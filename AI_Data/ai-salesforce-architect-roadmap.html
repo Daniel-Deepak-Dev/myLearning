@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Salesforce Architect — Field Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blueprint:#0E3A5C;
+  --blueprint-deep:#092C47;
+  --paper:#F5F7F9;
+  --card:#FFFFFF;
+  --ink:#1B2B3A;
+  --ink-soft:#4A5D70;
+  --hairline:#D8E0E7;
+  --cyan:#3FB9DE;   /* Data Cloud */
+  --amber:#E89B2E;  /* Salesforce AI */
+  --violet:#8F79E4; /* Claude / CCA */
+  --green:#4FAF7E;  /* Capstone */
+  --slate:#7A8CA0;  /* Core skills */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.55;
+}
+/* ---------- Blueprint header ---------- */
+.bp-header{
+  background:
+    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(160deg, var(--blueprint) 0%, var(--blueprint-deep) 100%);
+  background-size:28px 28px,28px 28px,cover;
+  color:#EAF3FA;
+  padding:34px 20px 8px;
+}
+.bp-inner{max-width:860px;margin:0 auto}
+.bp-eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:#8FC6E3;margin-bottom:10px;
+}
+.bp-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;font-size:clamp(26px,5.4vw,40px);
+  line-height:1.12;letter-spacing:-.01em;
+}
+.bp-sub{color:#B8D3E6;font-size:14.5px;margin-top:10px;max-width:560px}
+.tracks{display:block;width:100%;max-width:620px;margin:18px auto 0}
+.track-label{font-family:'IBM Plex Mono',monospace;font-size:10px;fill:#CFE4F2}
+/* ---------- Tabs ---------- */
+.tabs{
+  position:sticky;top:0;z-index:20;
+  background:var(--blueprint-deep);
+  display:flex;justify-content:center;gap:6px;
+  padding:10px 16px;
+}
+.tab{
+  font-family:'Space Grotesk',sans-serif;font-weight:500;
+  font-size:15px;color:#9FBED4;background:transparent;
+  border:1px solid transparent;border-radius:999px;
+  padding:8px 22px;cursor:pointer;
+}
+.tab[aria-selected="true"]{color:#FFFFFF;border-color:#3E6C8F;background:rgba(255,255,255,.07)}
+.tab:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+/* ---------- Progress ---------- */
+.progress-wrap{background:var(--blueprint-deep);padding:0 16px 14px}
+.progress-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.progress-bar{flex:1;height:6px;background:rgba(255,255,255,.14);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--cyan),var(--violet));border-radius:999px}
+@media (prefers-reduced-motion:no-preference){.progress-fill{transition:width .35s ease}}
+.progress-text{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#9FC7DF;white-space:nowrap}
+.reset-btn{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7FA9C4;
+  background:none;border:1px solid #33587A;border-radius:6px;padding:3px 8px;cursor:pointer;
+}
+.reset-btn:hover{color:#CFE4F2}
+/* ---------- Main ---------- */
+main{max-width:860px;margin:0 auto;padding:26px 18px 80px}
+.panel{display:none}
+.panel.active{display:block}
+/* ---------- Legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.legend .chip{cursor:default}
+/* ---------- Chips ---------- */
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.04em;
+  padding:3px 10px;border-radius:999px;border:1px solid var(--hairline);
+  background:var(--card);color:var(--ink-soft);white-space:nowrap;
+}
+.chip .dot{width:7px;height:7px;border-radius:50%}
+.dot-sfai{background:var(--amber)} .dot-dc{background:var(--cyan)}
+.dot-cca{background:var(--violet)} .dot-core{background:var(--slate)}
+.dot-ship{background:var(--green)}
+/* ---------- Phases ---------- */
+.phase{margin-bottom:34px}
+.phase-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:4px}
+.phase-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);letter-spacing:.12em}
+.phase-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:21px}
+.phase-goal{font-size:14px;color:var(--ink-soft);margin:8px 0 14px}
+.item{
+  display:flex;gap:12px;align-items:flex-start;
+  background:var(--card);border:1px solid var(--hairline);border-radius:10px;
+  padding:12px 14px;margin-bottom:8px;
+}
+.item input[type="checkbox"]{
+  width:18px;height:18px;margin-top:3px;flex-shrink:0;accent-color:var(--blueprint);cursor:pointer;
+}
+.item-body{flex:1}
+.item-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:2px}
+.item-name{font-weight:600;font-size:15px}
+.item.done .item-name{color:var(--ink-soft);text-decoration:line-through;text-decoration-thickness:1px}
+.item-desc{font-size:13.5px;color:var(--ink-soft)}
+.milestone{
+  display:flex;gap:10px;align-items:flex-start;
+  border:1px dashed var(--blueprint);border-radius:10px;
+  padding:12px 14px;margin-top:10px;background:#EDF3F8;
+}
+.milestone .flag{font-size:16px;line-height:1.4}
+.milestone-text{font-size:13.5px}
+.milestone-text strong{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--blueprint);display:block;margin-bottom:2px}
+/* ---------- Glossary ---------- */
+.gloss-controls{position:sticky;top:52px;z-index:10;background:var(--paper);padding:6px 0 12px}
+.search{
+  width:100%;font-family:'IBM Plex Sans',sans-serif;font-size:15px;
+  padding:11px 14px;border:1px solid var(--hairline);border-radius:10px;background:var(--card);color:var(--ink);
+}
+.search:focus-visible{outline:2px solid var(--blueprint);outline-offset:1px}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.filter{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;
+  border:1px solid var(--hairline);background:var(--card);color:var(--ink-soft);
+  border-radius:999px;padding:5px 12px;cursor:pointer;
+}
+.filter[aria-pressed="true"]{background:var(--blueprint);border-color:var(--blueprint);color:#fff}
+.term{
+  background:var(--card);border:1px solid var(--hairline);border-radius:10px;
+  padding:12px 14px;margin-bottom:8px;
+}
+.term-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:3px}
+.term-name{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:14px;color:var(--blueprint)}
+.term-def{font-size:13.5px;color:var(--ink-soft)}
+.empty-note{font-size:14px;color:var(--ink-soft);text-align:center;padding:26px 0;display:none}
+footer{max-width:860px;margin:0 auto;padding:0 18px 40px;font-size:12px;color:var(--slate);font-family:'IBM Plex Mono',monospace}
+</style>
+</head>
+<body>
+
+<header class="bp-header">
+  <div class="bp-inner">
+    <div class="bp-eyebrow">Field Blueprint · Rev A · 26 weeks</div>
+    <h1 class="bp-title">AI-Salesforce Architect</h1>
+    <p class="bp-sub">Three tracks — Salesforce AI, Data Cloud, and the Claude stack (CCA) — converging on one architect profile.</p>
+    <svg class="tracks" viewBox="0 0 620 120" role="img" aria-label="Three learning tracks converging into the architect role">
+      <path d="M20 25 C 240 25, 340 60, 560 60" fill="none" stroke="#E89B2E" stroke-width="2.5"/>
+      <path d="M20 60 L 560 60" fill="none" stroke="#3FB9DE" stroke-width="2.5"/>
+      <path d="M20 95 C 240 95, 340 60, 560 60" fill="none" stroke="#8F79E4" stroke-width="2.5"/>
+      <circle cx="20" cy="25" r="4.5" fill="#E89B2E"/>
+      <circle cx="20" cy="60" r="4.5" fill="#3FB9DE"/>
+      <circle cx="20" cy="95" r="4.5" fill="#8F79E4"/>
+      <circle cx="560" cy="60" r="7" fill="#EAF3FA"/>
+      <circle cx="560" cy="60" r="12" fill="none" stroke="#EAF3FA" stroke-width="1.2" opacity=".5"/>
+      <text class="track-label" x="34" y="21">SALESFORCE AI</text>
+      <text class="track-label" x="34" y="52">DATA CLOUD</text>
+      <text class="track-label" x="34" y="112">CLAUDE / CCA</text>
+      <text class="track-label" x="558" y="86" text-anchor="end">ARCHITECT</text>
+    </svg>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button class="tab" id="tab-roadmap" role="tab" aria-selected="true" aria-controls="panel-roadmap">Roadmap</button>
+  <button class="tab" id="tab-glossary" role="tab" aria-selected="false" aria-controls="panel-glossary">Glossary</button>
+</nav>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-inner">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-text" id="progressText">0 / 0</span>
+    <button class="reset-btn" id="resetBtn" title="Clear all checkmarks">RESET</button>
+  </div>
+</div>
+
+<main>
+<!-- ================= ROADMAP ================= -->
+<section class="panel active" id="panel-roadmap" role="tabpanel" aria-labelledby="tab-roadmap">
+
+  <div class="legend">
+    <span class="chip"><span class="dot dot-sfai"></span>Salesforce AI</span>
+    <span class="chip"><span class="dot dot-dc"></span>Data Cloud</span>
+    <span class="chip"><span class="dot dot-cca"></span>Claude / CCA</span>
+    <span class="chip"><span class="dot dot-core"></span>Core skills</span>
+    <span class="chip"><span class="dot dot-ship"></span>Capstone</span>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">PHASE 01 · WEEKS 1–4</span><h2 class="phase-title">Foundations &amp; Landscape</h2></div>
+    <p class="phase-goal">Build the mental map before the deep dives. You already have the CRM half — this phase installs the data and AI vocabulary everything else hangs on.</p>
+
+    <label class="item"><input type="checkbox" data-id="p1-sql"><span class="item-body"><span class="item-top"><span class="item-name">SQL fluency refresh</span><span class="chip"><span class="dot dot-core"></span>Core</span></span><span class="item-desc">Joins, CTEs, window functions, aggregation. SQL is the lingua franca of Data Cloud queries, calculated insights, and every pipeline you'll touch.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p1-python"><span class="item-body"><span class="item-top"><span class="item-name">Python for data work</span><span class="chip"><span class="dot dot-core"></span>Core</span></span><span class="item-desc">pandas basics, JSON handling, calling REST APIs. You don't need to be a Pythonista — you need to move data and call models comfortably.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p1-dcorient"><span class="item-body"><span class="item-top"><span class="item-name">Data Cloud orientation</span><span class="chip"><span class="dot dot-dc"></span>Data Cloud</span></span><span class="item-desc">What it is (a lakehouse-based CDP), how it sits beside core CRM orgs, and the flow: ingest → model → unify → insight → activate.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p1-ingest"><span class="item-body"><span class="item-top"><span class="item-name">Ingestion basics</span><span class="chip"><span class="dot dot-dc"></span>Data Cloud</span></span><span class="item-desc">Data streams, connectors (CRM, Marketing Cloud, S3, web SDK), batch vs streaming ingestion, refresh schedules.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p1-sfai"><span class="item-body"><span class="item-top"><span class="item-name">Salesforce AI landscape</span><span class="chip"><span class="dot dot-sfai"></span>Salesforce AI</span></span><span class="item-desc">The arc from Einstein → Einstein GPT → Agentforce. Where Prompt Builder, Model Builder, and the Einstein Trust Layer each fit.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p1-claude"><span class="item-body"><span class="item-top"><span class="item-name">Claude API first calls</span><span class="chip"><span class="dot dot-cca"></span>Claude / CCA</span></span><span class="item-desc">The messages endpoint, roles, system prompts, tokens, max_tokens. Make real API calls — build with the API, not just alongside the tools.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p1-ai4beg"><span class="item-body"><span class="item-top"><span class="item-name">AI theory essentials (selective)</span><span class="chip"><span class="dot dot-core"></span>Core</span></span><span class="item-desc">From Microsoft's AI-For-Beginners repo, only lessons 14 (embeddings), 18 (transformers), 20 (LLMs &amp; prompt programming), and 23 (multi-agent systems). Skip the CNN/GAN/vision lessons — that's the model-training layer, below your critical path.</span></span></label>
+
+    <div class="milestone"><span class="flag">▸</span><span class="milestone-text"><strong>Milestone</strong>Trailhead badges: Data Cloud Basics + Agentforce Basics. First working Claude API script committed to a personal repo.</span></div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">PHASE 02 · WEEKS 5–8</span><h2 class="phase-title">Data Cloud Depth</h2></div>
+    <p class="phase-goal">Own the data layer. AI systems are only as good as the data feeding them — this phase is what makes your AI work trustworthy later.</p>
+
+    <label class="item"><input type="checkbox" data-id="p2-model"><span class="item-body"><span class="item-top"><span class="item-name">Data modeling: DSO → DLO → DMO</span><span class="chip"><span class="dot dot-dc"></span>Data Cloud</span></span><span class="item-desc">How raw source objects land as lake objects and get mapped to the standard data model. This mapping discipline is the heart of the Consultant exam.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p2-identity"><span class="item-body"><span class="item-top"><span class="item-name">Harmonization &amp; identity resolution</span><span class="chip"><span class="dot dot-dc"></span>Data Cloud</span></span><span class="item-desc">Match rules, reconciliation rules, rulesets, and how unified individual profiles get built from messy multi-source data.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p2-insights"><span class="item-body"><span class="item-top"><span class="item-name">Calculated insights &amp; segmentation</span><span class="chip"><span class="dot dot-dc"></span>Data Cloud</span></span><span class="item-desc">Build metrics (LTV, engagement scores) with SQL-like expressions, slice audiences into segments, and activate them to targets.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p2-zerocopy"><span class="item-body"><span class="item-top"><span class="item-name">Zero copy &amp; BYOL federation</span><span class="chip"><span class="dot dot-dc"></span>Data Cloud</span></span><span class="item-desc">Querying Snowflake, BigQuery, or Databricks in place without duplicating data — and when zero copy beats ingestion (and vice versa).</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p2-vector"><span class="item-body"><span class="item-top"><span class="item-name">Vector database &amp; unstructured data</span><span class="chip"><span class="dot dot-dc"></span>Data Cloud</span></span><span class="item-desc">Search indexes, chunking, embeddings, and semantic search inside Data Cloud — the retrieval layer your AI agents will stand on.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p2-pipeline"><span class="item-body"><span class="item-top"><span class="item-name">Pipeline patterns</span><span class="chip"><span class="dot dot-core"></span>Core</span></span><span class="item-desc">ETL vs ELT, orchestration concepts, idempotent loads, data quality checks. Enough general data engineering to talk shop beyond Salesforce.</span></span></label>
+
+    <div class="milestone"><span class="flag">▸</span><span class="milestone-text"><strong>Milestone</strong>Salesforce Certified Data Cloud Consultant.</span></div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">PHASE 03 · WEEKS 9–14</span><h2 class="phase-title">Salesforce AI Depth</h2></div>
+    <p class="phase-goal">Build agents on the platform. This is where your Apex and Flow experience becomes a superpower — custom actions are your home turf.</p>
+
+    <label class="item"><input type="checkbox" data-id="p3-agentforce"><span class="item-body"><span class="item-top"><span class="item-name">Agentforce anatomy</span><span class="chip"><span class="dot dot-sfai"></span>Salesforce AI</span></span><span class="item-desc">Agents, topics, actions, instructions — and how the Atlas Reasoning Engine plans and picks actions at runtime.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p3-promptbuilder"><span class="item-body"><span class="item-top"><span class="item-name">Prompt Builder</span><span class="chip"><span class="dot dot-sfai"></span>Salesforce AI</span></span><span class="item-desc">Prompt templates, merge fields, and dynamic grounding with record data, Flows, and Data Cloud retrievers.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p3-trust"><span class="item-body"><span class="item-top"><span class="item-name">Einstein Trust Layer</span><span class="chip"><span class="dot dot-sfai"></span>Salesforce AI</span></span><span class="item-desc">Secure data retrieval, data masking, zero retention, toxicity scoring, audit trail. Clients will ask about this in every AI conversation.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p3-actions"><span class="item-body"><span class="item-top"><span class="item-name">Custom agent actions</span><span class="chip"><span class="dot dot-sfai"></span>Salesforce AI</span></span><span class="item-desc">Invocable Apex and autolaunched Flows as agent actions. Input/output descriptions become the agent's understanding of the tool — write them like prompts.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p3-byom"><span class="item-body"><span class="item-top"><span class="item-name">Model Builder &amp; BYOM</span><span class="chip"><span class="dot dot-sfai"></span>Salesforce AI</span></span><span class="item-desc">Registering external models — including Claude via Amazon Bedrock — for use in Prompt Builder and beyond. The bridge between your two worlds.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p3-rag"><span class="item-body"><span class="item-top"><span class="item-name">RAG on platform</span><span class="chip"><span class="dot dot-dc"></span>Data Cloud</span></span><span class="item-desc">Retrievers and search indexes grounding Agentforce answers in Data Cloud content — Salesforce's productized RAG pipeline end to end.</span></span></label>
+
+    <div class="milestone"><span class="flag">▸</span><span class="milestone-text"><strong>Milestone</strong>Salesforce Certified Agentforce Specialist. One working agent with a custom Apex action in a dev org.</span></div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">PHASE 04 · WEEKS 15–20</span><h2 class="phase-title">Claude Stack &amp; CCA-F</h2></div>
+    <p class="phase-goal">Cover the five CCA-F exam domains through Anthropic Academy's free courses (~15–20 hrs) plus hands-on builds. Percentages below are exam weight.</p>
+
+    <label class="item"><input type="checkbox" data-id="p4-api"><span class="item-body"><span class="item-top"><span class="item-name">Claude API depth</span><span class="chip"><span class="dot dot-cca"></span>Claude / CCA</span></span><span class="item-desc">Tool use, structured output with JSON schemas, streaming, prompt caching, vision/PDF inputs. The flagship "Building with the Claude API" course covers this.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p4-agentic"><span class="item-body"><span class="item-top"><span class="item-name">Agentic architecture &amp; orchestration — 27%</span><span class="chip"><span class="dot dot-cca"></span>Claude / CCA</span></span><span class="item-desc">Agentic loops, orchestrator-worker patterns, subagents in separate context windows, parallel vs sequential execution, when NOT to delegate.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p4-code"><span class="item-body"><span class="item-top"><span class="item-name">Claude Code configuration &amp; workflows — 20%</span><span class="chip"><span class="dot dot-cca"></span>Claude / CCA</span></span><span class="item-desc">CLAUDE.md, custom commands, subagents, headless mode in CI, automated code review with structured JSON output. Turn your daily tool into a discipline.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p4-prompt"><span class="item-body"><span class="item-top"><span class="item-name">Prompt engineering &amp; structured output — 20%</span><span class="chip"><span class="dot dot-cca"></span>Claude / CCA</span></span><span class="item-desc">Explicit criteria over vague instructions, validation loops, extraction pipelines, eval-driven iteration.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p4-mcp"><span class="item-body"><span class="item-top"><span class="item-name">Tool design &amp; MCP integration — 18%</span><span class="chip"><span class="dot dot-cca"></span>Claude / CCA</span></span><span class="item-desc">Host/client/server architecture, the three primitives (tools, resources, prompts), building a server with the Python SDK, transports and security boundaries.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p4-context"><span class="item-body"><span class="item-top"><span class="item-name">Context management &amp; reliability — 15%</span><span class="chip"><span class="dot dot-cca"></span>Claude / CCA</span></span><span class="item-desc">Context window budgeting, caching strategy, compaction, failure handling, evals — what separates production agents from demos.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p4-msrepos"><span class="item-body"><span class="item-top"><span class="item-name">Supplementary repos (optional)</span><span class="chip"><span class="dot dot-core"></span>Core</span></span><span class="item-desc">Microsoft's "Generative AI for Beginners", "AI Agents for Beginners", and "MCP for Beginners" repos — hands-on, vendor-neutral reinforcement of the same agentic and MCP concepts the CCA-F tests.</span></span></label>
+
+    <div class="milestone"><span class="flag">▸</span><span class="milestone-text"><strong>Milestone</strong>Claude Certified Architect — Foundations (CCA-F). 60 scenario questions, 120 min, 720/1000 to pass. Check if Geeksoft joins the Claude Partner Network — the $99 fee may be waived.</span></div>
+  </div>
+
+  <!-- Phase 5 -->
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">PHASE 05 · WEEKS 21–26</span><h2 class="phase-title">Capstone — Ship Billable Work</h2></div>
+    <p class="phase-goal">Convert learning into architect-track proof. One shipped project beats five certificates in a client conversation.</p>
+
+    <label class="item"><input type="checkbox" data-id="p5-mcpserver"><span class="item-body"><span class="item-top"><span class="item-name">Build an MCP server for Salesforce</span><span class="chip"><span class="dot dot-ship"></span>Capstone</span></span><span class="item-desc">Expose SOQL queries, record actions, and metadata reads as MCP tools so Claude (and Claude Code) can work against a real org safely.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p5-ragapp"><span class="item-body"><span class="item-top"><span class="item-name">RAG assistant over CRM data</span><span class="chip"><span class="dot dot-ship"></span>Capstone</span></span><span class="item-desc">Data Cloud vector search + Claude: grounded answers over cases, knowledge, and account history, with citations back to records.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p5-agent"><span class="item-body"><span class="item-top"><span class="item-name">End-to-end Agentforce use case</span><span class="chip"><span class="dot dot-ship"></span>Capstone</span></span><span class="item-desc">Pick one measurable outcome — case deflection or lead scoring — and build it: data in via Data Cloud, reasoning via agent, action via custom Apex.</span></span></label>
+
+    <label class="item"><input type="checkbox" data-id="p5-writeup"><span class="item-body"><span class="item-top"><span class="item-name">Write it up &amp; pitch internally</span><span class="chip"><span class="dot dot-ship"></span>Capstone</span></span><span class="item-desc">Architecture diagram, tradeoffs, demo video. Position it as a Geeksoft "AI + Data solutions" offering — your architect-track calling card.</span></span></label>
+
+    <div class="milestone"><span class="flag">▸</span><span class="milestone-text"><strong>Milestone</strong>One demoable AI + Data project shipped, plus the dual credential: Salesforce certs + CCA-F. The rare pairing.</span></div>
+  </div>
+
+</section>
+
+<!-- ================= GLOSSARY ================= -->
+<section class="panel" id="panel-glossary" role="tabpanel" aria-labelledby="tab-glossary">
+  <div class="gloss-controls">
+    <input class="search" id="searchInput" type="search" placeholder="Search terms — try &quot;grounding&quot;, &quot;DMO&quot;, &quot;MCP&quot;…" aria-label="Search glossary">
+    <div class="filter-row" id="filterRow">
+      <button class="filter" data-cat="all" aria-pressed="true">All</button>
+      <button class="filter" data-cat="sfai" aria-pressed="false">Salesforce AI</button>
+      <button class="filter" data-cat="dc" aria-pressed="false">Data Cloud</button>
+      <button class="filter" data-cat="cca" aria-pressed="false">Claude / CCA</button>
+      <button class="filter" data-cat="core" aria-pressed="false">Data &amp; AI Core</button>
+    </div>
+  </div>
+  <div id="glossaryList"></div>
+  <p class="empty-note" id="emptyNote">No terms match — try a shorter search.</p>
+</section>
+</main>
+
+<footer>REV A · COMPILED 2026 · CHECK EXAM GUIDES FOR CURRENT WEIGHTS &amp; PRICING</footer>
+
+<script>
+/* ---------------- Glossary data ---------------- */
+const TERMS = [
+// Salesforce AI
+{c:"sfai",t:"Agentforce",d:"Salesforce's platform for building autonomous AI agents that plan and execute tasks across CRM using topics, actions, and the Atlas Reasoning Engine."},
+{c:"sfai",t:"Atlas Reasoning Engine",d:"The 'brain' of Agentforce: interprets a request, classifies it into a topic, plans steps, and chooses which actions to run."},
+{c:"sfai",t:"Topic (Agentforce)",d:"A job category inside an agent that groups related actions and instructions, scoping what the agent is allowed to do for that kind of request."},
+{c:"sfai",t:"Agent Action",d:"A unit of work an agent can execute — an autolaunched Flow, invocable Apex method, prompt template, or external API call."},
+{c:"sfai",t:"Instructions (Guardrails)",d:"Natural-language rules attached to topics/agents that constrain behavior — what to always do, never do, and how to respond."},
+{c:"sfai",t:"Prompt Builder",d:"Declarative tool for creating reusable prompt templates that merge CRM record data and grounding sources before calling an LLM."},
+{c:"sfai",t:"Prompt Template",d:"A reusable, versioned prompt definition with merge fields, resolved with live data at runtime."},
+{c:"sfai",t:"Dynamic Grounding",d:"Injecting live CRM or Data Cloud data into a prompt at runtime so the model answers from your data instead of general knowledge."},
+{c:"sfai",t:"Einstein Trust Layer",d:"The security layer between Salesforce and LLM providers: data masking, secure retrieval, zero retention, toxicity scoring, and an audit trail."},
+{c:"sfai",t:"Zero Data Retention",d:"Guarantee that model providers processing prompts via the Trust Layer don't store them or use them for training."},
+{c:"sfai",t:"Data Masking",d:"Trust Layer step that replaces PII in a prompt with placeholder tokens before it leaves Salesforce, then re-inserts real values in the response."},
+{c:"sfai",t:"Model Builder",d:"Tool to register and configure LLMs — Salesforce-hosted or bring-your-own via Bedrock/Vertex — for use across Prompt Builder and Agentforce."},
+{c:"sfai",t:"BYOM (Bring Your Own Model)",d:"Connecting an external foundation model (e.g., Claude on Amazon Bedrock) so Salesforce features can call it through your own endpoint."},
+{c:"sfai",t:"Einstein",d:"Umbrella brand for Salesforce's AI features, spanning older predictive tools and current generative capabilities."},
+{c:"sfai",t:"Einstein Copilot",d:"The predecessor conversational CRM assistant, since folded into the Agentforce platform."},
+{c:"sfai",t:"Agentforce Specialist",d:"Salesforce certification validating skills in building, configuring, and deploying Agentforce agents and prompt templates."},
+
+// Data Cloud
+{c:"dc",t:"Data Cloud",d:"Salesforce's lakehouse-based customer data platform that ingests, harmonizes, unifies, and activates data from any source."},
+{c:"dc",t:"CDP (Customer Data Platform)",d:"System category that unifies customer data from many sources into persistent profiles usable by other tools; Data Cloud is Salesforce's CDP and more."},
+{c:"dc",t:"Lakehouse",d:"Architecture combining a data lake's cheap open storage with a warehouse's query performance and governance."},
+{c:"dc",t:"Data Stream",d:"A configured ingestion feed bringing data into Data Cloud from a connector, on a batch or streaming schedule."},
+{c:"dc",t:"DSO (Data Source Object)",d:"Representation of raw data exactly as it arrives from the source, before any mapping."},
+{c:"dc",t:"DLO (Data Lake Object)",d:"The stored, source-shaped table in the data lake created from a data stream — raw material awaiting harmonization."},
+{c:"dc",t:"DMO (Data Model Object)",d:"A standardized object in Data Cloud's canonical data model that DLOs are mapped into, enabling cross-source consistency."},
+{c:"dc",t:"Harmonization",d:"Mapping disparate source fields into the standard data model so 'email' from five systems becomes one consistent attribute."},
+{c:"dc",t:"Identity Resolution",d:"Matching records across sources into one unified individual using match rules and reconciliation rules."},
+{c:"dc",t:"Match Rules",d:"Criteria (exact or fuzzy — email, name+phone, etc.) that decide when two records represent the same person."},
+{c:"dc",t:"Reconciliation Rules",d:"Rules that pick the winning value (most recent, most frequent, source priority) when matched records conflict."},
+{c:"dc",t:"Unified Profile",d:"The single individual record produced after identity resolution, linking all source records and behaviors."},
+{c:"dc",t:"Calculated Insight",d:"A metric (e.g., lifetime value, engagement score) computed over Data Cloud data on a schedule with a SQL-like definition."},
+{c:"dc",t:"Segment",d:"A defined audience slice built from profiles, attributes, and insights — the unit you activate to other systems."},
+{c:"dc",t:"Activation",d:"Publishing a segment or data to a target — Marketing Cloud, ad platforms, CRM — where action happens."},
+{c:"dc",t:"Zero Copy / BYOL",d:"Federation pattern: query data in Snowflake, BigQuery, or Databricks in place — bring your own lake — without copying it into Data Cloud."},
+{c:"dc",t:"Data Graph",d:"A precomputed, denormalized view of related data around a profile, built for millisecond real-time reads by agents and personalization."},
+{c:"dc",t:"Search Index",d:"Unstructured content (PDFs, transcripts, knowledge) that Data Cloud has chunked and embedded so it's semantically searchable."},
+{c:"dc",t:"Retriever",d:"A configured query against a search index or data graph that fetches the most relevant content to ground a prompt — Salesforce's RAG building block."},
+{c:"dc",t:"Vector Database (Data Cloud)",d:"Data Cloud's built-in store of embeddings for unstructured content, powering semantic search and grounded AI answers."},
+{c:"dc",t:"Data Cloud Consultant",d:"Salesforce certification covering ingestion, modeling, identity resolution, insights, segmentation, and activation."},
+
+// Claude / CCA
+{c:"cca",t:"Claude Certified Architect (CCA-F)",d:"Anthropic's proctored Foundations certification: 60 scenario-based questions across agentic architecture, Claude Code, MCP, prompting, and context management."},
+{c:"cca",t:"MCP (Model Context Protocol)",d:"Open standard for connecting AI applications to external tools and data through one protocol — often described as USB-C for AI."},
+{c:"cca",t:"MCP Host / Client / Server",d:"Host = the AI application (e.g., Claude Desktop); client = the connection handler inside it; server = the program exposing capabilities."},
+{c:"cca",t:"MCP Primitives",d:"The three things a server can expose: tools (actions the model can invoke), resources (data to read), and prompts (reusable templates)."},
+{c:"cca",t:"Tool Use (Function Calling)",d:"The model requests a structured call to a tool you defined; your code executes it and returns the result for the model to continue with."},
+{c:"cca",t:"Structured Output",d:"Constraining a model's response to a JSON schema so downstream code can parse it reliably."},
+{c:"cca",t:"JSON Schema",d:"A contract describing required fields, types, and constraints — used to define tools and validate structured output."},
+{c:"cca",t:"Agentic Loop",d:"The core agent pattern: reason → act (call a tool) → observe the result → repeat until the goal is met."},
+{c:"cca",t:"Orchestrator-Worker",d:"Multi-agent pattern where a lead agent decomposes a task and delegates slices to specialized subagents, then synthesizes results."},
+{c:"cca",t:"Subagent",d:"A worker agent running in its own separate context window, handling a delegated task without polluting the lead agent's context."},
+{c:"cca",t:"Context Window",d:"The maximum tokens a model can consider at once — the hard budget every agent design must manage."},
+{c:"cca",t:"Prompt Caching",d:"Reusing a cached prompt prefix (system prompt, documents, tools) across calls to cut latency and cost dramatically."},
+{c:"cca",t:"Compaction",d:"Summarizing earlier conversation/tool history to reclaim context window space in long-running agent sessions."},
+{c:"cca",t:"System Prompt",d:"Instructions set before any user message that define the model's role, rules, and output expectations."},
+{c:"cca",t:"Extended Thinking",d:"A mode where Claude reasons step-by-step in a visible scratchpad before producing its final answer — better on hard problems."},
+{c:"cca",t:"Claude Code",d:"Anthropic's terminal-based agentic coding tool that reads, edits, tests, and commits code in your repo."},
+{c:"cca",t:"CLAUDE.md",d:"A project memory file Claude Code reads automatically — conventions, architecture notes, commands — shaping every session's behavior."},
+{c:"cca",t:"Headless Mode (-p)",d:"Running Claude Code non-interactively with a prompt flag, typically in CI pipelines, often with JSON output for automation."},
+{c:"cca",t:"Evals",d:"Systematic tests that score prompt or agent output against defined criteria — how you improve AI systems on evidence instead of vibes."},
+{c:"cca",t:"Claude Agent SDK",d:"Anthropic's framework for building production agents with the same loop, tools, and context management that power Claude Code."},
+
+// Data & AI Core
+{c:"core",t:"LLM (Large Language Model)",d:"A model trained on massive text corpora to predict tokens, capable of reasoning, generation, and tool use."},
+{c:"core",t:"Token",d:"The unit models read and write — roughly ¾ of an English word. Context limits and API pricing are measured in tokens."},
+{c:"core",t:"Embedding",d:"A numeric vector representing meaning; similar texts map to nearby vectors, enabling semantic comparison."},
+{c:"core",t:"Semantic Search",d:"Retrieval by meaning using embedding similarity rather than keyword matching."},
+{c:"core",t:"Chunking",d:"Splitting documents into pieces before embedding — chunk size and overlap strongly affect retrieval quality."},
+{c:"core",t:"RAG (Retrieval-Augmented Generation)",d:"Pattern: retrieve relevant content, inject it into the prompt, and generate an answer grounded in it — the antidote to hallucination."},
+{c:"core",t:"Hallucination",d:"Confident but false model output; mitigated by grounding, RAG, citations, and validation."},
+{c:"core",t:"Fine-tuning",d:"Further training a model on domain data to shift its behavior — contrast with RAG, which supplies knowledge at runtime."},
+{c:"core",t:"Inference",d:"Running a trained model to produce output; what you pay for per token on every API call."},
+{c:"core",t:"Temperature",d:"Sampling parameter controlling randomness: low = deterministic and repeatable, high = varied and creative."},
+{c:"core",t:"Prompt Injection",d:"Attack where malicious instructions hidden in data (an email, a web page) hijack an agent — a core security concern in tool-using systems."},
+{c:"core",t:"ETL / ELT",d:"Pipeline patterns: transform before loading (ETL) vs load raw then transform inside the warehouse (ELT, the modern default)."},
+{c:"core",t:"Data Pipeline",d:"An automated flow that moves and transforms data between systems on a schedule or trigger."},
+{c:"core",t:"Idempotency",d:"Property that re-running a pipeline or action produces the same result — essential for safe retries."},
+{c:"core",t:"Data Lineage",d:"Tracking where data came from and how it was transformed — key for trust, debugging, and compliance."},
+{c:"core",t:"Semantic Layer",d:"A governed layer of business definitions (what counts as 'revenue') sitting between raw data and consumers, human or AI."},
+{c:"core",t:"Transformer",d:"The neural architecture behind modern LLMs, built on attention — the mechanism that lets a model weigh which parts of the input matter for each output token."},
+{c:"core",t:"Attention",d:"The core transformer operation: for each token, score how relevant every other token is, and blend information accordingly."},
+{c:"core",t:"Few-Shot Prompting",d:"Steering a model by including a handful of worked examples in the prompt instead of retraining it."},
+{c:"core",t:"Multi-Agent System",d:"Multiple AI agents interacting — cooperating or competing — to solve a task no single agent handles well; the theory behind orchestrator-worker designs."}
+];
+
+const CAT_META = {sfai:["Salesforce AI","dot-sfai"], dc:["Data Cloud","dot-dc"], cca:["Claude / CCA","dot-cca"], core:["Data & AI Core","dot-core"]};
+
+/* ---------------- Render glossary ---------------- */
+const list = document.getElementById('glossaryList');
+TERMS.forEach(x=>{
+  const el = document.createElement('div');
+  el.className='term'; el.dataset.cat=x.c;
+  el.dataset.text=(x.t+' '+x.d).toLowerCase();
+  el.innerHTML = '<div class="term-head"><span class="term-name"></span><span class="chip"><span class="dot '+CAT_META[x.c][1]+'"></span>'+CAT_META[x.c][0]+'</span></div><div class="term-def"></div>';
+  el.querySelector('.term-name').textContent = x.t;
+  el.querySelector('.term-def').textContent = x.d;
+  list.appendChild(el);
+});
+
+/* ---------------- Glossary filtering ---------------- */
+let activeCat='all';
+const searchInput=document.getElementById('searchInput');
+const emptyNote=document.getElementById('emptyNote');
+function applyFilter(){
+  const q=searchInput.value.trim().toLowerCase();
+  let shown=0;
+  list.querySelectorAll('.term').forEach(el=>{
+    const ok=(activeCat==='all'||el.dataset.cat===activeCat)&&(!q||el.dataset.text.includes(q));
+    el.style.display=ok?'':'none'; if(ok)shown++;
+  });
+  emptyNote.style.display=shown?'none':'block';
+}
+searchInput.addEventListener('input',applyFilter);
+document.getElementById('filterRow').addEventListener('click',e=>{
+  const btn=e.target.closest('.filter'); if(!btn)return;
+  activeCat=btn.dataset.cat;
+  document.querySelectorAll('.filter').forEach(b=>b.setAttribute('aria-pressed',b===btn?'true':'false'));
+  applyFilter();
+});
+
+/* ---------------- Tabs ---------------- */
+const tabs={ 'tab-roadmap':'panel-roadmap','tab-glossary':'panel-glossary' };
+Object.keys(tabs).forEach(id=>{
+  document.getElementById(id).addEventListener('click',()=>{
+    Object.entries(tabs).forEach(([tid,pid])=>{
+      const sel=tid===id;
+      document.getElementById(tid).setAttribute('aria-selected',sel?'true':'false');
+      document.getElementById(pid).classList.toggle('active',sel);
+    });
+    document.getElementById('progressWrap').style.display = id==='tab-roadmap'?'':'none';
+    window.scrollTo({top:0});
+  });
+});
+
+/* ---------------- Progress (persistent) ---------------- */
+const STORAGE_KEY='sf-ai-architect-roadmap-progress';
+let progress={}; let saveTimer=null;
+const boxes=[...document.querySelectorAll('.item input[type="checkbox"]')];
+
+function updateUI(){
+  let done=0;
+  boxes.forEach(b=>{
+    const on=!!progress[b.dataset.id];
+    b.checked=on;
+    b.closest('.item').classList.toggle('done',on);
+    if(on)done++;
+  });
+  const pct=boxes.length?Math.round(done/boxes.length*100):0;
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressText').textContent=done+' / '+boxes.length+' · '+pct+'%';
+}
+function scheduleSave(){
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(async()=>{
+    try{ await window.storage.set(STORAGE_KEY, JSON.stringify(progress)); }catch(e){ /* in-memory only */ }
+  },400);
+}
+boxes.forEach(b=>b.addEventListener('change',()=>{
+  progress[b.dataset.id]=b.checked; if(!b.checked)delete progress[b.dataset.id];
+  updateUI(); scheduleSave();
+}));
+document.getElementById('resetBtn').addEventListener('click',async()=>{
+  progress={}; updateUI();
+  try{ await window.storage.delete(STORAGE_KEY); }catch(e){}
+});
+(async()=>{
+  try{
+    const r=await window.storage.get(STORAGE_KEY);
+    if(r&&r.value)progress=JSON.parse(r.value)||{};
+  }catch(e){ /* first run or unavailable */ }
+  updateUI();
+})();
+</script>
+</body>
+</html>

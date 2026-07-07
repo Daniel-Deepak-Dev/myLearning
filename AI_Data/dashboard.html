@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI_Data — Study Base Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blueprint:#0E3A5C; --blueprint-deep:#092C47;
+  --paper:#F5F7F9; --card:#FFFFFF; --ink:#1B2B3A; --ink-soft:#4A5D70;
+  --hairline:#D8E0E7;
+  --cyan:#3FB9DE; --amber:#E89B2E; --violet:#8F79E4; --green:#4FAF7E; --slate:#7A8CA0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
+.bp-header{
+  background:
+    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(160deg, var(--blueprint) 0%, var(--blueprint-deep) 100%);
+  background-size:28px 28px,28px 28px,cover;
+  color:#EAF3FA;padding:34px 20px 30px;
+}
+.bp-inner{max-width:980px;margin:0 auto}
+.bp-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8FC6E3;margin-bottom:10px}
+.bp-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(26px,5vw,38px);letter-spacing:-.01em}
+.bp-sub{color:#B8D3E6;font-size:14.5px;margin-top:8px;max-width:640px}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.quick a{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;
+  color:#CFE4F2;text-decoration:none;border:1px solid #3E6C8F;border-radius:999px;padding:5px 14px;
+}
+.quick a:hover{background:rgba(255,255,255,.09);color:#fff}
+main{max-width:980px;margin:0 auto;padding:26px 18px 70px}
+.hint{font-size:13px;color:var(--ink-soft);margin-bottom:20px}
+.hint code{font-family:'IBM Plex Mono',monospace;font-size:12px;background:#E9EEF3;border-radius:4px;padding:1px 6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
+.track{
+  background:var(--card);border:1px solid var(--hairline);border-radius:12px;
+  border-top:4px solid var(--slate);padding:16px 16px 12px;
+}
+.track.dc{border-top-color:var(--cyan)} .track.sfai{border-top-color:var(--amber)}
+.track.cca{border-top-color:var(--violet)} .track.ship{border-top-color:var(--green)}
+.track h2{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;margin-bottom:2px}
+.track .cert{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-soft);letter-spacing:.05em;margin-bottom:10px}
+.track ul{list-style:none}
+.track li{
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  padding:6px 0;border-top:1px dashed var(--hairline);font-size:13.5px;
+}
+.track li:first-child{border-top:none}
+.t-name a{color:var(--ink);text-decoration:none;font-weight:500}
+.t-name a:hover{color:var(--blueprint);text-decoration:underline}
+.t-links{font-family:'IBM Plex Mono',monospace;font-size:10.5px;white-space:nowrap}
+.t-links a{color:var(--ink-soft);text-decoration:none}
+.t-links a:hover{color:var(--blueprint);text-decoration:underline}
+.rowwide{grid-column:1 / -1}
+footer{max-width:980px;margin:0 auto;padding:0 18px 40px;font-size:12px;color:var(--slate);font-family:'IBM Plex Mono',monospace}
+</style>
+</head>
+<body>
+
+<header class="bp-header">
+  <div class="bp-inner">
+    <div class="bp-eyebrow">Study Base · Master Index</div>
+    <h1 class="bp-title">AI_Data — AI-Salesforce Architect</h1>
+    <p class="bp-sub">Every roadmap topic has a folder: notes to learn, a cheatsheet to recall, flashcards to self-test, resources to go deeper.</p>
+    <nav class="quick">
+      <a href="ai-salesforce-architect-roadmap.html">ROADMAP TRACKER</a>
+      <a href="STUDY-PLAN.md">STUDY PLAN</a>
+      <a href="GLOSSARY.md">GLOSSARY (77)</a>
+      <a href="README.md">README</a>
+      <a href="99-inbox/INBOX.md">INBOX</a>
+      <a href="journal/">JOURNAL</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <p class="hint">Links open the raw markdown in the browser — fine for a quick cheatsheet read. For editing and pretty preview, open the folder in VS Code (<code>Ctrl+Shift+V</code>).</p>
+
+  <div class="grid">
+
+    <section class="track">
+      <h2>00 · Core Skills</h2>
+      <div class="cert">FOUNDATIONS · PHASE 01–02</div>
+      <ul>
+        <li><span class="t-name"><a href="00-core-skills/01-sql/notes.md">SQL Fluency</a></span><span class="t-links"><a href="00-core-skills/01-sql/cheatsheet.md">cheat</a> · <a href="00-core-skills/01-sql/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="00-core-skills/02-python-for-data/notes.md">Python for Data Work</a></span><span class="t-links"><a href="00-core-skills/02-python-for-data/cheatsheet.md">cheat</a> · <a href="00-core-skills/02-python-for-data/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="00-core-skills/03-ai-theory/notes.md">AI Theory Essentials</a></span><span class="t-links"><a href="00-core-skills/03-ai-theory/cheatsheet.md">cheat</a> · <a href="00-core-skills/03-ai-theory/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="00-core-skills/04-data-engineering/notes.md">Data Engineering &amp; Pipelines</a></span><span class="t-links"><a href="00-core-skills/04-data-engineering/cheatsheet.md">cheat</a> · <a href="00-core-skills/04-data-engineering/flashcards.md">cards</a></span></li>
+      </ul>
+    </section>
+
+    <section class="track dc">
+      <h2>01 · Data Cloud</h2>
+      <div class="cert">CERT: <a href="01-data-cloud/_cert-data-cloud-consultant/exam-guide.md">DATA CLOUD CONSULTANT</a> · PHASE 02</div>
+      <ul>
+        <li><span class="t-name"><a href="01-data-cloud/01-orientation/notes.md">Orientation</a></span><span class="t-links"><a href="01-data-cloud/01-orientation/cheatsheet.md">cheat</a> · <a href="01-data-cloud/01-orientation/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="01-data-cloud/02-ingestion/notes.md">Ingestion</a></span><span class="t-links"><a href="01-data-cloud/02-ingestion/cheatsheet.md">cheat</a> · <a href="01-data-cloud/02-ingestion/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="01-data-cloud/03-data-modeling-dso-dlo-dmo/notes.md">Modeling: DSO → DLO → DMO</a></span><span class="t-links"><a href="01-data-cloud/03-data-modeling-dso-dlo-dmo/cheatsheet.md">cheat</a> · <a href="01-data-cloud/03-data-modeling-dso-dlo-dmo/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="01-data-cloud/04-identity-resolution/notes.md">Identity Resolution</a></span><span class="t-links"><a href="01-data-cloud/04-identity-resolution/cheatsheet.md">cheat</a> · <a href="01-data-cloud/04-identity-resolution/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="01-data-cloud/05-insights-segmentation/notes.md">Insights &amp; Segmentation</a></span><span class="t-links"><a href="01-data-cloud/05-insights-segmentation/cheatsheet.md">cheat</a> · <a href="01-data-cloud/05-insights-segmentation/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="01-data-cloud/06-zero-copy-byol/notes.md">Zero Copy &amp; BYOL</a></span><span class="t-links"><a href="01-data-cloud/06-zero-copy-byol/cheatsheet.md">cheat</a> · <a href="01-data-cloud/06-zero-copy-byol/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="01-data-cloud/07-vector-db-unstructured/notes.md">Vector DB &amp; Unstructured</a></span><span class="t-links"><a href="01-data-cloud/07-vector-db-unstructured/cheatsheet.md">cheat</a> · <a href="01-data-cloud/07-vector-db-unstructured/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="01-data-cloud/08-rag-on-platform/notes.md">RAG on Platform</a></span><span class="t-links"><a href="01-data-cloud/08-rag-on-platform/cheatsheet.md">cheat</a> · <a href="01-data-cloud/08-rag-on-platform/flashcards.md">cards</a></span></li>
+      </ul>
+    </section>
+
+    <section class="track sfai">
+      <h2>02 · Salesforce AI</h2>
+      <div class="cert">CERT: <a href="02-salesforce-ai/_cert-agentforce-specialist/exam-guide.md">AGENTFORCE SPECIALIST</a> · PHASE 03</div>
+      <ul>
+        <li><span class="t-name"><a href="02-salesforce-ai/01-landscape/notes.md">AI Landscape</a></span><span class="t-links"><a href="02-salesforce-ai/01-landscape/cheatsheet.md">cheat</a> · <a href="02-salesforce-ai/01-landscape/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="02-salesforce-ai/02-agentforce-anatomy/notes.md">Agentforce Anatomy</a></span><span class="t-links"><a href="02-salesforce-ai/02-agentforce-anatomy/cheatsheet.md">cheat</a> · <a href="02-salesforce-ai/02-agentforce-anatomy/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="02-salesforce-ai/03-prompt-builder/notes.md">Prompt Builder</a></span><span class="t-links"><a href="02-salesforce-ai/03-prompt-builder/cheatsheet.md">cheat</a> · <a href="02-salesforce-ai/03-prompt-builder/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="02-salesforce-ai/04-einstein-trust-layer/notes.md">Einstein Trust Layer</a></span><span class="t-links"><a href="02-salesforce-ai/04-einstein-trust-layer/cheatsheet.md">cheat</a> · <a href="02-salesforce-ai/04-einstein-trust-layer/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="02-salesforce-ai/05-custom-agent-actions/notes.md">Custom Agent Actions</a></span><span class="t-links"><a href="02-salesforce-ai/05-custom-agent-actions/cheatsheet.md">cheat</a> · <a href="02-salesforce-ai/05-custom-agent-actions/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="02-salesforce-ai/06-model-builder-byom/notes.md">Model Builder &amp; BYOM</a></span><span class="t-links"><a href="02-salesforce-ai/06-model-builder-byom/cheatsheet.md">cheat</a> · <a href="02-salesforce-ai/06-model-builder-byom/flashcards.md">cards</a></span></li>
+      </ul>
+    </section>
+
+    <section class="track cca">
+      <h2>03 · Claude / CCA</h2>
+      <div class="cert">CERT: <a href="03-claude-cca/_cert-cca-f/exam-guide.md">CCA-F</a> · PHASE 04 · % = EXAM WEIGHT</div>
+      <ul>
+        <li><span class="t-name"><a href="03-claude-cca/01-claude-api/notes.md">Claude API</a></span><span class="t-links"><a href="03-claude-cca/01-claude-api/cheatsheet.md">cheat</a> · <a href="03-claude-cca/01-claude-api/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="03-claude-cca/02-agentic-architecture/notes.md">Agentic Architecture · 27%</a></span><span class="t-links"><a href="03-claude-cca/02-agentic-architecture/cheatsheet.md">cheat</a> · <a href="03-claude-cca/02-agentic-architecture/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="03-claude-cca/03-claude-code/notes.md">Claude Code · 20%</a></span><span class="t-links"><a href="03-claude-cca/03-claude-code/cheatsheet.md">cheat</a> · <a href="03-claude-cca/03-claude-code/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="03-claude-cca/04-prompt-engineering/notes.md">Prompt Engineering · 20%</a></span><span class="t-links"><a href="03-claude-cca/04-prompt-engineering/cheatsheet.md">cheat</a> · <a href="03-claude-cca/04-prompt-engineering/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="03-claude-cca/05-mcp/notes.md">MCP · 18%</a></span><span class="t-links"><a href="03-claude-cca/05-mcp/cheatsheet.md">cheat</a> · <a href="03-claude-cca/05-mcp/flashcards.md">cards</a></span></li>
+        <li><span class="t-name"><a href="03-claude-cca/06-context-management/notes.md">Context Management · 15%</a></span><span class="t-links"><a href="03-claude-cca/06-context-management/cheatsheet.md">cheat</a> · <a href="03-claude-cca/06-context-management/flashcards.md">cards</a></span></li>
+      </ul>
+    </section>
+
+    <section class="track ship rowwide">
+      <h2>04 · Capstone — Ship Billable Work</h2>
+      <div class="cert">PHASE 05 · ONE SHIPPED PROJECT BEATS FIVE CERTIFICATES</div>
+      <ul>
+        <li><span class="t-name"><a href="04-capstone/01-mcp-server-salesforce/notes.md">MCP Server for Salesforce</a></span><span class="t-links"><a href="04-capstone/01-mcp-server-salesforce/resources.md">resources</a></span></li>
+        <li><span class="t-name"><a href="04-capstone/02-rag-assistant-crm/notes.md">RAG Assistant over CRM Data</a></span><span class="t-links"><a href="04-capstone/02-rag-assistant-crm/resources.md">resources</a></span></li>
+        <li><span class="t-name"><a href="04-capstone/03-agentforce-use-case/notes.md">End-to-End Agentforce Use Case</a></span><span class="t-links"><a href="04-capstone/03-agentforce-use-case/resources.md">resources</a></span></li>
+        <li><span class="t-name"><a href="04-capstone/04-writeup/notes.md">Write-up &amp; Internal Pitch</a></span><span class="t-links"><a href="04-capstone/04-writeup/resources.md">resources</a></span></li>
+      </ul>
+    </section>
+
+  </div>
+</main>
+
+<footer>STUDY BASE · GENERATED 2026-07 · REGENERATE ON REQUEST WHEN TOPICS ARE ADDED</footer>
+</body>
+</html>
