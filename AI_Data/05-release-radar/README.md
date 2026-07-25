@@ -1,0 +1,35 @@
+# 05-release-radar — Salesforce AI / Agentforce / Data 360 updates
+
+**What this is:** a running log of Salesforce technical updates worth knowing as an AI-Salesforce architect. Fed by the `daily-agentforce-updates` scheduled task. Organized **by topic**, with dated entries inside each file — so a topic reads as a story over time, not as a pile of daily digests.
+
+**How to read it:** skim `README.md` (this file) for the current state of play, then open the topic file that matters to what you're building. Each entry has a **Why it matters** line — that's the part to remember.
+
+## Topic files
+
+| File | Covers |
+|---|---|
+| [agentforce-platform.md](agentforce-platform.md) | Agentforce Builder, Agent Script, Multi-Agent Orchestration, Voice, mobile SDK, observability |
+| [data-360.md](data-360.md) | Data 360 (ex-Data Cloud): SOQL changes, Code Extension, Intelligent Context, semantic layer, zero-copy |
+| [developer-tooling-and-apis.md](developer-tooling-and-apis.md) | Hosted MCP servers, Headless 360, Apex/LWC changes, CLI, Agentforce Vibes, Agent Skills |
+| [trust-security-and-governance.md](trust-security-and-governance.md) | Einstein Trust Layer, user-mode defaults, SOAP login retirement, secrets handling |
+| [pricing-and-certification.md](pricing-and-certification.md) | Flex Credits, pay-per-resolution, Agentforce Specialist exam changes |
+
+## State of play — as of 2026-07-26
+
+Five things define the current Salesforce AI landscape. If you only retain five, retain these.
+
+1. **Headless 360 is the organizing theme of Summer '26.** Every major Salesforce capability is now reachable as an API, an MCP tool, or a CLI command — by a human, an app, or an autonomous agent. Salesforce-hosted MCP servers are GA.
+2. **Agent Script + the new Agentforce Builder are GA**, and from the week of **July 13, 2026** the *New Agent* button no longer opens the legacy builder. Agent Script is also **open source** (Apache 2.0). Learning it is no longer optional.
+3. **Data Cloud is positioned as "Data 360"** and reframed from a CDP/warehouse into the *context engine* that grounds agents. Its developer surface grew a lot: `SET OPTIONS` in SOQL, Python Code Extensions, a Data 360 MCP server.
+4. **Security defaults flipped.** At API 67.0, Apex DML/SOQL run in **user mode** by default and classes default to **`with sharing`**. `WITH SECURITY_ENFORCED` no longer compiles. Expect real migration work in older codebases.
+5. **Commercials moved to consumption.** Flex Credits (~$500 / 100k credits) is the recommended model, and the new Help Agent introduced **pay-per-resolution** — you're billed on outcomes, not conversations.
+
+## Open questions to chase
+
+- Does "Data 360" have a formal SKU/licence rename yet, or is it still positioning language over "Data Cloud"? Sources disagree — check the Salesforce price book, not blogs.
+- Winter '27 release notes aren't public yet; Release Update *enforcement* starts September 2026. Watch what gets enforced.
+- Agent Script coverage in the Agentforce Specialist exam — the exam restructured in Spring '26 but the mapping to Agent Script is not explicit in the exam guide.
+
+---
+
+_Last updated: 2026-07-26 · Sources are linked inline in each topic file._
