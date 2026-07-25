@@ -11,6 +11,7 @@ Companion folder to [ai-salesforce-architect-roadmap.html](ai-salesforce-archite
 | [02-salesforce-ai/](02-salesforce-ai/INDEX.md) | Agentforce, Prompt Builder, Trust Layer → **Agentforce Specialist** cert |
 | [03-claude-cca/](03-claude-cca/INDEX.md) | Claude API, agents, MCP, Claude Code → **CCA-F** cert |
 | [04-capstone/](04-capstone/INDEX.md) | The shipped proof: MCP server, RAG assistant, Agentforce build |
+| [05-release-radar/](05-release-radar/README.md) | Running log of Salesforce AI / Agentforce / Data 360 updates worth knowing |
 | [99-inbox/](99-inbox/INBOX.md) | Capture anything new before it has a home |
 | [journal/](journal/) | Weekly learning log |
 | [GLOSSARY.md](GLOSSARY.md) | All 77 terms, greppable |
