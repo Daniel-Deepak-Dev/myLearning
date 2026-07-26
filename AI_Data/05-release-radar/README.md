@@ -1,10 +1,23 @@
 # 05-release-radar — Salesforce AI / Agentforce / Data 360 updates
 
-**What this is:** a running log of Salesforce technical updates worth knowing as an AI-Salesforce architect. Fed by the `daily-agentforce-updates` scheduled task. Organized **by topic**, with dated entries inside each file — so a topic reads as a story over time, not as a pile of daily digests.
+**What this is:** a running log of Salesforce technical updates worth knowing as an AI-Salesforce architect. Fed by the `daily-agentforce-updates` scheduled task.
 
-**How to read it:** skim `README.md` (this file) for the current state of play, then open the topic file that matters to what you're building. Each entry has a **Why it matters** line — that's the part to remember.
+**How it's organized — two layers.**
 
-## Topic files
+- **Dated scan notes** live in three **area folders** — [`01-agentforce/`](01-agentforce/), [`02-data-cloud/`](02-data-cloud/), [`03-salesforce-ai-research/`](03-salesforce-ai-research/). One `YYYY-MM-DD.md` per area per scan: table of contents, entries ordered most-consequential-first, a `**Status:**` line and per-entry `**Sources:**` on each. When a scan finds nothing, the note says so explicitly — a quiet day should read as a quiet day, not as a missed scan.
+- **Topic files** sit at the root of this folder and hold the *running story* — dated entries newest-first, so a topic reads as a narrative over time. They stay at the root deliberately: most of them cut across areas (developer tooling covers both Agentforce and Data 360; pricing covers both), so filing them under one area would lose information.
+
+**How to read it:** skim this README for the current state of play → open the newest dated note in the area you care about → drop into the topic file when you want the history. Every entry carries a **Why it matters** line; that's the part to remember.
+
+## Areas — dated scan notes
+
+| Folder | Covers | Latest |
+|---|---|---|
+| [01-agentforce/](01-agentforce/) | Agentforce platform, builder and Agent Script, developer tooling, governance, pricing | [2026-07-26](01-agentforce/2026-07-26.md) |
+| [02-data-cloud/](02-data-cloud/) | Data 360 (ex-Data Cloud): ingestion, modeling, grounding, zero-copy, semantic layer | [2026-07-26](02-data-cloud/2026-07-26.md) |
+| [03-salesforce-ai-research/](03-salesforce-ai-research/) | Salesforce AI Research: benchmarks (CRMArena, SCUBA, GIFT-Eval), open models, agent-lifecycle tooling | [2026-07-26](03-salesforce-ai-research/2026-07-26.md) |
+
+## Topic files — the running story
 
 | File | Covers |
 |---|---|
@@ -23,6 +36,8 @@ Five things define the current Salesforce AI landscape. If you only retain five,
 3. **Data Cloud is now Data 360** — a real rename (SKUs, release notes and the consultant cert all use it), and a reframing from CDP/warehouse into the *context engine* that grounds agents. Its developer surface grew a lot: `SET OPTIONS` in SOQL, Python Code Extensions, a Data 360 MCP server.
 4. **Security defaults flipped.** At API 67.0, Apex DML/SOQL run in **user mode** by default and classes default to **`with sharing`**. `WITH SECURITY_ENFORCED` no longer compiles. Expect real migration work in older codebases.
 5. **Commercials moved to consumption.** Flex Credits ($500 / 100k credits, ~$0.10 per action) is the recommended model, and the new Help Agent introduced **pay-per-resolution** at $2 per autonomous resolution — billed on outcomes, with consumption unmetered during the interaction.
+
+**Newest additions (scan of 2026-07-26):** Salesforce AI Research is shipping [`agentforce-adlc`](https://github.com/SalesforceAIResearch/agentforce-adlc) — Claude Code skills covering the whole agent lifecycle in Agent Script, with voice support merged July 23 — and the **Headless 360 MCP Server** hit Beta with ~100 admin-facing *skills* rather than thousands of flat tools. On July 24 the VA awarded Salesforce a **$1.6B "Agentic Enterprise License Agreement"**, a third commercial model alongside Flex Credits and pay-per-resolution.
 
 ## Open questions to chase
 
