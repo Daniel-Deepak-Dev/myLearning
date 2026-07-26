@@ -2,30 +2,22 @@
 
 **What this is:** a running log of Salesforce technical updates worth knowing as an AI-Salesforce architect. Fed by the `daily-agentforce-updates` scheduled task.
 
-**How it's organized — two layers.**
+**How it's organized.** **Topic files** are the knowledge — each one reads as a story about a subject, newest entry at top, revised when something supersedes it. [CHANGELOG.md](CHANGELOG.md) is the dated index: one line per finding, pointing at the entry. The date is metadata, not the filing system.
 
-- **Dated scan notes** live in three **area folders** — [`01-agentforce/`](01-agentforce/), [`02-data-cloud/`](02-data-cloud/), [`03-salesforce-ai-research/`](03-salesforce-ai-research/). One `YYYY-MM-DD.md` per area per scan: table of contents, entries ordered most-consequential-first, a `**Status:**` line and per-entry `**Sources:**` on each. When a scan finds nothing, the note says so explicitly — a quiet day should read as a quiet day, not as a missed scan.
-- **Topic files** sit at the root of this folder and hold the *running story* — dated entries newest-first, so a topic reads as a narrative over time. They stay at the root deliberately: most of them cut across areas (developer tooling covers both Agentforce and Data 360; pricing covers both), so filing them under one area would lose information.
+**Every entry carries:** what changed → **how you actually use it** (click path, endpoint, CLI command, metadata type, permission set) → **the trap** that would cost you an afternoon → why it matters → `**Status:**` → `**Study action:**` → `**Sources:**`. If an entry has no mechanism and no trap, it didn't clear the bar and shouldn't be here.
 
-**How to read it:** skim this README for the current state of play → open the newest dated note in the area you care about → drop into the topic file when you want the history. Every entry carries a **Why it matters** line; that's the part to remember.
+**How to read it:** skim this README for the current state of play → open the topic file that matters to what you're building. Scan [CHANGELOG.md](CHANGELOG.md) when you want to know what's new since you last looked.
 
-## Areas — dated scan notes
-
-| Folder | Covers | Latest |
-|---|---|---|
-| [01-agentforce/](01-agentforce/) | Agentforce platform, builder and Agent Script, developer tooling, governance, pricing | [2026-07-26](01-agentforce/2026-07-26.md) |
-| [02-data-cloud/](02-data-cloud/) | Data 360 (ex-Data Cloud): ingestion, modeling, grounding, zero-copy, semantic layer | [2026-07-26](02-data-cloud/2026-07-26.md) |
-| [03-salesforce-ai-research/](03-salesforce-ai-research/) | Salesforce AI Research: benchmarks (CRMArena, SCUBA, GIFT-Eval), open models, agent-lifecycle tooling | [2026-07-26](03-salesforce-ai-research/2026-07-26.md) |
-
-## Topic files — the running story
+## Topic files
 
 | File | Covers |
 |---|---|
 | [agentforce-platform.md](agentforce-platform.md) | Agentforce Builder, Agent Script, Multi-Agent Orchestration, Voice, mobile SDK, observability |
-| [data-360.md](data-360.md) | Data 360 (ex-Data Cloud): SOQL changes, Code Extension, Intelligent Context, semantic layer, zero-copy |
-| [developer-tooling-and-apis.md](developer-tooling-and-apis.md) | Hosted MCP servers, Headless 360, Apex/LWC changes, CLI, Agentforce Vibes, Agent Skills |
+| [data-360.md](data-360.md) | Data 360 (ex-Data Cloud): SOQL changes, Code Extension, ingestion monitoring, Intelligent Context, semantic layer, zero-copy |
+| [developer-tooling-and-apis.md](developer-tooling-and-apis.md) | Hosted MCP servers, Headless 360, Agentforce ADLC skills, Apex/LWC changes, CLI, Agentforce Vibes |
 | [trust-security-and-governance.md](trust-security-and-governance.md) | Einstein Trust Layer, user-mode defaults, SOAP login retirement, secrets handling |
-| [pricing-and-certification.md](pricing-and-certification.md) | Flex Credits, pay-per-resolution, Agentforce Specialist exam changes |
+| [pricing-and-certification.md](pricing-and-certification.md) | Flex Credits, pay-per-resolution, Agentic ELA, Agentforce Specialist exam changes |
+| [ai-research-and-benchmarks.md](ai-research-and-benchmarks.md) | Salesforce AI Research: CRMArena-Pro, SCUBA, GIFT-Eval — what agents measurably can't do yet |
 
 ## State of play — as of 2026-07-26
 
@@ -37,7 +29,7 @@ Five things define the current Salesforce AI landscape. If you only retain five,
 4. **Security defaults flipped.** At API 67.0, Apex DML/SOQL run in **user mode** by default and classes default to **`with sharing`**. `WITH SECURITY_ENFORCED` no longer compiles. Expect real migration work in older codebases.
 5. **Commercials moved to consumption.** Flex Credits ($500 / 100k credits, ~$0.10 per action) is the recommended model, and the new Help Agent introduced **pay-per-resolution** at $2 per autonomous resolution — billed on outcomes, with consumption unmetered during the interaction.
 
-**Newest additions (scan of 2026-07-26):** Salesforce AI Research is shipping [`agentforce-adlc`](https://github.com/SalesforceAIResearch/agentforce-adlc) — Claude Code skills covering the whole agent lifecycle in Agent Script, with voice support merged July 23 — and the **Headless 360 MCP Server** hit Beta with ~100 admin-facing *skills* rather than thousands of flat tools. On July 24 the VA awarded Salesforce a **$1.6B "Agentic Enterprise License Agreement"**, a third commercial model alongside Flex Credits and pay-per-resolution.
+Three things to add to that picture, from 2026-07-26: [`agentforce-adlc`](developer-tooling-and-apis.md) gives you Claude Code skills for the whole agent lifecycle, and it encodes Agent Script's real authoring rules (4-space indent, Python-style `True`/`False`, `developer_name` must match the bundle folder). The **Agentic ELA** is now a third commercial model alongside Flex Credits and pay-per-resolution, and it inverts what you optimize for. And [CRMArena-Pro](ai-research-and-benchmarks.md) puts a peer-reviewed number on the ceiling: ~83% on structured single-turn CRM tasks, sharply worse multi-turn, near-blind to confidentiality unless prompted.
 
 ## Open questions to chase
 

@@ -4,6 +4,67 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-07-26 · Agentforce ADLC — Claude Code skills for the whole agent lifecycle
+
+[`agentforce-adlc`](https://github.com/SalesforceAIResearch/agentforce-adlc) from Salesforce AI Research is a set of **Claude Code skills** that author, deploy, test and optimize Agentforce agents in [Agent Script](agentforce-platform.md). "ADLC" is Agent Development Life Cycle — their term for the SDLC when the artifact is an agent.
+
+**Install it (plugin route, recommended):**
+
+```bash
+claude plugin marketplace add SalesforceAIResearch/agentforce-adlc
+claude plugin install agentforce-adlc@agentforce-adlc
+```
+
+Or point Claude Code at a clone: `git clone …/agentforce-adlc.git && claude --plugin-dir ./agentforce-adlc`. For Cursor, `python3 tools/install.py --target cursor`.
+
+Prerequisites: **Python 3.9+**, **Salesforce CLI v2.x** (`sf`), an Agentforce-enabled org.
+
+**The four skills:**
+
+| Skill | Covers |
+|---|---|
+| `/agentforce-generate` | Author `.agent` files, discover existing Flow/Apex/Retriever targets in the org, scaffold stubs for what's missing (Flow XML, Apex, permission sets), deploy, safety review |
+| `/agentforce-test` | Preview sessions, batch tests, real action execution, auto-generated adversarial probes |
+| `/agentforce-observe` | Pull STDM production traces, reproduce the issue, propose fixes |
+| `/agentforce-secure` | OWASP LLM Top 10 assessment of the agent |
+
+**Gotcha — skills are namespaced when installed as a plugin.** It's `/agentforce-adlc:agentforce-generate`, not `/agentforce-generate`. The bare names only work on a file-copy install. Old names (`/developing-agentforce`, `/adlc-author`) still alias to the new ones.
+
+**Four Agent Script authoring rules the tool enforces** — worth memorizing whether or not you use the skills, because they're properties of the language:
+
+- Indent with **4 spaces**; never mix tabs and spaces.
+- Booleans are **Python-style**: `True` / `False`, not `true` / `false`.
+- Variables are declared **`mutable`** (read-write) or **`linked`** (bound to something external).
+- **`developer_name` must match the folder name** under `aiAuthoringBundles/`. Mismatch is a deploy-time failure, not an authoring-time one.
+
+**Safety is a gate, not a report.** Review runs at four points: before authoring starts (Phase 0), before publishing to any org, as adversarial probes generated during testing, and against production traces. Seven categories: identity/transparency, user safety, data privacy, content safety, fairness, deception prevention, scope boundaries.
+
+**Voice is supported** as of July 2026 — `VoiceCallId`, connection blocks and default voice behaviours are first-class in the generated scripts, so a voice agent can be authored and tested from code rather than assembled by hand in the builder.
+
+**Licence: CC BY-NC 4.0 — non-commercial.** This is *not* the Apache-2.0 that Agent Script itself carries. Read it before using this on client work; it's the single most important line in the repo.
+
+**Why it matters.** It's the first coherent answer to "what does the SDLC look like when the artifact is an agent" — and it's built on Claude Code skills, so it sits directly on the seam between the Agentforce track and the CCA-F track. Even if you never adopt the skills, the *shape* of the lifecycle (safety gate → deploy → adversarial test → trace analysis → optimize) is the thing to steal.
+
+**Study action:** install the plugin against a Dev org, run `/agentforce-adlc:agentforce-generate` on a small order-status agent, then read the generated `.agent` file line by line — that file is the fastest Agent Script tutorial available.
+
+---
+
+## 2026-07-26 · Headless 360 MCP Server (Beta) — skills, not tools
+
+The [Headless 360 MCP Server](https://developer.salesforce.com/blogs/2026/07/announcing-the-headless-360-mcp-server-beta) went **Beta in early July 2026**, on top of the hosted MCP servers that reached GA in April.
+
+**The design decision is the lesson.** Salesforce did not expose each platform feature as its own MCP tool — thousands of flat tool descriptions would force the model to reason over the whole list before acting, burning context and latency on every call. Instead the Beta ships roughly **100 coarse "skills"**: task-shaped units rather than API-shaped ones. Same instinct as the Data 360 MCP server's three facade tools, applied platform-wide.
+
+At launch the majority are **Setup operations for admins** — effectively Agentforce for Setup, reachable by any headless MCP client. User administration is the fully-covered path: create, deactivate, freeze/unfreeze, reset or set passwords, assign permission sets and permission set licences. Salesforce says cloud-specific business skills follow during Beta.
+
+**The governance trap.** "An agent can reset passwords and assign permission sets" is a privilege-escalation surface, not a productivity feature. Whatever identity the MCP connection runs as needs the same review you'd give a human admin with those rights — and unlike a human, it acts without a session you can watch.
+
+**Why it matters.** If you build your own MCP servers, tool-count discipline is the constraint that decides whether the thing works at all. This is the reference implementation of the pattern at scale.
+
+**Study action:** connect Claude to the Headless 360 server in a Dev org, ask it to freeze a test user, and read the resulting audit trail — that tells you what the governance story actually looks like.
+
+---
+
 ## 2026-07-26 · Headless 360 — the organizing idea of Summer '26
 
 [Headless 360](https://developer.salesforce.com/blogs/2026/05/headless-360-what-it-means-for-developers) makes every major Salesforce capability available as an **API, an MCP tool, or a CLI command**, accessible to any authenticated caller — an app, a human, or an autonomous AI agent.

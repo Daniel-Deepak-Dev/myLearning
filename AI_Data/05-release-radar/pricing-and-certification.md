@@ -53,6 +53,24 @@ Deflection rates are heavily domain-dependent; use these as ceilings, not foreca
 
 ---
 
+## 2026-07-26 · Agentic Enterprise License Agreement — a third commercial model
+
+A third way to buy Agentforce has appeared alongside Flex Credits and pay-per-resolution: the **Agentic Enterprise License Agreement (ELA)** — an enterprise-wide agent licence for a fixed term, rather than metering actions or outcomes. Public terms so far come from large public-sector agreements, structured as a **one-year base with option years** and a spending ceiling rather than a fixed price.
+
+**Why it matters for design, not just procurement.** Under Flex Credits, agent architecture has direct unit economics — an orchestrator routing through three subagents costs three times a direct hit, so chatty grounding loops cost real money. Under an ELA that pressure largely disappears within the term, which changes what a defensible design looks like: breadth of deployment starts to matter more than per-conversation efficiency. Know which model a client is on **before** you optimize anything, because the two push architecture in opposite directions.
+
+**The three models, side by side:**
+
+| Model | Billed on | Optimize for |
+|---|---|---|
+| Flex Credits | Actions (~$0.10 each) | Fewer actions per resolution |
+| Pay-per-resolution | Autonomous resolutions ($2) | Grounding quality — unresolved earns nothing |
+| Agentic ELA | Fixed term, enterprise-wide | Adoption breadth within the term |
+
+**Status:** In market — observed in enterprise and public-sector agreements from mid-2026. Not a published list-price SKU; treat terms as negotiated and verify against a current quote.
+
+---
+
 ## 2026-07-26 · Agentforce Specialist certification restructured
 
 The exam was **significantly restructured in the Summer '25-aligned revision** (announced October 2025) and redesigned around how agents think, interact and collaborate — away from the older emphasis on configuration and prompt building.

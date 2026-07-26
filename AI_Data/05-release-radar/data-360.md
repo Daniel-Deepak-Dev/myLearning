@@ -16,6 +16,36 @@ Salesforce began calling Data Cloud **"Data 360"** at Dreamforce 2025 (Oct 14, 2
 
 ---
 
+## 2026-07-26 · Problem Records DLOs — failed ingestion rows stop vanishing
+
+Rows that fail ingestion used to be **dropped silently**. Data 360 now captures them into a dedicated **Problem Records** Data Lake Object instead, so a failed row is queryable rather than merely absent.
+
+**How you use it.** Query the Problem Records DLO after every ingestion run and put it on a monitoring dashboard — treat it as a standing check, not an incident-only tool. The older path (data stream → **Refresh History** tab → click the error → download the error file) still exists and is still the quickest way to see *why* a specific stream failed; Problem Records is what gives you the failed rows themselves. *(The exact DLO API name isn't stated in the sources I could reach — confirm it in your own org's Data Lake Objects list before scripting against it.)*
+
+**The trap this closes.** Silent data loss produces no error — it produces a **confident, wrong answer**. An agent grounded on Data 360 cannot distinguish "no matching record exists" from "that record failed to ingest last Tuesday," and it will assert the former. Before you let an agent answer customers from a DLO, you need to know the ingestion is complete, and until now there was no cheap way to know that.
+
+**Why it matters.** This is the difference between a correctness problem you can see and one you can't. Permission gaps on the source object are the usual cause of CRM stream failures, which means the failure mode is systematic — whole slices of data missing, not scattered rows.
+
+**Status:** GA — Summer '26, listed under June 2026 in the Data 360 monthly release notes.
+
+**Study action:** break an ingestion deliberately in a Dev org (remove field-level read on a mapped field), run the stream, and find the rows in Problem Records. Knowing what a failure looks like is worth more than knowing the feature exists.
+
+---
+
+## 2026-07-26 · Result Reuse for Data 360 Live, and currency reporting
+
+**Result Reuse for Data 360 Live** caches query results instead of recomputing them for every viewer and refresh. "Data 360 Live" is the read-time federation mode — the zero-copy path that queries the source system rather than serving from an ingested copy.
+
+**The trade-off it changes.** Zero-copy swaps storage cost and freshness lag for query cost and latency; the standard objection is "every dashboard load hits the warehouse and costs money and seconds." Result Reuse blunts the latency and cost side, which makes zero-copy defensible for more workloads rather than a niche choice.
+
+**The trap.** A reused result is by definition **not live**. Check the freshness semantics before you rely on it, and for anything grounding an agent, decide explicitly how stale an answer is allowed to be — that's a design decision, not a detail. A dashboard tolerating five-minute-old data is normal; an agent quoting an account balance may not.
+
+**Also shipped:** **Currency Reporting in Data 360**, for correct multi-currency roll-ups.
+
+**Status:** GA — Summer '26, listed under June 2026.
+
+---
+
 ## 2026-07-26 · `SET OPTIONS` clause in SOQL
 
 A new [`SET OPTIONS` clause](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_set_options.htm) lets SOQL queries specify a Data 360 **dataspace** and control `NULL` / empty-string handling. The clause goes at the **very end** of the query.
