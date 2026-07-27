@@ -13,9 +13,9 @@
 
 | Folder | Covers | Latest |
 |---|---|---|
-| [01-agentforce/](01-agentforce/) | Agentforce platform, builder and Agent Script, developer tooling, governance, pricing | [2026-07-26](01-agentforce/2026-07-26.md) |
-| [02-data-cloud/](02-data-cloud/) | Data 360 (ex-Data Cloud): ingestion, modeling, grounding, zero-copy, semantic layer | [2026-07-26](02-data-cloud/2026-07-26.md) |
-| [03-salesforce-ai-research/](03-salesforce-ai-research/) | Salesforce AI Research: benchmarks (CRMArena, SCUBA, GIFT-Eval), open models, agent-lifecycle tooling | [2026-07-26](03-salesforce-ai-research/2026-07-26.md) |
+| [01-agentforce/](01-agentforce/) | Agentforce platform, builder and Agent Script, developer tooling, governance, pricing | [2026-07-27](01-agentforce/2026-07-27.md) · [2026-07-26](01-agentforce/2026-07-26.md) |
+| [02-data-cloud/](02-data-cloud/) | Data 360 (ex-Data Cloud): ingestion, modeling, grounding, zero-copy, semantic layer | [2026-07-27](02-data-cloud/2026-07-27.md) · [2026-07-26](02-data-cloud/2026-07-26.md) |
+| [03-salesforce-ai-research/](03-salesforce-ai-research/) | Salesforce AI Research: benchmarks (CRMArena, SCUBA, GIFT-Eval), open models, agent-lifecycle tooling | [2026-07-27](03-salesforce-ai-research/2026-07-27.md) · [2026-07-26](03-salesforce-ai-research/2026-07-26.md) |
 
 ## Topic files — the running story
 
@@ -27,7 +27,7 @@
 | [trust-security-and-governance.md](trust-security-and-governance.md) | Einstein Trust Layer, user-mode defaults, SOAP login retirement, secrets handling |
 | [pricing-and-certification.md](pricing-and-certification.md) | Flex Credits, pay-per-resolution, Agentforce Specialist exam changes |
 
-## State of play — as of 2026-07-26
+## State of play — as of 2026-07-27
 
 Five things define the current Salesforce AI landscape. If you only retain five, retain these.
 
@@ -37,7 +37,9 @@ Five things define the current Salesforce AI landscape. If you only retain five,
 4. **Security defaults flipped.** At API 67.0, Apex DML/SOQL run in **user mode** by default and classes default to **`with sharing`**. `WITH SECURITY_ENFORCED` no longer compiles. Expect real migration work in older codebases.
 5. **Commercials moved to consumption.** Flex Credits ($500 / 100k credits, ~$0.10 per action) is the recommended model, and the new Help Agent introduced **pay-per-resolution** at $2 per autonomous resolution — billed on outcomes, with consumption unmetered during the interaction.
 
-**Newest additions (scan of 2026-07-26):** Salesforce AI Research is shipping [`agentforce-adlc`](https://github.com/SalesforceAIResearch/agentforce-adlc) — Claude Code skills covering the whole agent lifecycle in Agent Script, with voice support merged July 23 — and the **Headless 360 MCP Server** hit Beta with ~100 admin-facing *skills* rather than thousands of flat tools. On July 24 the VA awarded Salesforce a **$1.6B "Agentic Enterprise License Agreement"**, a third commercial model alongside Flex Credits and pay-per-resolution.
+**Newest additions (scan of 2026-07-27):** the 24-hour window was empty and the 72-hour window produced nothing beyond the previous scan, so this scan went after **verified gaps** instead. Four of them matter. **Agentforce Commerce went GA on July 6, 2026** — Shopper, Buyer and Merchant agents, with **native ChatGPT selling** (catalogue synced straight from Business Manager, checkout kept on the merchant's own site). **Data 360 pricing was rebuilt on March 2, 2026** around a **profile-based SKU (~$240 per 1,000 profiles)**, with Data 360 folded into the **shared Flex Credits pool** and Tableau usage un-metered — which makes identity-resolution quality a direct cost lever. **Multi-Agent Orchestration is GA (June 15, 2026), not Beta** — the radar had it wrong, now corrected, and **Atlas Reasoning Engine 3.0 routes on subagent descriptions**, making that field executable configuration. And Salesforce AI Research was genuinely **silent July 24–27**: `agentforce-adlc` has had no commits since July 24.
+
+**Previous additions (scan of 2026-07-26):** Salesforce AI Research is shipping [`agentforce-adlc`](https://github.com/SalesforceAIResearch/agentforce-adlc) — Claude Code skills covering the whole agent lifecycle in Agent Script, with voice support merged July 23 — and the **Headless 360 MCP Server** hit Beta with ~100 admin-facing *skills* rather than thousands of flat tools. On July 24 the VA awarded Salesforce a **$1.6B "Agentic Enterprise License Agreement"**, a third commercial model alongside Flex Credits and pay-per-resolution.
 
 ## Open questions to chase
 
@@ -48,4 +50,4 @@ Five things define the current Salesforce AI landscape. If you only retain five,
 
 ---
 
-_Last updated: 2026-07-26 · Sources are linked inline in each topic file._
+_Last updated: 2026-07-27 · Sources are linked inline in each topic file._

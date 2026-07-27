@@ -29,6 +29,24 @@ Flex Credits covers **every** Agentforce use case — customer-facing agents, em
 
 ---
 
+## 2026-07-27 · Data 360 pricing — profiles, pooled credits, free Tableau
+
+_Effective **March 2, 2026**. Added on 2026-07-27 as a gap-fill; see [02-data-cloud/2026-07-27.md](02-data-cloud/2026-07-27.md) for the full write-up._
+
+| Change | Detail |
+|---|---|
+| **Profile-based SKU** | **~$240 per 1,000 profiles** (baseline) · **~$420 per 1,000** (premium) — bundles essential Data 360 actions into a flat per-profile cost |
+| **Data 360 joins Flex Credits** | Data 360 and Agentforce consumption now draw from **one pooled, fungible credit balance** |
+| **Tableau usage un-metered** | Querying Data 360 from Tableau no longer burns credits |
+
+A "profile" is a **unified individual after identity resolution**, not a raw source row — so you are billed on the *output* of your identity-resolution ruleset.
+
+**Why it changes design, not just the invoice.** Credit metering rewarded processing less. Profile pricing rewards **resolving fewer, better profiles** — duplicates and under-matches now inflate a recurring bill directly, which puts money behind identity-resolution quality for the first time. Credit pooling removes the "is this the data team's cost or the AI team's cost?" argument that stalls grounding projects. Tableau un-metering is a deliberate nudge toward using Data 360 as the reporting substrate.
+
+Verify against a live quote before any commercial use — public list pricing moves and varies by region.
+
+---
+
 ## 2026-07-26 · Pay-per-resolution (Agentforce Help Agent)
 
 The new prepackaged Help Agent, GA July '26, introduces **pay-per-resolution** pricing — billed on outcomes rather than actions or conversations.
