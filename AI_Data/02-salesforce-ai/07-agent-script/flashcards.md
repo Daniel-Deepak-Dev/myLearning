@@ -1,0 +1,41 @@
+# Agent Script — Flashcards
+
+<!-- Strict format: one "Q:" line, then "A:" line(s), blank line between cards.
+     Keep it strict — this file is scriptable into Anki (Q/A = front/back).
+     Cover the A, answer out loud, then check. Add cards as you learn. -->
+
+Q: What is Agent Script?
+A: A human-readable expression language for defining Agentforce agents that compiles to portable JSON, blending deterministic control flow with agentic LLM reasoning.
+
+Q: What licence is Agent Script released under, and what ships with it?
+A: Apache 2.0 — the parser, linter, compiler, Language Server Protocol implementation and editor integrations, at github.com/salesforce/agentscript.
+
+Q: What is Hybrid Reasoning?
+A: The Agent Script design point — dialling, per decision point, how much is structured business logic and how much is left to the model.
+
+Q: Name the four things that follow from agents compiling to JSON.
+A: Diffs and PR review; linting and testing in a plain CI job with no org connection; portability to third-party harnesses; and model pinning declared alongside the logic.
+
+Q: Why was the topic-and-instruction model replaced?
+A: Behaviour lived in natural-language prose: contradictions were silent, nothing compiled, there was no meaningful diff, nothing was testable outside an org, and reliability problems were untraceable because there was no artifact to trace.
+
+Q: What is the strongest strategic signal in Agent Script being open source?
+A: That Salesforce wants agent logic to be portable rather than org-locked — third parties can already execute compiled Agent Script under harnesses like Pydantic AI.
+
+Q: What does the one-click legacy upgrade do, and what must you do afterwards?
+A: It converts all subagents, actions, system messages, data and connections into Agent Script, then optionally optimizes for reliability. Afterwards, diff the two behaviours in preview — the optimize step can change behaviour.
+
+Q: Does a definition that compiles cleanly behave correctly?
+A: No. The compiler validates structure, not judgement. Behaviour is verified with evaluations and Custom Scorers.
+
+Q: What is the limit on Agent Script portability?
+A: The compiled JSON is portable, but the actions it invokes are still org-bound Apex and Flows. Don't oversell "runs anywhere".
+
+Q: Which CLI commands drive an agent preview session?
+A: `sf agent preview start`, `send`, `sessions`, `end` — GA — plus trace files showing exactly how the agent routed and acted.
+
+Q: What is the confirmed date fact about Agent Script's rollout?
+A: The week of July 13, 2026, the *New Agent* button stopped opening the legacy builder. The exact GA date is not pinned by any first-party announcement.
+
+Q: Is Agent Script on the Agentforce Specialist exam?
+A: It isn't named in the exam guide despite being the default authoring model since July 2026. Given the guide's emphasis on deterministic behaviour, filters and variables, assume implicit scope and re-check before booking.

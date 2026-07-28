@@ -7,15 +7,24 @@ Companion folder to [ai-salesforce-architect-roadmap.html](ai-salesforce-archite
 | Folder | Track |
 |---|---|
 | [00-core-skills/](00-core-skills/INDEX.md) | SQL, Python, AI theory, data engineering |
-| [01-data-cloud/](01-data-cloud/INDEX.md) | Data Cloud → **Data Cloud Consultant** cert |
-| [02-salesforce-ai/](02-salesforce-ai/INDEX.md) | Agentforce, Prompt Builder, Trust Layer → **Agentforce Specialist** cert |
+| [01-data-cloud/](01-data-cloud/INDEX.md) | **Data 360** (ex-Data Cloud) → **Data 360 Consultant** cert |
+| [02-salesforce-ai/](02-salesforce-ai/INDEX.md) | Agentforce, Agent Script, Trust Layer, orchestration → **Agentforce Specialist** cert |
 | [03-claude-cca/](03-claude-cca/INDEX.md) | Claude API, agents, MCP, Claude Code → **CCA-F** cert |
 | [04-capstone/](04-capstone/INDEX.md) | The shipped proof: MCP server, RAG assistant, Agentforce build |
 | [05-release-radar/](05-release-radar/README.md) | Running log of Salesforce AI updates, in three areas: `01-agentforce/`, `02-data-cloud/`, `03-salesforce-ai-research/` |
 | [99-inbox/](99-inbox/INBOX.md) | Capture anything new before it has a home |
 | [journal/](journal/) | Weekly learning log |
-| [GLOSSARY.md](GLOSSARY.md) | All 77 terms, greppable |
+| [GLOSSARY.md](GLOSSARY.md) | All 106 terms, greppable, marked for currency |
 | [dashboard.html](dashboard.html) | Visual master index (open in browser) |
+
+## Currency
+
+Content is current to **Summer '26 (API 67.0)** as of **2026-07-28**. Two things changed structurally since this base was first laid out, and both trip up anyone studying from older material:
+
+- **Data Cloud → Data 360.** A real rename — SKUs, release notes and the certification all use it. Folder paths keep the old name so links don't break; the content doesn't.
+- **Agent Script replaced topics-and-instructions.** Since the week of **July 13, 2026** the *New Agent* button no longer opens the legacy builder. Most tutorials online still teach the retired model — check publication dates.
+
+[05-release-radar/](05-release-radar/README.md) is the source of truth for what's changed; topic folders link back into it rather than duplicating the detail.
 
 ## The layers — how to use each file
 

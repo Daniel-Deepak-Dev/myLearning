@@ -2,6 +2,8 @@
 
 The roadmap runs in 5 phases over 26 weeks; this folder is organized by track. This file is the bridge: what to open, in what order. Check items off in [the roadmap HTML](ai-salesforce-architect-roadmap.html) as you go.
 
+> **Currency: Summer '26 (API 67.0).** Content was brought current on 2026-07-28. Two structural changes since the roadmap was written: **Data Cloud is now Data 360**, and agents are authored in **Agent Script**, not topics — which added four topic folders (marked 🆕 below). Running updates: [05-release-radar/](05-release-radar/README.md).
+
 ## Phase 01 · Weeks 1–4 — Foundations & Landscape
 *Build the mental map before the deep dives.*
 
@@ -9,7 +11,7 @@ The roadmap runs in 5 phases over 26 weeks; this folder is organized by track. T
 |---|---|
 | SQL fluency refresh | [00-core-skills/01-sql](00-core-skills/01-sql/notes.md) |
 | Python for data work | [00-core-skills/02-python-for-data](00-core-skills/02-python-for-data/notes.md) |
-| Data Cloud orientation | [01-data-cloud/01-orientation](01-data-cloud/01-orientation/notes.md) |
+| Data 360 orientation | [01-data-cloud/01-orientation](01-data-cloud/01-orientation/notes.md) |
 | Ingestion basics | [01-data-cloud/02-ingestion](01-data-cloud/02-ingestion/notes.md) |
 | Salesforce AI landscape | [02-salesforce-ai/01-landscape](02-salesforce-ai/01-landscape/notes.md) |
 | Claude API first calls | [03-claude-cca/01-claude-api](03-claude-cca/01-claude-api/notes.md) |
@@ -17,7 +19,7 @@ The roadmap runs in 5 phases over 26 weeks; this folder is organized by track. T
 
 **Milestone:** Trailhead badges Data Cloud Basics + Agentforce Basics · first Claude API script in a personal repo.
 
-## Phase 02 · Weeks 5–8 — Data Cloud Depth
+## Phase 02 · Weeks 5–8 — Data 360 Depth
 *Own the data layer — it's what makes the AI work trustworthy later.*
 
 | Roadmap item | Study folder |
@@ -27,9 +29,10 @@ The roadmap runs in 5 phases over 26 weeks; this folder is organized by track. T
 | Calculated insights & segmentation | [01-data-cloud/05-insights-segmentation](01-data-cloud/05-insights-segmentation/notes.md) |
 | Zero copy & BYOL federation | [01-data-cloud/06-zero-copy-byol](01-data-cloud/06-zero-copy-byol/notes.md) |
 | Vector database & unstructured data | [01-data-cloud/07-vector-db-unstructured](01-data-cloud/07-vector-db-unstructured/notes.md) |
+| Data 360 DevOps 🆕 | [01-data-cloud/09-data-360-devops](01-data-cloud/09-data-360-devops/notes.md) |
 | Pipeline patterns | [00-core-skills/04-data-engineering](00-core-skills/04-data-engineering/notes.md) |
 
-**Milestone:** 🏅 **Data Cloud Consultant** → prep in [_cert-data-cloud-consultant](01-data-cloud/_cert-data-cloud-consultant/exam-guide.md)
+**Milestone:** 🏅 **Data 360 Consultant** _(renamed from Data Cloud Consultant, 2026-03-27; exam code `Data-Con-101` unchanged)_ → prep in [_cert-data-cloud-consultant](01-data-cloud/_cert-data-cloud-consultant/exam-guide.md)
 
 ## Phase 03 · Weeks 9–14 — Salesforce AI Depth
 *Build agents on the platform. Apex + Flow = home turf.*
@@ -37,11 +40,16 @@ The roadmap runs in 5 phases over 26 weeks; this folder is organized by track. T
 | Roadmap item | Study folder |
 |---|---|
 | Agentforce anatomy | [02-salesforce-ai/02-agentforce-anatomy](02-salesforce-ai/02-agentforce-anatomy/notes.md) |
+| **Agent Script** 🆕 — the current authoring model | [02-salesforce-ai/07-agent-script](02-salesforce-ai/07-agent-script/notes.md) |
 | Prompt Builder | [02-salesforce-ai/03-prompt-builder](02-salesforce-ai/03-prompt-builder/notes.md) |
 | Einstein Trust Layer | [02-salesforce-ai/04-einstein-trust-layer](02-salesforce-ai/04-einstein-trust-layer/notes.md) |
 | Custom agent actions | [02-salesforce-ai/05-custom-agent-actions](02-salesforce-ai/05-custom-agent-actions/notes.md) |
 | Model Builder & BYOM | [02-salesforce-ai/06-model-builder-byom](02-salesforce-ai/06-model-builder-byom/notes.md) |
+| Multi-agent orchestration 🆕 | [02-salesforce-ai/08-multi-agent-orchestration](02-salesforce-ai/08-multi-agent-orchestration/notes.md) |
+| Observability & testing 🆕 | [02-salesforce-ai/09-observability-and-testing](02-salesforce-ai/09-observability-and-testing/notes.md) |
 | RAG on platform | [01-data-cloud/08-rag-on-platform](01-data-cloud/08-rag-on-platform/notes.md) |
+
+**Study Agent Script immediately after Agentforce anatomy** — the anatomy notes explain *why* it replaced topics; this is where you learn it. Most online tutorials still teach the retired model.
 
 **Milestone:** 🏅 **Agentforce Specialist** + one working agent with a custom Apex action → prep in [_cert-agentforce-specialist](02-salesforce-ai/_cert-agentforce-specialist/exam-guide.md)
 
@@ -73,7 +81,8 @@ The roadmap runs in 5 phases over 26 weeks; this folder is organized by track. T
 
 ## Weekly rhythm
 
-1. Study the phase's topics → write into `notes.md`.
-2. Distill each finished topic into its `cheatsheet.md`.
+1. Study the phase's topics → extend `notes.md` with what you learned hands-on.
+2. Distill anything new into its `cheatsheet.md` (half a page — that's the constraint that makes it useful).
 3. Friday: run the track's `flashcards.md` files + write the week's entry in [journal/](journal/).
 4. Anything off-roadmap you stumbled on → [99-inbox/INBOX.md](99-inbox/INBOX.md).
+5. Skim the newest [05-release-radar/](05-release-radar/README.md) note for your track — Data 360 ships monthly, and Agentforce moves fast enough that a topic can drift between now and your exam date.
