@@ -16,6 +16,30 @@ Salesforce began calling Data Cloud **"Data 360"** at Dreamforce 2025 (Oct 14, 2
 
 ---
 
+## 2026-07-28 · Summer '26 ingest and federation status changes
+
+Three status changes that decide what you can put in production versus only prototype:
+
+| Capability | Status |
+|---|---|
+| **Accelerated Data Ingest** — real-time CRM data into Data 360, no pipeline delay | **GA** |
+| **AWS Glue Data Catalog** federation | **GA** |
+| **Microsoft Fabric OneLake** federation | **Beta** |
+| **Databricks** file federation connector — identity-provider (IdP) authentication | Summer '26 |
+| **Run SQL from Apex** against Data 360 | Summer '26 |
+
+**Why Accelerated Data Ingest matters most.** Scheduled ingestion meant Data 360's copy of a Case or Opportunity always lagged the live CRM record. Tolerable for analytics; fatal for agents, which then answer confidently from stale state. This removes the most common cause of a "the agent was wrong" ticket that turns out not to be a model problem at all — and it removes the workaround of bypassing Data 360 to call CRM directly from an action, which cost you the unified profile and its governance.
+
+**Read the Beta label literally.** Fabric OneLake federation is fine to prototype and demo; it carries no support commitment and must not become load-bearing in a delivery plan. AWS Glue at GA is proposal-safe. The Databricks IdP change is a **security-review unlock** — "can we govern this connection centrally?" is the question that stalls zero-copy projects.
+
+**SQL from Apex** removes the impedance mismatch: SOQL can't express the joins, aggregations and window functions that lakehouse work needs, and the alternative was HTTP callouts to the Direct API. An Apex-backed Agentforce action can now compute a rolling aggregate or multi-table join in one query. Same trap applies as with `SET OPTIONS` below — **specify the dataspace for DLO queries or get zero records, silently.**
+
+Sources: [Developer's Guide to Summer '26](https://developer.salesforce.com/blogs/2026/06/the-salesforce-developers-guide-to-the-summer-26-release) · [Data 360 in Summer '26: New Connectors, Document AI, and Real-Time Ingest](https://agentexchange.in/blog/data-360-summer-26) · [Zero Copy Connectivity](https://www.salesforce.com/data/connectivity/zero-copy/)
+
+> **Unverified — do not rely on:** *Context Indexing* was reported in June 2026 as expected to reach GA "later in July 2026." No confirmation of that GA could be found as of 2026-07-28. Treat its status as open. Same for the precise status of *Document AI upgrades* and *secondary indexes*.
+
+---
+
 ## 2026-07-26 · `SET OPTIONS` clause in SOQL
 
 A new [`SET OPTIONS` clause](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_set_options.htm) lets SOQL queries specify a Data 360 **dataspace** and control `NULL` / empty-string handling. The clause goes at the **very end** of the query.

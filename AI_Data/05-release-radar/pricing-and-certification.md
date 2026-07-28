@@ -4,6 +4,24 @@ Commercial model and exam changes — the two things clients and recruiters ask 
 
 ---
 
+## 2026-07-24 · Certification retirements and renames — two hard dates
+
+**24 certifications retire on February 1, 2027.** Registration for those exams **closed July 24, 2026**; the **last day to sit one is August 31, 2026**. Passing before the deadline still counts — the credential stays on your Trailblazer profile permanently, flagged as retired from February 1, 2027, and remains valid evidence of knowledge. What it loses is **public verification**: retired credentials stop appearing on the public verification pages.
+
+**16 certifications were renamed on July 24, 2026**, with *Agentforce* replacing the old cloud branding. Cosmetic only — no content change, no exam-code change, no retake. Trailblazer profiles updated automatically.
+
+| Old name | New name |
+|---|---|
+| Sales Cloud Consultant | Agentforce Sales Consultant |
+| Service Cloud Consultant | Agentforce Service Consultant |
+| Data Cloud Consultant | Data 360 Consultant _(renamed earlier, 2026-03-27; exam code `Data-Con-101` unchanged)_ |
+
+**Why it matters.** The rename doesn't touch your CV, LinkedIn or email signature — and recruiters search the new terms. Also read it as directional: Salesforce is aligning the credential catalogue with the Agentforce 360 portfolio, so expect exam *content* to drift toward agentic material at the next refresh.
+
+Full list in Salesforce's Certification Name Changes FAQ. Sources: [Salesforce Ben — retiring 24 certifications](https://www.salesforceben.com/salesforce-is-retiring-24-certifications-heres-what-you-need-to-know/) · [Apex Hours — 2027 retirements](https://www.apexhours.com/salesforce-2027-certification-retirements-everything-you-need-to-know/) · [Salesforce Time — retirements and renames](https://salesforcetime.com/2026/06/10/salesforce-certification-retirements-and-renames-explained/) · [The Salesforce Certification Lifecycle](https://www.salesforce.com/blog/salesforce-certification-lifecycle/)
+
+---
+
 ## 2026-07-26 · Agentforce Flex Credits — the consumption model
 
 **Headline numbers** (verify against a current quote before using in a proposal — public pricing moves):
