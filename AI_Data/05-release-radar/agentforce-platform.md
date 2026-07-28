@@ -111,6 +111,31 @@ Context for anything built on the current platform:
 
 ---
 
+## 2026-05-21 · Agentforce Coworker (Beta) — the search bar becomes the agent
+
+> **Backfill (recorded 2026-07-28).** This radar had no Coworker entry despite the announcement being two months old. Added as verified gap-fill, dated to the announcement, not to the scan.
+
+**What changed.** Marc Benioff announced [Agentforce Coworker](https://www.salesforce.com/agentforce/coworker/) on **May 21, 2026**, calling it the biggest thing Salesforce shipped that quarter and describing it as effectively *replacing* Salesforce Search. It is **Beta today for all Agentforce customers**, in the Salesforce global search bar and in Slack, with web, **Microsoft Teams, ChatGPT, Claude** and a desktop app slated for "later this year."
+
+- **You author nothing.** No Agent Script, no topics, no actions. Setup → Quick Find *Agentforce Coworker* → Turn On → Turn on End User Experience → assign users. Requires the **Agentforce Coworker Admin** permission set; **Enterprise, Unlimited and Agentforce 1** editions; **not supported on Government Cloud Plus**. Enabling it **automatically enables Einstein**.
+- **Grounded on Data 360**, and the [data-source model](https://developer.salesforce.com/docs/data/agentforce-coworker/guide/agentforce-coworker-limits-and-guidelines.html) is the interesting part: **Slack is federated, not ingested** (queried live via Slack Authentication), while **Google Drive and SharePoint are ingested** on a 1 hr incremental crawl. Any DMO in the data space can be added.
+- **It routes to specialized agents** — Sales Coach Agent, Support Agent — so it's a front door onto the agent estate rather than a competitor to it.
+- **[Billing has two modes that coexist](https://developer.salesforce.com/docs/data/agentforce-coworker/guide/agentforce-coworker-billing-considerations.html).** Seat-based (Agentforce 1, or Agentforce for Sales/Service/Industries): searching CRM or Slack costs **zero credits**. Usage-based: **Flex Credits** for prompts, **Data Services Credits** for data queries and processing. Guest, unauthenticated and portal users are always usage-based.
+
+**The claim that doesn't survive checking.** Secondary coverage repeats a **"270+ external data sources"** figure. The first-party Beta limits page lists **three**: Salesforce CRM, Data 360 objects, and Slack — with **Google Drive, SharePoint and Jira pilot-only**, requiring an account executive. Don't scope client work on the marketing number.
+
+**Why it matters.** Every other Agentforce advance in 2026 has been about *authoring* — Agent Script, orchestration, scorers. Coworker inverts it: nothing is authored and everything is inherited, so what it can answer is decided entirely by the org's sharing model and field-level security. Enabling it is, in practice, an instant org-wide sharing audit performed by every licensed user through a conversational interface. That's the risk and the sales pitch in the same sentence. The ChatGPT/Claude surfaces add a second governance question — what leaves the org, under whose identity, logged where.
+
+**Study action:** turn it on in a dev org, then log in as a restricted user and ask for something they shouldn't see. Confirm sharing holds before a client tests it for you.
+
+**Status:** Beta, available to all Agentforce customers. Announced 2026-05-21. **No GA date announced** as of 2026-07-28. Beta Services Terms apply — consumption under Non-GA services carries no refund or credit rights.
+
+**Sources:** [Agentforce Coworker developer guide (Beta)](https://developer.salesforce.com/docs/data/agentforce-coworker/guide/agentforce-coworker-a-home.html) · [Turn On Agentforce Coworker](https://developer.salesforce.com/docs/data/agentforce-coworker/guide/agentforce-coworker-turn-on-infrastructure.html) · [Limits and Guidelines](https://developer.salesforce.com/docs/data/agentforce-coworker/guide/agentforce-coworker-limits-and-guidelines.html) · [Billing Considerations](https://developer.salesforce.com/docs/data/agentforce-coworker/guide/agentforce-coworker-billing-considerations.html) · [Salesforce Announces Agentforce Coworker: AI 'In Every Search Bar' (Salesforce Ben)](https://www.salesforceben.com/salesforce-announces-agentforce-coworker-ai-in-every-search-bar/) · [Meet Your Users' New AI Teammate (Salesforce Admins)](https://admin.salesforce.com/blog/2026/meet-your-users-new-ai-teammate-introducing-agentforce-coworker)
+
+**Study folder:** [02-salesforce-ai/10-agentforce-coworker](../02-salesforce-ai/10-agentforce-coworker/notes.md)
+
+---
+
 ## Field notes
 
 - **TTEC Digital** completed the first customer go-live of **Agentforce Contact Center** (client: Compass Working Capital), announced 2026-07-23.

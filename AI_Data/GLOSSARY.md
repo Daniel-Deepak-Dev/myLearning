@@ -1,4 +1,4 @@
-# Glossary — 106 Terms
+# Glossary — 109 Terms
 
 Extracted from [the roadmap](ai-salesforce-architect-roadmap.html) glossary tab, grouped by track and alphabetized. Greppable and extendable — **add new terms here as you meet them**, in the right section, keeping alphabetical order. If a term deserves depth, it also earns a flashcard in its topic folder.
 
@@ -13,6 +13,7 @@ Extracted from [the roadmap](ai-salesforce-architect-roadmap.html) glossary tab,
 | Agent Script | The language agents are authored in since 2026: human-readable, compiles to portable JSON, blends deterministic rules (conditionals, explicit hand-offs) with LLM reasoning. Open source, Apache 2.0. **Replaced topic-and-instruction configuration as the default authoring model.** |
 | Agentforce | Salesforce's platform for building autonomous AI agents that plan and execute tasks across CRM. In 2026 the platform umbrella is **Agentforce 360**. |
 | Agentforce Builder | The current agent authoring UI, built around Agent Script. Since the week of **July 13, 2026** the *New Agent* button opens only this — the legacy builder can still edit existing agents but cannot create new ones. |
+| Agentforce Coworker | **Beta (announced 2026-05-21, no GA date).** An agent embedded in the search bar — Salesforce and Slack today; Teams, ChatGPT, Claude and web later. **You author nothing**: it inherits the org's sharing rules, FLS and permissions, so what it can answer is a governance question, not a configuration one. Searches CRM, Data 360 DMOs and Slack, then routes to specialized agents to act. |
 | Agentforce Data Library (ADL) | A managed grounding store: indexes Knowledge articles or uploaded files into a vector index and exposes a retriever for RAG. Lifecycle is scriptable via the ADL Connect API (Beta). |
 | Agentforce Specialist | Salesforce certification for building, configuring and deploying agents. Restructured around how agents *think, interact and collaborate*, with a new AI Agents domain and a Multi-Agent Interoperability section. |
 | Agentforce Voice | Low-latency voice agents with live transcription into Salesforce, and human takeover mid-call. Integrates with Amazon Connect, Five9, Genesys, NiCE, Vonage. |
@@ -21,6 +22,7 @@ Extracted from [the roadmap](ai-salesforce-architect-roadmap.html) glossary tab,
 | Custom Lightning Type | A purpose-built UI attached to an agent action's structured output. Defined once, renders idiomatically everywhere — LWC on desktop, native UI in the mobile app. |
 | Custom Scorer | A user-defined quality metric graded against live agent sessions (Beta). Deployable as `aiAgentScorerDefinitions` metadata, so evaluation lives in source control. |
 | Data Masking | Trust Layer step that replaces PII in a prompt with placeholder tokens before it leaves Salesforce, then re-inserts real values in the response. |
+| Data Services Credits | The consumption unit for **data** work — data queries, unstructured data processed, intelligent processing — as distinct from **Flex Credits**, which cover prompts. Both can be drawn by the same feature; Agentforce Coworker bills against each for different operations. |
 | Dynamic Grounding | Injecting live CRM or Data 360 data into a prompt at runtime so the model answers from your data instead of general knowledge. |
 | Einstein | Umbrella brand for Salesforce's AI features, spanning older predictive tools and current generative capabilities. |
 | Einstein Copilot | **Historical.** The predecessor conversational CRM assistant, folded into Agentforce. You'll still meet the name in 2024–25 material; it is not current product vocabulary. |
@@ -58,6 +60,7 @@ Extracted from [the roadmap](ai-salesforce-architect-roadmap.html) glossary tab,
 | DLO (Data Lake Object) | The stored, source-shaped table in the data lake created from a data stream — raw material awaiting harmonization. Does *not* share Platform object semantics. |
 | DMO (Data Model Object) | A standardized object in Data 360's canonical data model that DLOs are mapped into, enabling cross-source consistency. |
 | DSO (Data Source Object) | Representation of raw data exactly as it arrives from the source, before any mapping. |
+| Federated Search | Querying a source **live at search time instead of ingesting and indexing it**. Always fresh and no data duplicated, but bound by the source's own rate limits. Agentforce Coworker federates **Slack** (180 queries/min per user) while *ingesting* Google Drive and SharePoint on a 1 hr incremental crawl — the same freshness-vs-latency trade-off as zero-copy federation. |
 | Harmonization | Mapping disparate source fields into the standard data model so "email" from five systems becomes one consistent attribute. |
 | Identity Resolution | Matching records across sources into one unified individual using match rules and reconciliation rules. Under profile-based pricing, its quality is a **direct recurring cost lever**. |
 | Intelligent Context | Automatic extraction of unstructured content (PDFs, tables, images, flowcharts) into grounding data via a low-code pipeline. The same document can be interpreted from multiple business perspectives. |

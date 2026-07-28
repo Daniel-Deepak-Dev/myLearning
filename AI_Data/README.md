@@ -14,7 +14,8 @@ Companion folder to [ai-salesforce-architect-roadmap.html](ai-salesforce-archite
 | [05-release-radar/](05-release-radar/README.md) | Running log of Salesforce AI updates, in three areas: `01-agentforce/`, `02-data-cloud/`, `03-salesforce-ai-research/` |
 | [99-inbox/](99-inbox/INBOX.md) | Capture anything new before it has a home |
 | [journal/](journal/) | Weekly learning log |
-| [GLOSSARY.md](GLOSSARY.md) | All 106 terms, greppable, marked for currency |
+| [QUICKSTART-LINKS.md](QUICKSTART-LINKS.md) | **Start here for Agentforce + Data 360** — curated links, first-week plan, outdated-source traps |
+| [GLOSSARY.md](GLOSSARY.md) | All 109 terms, greppable, marked for currency |
 | [dashboard.html](dashboard.html) | Visual master index (open in browser) |
 
 ## Currency

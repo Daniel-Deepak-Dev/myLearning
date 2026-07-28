@@ -16,6 +16,7 @@ Cert target: **[Agentforce Specialist](_cert-agentforce-specialist/exam-guide.md
 | [Agent Script](07-agent-script/notes.md) 🆕 | The current authoring language: compile-to-JSON, open-source toolchain, CI linting without an org | [cheatsheet](07-agent-script/cheatsheet.md) · [flashcards](07-agent-script/flashcards.md) |
 | [Multi-Agent Orchestration](08-multi-agent-orchestration/notes.md) 🆕 | Orchestrator + subagents, **descriptions as routing contracts**, Agent Router, A2A | [cheatsheet](08-multi-agent-orchestration/cheatsheet.md) · [flashcards](08-multi-agent-orchestration/flashcards.md) |
 | [Observability & Testing](09-observability-and-testing/notes.md) 🆕 | Agent Analytics, Custom Scorers as metadata, `agent preview`, trace files, `@IntegrationTest` | [cheatsheet](09-observability-and-testing/cheatsheet.md) · [flashcards](09-observability-and-testing/flashcards.md) |
+| [Agentforce Coworker](10-agentforce-coworker/notes.md) 🆕 | **Beta.** The agent you don't author — search-bar surface, federation vs ingestion, inherited governance | [cheatsheet](10-agentforce-coworker/cheatsheet.md) · [flashcards](10-agentforce-coworker/flashcards.md) |
 
 Grounding lives in the Data 360 track — see [RAG on Platform](../01-data-cloud/08-rag-on-platform/notes.md).
 

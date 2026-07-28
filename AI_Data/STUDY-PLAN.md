@@ -47,6 +47,7 @@ The roadmap runs in 5 phases over 26 weeks; this folder is organized by track. T
 | Model Builder & BYOM | [02-salesforce-ai/06-model-builder-byom](02-salesforce-ai/06-model-builder-byom/notes.md) |
 | Multi-agent orchestration 🆕 | [02-salesforce-ai/08-multi-agent-orchestration](02-salesforce-ai/08-multi-agent-orchestration/notes.md) |
 | Observability & testing 🆕 | [02-salesforce-ai/09-observability-and-testing](02-salesforce-ai/09-observability-and-testing/notes.md) |
+| Agentforce Coworker 🆕 _(Beta)_ | [02-salesforce-ai/10-agentforce-coworker](02-salesforce-ai/10-agentforce-coworker/notes.md) |
 | RAG on platform | [01-data-cloud/08-rag-on-platform](01-data-cloud/08-rag-on-platform/notes.md) |
 
 **Study Agent Script immediately after Agentforce anatomy** — the anatomy notes explain *why* it replaced topics; this is where you learn it. Most online tutorials still teach the retired model.
