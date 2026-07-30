@@ -48,6 +48,10 @@ The roadmap runs in 5 phases over 26 weeks; this folder is organized by track. T
 | Multi-agent orchestration 🆕 | [02-salesforce-ai/08-multi-agent-orchestration](02-salesforce-ai/08-multi-agent-orchestration/notes.md) |
 | Observability & testing 🆕 | [02-salesforce-ai/09-observability-and-testing](02-salesforce-ai/09-observability-and-testing/notes.md) |
 | Agentforce Coworker 🆕 _(Beta)_ | [02-salesforce-ai/10-agentforce-coworker](02-salesforce-ai/10-agentforce-coworker/notes.md) |
+| Agent Fabric & interop 🆕 | [02-salesforce-ai/11-agent-fabric-and-interop](02-salesforce-ai/11-agent-fabric-and-interop/notes.md) |
+| Voice & Contact Center 🆕 _(GA)_ | [02-salesforce-ai/12-voice-and-contact-center](02-salesforce-ai/12-voice-and-contact-center/notes.md) |
+| ADLC & Agentforce DX 🆕 | [02-salesforce-ai/13-adlc-and-agentforce-dx](02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md) |
+| Prebuilt agents & buy vs build 🆕 | [02-salesforce-ai/14-prebuilt-agents-and-buy-vs-build](02-salesforce-ai/14-prebuilt-agents-and-buy-vs-build/notes.md) |
 | RAG on platform | [01-data-cloud/08-rag-on-platform](01-data-cloud/08-rag-on-platform/notes.md) |
 
 **Study Agent Script immediately after Agentforce anatomy** — the anatomy notes explain *why* it replaced topics; this is where you learn it. Most online tutorials still teach the retired model.

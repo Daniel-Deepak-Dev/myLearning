@@ -136,6 +136,35 @@ Context for anything built on the current platform:
 
 ---
 
+## 2026-02-23 · Agentforce Contact Center is GA — and Voice is a product line, not a channel
+
+> **Backfill (recorded 2026-07-28).** Voice had exactly one line in this radar (a bullet in the Agentforce 360 baseline entry) and **"Contact Center" appeared nowhere** — despite Contact Center being GA since February. Dated to the GA, not the scan.
+
+**What changed.** [Agentforce Contact Center](https://www.uctoday.com/unified-communications/salesforce-agentforce-contact-center/) went **GA February 23, 2026**, launched at Enterprise Connect 2026 — Salesforce's own native CCaaS, pitched as "the only contact center solution that unifies voice, digital channels, CRM data, and AI agents natively in a single system."
+
+Separate the two things it's built on:
+
+- **Agentforce Voice** — the capability. Autonomous **inbound and outbound** calls over **PSTN or SIP trunking**, explicitly positioned as replacing the IVR. **Barge-in** (the customer interrupting mid-sentence), automatic conversation logging, and context transfer with live transcription into Salesforce Voice on escalation. Amazon Connect is **native** (Salesforce manages provisioning); Five9, Genesys, NiCE and Vonage connect via **Partner Telephony**.
+- **Agentforce Contact Center** — the product you buy instead of a partner.
+
+**Summer '26 added SIP routing and the Mobile SDK** as GA; **Voice for Digital Channels** reached GA in Q2 2026 (web chat, mobile apps, WhatsApp, messaging). Global languages remain **Beta** per the [July 27 scan](01-agentforce/2026-07-27.md).
+
+**Three things that decide whether a voice project happens.**
+
+1. **Region.** Voice was **US and Canada only** as of early 2026, global languages Beta. From a European practice this is the first question, not a footnote — and the most likely reason a project doesn't proceed.
+2. **Billing model.** A voice action is **30 Flex Credits** vs 20 standard — but there is also a **per-minute model at ~60 credits/min**. A five-minute call with three actions is ~90 credits one way and ~300 the other. See [pricing-and-certification.md](pricing-and-certification.md).
+3. **Escalation prerequisites.** Handing a call to a human needs **Partner Telephony Setup** configured, **Service Cloud Voice** enabled *and* **Contact Center setup** completed — all outside Agentforce. A voice agent that answers calls correctly can still fail its first escalation.
+
+**One date to hold loosely.** Most sources put Voice GA at **October 21, 2025** (Winter '26 cycle); others describe it moving "from pilot to GA" in **Spring '26** with Atlas-powered autonomous reasoning. Progressive GA is the likely reconciliation — channel first, fully reasoning agent later — but that's inference. Don't quote either date to a client without checking.
+
+**Why it matters beyond the feature list.** Voice fails in ways text doesn't: latency is a design constraint because every grounding hop is dead air, barge-in means long planned answers rarely land, and handoff is a protocol problem rather than a prompt problem. None of it is fixed by Agent Script tuning. Also worth holding in mind commercially — Salesforce **partners** with Genesys, Five9 and NiCE at the Voice layer and **competes** with them at the Contact Center layer.
+
+**Status:** Contact Center **GA 2026-02-23**. Voice **GA** (date disputed — see above). SIP routing and Mobile SDK **GA** Summer '26. Voice for Digital Channels **GA** Q2 2026. Global languages **Beta**. Region-limited to US/Canada as of early 2026. Now written up at [02-salesforce-ai/12-voice-and-contact-center](../02-salesforce-ai/12-voice-and-contact-center/notes.md).
+
+**Sources:** [Agentforce Voice overview (developer guide)](https://developer.salesforce.com/docs/ai/agentforce-partner/guide/agentforce-voice-overview.html) · [Enterprise Connect 2026: Salesforce Launches Agentforce Contact Center (UC Today)](https://www.uctoday.com/unified-communications/salesforce-agentforce-contact-center/) · [Agentforce Contact Center brings native CCaaS to Salesforce (TechTarget)](https://www.techtarget.com/searchCustomerExperience/news/366639947/Agentforce-Contact-Center-brings-native-CCaaS-to-Salesforce) · [Agentforce Voice Agent Setup: From Prerequisites to Talking with the Agent (ABSYZ)](https://www.absyz.com/agentforce-voice-agent-setup-in-salesforce-from-prerequisites-to-talking-with-the-agent/) · [Meet Agentforce Voice (Trailhead)](https://trailhead.salesforce.com/content/learn/modules/agentforce-voice-quick-look/meet-agentforce-voice)
+
+---
+
 ## Field notes
 
 - **TTEC Digital** completed the first customer go-live of **Agentforce Contact Center** (client: Compass Working Capital), announced 2026-07-23.

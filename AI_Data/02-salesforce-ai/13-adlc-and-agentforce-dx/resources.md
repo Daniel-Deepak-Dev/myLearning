@@ -18,7 +18,7 @@
 
 ## Courses & videos
 - Explore Agentforce Vibes: Enhancing Developer Productivity (Trailhead) — https://trailhead.salesforce.com/content/learn/modules/einstein-for-developers/get-to-know-einstein-for-developers
-- Build a Decision-Scoring Skill for Any Agent (Developers Blog, June 16 2026) — a worked skill, useful as a template — https://developer.salesforce.com/blogs/2026/06/master-the-agentic-development-lifecycle-for-agentforce
+- Build a Decision-Scoring Skill for Any Agent (Developers Blog, June 16 2026, Dave Norris) — a worked skill, useful as a template. _URL not captured; find it in the [June 2026 blog archive](https://developer.salesforce.com/blogs)._
 
 ## Articles & repos
 

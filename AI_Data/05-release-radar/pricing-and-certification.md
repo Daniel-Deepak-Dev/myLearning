@@ -32,8 +32,11 @@ Full list in Salesforce's Certification Name Changes FAQ. Sources: [Salesforce B
 | Standard action | 20 credits (~$0.10) |
 | Voice action | 30 credits (~$0.15) |
 | Sandbox / Testing Center action | 16 credits (~$0.08) |
+| **Voice, per-minute alternative** | **60 credits/min** — ~$0.30 production, ~$0.24 sandbox _(added 2026-07-28)_ |
 
 A single action costs about **$0.10**; a multi-step task costs a multiple of that, because **you pay per action, not per conversation**. That's the modelling trap — a "conversation" in a demo is one action, but a real resolution is often five to fifteen.
+
+> **Backfill (2026-07-28): voice has two billing models, not one.** Alongside the 30-credit-per-action rate there is a **per-minute model at ~60 credits/min**. The two are not close to equivalent: a five-minute call with three actions costs ~90 credits per-action and ~300 credits per-minute. **Ask which model applies before modelling a voice deployment** — this single question can move a cost estimate by 3×. Secondary-sourced; verify against the contract. See [02-salesforce-ai/12-voice-and-contact-center](../02-salesforce-ai/12-voice-and-contact-center/notes.md).
 
 **Three buying structures:**
 
@@ -90,6 +93,8 @@ Deflection rates are heavily domain-dependent; use these as ceilings, not foreca
 ---
 
 ## 2026-07-26 · Agentforce Specialist certification restructured
+
+> ⚠️ **Correction pending (2026-07-28): the ~5% figure below may be wrong, and a whole domain may be missing.** A second research pass found 2026 study resources reporting **Multi-Agent Interoperability at 15%** and a **Development Lifecycle and Observability domain at 15–20%** — a domain this radar never recorded. Sources disagree with each other and the official guide could not be read first-party (Trailhead truncates to automated fetching; `salesforce.com` and `help.salesforce.com` return 403). **If the higher numbers are right, the "not a reason to reallocate study time" advice below inverts** — lifecycle plus interoperability would be ~30% of the exam. Both readings are recorded side by side in [the exam guide](../02-salesforce-ai/_cert-agentforce-specialist/exam-guide.md); settle it from the official PDF. Also note a third, older breakdown still circulating (Prompt Engineering 30% / Agentforce Concepts 30% / Data Cloud 20% / Service 10% / Sales 10%) — that one contradicts the documented retirement of the Service and Sales sections, so treat it as stale rather than as a third opinion.
 
 The exam was **significantly restructured in the Summer '25-aligned revision** (announced October 2025) and redesigned around how agents think, interact and collaborate — away from the older emphasis on configuration and prompt building.
 

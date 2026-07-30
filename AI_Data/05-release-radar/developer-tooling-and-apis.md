@@ -4,6 +4,57 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2025-09 → 2026-04-15 · MuleSoft Agent Fabric — the gap this radar never had
+
+> **Backfill (recorded 2026-07-28).** Agent Fabric launched in **September 2025** and had **zero mentions anywhere in this study base** — radar included — until this entry. It is the largest single gap the 2026-07-28 second pass found. Dated to the product's own timeline, not to the scan.
+
+**What it is.** A **MuleSoft** control plane — "a single pane of glass to register, manage, govern and observe all of your agents and MCP endpoints." The framing is *agent sprawl*: what happened to APIs around 2015 is happening to agents, and MuleSoft already owns that playbook.
+
+**Four pillars, four components:**
+
+| Pillar | Component | Function |
+|---|---|---|
+| Discovery | **Agent Registry** | Catalog of every agentic asset — custom agents, SaaS-embedded agents, MCP servers, A2A endpoints. **Federated**: anyone can run a registry and registries reference each other |
+| Governance | **Omni Gateway** + Governance Strategies | Runtime layer between agents and the systems they reach; policy on every A2A and MCP call |
+| Orchestration | **Agent Broker** + Agent Networks | Graph-based routing across A2A agents; networks declared in **YAML**, deployed to CloudHub 2.0 |
+| Observation | **Agent Visualizer** | Network structure, live request flows, latency, error rates |
+
+**Timeline.** Launched September 2025. Registry, Visualizer GA October 2025; Governance available at launch. **Agent Scanners GA January 2026** for Agentforce, Amazon Bedrock, Google Vertex AI and Microsoft Copilot Studio, alongside curated third-party MCP servers in the Registry. **April 15, 2026**: automated cross-platform discovery, a drag-and-drop workflow canvas, **guided determinism**, and a centralised LLM governance layer for cost, compliance and model routing.
+
+**Two vocabulary traps worth recording.** First, **Flex Gateway was renamed Omni Gateway** — same runtime, expanded to govern AI/MCP/A2A traffic alongside APIs, a non-breaking cosmetic change (1.13.0) that leaves CI/CD alone. Both names circulate, and Agent Fabric launch coverage still says Flex. Second, **"Agent Script" now names two products**: the Agentforce authoring language (Apache 2.0, see [agentforce-platform.md](agentforce-platform.md)) and "Agent Script for Agent Broker", the guided-determinism feature. Disambiguate before quoting either.
+
+**Why it matters.** It reframes MCP and A2A from protocols into *governed traffic* — every call routed through the gateway, policy applied at the endpoint rather than per integration. It is also the answer to the question a large client asks first: "we already run agents in Copilot Studio and Bedrock, what happens to those?" And it draws the boundary around Agentforce's own orchestration in one sentence: **Agentforce orchestration coordinates agents inside one org; Agent Fabric coordinates agents across vendors.**
+
+**Status:** Registry / Visualizer **GA** Oct 2025 · Scanners **GA** Jan 2026 · **Agent Broker status disputed** — GA per launch coverage, Beta per April 2026 coverage; unresolved, see the README open questions. **MuleSoft-licensed, not part of an Agentforce SKU; no public pricing found.** Now written up at [02-salesforce-ai/11-agent-fabric-and-interop](../02-salesforce-ai/11-agent-fabric-and-interop/notes.md).
+
+**Sources:** [MuleSoft Agent Fabric Overview (docs — the authority)](https://docs.mulesoft.com/general/agent-fabric-overview) · [Omni Gateway release notes](https://docs.mulesoft.com/release-notes/flex-gateway/flex-gateway-release-notes) · [Salesforce Launches MuleSoft Agent Fabric](https://www.salesforce.com/news/stories/mulesoft-agent-fabric-announcement/) · [Salesforce Advances Agent Fabric: Guided Determinism and Governance Controls (2026-04-15)](https://www.salesforce.com/news/stories/agent-fabric-control-plane-announcement/) · [Complete Breakdown (Salesforce Ben)](https://www.salesforceben.com/salesforce-launches-mulesoft-agent-fabric-a-complete-breakdown/) · [MuleSoft Agent Fabric Deep Dive (architect.salesforce.com)](https://architect.salesforce.com/docs/architect/fundamentals/guide/mulesoft-agent-fabric-deep-dive.html)
+
+---
+
+## 2026-06-24 · The ADLC has a first-party command sequence
+
+> **Backfill (recorded 2026-07-28).** The [July 26 scan](01-agentforce/2026-07-26.md) captured the *research* toolkit (`agentforce-adlc`). It never captured Salesforce's own **supported** workflow, published two days before that scan's window opened.
+
+**What it is.** [Master the Agentic Development Lifecycle for Agentforce](https://developer.salesforce.com/blogs/2026/06/master-the-agentic-development-lifecycle-for-agentforce) sets out a design-first workflow driven by three Agent Skills — `developing-agentforce`, `testing-agentforce`, `observing-agentforce` — installed with `npx skills add forcedotcom/sf-skills`.
+
+| Phase | Commands |
+|---|---|
+| Design | plan mode (Shift+Tab in Claude Code); design interview; agent mapped as a graph — router node plus domain subagents |
+| Build & deploy | `sf agent generate authoring-bundle` → validate Agent Script compiles locally → `sf project deploy start` for backing Flow/Apex → deploy the bundle. Failures drive automated fix-and-retry loops |
+| Test | `sf agent preview start` / `send` / `end`; `sf agent test create` / `run` against YAML specs |
+| Publish | `sf agent publish authoring-bundle` → `sf agent activate` |
+| Observe | local traces in `.sfdx/agents/[name]/sessions/…/traces/`; production via the **Session Trace Data Model**; **AgentLens** to walk the graph |
+
+**Five rules from the guide:** one folder per project · **build only in scratch orgs or sandboxes, never production** · commit Agent Script to Git · `--json` on every command · scope deployments explicitly.
+
+**Why it matters.** The architect-level framing — five phases, **inner loop** vs **outer loop** — now has an executable counterpart. And the licence distinction becomes commercially load-bearing: `sf-skills` is Salesforce's supported library, while **`agentforce-adlc` is CC BY-NC 4.0 and therefore unusable on paid client work**. Three artifacts, three licences (Agent Script is Apache 2.0).
+
+**Status:** `agent preview` **GA**; agent evaluations **Beta**; Agentforce Vibes 2.0 **Developer Preview**. Now written up at [02-salesforce-ai/13-adlc-and-agentforce-dx](../02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md).
+
+**Sources:** [Master the Agentic Development Lifecycle for Agentforce](https://developer.salesforce.com/blogs/2026/06/master-the-agentic-development-lifecycle-for-agentforce) · [The Agent Development Lifecycle: From Conception to Production](https://architect.salesforce.com/docs/architect/fundamentals/guide/agent-development-lifecycle.html) · [Agentforce DX](https://developer.salesforce.com/docs/ai/agentforce/guide/agent-dx.html) · [`forcedotcom/sf-skills`](https://github.com/forcedotcom/sf-skills)
+
+---
+
 ## 2026-07-26 · Headless 360 — the organizing idea of Summer '26
 
 [Headless 360](https://developer.salesforce.com/blogs/2026/05/headless-360-what-it-means-for-developers) makes every major Salesforce capability available as an **API, an MCP tool, or a CLI command**, accessible to any authenticated caller — an app, a human, or an autonomous AI agent.
