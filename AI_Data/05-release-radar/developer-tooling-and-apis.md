@@ -4,6 +4,30 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-07-30 · The DX Node library stack dropped Node 18 and 20 — `@salesforce/agents` is 2.0.0
+
+Between **20:21 and 22:22 UTC on July 29, 2026**, three libraries cut majors carrying one breaking change each: **[`@salesforce/core` 9.0.0](https://github.com/forcedotcom/sfdx-core/commits/main)**, **[`@salesforce/source-deploy-retrieve` 13.0.0](https://github.com/forcedotcom/source-deploy-retrieve/commits/main)**, **[`@salesforce/agents` 2.0.0](https://github.com/forcedotcom/agents/releases)** — `engines.node` raised to **`>=22.0.0`**, **Node 18 and 20 dropped** (both past EOL: April 2025 and April 2026). `@salesforce/kit` went to 4.0.0 and `@salesforce/ts-types` to 3.0.0 alongside.
+
+**Why it matters.** `@salesforce/agents` implements the **`sf agent` command family** — `agent generate`, `agent test create/run/results`, `agent preview` — so it sits under every automated way you exercise an Agentforce agent, ADLC test modes included. SDR is the engine behind `sf project deploy`, so it sits under every metadata deployment, **agent bundles and Data 360 metadata alike**. The failure is quiet, not loud: npm installs on Node 20 with an `EBADENGINE` warning and proceeds, so the break surfaces later as errors that look like metadata problems.
+
+**What to do.** Check **CI images, not laptops** — installer/tarball `sf` **bundles its own Node** (v24 since February 2026) and is insulated; what's exposed is `npm install -g @salesforce/cli`, `actions/setup-node` pinned to 18/20, and your own scripts importing these libraries. `@salesforce/agents` **1.11.7** (July 28) is the last Node 18/20 line — pin for a week, not a quarter. Expect the CLI plugins to inherit the floor as they take core 9.
+
+Full write-up: [01-agentforce/2026-07-30](01-agentforce/2026-07-30.md) · Data 360 deploy angle: [02-data-cloud/2026-07-30](02-data-cloud/2026-07-30.md).
+
+---
+
+## 2026-07-30 · sf-pi ships Agent Script quality gates — and a better way to expire test evidence
+
+[`salesforce/sf-pi`](https://github.com/salesforce/sf-pi) (Apache 2.0, extensions for the **pi** coding agent) released **v0.250.0** on July 28 with `feat(sf-agentscript): add native quality analysis` and **v0.251.0** on July 29 with `gate agent activation`. Its `sf-agentscript` extension is a **full Agent Script lifecycle manager**, not a linter: authoring (compile, format, reference-safe renames) → preview (live-org sessions, compact traces) → eval (multi-turn regression specs, release contracts) → lifecycle (publish inactive, **gate activation**, manage Service Agent users).
+
+Quality analysis is an **18-rule catalogue** graded High/Moderate/Low/Info, all v1 rules **On** by default, and **High findings block publication unless explicitly acknowledged** — linting as a gate, not advice.
+
+**Why it matters.** The design detail worth copying: **release evidence has no time expiry**. It "remains valid while the exact org, `BotVersion`, baseline identity, and designated-suite digest remain unchanged." **Invalidate on identity, not on elapsed time** — an arbitrary "results expire in 7 days" rule is simultaneously too strict (nothing changed) and too loose (everything changed on day 2). Also note the templates use **subagents, not deprecated topic blocks**. Caveat: runs inside `pi`, not VS Code; Salesforce-published but **not a supported product**.
+
+Full write-up: [01-agentforce/2026-07-30](01-agentforce/2026-07-30.md).
+
+---
+
 ## 2026-07-29 · ADLC security testing is now generated from the agent, not from a catalogue
 
 On **July 28, 2026** the [`agentforce-adlc`](https://github.com/SalesforceAIResearch/agentforce-adlc) toolkit merged five PRs. The one that changes how you work: **[`/agentforce-secure` is deleted](https://github.com/SalesforceAIResearch/agentforce-adlc/pull/44)**, folded into `/agentforce-test` as **Mode C**.

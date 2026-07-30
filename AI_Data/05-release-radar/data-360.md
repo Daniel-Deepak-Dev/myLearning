@@ -16,6 +16,20 @@ Salesforce began calling Data Cloud **"Data 360"** at Dreamforce 2025 (Oct 14, 2
 
 ---
 
+## 2026-07-30 · The Python Data 360 connector: v1 deprecated, v2 still beta
+
+[`salesforce-cdp-connector`](https://github.com/forcedotcom/salesforce-cdp-connector) — the **read-only Python client** most people use to query Data 360 and pull results into **pandas** — states plainly: *"This package is deprecated and will be removed once `salesforce-datacloud-connector` reaches GA."* The replacement, **`salesforce-datacloud-connector` 2.0.0b1**, landed alongside it on **June 2, 2026** and is a **pre-release**: `pip install --pre salesforce-datacloud-connector`, because pip won't resolve a beta without the flag. **No GA date is published.** On **July 29, 2026** maintainers broadened v1 CI to run on all PRs — reassuring for the gap, not a promise.
+
+Auth covers JWT, username/password, OAuth token and client credentials, and you can target a **non-default dataspace** at connection time — remember that one, because querying the wrong dataspace returns a confidently **empty result**, not an error.
+
+**Why it matters.** This is the standard route for notebook analysis, feature engineering and anything putting Data 360 data next to a training loop. New work should take v2 with `--pre`; existing scripts should **pin v1 explicitly and budget a migration**. General rule for this ecosystem: **a package rename usually carries a support-status change** — `cdp` → `datacloud` tracks CDP → Data Cloud → Data 360, and the rename is the tell that a lifecycle boundary is close.
+
+**Also, on deploys:** `@salesforce/source-deploy-retrieve` **13.0.0** (July 29, 2026) requires **Node ≥ 22** and drops Node 18/20. SDR is what `sf project deploy` runs, so **any pipeline deploying Data 360 metadata** — streams, DLOs/DMOs, mappings, transforms, identity resolution, data kits — inherits that floor. It installs on Node 20 with only an `EBADENGINE` warning, then fails later in ways that look like metadata errors.
+
+Full write-up: [02-data-cloud/2026-07-30](02-data-cloud/2026-07-30.md).
+
+---
+
 ## 2026-07-28 · Summer '26 ingest and federation status changes
 
 Three status changes that decide what you can put in production versus only prototype:
