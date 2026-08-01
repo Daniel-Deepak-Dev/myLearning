@@ -1,21 +1,23 @@
 # 05-release-radar — Salesforce AI / Agentforce / Data 360 updates
 
-**What this is:** a running log of Salesforce technical updates worth knowing as an AI-Salesforce architect. Fed by the `daily-agentforce-updates` scheduled task.
+**What this is:** a running log of Salesforce technical updates worth knowing as an AI-Salesforce architect. Fed by the `daily-agentforce-updates` scheduled task, which writes to the contract in [Writing contract](#writing-contract) below.
 
-**How it's organized — two layers.**
+**How it's organized — two layers, one of them primary.**
 
-- **Dated scan notes** live in three **area folders** — [`01-agentforce/`](01-agentforce/), [`02-data-cloud/`](02-data-cloud/), [`03-salesforce-ai-research/`](03-salesforce-ai-research/). One `YYYY-MM-DD.md` per area per scan: table of contents, entries ordered most-consequential-first, a `**Status:**` line and per-entry `**Sources:**` on each. When a scan finds nothing, the note says so explicitly — a quiet day should read as a quiet day, not as a missed scan.
-- **Topic files** sit at the root of this folder and hold the *running story* — dated entries newest-first, so a topic reads as a narrative over time. They stay at the root deliberately: most of them cut across areas (developer tooling covers both Agentforce and Data 360; pricing covers both), so filing them under one area would lose information.
+- **Topic files** sit at the root of this folder and are **the layer to learn from**. Each holds the *running story* of one subject — dated entries newest-first, so a topic reads as a narrative over time. Every entry carries **What changed / Why it matters / Gotchas / Study action / Status / Sources**. They stay at the root deliberately: most cut across areas (developer tooling covers both Agentforce and Data 360; pricing covers both), so filing them under one area would lose information.
+- **Dated scan notes** live in three **area folders** — [`01-agentforce/`](01-agentforce/), [`02-data-cloud/`](02-data-cloud/), [`03-salesforce-ai-research/`](03-salesforce-ai-research/). One `YYYY-MM-DD.md` per area per scan, and they are **audit logs, not write-ups**: what window was checked, what changed and which topic file it went into, and named verified negatives. A quiet day should read as a quiet day, not as a missed scan.
 
-**How to read it:** skim this README for the current state of play → open the newest dated note in the area you care about → drop into the topic file when you want the history. Every entry carries a **Why it matters** line; that's the part to remember.
+**How to read it:** skim this README for the current state of play → open the topic file for the subject you care about → use the dated notes only when you need to know *when* something was recorded or what a scan checked.
+
+> Notes dated 2026-07-26 → 2026-07-30 predate this contract and are full write-ups. They are left as-is; the routine rewrites entries into the contract shape as it touches them.
 
 ## Areas — dated scan notes
 
 | Folder | Covers | Latest |
 |---|---|---|
-| [01-agentforce/](01-agentforce/) | Agentforce platform, builder and Agent Script, developer tooling, governance, pricing | [2026-07-30](01-agentforce/2026-07-30.md) · [2026-08-01](01-agentforce/2026-08-01.md) · [2026-07-31](01-agentforce/2026-07-31.md) · [2026-07-29](01-agentforce/2026-07-29.md) · [2026-07-28](01-agentforce/2026-07-28.md) · [2026-07-27](01-agentforce/2026-07-27.md) · [2026-07-26](01-agentforce/2026-07-26.md) |
-| [02-data-cloud/](02-data-cloud/) | Data 360 (ex-Data Cloud): ingestion, modeling, grounding, zero-copy, semantic layer | [2026-07-30](02-data-cloud/2026-07-30.md) · [2026-08-01](02-data-cloud/2026-08-01.md) · [2026-07-31](02-data-cloud/2026-07-31.md) · [2026-07-29](02-data-cloud/2026-07-29.md) · [2026-07-28](02-data-cloud/2026-07-28.md) · [2026-07-27](02-data-cloud/2026-07-27.md) · [2026-07-26](02-data-cloud/2026-07-26.md) |
-| [03-salesforce-ai-research/](03-salesforce-ai-research/) | Salesforce AI Research: benchmarks (CRMArena, SCUBA, GIFT-Eval), open models, agent-lifecycle tooling | [2026-07-30](03-salesforce-ai-research/2026-07-30.md) · [2026-08-01](03-salesforce-ai-research/2026-08-01.md) · [2026-07-31](03-salesforce-ai-research/2026-07-31.md) · [2026-07-29](03-salesforce-ai-research/2026-07-29.md) · [2026-07-28](03-salesforce-ai-research/2026-07-28.md) · [2026-07-27](03-salesforce-ai-research/2026-07-27.md) · [2026-07-26](03-salesforce-ai-research/2026-07-26.md) |
+| [01-agentforce/](01-agentforce/) | Agentforce platform, builder and Agent Script, developer tooling, governance, pricing | [2026-08-01](01-agentforce/2026-08-01.md) · [07-31](01-agentforce/2026-07-31.md) · [07-30](01-agentforce/2026-07-30.md) · [07-29](01-agentforce/2026-07-29.md) · [07-28](01-agentforce/2026-07-28.md) · [07-27](01-agentforce/2026-07-27.md) · [07-26](01-agentforce/2026-07-26.md) |
+| [02-data-cloud/](02-data-cloud/) | Data 360 (ex-Data Cloud): ingestion, modeling, grounding, zero-copy, semantic layer | [2026-08-01](02-data-cloud/2026-08-01.md) · [07-31](02-data-cloud/2026-07-31.md) · [07-30](02-data-cloud/2026-07-30.md) · [07-29](02-data-cloud/2026-07-29.md) · [07-28](02-data-cloud/2026-07-28.md) · [07-27](02-data-cloud/2026-07-27.md) · [07-26](02-data-cloud/2026-07-26.md) |
+| [03-salesforce-ai-research/](03-salesforce-ai-research/) | Salesforce AI Research: benchmarks (CRMArena, SCUBA, GIFT-Eval), open models, agent-lifecycle tooling | [2026-08-01](03-salesforce-ai-research/2026-08-01.md) · [07-31](03-salesforce-ai-research/2026-07-31.md) · [07-30](03-salesforce-ai-research/2026-07-30.md) · [07-29](03-salesforce-ai-research/2026-07-29.md) · [07-28](03-salesforce-ai-research/2026-07-28.md) · [07-27](03-salesforce-ai-research/2026-07-27.md) · [07-26](03-salesforce-ai-research/2026-07-26.md) |
 
 ## Topic files — the running story
 
@@ -27,7 +29,7 @@
 | [trust-security-and-governance.md](trust-security-and-governance.md) | Einstein Trust Layer, user-mode defaults, SOAP login retirement, secrets handling |
 | [pricing-and-certification.md](pricing-and-certification.md) | Flex Credits, pay-per-resolution, Agentforce Specialist exam changes |
 
-## State of play — as of 2026-07-30
+## State of play — as of 2026-08-01
 
 Five things define the current Salesforce AI landscape. If you only retain five, retain these.
 
@@ -65,4 +67,98 @@ Five things define the current Salesforce AI landscape. If you only retain five,
 
 ---
 
-_Last updated: 2026-07-30 · Sources are linked inline in each topic file._
+## Writing contract
+
+The `daily-agentforce-updates` routine writes to this contract. It lives here rather than in the prompt so the rules travel with the repo.
+
+### Routing — one canonical home per item
+
+Write the full entry in exactly one topic file. Other topic files may carry a one-line cross-link, never a copy.
+
+| Subject | Canonical file |
+|---|---|
+| Builder, Agent Script, orchestration, Voice, Contact Center, mobile SDK, observability, Coworker, prebuilt agents | [agentforce-platform.md](agentforce-platform.md) |
+| Data 360 ingestion, modeling, grounding, SOQL, Code Extensions, connectors, zero-copy, semantic layer | [data-360.md](data-360.md) |
+| MCP servers, Headless 360, Agent Fabric, ADLC, `sf` CLI, npm libraries, Apex/LWC, IDEs | [developer-tooling-and-apis.md](developer-tooling-and-apis.md) |
+| Trust Layer, execution modes, sharing, auth retirements, secrets, Release Update enforcement | [trust-security-and-governance.md](trust-security-and-governance.md) |
+| Flex Credits, pay-per-resolution, ELAs, certifications, acquisitions | [pricing-and-certification.md](pricing-and-certification.md) |
+
+**Tie-breakers.** MCP servers route to `developer-tooling-and-apis.md` even when Data-360-specific — `data-360.md` gets the cross-link. A licence, price or exam-scope fact about a tool routes to `pricing-and-certification.md`; the tool itself stays in its own file.
+
+### Topic-file entry — the primary deliverable
+
+```markdown
+## YYYY-MM-DD · <Title — names the thing, no marketing verbs>
+
+**What changed.** <the fact, ≤60 words>
+
+- **<Bolded lead label>.** <detail>
+- **<Bolded lead label>.** <detail>
+
+**Why it matters.** <2–4 sentences: the practitioner consequence, not a restatement of the fact.>
+
+**Gotchas:**
+- <the trap, with the exact identifier that triggers it>
+
+**Study action:** <one concrete thing to do in a dev org, a repo or the CLI.>
+
+**Status:** GA / Beta / Pilot / Developer Preview / Announced / Open source — plus the release and date.
+
+**Sources:** [Title](url) · [Title](url)
+```
+
+Rules:
+
+- **No paragraph over ~60 words.** Any inline enumeration — "four skills:", "Three concrete things", "(1)…(2)…(3)" — becomes a list.
+- **`**Why it matters.**` is a fixed literal string.** Not "why it's worth your time", not "what it means practically". It has to stay greppable.
+- **`**Study action:**` is mandatory on every entry.**
+- **`**Gotchas:**` is mandatory when the item has an API, CLI, metadata type, permission set or config surface**, and identifiers must be exact. The bar is the Data Library entry: treat the library as ready when `retrieverId` goes non-null, not when `status` flips; `rag_feature_config_id` is `"ARFPC_" + libraryId`.
+- **Mermaid diagrams belong here**, not in a scan log. Use one for a flow, a routing decision or a dependency graph.
+- **A negative finding carries a timestamp.** "No commits since July 24" was true when checked on 07-28 and false hours later.
+
+### Write discipline
+
+- **New entry** → append at the top. Every topic file reads newest-first.
+- **Status change to an existing entry** → mutate in place and prepend `> **Correction (YYYY-MM-DD):** <what this said before, what it is now>`.
+- **Never bump an existing heading's date.** That is what put a 07-27 entry between two 07-26 entries in `agentforce-platform.md`.
+- **Never delete a superseded claim** — supersede it visibly.
+- Touching several topic files in one run is normal; top-appending in all of them at once is what caused the merge conflict in `bbff18a`, so commit once per run.
+
+### Dated scan note — an audit log, not a write-up
+
+Target ≤25 lines. No table of contents. No `## What this scan did not find` essay. No `**Status:** N/A — scan record`.
+
+```markdown
+# <Area> — <Month D, YYYY>
+
+**Window:** <UTC range> (24h / extended to 72h) · **Checked:** <sources>
+
+## What changed
+- **<Item>** → [agentforce-platform.md](../agentforce-platform.md#anchor) — <one line>
+
+## Verified negatives
+- `salesforce/agentscript` — newest `main` commit 2026-07-24, "<subject>", checked <UTC time>
+```
+
+A verified negative names the artifact and when it was checked. Anything vaguer is omitted, not padded.
+
+### Standing notes — do not restate these in dated notes
+
+- `salesforce.com`, `salesforceben.com`, `arxiv.org` and `huggingface.co` return **403** to automated fetching. Use search-result snippets and secondary coverage; a negative from these sources is weaker than one from GitHub.
+- An **org-wide OSPO CODEOWNERS sweep on 2026-07-29** makes many Salesforce repositories look freshly updated. Repository metadata is not code — check commits.
+- The three `agentforce-*` skills ship from one internal source into two public repos at identical versions: `SalesforceAIResearch/agentforce-adlc` (**CC BY-NC 4.0**, blocks client work) and `forcedotcom/sf-skills` (**Apache-2.0**). The restriction attaches to the copy you took — prefer `sf-skills` for anything commercial.
+
+### Feeding the study base
+
+- New jargon defined in an entry → the right alphabetical section of [GLOSSARY.md](../GLOSSARY.md).
+- Each scan adds strict `Q:` / `A:` pairs to the relevant `../02-salesforce-ai/NN-topic/flashcards.md`.
+- An item big enough to be its own subject (a product or capability with its own surface, not a version bump) → next-numbered `NN-kebab-case` folder in [02-salesforce-ai](../02-salesforce-ai/INDEX.md) from `../_templates/`, update that INDEX, and link it from the radar entry with a `**Study folder:**` line.
+
+### Coverage, staleness and the weekly pass
+
+- **Every run** reports the last-touched date of all five topic files. Anything untouched **>14 days** gets a gap check that run. `trust-security-and-governance.md` went 8 commits with zero updates before anything noticed.
+- **Weekly (first run on or after Sunday):** rewrite *State of play*, prune resolved *Open questions* and add new ones, refresh the areas-table `Latest` column and the footer date, and reconcile any item that has landed in two topic files.
+
+---
+
+_Last updated: 2026-08-01 · Sources are linked inline in each topic file._
