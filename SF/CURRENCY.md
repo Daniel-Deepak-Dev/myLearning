@@ -55,6 +55,15 @@ Both are commonly asserted as dead. Neither is, and saying so to a client is a c
 
 > **Not new — a myth corrected in phase 03.** `??`, `?.` and `switch on` are routinely written up as modern Apex. None of them is new at 67.0: `switch on` is **Summer '18 (43.0)**, safe navigation is **Winter '21 (50.0)**, null coalescing is **Spring '24 (60.0)**. Useful for dating an inherited codebase; not a release-notes talking point.
 
+## New in async Apex at 67.0 — checked in phase 04
+
+- **Elastic limits for async jobs are Beta.** `Queueable` and `@future` jobs can be enqueued up to **twice** the licensed daily limit, with the overflow throttled rather than rejected. This changes a *failure mode*, not just a ceiling: a runaway chain used to stop with a `LimitException` and now merely slows down. Read `DailyAsyncApexElasticExecutions` and `DailyAsyncApexProcessed` from `System.OrgLimits.getMap()` rather than assuming headroom. → [02-apex · 12](02-apex-and-triggers/12-async-apex-overview-and-choosing.md), [13](02-apex-and-triggers/13-queueable-apex-and-chaining.md)
+- **The security flip reaches async, and it fails quietly there.** A batch `QueryLocator`, a scheduled job's query and a finalizer's audit insert all default to **user mode** at 67.0. The symptom is not an exception — it is a nightly job that processes a subset of its scope and still reports `Completed`. Audit `CronTrigger.OwnerId` and any unqualified `Database.getQueryLocator` in scheduled work. → [02-apex · 14](02-apex-and-triggers/14-batch-apex-and-stateful-processing.md), [15](02-apex-and-triggers/15-scheduled-apex-and-cron.md)
+
+> **Not new — a myth corrected in phase 04.** `Database.Cursor` is routinely written up as a Summer '26 addition and as a way around the 50,000-row query limit. **Both are wrong.** Apex cursors have been **GA since Summer '24 (API 61.0)**, and `Cursor.fetch()` costs a SOQL query whose rows count against the row limit — so a cursor buys you **heap and resumability across transactions** (2-day lifetime), not row budget. → [02-apex · 17](02-apex-and-triggers/17-database-cursor-and-large-result-sets.md)
+
+> **A retirement to add to the list above.** **Legacy named credentials are deprecated** and will be discontinued. Since Winter '23 the model is two objects — an *external credential* (authentication protocol plus principals) and a *named credential* (base URL, pointing at one). The migration is not a rename: the legacy object has no principals, so it cannot express *who* may call out via a permission set. → [02-apex · 19](02-apex-and-triggers/19-callouts-named-credentials-and-http-in-apex.md)
+
 ## Licensing changes that change a design decision
 
 - **Flow Orchestration is a standard flow type as of 2026-02-18** — previously a paid add-on. Included with no usage-based run limits in Enterprise, Performance, Unlimited, all Einstein 1 and Developer editions. Cost was the usual reason to stay on classic approvals; that reason is gone. → [01-admin · 12](01-admin-and-declarative-platform/12-approval-processes-and-approval-orchestration.md)

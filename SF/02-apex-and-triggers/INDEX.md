@@ -1,6 +1,6 @@
 # 02 · Apex & Triggers
 
-Expert Apex, including the **API 67.0 security rewrite that invalidates most published examples**. **24 topics** · phases [03](PHASES.md) — **complete ✅**, [04](PHASES.md), [05](PHASES.md).
+Expert Apex, including the **API 67.0 security rewrite that invalidates most published examples**. **24 topics** · phases [03](PHASES.md), [04](PHASES.md) — **complete ✅**, [05](PHASES.md).
 
 > Currency: **Summer '26 (API 67.0)** · [flag legend](../README.md#flag-legend) · [what changed](../CURRENCY.md)
 
@@ -17,16 +17,16 @@ Expert Apex, including the **API 67.0 security rewrite that invalidates most pub
 | 07 | [Order of execution & recursion](07-order-of-execution-and-recursion.md) ⚠️ | the Apex slice of the save order; per-record guards, not `hasRun` | 03 |
 | 08 | [Bulkification patterns](08-bulkification-patterns.md) | maps/sets, no SOQL-DML in loops, 200-record chunks | 03 |
 | 09 | [Exception handling & custom exceptions](09-exception-handling-and-custom-exceptions.md) | catch scope, `addError` vs `throw`, partial-success design | 03 |
-| 10 | Apex security: user mode & FLS 🆕⚠️ | user mode is the 67.0 default; `WITH SECURITY_ENFORCED` retired | 04 |
-| 11 | Sharing keywords & Apex managed sharing 🆕⚠️ | keyword-less classes now `with sharing`; triggers always system mode | 04 |
-| 12 | Async Apex overview & choosing | future vs queueable vs batch vs events | 04 |
-| 13 | Queueable Apex & chaining ⚠️ | replaces `@future`; delay, depth, allowCallouts | 04 |
-| 14 | Batch Apex & stateful processing | scope sizing, `Database.Stateful`, failure isolation | 04 |
-| 15 | Scheduled Apex & CRON | Schedulable, CRON syntax, scheduling from Apex | 04 |
-| 16 | Transaction Finalizers *(GA Winter '22)* | post-Queueable hook, retry/alert on uncatchable failures | 04 |
-| 17 | `Database.Cursor` & large result sets 🆕 | cursor pagination, heap avoidance, vs QueryLocator | 04 |
-| 18 | Platform Events & CDC in Apex | publish behaviours, event triggers, replay handling | 04 |
-| 19 | Callouts, Named Credentials & HTTP ⚠️ | callout limits, new-style named credentials, no hardcoded endpoints | 04 |
+| 10 | [Apex security: user mode & FLS](10-apex-security-user-mode-and-fls.md) 🆕⚠️ | user mode is the 67.0 default; `WITH SECURITY_ENFORCED` retired | 04 |
+| 11 | [Sharing keywords & Apex managed sharing](11-sharing-keywords-and-apex-managed-sharing.md) 🆕⚠️ | keyword-less classes now `with sharing`; triggers always system mode | 04 |
+| 12 | [Async Apex overview & choosing](12-async-apex-overview-and-choosing.md) | future vs queueable vs batch vs events; elastic async limits are **Beta** | 04 |
+| 13 | [Queueable Apex & chaining](13-queueable-apex-and-chaining.md) ⚠️ | replaces `@future`; delay, stack depth, `DuplicateSignature`, allowCallouts | 04 |
+| 14 | [Batch Apex & stateful processing](14-batch-apex-and-stateful-processing.md) | scope sizing, `Database.Stateful` (instance members **only**), failure isolation | 04 |
+| 15 | [Scheduled Apex & CRON](15-scheduled-apex-and-cron.md) | Schedulable, 7-field CRON, the deployment lock on pending jobs | 04 |
+| 16 | [Transaction Finalizers](16-transaction-finalizers.md) *(GA Winter '22)* | post-Queueable hook; the only code that survives an uncatchable failure | 04 |
+| 17 | [`Database.Cursor` & large result sets](17-database-cursor-and-large-result-sets.md) 🆕 | GA since Summer '24; `fetch()` **costs a query** — saves heap, not rows | 04 |
+| 18 | [Platform Events & CDC in Apex](18-platform-events-and-cdc-in-apex.md) | publish behaviours, event triggers, 10 runs then the subscriber dies | 04 |
+| 19 | [Callouts, Named Credentials & HTTP](19-callouts-named-credentials-and-http-in-apex.md) ⚠️ | callout limits, external + named credential split, no hardcoded endpoints | 04 |
 | 20 | Apex testing fundamentals ⚠️ | `@TestSetup`, data factory, never `SeeAllData=true` | 05 |
 | 21 | Apex testing advanced & mocking | HttpCalloutMock, Stub API, `Assert` class, async assertions | 05 |
 | 22 | Invocable Apex & Agentforce actions 🆕 | `@InvocableMethod` contract, mandatory no-arg constructor at 67.0 | 05 |
@@ -36,7 +36,8 @@ Expert Apex, including the **API 67.0 security rewrite that invalidates most pub
 ## Related
 
 - **07** is the code-side twin of [01-admin · 14 Order of execution](../01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md). **That note landed first in phase 01 and is the reference** — 07 carries only the Apex slice of the save order and links across for the full twenty steps, rather than keeping a second copy that can drift.
-- **01–09 were written before phase 04 owns the security defaults**, so they state the 67.0 position without explaining it. The explanation is [10–11](PHASES.md).
+- **01–09 were written before phase 04 owns the security defaults**, so they state the 67.0 position without explaining it. The explanation is [10](10-apex-security-user-mode-and-fls.md) and [11](11-sharing-keywords-and-apex-managed-sharing.md).
 - **10–11** are the Apex projection of [07-security-and-sharing](../07-security-and-sharing/INDEX.md) — read together.
+- **17 is not a row-limit escape hatch.** `Database.Cursor.fetch()` costs a SOQL query and its rows count against the row limit; the win is heap and resumability. Reach for [14](14-batch-apex-and-stateful-processing.md) when you need 50 M rows chunked for you.
 - **19** continues in [06-integration-and-apis · 15 Named credentials](../06-integration-and-apis/INDEX.md).
 - **22–23** are the bridge into [AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) — that note already carries the 67.0 action-contract facts.

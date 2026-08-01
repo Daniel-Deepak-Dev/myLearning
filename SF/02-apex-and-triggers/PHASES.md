@@ -1,6 +1,6 @@
 # Phases for 02 · Apex & Triggers
 
-24 topics across 3 runs — **phase 03 complete**. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
+24 topics across 3 runs — **phases 03–04 complete**, 19 of 24 written. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
 
 > **The area-wide constraint.** Three defaults flipped at API 67.0 — user mode, `with sharing`, `WITH SECURITY_ENFORCED` retired. Phase 04 owns them, but **every phase must be written as if they are already true.** Never show a code sample that relies on the old defaults without labelling it. Anchor: [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
 
@@ -38,7 +38,7 @@
 
 ---
 
-## Phase 04 — Apex security defaults, async & events · 10 files ⬜
+## Phase 04 — Apex security defaults, async & events · 10 files ✅
 
 **The most currency-sensitive run in the vault.**
 
@@ -61,12 +61,22 @@
 - **13** — `@future` is legacy. Queueable is the default async choice; cover delay, depth limits, `allowCallouts`.
 - **19** — hardcoded endpoints and the legacy Named Credential model are both wrong now.
 
-**🆕** — **17** `Database.Cursor`: research the actual limits and how it differs from `QueryLocator` before writing.
+**🆕** — **17** ~~`Database.Cursor`: research the actual limits and how it differs from `QueryLocator` before writing.~~ **Researched during phase 04, and the framing in the plan was wrong twice over.** Cursors are not a Summer '26 feature — they are **GA and have been since Summer '24 (API 61.0)**, so 🆕 holds only in the flag legend's 2024–2026 sense. More importantly, **a cursor is not a row-limit escape hatch**: `Cursor.fetch()` costs a SOQL query and the rows it returns count against the query row limit, so 50,000 rows per transaction still applies. What a cursor actually buys is **heap** and **resumability** — the handle survives into the next transaction (2-day lifetime), which makes it the Queueable-chain counterpart to a batch `QueryLocator`. Real numbers now in the note: 50 M rows per cursor, 100 `fetch()` calls per transaction shared across cursor types, 10,000 cursors / 200,000 pagination cursors per org per 24 h, and two exception types where only `TransientCursorException` is retryable. The `PaginationCursor` / `Database.CursorFetchResult` variant was a genuine discovery and is covered.
 
-**Seed harvest**
-- **14** — `Batch For Loop - maintains heap size` is the **best gotcha in the whole corpus**: measured heap 1050→20000 vs 1050→1200 for 450 records. Harvest it as a `> **From my notes.**` callout.
-- **10** — the old `WITH SECURITY_ENFORCED` page is now **actively wrong**. Good raw material for the "what changed" framing.
-- **13** — `Future vs Queueable` is a stub; its comparison table doesn't export.
+**Seed harvest** · *two of three harvested; the third was a dead embed as predicted*
+- **14** — `Batch For Loop - maintains heap size` is the **best gotcha in the whole corpus**: measured heap 1050→20000 vs 1050→1200 for 450 records. Harvest it as a `> **From my notes.**` callout. → *done, with one qualification added: inside a batch `execute()` the scope list is already bounded, so the SOQL-for-loop trick applies to any **additional** query in that method, not to the scope itself.*
+- **10** — the old `WITH SECURITY_ENFORCED` page is now **actively wrong**. Good raw material for the "what changed" framing. → *used as the callout. The note claimed the clause "handled FLS"; it never checked the `WHERE` clause, never resolved polymorphic fields, and threw on the first violation only — so it was wrong before it stopped compiling.*
+- **13** — `Future vs Queueable` is a stub; its comparison table doesn't export. → *confirmed dead. The comparison table in 13 was rebuilt from the current docs; **13 carries no `From my notes.` callout.***
+- **11** — *unplanned harvest.* `UserRecordAccess Query Problem` turned out to be substantive and became 11's callout: the query **must** filter on `RecordId`, `RecordId IN` is capped at **200** records so it does not bulkify like ordinary SOQL, and `HasEditAccess` answers a sharing question only — it can be `true` for a user with no Edit permission on the object.
+- **19** — *unplanned harvest.* `Can We Perform Callout After DML Operation?` became 19's callout. Its answer ("use `@future`") is superseded by a `Queueable implements Database.AllowsCallouts`, and the better fix is usually to reorder so the callout runs *before* the DML.
+
+**Other corrections made while writing**
+- **The plan's "queueable delay, depth limits" line understated the surface.** `AsyncOptions` carries three things, not one: `MinimumQueueableDelayInMinutes`, `MaximumQueueableStackDepth` and `DuplicateSignature`. Duplicate suppression (`QueueableDuplicateSignature.Builder` → `DuplicateMessageException`) is the most useful of the three and was missing from the plan entirely.
+- **Chain depth is capped at 5 in Developer and Trial orgs only** — production has no documented ceiling. That inverts the usual testing story: a runaway chain fails safely in the sandbox and burns the daily async limit in production.
+- **Finalizers can make callouts**, which the phase plan did not anticipate, and they run under *synchronous* limits with three exceptions (heap, max enqueued jobs, `@future` limits) that use the async caps.
+- **Platform event subscribers fail dead, not loud.** Ten runs — one attempt plus nine retries — then the trigger enters an error state and stops processing **new** events until the class is fixed and saved. 18 was written around that rather than around the retry mechanics.
+- **Elastic async limits (Beta at 67.0) change a failure mode, not just a number.** A runaway Queueable chain used to stop with a `LimitException`; throttled overflow means it now just slows down. Called out in 12, 13 and 16.
+- **Batch is not exempt from the security flip.** A `QueryLocator` built in `start()` defaults to user mode, so an old nightly job processes a *subset* and still reports success. This is in 14's currency section and is the most likely real-world 67.0 regression in the run.
 
 ---
 
