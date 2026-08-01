@@ -12,6 +12,7 @@ Companion folder to [ai-salesforce-architect-roadmap.html](ai-salesforce-archite
 | [03-claude-cca/](03-claude-cca/INDEX.md) | Claude API, agents, MCP, Claude Code → **CCA-F** cert |
 | [04-capstone/](04-capstone/INDEX.md) | The shipped proof: MCP server, RAG assistant, Agentforce build |
 | [05-release-radar/](05-release-radar/README.md) | Running log of Salesforce AI updates, in three areas: `01-agentforce/`, `02-data-cloud/`, `03-salesforce-ai-research/` |
+| [../SF/](../SF/README.md) | **Core Salesforce platform** — Apex, LWC, Flow, Admin, Experience Cloud, Integration, Security, Data, DevOps. The platform underneath this path |
 | [99-inbox/](99-inbox/INBOX.md) | Capture anything new before it has a home |
 | [journal/](journal/) | Weekly learning log |
 | [QUICKSTART-LINKS.md](QUICKSTART-LINKS.md) | **Start here for Agentforce + Data 360** — curated links, first-week plan, outdated-source traps |
