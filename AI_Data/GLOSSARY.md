@@ -78,6 +78,7 @@ Extracted from [the roadmap](ai-salesforce-architect-roadmap.html) glossary tab,
 | Identity Resolution | Matching records across sources into one unified individual using match rules and reconciliation rules. Under profile-based pricing, its quality is a **direct recurring cost lever**. |
 | Intelligent Context | Automatic extraction of unstructured content (PDFs, tables, images, flowcharts) into grounding data via a low-code pipeline. The same document can be interpreted from multiple business perspectives. |
 | Lakehouse | Architecture combining a data lake's cheap open storage with a warehouse's query performance and governance. |
+| Lakehouse Federation (Databricks) | Databricks' feature for querying an external system as if it were a native table. The mechanism behind **Data 360 File Sharing into Unity Catalog** — the *inward* path, where a Databricks notebook reads Salesforce data in place. Do not confuse with Data 360's own zero-copy federation, which points *outward*. |
 | Match Rules | Criteria (exact or fuzzy — email, name+phone, etc.) that decide when two records represent the same person. |
 | OSI | A vendor-neutral, YAML-based open-source standard for interoperable semantic models, metrics and relationships. Core spec finalized February 2026. |
 | Profile (billing sense) | A **unified individual after identity resolution** — the unit Data 360 is priced on (~$240 per 1,000 baseline). Not a raw source row, so duplicates inflate a recurring bill. |
@@ -87,7 +88,9 @@ Extracted from [the roadmap](ai-salesforce-architect-roadmap.html) glossary tab,
 | Segment | A defined audience slice built from profiles, attributes and insights — the unit you activate to other systems. |
 | Semantic Layer | A governed layer of business definitions (what counts as "revenue") between raw data and consumers. **Tableau Semantics** is the Salesforce implementation: an agent asked "what was churn last quarter" gets the company's definition rather than inventing one. |
 | `SET OPTIONS` | SOQL clause (Summer '26) specifying the Data 360 dataspace and controlling `NULL` / empty-string handling. Goes at the **very end** of the query. |
+| STDM (Standard Data Model) | Salesforce's prebuilt Data 360 schema, so data landing from different sources arrives in a shape the platform already understands instead of one you map by hand. Agentforce writes **production agent session traces** as STDM records — which is why debugging a live agent is a Data 360 query. |
 | Unified Profile | The single individual record produced after identity resolution, linking all source records and behaviors. |
+| Unity Catalog | Databricks' governance layer for data and AI assets. **Salesforce Data 360 File Sharing into Unity Catalog** (GA October 2025) registers Data 360 objects as shared files that Databricks SQL reads directly, authenticated by **IAM Workload Identity Federation** — secretless, no long-lived key on either side. |
 | Vector Database (Data 360) | Data 360's built-in store of embeddings for unstructured content, powering semantic search and grounded AI answers. |
 | Zero Copy / BYOL | Federation pattern: query data in Snowflake, BigQuery, Databricks or Redshift in place — bring your own lake — without copying it into Data 360. |
 
@@ -95,6 +98,8 @@ Extracted from [the roadmap](ai-salesforce-architect-roadmap.html) glossary tab,
 
 | Term | Definition |
 |---|---|
+| `accessCheck` | Agent Skill frontmatter declaring the **org permission** a skill needs (e.g. `userPerm: "ManageSandboxes"`), so it fails fast instead of dying inside a REST call. Sibling of `cliTools`, which declares the local CLI it needs. Both added to `forcedotcom/sf-skills` in late July 2026. |
+| `findSessions` | The documented entry point in the `agentforce-observe` skill for locating a specific production agent conversation in Data 360 STDM trace records before analysing it. Companion reference: `stdm-queries.md`. |
 | Headless 360 | The organizing idea of Summer '26: every major Salesforce capability reachable as an **API, an MCP tool, or a CLI command**, by a human, an app or an autonomous agent. |
 | Hosted MCP Server | A Salesforce-hosted MCP server exposing org capability to any MCP client over standard OAuth. Standard servers (SObject, Data 360, Tableau) are **GA**; custom servers **respect the org's full sharing and security model**. |
 | System Mode | Execution context ignoring the running user's permissions. Apex **triggers always run in system mode** at 67.0 and can no longer declare sharing or access modes. |

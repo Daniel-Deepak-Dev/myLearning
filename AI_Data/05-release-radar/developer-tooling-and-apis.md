@@ -4,6 +4,59 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-07-31 · `sf-skills` 1.33.0 — a Help Agent skill, and skills that declare their own preconditions
+
+**What changed.** [`forcedotcom/sf-skills`](https://github.com/forcedotcom/sf-skills) tagged **1.33.0** on 2026-07-31 at 17:57 UTC (commit `40db639`, work item `@W-23641814@`): **10 new and 16 updated skills**, 26 directories, 2,393 files. An *Agent Skill* is a folder with a `SKILL.md` telling a coding agent **when** to take over and **how** — procedural knowledge it loads on a trigger match, not code you call.
+
+**The cadence is the first thing to internalise: this library ships weekly, on Fridays** — 1.28/1.29 on July 3, then July 10, 17, 24 and 31. Plan around it rather than treating each release as an event.
+
+**The headline skill is `service-helpagent-coordinate` (0.9)** — the first built around the **Help Agent**, the prepackaged Service Agent that reached GA in July '26 on pay-per-resolution pricing.
+
+It drives a guided **four-checkpoint flow**: setup → channel configuration → grounding on Salesforce Knowledge → go-live. Its triggers map the product's real surface: Experience Cloud / LWR embed, web chat, voice, phone, Knowledge grounding.
+
+Notably, it **hard-stops on channels that are announced but not shippable** rather than improvising — an honest design choice worth copying.
+
+**The other nine new skills cluster in three groups:**
+
+| Group | Skills |
+|---|---|
+| Digital engagement (the plumbing a Help Agent needs to reach a customer) | `service-digital-engagement-channel-configure`, `-deployment-configure`, `-messaging-site-integrate` |
+| Experience Cloud front end | `experience-lwr-site-generate`, `experience-lds-data-requirements-generate`, `experience-ui-bundle-mfa-configure` |
+| Platform utilities | `platform-report-generate`, `platform-data-and-tooling-api-context-get`, `platform-sandbox-configure` |
+
+**The quiet story is declared preconditions.** `platform-sandbox-configure` ships at **1.0** — not 0.x like almost everything else — and carries a frontmatter field this radar had not seen:
+
+```yaml
+accessCheck:
+  - type: "userPerm"
+    value: "ManageSandboxes"
+```
+
+That declares the **org permission** the skill needs, the way `cliTools` (added July 30) declares the local CLI it needs. Together they let a skill fail fast with *"you lack ManageSandboxes"* instead of dying inside a REST call.
+
+**Product news leaks through the updated `agentforce-*` trigger text:**
+
+- **`agentforce-generate` 0.11** now names **`sf agent mcp`** — registering, listing and deleting MCP servers, whitelisting and approving MCP tools, configuring MCP auth. A command surface present in a shipped skill is a stronger signal than a roadmap slide.
+- **`agentforce-test` 0.8** expands from functional testing to **security testing explicitly** — OWASP LLM Top 10, red-teaming, prompt-injection, a security grade.
+- **`agentforce-observe` 0.8** is the Data 360 one — see [data-360.md](data-360.md#2026-07-31--data-360-is-the-observability-backend-for-agentforce--and-agentforce-observe-names-the-query-path).
+
+**Why it matters.** Salesforce's implementation guidance is now shipped as **versioned, diffable artifacts on a weekly train**, ahead of the prose documentation. `service-helpagent-coordinate`'s four checkpoints are the closest thing to an official Help Agent implementation order that exists in public, and `agentforce-test` 0.8 is a ready-made agent security checklist you no longer have to invent.
+
+**Gotchas:**
+- `service-helpagent-coordinate` declares **`minApiVersion: "67.0"`** — a *higher* floor than `agentforce-generate`'s `66.0`. It needs a newer org than the core skill does.
+- `agentforce-observe` declares **`sf >= 2.136.8`** as its CLI floor.
+- Install with **`npx skills add forcedotcom/sf-skills`** (pre-packaged in Agentforce Vibes). Pin the release tag: the README warns skills *"may be renamed, restructured, or removed between releases"* with no API-stability guarantee.
+- **Skill version numbers are not a reliable change indicator** — `agentforce-observe` shipped in 1.33.0 at the same `0.8` it carried in the July 30 `agentforce-adlc` sync.
+- **Licence depends on which repo you clone from** — see [pricing-and-certification.md](pricing-and-certification.md#2026-08-01--the-same-agentforce-skills-ship-under-two-licences--only-one-permits-client-work).
+
+**Study action:** `npx skills add forcedotcom/sf-skills`, then open `skills/platform-sandbox-configure/SKILL.md` and `skills/agentforce-generate/SKILL.md` side by side and diff their frontmatter — `accessCheck`, `cliTools`, `minApiVersion`, `relatedSkills`. Then add an `accessCheck` block to one skill of your own and confirm it fails fast in an org lacking the permission.
+
+**Status:** Open-source release **1.33.0, 2026-07-31**, Apache-2.0. Salesforce-maintained, **not a supported Salesforce product** — no release train, no SLA, explicit stability disclaimer. Individual skills remain 0.x except `platform-sandbox-configure` at 1.0. The **Help Agent** it configures is separately GA as of July '26.
+
+**Sources:** [forcedotcom/sf-skills](https://github.com/forcedotcom/sf-skills) · [releases](https://github.com/forcedotcom/sf-skills/releases) · [commit history](https://github.com/forcedotcom/sf-skills/commits/main) · [`service-helpagent-coordinate` SKILL.md](https://github.com/forcedotcom/sf-skills/blob/main/skills/service-helpagent-coordinate/SKILL.md) · [`platform-sandbox-configure` SKILL.md](https://github.com/forcedotcom/sf-skills/blob/main/skills/platform-sandbox-configure/SKILL.md) · [`agentforce-test` SKILL.md](https://github.com/forcedotcom/sf-skills/blob/main/skills/agentforce-test/SKILL.md) · scan note [01-agentforce/2026-08-01](01-agentforce/2026-08-01.md)
+
+---
+
 ## 2026-07-30 · The DX Node library stack dropped Node 18 and 20 — `@salesforce/agents` is 2.0.0
 
 Between **20:21 and 22:22 UTC on July 29, 2026**, three libraries cut majors carrying one breaking change each: **[`@salesforce/core` 9.0.0](https://github.com/forcedotcom/sfdx-core/commits/main)**, **[`@salesforce/source-deploy-retrieve` 13.0.0](https://github.com/forcedotcom/source-deploy-retrieve/commits/main)**, **[`@salesforce/agents` 2.0.0](https://github.com/forcedotcom/agents/releases)** — `engines.node` raised to **`>=22.0.0`**, **Node 18 and 20 dropped** (both past EOL: April 2025 and April 2026). `@salesforce/kit` went to 4.0.0 and `@salesforce/ts-types` to 3.0.0 alongside.
@@ -50,9 +103,18 @@ Full write-up: [01-agentforce/2026-07-29](01-agentforce/2026-07-29.md).
 
 The interesting move is architectural. Registering ~200 REST operations as ~200 MCP tools would consume the model's context before any work starts, so the server fronts everything with **three facade tools** — **`search`** (find operations by intent, keyword or family), **`payload_examples`** (fetch a working JSON payload), **`execute`** (run any operation by name). Behind them: **201 operations across 22 tool families** — DLOs, DMOs, streams, mappings, transforms, identity resolution, segments, queries, ML.
 
-**Why it matters.** `payload_examples` is the pattern to steal: when a model must produce nested JSON for an unfamiliar API, **serve it a known-good example rather than a schema description** — hallucinated shapes are the default failure otherwise. Preview constraints rule it out of shared use: **STDIO only, single user/org per process, Java 17+ and Maven 3.9+ locally**. A **hosted GA version is planned for 2026**, no date confirmed. One governance flag: semantic search is powered by an **optional OpenAI API key**, so enabling it sends search terms to a third party — fine on a personal dev org, a conversation to have anywhere else.
+**Why it matters.** This is the canonical answer to context-window blowout in MCP design: a searchable facade over a large API surface instead of a flat tool list.
 
-Full write-up: [02-data-cloud/2026-07-29](02-data-cloud/2026-07-29.md).
+`payload_examples` is the specific pattern to steal — when a model must produce nested JSON for an unfamiliar API, **serve it a known-good example rather than a schema description.** Hallucinated shapes are the default failure otherwise. Transfers directly if you build your own MCP servers; see [03-claude-cca/](../03-claude-cca/INDEX.md).
+
+**Gotchas:**
+- Preview constraints rule it out of shared use: **STDIO only, single user/org per process, Java 17+ and Maven 3.9+ locally**.
+- Semantic search runs on an **optional OpenAI API key** — enabling it sends search terms to a third party. Fine on a personal dev org; a conversation to have anywhere else.
+- A **hosted GA version is planned for 2026**, no date confirmed.
+
+**Study action:** clone [`forcedotcom/d360-mcp-server`](https://github.com/forcedotcom/d360-mcp-server), call `search` for "identity resolution", then `payload_examples` on the operation it returns — and compare that request body to what you would have guessed from the REST reference alone.
+
+Full write-up: [02-data-cloud/2026-07-29](02-data-cloud/2026-07-29.md). Consolidated here on 2026-08-01 from a duplicate in [data-360.md](data-360.md).
 
 ---
 

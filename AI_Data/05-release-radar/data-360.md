@@ -16,6 +16,52 @@ Salesforce began calling Data Cloud **"Data 360"** at Dreamforce 2025 (Oct 14, 2
 
 ---
 
+## 2026-07-31 · Data 360 is the observability backend for Agentforce — and `agentforce-observe` names the query path
+
+**What changed.** The `agentforce-observe` skill (**0.8**, shipped in `forcedotcom/sf-skills` 1.33.0) exists to *"analyze production Agentforce agent behavior using session traces and Data Cloud."* Its trigger list is the informative part: it fires on querying **STDM** session data or Data 360 trace records, on investigating production agent failures or regressions, and on `findSessions` or trace-analysis queries.
+
+**STDM** is Salesforce's **Standard Data Model** — the prebuilt schema Data 360 uses so data from different sources lands in a shape the platform already understands, instead of one you map by hand each time.
+
+**Why it matters.** When an agent runs in production, what it did — which actions fired, what it retrieved, where it stalled — is written as **session trace records into Data 360**. That makes Data 360 the observability backend for the whole agent platform, not merely a customer-data store: **the debugging loop for a misbehaving agent is a Data 360 query.**
+
+This skill is the closest thing to a public, executable statement of what that query looks like.
+
+**The boundary the skill draws is a good map of the tooling**, and it splits by *environment*, not activity:
+
+| Situation | Tool |
+|---|---|
+| Authoring or debugging `.agent` files during development | `agentforce-generate` |
+| Writing test specs, pre-deployment | `agentforce-test` |
+| Production behaviour reconstructed from Data 360 traces | `agentforce-observe` |
+
+```mermaid
+flowchart LR
+    AGENT["Agentforce agent<br/>running in production"] -->|"session traces"| D360[("Data 360<br/>STDM trace records")]
+    D360 --> FIND["findSessions<br/>locate the conversation"]
+    FIND --> ANALYSE["stdm-queries.md<br/>trace analysis"]
+    ANALYSE --> REPRO["Reproduce in sf agent preview"]
+    REPRO --> FIX["Fix in .agent file<br/>(agentforce-generate)"]
+    FIX --> TEST["Regression test<br/>(agentforce-test)"]
+    TEST --> AGENT
+```
+
+So when someone reports that an agent "did something weird yesterday," the answer is **Data 360, not preview**.
+
+**Gotchas:**
+- The skill declares **`sf >= 2.136.8`** as its CLI floor.
+- Its reference file is **`stdm-queries.md`** (added in the 2026-07-30 `agentforce-adlc` sync) plus an `assets/apex/` tree; **`findSessions`** is the documented entry point for locating a conversation before analysing it.
+- Take it from **`forcedotcom/sf-skills`** (Apache-2.0), not `agentforce-adlc` (CC BY-NC 4.0) — see [pricing-and-certification.md](pricing-and-certification.md#2026-08-01--the-same-agentforce-skills-ship-under-two-licences--only-one-permits-client-work).
+- **Data 360 surfaces increasingly ship under Agentforce labels.** Scanning only Data-360-named sources misses the parts practitioners touch daily — this entry is the proof.
+- **Untouched in 1.33.0:** `data360-connect`, `data360-activate`, `agentforce-d360-analyze`. Those three are the ones to watch; a release that moves them signals a real change in ingestion, activation or analysis behaviour.
+
+**Study action:** open `skills/agentforce-observe/references/stdm-queries.md` and write down the STDM trace object names by hand — that schema is what your incident response runs on, and there is no equally concrete public description of it.
+
+**Status:** Skill update **`agentforce-observe` 0.8**, in `forcedotcom/sf-skills` **1.33.0, 2026-07-31**, Apache-2.0. Salesforce-maintained open source, **not a Data 360 product release** — no GA/Beta designation, no release train. The **skill version did not change** from the copy synced into `agentforce-adlc` on 2026-07-30; only the release carrying it is new.
+
+**Sources:** [`agentforce-observe` SKILL.md](https://github.com/forcedotcom/sf-skills/blob/main/skills/agentforce-observe/SKILL.md) · [forcedotcom/sf-skills](https://github.com/forcedotcom/sf-skills) · [releases](https://github.com/forcedotcom/sf-skills/releases) · [PR #47 — sync from sf-skills, agentforce-adlc](https://github.com/SalesforceAIResearch/agentforce-adlc/pull/47)
+
+---
+
 ## 2026-07-30 · The Python Data 360 connector: v1 deprecated, v2 still beta
 
 [`salesforce-cdp-connector`](https://github.com/forcedotcom/salesforce-cdp-connector) — the **read-only Python client** most people use to query Data 360 and pull results into **pandas** — states plainly: *"This package is deprecated and will be removed once `salesforce-datacloud-connector` reaches GA."* The replacement, **`salesforce-datacloud-connector` 2.0.0b1**, landed alongside it on **June 2, 2026** and is a **pre-release**: `pip install --pre salesforce-datacloud-connector`, because pip won't resolve a beta without the flag. **No GA date is published.** On **July 29, 2026** maintainers broadened v1 CI to run on all PRs — reassuring for the gap, not a promise.
@@ -90,21 +136,11 @@ A DevOps **data kit** can now move [code extensions](https://help.salesforce.com
 
 ---
 
-## 2026-07-26 · Data 360 MCP Server (Developer Preview)
+## 2026-07-26 · Data 360 MCP Server (Developer Preview) — moved
 
-An [open-source MCP server](https://developer.salesforce.com/blogs/2026/05/introducing-the-data-360-mcp-server-developer-preview) connecting a coding agent to Data 360.
+> **Correction (2026-08-01):** this item was written up **twice** — here and, more fully, in `developer-tooling-and-apis.md` dated 2026-07-29 — and the two copies disagreed on operation count and preview constraints. Per the routing table, MCP servers are canonically **developer tooling**. The full entry now lives there; nothing has been deleted, only reconciled.
 
-The design choice is worth studying on its own: rather than exposing roughly **200 REST operations** as 200 tools, it fronts them with **three facade tools** —
-
-| Tool | Purpose |
-|---|---|
-| `search` | find a capability by intent |
-| `payload_examples` | fetch a working request body |
-| `execute` | run it |
-
-**Why it matters.** This is the canonical answer to context-window blowout in MCP design: a searchable facade over a large API surface instead of a flat tool list. Directly transferable if you build your own MCP servers — see [03-claude-cca/](../03-claude-cca/INDEX.md).
-
-There is also a **Data 360 standard hosted MCP server** (GA) for Data 360 queries and graph traversal — see [developer-tooling-and-apis.md](developer-tooling-and-apis.md).
+Canonical entry: [developer-tooling-and-apis.md → Data 360 MCP Server](developer-tooling-and-apis.md#2026-07-29--data-360-mcp-server--200-rest-operations-behind-three-facade-tools). The separate **Data 360 standard hosted MCP server** (GA, queries and graph traversal) is in the same file.
 
 ---
 
@@ -115,6 +151,51 @@ The new `@IntegrationTest` Apex annotation allows **live callouts** and mid-tran
 Constraints: **scratch orgs only**; add `ApexIntegrationTests` to the `features` array in the scratch org definition; tests run asynchronously, one at a time, via the Tooling API `runTestsAsynchronous` resource.
 
 **Why it matters.** "You can't really test it" was a legitimate objection to grounding-heavy designs. This is the beginning of an answer — though scratch-org-only keeps it out of most real pipelines for now.
+
+---
+
+## 2025-10 · Databricks reads Data 360 in place — Unity Catalog file sharing
+
+_Background gap-fill, routed here 2026-08-01: this had lived only in a dated scan note ([02-data-cloud/2026-07-27](02-data-cloud/2026-07-27.md)), which is the wrong home for a durable architectural distinction._
+
+**What changed.** **Salesforce Data 360 File Sharing into Databricks Unity Catalog** lets Databricks query Data 360 objects **directly, in place**, on Databricks compute — no ingestion pipeline, no duplicated copy.
+
+Two terms first. **Unity Catalog** is Databricks' governance layer for data and AI assets. **Lakehouse Federation** is the Databricks feature that queries external systems as if they were native tables. Salesforce exposes Data 360 objects as shared files; Unity Catalog registers them; Databricks SQL reads the underlying files rather than round-tripping an API per query.
+
+**The distinction to hold — and the one people get backwards in design reviews:**
+
+| Mechanism | Direction | Who reads whose data |
+|---|---|---|
+| **Zero-copy federation** (Data 360's own) | *Outward* | Data 360 queries Snowflake / BigQuery / Databricks / Redshift where that data lives, so **agents** can be grounded in warehouse data without importing it |
+| **Unity Catalog file sharing** | *Inward* | The **data scientist's** Databricks notebook reads Salesforce-resident data without exporting it |
+
+```mermaid
+flowchart LR
+    subgraph SF["Salesforce Data 360"]
+        P["Unified profiles<br/>and DMOs"]
+    end
+    subgraph DBX["Databricks Lakehouse"]
+        L["Delta tables<br/>Unity Catalog"]
+    end
+    P -.->|"File Sharing into Unity Catalog<br/>Databricks reads Salesforce data in place"| L
+    L -.->|"Zero-copy federation<br/>Data 360 reads warehouse data in place"| P
+    style P fill:#0b5cad,color:#ffffff
+    style L fill:#8a4b00,color:#ffffff
+```
+
+**Why it matters.** Same principle — do not move the data — in opposite directions of travel. Most real programmes need both, and the live design question is **which system owns which join**. Get the direction wrong and you will architect an ingestion pipeline that neither side needed.
+
+**Gotchas:**
+- Authentication is **IAM Workload Identity Federation** — secretless, so no long-lived API key is stored on either side. This is usually what gets the connection through security review.
+- Databricks documents it separately for **AWS, Azure and Google Cloud**; the Azure page lives on Microsoft Learn, not on `databricks.com`.
+- Databricks' own docs still use the **`salesforce-data-cloud-file-sharing`** path slug — the product rename to Data 360 has not reached the URLs.
+- Do not confuse this with the **Databricks file-federation connector's IdP authentication**, a *separate* Summer '26 change on the outward path (see the 2026-07-28 entry above).
+
+**Study action:** in a design doc for any Salesforce + lakehouse programme, draw the two arrows above and label each with the consumer — agent or notebook. If you can only justify one arrow, you have found either an unnecessary pipeline or a missing one.
+
+**Status:** **GA since October 2025**; public preview **2025-06-05**. Documented for Databricks on AWS, Azure and Google Cloud. `databricks.com` returns HTTP 403 to automated fetching, so the announcement post was read via search extract, not first-party retrieval; the three Lakehouse Federation doc pages corroborate it.
+
+**Sources:** [Announcing Public Preview: Salesforce Data 360 File Sharing in Unity Catalog (Databricks)](https://www.databricks.com/blog/announcing-public-preview-salesforce-data-360-file-sharing-unity-catalog) · [Lakehouse Federation for Salesforce Data 360 File Sharing — AWS](https://docs.databricks.com/aws/en/query-federation/salesforce-data-cloud-file-sharing) · [— Azure](https://learn.microsoft.com/en-us/azure/databricks/query-federation/salesforce-data-cloud-file-sharing) · [— Google Cloud](https://docs.databricks.com/gcp/en/query-federation/salesforce-data-cloud-file-sharing)
 
 ---
 

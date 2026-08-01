@@ -60,3 +60,18 @@ A: Its listing showed "updated July 28, 2026" while `main` had no commits since 
 
 Q: Why is ADLC the strongest overlap between the Agentforce track and the Claude CCA track?
 A: Agent Skills use the same open format that Claude Code uses, so driving an Agentforce agent through the full lifecycle from Claude Code advances preparation for the Agentforce Specialist exam and the CCA-F at the same time.
+
+Q: The three `agentforce-*` skills exist in two public repos. Which one may you use on paid client work, and why?
+A: `forcedotcom/sf-skills` — Apache-2.0 since 2026-06-29. `SalesforceAIResearch/agentforce-adlc` is CC BY-NC 4.0, which forbids commercial use. The content and versions are identical; the licence attaches to the copy you took, not to the skill.
+
+Q: What is the release cadence of `forcedotcom/sf-skills`?
+A: Weekly, on Fridays. 1.33.0 shipped 2026-07-31 with 10 new and 16 updated skills.
+
+Q: What do the `accessCheck` and `cliTools` fields in an Agent Skill's frontmatter do?
+A: They declare preconditions — `accessCheck` names the required org permission (e.g. `ManageSandboxes`), `cliTools` the required local CLI — so the skill fails fast with a clear message instead of dying inside a REST call.
+
+Q: Which skill stands up a Help Agent, and what API version floor does it declare?
+A: `service-helpagent-coordinate` (0.9), a guided four-checkpoint flow — setup, channel configuration, Knowledge grounding, go-live. It declares `minApiVersion: "67.0"`, a higher floor than `agentforce-generate`'s `66.0`.
+
+Q: Why is an Agent Skill's version number a poor change indicator?
+A: `agentforce-observe` shipped in sf-skills 1.33.0 at the same `0.8` it carried in the earlier `agentforce-adlc` sync. Track the release tag and the commit, not the skill version.

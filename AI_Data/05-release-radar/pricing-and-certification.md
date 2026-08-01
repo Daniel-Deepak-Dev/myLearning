@@ -4,6 +4,48 @@ Commercial model and exam changes — the two things clients and recruiters ask 
 
 ---
 
+## 2026-08-01 · The same Agentforce skills ship under two licences — only one permits client work
+
+**What changed.** The three `agentforce-*` Agent Skills are published in **two public repositories from one internal source**, at identical versions, under **different licences**.
+
+| Repository | Licence | Commercial use |
+|---|---|---|
+| [`forcedotcom/sf-skills`](https://github.com/forcedotcom/sf-skills) | **Apache-2.0** (relicensed from Creative Commons on 2026-06-29, commit `a9a7700`) | **Allowed**, with attribution |
+| [`SalesforceAIResearch/agentforce-adlc`](https://github.com/SalesforceAIResearch/agentforce-adlc) | **CC BY-NC 4.0** | **Blocked** — forbids use *"primarily for commercial advantage or monetary compensation"* |
+
+**The evidence they are the same artifact.** `agentforce-generate` is `version: "0.11"` with `minApiVersion: "66.0"` and a word-for-word identical description in both repos; `agentforce-test` and `agentforce-observe` are both `0.8` in both. `agentforce-adlc` names its upstream as a closed repo called `sf-skills-internal`.
+
+```mermaid
+flowchart TD
+    INT["sf-skills-internal<br/>closed Salesforce repo<br/>source of truth"]
+    INT -->|"periodic sync"| ADLC["SalesforceAIResearch/agentforce-adlc<br/><b>CC BY-NC 4.0</b><br/>research toolkit, 3 skills + harness"]
+    INT -->|"weekly release, Fridays"| SFS["forcedotcom/sf-skills<br/><b>Apache-2.0</b> since 2026-06-29<br/>full library"]
+    ADLC --> SAME["agentforce-generate 0.11<br/>agentforce-test 0.8<br/>agentforce-observe 0.8<br/><i>identical in both</i>"]
+    SFS --> SAME
+    SAME --> Q{"Using this in<br/>paid client work?"}
+    Q -->|"copy taken from agentforce-adlc"| NO["Blocked — NonCommercial"]
+    Q -->|"copy taken from sf-skills"| YES["Allowed — Apache-2.0<br/>attribution required"]
+```
+
+**Why it matters.** *NonCommercial* and *consulting deliverable* do not coexist — but the restriction attaches to **the copy you took, not to the skill**. So "can I use this at work?" is not a question about an artifact; it is a question about a **URL**.
+
+The practical answer is therefore never "re-implement it from the ideas." It is "take it from the other repository."
+
+**Gotchas:**
+- **Default to `forcedotcom/sf-skills`** for the three `agentforce-*` skills. `forcedotcom` and `salesforce` are product-engineering orgs and trend permissive; `SalesforceAIResearch` is the research org and trends CC BY-NC.
+- **This does not clear the whole ADLC repo.** `agentforce-adlc` carries a research harness `sf-skills` does not; "take it from sf-skills instead" covers the skills only.
+- **Apache-2.0 is permissive, not public domain** — retain the licence and notice, and state your changes.
+- **Record the licence at the commit you took.** The 2026-06-29 relicensing here and the July 30 AnchorBench rewrite both moved licence text with **no version number change**.
+- The shared-upstream link is **inferred** from identical content and versions across two Salesforce orgs, one of which names `sf-skills-internal`. Salesforce does not state it.
+
+**Study action:** in any repo where you have vendored Salesforce AI material, run `git log --diff-filter=M -- LICENSE LICENSE.txt` and confirm the licence at the commit you actually took — then record that commit SHA next to the vendored copy.
+
+**Status:** Standing finding, surfaced **2026-08-01** while verifying the `sf-skills` 1.33.0 release. Neither repository is a supported Salesforce product. This **corrects the practical conclusion** of the 2026-07-31 scan note, which treated CC BY-NC 4.0 as a hard stop on the skills themselves; that note's description of `agentforce-adlc` remains accurate. Release itself: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-07-31--sf-skills-1330--a-help-agent-skill-and-skills-that-declare-their-own-preconditions).
+
+**Sources:** [sf-skills LICENSE.txt](https://github.com/forcedotcom/sf-skills/blob/main/LICENSE.txt) · [relicensing commit `a9a7700` (2026-06-29)](https://github.com/forcedotcom/sf-skills/commit/a9a77002cb98c27a7fd77b866e6eef542403400c) · [sf-skills `agentforce-generate` SKILL.md](https://github.com/forcedotcom/sf-skills/blob/main/skills/agentforce-generate/SKILL.md) · [agentforce-adlc `agentforce-generate` SKILL.md](https://github.com/SalesforceAIResearch/agentforce-adlc/blob/main/skills/agentforce-generate/SKILL.md) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) · [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+
+---
+
 ## 2026-07-24 · Certification retirements and renames — two hard dates
 
 **24 certifications retire on February 1, 2027.** Registration for those exams **closed July 24, 2026**; the **last day to sit one is August 31, 2026**. Passing before the deadline still counts — the credential stays on your Trailblazer profile permanently, flagged as retired from February 1, 2027, and remains valid evidence of knowledge. What it loses is **public verification**: retired credentials stop appearing on the public verification pages.

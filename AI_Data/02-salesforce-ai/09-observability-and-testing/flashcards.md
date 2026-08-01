@@ -39,3 +39,15 @@ A: 16 credits, roughly $0.08 each — cheaper than a standard action's 20 credit
 
 Q: Why is agent observability a commercial topic, not just a QA one?
 A: Under pay-per-resolution and Flex Credits, "how well is it working" is a revenue question. A client asking for ROI needs numbers from Agent Analytics, not assurances.
+
+Q: Where does Agentforce write what a production agent actually did, and what does that imply?
+A: As session trace records into Data 360, in the Standard Data Model (STDM). It means Data 360 is the observability backend for the whole agent platform — debugging a live agent is a Data 360 query, not a preview session.
+
+Q: What is STDM?
+A: Salesforce's Standard Data Model — the prebuilt Data 360 schema, so data from different sources lands in a shape the platform already understands instead of one you map by hand each time.
+
+Q: Which tool do you reach for when someone reports an agent "did something weird yesterday"?
+A: `agentforce-observe` against Data 360 traces. The split is by environment, not activity: `agentforce-generate` for authoring/debugging `.agent` files, `agentforce-test` for pre-deployment specs, `agentforce-observe` for production behaviour.
+
+Q: What is `findSessions`, and what is its CLI prerequisite?
+A: The documented entry point for locating a specific production conversation in Data 360 trace records before analysing it. The `agentforce-observe` skill declares `sf >= 2.136.8`.

@@ -33,3 +33,12 @@ A: Teams federate everything to avoid duplication, then discover that identity r
 
 Q: Where does zero copy sit in the three legs of enterprise grounding?
 A: It is the reach leg — reach without copying — alongside Intelligent Context (unstructured content) and the semantic layer (agreed meaning).
+
+Q: Zero-copy federation and Unity Catalog file sharing both avoid moving data. What is the difference?
+A: Direction. Zero-copy points outward — Data 360 queries Snowflake/BigQuery/Databricks/Redshift in place so agents can be grounded in warehouse data. Unity Catalog file sharing points inward — a Databricks notebook reads Salesforce-resident data without exporting it.
+
+Q: What authenticates Salesforce Data 360 File Sharing into Databricks Unity Catalog, and why does that matter?
+A: IAM Workload Identity Federation — secretless, so no long-lived API key is stored on either side. That is usually what gets the connection through security review.
+
+Q: What is the status of Data 360 File Sharing into Unity Catalog?
+A: GA since October 2025 (public preview 2025-06-05), documented for Databricks on AWS, Azure and Google Cloud. Note the docs still use the `salesforce-data-cloud-file-sharing` path slug.

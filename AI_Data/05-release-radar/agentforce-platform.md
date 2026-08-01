@@ -4,6 +4,19 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 ---
 
+## 2026-07-27 · Multi-Agent Orchestration is GA — status corrected
+
+> **Correction (2026-07-27):** this entry previously recorded Multi-Agent Orchestration as **Beta**. Secondary sources date **GA to June 15, 2026** as part of Summer '26. Salesforce Help still labels the in-builder *Connect Agent as Subagent* step **(Beta)**, so product page and setup docs disagree — verify in your own org before quoting a status. See [01-agentforce/2026-07-27.md](01-agentforce/2026-07-27.md).
+
+[Multi-Agent Orchestration](https://help.salesforce.com/s/articleView?id=ai.agent_multi_orch.htm&type=5) lets an **orchestrator agent** connect to other specialized agents in the org and present a single point of contact, so a user handles a cross-domain task without switching sessions, with shared context across channels.
+
+**How you wire it.** In Agentforce Builder, open a draft agent as the orchestrator, then in the Explorer panel: **+ → Connect Agent as Subagent (Beta)**. Give each connected subagent a description — that description governs routing behaviour. With Agent Router, add each subagent under *Actions Available for Reasoning* and reference it with `@`.
+
+**Why it matters.** The realistic enterprise pattern is many narrow, well-tested agents rather than one omniscient one. Orchestration is what makes that pattern usable, and the subagent *description* becomes a first-class design artifact — it's effectively the routing contract. Write it like an API doc, not a label. **Atlas Reasoning Engine 3.0 routes by reading each subagent's description rather than following a fixed decision tree**, which makes that field executable configuration, not documentation: a vague description produces intermittent mis-routing that looks like a model failure but is a specification failure.
+
+---
+---
+
 ## 2026-07-26 · Agentforce Builder and Agent Script are GA
 
 **What changed.** Both the new [Agentforce Builder](https://help.salesforce.com/s/articleView?id=ai.agent_builder_tour.htm&type=5) and [Agent Script](https://developer.salesforce.com/docs/ai/agentforce/guide/agent-script.html) went generally available in the Summer '26 monthly cadence, per the Salesforce developer release guide. *(Exact GA date is not stated in a first-party announcement I could find — some secondary sources say February 2026, others still showed Beta docs as late as April 2026. The July 13 cutoff below is confirmed.)*
@@ -25,18 +38,6 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 Salesforce open-sourced the whole Agent Script toolchain at [github.com/salesforce/agentscript](https://github.com/salesforce/agentscript): parser, linter, compiler, Language Server Protocol implementation and editor integrations.
 
 **Why it matters.** An open parser/compiler means agent definitions can be linted and tested *outside* an org — in a plain CI job, with no Salesforce connection. It also means third-party harnesses (the community is already running compiled Agent Script under Pydantic AI) can execute the same logic. For an architect, this is the strongest signal yet that Salesforce wants agent logic to be portable rather than org-locked.
-
----
-
-## 2026-07-27 · Multi-Agent Orchestration is GA — status corrected
-
-> **Correction (2026-07-27):** this entry previously recorded Multi-Agent Orchestration as **Beta**. Secondary sources date **GA to June 15, 2026** as part of Summer '26. Salesforce Help still labels the in-builder *Connect Agent as Subagent* step **(Beta)**, so product page and setup docs disagree — verify in your own org before quoting a status. See [01-agentforce/2026-07-27.md](01-agentforce/2026-07-27.md).
-
-[Multi-Agent Orchestration](https://help.salesforce.com/s/articleView?id=ai.agent_multi_orch.htm&type=5) lets an **orchestrator agent** connect to other specialized agents in the org and present a single point of contact, so a user handles a cross-domain task without switching sessions, with shared context across channels.
-
-**How you wire it.** In Agentforce Builder, open a draft agent as the orchestrator, then in the Explorer panel: **+ → Connect Agent as Subagent (Beta)**. Give each connected subagent a description — that description governs routing behaviour. With Agent Router, add each subagent under *Actions Available for Reasoning* and reference it with `@`.
-
-**Why it matters.** The realistic enterprise pattern is many narrow, well-tested agents rather than one omniscient one. Orchestration is what makes that pattern usable, and the subagent *description* becomes a first-class design artifact — it's effectively the routing contract. Write it like an API doc, not a label. **Atlas Reasoning Engine 3.0 routes by reading each subagent's description rather than following a fixed decision tree**, which makes that field executable configuration, not documentation: a vague description produces intermittent mis-routing that looks like a model failure but is a specification failure.
 
 ---
 
@@ -63,6 +64,18 @@ The [Agentforce Mobile SDK](https://github.com/salesforce/AgentforceMobileSDK-iO
 **[Custom Lightning Types](https://developer.salesforce.com/blogs/2026/05/use-custom-lightning-types-in-agent-script-for-rich-agent-ui)** are the companion feature and are *not* mobile-specific: when an agent action returns structured data, a custom Lightning type attaches a purpose-built UI to it. Define once against the action output and it renders idiomatically everywhere — an LWC on desktop/web, the matching native UI in the mobile app.
 
 **Why it matters.** Cross-surface rendering from a single definition is a genuine architecture win. Design agent action outputs as *typed structures*, not prose, and the UI follows for free.
+
+**Gotchas — the mobile artifacts do not share a version line.** Three separately versioned packages, and assuming a single "Agentforce mobile version" is an easy way to pin the wrong thing:
+
+| Artifact | Version line | Latest seen |
+|---|---|---|
+| `salesforce/AgentforceMobileSDK-ReactNative` (npm `@salesforce/react-native-agentforce`) | 0.x | **0.3.0**, 2026-07-28 — bundles Agentforce SDK **262.1** (iOS 17.31.6) |
+| `forcedotcom/AgentforceMobileService-iOS` | 6.11.x | **6.11.2**, 2026-07-31 19:51 UTC (commit `f86eb61`) |
+| `salesforce/AgentforceMobileSDK-iOS` | independent | — |
+
+`AgentforceMobileService-iOS` ships as an **SPM binary distribution** — `Package.swift` points at a precompiled `.xcframework`, so a commit there is a **pointer bump with no changelog in the repository**. The 6.11.2 bump published no release and no notes; the substance is in a binary elsewhere. Track each dependency separately.
+
+**Study action:** in any app embedding Agentforce, list the three package versions in one place in your README, and record which Agentforce SDK build (`262.x`) each resolves to — that mapping is not published anywhere.
 
 ---
 
