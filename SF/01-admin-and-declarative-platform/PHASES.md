@@ -1,6 +1,6 @@
 # Phases for 01 · Admin & Declarative Platform
 
-19 topics across 2 runs. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
+19 topics across 2 runs — **both complete**. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
 
 ---
 
@@ -31,7 +31,7 @@ The vocabulary everything else assumes. No 🆕 topics — this is stable platfo
 
 ---
 
-## Phase 02 — Modern admin surface & org ops · 8 files ⬜
+## Phase 02 — Modern admin surface & org ops · 8 files ✅
 
 Everything an admin does that changed after 2021.
 
@@ -46,15 +46,15 @@ Everything an admin does that changed after 2021.
 19-agentforce-in-setup-and-ai-assisted-admin.md    🆕
 ```
 
-**🆕 — research before writing, do not draft from recall**
-- **05** — confirm current Dynamic Forms object coverage and the page-layout deprecation posture.
-- **12** — confirm what Approval Orchestration supports vs classic approval processes today, and whether classic is deprecated or merely in maintenance. **Do not assert a retirement date without a source.**
-- **18** — Foundations SKU: what's actually included, and which editions.
-- **19** — the AI-assisted Setup surface moves fast; cite what you find.
+**🆕 — research before writing, do not draft from recall** · *all four researched; findings below*
+- **05** — coverage: **all LWC-enabled standard objects since Winter '24** (`Note` excluded, fixed layout). Deprecation posture: **page layouts are NOT deprecated** — no retirement announced, and they still own related lists, actions, compact layouts, Classic and the required/read-only field properties.
+- **12** — **Flow Approval Processes** is the platform name; it runs as an approval orchestration. Classic is **neither deprecated nor retired** — the docs were renamed *Classic Approval Processes* and Flow approvals are positioned as the "modern alternative". The real news is licensing: **Flow Orchestration became a standard flow type on 2026-02-18**, no add-on, no usage-based run limits.
+- **18** — **$0 built-in add-on**; Enterprise, Unlimited, Einstein 1 Sales, Einstein 1 Service. Auto-provisions **Data 360**; ships **200K Flex credits** and ~2,000 email sends/month; overage bills after that.
+- **19** — **Setup with Agentforce is GA** and **Setup actions are non-billable** (no Flex credits). Acts only on approval, only within the running user's permissions, and writes to **Setup Audit Trail**.
 
-**⚠️ corrections to lead with**
-- **05** — page layouts are no longer where field visibility is designed; Dynamic Forms are.
-- **06** — button/action visibility is set by **Dynamic Actions** rules, not by layout assignment per record type.
+**⚠️ corrections to lead with** · *both held, 05 needed a guard rail*
+- **05** — page layouts are no longer where field visibility is designed; Dynamic Forms are. **But do not overstate it into "layouts are legacy/gone"** — that was the wording in this plan and in the INDEX row, and the docs do not support it. Both corrected.
+- **06** — button/action visibility is set by **Dynamic Actions** rules, not by layout assignment per record type. Held. Added gate: standard-object dynamic actions require Setup → *Salesforce Mobile App* → **Enable Dynamic Actions on Mobile**.
 
 **Cross-links:** **19** → [AI_Data/02-salesforce-ai/INDEX.md](../../AI_Data/02-salesforce-ai/INDEX.md). Link, don't duplicate. **12** → [04-flow · 15 Approval Orchestration](../04-flow-and-automation/INDEX.md), written in phase 09 — that one carries the Flow mechanics, this one carries the admin-surface view.
 

@@ -41,6 +41,19 @@ Detail, sources and dates for all six: [AI_Data/05-release-radar/trust-security-
 
 > **Not a retirement — a myth corrected in phase 01.** Data Loader does **not** default to Bulk API 2.0. It still defaults to the SOAP-based API, with *Use Bulk API* and *Use Bulk API 2.0* as separate opt-in checkboxes.
 
+## Two more things that are *not* retired — checked in phase 02
+
+Both are commonly asserted as dead. Neither is, and saying so to a client is a credibility loss.
+
+- **Page layouts.** Demoted, not retired. Dynamic Forms owns field composition and visibility ([01-admin · 05](01-admin-and-declarative-platform/05-dynamic-forms-and-lightning-app-builder.md)), but the layout still owns related lists, actions, compact layouts, Salesforce Classic, and the **required/read-only field properties** Dynamic Forms inherits.
+- **Classic approval processes.** Fully supported; the docs were renamed *Classic Approval Processes* and Flow approvals are the "modern alternative". **No retirement date has been announced.** → [01-admin · 12](01-admin-and-declarative-platform/12-approval-processes-and-approval-orchestration.md)
+
+## Licensing changes that change a design decision
+
+- **Flow Orchestration is a standard flow type as of 2026-02-18** — previously a paid add-on. Included with no usage-based run limits in Enterprise, Performance, Unlimited, all Einstein 1 and Developer editions. Cost was the usual reason to stay on classic approvals; that reason is gone. → [01-admin · 12](01-admin-and-declarative-platform/12-approval-processes-and-approval-orchestration.md)
+- **Salesforce Foundations is a $0 add-on** on Enterprise, Unlimited, Einstein 1 Sales and Einstein 1 Service — and it **auto-provisions Data 360** and starts an Agentforce credit meter. Free commercially, not free architecturally. → [01-admin · 18](01-admin-and-declarative-platform/18-salesforce-foundations-and-org-strategy.md)
+- **Setup with Agentforce is GA and its Setup actions are non-billable** — no Flex credits consumed. Runtime agents in the same org still bill normally. → [01-admin · 19](01-admin-and-declarative-platform/19-agentforce-in-setup-and-ai-assisted-admin.md)
+
 ## Keeping this file honest
 
 When a phase discovers a currency fact, it goes **here** as a row and into the relevant note — not duplicated into five notes. If it's genuinely new news rather than a stable fact, it belongs in [AI_Data/05-release-radar/](../AI_Data/05-release-radar/README.md) instead and this file links to it.

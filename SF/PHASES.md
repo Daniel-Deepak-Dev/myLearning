@@ -8,7 +8,7 @@ Mark a phase ✅ when its files exist and its INDEX rows are live links.
 |---|---|---|---|---|---|
 | 00 | ✅ | Skeleton | — | 23 | tree, README, CURRENCY, template, inventory, 9 INDEX + 9 PHASES |
 | 01 | ✅ | Declarative bedrock | 01 Admin | 11 | objects, relationships, formulas, CMDT ⚠️, order of execution |
-| 02 | ⬜ | Modern admin surface & org ops | 01 Admin | 8 | Dynamic Forms 🆕⚠️, Approval Orchestration 🆕⚠️, Foundations 🆕 |
+| 02 | ✅ | Modern admin surface & org ops | 01 Admin | 8 | Dynamic Forms 🆕⚠️, Approval Orchestration 🆕⚠️, Foundations 🆕 |
 | 03 | ⬜ | Apex core, querying & triggers | 02 Apex | 9 | limits, SOQL/SOSL, DML, handler framework, order of execution ⚠️ |
 | 04 | ⬜ | Apex security defaults, async & events | 02 Apex | 10 | **user mode default** 🆕⚠️, `with sharing` default 🆕⚠️, queueable ⚠️, finalizers, `Database.Cursor` 🆕 |
 | 05 | ⬜ | Apex closeout + LWC entry | 02 → 03 | 10 | testing ⚠️, Stub API, `@InvocableMethod` 🆕, UDT 🆕 → LWC lifecycle, `lwc:if` ⚠️ |
