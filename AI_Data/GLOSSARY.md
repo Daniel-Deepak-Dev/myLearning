@@ -1,4 +1,4 @@
-# Glossary — 109 Terms
+# Glossary — 133 Terms
 
 Extracted from [the roadmap](ai-salesforce-architect-roadmap.html) glossary tab, grouped by track and alphabetized. Greppable and extendable — **add new terms here as you meet them**, in the right section, keeping alphabetical order. If a term deserves depth, it also earns a flashcard in its topic folder.
 
@@ -102,6 +102,7 @@ Extracted from [the roadmap](ai-salesforce-architect-roadmap.html) glossary tab,
 | `findSessions` | The documented entry point in the `agentforce-observe` skill for locating a specific production agent conversation in Data 360 STDM trace records before analysing it. Companion reference: `stdm-queries.md`. |
 | Headless 360 | The organizing idea of Summer '26: every major Salesforce capability reachable as an **API, an MCP tool, or a CLI command**, by a human, an app or an autonomous agent. |
 | Hosted MCP Server | A Salesforce-hosted MCP server exposing org capability to any MCP client over standard OAuth. Standard servers (SObject, Data 360, Tableau) are **GA**; custom servers **respect the org's full sharing and security model**. |
+| Release Update | A behaviour-changing platform change listed individually under Setup → Release Updates, each carrying a **Complete Steps By** release. **Not an advisory** — on that release Salesforce enforces it whether or not you acted. Many offer a reversible *Test Run*; Salesforce sometimes postpones or cancels one, and can **relaunch** an already-enforced update when a related change ships. Pinning Apex or an integration to an older API version does **not** opt you out, because the change is to org behaviour, not to an API version. |
 | System Mode | Execution context ignoring the running user's permissions. Apex **triggers always run in system mode** at 67.0 and can no longer declare sharing or access modes. |
 | User Mode | Execution context enforcing the running user's object permissions, FLS and sharing rules. **The default for Apex SOQL/SOSL/DML at API 67.0** — elevated access is now opt-in. |
 | `with sharing` (default) | At API 67.0 a class with no sharing keyword defaults to `with sharing`. Previously it inherited the caller's context, which silently skipped sharing when it was the entry point. |

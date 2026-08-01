@@ -4,7 +4,7 @@
 
 ---
 
-## Phase 01 — Declarative bedrock · 11 files ⬜
+## Phase 01 — Declarative bedrock · 11 files ✅
 
 The vocabulary everything else assumes. No 🆕 topics — this is stable platform, so it can be written without release-note research, **except** the ⚠️ ones.
 
@@ -25,7 +25,7 @@ The vocabulary everything else assumes. No 🆕 topics — this is stable platfo
 **⚠️ corrections to lead with**
 - **02** — Release Updates are not optional advisories; they **auto-enforce** on a stated release. The old "review when convenient" posture is wrong.
 - **09** — Custom Settings are not the default choice any more. **Custom Metadata Types are deployable, packageable and don't consume SOQL queries.** Reach for Custom Settings only for per-user/per-profile hierarchy values.
-- **13** — Data Loader now runs on **Bulk API 2.0** by default. Guidance written against Bulk v1 batch-splitting no longer describes what happens.
+- **13** — ~~Data Loader now runs on **Bulk API 2.0** by default.~~ **Corrected during phase 01 against the Data Loader Guide: this was wrong.** Data Loader **still defaults to the SOAP-based API**; *Use Bulk API* (v1) and *Use Bulk API 2.0* are two separate opt-in checkboxes. The real correction is that the old "tick Use Bulk API" advice is now ambiguous, and that enabling either Bulk path silently disables *Insert null values* and *Allow field truncation*.
 
 **Watch:** **14** must agree exactly with [02-apex · 07 Order of execution](../02-apex-and-triggers/INDEX.md), which is written in phase 03. Whichever lands second reconciles against the first — do not let two save-order lists drift.
 

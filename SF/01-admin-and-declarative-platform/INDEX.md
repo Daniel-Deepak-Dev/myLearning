@@ -8,20 +8,20 @@ The declarative surface an architect must know cold before writing any code. **1
 
 | # | Topic | Scope | Phase |
 |---|---|---|---|
-| 01 | Org anatomy & editions | org types, editions, Setup map, hard limits | 01 |
-| 02 | Release cadence & Release Updates ⚠️ | 3 releases/yr, preview orgs, Release Updates auto-enforce | 01 |
-| 03 | Objects, fields & relationships | standard vs custom, lookup/master-detail/junction, field types | 01 |
-| 04 | Record types & picklist architecture | record types, global value sets, dependent picklists | 01 |
+| 01 | [Org anatomy & editions](01-org-anatomy-and-editions.md) | org types, editions, Setup map, hard limits | 01 |
+| 02 | [Release cadence & Release Updates](02-release-cadence-and-release-updates.md) ⚠️ | 3 releases/yr, preview orgs, Release Updates auto-enforce | 01 |
+| 03 | [Objects, fields & relationships](03-objects-fields-and-relationships.md) | standard vs custom, lookup/master-detail/junction, field types | 01 |
+| 04 | [Record types & picklist architecture](04-record-types-and-picklist-architecture.md) | record types, global value sets, dependent picklists | 01 |
 | 05 | Dynamic Forms & Lightning App Builder 🆕⚠️ | Dynamic Forms now cover all objects; page layouts legacy | 02 |
 | 06 | Dynamic Actions & list views ⚠️ | action visibility rules replace layout-driven buttons | 02 |
-| 07 | Formula fields & roll-up summaries | cross-object formulas, compile size, roll-up limits | 01 |
-| 08 | Validation rules & duplicate management | enforcement point, matching vs duplicate rules | 01 |
-| 09 | Custom Metadata vs Custom Settings ⚠️ | CMDT is deployable, packageable, limit-free in SOQL | 01 |
-| 10 | Custom labels & Translation Workbench | label reuse across Apex/LWC/Flow, translation workflow | 01 |
-| 11 | Queues, assignment & escalation rules | declarative routing, evaluation order, ownership effects | 01 |
+| 07 | [Formula fields & roll-up summaries](07-formula-fields-and-roll-up-summaries.md) | cross-object formulas, compile size, roll-up limits | 01 |
+| 08 | [Validation rules & duplicate management](08-validation-rules-and-duplicate-management.md) | enforcement point, matching vs duplicate rules | 01 |
+| 09 | [Custom Metadata vs Custom Settings](09-custom-metadata-vs-custom-settings.md) ⚠️ | CMDT is deployable, packageable, limit-free in **Apex** SOQL (not Flow) | 01 |
+| 10 | [Custom labels & Translation Workbench](10-custom-labels-and-translation-workbench.md) | label reuse across Apex/LWC/Flow, translation workflow | 01 |
+| 11 | [Queues, assignment & escalation rules](11-queues-assignment-and-escalation-rules.md) | declarative routing, evaluation order, ownership effects | 01 |
 | 12 | Approval processes & Approval Orchestration 🆕⚠️ | Flow Approval Orchestrator supersedes classic approvals | 02 |
-| 13 | Data import, export & loading tools ⚠️ | Import Wizard, Data Loader, Bulk API 2.0 default | 01 |
-| 14 | Order of execution — declarative view | where each automation type fires in the save | 01 |
+| 13 | [Data import, export & loading tools](13-data-import-export-and-loading-tools.md) ⚠️ | Import Wizard, Data Loader, Bulk API 2.0 **opt-in** (SOAP is the default) | 01 |
+| 14 | [Order of execution — declarative view](14-order-of-execution-declarative-view.md) | where each automation type fires in the save | 01 |
 | 15 | Mobile app, Notification Builder & Briefcase | mobile config, custom notifications, offline briefcase | 02 |
 | 16 | Search configuration & Einstein Search | search layouts, synonyms, pinned/personalized results | 02 |
 | 17 | Setup Audit Trail, monitoring & usage | Audit Trail, Lightning Usage App, background jobs | 02 |
@@ -30,5 +30,5 @@ The declarative surface an architect must know cold before writing any code. **1
 
 ## Related
 
-- [14 · Order of execution](#) pairs with [02-apex-and-triggers · 07 Order of execution & recursion](../02-apex-and-triggers/INDEX.md) — the declarative view and the Apex view are the same save order seen from two sides.
+- [14 · Order of execution](14-order-of-execution-declarative-view.md) pairs with [02-apex-and-triggers · 07 Order of execution & recursion](../02-apex-and-triggers/INDEX.md) — the declarative view and the Apex view are the same save order seen from two sides. **The declarative view landed first (phase 01), so it is the reference the Apex note reconciles against.**
 - [19 · Agentforce in Setup](#) is the seam into [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md).

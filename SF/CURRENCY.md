@@ -36,6 +36,10 @@ Detail, sources and dates for all six: [AI_Data/05-release-radar/trust-security-
 - **Change Sets** — superseded by DevOps Center / source-driven pipelines. → [09-devops](09-devops-sfdx-and-release-management/INDEX.md)
 - **1GP packaging** — legacy; 2GP unlocked/managed is the model. → [09-devops](09-devops-sfdx-and-release-management/INDEX.md)
 - **SOAP `login()`** — retirement announced for Summer '27.
+- **Platform API versions 21.0–30.0** — deprecated Summer '22, **retired Summer '25**. Old Data Loader builds and pinned integrations stop working rather than degrade. → [01-admin · 13](01-admin-and-declarative-platform/13-data-import-export-and-loading-tools.md)
+- **Bulk API v1** — not retired, but legacy; Bulk API 2.0 is where new capability lands. Audit remaining v1 usage under Setup → Bulk Data Load Jobs, filtering for **Bulk V1** jobs.
+
+> **Not a retirement — a myth corrected in phase 01.** Data Loader does **not** default to Bulk API 2.0. It still defaults to the SOAP-based API, with *Use Bulk API* and *Use Bulk API 2.0* as separate opt-in checkboxes.
 
 ## Keeping this file honest
 
