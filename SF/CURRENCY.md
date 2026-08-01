@@ -48,6 +48,13 @@ Both are commonly asserted as dead. Neither is, and saying so to a client is a c
 - **Page layouts.** Demoted, not retired. Dynamic Forms owns field composition and visibility ([01-admin · 05](01-admin-and-declarative-platform/05-dynamic-forms-and-lightning-app-builder.md)), but the layout still owns related lists, actions, compact layouts, Salesforce Classic, and the **required/read-only field properties** Dynamic Forms inherits.
 - **Classic approval processes.** Fully supported; the docs were renamed *Classic Approval Processes* and Flow approvals are the "modern alternative". **No retirement date has been announced.** → [01-admin · 12](01-admin-and-declarative-platform/12-approval-processes-and-approval-orchestration.md)
 
+## New in Apex at 67.0 — checked in phase 03
+
+- **Multiline strings and `String.template()`** are the Summer '26 Apex language additions, both GA. Triple single quotes (`'''`) open and close a literal block; `.template(Map<String, Object>)` fills `${key}` placeholders from a map. They retire the concatenation chains behind email bodies, JSON payloads, HTTP request bodies and assembled SOQL. Two traps: the newline immediately after the opening `'''` is **trimmed**, and `.template()` renders a `Datetime` in **GMT** as `yyyy-MM-dd HH:mm:ss`, which is not what `String.valueOf()` does. → [02-apex · 02](02-apex-and-triggers/02-modern-apex-syntax.md)
+- **Dynamic SOQL carries an access level explicitly.** `Database.queryWithBinds(query, bindMap, AccessLevel)` — Spring '23, and defaulting to user mode at 67.0. Binds resolve from the map by key rather than from Apex locals, which removes the old scoping surprise. → [02-apex · 04](02-apex-and-triggers/04-advanced-soql-sosl-and-dynamic-queries.md)
+
+> **Not new — a myth corrected in phase 03.** `??`, `?.` and `switch on` are routinely written up as modern Apex. None of them is new at 67.0: `switch on` is **Summer '18 (43.0)**, safe navigation is **Winter '21 (50.0)**, null coalescing is **Spring '24 (60.0)**. Useful for dating an inherited codebase; not a release-notes talking point.
+
 ## Licensing changes that change a design decision
 
 - **Flow Orchestration is a standard flow type as of 2026-02-18** — previously a paid add-on. Included with no usage-based run limits in Enterprise, Performance, Unlimited, all Einstein 1 and Developer editions. Cost was the usual reason to stay on classic approvals; that reason is gone. → [01-admin · 12](01-admin-and-declarative-platform/12-approval-processes-and-approval-orchestration.md)

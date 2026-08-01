@@ -1,6 +1,6 @@
 # 02 · Apex & Triggers
 
-Expert Apex, including the **API 67.0 security rewrite that invalidates most published examples**. **24 topics** · phases [03](PHASES.md), [04](PHASES.md), [05](PHASES.md).
+Expert Apex, including the **API 67.0 security rewrite that invalidates most published examples**. **24 topics** · phases [03](PHASES.md) — **complete ✅**, [04](PHASES.md), [05](PHASES.md).
 
 > Currency: **Summer '26 (API 67.0)** · [flag legend](../README.md#flag-legend) · [what changed](../CURRENCY.md)
 
@@ -8,15 +8,15 @@ Expert Apex, including the **API 67.0 security rewrite that invalidates most pub
 
 | # | Topic | Scope | Phase |
 |---|---|---|---|
-| 01 | Apex language core & governor limits | types, collections, per-transaction limit map | 03 |
-| 02 | Modern Apex syntax 🆕 | null coalescing `??`, safe navigation `?.`, switch | 03 |
-| 03 | SOQL fundamentals & relationship queries | parent/child traversal, aggregates, date literals | 03 |
-| 04 | Advanced SOQL, SOSL & dynamic queries | TYPEOF, FOR UPDATE, bind vars, injection defence | 03 |
-| 05 | DML, Database methods & savepoints | allOrNone, SaveResult handling, rollback semantics | 03 |
-| 06 | Triggers & the handler framework | one trigger per object, context vars, dispatcher pattern | 03 |
-| 07 | Order of execution & recursion ⚠️ | full save order incl. flows; static recursion guards | 03 |
-| 08 | Bulkification patterns | maps/sets, no SOQL-DML in loops, 200-record chunks | 03 |
-| 09 | Exception handling & custom exceptions | catch scope, `addError`, partial-success design | 03 |
+| 01 | [Apex language core & governor limits](01-apex-language-core-and-governor-limits.md) | types, collections, per-transaction limit map (SOSL is **20**, not 50) | 03 |
+| 02 | [Modern Apex syntax](02-modern-apex-syntax.md) 🆕 | multiline `'''` + `String.template()` are the 67.0 additions; `??`/`?.`/switch are older | 03 |
+| 03 | [SOQL fundamentals & relationship queries](03-soql-fundamentals-and-relationship-queries.md) | 5 levels up / 1 down, aggregates, `COUNT()` **invalid** with `GROUP BY` | 03 |
+| 04 | [Advanced SOQL, SOSL & dynamic queries](04-advanced-soql-sosl-and-dynamic-queries.md) | TYPEOF, FOR UPDATE, `queryWithBinds` + `AccessLevel`, injection defence | 03 |
+| 05 | [DML, Database methods & savepoints](05-dml-database-methods-and-savepoints.md) | allOrNone, SaveResult handling, savepoints cost DML and don't reset limits | 03 |
+| 06 | [Triggers & the handler framework](06-triggers-and-the-handler-framework.md) | one trigger per object, `operationType` dispatch, always system mode at 67.0 | 03 |
+| 07 | [Order of execution & recursion](07-order-of-execution-and-recursion.md) ⚠️ | the Apex slice of the save order; per-record guards, not `hasRun` | 03 |
+| 08 | [Bulkification patterns](08-bulkification-patterns.md) | maps/sets, no SOQL-DML in loops, 200-record chunks | 03 |
+| 09 | [Exception handling & custom exceptions](09-exception-handling-and-custom-exceptions.md) | catch scope, `addError` vs `throw`, partial-success design | 03 |
 | 10 | Apex security: user mode & FLS 🆕⚠️ | user mode is the 67.0 default; `WITH SECURITY_ENFORCED` retired | 04 |
 | 11 | Sharing keywords & Apex managed sharing 🆕⚠️ | keyword-less classes now `with sharing`; triggers always system mode | 04 |
 | 12 | Async Apex overview & choosing | future vs queueable vs batch vs events | 04 |
@@ -35,7 +35,8 @@ Expert Apex, including the **API 67.0 security rewrite that invalidates most pub
 
 ## Related
 
-- **07** is the code-side twin of [01-admin · 14 Order of execution](../01-admin-and-declarative-platform/INDEX.md).
+- **07** is the code-side twin of [01-admin · 14 Order of execution](../01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md). **That note landed first in phase 01 and is the reference** — 07 carries only the Apex slice of the save order and links across for the full twenty steps, rather than keeping a second copy that can drift.
+- **01–09 were written before phase 04 owns the security defaults**, so they state the 67.0 position without explaining it. The explanation is [10–11](PHASES.md).
 - **10–11** are the Apex projection of [07-security-and-sharing](../07-security-and-sharing/INDEX.md) — read together.
 - **19** continues in [06-integration-and-apis · 15 Named credentials](../06-integration-and-apis/INDEX.md).
 - **22–23** are the bridge into [AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) — that note already carries the 67.0 action-contract facts.

@@ -1,12 +1,12 @@
 # Phases for 02 · Apex & Triggers
 
-24 topics across 3 runs. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
+24 topics across 3 runs — **phase 03 complete**. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
 
 > **The area-wide constraint.** Three defaults flipped at API 67.0 — user mode, `with sharing`, `WITH SECURITY_ENFORCED` retired. Phase 04 owns them, but **every phase must be written as if they are already true.** Never show a code sample that relies on the old defaults without labelling it. Anchor: [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
 
 ---
 
-## Phase 03 — Apex core, querying & triggers · 9 files ⬜
+## Phase 03 — Apex core, querying & triggers · 9 files ✅
 
 ```
 01-apex-language-core-and-governor-limits.md
@@ -20,17 +20,21 @@
 09-exception-handling-and-custom-exceptions.md
 ```
 
-**🆕** — **02**: confirm which syntax additions are GA at 67.0 (`??`, `?.`, switch, safe navigation on collections).
+**🆕** — **02**: ~~confirm which syntax additions are GA at 67.0 (`??`, `?.`, switch, safe navigation on collections).~~ **Researched during phase 03: the premise was wrong.** None of those are new — `switch on` is Summer '18 (43.0), `?.` is Winter '21 (50.0), `??` is Spring '24 (60.0). **The actual 67.0 syntax additions are multiline strings (`'''`) and `String.template()`**, both GA, and the file was rebuilt around them. Two details that do not survive a casual read: the newline after the opening `'''` is trimmed, and `.template()` renders a `Datetime` in **GMT**, not the user's locale.
 
-**⚠️** — **07**: the save order now includes **before-save flows** ahead of before triggers. Any ordering list that predates that is wrong.
+**⚠️** — **07**: held. The save order does put **before-save flows** at step 3, ahead of before triggers.
 
-**Seed harvest** (see [../_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md))
-- **06** — `Steps to create handler using trigger factory` is substantive but the pattern is ~2013-era `ITrigger`/`TriggerFactory`. **Keep the "Manthras"** (SOQL in bulk phases, DML only in `andFinally()`); **do not present that framework as current.** `Trigger Basics` and `Trigger Context Variable` are stubs — their content is an unexported inline table.
-- **05** — `Mixed DML Exception`, `Upsert : DML Operation`, `Database.SaveResult` are usable.
-- **03** — `Group By` **contains a self-contradiction about `COUNT()` vs `COUNT(Id)`.** Verify against docs; do not reuse verbatim.
-- **04** — `TIPS!: Get Picklist Value` and `Get Dependent Picklist Values` are good schema-describe recipes.
+**Seed harvest** (see [../_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md)) · *all four harvested; three became `From my notes.` callouts*
+- **06** — `Steps to create handler using trigger factory` is substantive but the pattern is ~2013-era `ITrigger`/`TriggerFactory`. **Keep the "Manthras"** (SOQL in bulk phases, DML only in `andFinally()`); **do not present that framework as current.** `Trigger Basics` and `Trigger Context Variable` are stubs — their content is an unexported inline table. → *done: Manthras kept as a callout, framework named as superseded by `Trigger.operationType` + `switch`.*
+- **05** — `Mixed DML Exception`, `Upsert : DML Operation`, `Database.SaveResult` are usable. → *all three used. The callout went to `Savepoint and Rollback in Apex` instead: **a savepoint costs one DML statement and the rollback costs another**, and neither returns budget already spent. Mixed DML is a gotcha.*
+- **03** — `Group By` **contains a self-contradiction about `COUNT()` vs `COUNT(Id)`.** Verify against docs; do not reuse verbatim. → *verified. **The note's rule is right and its example is wrong.** `COUNT()` has been invalid with `GROUP BY` since API 19.0 and must be the only element in the `SELECT` list, so its own `select count() from case group by status` does not run. Quoted with the correction inline.*
+- **04** — `TIPS!: Get Picklist Value` and `Get Dependent Picklist Values` are good schema-describe recipes. → *the `validFor` base64 bitmap became the callout; still the only way to read a picklist dependency from Apex, still undocumented.*
 
-**Watch:** **07** must agree exactly with [01-admin · 14](../01-admin-and-declarative-platform/INDEX.md). Reconcile with whichever landed first.
+**Watch:** ~~**07** must agree exactly with [01-admin · 14](../01-admin-and-declarative-platform/INDEX.md). Reconcile with whichever landed first.~~ **Resolved: [01-admin · 14](../01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md) landed first and is the reference.** 07 therefore carries only the Apex-participating steps and links across for the canonical twenty — one table, not two that can drift.
+
+**Other corrections made while writing**
+- The plan's limit figure of "50 SOSL" was wrong. **SOSL is 20 queries and 2,000 rows per transaction**; the INDEX scope cell for 01 was fixed to say so.
+- `Database.queryWithBinds` (Spring '23) takes `AccessLevel` as its third argument and defaults to user mode at 67.0 — it belongs in **04**, not deferred to phase 04's security files.
 
 ---
 
