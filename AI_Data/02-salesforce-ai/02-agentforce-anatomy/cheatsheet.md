@@ -26,7 +26,7 @@ An agent = actions + grounding + guardrails, wired together by **Agent Script** 
 
 - **Week of July 13, 2026:** *New Agent* stopped opening the legacy builder. Creation removed — **not** editing, activation, versioning or management.
 - Most tutorials online still teach topics-and-instructions. Check the publication date.
-- Apex actions at 67.0 run in **user mode**, and invocable input classes need a **visible no-arg constructor** — this breaks existing actions.
+- Apex actions at 67.0 run in **user mode**, and invocable input classes need a **visible no-arg constructor** from **66.0** (enforced Summer '26) — this breaks existing actions.
 - **Unresolved:** MAO is dated GA (June 15, 2026) but Help still labels *Connect Agent as Subagent* **(Beta)**. Verify in-org before quoting.
 
 ## Minimal example

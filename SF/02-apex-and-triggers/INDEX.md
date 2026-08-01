@@ -1,6 +1,6 @@
 # 02 · Apex & Triggers
 
-Expert Apex, including the **API 67.0 security rewrite that invalidates most published examples**. **24 topics** · phases [03](PHASES.md), [04](PHASES.md) — **complete ✅**, [05](PHASES.md).
+Expert Apex, including the **API 67.0 security rewrite that invalidates most published examples**. **24 topics** · phases [03](PHASES.md), [04](PHASES.md), [05](PHASES.md) — **area complete ✅**.
 
 > Currency: **Summer '26 (API 67.0)** · [flag legend](../README.md#flag-legend) · [what changed](../CURRENCY.md)
 
@@ -27,11 +27,11 @@ Expert Apex, including the **API 67.0 security rewrite that invalidates most pub
 | 17 | [`Database.Cursor` & large result sets](17-database-cursor-and-large-result-sets.md) 🆕 | GA since Summer '24; `fetch()` **costs a query** — saves heap, not rows | 04 |
 | 18 | [Platform Events & CDC in Apex](18-platform-events-and-cdc-in-apex.md) | publish behaviours, event triggers, 10 runs then the subscriber dies | 04 |
 | 19 | [Callouts, Named Credentials & HTTP](19-callouts-named-credentials-and-http-in-apex.md) ⚠️ | callout limits, external + named credential split, no hardcoded endpoints | 04 |
-| 20 | Apex testing fundamentals ⚠️ | `@TestSetup`, data factory, never `SeeAllData=true` | 05 |
-| 21 | Apex testing advanced & mocking | HttpCalloutMock, Stub API, `Assert` class, async assertions | 05 |
-| 22 | Invocable Apex & Agentforce actions 🆕 | `@InvocableMethod` contract, mandatory no-arg constructor at 67.0 | 05 |
-| 23 | `UserDefinedType` & typed interop 🆕 | typed payloads across Apex, Flow and agent actions | 05 |
-| 24 | Apex performance & profiling | CPU/heap hotspots, query cost, debug log reading | 05 |
+| 20 | [Apex testing fundamentals](20-apex-testing-fundamentals.md) ⚠️ | `@TestSetup` does **not** reset limits; `SeeAllData=true` disables it outright | 05 |
+| 21 | [Apex testing advanced & mocking](21-apex-testing-advanced-and-mocking.md) | HttpCalloutMock, Stub API and the long list of what it **can't** stub | 05 |
+| 22 | [Invocable Apex & Agentforce actions](22-invocable-apex-and-agentforce-actions.md) 🆕 | `@InvocableMethod` contract; no-arg constructor from **66.0**, enforced Summer '26 | 05 |
+| 23 | [`UserDefinedType` & typed interop](23-userdefinedtype-and-typed-interop.md) 🆕 | **no such interface exists** — ADTs, `@InvocableVariable`, `equals`/`hashCode` | 05 |
+| 24 | [Apex performance & profiling](24-apex-performance-and-profiling.md) | CPU and heap are the two that bite; `Limits` deltas over whole-log reading | 05 |
 
 ## Related
 
@@ -40,4 +40,6 @@ Expert Apex, including the **API 67.0 security rewrite that invalidates most pub
 - **10–11** are the Apex projection of [07-security-and-sharing](../07-security-and-sharing/INDEX.md) — read together.
 - **17 is not a row-limit escape hatch.** `Database.Cursor.fetch()` costs a SOQL query and its rows count against the row limit; the win is heap and resumability. Reach for [14](14-batch-apex-and-stateful-processing.md) when you need 50 M rows chunked for you.
 - **19** continues in [06-integration-and-apis · 15 Named credentials](../06-integration-and-apis/INDEX.md).
-- **22–23** are the bridge into [AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) — that note already carries the 67.0 action-contract facts.
+- **22–23** are the bridge into [AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) — that note owns the *agent* side (description writing, action selection, MCP exposure); **22** owns the Apex contract. The no-arg constructor rule is **API 66.0**, auto-enforced by a Summer '26 Release Update — phase 05 corrected that version across `AI_Data/`.
+- **23 is not about an interface.** `UserDefinedType` is the Apex docs' phrase for a plain class used as a typed payload; nothing implements it. The real surfaces are `@InvocableVariable`, `@AuraEnabled` Apex-Defined Types, and `equals`/`hashCode`.
+- **20–21 are where the security flip stops being theoretical.** User mode means the identity a test runs under decides the result, so `System.runAs` moved from optional to necessary. → [10](10-apex-security-user-mode-and-fls.md)

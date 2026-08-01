@@ -57,7 +57,7 @@ If an action returns a structured type rather than a string, a **Custom Lightnin
 
 Four changes, in rough order of how likely they are to bite:
 
-**1. Invocable input classes need a visible no-arg constructor.** Any custom Apex type used as an invocable action input must expose a no-argument constructor — `public`, or `global` for packaged classes. **This breaks existing Agentforce Apex actions.** It's the first thing to check when an action stops working after an API bump.
+**1. Invocable input classes need a visible no-arg constructor.** Any custom Apex type used as an invocable action input must expose a no-argument constructor — `public`, or `global` for packaged classes. **The requirement starts at API 66.0**; Summer '26 is when the Release Update auto-activates, which is why it is so often dated to 67.0. **This breaks existing Agentforce Apex actions**, and the mechanism is ordinary OO behaviour: declaring any constructor with arguments removes the compiler-generated default one. It's the first thing to check when an action stops working after an API bump. Apex-side detail: [SF/02-apex · 22](../../../SF/02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md).
 
 **2. Database operations default to user mode.** SOQL, SOSL, DML and `Database` methods now enforce the running user's object permissions, FLS and sharing rules. Elevated access is opt-in:
 
@@ -101,7 +101,7 @@ Under Headless 360, an `@InvocableMethod` can be exposed through a **custom host
 ## Gotchas & sharp edges
 
 - **Vague descriptions cause mis-selection.** Include negative boundaries ("do not use for exchanges"), not just positive ones.
-- **Check for the no-arg constructor first** when an action breaks after an API bump. It's the most common 67.0 casualty.
+- **Check for the no-arg constructor first** when an action breaks after an API bump. It's the most common casualty, and it bites from **66.0** — not 67.0, as most write-ups claim.
 - **`WITH SECURITY_ENFORCED` won't compile** — grep for it before upgrading anything.
 - **User mode may make an action legitimately return less.** That's the feature working, not a bug. If the agent genuinely needs elevated access, opt in explicitly and document why.
 - **Every action invocation costs ~20 credits (~$0.10).** An action that internally loops or chains is a recurring cost multiplier.

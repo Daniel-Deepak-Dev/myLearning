@@ -24,7 +24,7 @@ One narrow measurable outcome, authored in **Agent Script**, grounded in Data 36
 
 - **Author in Agent Script** — the legacy builder can't create agents since July 13, 2026.
 - **You pay per action, not per conversation.** Real resolutions run 5–15 actions; orchestration multiplies.
-- **67.0 breaks invocable actions** without a visible no-arg constructor on input classes.
+- **API 66.0 breaks invocable actions** without a visible no-arg constructor on input classes; Summer '26 is the enforcement date.
 - Make actions **idempotent** — agents retry after timeouts.
 - Benchmarks are **ceilings**: Salesforce's own help site hit 70% resolution of 4.3M inquiries; Oviva deflected ~50%.
 

@@ -11,7 +11,7 @@ Mark a phase ✅ when its files exist and its INDEX rows are live links.
 | 02 | ✅ | Modern admin surface & org ops | 01 Admin | 8 | Dynamic Forms 🆕⚠️, Approval Orchestration 🆕⚠️, Foundations 🆕 |
 | 03 | ✅ | Apex core, querying & triggers | 02 Apex | 9 | limits, SOQL/SOSL, DML, handler framework, order of execution ⚠️ |
 | 04 | ✅ | Apex security defaults, async & events | 02 Apex | 10 | **user mode default** 🆕⚠️, `with sharing` default 🆕⚠️, queueable ⚠️, finalizers, `Database.Cursor` 🆕 |
-| 05 | ⬜ | Apex closeout + LWC entry | 02 → 03 | 10 | testing ⚠️, Stub API, `@InvocableMethod` 🆕, UDT 🆕 → LWC lifecycle, `lwc:if` ⚠️ |
+| 05 | ✅ | Apex closeout + LWC entry | 02 → 03 | 10 | testing ⚠️, Stub API, `@InvocableMethod` 🆕, UDT 🆕 → LWC lifecycle, `lwc:if` ⚠️ |
 | 06 | ⬜ | LWC data, security & navigation | 03 LWC | 9 | LDS, GraphQL wire 🆕, **LWS replaces Locker** 🆕⚠️, SLDS 2 🆕⚠️ |
 | 07 | ⬜ | LWC quality, modern tooling & reach | 03 LWC | 8 | Jest, a11y, custom Lightning types 🆕, `sf lightning dev` 🆕, LWC OSS |
 | 08 | ⬜ | Flow fundamentals → Apex interop | 04 Flow | 11 | **WF/Process Builder retired** ⚠️, record-triggered, reactive screens 🆕, Transform 🆕 |

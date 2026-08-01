@@ -1,6 +1,6 @@
 # 03 · LWC & SLDS
 
-LWC as the **only** UI framework in this vault. **22 topics** · phases [05](PHASES.md), [06](PHASES.md), [07](PHASES.md).
+LWC as the **only** UI framework in this vault. **22 topics** · phases [05](PHASES.md) — **complete ✅**, [06](PHASES.md), [07](PHASES.md).
 
 > Currency: **Summer '26 (API 67.0)** · [flag legend](../README.md#flag-legend) · [what changed](../CURRENCY.md)
 
@@ -10,11 +10,11 @@ LWC as the **only** UI framework in this vault. **22 topics** · phases [05](PHA
 
 | # | Topic | Scope | Phase |
 |---|---|---|---|
-| 01 | Component model & lifecycle | bundle anatomy, lifecycle hooks, render cycle | 05 |
-| 02 | Templates, directives & rendering ⚠️ | `lwc:if/elseif/else` replaced `if:true`; `for:each` keys | 05 |
-| 03 | Composition, slots & dynamic components | `@api` props, slots, `lwc:ref`, `lwc:spread`, `lwc:component` | 05 |
-| 04 | Events & component communication | CustomEvent, bubbling/composed, no pubsub library | 05 |
-| 05 | Decorators & the reactivity model | `@api`/`@track`/`@wire`, mutation rules for objects | 05 |
+| 01 | [Component model & lifecycle](01-component-model-and-lifecycle.md) | bundle anatomy, hook order, child `renderedCallback` fires **first** | 05 |
+| 02 | [Templates, directives & rendering](02-templates-directives-and-rendering.md) ⚠️ | `lwc:if/elseif/else` (Spring '23) — `if:true` evaluates the getter **twice** | 05 |
+| 03 | [Composition, slots & dynamic components](03-composition-slots-and-dynamic-components.md) | `@api`, slots, `lwc:ref`, `lwc:spread`, `lwc:component` (Winter '24) | 05 |
+| 04 | [Events & component communication](04-events-and-component-communication.md) | CustomEvent, `bubbles`/`composed`, retargeting, **no pubsub library** | 05 |
+| 05 | [Decorators & the reactivity model](05-decorators-and-the-reactivity-model.md) | reassign don't mutate; **State Managers GA at 67.0** | 05 |
 | 06 | Lightning Data Service & UI API wires | getRecord, RecordForm vs RecordEditForm, cache behaviour | 06 |
 | 07 | GraphQL wire adapter 🆕 | pagination, filtering, aggregates, when it beats Apex | 06 |
 | 08 | Apex in LWC — wire vs imperative | `cacheable=true` rules, `refreshApex`, notifyRecordUpdate | 06 |
@@ -35,6 +35,8 @@ LWC as the **only** UI framework in this vault. **22 topics** · phases [05](PHA
 
 ## Related
 
+- **05 carries the State Manager story** — `defineState` from `@lwc/state` (`atom` / `computed` / `setAtom`) went **GA at API 67.0** and moves shared state out of components entirely. It is folded into 05's currency section rather than given its own file; **a dedicated topic is a phase-07 candidate.**
+- **02's Beta caveat matters.** Complex template expressions need component `apiVersion` 66.0+ and are documented as **not for production** — most 2026 write-ups omit that.
 - **08** depends on [02-apex · 10 user mode](../02-apex-and-triggers/INDEX.md) — a `cacheable=true` method now enforces the running user's FLS by default.
 - **11** pairs with [04-flow · 04 Screen flows](../04-flow-and-automation/INDEX.md).
 - **19** feeds [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md) — how agent action output renders.

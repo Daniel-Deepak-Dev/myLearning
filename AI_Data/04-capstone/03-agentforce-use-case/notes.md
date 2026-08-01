@@ -56,7 +56,7 @@ Worth knowing as contrast: the prepackaged Help Agent uses **pay-per-resolution*
 1. **Pick the outcome and baseline it.** Measure the current metric for two weeks before you build.
 2. **Ground it** — Data 360, with real-time ingest if the agent reads live records. Stale grounding is the top failure cause.
 3. **Author in Agent Script.** Pin the model deliberately.
-4. **Build the action** — invocable Apex under 67.0 rules: user mode, `with sharing`, and a visible **no-arg constructor** on any invocable input class. Make it **idempotent**.
+4. **Build the action** — invocable Apex under current rules: user mode and `with sharing` (67.0), plus a visible **no-arg constructor** on any invocable input class (**66.0**, enforced Summer '26). Make it **idempotent**.
 5. **Test:** `agent preview` + trace files, then YAML/JSON evaluations in CI.
 6. **Deploy via Metadata API** so the whole thing is source-controlled.
 7. **Measure with Custom Scorers** against live sessions.
@@ -84,7 +84,7 @@ Then note the cost: three subagents ≈ three times the actions. Being able to s
 - **Don't author in topics.** The legacy builder can't create new agents since July 13, 2026.
 - **No baseline, no result.** Measure before you build or you have a demo, not a project.
 - **Per-action billing surprises people.** Five to fifteen actions per real resolution; orchestration multiplies.
-- **The 67.0 no-arg constructor rule breaks invocable actions.** Check it first when something stops working.
+- **The no-arg constructor rule breaks invocable actions** — and it starts at **66.0**, not 67.0. Check it first when something stops working.
 - **Make the action idempotent** — agents retry after timeouts, and a duplicated write is a real incident.
 - **Stale grounding is the top failure cause**, and it presents as a model problem.
 - **Subagent descriptions are executable config**, not labels. Include exclusions.

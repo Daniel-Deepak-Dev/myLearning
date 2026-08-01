@@ -65,7 +65,7 @@ Likewise, **Einstein Copilot** is a historical name. A source using it as curren
 - **Atlas Reasoning Engine 3.0** — routes on subagent descriptions
 - **Multi-Agent Orchestration** — GA June 15, 2026 _(note: Help still labels the in-builder step Beta — verify in-org)_
 - **Model choice** — Anthropic, OpenAI, **Gemini**; per-agent pinning
-- **API 67.0 security** — user mode default, `with sharing` default, `WITH SECURITY_ENFORCED` retired, no-arg constructor rule
+- **API 67.0 security** — user mode default, `with sharing` default, `WITH SECURITY_ENFORCED` retired; plus the no-arg constructor rule, which is **66.0** and merely *enforced* at Summer '26
 - **Hosted MCP servers GA** — standard and custom; custom respects org sharing
 - **Observability** — Refined Agent Analytics, Custom Scorers (Beta), `aiAgentScorerDefinitions`
 - **Flex Credits** — billed per action (~$0.10), not per conversation

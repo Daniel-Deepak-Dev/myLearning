@@ -1,6 +1,6 @@
 # Phases for 02 · Apex & Triggers
 
-24 topics across 3 runs — **phases 03–04 complete**, 19 of 24 written. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
+24 topics across 3 runs — **phases 03–05 complete, the area is done.** Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
 
 > **The area-wide constraint.** Three defaults flipped at API 67.0 — user mode, `with sharing`, `WITH SECURITY_ENFORCED` retired. Phase 04 owns them, but **every phase must be written as if they are already true.** Never show a code sample that relies on the old defaults without labelling it. Anchor: [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
 
@@ -80,7 +80,7 @@
 
 ---
 
-## Phase 05 — Apex closeout + LWC entry · 10 files ⬜
+## Phase 05 — Apex closeout + LWC entry · 10 files ✅
 
 Closes Apex, opens [03-lwc-and-slds](../03-lwc-and-slds/INDEX.md). See that area's [PHASES.md](../03-lwc-and-slds/PHASES.md) for the LWC half.
 
@@ -98,8 +98,14 @@ Closes Apex, opens [03-lwc-and-slds](../03-lwc-and-slds/INDEX.md). See that area
 05-decorators-and-the-reactivity-model.md
 ```
 
-**⚠️** — **20**: `SeeAllData=true` is not a workaround, it's a defect. Lead with that.
+**⚠️** — **20**: held, and it is sharper than the plan knew. `SeeAllData=true` is not merely bad practice — it **silently disables `@TestSetup`**, because setup methods are supported only in the default isolation mode. So the annotation removes your data factory rather than erroring, which is why the tests it breaks look unrelated to it.
 
-**🆕** — **22**: the `@InvocableMethod` contract changed at 67.0 — input classes need a **visible no-arg constructor**. Cross-check against [AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md), which already documents this. **23** `UserDefinedType` — research current support surface.
+**🆕 — both premises wrong, in different ways.** **22**: ~~the contract changed at 67.0.~~ The no-arg constructor requirement starts at **API 66.0** (Spring '26) — Summer '26 is only when the *Release Update* auto-activates. Salesforce's own release-note ID ends `_v66`, and **our `AI_Data/` notes had it wrong in seven files**; phase 05 corrected them. `public` outside a managed package, **`global`** cross-package. The mechanism is ordinary OO meeting a platform assumption: **declaring any constructor with arguments removes the compiler-generated default one**, and the platform stopped guessing what to pass — so it fails at runtime in Flow or an agent action, never at compile time. Also added: invocable actions gained **custom property editors, definable picklists and custom headers**, GA at 67.0. · **23**: ~~research the `UserDefinedType` support surface.~~ **There is no such interface, and there never was.** The name reads like `Comparable` or `Callable`; "user-defined type" is the *Apex docs' own phrase* for a plain class used as an invocable payload — *"a list of a user-defined type, containing variables of the supported types."* Rebuilt around the three unrelated mechanisms that actually carry typed payloads: **`@InvocableVariable`** (Flow and agent actions), **`@AuraEnabled` Apex-Defined Types** (Flow variables and LWC), **`equals`/`hashCode`** (map keys and sets). A class often needs two of the three and neither annotation implies the other. **Filename kept deliberately** — the wrong name is what a reader will search for.
 
-**Seed harvest** — **20**: `Test Annotations` is the richest page in the corpus (~450 words). Real gotchas worth keeping: the `SeeAllData` + `@TestSetup` conflict, and "DML limits are reset by testSetup but SOQL limits are not." Note only 4 of its 12 planned sections were ever written.
+**Seed harvest** · *one of two harvested; **21** is link-only, confirmed dead, and carries no callout*
+- **20** — `Test Annotations`, the richest page in the corpus (~450 words). **The `SeeAllData` + `@TestSetup` conflict is right and became part of the ⚠️ opener.** The second claim — *"DML limits are reset by testSetup but SOQL limits are not"* — is **inverted, and it became the callout**. Neither is reset: everything a setup method consumes counts against **every** test method in the class. The only reset is `Test.startTest()`/`stopTest()`, and it works *inside* the setup method. Corroborated by three independent sources including a standing Salesforce Idea to remove the behaviour; the Apex docs do not state it either way, which is presumably how the myth survives.
+
+**Other corrections made while writing**
+- **The Stub API's restriction list is the story, not the API.** No static (incl. `@future`) or private methods, **no properties — getters and setters both**, no triggers, inner classes, system types, `Batchable` classes, private-constructor-only classes, or iterators as parameter/return types; and the stub must share the caller's namespace. Those exclude most utility classes, so stubbing is a **design** constraint: interface or `virtual`, injected not instantiated inline. Dispatch is on the method name **as a `String`**, so a rename leaves the stub compiling and silently returning `null`.
+- **Two testing features the plan missed.** **Apex Integration Tests** — Developer Preview at 67.0, and narrower than the name: the feature is *for **Agentforce and Data 360 Services***, scratch orgs only via the `ApexIntegrationTests` feature (`@IntegrationTest`, `IntegrationTest.commitTestOnly()`, `@TearDown`). **`RunRelevantTests`** — Beta from Spring '26, steered by `@IsTest(testFor=…)` and overridden by `@IsTest(critical=true)`; Unified Logic Testing (Beta) runs Apex and Flow tests in one request, which matters because **22** is the seam between them.
+- **Three small facts that earned their place.** `System.runAs` **costs one DML statement per call** — easy to hit in a loop over test users. **No coverage is calculated for a non-test method called from `@TestSetup`**, so building data through your own service layer looks like it covers that layer and does not. The `Assert` class is **Winter '23 (API 56.0)** and `System.assertEquals` is **not** deprecated with no announced retirement — "the old methods are dead" is a common overstatement.

@@ -12,7 +12,7 @@ Flows, `@InvocableMethod` Apex, prompt templates, Apex REST and `@AuraEnabled` m
 | Action description | Executable specification, not documentation. Drives selection and input filling. |
 | `WITH USER_MODE` | Replaces the retired `WITH SECURITY_ENFORCED`. Checks the `WHERE` clause and reports *all* FLS violations. |
 | Custom Lightning Type | UI attached to a typed action output; renders on desktop and native mobile from one definition. |
-| No-arg constructor rule | Invocable input classes need a visible one at 67.0. Breaks existing actions. |
+| No-arg constructor rule | Invocable input classes need a visible one from **API 66.0**; the Release Update enforces it in Summer '26. Breaks existing actions. |
 
 ## Rules of thumb
 
@@ -23,7 +23,7 @@ Flows, `@InvocableMethod` Apex, prompt templates, Apex REST and `@AuraEnabled` m
 
 ## Exam traps / common confusions
 
-- **67.0 breaking change #1:** invocable input classes need a visible no-arg constructor (public, or global if packaged).
+- **Breaking change #1 — and it's 66.0, not 67.0:** invocable input classes need a visible no-arg constructor (public, or global if packaged). Summer '26 is the *enforcement* date, not the start.
 - **67.0 defaults:** SOQL/DML in user mode; keyword-less classes are `with sharing`; `WITH SECURITY_ENFORCED` **won't compile**.
 - Old classes keep old behaviour until **recompiled at 67.0** — the risk arrives on an unrelated version bump.
 - **Triggers always run in system mode** now and can't declare sharing — so don't put security-sensitive logic there.
@@ -33,7 +33,7 @@ Flows, `@InvocableMethod` Apex, prompt templates, Apex REST and `@AuraEnabled` m
 ```apex
 public with sharing class RefundAction {          // 67.0: 'with sharing' is the default anyway
     public class Input {
-        public Input() {}                          // REQUIRED at 67.0 — visible no-arg constructor
+        public Input() {}                          // REQUIRED from 66.0 — visible no-arg constructor
         @InvocableVariable(label='Order ID'
             description='18-char ID of a Delivered Order to refund.')
         public Id orderId;
