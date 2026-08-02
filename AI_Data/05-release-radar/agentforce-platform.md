@@ -4,6 +4,45 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 ---
 
+## 2026-07-31 · Agentforce Mobile SDK 262.1.2 — a "patch" that is a major, and five new Gen UI components
+
+**What changed.** [`salesforce/AgentforceMobileSDK-iOS`](https://github.com/salesforce/AgentforceMobileSDK-iOS) published **Agentforce Mobile SDK 262.1.2** on 2026-07-31 at 20:34 UTC under git tag **`18.26.8`**. It adds a customizable **splash screen** and moves the whole SDK to **Swift 6 strict concurrency** — declared in the notes as *"a major release, 18.0.0"*.
+
+**Five new customizable components** join the Gen UI set, all of them shapes an agent action can now render natively rather than as prose:
+
+- `Table`
+- `Schedule`
+- `DataGroup`
+- `QueryOption`
+- `VerticalCard`
+
+**Fixes worth knowing by name**, because each is a symptom you would otherwise misdiagnose as your own bug:
+
+- Record selector showed **raw IDs instead of names**
+- **Lightning Out 2.0** inline scrolling and WebView reuse
+- **Gen UI LWC** rendering on mobile
+- Voice panel not dismissing on **session auto-end**
+- **Memory leak in the pre-chat submit button**
+- `INQUIRE` input values lost on re-render
+- SPM/XCFramework resource lookups failing for images and HTML entities
+
+**Why it matters.** The five components extend the *design agent output as typed structures* argument one concrete step — `Table` and `Schedule` are exactly the returns that used to be flattened into a sentence.
+
+But the release is more useful as a versioning lesson. **262.1.2 reads like a patch and is a Swift-language major.** An app on 262.1.0 (tag `17.31.6`) that bumps to it inherits strict-concurrency compilation across the whole dependency: a sprint, not an afternoon.
+
+**Gotchas:**
+- **Two version lines on one release, and they disagree about severity.** The marketing name went `262.1.0 → 262.1.2` (patch-shaped); the git tag went `17.31.6 → 18.26.8` (major-shaped). **Read the tag, not the title.**
+- The SDK declares a dependency on **`AgentforceService` 6.10.0**, while [`forcedotcom/AgentforceMobileService-iOS`](https://github.com/forcedotcom/AgentforceMobileService-iOS) is already at **6.11.2** (2026-07-31 19:51 UTC). The SDK's floor lags the service's head — do not assume the newest service build is the tested one.
+- The release notes publish **no minimum iOS or Xcode version**, and Swift 6 strict concurrency implies a modern toolchain. Confirm in a branch before committing to the bump.
+
+**Study action:** in a throwaway iOS app, pin `AgentforceMobileSDK-iOS` to tag `17.31.6`, build, then move the pin to `18.26.8` and build again — count the strict-concurrency errors. That number is the real cost of the "patch". Then render an action output through the new `Table` component and compare it against the same data returned as text.
+
+**Status:** Released **2026-07-31**, tag `18.26.8`, marketed as Agentforce Mobile SDK **262.1.2**. iOS only; the Android and React Native lines move separately.
+
+**Sources:** [Release 18.26.8](https://github.com/salesforce/AgentforceMobileSDK-iOS/releases/tag/18.26.8) · [AgentforceMobileSDK-iOS releases](https://github.com/salesforce/AgentforceMobileSDK-iOS/releases) · scan note [01-agentforce/2026-08-02](01-agentforce/2026-08-02.md)
+
+---
+
 ## 2026-07-27 · Multi-Agent Orchestration is GA — status corrected
 
 > **Correction (2026-07-27):** this entry previously recorded Multi-Agent Orchestration as **Beta**. Secondary sources date **GA to June 15, 2026** as part of Summer '26. Salesforce Help still labels the in-builder *Connect Agent as Subagent* step **(Beta)**, so product page and setup docs disagree — verify in your own org before quoting a status. See [01-agentforce/2026-07-27.md](01-agentforce/2026-07-27.md).
@@ -14,7 +53,6 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 **Why it matters.** The realistic enterprise pattern is many narrow, well-tested agents rather than one omniscient one. Orchestration is what makes that pattern usable, and the subagent *description* becomes a first-class design artifact — it's effectively the routing contract. Write it like an API doc, not a label. **Atlas Reasoning Engine 3.0 routes by reading each subagent's description rather than following a fixed decision tree**, which makes that field executable configuration, not documentation: a vague description produces intermittent mis-routing that looks like a model failure but is a specification failure.
 
----
 ---
 
 ## 2026-07-26 · Agentforce Builder and Agent Script are GA
@@ -54,6 +92,8 @@ Salesforce open-sourced the whole Agent Script toolchain at [github.com/salesfor
 
 ## 2026-07-26 · Agentforce Mobile SDK
 
+> **Correction (2026-08-02):** the version table below left `salesforce/AgentforceMobileSDK-iOS` blank with "independent · —". It is filled in: tag `18.26.8` = marketing version 262.1.2. The version line is not merely independent, it is **differently scaled** — see the [2026-07-31 entry](#2026-07-31--agentforce-mobile-sdk-26212--a-patch-that-is-a-major-and-five-new-gen-ui-components).
+
 The [Agentforce Mobile SDK](https://github.com/salesforce/AgentforceMobileSDK-iOS) embeds agents in native **iOS**, **Android** and **React Native** apps, either as a pre-built chat UI or headless (you own the UI).
 
 - **React Native support:** one TypeScript codebase for both platforms, via a single `AgentforceService` object. Integration is three calls: **configure → (optional) add context → launch**.
@@ -71,7 +111,7 @@ The [Agentforce Mobile SDK](https://github.com/salesforce/AgentforceMobileSDK-iO
 |---|---|---|
 | `salesforce/AgentforceMobileSDK-ReactNative` (npm `@salesforce/react-native-agentforce`) | 0.x | **0.3.0**, 2026-07-28 — bundles Agentforce SDK **262.1** (iOS 17.31.6) |
 | `forcedotcom/AgentforceMobileService-iOS` | 6.11.x | **6.11.2**, 2026-07-31 19:51 UTC (commit `f86eb61`) |
-| `salesforce/AgentforceMobileSDK-iOS` | independent | — |
+| `salesforce/AgentforceMobileSDK-iOS` | independent (tag ≠ marketing name) | **tag `18.26.8`** = "262.1.2", 2026-07-31 20:34 UTC — [entry above](#2026-07-31--agentforce-mobile-sdk-26212--a-patch-that-is-a-major-and-five-new-gen-ui-components) |
 
 `AgentforceMobileService-iOS` ships as an **SPM binary distribution** — `Package.swift` points at a precompiled `.xcframework`, so a commit there is a **pointer bump with no changelog in the repository**. The 6.11.2 bump published no release and no notes; the substance is in a binary elsewhere. Track each dependency separately.
 

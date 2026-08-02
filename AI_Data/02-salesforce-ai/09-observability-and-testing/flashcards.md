@@ -51,3 +51,27 @@ A: `agentforce-observe` against Data 360 traces. The split is by environment, no
 
 Q: What is `findSessions`, and what is its CLI prerequisite?
 A: The documented entry point for locating a specific production conversation in Data 360 trace records before analysing it. The `agentforce-observe` skill declares `sf >= 2.136.8`.
+
+Q: Before quoting a GIFT-Eval leaderboard position, which two `config.json` fields must you read, and why?
+A: `replication_code_available` and `testdata_leakage`. Of the five models merged 2026-07-31, only one declared replication code available; the leakage flag is self-declared, not audited. A leaderboard position is a claim, not a result.
+
+Q: AnchorBench separates two failure modes that sound like one. What are they?
+A: **Persona collapse** — drifting off the assigned role, boundaries, values and style. **Trajectory recall** — telling what actually happened from a plausible alternative. They come apart: a model can hold steady on a checkpoint questionnaire while drifting in live conversation.
+
+Q: What is AnchorBench's most transferable result for a long-lived service agent?
+A: User-state changes are recalled at chance (~0.25 on four-option questions). The customer says at turn 3 that they cancelled; at turn 40 the agent still acts on the old state. That deserves an explicit Testing Center case, not an assumption.
+
+Q: Which AnchorBench finding is invisible to adversarial security testing?
+A: Social pressure beats direct attack — schedules built on emotional vulnerability and agreement-seeking surfaced more behavioural failures than explicit adversarial probing. Sycophancy under sustained politeness is a separate axis from prompt injection; both need testing.
+
+Q: Why does MFCL Audio grade argument values, not just function names?
+A: Voice adds perception errors — homophones, noise, disfluencies, accent — that corrupt a tool call's *arguments* rather than its intent. An agent that understands "cancel my order" but mis-hears the order number executes the right function on the wrong record.
+
+Q: What is the CRMArena-Pro result you should act on first?
+A: Confidentiality awareness is close to absent unless the agent is explicitly prompted for it. Agents disclose what they can reach, so data governance is a prompt-and-permission problem before it is a model problem.
+
+Q: LoCoBench-Agent found comprehension and efficiency negatively correlated. What follows commercially?
+A: An agent that explores exhaustively is not simply "better" — under Flex Credits you pay per action, so thoroughness is a priced choice. Measure tool calls per resolved task and decide where on that curve you want to sit.
+
+Q: What is the method warning AnchorBench raises about your own evaluations?
+A: Do not measure what the agent *says about itself* at checkpoints. Checkpoint answers held steady while live behaviour drifted, so measure what the agent *does* across a long conversation.

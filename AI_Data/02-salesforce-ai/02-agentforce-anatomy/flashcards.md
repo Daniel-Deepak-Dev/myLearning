@@ -48,3 +48,12 @@ A: You are billed per *action* (~20 credits, ~$0.10), not per conversation. A re
 
 Q: Which Apex change at API 67.0 breaks existing Agentforce actions?
 A: Custom Apex types used as invocable action inputs must expose a visible no-argument constructor — public, or global for packaged classes.
+
+Q: Agentforce Mobile SDK "262.1.2" sounds like a patch. Why is it not?
+A: The marketing name and the git tag are different version lines. 262.1.0 → 262.1.2 is patch-shaped; the tag went 17.31.6 → 18.26.8, a major, because the SDK moved to Swift 6 strict concurrency. Read the tag, not the release title.
+
+Q: Which five Gen UI components did Agentforce Mobile SDK 262.1.2 add, and why do they matter?
+A: `Table`, `Schedule`, `DataGroup`, `QueryOption` and `VerticalCard`. They are exactly the action returns that previously got flattened into prose — more reason to design agent action outputs as typed structures rather than sentences.
+
+Q: The Agentforce mobile stack has three separately versioned artifacts. What is the trap in late July 2026?
+A: The SDK (tag `18.26.8`) declares a dependency on `AgentforceService` 6.10.0 while `AgentforceMobileService-iOS` is already at 6.11.2. The SDK's floor lags the service's head — the newest service build is not the tested one.

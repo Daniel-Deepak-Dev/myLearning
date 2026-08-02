@@ -1,8 +1,8 @@
-﻿# Glossary — 175 Terms
+# Glossary — 175 Terms
 
 Extracted from [the roadmap](ai-salesforce-architect-roadmap.html) glossary tab, grouped by track and alphabetized. Greppable and extendable — **add new terms here as you meet them**, in the right section, keeping alphabetical order. If a term deserves depth, it also earns a flashcard in its topic folder.
 
-> **Currency:** definitions reflect **Summer '26 (API 67.0)**, the current release as of 2026-07-28. Where a term changed meaning in 2026, the entry says so — knowing the old meaning is what stops you answering an exam question from 2025 memory. Running detail and sources live in [05-release-radar/](05-release-radar/README.md).
+> **Currency:** definitions reflect **Summer '26 (API 67.0)**, the current release as of 2026-08-02. Where a term changed meaning in 2026, the entry says so — knowing the old meaning is what stops you answering an exam question from 2025 memory. Running detail and sources live in [05-release-radar/](05-release-radar/README.md).
 
 ## Salesforce AI
 
@@ -108,6 +108,7 @@ Extracted from [the roadmap](ai-salesforce-architect-roadmap.html) glossary tab,
 | Custom Error (Flow element) | The Flow element that shows an error message you wrote **and rolls the transaction back** — Winter '24, record-triggered flows. The distinction that matters: a **fault path does not roll back**, so it reports the failure while leaving everything already written on disk. `Roll Back Records` (Winter '22) does the rollback without a message but is **screen-flow only**, and reaches back only to the previous screen, because every screen boundary ends a transaction. |
 | Custom Lightning Type | The metadata that replaces an Agentforce action's default input form or output text with your own LWC. A folder under `lightningTypes/` with a required **`schema.json`** (the data shape, mirroring the action's `@InvocableVariable` properties), plus optional **`renderer.json`** for output and **`editor.json`** for input. Components bind by `targetType` — **`lightning__AgentforceOutput`** for a renderer, **`lightning__AgentforceInput`** for an editor. **Overrides register per channel** (`lightningDesktopGenAi`, `enhancedWebChat`, `lightningMobileGenAi`, `experienceBuilder`) with no inheritance, so registering one leaves the others on the default UI. |
 | `Database.Cursor` | A server-side handle to a SOQL result set, paged with `fetch(position, count)` and surviving into later transactions for **2 days** — the Queueable-chain counterpart to a batch `QueryLocator`. **GA since Summer '24 (API 61.0), and not a row-limit escape hatch**: each `fetch()` costs a SOQL query and its rows count against the row limit. 50 M rows per cursor, 100 fetches per transaction, 10,000 cursors per org per 24 h. |
+| `dist-tag` (npm) | A named pointer to one published version of an npm package. **They are not ordered by version** — `@salesforce/cli` currently has `latest` at 2.145.6, `latest-rc` at 2.146.3 and `nightly` at 2.147.3. `npm install` follows `latest`, so "the newest published version" and "the version you get" are routinely different, and a security patch can be published and still be unreachable from a plain install. |
 | `Database.Stateful` | The marker interface that makes a batch class's **instance** member variables persist across `execute()` chunks. **Static variables still reset at every chunk** — which is why a running total so often ends up equal to the last chunk's count. |
 | Draft Record | A record created or edited in the Salesforce mobile app **while offline** — held in a local queue with no server Id until it synchronises. The consequence people miss is timing: triggers, validation rules and flows run **at sync, not at save**, so an offline save can be rejected hours later and out of context, which is what makes client-side validation mandatory in an offline component. |
 | Dynamic Actions | Actions configured on the Lightning record page's Highlights Panel with per-action filters (field values, user, device type) instead of in the page layout's action section. Standard-object support is gated behind Setup → *Salesforce Mobile App* → **Enable Dynamic Actions on Mobile**. |
@@ -154,6 +155,7 @@ Extracted from [the roadmap](ai-salesforce-architect-roadmap.html) glossary tab,
 | `with sharing` (default) | At API 67.0 a class with no sharing keyword defaults to `with sharing`. Previously it inherited the caller's context, which silently skipped sharing when it was the entry point. |
 | `WITH SECURITY_ENFORCED` | **Retired — no longer compiles at 67.0.** Replaced by `WITH USER_MODE`, which handles polymorphic fields, checks the `WHERE` clause and reports every FLS violation instead of the first. |
 | `WITH USER_MODE` | The SOQL/SOSL clause enforcing the running user's CRUD, FLS **and sharing** — the replacement for `WITH SECURITY_ENFORCED`, and already the behaviour of an untagged query in a class compiled at 67.0. Write it anyway: it survives an API-version bump as a statement of intent. Its `Database`-method equivalent is the `AccessLevel` argument. |
+| Zip-slip | A path-traversal attack on archive extraction: an entry whose stored path escapes the target directory (`../../../.git/hooks/pre-commit`), so unzipping writes where the extractor never intended. Fixed in `@salesforce/source-deploy-retrieve` **13.0.1** (`W-23558165`) for static resources of `contentType` `application/zip` / `application/jar` during metadata→source conversion. The lesson beyond the CVE-shaped fact: **`sf project retrieve` is an inbound trust boundary**, executing org-controlled bytes on your machine. |
 
 ## Claude / CCA
 
@@ -205,5 +207,23 @@ Extracted from [the roadmap](ai-salesforce-architect-roadmap.html) glossary tab,
 | Temperature | Sampling parameter controlling randomness: low = deterministic and repeatable, high = varied and creative. |
 | Token | The unit models read and write — roughly ¾ of an English word. Context limits and API pricing are measured in tokens. |
 | Transformer | The neural architecture behind modern LLMs, built on attention — the mechanism that lets a model weigh which parts of the input matter for each output token. |
+
+## AI research & benchmarks
+
+> Salesforce AI Research's evaluation line. Running detail lives in [05-release-radar/ai-research-and-benchmarks.md](05-release-radar/ai-research-and-benchmarks.md).
+
+| Term | Definition |
+|---|---|
+| AnchorBench | Benchmark for **long-horizon** persona stability, released 2026-07-27 under **CC BY-NC 4.0** (code included — blocks client work). 2,008 conversations, 27 personas, **85–130 sessions each**. Headline findings: user-state changes recalled at **chance (~0.25)**, no memory setting wins (0.430–0.459), and emotional vulnerability exposes more failures than explicit attacks. **Paper is not on arXiv** — every number comes from a README. |
+| CRMArena / CRMArena-Pro | The CRM-work benchmark, **accepted to TMLR**. Runs agents inside real Salesforce org environments on Salesforce schemas, B2B and B2C. **~83% on structured single-turn tasks**, sharp degradation on multi-turn, and **confidentiality awareness close to absent unless explicitly prompted**. |
+| Enterprise Deep Research (EDR) | Salesforce AI Research's **steerable** multi-agent research system (2025-10-24): a Master Planning Agent decomposing a query over four specialised search agents. *Steerable* = a human redirects mid-run rather than judging only the output. The first-party reference architecture behind Multi-Agent Orchestration's shape. |
+| GIFT-Eval | Salesforce AI Research's **general time-series forecasting** benchmark, Apache-2.0. Seven frequency ranges, seven domains, a fixed **98 dataset configurations** per submission. Notable because competitors submit to it — including **Google Cloud AI Research** — which makes it neutral industry infrastructure rather than a vendor marketing surface. |
+| LoCoBench-Agent | Long-context software-engineering benchmark ([arXiv 2511.13998](https://arxiv.org/abs/2511.13998)): 8,000 scenarios, 10 languages, up to 50 turns, **10K–1M tokens**. Two findings: long context degraded **less** than expected, and comprehension trades off against efficiency — so an agent that explores exhaustively is not simply better, it is more expensive under Flex Credits. |
+| MFCL Audio | Function-calling benchmark evaluated **from speech**, not from a transcript — **ICML 2026**, 6,200 expert-verified tasks, two suites (**Text Audio** pipelined, **True Audio** end-to-end). Isolates **perception errors**, which corrupt tool-call *arguments* rather than intent. Grading is deterministic (AST-based), with no LLM judge. |
+| Persona collapse | A model drifting off its assigned role, boundaries, values and communication style over a long conversation. Distinct from **trajectory recall** — AnchorBench's central finding is that the two come apart. |
+| `replication_code_available` | A field in every GIFT-Eval submission's `config.json`. Read it before quoting a leaderboard position: of the five models merged 2026-07-31, **only one declared `"Yes"`**. Its sibling `testdata_leakage` is **self-declared, not audited**. |
+| SCUBA | Named consistently alongside CRMArena-Pro and GIFT-Eval as Salesforce's agent-evaluation line. **No detail captured by this radar yet** — an acknowledged gap, not a summary. |
+| Trajectory recall | Whether a model can distinguish what actually happened in a conversation from a plausible alternative that did not. Measured by AnchorBench's Trajectory Probe with four-option counterfactuals. The support-agent failure it predicts: the customer said at turn 3 they had cancelled, and at turn 40 the agent still acts on the old state. |
+| Zero-shot forecasting | Forecasting a time series the model was never trained on — GIFT-Eval's target capability, and the forecasting analogue of a language model answering a question it never saw. |
 
 ## New terms (unsorted — file into sections above during weekly review)
