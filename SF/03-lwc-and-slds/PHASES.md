@@ -1,6 +1,8 @@
 # Phases for 03 · LWC & SLDS
 
-22 topics across 3 runs — **phase 05 complete**, 5 of 22 written. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
+22 topics across 3 runs — **phases 05 and 06 complete**, 14 of 22 written. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
+
+> Currency anchor for this area: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md); for **09** specifically, [trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
 
 > **Area constraint.** Aura and Visualforce are **out of scope**. They may be named only in a migration or coexistence sentence — never as an approach. The old notes contain several Aura-flavoured pages ([../_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md) marks them ⛔); skip those outright.
 
@@ -42,7 +44,7 @@ Shares a run with the Apex closeout — see [02-apex-and-triggers/PHASES.md](../
 
 ---
 
-## Phase 06 — LWC data, security & navigation · 9 files ⬜
+## Phase 06 — LWC data, security & navigation · 9 files ✅
 
 ```
 06-lightning-data-service-and-ui-api-wires.md
@@ -69,6 +71,38 @@ Shares a run with the Apex closeout — see [02-apex-and-triggers/PHASES.md](../
 **Dependency** — **08** must reflect [02-apex · 10 user mode](../02-apex-and-triggers/INDEX.md): a `cacheable=true` method enforces the running user's FLS by default at 67.0. Don't restate the Apex note; link it.
 
 **Seed harvest** — **08**: `Cache issue : refreshApex of wire method & multiple calling of imperative method` is a genuine gotcha worth a callout.
+
+### Retro
+
+**⚠️ corrections — two of three needed correcting themselves**
+
+- **09** — held, but the plan overstated it. **Lightning Locker is not retired.** LWS is the default only for orgs created **Winter '23 and later**, has been GA for all orgs since **Summer '23**, and is a Session Settings checkbox — *Use Lightning Web Security for Lightning web components and Aura components* — that an org can still switch off. "Replaced as the default, not retired" is the accurate sentence, and it is the same credibility problem phase 05 hit with `if:true`. The `data:`/`blob:` find carried over from phase 05 as planned.
+- **13** — held. Added the release-accurate framing the plan lacked: **Mixed Shadow Mode is still Beta at 67.0**, synthetic remains the Lightning Experience default, and `shadowSupportMode = 'any'` is **deprecated in favour of `'native'`**. Also recorded that a synthetic parent may contain native children but not the reverse, which is what makes migration leaves-first.
+- **14** — **the plan's framing was half wrong and it changed the note.** "Styling hooks are the supported surface" is only true of **global** hooks. **`--slds-c-*` component hooks are not supported in SLDS 2**, and Salesforce's own guidance is that a component depending on them should stay on SLDS 1 for now. `--slds-g-*` is the portable surface.
+
+**🆕 the plan did not flag**
+
+- **SLDS 2 went GA in Winter '26, not Summer '26** (introduced Spring '25). Summer '26's contribution is the **expanded Themes and Branding interface** — typography, shadows, sizing, spacing, illustration colour, with inline preview. On by default for new orgs in the supported editions, opt-in for existing ones.
+- **Aura-era design tokens are inert under SLDS 2** — not merely deprecated. **SLDS Linter** and **SLDS Validator** convert them to global hooks; the DX MCP server exposes the same guidance.
+- **Dark mode is exclusive to SLDS 2**, enabled per theme with *Let users enable Dark Mode*. An SLDS 1 org must migrate first.
+- **GraphQL mutation chaining (Summer '26) landed in the GraphQL *API*, not the wire adapter.** The wire adapter still has **no mutations at all**, so LDS remains the only client-side write path. Features reach the API several releases before the adapter — a "GraphQL API" release note is not evidence the adapter has it.
+- **LWS is namespace isolation, not a firewall.** The genuinely blocked set is small (`document.write()`, `Worker()`, `ServiceWorkerContainer`, `window.find()`, XSLT); most symptoms are namespacing or sanitization. Three things routinely blamed on LWS are **not** LWS: external CDN scripts (CSP), `$A`/`Sfdc`/`sforce` (the LWC framework), and `fetch('/aura')` (an internal endpoint).
+
+**Other corrections made while writing**
+
+- **`encodeDefaultFieldValues` is honoured only on `actionName: 'new'`** — silently ignored on `edit`, which is the usual wrong guess. In **10**.
+- **`role="outputOnly"` is not enough to return a value to Flow.** Assigning to the `@api` property does nothing; it takes a `FlowAttributeChangeEvent` whose attribute name is an **unchecked string**. In **11**.
+- **LMS default scope excludes inactive console tabs and the utility bar** — the "works on my page, not in the console" bug. `APPLICATION_SCOPE` is the fix. In **12**.
+- **`fields` vs `optionalFields` differ on no-access**: a field in `fields` the user cannot see errors the *whole* wire. In **06**.
+
+**Seed harvest** · *two harvested, and the Notion connector dropped mid-run*
+
+- **08** — `Cache issue : refreshApex of wire method & multiple calling of imperative method` (2022). → *harvested and it holds up verbatim: **"Refreshing wire method will only call the method using old parameter value, not the updated parameter value."** Stated as the rule it implies — `refreshApex` re-provisions with the config the wire last had, so it is for "the data behind the same question changed", never for "the question changed".*
+- **10** — `Navigate to a Record's Create Page with Default Field Values` (2023) plus its sibling `Navigation` page. → *harvested with the correction: the sibling's example is Aura (`<lightning:pageReferenceUtils>`) and **does not port** — in LWC it is a plain import from the `lightning/pageReferenceUtils` module. The part worth keeping is the `GenerateUrl`-into-an-anchor shape, because `Navigate` on a `<div onclick>` produces a destination nobody can middle-click or reach by keyboard.*
+- **07, 09, 12, 14 carry no `From my notes.` callout** — confirmed zero seed coverage. No entry anywhere in the inventory for LDS, GraphQL, Locker/LWS, SLDS, or LMS.
+- **06, 11, 13 carry none either, for a different reason.** `@Salesforce Modules`, `LWC - Quick Action`, `LWC metadata api file` and `LWC : Query DOM Elements` were **not re-readable** — the Notion connector disconnected part-way through the run. Titles are known, bodies are not, and inventing their content was not an option. **Re-try these three in a later pass.**
+
+**Known debt** — phase-05 files 01, 02, 04 and 05 link forward to topics 06–14 as `[NN](INDEX.md)`, which was correct when those files did not exist. They now do. Left alone under standing rule 1 (no sprawl); worth a one-pass sweep after phase 07 writes 15–22, when the same debt will exist for the rest of the area.
 
 ---
 
