@@ -46,21 +46,21 @@ The practical answer is therefore never "re-implement it from the ideas." It is 
 
 ---
 
-## 2026-07-24 · Certification retirements and renames — two hard dates
+## 2026-07-27 · Data 360 pricing — profiles, pooled credits, free Tableau
 
-**24 certifications retire on February 1, 2027.** Registration for those exams **closed July 24, 2026**; the **last day to sit one is August 31, 2026**. Passing before the deadline still counts — the credential stays on your Trailblazer profile permanently, flagged as retired from February 1, 2027, and remains valid evidence of knowledge. What it loses is **public verification**: retired credentials stop appearing on the public verification pages.
+_Effective **March 2, 2026**. Added on 2026-07-27 as a gap-fill; see [02-data-cloud/2026-07-27.md](02-data-cloud/2026-07-27.md) for the full write-up._
 
-**16 certifications were renamed on July 24, 2026**, with *Agentforce* replacing the old cloud branding. Cosmetic only — no content change, no exam-code change, no retake. Trailblazer profiles updated automatically.
-
-| Old name | New name |
+| Change | Detail |
 |---|---|
-| Sales Cloud Consultant | Agentforce Sales Consultant |
-| Service Cloud Consultant | Agentforce Service Consultant |
-| Data Cloud Consultant | Data 360 Consultant _(renamed earlier, 2026-03-27; exam code `Data-Con-101` unchanged)_ |
+| **Profile-based SKU** | **~$240 per 1,000 profiles** (baseline) · **~$420 per 1,000** (premium) — bundles essential Data 360 actions into a flat per-profile cost |
+| **Data 360 joins Flex Credits** | Data 360 and Agentforce consumption now draw from **one pooled, fungible credit balance** |
+| **Tableau usage un-metered** | Querying Data 360 from Tableau no longer burns credits |
 
-**Why it matters.** The rename doesn't touch your CV, LinkedIn or email signature — and recruiters search the new terms. Also read it as directional: Salesforce is aligning the credential catalogue with the Agentforce 360 portfolio, so expect exam *content* to drift toward agentic material at the next refresh.
+A "profile" is a **unified individual after identity resolution**, not a raw source row — so you are billed on the *output* of your identity-resolution ruleset.
 
-Full list in Salesforce's Certification Name Changes FAQ. Sources: [Salesforce Ben — retiring 24 certifications](https://www.salesforceben.com/salesforce-is-retiring-24-certifications-heres-what-you-need-to-know/) · [Apex Hours — 2027 retirements](https://www.apexhours.com/salesforce-2027-certification-retirements-everything-you-need-to-know/) · [Salesforce Time — retirements and renames](https://salesforcetime.com/2026/06/10/salesforce-certification-retirements-and-renames-explained/) · [The Salesforce Certification Lifecycle](https://www.salesforce.com/blog/salesforce-certification-lifecycle/)
+**Why it changes design, not just the invoice.** Credit metering rewarded processing less. Profile pricing rewards **resolving fewer, better profiles** — duplicates and under-matches now inflate a recurring bill directly, which puts money behind identity-resolution quality for the first time. Credit pooling removes the "is this the data team's cost or the AI team's cost?" argument that stalls grounding projects. Tableau un-metering is a deliberate nudge toward using Data 360 as the reporting substrate.
+
+Verify against a live quote before any commercial use — public list pricing moves and varies by region.
 
 ---
 
@@ -89,24 +89,6 @@ A single action costs about **$0.10**; a multi-step task costs a multiple of tha
 Flex Credits covers **every** Agentforce use case — customer-facing agents, employee-facing agents, and Agentforce Voice — and as of early 2026 is the recommended model for most new deployments.
 
 **Why it matters architecturally, not just commercially.** Cost is now a function of agent design. An orchestrator that routes through three subagents costs three times a direct hit. Chatty grounding loops cost real money. This is the first time Salesforce agent architecture has had a direct, legible unit economics consequence — and it's the question a CFO will ask first.
-
----
-
-## 2026-07-27 · Data 360 pricing — profiles, pooled credits, free Tableau
-
-_Effective **March 2, 2026**. Added on 2026-07-27 as a gap-fill; see [02-data-cloud/2026-07-27.md](02-data-cloud/2026-07-27.md) for the full write-up._
-
-| Change | Detail |
-|---|---|
-| **Profile-based SKU** | **~$240 per 1,000 profiles** (baseline) · **~$420 per 1,000** (premium) — bundles essential Data 360 actions into a flat per-profile cost |
-| **Data 360 joins Flex Credits** | Data 360 and Agentforce consumption now draw from **one pooled, fungible credit balance** |
-| **Tableau usage un-metered** | Querying Data 360 from Tableau no longer burns credits |
-
-A "profile" is a **unified individual after identity resolution**, not a raw source row — so you are billed on the *output* of your identity-resolution ruleset.
-
-**Why it changes design, not just the invoice.** Credit metering rewarded processing less. Profile pricing rewards **resolving fewer, better profiles** — duplicates and under-matches now inflate a recurring bill directly, which puts money behind identity-resolution quality for the first time. Credit pooling removes the "is this the data team's cost or the AI team's cost?" argument that stalls grounding projects. Tableau un-metering is a deliberate nudge toward using Data 360 as the reporting substrate.
-
-Verify against a live quote before any commercial use — public list pricing moves and varies by region.
 
 ---
 
@@ -155,6 +137,24 @@ The exam was **significantly restructured in the Summer '25-aligned revision** (
 Official prep: [Agentforce Specialist Certification Prep on Trailhead](https://trailhead.salesforce.com/content/learn/modules/cert-prep-agentforce-specialist/get-started-with-salesforce-agentforce-specialist-certification-prep).
 
 **Naming note:** the Data Cloud Consultant certification is now the **Salesforce Certified Data 360 Consultant** — update any bookmarks or study plans referring to the old name.
+
+---
+
+## 2026-07-24 · Certification retirements and renames — two hard dates
+
+**24 certifications retire on February 1, 2027.** Registration for those exams **closed July 24, 2026**; the **last day to sit one is August 31, 2026**. Passing before the deadline still counts — the credential stays on your Trailblazer profile permanently, flagged as retired from February 1, 2027, and remains valid evidence of knowledge. What it loses is **public verification**: retired credentials stop appearing on the public verification pages.
+
+**16 certifications were renamed on July 24, 2026**, with *Agentforce* replacing the old cloud branding. Cosmetic only — no content change, no exam-code change, no retake. Trailblazer profiles updated automatically.
+
+| Old name | New name |
+|---|---|
+| Sales Cloud Consultant | Agentforce Sales Consultant |
+| Service Cloud Consultant | Agentforce Service Consultant |
+| Data Cloud Consultant | Data 360 Consultant _(renamed earlier, 2026-03-27; exam code `Data-Con-101` unchanged)_ |
+
+**Why it matters.** The rename doesn't touch your CV, LinkedIn or email signature — and recruiters search the new terms. Also read it as directional: Salesforce is aligning the credential catalogue with the Agentforce 360 portfolio, so expect exam *content* to drift toward agentic material at the next refresh.
+
+Full list in Salesforce's Certification Name Changes FAQ. Sources: [Salesforce Ben — retiring 24 certifications](https://www.salesforceben.com/salesforce-is-retiring-24-certifications-heres-what-you-need-to-know/) · [Apex Hours — 2027 retirements](https://www.apexhours.com/salesforce-2027-certification-retirements-everything-you-need-to-know/) · [Salesforce Time — retirements and renames](https://salesforcetime.com/2026/06/10/salesforce-certification-retirements-and-renames-explained/) · [The Salesforce Certification Lifecycle](https://www.salesforce.com/blog/salesforce-certification-lifecycle/)
 
 ---
 

@@ -4,6 +4,14 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-01 · A path-traversal in metadata retrieve (cross-link)
+
+`@salesforce/source-deploy-retrieve` 13.0.1 fixed a **zip-slip** in static-resource conversion (`W-23558165`) — org metadata writing outside the project on the machine that retrieves it, with **no 12.x backport** and the stable `sf` channel still on the unpatched line. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-01--a-path-traversal-fix-in-the-retrieve-path--and-most-sf-installs-cannot-reach-it-yet).
+
+**The governance point that generalises:** your metadata pipeline is an **inbound** trust boundary, not just an outbound one. Retrieve, convert and install all execute org-controlled bytes on developer and CI machines.
+
+---
+
 ## 2026-07-26 · Apex database operations run in user mode by default
 
 At **API version 67.0**, SOQL, SOSL, DML and [`Database`](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_methods_system_database.htm) methods default to [**user mode**](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_classes_enforce_usermode.htm) instead of system mode. Every operation now enforces the running user's object permissions, field-level security and sharing rules. Elevated access is something you **opt into explicitly**.

@@ -16,6 +16,24 @@ Salesforce began calling Data Cloud **"Data 360"** at Dreamforce 2025 (Oct 14, 2
 
 ---
 
+## 2026-08-01 · The Data 360 grounding reference app is renamed — NextGenWealth is now Agentic Advisor
+
+**What changed.** [`salesforce/next-gen-wealth`](https://github.com/salesforce/next-gen-wealth) — Salesforce's Apache-2.0 Financial Services Cloud reference app, and the only public worked example of Data-360-grounded prompt templates this radar has found — **renamed itself from NextGenWealth to Agentic Advisor** on 2026-08-01 (commit `79d77b4`, PR #15, work item `@W-23668628`). README and skill text changed with it.
+
+**Why it matters.** Nothing technical shipped, but the app is the one place you can read a *shipped* answer to the question the July 30 scan raised: **what does a grounded prompt template say when its grounding returns nothing?** Its Client Pulse templates answer that with an explicit fail-safe message. Knowing the app's current name is what keeps that example findable.
+
+**Gotchas:**
+- The **repository slug is still `next-gen-wealth`** — only the product name moved. Search for "Agentic Advisor" and you will not find the repo; search the old slug and you will not find the docs.
+- The Client Pulse templates exist in **two variants**, household (`HH`) and `PersonAccount`. A change applied to one is not applied to the other — both PRs on July 29 had to be raised separately.
+
+**Study action:** clone it and read the two Client Pulse prompt templates side by side, then open one prompt template of your own and write down what it emits when its Data 360 retriever returns zero rows. If the answer is "whatever the model invents", that is the gap.
+
+**Status:** Open source, Apache-2.0. Reference app, **not a supported product** and not on a release train. Rename landed 2026-08-01.
+
+**Sources:** [`salesforce/next-gen-wealth`](https://github.com/salesforce/next-gen-wealth) · [commit history](https://github.com/salesforce/next-gen-wealth/commits/main) · [PR #15](https://github.com/salesforce/next-gen-wealth/pull/15) · prior detail in scan note [02-data-cloud/2026-07-30](02-data-cloud/2026-07-30.md)
+
+---
+
 ## 2026-07-31 · Data 360 is the observability backend for Agentforce — and `agentforce-observe` names the query path
 
 **What changed.** The `agentforce-observe` skill (**0.8**, shipped in `forcedotcom/sf-skills` 1.33.0) exists to *"analyze production Agentforce agent behavior using session traces and Data Cloud."* Its trigger list is the informative part: it fires on querying **STDM** session data or Data 360 trace records, on investigating production agent failures or regressions, and on `findSessions` or trace-analysis queries.

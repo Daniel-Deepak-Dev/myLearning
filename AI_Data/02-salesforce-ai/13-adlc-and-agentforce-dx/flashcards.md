@@ -75,3 +75,18 @@ A: `service-helpagent-coordinate` (0.9), a guided four-checkpoint flow — setup
 
 Q: Why is an Agent Skill's version number a poor change indicator?
 A: `agentforce-observe` shipped in sf-skills 1.33.0 at the same `0.8` it carried in the earlier `agentforce-adlc` sync. Track the release tag and the commit, not the skill version.
+
+Q: SDR 13.0.1 fixed a zip-slip. Why can a team on the stable `sf` channel not have the fix?
+A: There is no 12.x backport — the newest 12.x is 12.37.2 (2026-07-13). `@salesforce/plugin-deploy-retrieve` 3.x pins SDR `^12.36.7`, a range that can never resolve to a patched build. Only plugin 4.x pins `^13.0.0`, and it ships in CLI 2.147.x, which requires Node ≥ 22.
+
+Q: What is a zip-slip, and which Salesforce code path had one?
+A: An archive entry whose stored path escapes the target directory (`../../../.git/hooks/pre-commit`), so extraction writes outside it. In `staticResourceMetadataTransformer.ts`, which unzips static resources of `contentType` `application/zip` or `application/jar` during metadata→source conversion — i.e. `sf project retrieve start`.
+
+Q: Why is `npm view @salesforce/cli dist-tags` worth running before you claim your CLI is current?
+A: dist-tags are not ordered by version. As of 2026-08-02, `latest` is 2.145.6, `latest-rc` 2.146.3 and `nightly` 2.147.3. A plain `npm install -g @salesforce/cli` follows `latest`, so the newest published version and the version you get are different.
+
+Q: What is the security lesson from the SDR zip-slip that outlives the specific bug?
+A: `sf project retrieve` is an **inbound** trust boundary. It takes org-controlled bytes — which a packaging partner, a compromised sandbox or an agent with metadata write access can influence — and writes them onto a developer laptop or CI runner.
+
+Q: Which sf CLI version first required Node 22, and what else came with it?
+A: 2.147.3 (2026-08-01, `nightly` dist-tag): `engines.node >=22.0.0`, `@salesforce/core ^9.0.0`, `@salesforce/plugin-agent` 2.0.0 and `@salesforce/plugin-deploy-retrieve` 4.0.1. You cannot take the security patch without taking all of it.
