@@ -2,7 +2,7 @@
 
 > Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 05
 
-**Scope:** What makes a component re-render — the three decorators, the mutation rules behind them, and where shared state should live instead. Wiring data specifically is [08 · Apex in LWC](INDEX.md); message-passing is [04](04-events-and-component-communication.md).
+**Scope:** What makes a component re-render — the three decorators, the mutation rules behind them, and where shared state should live instead. Wiring data specifically is [08 · Apex in LWC](08-apex-in-lwc-wire-vs-imperative.md); message-passing is [04](04-events-and-component-communication.md).
 
 ## Core idea
 
@@ -19,7 +19,7 @@ Every field on a `LightningElement` is reactive by default — has been since Sp
 - **Reassignment is the trigger.** Primitives are covered automatically. For objects and arrays, replace rather than mutate — `this.rows = [...this.rows]` after a change is the idiomatic form and it also makes the change obvious to whoever reads it.
 - **`@track` observes nested fields.** With it, `this.filters.status = 'Open'` re-renders; without it, only `this.filters = {...}` does.
 - **`@wire` parameters prefixed with `$` are reactive.** `@wire(getRecord, { recordId: '$recordId' })` re-invokes whenever `recordId` changes; without the `$` the value is a literal string.
-- **A wired *property* gives you `{ data, error }`**; a wired *function* receives the same object and lets you transform it. Neither can be called imperatively — that needs a separate import. → [08](INDEX.md)
+- **A wired *property* gives you `{ data, error }`**; a wired *function* receives the same object and lets you transform it. Neither can be called imperatively — that needs a separate import. → [08](08-apex-in-lwc-wire-vs-imperative.md)
 - **Getters are the computed layer.** They re-evaluate on every render, so keep them cheap and never give them side effects.
 
 ```js
@@ -72,4 +72,4 @@ A: Wire results are immutable and shared from the cache — copy before changing
 
 - [04 · Events & component communication](04-events-and-component-communication.md) — the messaging alternative that state managers partly displace
 - [02 · Templates, directives & rendering](02-templates-directives-and-rendering.md) — where getters are consumed and re-evaluated
-- [08 · Apex in LWC — wire vs imperative](INDEX.md) — using `@wire` against Apex, and `refreshApex`
+- [08 · Apex in LWC — wire vs imperative](08-apex-in-lwc-wire-vs-imperative.md) — using `@wire` against Apex, and `refreshApex`

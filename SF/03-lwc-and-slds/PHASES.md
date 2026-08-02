@@ -1,6 +1,6 @@
 # Phases for 03 · LWC & SLDS
 
-22 topics across 3 runs — **phases 05 and 06 complete**, 14 of 22 written. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
+24 topics across 3 runs — **all complete ✅**, 24 of 24 written. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
 
 > Currency anchor for this area: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md); for **09** specifically, [trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
 
@@ -106,18 +106,26 @@ Shares a run with the Apex closeout — see [02-apex-and-triggers/PHASES.md](../
 
 ---
 
-## Phase 07 — LWC quality, modern tooling & reach · 8 files ⬜
+## Phase 07 — LWC quality, modern tooling & reach · 10 files ✅
 
 ```
-15-lwc-testing-with-jest.md
+15-lwc-testing-with-jest.md                        ⚠️
 16-lwc-performance-and-debugging.md
-17-accessibility-and-internationalization.md
-18-error-handling-and-user-feedback.md
+17-accessibility-and-internationalization.md       ⚠️
+18-error-handling-and-user-feedback.md             ⚠️
 19-custom-lightning-types-for-agent-output.md      🆕
 20-offline-lwc-and-mobile-constraints.md           🆕
-21-local-dev-and-lightning-dev-server.md           🆕
+21-local-dev-and-lightning-dev-server.md           🆕⚠️
 22-lwc-open-source-and-off-platform-reuse.md
+23-static-resources-and-third-party-javascript.md  ← added at plan time
+24-lwc-state-managers.md                           🆕 ← added at plan time
 ```
+
+**Two files added before the run, appended rather than inserted** so no existing link breaks.
+- **23** closes a hole in the whole area: nothing in 01–22 owned `platformResourceLoader`, CSP Trusted Sites or `lwc:dom="manual"`, and 09 had already recorded that blocked CDN scripts are CSP rather than LWS without anywhere to point at for the right pattern.
+- **24** is the topic the phase-05 retro nominated — State Managers, GA at 67.0. A paragraph in 05's currency section undersold the first new answer to cross-component state since LMS.
+
+**A 25 · *LWC host surfaces & the `js-meta.xml` targets contract* was considered and declined** — 11 already owns `.js-meta.xml` as "the contract". The one genuinely new surface, LWC in Lightning dashboards, went into 22.
 
 **🆕 — research before writing**
 - **19** Custom Lightning Types — how typed agent action results render on desktop vs mobile. Cross-link [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md); don't duplicate the agent side.
@@ -125,3 +133,44 @@ Shares a run with the Apex closeout — see [02-apex-and-triggers/PHASES.md](../
 - **21** `sf lightning dev app|site` — the hot-reload workflow. Overlaps [09-devops · 22](../09-devops-sfdx-and-release-management/INDEX.md); this note owns the component-authoring angle, that one owns the tooling install.
 
 **Seed harvest** — `Local Dev` (2024) maps to **21** and may be the most current LWC note in the corpus. Read it before writing — but note it is **named for a thing that has been renamed**: phase 05 found that **LWC Component Preview went GA at 67.0** and the VS Code extension is now **Live Preview**, not Local Dev. Treat the page's terminology as dated even where its workflow is not.
+
+### Retro
+
+**⚠️ — the plan added three flags to a file list that shipped with none, and the run added a fourth**
+
+The phase-07 list as written in the master plan carried **no ⚠️ at all**, which was wrong for half of it. Flags added at plan time to **15**, **17** and **21**; **18** earned one during the run.
+
+- **15** — held, and it is two stale answers rather than one. `registerApexTestWireAdapter` / `registerLdsTestWireAdapter` / `registerTestWireAdapter` are the **Spring '21-and-earlier** pattern; the docs' exact words are that the code *"still works, but it isn't recommended."* Not deprecated, not broken — superseded, and the distinction matters for the same credibility reason `if:true` did in phase 05. Second half: `sfdx force:lightning:lwc:test:run` went with `sfdx` v1.
+- **17** — held, and the doc-backed framing is stronger than the one the plan proposed. The plan led with "LWC v4 dropped the global ARIA property polyfill", which is an **OSS** changelog fact and not something the platform docs state. The platform docs *do* say, plainly: *"In native shadow DOM, you can't link IDs and ARIA attributes between elements in separate templates."* That is the correction the note leads with, because it also explains the delayed fuse — synthetic shadow flattens IDs, so `aria-labelledby` written in 2021 works until the component goes native.
+- **21** — held, and the topic's own filename is the artefact. Three names, three products: `sfdx force:lightning:lwc:start` (retired, off-org, mock-backed) → *Lightning Preview* / *Local Dev* (2024, org-backed) → **Live Preview** (the extension) with **LWC Component Preview** GA at 67.0.
+- **18 — a fourth ⚠️ nobody flagged.** *"Fire `ShowToastEvent`"* is no longer portable: it is **not supported in LWR Experience Cloud sites or standalone apps**, where it fails silently because there is no container to catch the event. **`lightning/toast` + `lightning/toastContainer` (Winter '24)** is the portable answer. This is the same shape as `NavigationMixin`'s absence off-platform — a component is only as reusable as its container-dependent imports.
+
+**🆕 the plan did not flag**
+
+- **The plan was wrong about the Custom Lightning Types binding.** It said the renderer LWC uses a **`sourceType`**; the docs use **`targetType`**, with `lightning__AgentforceOutput` for a renderer and `lightning__AgentforceInput` for an editor. The `sourceType` claim came from a search snippet and did not survive the primary source. **Third phase running that a 🆕 item in the plan needed correcting** — 05 hit it, 06 hit it twice, and it should now be treated as the expected outcome rather than a surprise.
+- **Custom Lightning Types are registered per channel**, and this is the part every write-up omits: `lightningDesktopGenAi`, `enhancedWebChat`, `lightningMobileGenAi`, `experienceBuilder` are separate folders with **no inheritance**. A renderer that works on the desktop agent is simply absent in Enhanced Chat v2.
+- **`lightning/accApi` (Summer '26)** runs the other direction — an ordinary LWC can drive the Agentforce side panel with `open(botId)` / `close()` / `execute(utterance, botId)`. Folded into **19**; the agent side stays in `AI_Data/`.
+- **State Managers share through *context*, not through the page.** `fromContext` resolves to the nearest ancestor that instantiated the manager, so two sibling subtrees get two independent states and anything outside the provider's subtree gets nothing. That is the line between **24** and **12**, and it is why LMS is not obsolete.
+- **`@lwc/state` is at `0.x` on npm while the platform feature is GA.** Platform GA and package maturity are not the same claim.
+- **`lwc` OSS is at 9.x** and moves on its own cadence — an OSS changelog entry is not evidence a deployed component can use it. Checked against the registry rather than recalled.
+- **Offline is harsher than "some things are slower".** **Apex does not run offline at all** — neither `@wire`d nor imperative — and triggers, validation rules and flows fire at *sync*, so an offline save can be rejected hours later. Also: Mobile Offline needs **`lightning/uiGraphQLApi`**, not `lightning/graphql`, and that module supports neither optional fields nor dynamic query construction.
+- **Summer '26 LWC items absent from the plan, each given a home instead of a file** — LWC in Lightning dashboards → **22**; dynamic list components / virtualization, Developer Preview → **16**; lazy-loading wire adapters → **16**.
+
+**Other corrections made while writing**
+
+- **`force:refreshView` does not port**, and the area was teaching two of the three refresh APIs without ever saying which to pick. **16** now owns the decision: `refreshApex` (same question, new data) vs `notifyRecordUpdateAvailable` (LDS was bypassed) vs `RefreshEvent` from `lightning/refresh` (refresh a whole view, including components you don't own — and descendants must register their own callback, a parent is **not** responsible for them).
+- **`aria-*` on a custom element lands on the host**, not on anything in its template — the most common wrong assumption in hand-rolled LWC accessibility.
+- **`reduceErrors` is not a platform module.** There is no official import; every codebase copies its own and they drift.
+- **`lwc:dom="manual"` costs more than it looks.** Its content is outside reactivity, outside accessibility management **and** outside template sanitization — so it is an XSS surface, not just an escape hatch.
+
+**Seed harvest** · *the Notion connector held this time — all four phase-06 casualties were re-read*
+
+- **21** — `Local Dev` (2024). → *harvested. All four steps still describe the workflow, with two corrections: the `@salesforce/plugin-lightning-dev` install is usually unnecessary now (it ships with the CLI), and `sf lightning dev app` was the only command then — for authoring one component the answer is now **`sf lightning dev component`**, which is what GA'd at 67.0. Confirmed as the most current page in the corpus.*
+- **17** — `@salesforce modules or Importing SF values`. → *harvested. The whole import surface in one component — `@salesforce/i18n/lang|locale|currency|timeZone`, `label/c.*`, `resourceUrl`, `user/Id`, `user/isGuest`, `client/formFactor` — fed to `Intl.*`. Corrected inline: its `js-meta.xml` says `<apiVersion>47.0</apiVersion>`, and `lightning-formatted-*` now beats hand-rolled `Intl`.*
+- **15** — `LWC : Query DOM Elements` (2023). → *harvested, re-aimed. The page is about `lwc:ref`, which is **03**'s territory, but its findings are testing rules: refs are not emitted into the DOM, so a Jest test can never select by one — anything a test must find needs a `data-*` attribute. Duplicate ref names resolving to the last one, and the absence of a `querySelectorAll` equivalent, both still hold.*
+- **`@Salesforce Modules` (2020) was re-read and is structure-only** — a bookmark and an inline sub-topics database, no prose. The 2022 sibling above is the one with content. **`LWC metadata api file` (2019)** maps to **11**, out of phase; read, not used.
+- **16, 18, 19, 20, 22, 23, 24 carry no `From my notes.` callout** — confirmed zero seed coverage for performance, error handling, Agentforce rendering, offline, OSS, static resources and state management. Consistent with the inventory: the corpus is 2019–2021 component mechanics, and none of these existed as concerns in it.
+
+**Debt cleared** — the forward-link sweep the phase-06 retro asked for is **done**. 16 links across 8 files (01, 02, 03, 04, 05, 08, 10, 14) that pointed at `INDEX.md` as a placeholder now point at real files; anchor text was already correct, only hrefs changed. Every relative link in the area resolves.
+
+**Area closed.** 24 of 24 topics written. Nothing outstanding except the standing invitation to re-read `LWC - Quick Action` against **11** if that note is ever revised.

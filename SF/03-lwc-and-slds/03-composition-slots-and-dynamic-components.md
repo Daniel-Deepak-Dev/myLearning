@@ -18,7 +18,7 @@ Composition in LWC has two shapes and they answer different questions. `@api` pr
 
 - **`@api` is the public contract**, on properties and on methods. A parent calls a child's `@api` method through a reference; the child never reaches upward. Public properties are one-way — a child must not reassign its own `@api` field.
 - **Slots project the parent's markup into the child's template.** `<slot></slot>` is the default; `<slot name="footer">` is addressed with `slot="footer"` on the supplied element.
-- **Slotted content belongs to the parent, not the child.** It is styled by the parent's CSS and its events fire in the parent's scope — the single most surprising thing about slots. → [13 · Shadow DOM & styling](INDEX.md)
+- **Slotted content belongs to the parent, not the child.** It is styled by the parent's CSS and its events fire in the parent's scope — the single most surprising thing about slots. → [13 · Shadow DOM & styling](13-shadow-dom-styling-and-scoped-css.md)
 - **`lwc:spread` spreads top-level keys only.** Nested objects are passed as-is, and it does not bind event handlers.
 - **Dynamic components need a real constructor.** Resolve it with a dynamic `import()`, then assign — `lwc:is` takes the constructor, not a string name.
 
@@ -39,7 +39,7 @@ this.refs.firstRow.focus();                                    // @api method on
 
 ## 2026 currency
 
-Nothing in this topic changed at 67.0 — the currency risk is the opposite one. All three directives post-date the bulk of published LWC tutorials, so the material you find still solves these problems the old way: `this.template.querySelector` for references, one attribute per property, and a stack of `lwc:if` branches standing in for a dynamic component. Dynamic components in particular were an Aura capability for years, and their absence from LWC is still cited as a reason to keep Aura in a codebase; since Winter '24 it is not one. Composition patterns for Flow screens and quick actions are [11](INDEX.md); the styling consequences of slots and shadow boundaries are [13](INDEX.md).
+Nothing in this topic changed at 67.0 — the currency risk is the opposite one. All three directives post-date the bulk of published LWC tutorials, so the material you find still solves these problems the old way: `this.template.querySelector` for references, one attribute per property, and a stack of `lwc:if` branches standing in for a dynamic component. Dynamic components in particular were an Aura capability for years, and their absence from LWC is still cited as a reason to keep Aura in a codebase; since Winter '24 it is not one. Composition patterns for Flow screens and quick actions are [11](11-lwc-in-flow-screens-and-quick-actions.md); the styling consequences of slots and shadow boundaries are [13](13-shadow-dom-styling-and-scoped-css.md).
 
 > **From my notes.** The old `Facet (== Slot in LWC)` page maps the Aura *facet* idea onto LWC slots. The analogy holds for the mental model and breaks on scope: an Aura facet is evaluated in the *component's* context, whereas slotted LWC content stays in the **parent's** — which is why parent CSS reaches it and the child's does not.
 
@@ -75,4 +75,4 @@ A: Slotted markup belongs to the parent's template and only renders inside the c
 
 - [04 · Events & component communication](04-events-and-component-communication.md) — how a child tells its parent something changed
 - [01 · Component model & lifecycle](01-component-model-and-lifecycle.md) — why refs and children are absent early in the cycle
-- [13 · Shadow DOM, styling & scoped CSS](INDEX.md) — what a shadow boundary does to slotted content
+- [13 · Shadow DOM, styling & scoped CSS](13-shadow-dom-styling-and-scoped-css.md) — what a shadow boundary does to slotted content

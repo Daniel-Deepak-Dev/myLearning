@@ -71,4 +71,4 @@ A: SLDS 2 — dark mode is exclusive to SLDS 2 themes, enabled per theme in Setu
 
 - [13 · Shadow DOM, styling & scoped CSS](13-shadow-dom-styling-and-scoped-css.md) — why custom properties are the only thing that reaches inside a component
 - [01-admin · Lightning pages](../01-admin-and-declarative-platform/INDEX.md) — Themes and Branding as an admin surface
-- [17 · Accessibility & internationalization](INDEX.md) — colour contrast, which theme-aware hooks are meant to preserve
+- [17 · Accessibility & internationalization](17-accessibility-and-internationalization.md) — colour contrast, which theme-aware hooks are meant to preserve

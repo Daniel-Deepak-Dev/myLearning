@@ -50,7 +50,7 @@ export default class NewCaseButton extends NavigationMixin(LightningElement) {
 - **Custom `state` keys without the `c__` prefix disappear**, silently.
 - **`defaultFieldValues` is ignored outside `actionName: 'new'`** — including on `edit`, which is the usual wrong guess.
 - **`GenerateUrl` returns a promise**, so the URL is not available during the first render; bind a tracked field set from `.then()`.
-- **The mixin is not available everywhere.** It works in Lightning Experience, the mobile app and Experience Cloud sites, and not in Lightning Out or standalone apps — a component reused off-platform needs a fallback. → [22 · LWC OSS](INDEX.md)
+- **The mixin is not available everywhere.** It works in Lightning Experience, the mobile app and Experience Cloud sites, and not in Lightning Out or standalone apps — a component reused off-platform needs a fallback. → [22 · LWC OSS](22-lwc-open-source-and-off-platform-reuse.md)
 - **Navigating to the page you are already on does not remount the component.** `CurrentPageReference` updates and the component re-renders — a `connectedCallback`-only refresh never fires. → [01](01-component-model-and-lifecycle.md)
 - **`standard__webPage` to an internal path defeats the point.** If the destination is in the org, there is a typed page reference for it.
 

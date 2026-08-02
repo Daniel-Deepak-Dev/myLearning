@@ -14,12 +14,12 @@ LWC has exactly three sanctioned channels and choosing between them is a questio
 |---|---|---|
 | Parent → child | `@api` property or method | child must not reassign its own `@api` field |
 | Child → parent | `dispatchEvent(new CustomEvent(...))` | crosses one shadow boundary by default |
-| Anywhere ↔ anywhere | Lightning Message Service | needs a `messageChannel` metadata file → [12](INDEX.md) |
+| Anywhere ↔ anywhere | Lightning Message Service | needs a `messageChannel` metadata file → [12](12-lightning-message-service.md) |
 
 - **Event names are lowercase with no spaces, hyphens or camel case.** `orderselected`, not `orderSelected` — the HTML attribute is `onorderselected`, and camel case simply never fires.
 - **`bubbles` and `composed` are both `false` by default**, which is the right default: the event reaches the parent's listener on the child element and stops. Setting both `true` makes an event traverse the entire DOM and every shadow boundary — powerful, and almost always the wrong instinct.
 - **Retargeting means the listener sees the host, not the inner element.** Once an event crosses a shadow boundary, `event.target` is rewritten to the component that emitted it, so the parent cannot reach into the child's internals.
-- **Put primitives in `detail`.** Passing an object hands the receiver a live reference to the child's state, and the receiver can mutate it — a real defect in shadow DOM, and constrained further under Lightning Web Security. → [09 · LWS](INDEX.md)
+- **Put primitives in `detail`.** Passing an object hands the receiver a live reference to the child's state, and the receiver can mutate it — a real defect in shadow DOM, and constrained further under Lightning Web Security. → [09 · LWS](09-lightning-web-security.md)
 - **Never dispatch from the constructor.** No one is listening yet; `connectedCallback` is the earliest useful point.
 
 ```js
@@ -36,7 +36,7 @@ this.dispatchEvent(new CustomEvent('orderselected', {
 
 ## 2026 currency
 
-The mechanics are stable; what has changed is that the workarounds are now clearly wrong rather than merely dated. **Lightning Message Service is the supported cross-DOM channel** and has been for several releases, so a pubsub module is a finding in a code review. **Lightning Web Security replaced Locker Service**, and the distortion list around event payloads differs — advice of the form "Locker blocks passing X in `detail`" needs re-testing rather than trusting. At 67.0 LWS also blocks the `data:` URI scheme, so an event payload carrying a `data:` URL for a download or preview needs a `blob:` URL instead. All of that is [09](INDEX.md)'s subject; this note just stops short of repeating it.
+The mechanics are stable; what has changed is that the workarounds are now clearly wrong rather than merely dated. **Lightning Message Service is the supported cross-DOM channel** and has been for several releases, so a pubsub module is a finding in a code review. **Lightning Web Security replaced Locker Service**, and the distortion list around event payloads differs — advice of the form "Locker blocks passing X in `detail`" needs re-testing rather than trusting. At 67.0 LWS also blocks the `data:` URI scheme, so an event payload carrying a `data:` URL for a download or preview needs a `blob:` URL instead. All of that is [09](09-lightning-web-security.md)'s subject; this note just stops short of repeating it.
 
 > **From my notes.** `Events - LWC`, `dispatchEvent (CustomEvent)` and `addEventListener - LWC` are all 2020 pages and thin, but one line in them is still the most useful sentence on the topic: **name the event for what happened, not for what you want done about it.** `orderselected` leaves the parent free to decide; `refreshtable` has already decided for it, and breaks the second time the component is reused.
 
@@ -72,4 +72,4 @@ A: An object is passed by reference, letting the receiver mutate the sender's st
 
 - [05 · Decorators & the reactivity model](05-decorators-and-the-reactivity-model.md) — when shared state beats sending messages at all
 - [03 · Composition, slots & dynamic components](03-composition-slots-and-dynamic-components.md) — `@api` as the downward half of the contract
-- [12 · Lightning Message Service](INDEX.md) — the cross-DOM channel, with scope and channel metadata
+- [12 · Lightning Message Service](12-lightning-message-service.md) — the cross-DOM channel, with scope and channel metadata

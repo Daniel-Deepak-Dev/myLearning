@@ -1,6 +1,6 @@
 # 03 · LWC & SLDS
 
-LWC as the **only** UI framework in this vault. **22 topics** · phases [05](PHASES.md) and [06](PHASES.md) — **complete ✅**, [07](PHASES.md).
+LWC as the **only** UI framework in this vault. **24 topics** · phases [05](PHASES.md), [06](PHASES.md) and [07](PHASES.md) — **all complete ✅**. Area closed.
 
 > Currency: **Summer '26 (API 67.0)** · [flag legend](../README.md#flag-legend) · [what changed](../CURRENCY.md)
 
@@ -24,18 +24,24 @@ LWC as the **only** UI framework in this vault. **22 topics** · phases [05](PHA
 | 12 | [Lightning Message Service](12-lightning-message-service.md) | channels as metadata, `APPLICATION_SCOPE`, unsubscribe discipline | 06 |
 | 13 | [Shadow DOM, styling & scoped CSS](13-shadow-dom-styling-and-scoped-css.md) ⚠️ | synthetic is still the default; native is **Beta** via `shadowSupportMode` | 06 |
 | 14 | [SLDS 2 & styling hooks](14-slds-2-and-styling-hooks.md) 🆕⚠️ | **GA Winter '26**; `--slds-g-*` is portable, `--slds-c-*` is SLDS 1 only | 06 |
-| 15 | LWC testing with Jest | `sf-lwc-jest`, wire adapter stubs, DOM assertions | 07 |
-| 16 | LWC performance & debugging | render thrash, lazy loading, Lightning inspector | 07 |
-| 17 | Accessibility & internationalization | a11y patterns, `@salesforce/i18n`, label imports | 07 |
-| 18 | Error handling & user feedback | reduceErrors pattern, ShowToastEvent, error boundaries | 07 |
-| 19 | Custom Lightning Types for agent output 🆕 | typed action results rendering on desktop and mobile | 07 |
-| 20 | Offline LWC & mobile constraints 🆕 | offline GraphQL, draft records, mobile-first limits | 07 |
-| 21 | Local dev & Lightning Dev Server 🆕 | `sf lightning dev app\|site`, hot reload workflow | 07 |
-| 22 | LWC Open Source & off-platform reuse | LWC OSS, sharing components beyond the org | 07 |
+| 15 | [LWC testing with Jest](15-lwc-testing-with-jest.md) ⚠️ | import the adapter and `.emit()` — **registering it is the Spring '21 pattern** | 07 |
+| 16 | [LWC performance & debugging](16-lwc-performance-and-debugging.md) | render thrash, and **three refresh APIs that are not interchangeable** | 07 |
+| 17 | [Accessibility & internationalization](17-accessibility-and-internationalization.md) ⚠️ | **IDREF ARIA can't cross a shadow root**; `@salesforce/i18n`, Custom Labels | 07 |
+| 18 | [Error handling & user feedback](18-error-handling-and-user-feedback.md) ⚠️ | `reduceErrors`; **`ShowToastEvent` is silent in LWR** — `lightning/toast` | 07 |
+| 19 | [Custom Lightning Types for agent output](19-custom-lightning-types-for-agent-output.md) 🆕 | `schema.json` + per-channel `renderer.json`; `lightning__AgentforceOutput` | 07 |
+| 20 | [Offline LWC & mobile constraints](20-offline-lwc-and-mobile-constraints.md) 🆕 | **no Apex offline, at all**; draft records, `lightning/uiGraphQLApi` | 07 |
+| 21 | [Local dev & Lightning Dev Server](21-local-dev-and-lightning-dev-server.md) 🆕⚠️ | `sf lightning dev component\|app\|site`; **Local Dev → Live Preview**, GA 67.0 | 07 |
+| 22 | [LWC Open Source & off-platform reuse](22-lwc-open-source-and-off-platform-reuse.md) | the import list decides portability; **LWC in dashboards** is new | 07 |
+| 23 | [Static resources & third-party JavaScript](23-static-resources-and-third-party-javascript.md) | `loadScript`, CSP Trusted Sites, `lwc:dom="manual"` | 07 |
+| 24 | [LWC State Managers](24-lwc-state-managers.md) 🆕 | `defineState` / `atom` / `computed`, **GA at 67.0** — context, not a bus | 07 |
+
+## Reading order
+
+Topics are numbered in the order they were written, not strictly in learning order. Two of them sit at the end for link stability and read naturally elsewhere: **23** belongs with [09](09-lightning-web-security.md) (it is the other half of "why won't my script load"), and **24** belongs with [12](12-lightning-message-service.md) (context versus bus).
 
 ## Related
 
-- **05 carries the State Manager story** — `defineState` from `@lwc/state` (`atom` / `computed` / `setAtom`) went **GA at API 67.0** and moves shared state out of components entirely. It is folded into 05's currency section rather than given its own file; **a dedicated topic is a phase-07 candidate.**
+- **24 is the dedicated State Manager topic** the phase-05 retro nominated. `defineState` from `@lwc/state` went **GA at API 67.0**; [05](05-decorators-and-the-reactivity-model.md) still carries the one-paragraph version, and 24 carries the contract, `fromContext`, and the reason it is *not* a replacement for [12](12-lightning-message-service.md).
 - **02's Beta caveat matters.** Complex template expressions need component `apiVersion` 66.0+ and are documented as **not for production** — most 2026 write-ups omit that.
 - **08** depends on [02-apex · 10 user mode](../02-apex-and-triggers/INDEX.md) — a `cacheable=true` method now enforces the running user's FLS by default.
 - **11** pairs with [04-flow · 04 Screen flows](../04-flow-and-automation/INDEX.md).

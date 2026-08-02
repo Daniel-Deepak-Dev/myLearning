@@ -13,7 +13,7 @@ Mark a phase ✅ when its files exist and its INDEX rows are live links.
 | 04 | ✅ | Apex security defaults, async & events | 02 Apex | 10 | **user mode default** 🆕⚠️, `with sharing` default 🆕⚠️, queueable ⚠️, finalizers, `Database.Cursor` 🆕 |
 | 05 | ✅ | Apex closeout + LWC entry | 02 → 03 | 10 | testing ⚠️, Stub API, `@InvocableMethod` 🆕, UDT 🆕 → LWC lifecycle, `lwc:if` ⚠️ |
 | 06 | ✅ | LWC data, security & navigation | 03 LWC | 9 | LDS, GraphQL wire 🆕, **LWS is the default, Locker not retired** 🆕⚠️, SLDS 2 GA Winter '26 🆕⚠️ |
-| 07 | ⬜ | LWC quality, modern tooling & reach | 03 LWC | 8 | Jest, a11y, custom Lightning types 🆕, `sf lightning dev` 🆕, LWC OSS |
+| 07 | ✅ | LWC quality, modern tooling & reach | 03 LWC | 10 | Jest ⚠️, a11y ⚠️, toasts ⚠️, custom Lightning types 🆕, `sf lightning dev` 🆕⚠️, LWC OSS, **+ static resources, State Managers 🆕** |
 | 08 | ⬜ | Flow fundamentals → Apex interop | 04 Flow | 11 | **WF/Process Builder retired** ⚠️, record-triggered, reactive screens 🆕, Transform 🆕 |
 | 09 | ⬜ | Flow at scale | 04 Flow | 10 | limits ⚠️, Flow Tests, Orchestrator, Migrate to Flow 🆕⚠️, flows as agent actions 🆕 |
 | 10 | ⬜ | Access model & record sharing | 07 Security | 12 | permission-set-led model 🆕⚠️, PSG muting, restriction ⚠️ + scoping rules |
@@ -27,7 +27,7 @@ Mark a phase ✅ when its files exist and its INDEX rows are live links.
 | 18 | ⬜ | LWR sites: architecture → auth | 05 Experience | 10 | **LWR default, Aura legacy** 🆕⚠️, SSR/CDN, guest hardening ⚠️, licences, SSO |
 | 19 | ⬜ | Site content, headless, performance & agents | 05 Experience | 8 | Enhanced CMS 🆕, headless 🆕, SEO 🆕, ExperienceBundle ⚠️, embedded agents 🆕 |
 
-**190 topic files.** Exact file lists live in each area's `PHASES.md`.
+**192 topic files.** Exact file lists live in each area's `PHASES.md`. *(Phase 07 added two beyond plan — see [03-lwc/PHASES.md](03-lwc-and-slds/PHASES.md).)*
 
 ## Sequencing
 

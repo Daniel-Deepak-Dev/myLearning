@@ -41,7 +41,7 @@ export default class OrderPanel extends LightningElement {
 
 ## 2026 currency
 
-**LWC Component Preview is GA at 67.0** — a single component renders in the browser or in VS Code without a full page reload, which changes the lifecycle debugging loop from *deploy, navigate, refresh* to something closer to a normal front-end workflow. 67.0 also makes hot module reloading faster and more memory-efficient, and the VS Code extension has been renamed from *Local Dev* to *Live Preview*. The install and CLI side of that belongs to [21 · Local dev & Lightning Dev Server](INDEX.md); this note only cares that previewing a component in isolation is now a supported way to watch its hooks fire. Release context: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
+**LWC Component Preview is GA at 67.0** — a single component renders in the browser or in VS Code without a full page reload, which changes the lifecycle debugging loop from *deploy, navigate, refresh* to something closer to a normal front-end workflow. 67.0 also makes hot module reloading faster and more memory-efficient, and the VS Code extension has been renamed from *Local Dev* to *Live Preview*. The install and CLI side of that belongs to [21 · Local dev & Lightning Dev Server](21-local-dev-and-lightning-dev-server.md); this note only cares that previewing a component in isolation is now a supported way to watch its hooks fire. Release context: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
 
 ## Gotchas
 
@@ -49,7 +49,7 @@ export default class OrderPanel extends LightningElement {
 - **There is no DOM in the constructor either** — `this.template.querySelector` returns `null`, and adding attributes to the host element throws.
 - **`connectedCallback` can fire more than once.** Moving a component in the DOM disconnects and reconnects it, so a subscription made there needs a matching teardown, not a one-time flag.
 - **Mutating reactive state in `renderedCallback` without a guard is an infinite render loop** — the single most common LWC defect.
-- **`errorCallback` only catches errors thrown in a descendant's lifecycle hooks.** Errors in your own hooks, in event handlers, or inside a promise are not caught. → [18 · Error handling](INDEX.md)
+- **`errorCallback` only catches errors thrown in a descendant's lifecycle hooks.** Errors in your own hooks, in event handlers, or inside a promise are not caught. → [18 · Error handling](18-error-handling-and-user-feedback.md)
 - **`disconnectedCallback` is not guaranteed on page unload.** It is a DOM-removal hook, not a destructor; do not rely on it to flush anything important.
 - **The constructor must call `super()` first** and must not touch `this` before it.
 - **A missing `isExposed` in the metadata file is silent.** The component deploys cleanly and simply never appears in App Builder.

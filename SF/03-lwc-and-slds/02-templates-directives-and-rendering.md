@@ -49,7 +49,7 @@ An LWC template is intentionally underpowered. There is no expression language b
 - **A falsy check is JavaScript-falsy.** `0`, `''` and `NaN` all render the `lwc:else` branch, which quietly hides legitimate zero values.
 - **`key` on the wrong element is a compile error**, and `key` on the *iterated* element rather than the first child inside the template is the usual mistake.
 - **`for:item` scoping is per-template.** Nested loops need distinct item names or the inner one shadows the outer.
-- **Getters run on every render.** An expensive getter behind a frequently-rendered conditional is a real cost, and it is invisible in the template. → [16 · Performance](INDEX.md)
+- **Getters run on every render.** An expensive getter behind a frequently-rendered conditional is a real cost, and it is invisible in the template. → [16 · Performance](16-lwc-performance-and-debugging.md)
 - **`data-*` attributes stringify.** A numeric id read back from `dataset` is a `String`, so `===` against a number fails.
 - **`event.target` inside a loop may not be the element you bound.** Use `event.currentTarget` when the handler needs the element that carries the `data-*`.
 - **Mixing `lwc:if` and the old `if:true` in one template compiles** but makes the evaluation-count difference invisible to whoever reads it next.

@@ -12,7 +12,7 @@ Sibling to [AI_Data/](../AI_Data/README.md), which covers the AI-Architect path 
 |---|---|---|
 | [01-admin-and-declarative-platform/](01-admin-and-declarative-platform/INDEX.md) | Org anatomy, data model config, Dynamic Forms, CMDT, order of execution | 19 |
 | [02-apex-and-triggers/](02-apex-and-triggers/INDEX.md) | Apex language, SOQL/SOSL, triggers, async, user-mode security, testing | 24 |
-| [03-lwc-and-slds/](03-lwc-and-slds/INDEX.md) | LWC component model, LDS, GraphQL wire, LWS, SLDS 2, Jest | 22 |
+| [03-lwc-and-slds/](03-lwc-and-slds/INDEX.md) | LWC component model, LDS, GraphQL wire, LWS, SLDS 2, Jest, State Managers | 24 |
 | [04-flow-and-automation/](04-flow-and-automation/INDEX.md) | Flow Builder end-to-end, Orchestrator, testing, agent actions | 21 |
 | [05-experience-cloud-lwr/](05-experience-cloud-lwr/INDEX.md) | LWR sites, guest security, CMS, headless, SEO | 18 |
 | [06-integration-and-apis/](06-integration-and-apis/INDEX.md) | REST/Bulk/GraphQL/Pub-Sub, OAuth, External Client Apps, MCP | 23 |
@@ -22,7 +22,7 @@ Sibling to [AI_Data/](../AI_Data/README.md), which covers the AI-Architect path 
 | [PHASES.md](PHASES.md) | The 19-run build plan — what each AI run produces | — |
 | [_notion-seed/INVENTORY.md](_notion-seed/INVENTORY.md) | The old Notion notes, mapped to target topics | — |
 
-**190 topics.** Rows in each `INDEX.md` are plain text until written, links once they exist.
+**192 topics.** Rows in each `INDEX.md` are plain text until written, links once they exist.
 
 ## Out of scope — deliberately
 

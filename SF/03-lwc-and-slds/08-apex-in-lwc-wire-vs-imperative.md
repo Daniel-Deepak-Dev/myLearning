@@ -20,7 +20,7 @@ An `@AuraEnabled` method reaches a component two ways, and the choice is decided
 | Refresh | `refreshApex(this.wiredResult)` | call it again |
 
 - **Keep the whole wired result, not just its data.** `refreshApex` needs the provisioned object — `wired({ data, error })` throws it away, so assign the argument to a field (`this._wired = value`) and pass *that*.
-- **Errors arrive in different shapes.** A wire error lands in `error`; an imperative error lands in `.catch()`. Both are the same nested `body.message` structure, which is why every codebase grows a `reduceErrors` helper. → [18 · Error handling](INDEX.md)
+- **Errors arrive in different shapes.** A wire error lands in `error`; an imperative error lands in `.catch()`. Both are the same nested `body.message` structure, which is why every codebase grows a `reduceErrors` helper. → [18 · Error handling](18-error-handling-and-user-feedback.md)
 - **`cacheable=true` methods run in the user's context by default at 67.0.** The FLS and sharing story is the Apex note's, not this one's — link it rather than re-teaching it: [02-apex · 10 user mode](../02-apex-and-triggers/INDEX.md).
 - **`notifyRecordUpdateAvailable` refreshes *LDS*, `refreshApex` refreshes *your wire*.** They are not substitutes. If the Apex method returns records that LDS also caches, you often need both.
 - **Imperative calls are unbounded.** Nothing stops a click handler firing four calls before the first returns; debounce, or disable the control while a call is in flight.
