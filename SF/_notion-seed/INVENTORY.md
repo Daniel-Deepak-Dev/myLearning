@@ -96,7 +96,7 @@ Neither blocks any phase. This inventory informs gotcha-harvesting and ordering,
 | Notion page | Target |
 |---|---|
 | Apex Invocable method in Flow | `11-flow-and-apex-interop` — 4 correct bullets; the teaching content is in an embedded YouTube video |
-| Sub Flow | `08-subflows-and-modular-flow-design` |
+| Sub Flow | `08-subflows-and-modular-flow-design` — ⛔ **confirmed structure-only in phase 08**: a single YouTube embed, no prose |
 
 ## Mapping — SF Knowledge Base (100 of ~190 captured)
 
@@ -113,7 +113,8 @@ Grouped by destination. Dates are creation dates — anything 2019–2021 needs 
 ⛔ **skip:** `Communication Between Aura and LWC`, `LWC vs Aura and VF`, `VF + SLDS`, all `<apex:*/>` pages
 
 **→ 04 Flow**
-`Flow Builder` (2023) · `Flow Updates` (**2025**) · `Flow Invocable Methods and Variable` (**2025**)
+`Flow Builder` (2023) — ⚠️ a 16-item agenda with **one box ticked**; an artefact, not a note · `Flow Updates` (**2025**) · `Flow Invocable Methods and Variable` (**2025**) — ✅ one real gotcha, `Map<>` unsupported as an `@InvocableVariable`
+**Found in phase 08, absent from the original capture:** `Call Flow in Apex` (2023) → `11-flow-and-apex-interop`, ✅ usable — `Flow.Interview` both forms, and the restriction to autolaunched/user-provisioning flows · `Limits based Things` (**2025**) → `13-flow-limits-and-bulkification`, unread, mentions iterating large query results
 
 **→ 05 Experience Cloud**
 `Exp Cloud Certification Prep` (2022) · `VFpage Grey Background Problem in Community` — ⛔ VF, skip

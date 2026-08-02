@@ -22,9 +22,9 @@ One record save is a fixed pipeline, not a set of independent automations. Knowi
 | 8 | All **after** triggers | |
 | 9 | **Assignment rules** | |
 | 10 | **Auto-response rules** | |
-| 11 | *Workflow rules* | **retired** — vestigial slot |
+| 11 | *Workflow rules* | **out of support** — but still executes if any exist |
 | 12 | **Escalation rules** | business-hours aware |
-| 13 | *Process Builder & workflow-launched flows* | **retired** — vestigial slot |
+| 13 | *Process Builder & workflow-launched flows* | **out of support** — but still executes if any exist |
 | 14 | **After-save record-triggered flows** | |
 | 15 | **Entitlement rules** | |
 | 16 | **Roll-up summaries — parent** | |
@@ -33,13 +33,13 @@ One record save is a fixed pipeline, not a set of independent automations. Knowi
 | 19 | **Commit** all DML | |
 | 20 | **Post-commit logic** | email, async jobs, async flow paths |
 
-- Steps 11 and 13 are kept in the numbering because Salesforce's own documented order still lists them and the Apex-side note must line up. **Workflow Rules and Process Builder are retired** — Flow is the only declarative automation tool. See [CURRENCY.md](../CURRENCY.md).
+- Steps 11 and 13 are **not vestigial.** Workflow Rules and Process Builder went **out of support on 31 December 2025 but were not retired**, so in an org that never migrated these slots still execute. You cannot create new ones — creation was blocked in Winter '23 — but you can inherit hundreds. See [CURRENCY.md](../CURRENCY.md).
 - A field update at step 11 or 16–17 can **re-enter** the before/after update trigger path, which is why the same trigger appears twice in a debug log.
 - Nothing before step 19 is durable. An unhandled exception at step 18 discards the step-7 write.
 
 ## 2026 currency
 
-The retirement of Workflow Rules and Process Builder collapsed two slots' worth of automation into steps 3 and 14, which is the practical argument for record-triggered Flows: you choose your position in the save order explicitly instead of inheriting whatever slot the old tool occupied. Migration mechanics live in [04-flow](../04-flow-and-automation/INDEX.md).
+All *new* declarative automation now lands at steps 3 and 14, which is the practical argument for record-triggered Flows: you choose your position in the save order explicitly instead of inheriting whatever slot the old tool occupied. The nuance to hold on to when debugging an inherited org is that steps 11 and 13 can still be live — **end of support is not retirement**, and an unmigrated workflow rule will happily fire between your after-trigger and your after-save flow. → [04-flow · 01](../04-flow-and-automation/01-automation-landscape-and-tool-selection.md); migration mechanics are [04-flow · 18](../04-flow-and-automation/INDEX.md).
 
 ## Gotchas
 
@@ -62,7 +62,7 @@ Q: Where do validation rules fire relative to before-save flows?
 A: After them — flows at step 3, validation at step 5 — so a value corrected by a flow is the value validated.
 
 Q: What happened to the workflow rule and Process Builder steps?
-A: Both tools are retired; the slots remain in the documented numbering but nothing new should occupy them. Use record-triggered Flows at step 3 or 14.
+A: Both tools went out of support on 31 December 2025 but were **not retired** — you cannot create new ones, and existing ones still execute at steps 11 and 13. New automation goes to step 3 or 14 as a record-triggered Flow.
 
 Q: Why can the same trigger appear twice in one debug log?
 A: A later field update can re-enter the before/after update trigger path within the same save.

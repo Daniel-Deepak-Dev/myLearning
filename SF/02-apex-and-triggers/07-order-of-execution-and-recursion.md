@@ -4,7 +4,7 @@
 
 **Scope:** Where Apex sits in the save order, and how to stop a trigger re-entering itself. The canonical full 20-step order is [01-admin · 14](../01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md) — **this note conforms to it and does not restate it.**
 
-> **What changed.** Any save-order list beginning "before triggers run first" is wrong. **Before-save record-triggered flows fire at step 3, ahead of every before trigger**, so a flow may already have altered `Trigger.new` by the time your Apex sees it. Workflow Rules and Process Builder, which occupied steps 11 and 13, are retired — the slots survive in the documented numbering and nothing new should occupy them.
+> **What changed.** Any save-order list beginning "before triggers run first" is wrong. **Before-save record-triggered flows fire at step 3, ahead of every before trigger**, so a flow may already have altered `Trigger.new` by the time your Apex sees it. Workflow Rules and Process Builder, at steps 11 and 13, went **out of support on 31 December 2025 but were not retired** — you cannot build new ones, and in an unmigrated org they still fire between your after-trigger and your after-save flow.
 
 ## Core idea
 
@@ -45,7 +45,7 @@ public class OpportunityTriggerHandler {
 
 ## 2026 currency
 
-The retirement of Workflow Rules and Process Builder emptied steps 11 and 13 and moved all declarative automation into steps 3 and 14 — which brackets your Apex on both sides rather than trailing it. The practical effect is that re-entry is *more* likely than under the old model, not less: an after-save flow at step 14 updating the record it was triggered by will run your trigger again, and it is now the ordinary way admins build things. A per-record guard is therefore no longer defensive polish. Migration mechanics are [04-flow](../04-flow-and-automation/INDEX.md); the declarative view of the same pipeline is [01-admin · 14](../01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md).
+All *new* declarative automation now lands at steps 3 and 14, which brackets your Apex on both sides rather than trailing it. The practical effect is that re-entry is *more* likely than under the old model, not less: an after-save flow at step 14 updating the record it was triggered by will run your trigger again, and it is now the ordinary way admins build things. A per-record guard is therefore no longer defensive polish. The debugging nuance: steps 11 and 13 are **not empty** in an org that never migrated — end of support is not retirement — so an unexplained re-entry there is a legacy workflow rule, not a ghost. → [04-flow · 01](../04-flow-and-automation/01-automation-landscape-and-tool-selection.md). The declarative view of the same pipeline is [01-admin · 14](../01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md).
 
 ## Gotchas
 
