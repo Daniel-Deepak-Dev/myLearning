@@ -26,7 +26,7 @@ A subflow is a flow calling another flow, and the single most important thing to
 
 ## 2026 currency
 
-Nothing structural has changed in subflows, and that is worth stating plainly because the alternatives around them have moved. The reuse decision at 67.0 is now three-way rather than two-way: a **subflow** for declarative logic that stays inside Flow, an **invocable Apex action** when the logic needs data structures Flow lacks → [11](11-flow-and-apex-interop.md), and an **autolaunched flow exposed as an agent action**, which is the same artefact as a subflow but reached through a description rather than a call → [21 · Flows as agent actions](INDEX.md). The practical consequence is that an autolaunched flow built as a clean, well-named contract now has three possible callers instead of one, which raises the value of naming it for *what it does* rather than for the parent that first needed it.
+Nothing structural has changed in subflows, and that is worth stating plainly because the alternatives around them have moved. The reuse decision at 67.0 is now three-way rather than two-way: a **subflow** for declarative logic that stays inside Flow, an **invocable Apex action** when the logic needs data structures Flow lacks → [11](11-flow-and-apex-interop.md), and an **autolaunched flow exposed as an agent action**, which is the same artefact as a subflow but reached through a description rather than a call → [23 · Flows as agent actions](23-flows-as-agentforce-actions.md). The practical consequence is that an autolaunched flow built as a clean, well-named contract now has three possible callers instead of one, which raises the value of naming it for *what it does* rather than for the parent that first needed it.
 
 > **From my notes.** In a sixteen-line 2023 Flow agenda exactly one box was ticked — *"Use Sub Flow to communicate with main flow"* — and the page holds nothing but a video link. The thing the note never recorded is the thing that matters: **the communication is the easy half.** Passing values in and out is a checkbox. Knowing that no transaction boundary came with them is what stops the design from failing at scale.
 
@@ -61,4 +61,4 @@ A: All of them switch to it at once — a parent always invokes the subflow's ac
 
 - [02 · Flow anatomy & builder basics](02-flow-anatomy-and-builder-basics.md) — where the input/output flags live and what a resource is
 - [11 · Flow & Apex interop](11-flow-and-apex-interop.md) — the other reuse boundary, for logic Flow cannot express
-- [13 · Flow limits & bulkification](INDEX.md) — the budget a subflow shares rather than extends
+- [13 · Flow limits & bulkification](13-flow-limits-and-bulkification.md) — the budget a subflow shares rather than extends

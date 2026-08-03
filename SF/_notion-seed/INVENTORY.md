@@ -113,8 +113,9 @@ Grouped by destination. Dates are creation dates — anything 2019–2021 needs 
 ⛔ **skip:** `Communication Between Aura and LWC`, `LWC vs Aura and VF`, `VF + SLDS`, all `<apex:*/>` pages
 
 **→ 04 Flow**
-`Flow Builder` (2023) — ⚠️ a 16-item agenda with **one box ticked**; an artefact, not a note · `Flow Updates` (**2025**) · `Flow Invocable Methods and Variable` (**2025**) — ✅ one real gotcha, `Map<>` unsupported as an `@InvocableVariable`
-**Found in phase 08, absent from the original capture:** `Call Flow in Apex` (2023) → `11-flow-and-apex-interop`, ✅ usable — `Flow.Interview` both forms, and the restriction to autolaunched/user-provisioning flows · `Limits based Things` (**2025**) → `13-flow-limits-and-bulkification`, unread, mentions iterating large query results
+`Flow Builder` (2023) — ⚠️ a 16-item agenda with **one box ticked**; an artefact, not a note · `Flow Invocable Methods and Variable` (**2025**) — ✅ one real gotcha, `Map<>` unsupported as an `@InvocableVariable`
+`Flow Updates` (**2025**) → **`21-flow-for-external-and-guest-users`**, ✅ harvested in phase 09. **The title is misleading and this row previously guessed wrong** — it is not about flow releases at all, it is a **profile-by-profile audit of the `Run Flows` permission** in a production org
+**Found in phase 08, absent from the original capture:** `Call Flow in Apex` (2023) → `11-flow-and-apex-interop`, ✅ usable — `Flow.Interview` both forms, and the restriction to autolaunched/user-provisioning flows · `Limits based Things` (**2025**) → `13-flow-limits-and-bulkification`, ✅ harvested in phase 09 — CPU 10 s / 60 s and heap 6 MB / 12 MB still correct, but its "convert flows to Apex Triggers" advice is stale and is corrected inline
 
 **→ 05 Experience Cloud**
 `Exp Cloud Certification Prep` (2022) · `VFpage Grey Background Problem in Community` — ⛔ VF, skip

@@ -2,7 +2,7 @@
 
 > Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 02
 
-**Scope:** The admin-surface view — which approval engine to choose, what each one can route, and how submissions are tracked. Flow mechanics (stages, interactive steps, work guide) belong to [04-flow · 15](../04-flow-and-automation/INDEX.md).
+**Scope:** The admin-surface view — which approval engine to choose, what each one can route, and how submissions are tracked. Flow mechanics (stages, interactive steps, work guide) belong to [04-flow · 16](../04-flow-and-automation/16-flow-orchestrator.md) and [17](../04-flow-and-automation/17-approval-orchestration.md).
 
 > **What changed.** Two things at once. Approvals are now authored in Flow as **Flow Approval Processes**, and **Flow Orchestration stopped being a paid add-on on 2026-02-18** — it is a standard flow type with no usage-based run limits in Enterprise, Performance, Unlimited, all Einstein 1 and Developer editions. What has *not* happened: classic approval processes are **not retired and not deprecated**. Salesforce renamed the docs to *Classic Approval Processes* and calls Flow approvals a "modern alternative".
 
@@ -61,6 +61,6 @@ A: Email approval response — the approver needs **API Enabled** or their email
 
 ## Related
 
-- [04-flow · INDEX](../04-flow-and-automation/INDEX.md) — the Flow mechanics of orchestrations, written in phase 09; this note stays on the admin surface
+- [04-flow · 17 Approval Orchestration](../04-flow-and-automation/17-approval-orchestration.md) — the Flow mechanics of approvals, written in phase 09; this note stays on the admin surface
 - [11 · Queues, assignment & escalation rules](11-queues-assignment-and-escalation-rules.md) — queues as approval assignees
 - [14 · Order of execution](14-order-of-execution-declarative-view.md) — where approval field updates land in the save

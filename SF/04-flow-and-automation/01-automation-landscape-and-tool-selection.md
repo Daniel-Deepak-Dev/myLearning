@@ -21,13 +21,13 @@ The three-way declarative decision tree — workflow rule, process, flow — is 
 | **Platform event-triggered** | an event message arrives | integration fan-out → [07](07-platform-event-and-async-path-flows.md) |
 
 - **The Flow-vs-Apex boundary that actually holds.** Flow when the logic is a sequence a competent admin will still recognise in a year; Apex when it needs real data structures (maps, sets, recursion), genuine unit tests, or precise bulk control over more than a few hundred records. → [02-apex · 06](../02-apex-and-triggers/06-triggers-and-the-handler-framework.md)
-- **"Clicks not code" is not a limits argument.** Flow spends the same per-transaction budget as Apex and offers less control over how. → [13 · Flow limits & bulkification](INDEX.md)
+- **"Clicks not code" is not a limits argument.** Flow spends the same per-transaction budget as Apex and offers less control over how. → [13 · Flow limits & bulkification](13-flow-limits-and-bulkification.md)
 - **Mixing both on one object is normal**, not a smell. A before-save flow for field defaulting plus a trigger for the complex path is a common, defensible design.
 - **Flow has no Map type**, no true unit-test isolation and no interfaces. When a design needs any of those, it has already left Flow.
 
 ## 2026 currency
 
-**Workflow Rule creation was disabled in Winter '23** and Process Builder followed; the **Migrate to Flow** tool shipped in the same window. Support for both ended **31 December 2025**, which is a support boundary, not an execution one — an inherited org can still be running dozens of them, and steps 11 and 13 of the save order may be genuinely occupied rather than vestigial. → [01-admin · 14](../01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md). The other 2026 shift is commercial: **Flow Orchestration became a standard feature on 2026-02-18** with no usage-based run limits, so cost is no longer a reason to avoid it. Migration mechanics and the conversion traps are [18 · Migrate to Flow](INDEX.md).
+**Workflow Rule creation was disabled in Winter '23** and Process Builder followed; the **Migrate to Flow** tool shipped in the same window. Support for both ended **31 December 2025**, which is a support boundary, not an execution one — an inherited org can still be running dozens of them, and steps 11 and 13 of the save order may be genuinely occupied rather than vestigial. → [01-admin · 14](../01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md). The other 2026 shift is commercial: **Flow Orchestration became a standard feature on 2026-02-18** with no usage-based run limits, so cost is no longer a reason to avoid it. Migration mechanics and the conversion traps are [18 · Migrate to Flow](18-migrate-to-flow-and-legacy-retirement.md).
 
 ## Gotchas
 
@@ -36,7 +36,7 @@ The three-way declarative decision tree — workflow rule, process, flow — is 
 - **You cannot create new Workflow Rules or processes**, but you can still activate, deactivate and edit existing ones, which is how they quietly survive.
 - **Choosing the flow type is choosing your save-order position**, and it cannot be changed later without rebuilding the flow.
 - **"Flow can't do callouts" is out of date** — it has been able to since Winter '24. → [12](12-http-callout-and-external-services-in-flow.md)
-- **Apex is not the answer to "Flow hit a limit."** The same limit usually applies; the fix is bulkification. → [13](INDEX.md)
+- **Apex is not the answer to "Flow hit a limit."** The same limit usually applies; the fix is bulkification. → [13](13-flow-limits-and-bulkification.md)
 
 ## Recall
 

@@ -25,16 +25,16 @@ An **autolaunched flow (no trigger)** is the platform's unit of reusable declara
 
 ## 2026 currency
 
-Summer '26 added the control this flow type was missing: **a configurable batch size, 1–200, set directly on the Start element** of a schedule-triggered flow. Before it, a schedule that matched far more records than anticipated would process them in fixed chunks and fail as a block; you can now trade throughput for headroom explicitly. It is the same lever `Database.executeBatch(job, scopeSize)` gives Apex, and it should be reached for under the same conditions — heavy per-record work, or DML fanning out to related records. Note the asymmetry it exposes: **schedule-triggered flows got batch-size control while platform event-triggered flows still have none** → [07](07-platform-event-and-async-path-flows.md). → [13 · Flow limits & bulkification](INDEX.md)
+Summer '26 added the control this flow type was missing: **a configurable batch size, 1–200, set directly on the Start element** of a schedule-triggered flow. Before it, a schedule that matched far more records than anticipated would process them in fixed chunks and fail as a block; you can now trade throughput for headroom explicitly. It is the same lever `Database.executeBatch(job, scopeSize)` gives Apex, and it should be reached for under the same conditions — heavy per-record work, or DML fanning out to related records. Note the asymmetry it exposes: **schedule-triggered flows got batch-size control while platform event-triggered flows still have none** → [07](07-platform-event-and-async-path-flows.md). → [13 · Flow limits & bulkification](13-flow-limits-and-bulkification.md)
 
 ## Gotchas
 
 - **The Default Workflow User is the single biggest surprise here.** If it is unset, inactive, or lacks access to the records the flow touches, the flow fails or quietly processes nothing.
 - **A schedule-triggered flow reports success while doing nothing** when its running user cannot see the filtered records. Sharing, not logic, is the usual cause. → [07-security](../07-security-and-sharing/INDEX.md)
 - **Start Time uses the org's default time zone**, which bites orgs whose admins and users are in different ones.
-- **Deploying a schedule-triggered flow does not always carry its schedule.** Verify the start date and frequency in the target org after every deploy. → [22 · Deployment & versioning](INDEX.md)
+- **Deploying a schedule-triggered flow does not always carry its schedule.** Verify the start date and frequency in the target org after every deploy. → [24 · Deployment & versioning](24-flow-deployment-versioning-and-governance.md)
 - **A past start date does not backfill.** The schedule begins from the next occurrence.
-- **An autolaunched flow inherits the caller's context**, so the same flow called from a trigger, an agent action and a scheduled wrapper runs as three different users with three different limit budgets.
+- **An autolaunched flow inherits the caller's context by default**, so the same flow called from a trigger, an agent action and a scheduled wrapper runs as three different users with three different limit budgets — and the default setting is literally named *Depends on How Flow is Launched*. → [19](19-flow-run-context-and-sharing.md)
 - **Neither type may contain a Screen element**, and the builder will not let you add one — this is the usual reason a working screen flow cannot simply be reused as a subflow.
 
 ## Recall

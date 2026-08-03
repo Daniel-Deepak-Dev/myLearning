@@ -2,7 +2,7 @@
 
 > Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 08
 
-**Scope:** Working with more than one record — collection resources, the loop patterns worth keeping, and the **Transform** element that replaces most of them. Limit numbers live in [13 · Flow limits & bulkification](INDEX.md).
+**Scope:** Working with more than one record — collection resources, the loop patterns worth keeping, and the **Transform** element that replaces most of them. Limit numbers live in [13 · Flow limits & bulkification](13-flow-limits-and-bulkification.md).
 
 ## Core idea
 
@@ -26,7 +26,7 @@ Flow's Loop element is the most-used and most-misused element on the canvas, and
 
 ## 2026 currency
 
-Transform has been steadily absorbing work that used to need a loop. **Spring '25 added merging several collections into one**, which covers the "display related records together" case that previously needed nested loops. **Summer '26 added Transform Mode inside the action property panel**, so a transformation can be defined where an action's inputs are configured rather than as a separate canvas element — the same capability, one element fewer. Alongside it, actions gained **Formula Mode** for writing a formula directly into a parameter. Both reduce element count, which matters because the element executions cap is one of the limits people actually hit. → [13 · Flow limits & bulkification](INDEX.md), [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md)
+Transform has been steadily absorbing work that used to need a loop. **Spring '25 added merging several collections into one**, which covers the "display related records together" case that previously needed nested loops. **Summer '26 added Transform Mode inside the action property panel**, so a transformation can be defined where an action's inputs are configured rather than as a separate canvas element — the same capability, one element fewer. Alongside it, actions gained **Formula Mode** for writing a formula directly into a parameter. Both reduce element count — though **not for the reason usually given**: the 2,000-executed-elements cap was removed at API 57.0, so what fewer elements actually buy you is CPU time, which is the limit a large loop now hits. → [13 · Flow limits & bulkification](13-flow-limits-and-bulkification.md), [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md)
 
 ## Gotchas
 
@@ -58,6 +58,6 @@ A: A transformation can be defined inside an action's property panel rather than
 
 ## Related
 
-- [13 · Flow limits & bulkification](INDEX.md) — the actual numbers behind every rule in this note
+- [13 · Flow limits & bulkification](13-flow-limits-and-bulkification.md) — the actual numbers behind every rule in this note
 - [12 · HTTP callout & External Services](12-http-callout-and-external-services-in-flow.md) — the nested JSON responses Transform exists to flatten
 - [02-apex · 08 Bulkification patterns](../02-apex-and-triggers/08-bulkification-patterns.md) — the same discipline in code, where the limits are identical

@@ -20,7 +20,7 @@ A flow is two things that beginners conflate: **elements**, which are steps on t
 - **A variable's `Available for input` / `Available for output` flags are its public contract.** Nothing outside the flow can see a variable that has neither. → [08](08-subflows-and-modular-flow-design.md)
 - **Auto-layout is the default canvas** and enforces a single connected path; free-form is still available and is what older screenshots show. You can switch a flow between them.
 - **`$Record`, `$User`, `$Setup`, `$Permission`, `$Organization`, `$Api`, `$Flow`** are global variables. `$Flow.CurrentDateTime`, `$Flow.InterviewGuid` and `$Flow.FaultMessage` are the ones you reach for.
-- **One active version.** Deploying an inactive version to production changes nothing until something activates it. → [22 · Deployment & versioning](INDEX.md)
+- **One active version.** Deploying an inactive version to production changes nothing until something activates it. → [24 · Deployment & versioning](24-flow-deployment-versioning-and-governance.md)
 
 ## 2026 currency
 

@@ -56,7 +56,7 @@ Everything an admin does that changed after 2021.
 - **05** — page layouts are no longer where field visibility is designed; Dynamic Forms are. **But do not overstate it into "layouts are legacy/gone"** — that was the wording in this plan and in the INDEX row, and the docs do not support it. Both corrected.
 - **06** — button/action visibility is set by **Dynamic Actions** rules, not by layout assignment per record type. Held. Added gate: standard-object dynamic actions require Setup → *Salesforce Mobile App* → **Enable Dynamic Actions on Mobile**.
 
-**Cross-links:** **19** → [AI_Data/02-salesforce-ai/INDEX.md](../../AI_Data/02-salesforce-ai/INDEX.md). Link, don't duplicate. **12** → [04-flow · 15 Approval Orchestration](../04-flow-and-automation/INDEX.md), written in phase 09 — that one carries the Flow mechanics, this one carries the admin-surface view.
+**Cross-links:** **19** → [AI_Data/02-salesforce-ai/INDEX.md](../../AI_Data/02-salesforce-ai/INDEX.md). Link, don't duplicate. **12** → [04-flow · 17 Approval Orchestration](../04-flow-and-automation/17-approval-orchestration.md), written in phase 09 *(numbered 15 at plan time; area 04 renumbered in phase 09)* — that one carries the Flow mechanics, this one carries the admin-surface view.
 
 ---
 

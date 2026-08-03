@@ -44,7 +44,7 @@ Topics are numbered in the order they were written, not strictly in learning ord
 - **24 is the dedicated State Manager topic** the phase-05 retro nominated. `defineState` from `@lwc/state` went **GA at API 67.0**; [05](05-decorators-and-the-reactivity-model.md) still carries the one-paragraph version, and 24 carries the contract, `fromContext`, and the reason it is *not* a replacement for [12](12-lightning-message-service.md).
 - **02's Beta caveat matters.** Complex template expressions need component `apiVersion` 66.0+ and are documented as **not for production** — most 2026 write-ups omit that.
 - **08** depends on [02-apex · 10 user mode](../02-apex-and-triggers/INDEX.md) — a `cacheable=true` method now enforces the running user's FLS by default.
-- **11** pairs with [04-flow · 04 Screen flows](../04-flow-and-automation/INDEX.md).
+- **11** pairs with [04-flow · 04 Screen flows](../04-flow-and-automation/04-screen-flows-and-ux-design.md).
 - **The data layer is a three-way decision, not a preference.** [06](06-lightning-data-service-and-ui-api-wires.md) for records by ID, [07](07-graphql-wire-adapter.md) for filtered and aggregated reads, [08](08-apex-in-lwc-wire-vs-imperative.md) for server logic, system context or transactions — and **only 06 can write.**
 - **09 is the security seam, and it is narrower than its reputation.** LWS is namespace isolation; CSP, the LWC framework and your own input handling are separate and are commonly misattributed to it → [07-security](../07-security-and-sharing/INDEX.md).
 - **13 and 14 are one story split in two.** Custom properties are the only thing that crosses a shadow boundary, which is why styling hooks — not class overrides — are the supported customization surface.

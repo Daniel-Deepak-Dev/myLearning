@@ -39,7 +39,7 @@ One record save is a fixed pipeline, not a set of independent automations. Knowi
 
 ## 2026 currency
 
-All *new* declarative automation now lands at steps 3 and 14, which is the practical argument for record-triggered Flows: you choose your position in the save order explicitly instead of inheriting whatever slot the old tool occupied. The nuance to hold on to when debugging an inherited org is that steps 11 and 13 can still be live — **end of support is not retirement**, and an unmigrated workflow rule will happily fire between your after-trigger and your after-save flow. → [04-flow · 01](../04-flow-and-automation/01-automation-landscape-and-tool-selection.md); migration mechanics are [04-flow · 18](../04-flow-and-automation/INDEX.md).
+All *new* declarative automation now lands at steps 3 and 14, which is the practical argument for record-triggered Flows: you choose your position in the save order explicitly instead of inheriting whatever slot the old tool occupied. The nuance to hold on to when debugging an inherited org is that steps 11 and 13 can still be live — **end of support is not retirement**, and an unmigrated workflow rule will happily fire between your after-trigger and your after-save flow. → [04-flow · 01](../04-flow-and-automation/01-automation-landscape-and-tool-selection.md); migration mechanics are [04-flow · 18](../04-flow-and-automation/18-migrate-to-flow-and-legacy-retirement.md).
 
 ## Gotchas
 

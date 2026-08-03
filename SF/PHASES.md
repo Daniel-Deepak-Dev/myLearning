@@ -15,7 +15,7 @@ Mark a phase ✅ when its files exist and its INDEX rows are live links.
 | 06 | ✅ | LWC data, security & navigation | 03 LWC | 9 | LDS, GraphQL wire 🆕, **LWS is the default, Locker not retired** 🆕⚠️, SLDS 2 GA Winter '26 🆕⚠️ |
 | 07 | ✅ | LWC quality, modern tooling & reach | 03 LWC | 10 | Jest ⚠️, a11y ⚠️, toasts ⚠️, custom Lightning types 🆕, `sf lightning dev` 🆕⚠️, LWC OSS, **+ static resources, State Managers 🆕** |
 | 08 | ✅ | Flow fundamentals → Apex interop | 04 Flow | 12 | **WF/PB end of support, not retired** ⚠️, **fault paths don't roll back** ⚠️, reactive screens + Screen Actions 🆕, Transform 🆕, **+ HTTP callout** 🆕 |
-| 09 | ⬜ | Flow at scale | 04 Flow | 11 | limits ⚠️, Flow Tests, Orchestrator, Migrate to Flow 🆕⚠️, flows as agent actions 🆕, **+ trigger order** |
+| 09 | ✅ | Flow at scale | 04 Flow | 13 | **2,000-element cap removed at API 57.0** ⚠️, Flow Tests are record-triggered only ⚠️, Orchestrator, Migrate to Flow 🆕⚠️, agent actions 🆕, **+ run context, + Pause/Wait** |
 | 10 | ⬜ | Access model & record sharing | 07 Security | 12 | permission-set-led model 🆕⚠️, PSG muting, restriction ⚠️ + scoping rules |
 | 11 | ⬜ | Identity, encryption & monitoring | 07 Security | 9 | MFA ⚠️, SSO, enhanced domains ⚠️, Shield, Event Monitoring, secure-coding checklist ⚠️ |
 | 12 | ⬜ | APIs: REST → legacy streaming | 06 Integration | 12 | API retirement treadmill 🆕⚠️, composite, Bulk 2.0 ⚠️, GraphQL 🆕, **Pub/Sub replaces CometD** 🆕⚠️ |
@@ -27,7 +27,7 @@ Mark a phase ✅ when its files exist and its INDEX rows are live links.
 | 18 | ⬜ | LWR sites: architecture → auth | 05 Experience | 10 | **LWR default, Aura legacy** 🆕⚠️, SSR/CDN, guest hardening ⚠️, licences, SSO |
 | 19 | ⬜ | Site content, headless, performance & agents | 05 Experience | 8 | Enhanced CMS 🆕, headless 🆕, SEO 🆕, ExperienceBundle ⚠️, embedded agents 🆕 |
 
-**194 topic files.** Exact file lists live in each area's `PHASES.md`. *(Phase 07 added two beyond plan — see [03-lwc/PHASES.md](03-lwc-and-slds/PHASES.md). Phase 08 added two more and renumbered phase 09 — see [04-flow/PHASES.md](04-flow-and-automation/PHASES.md).)*
+**196 topic files.** Exact file lists live in each area's `PHASES.md`. *(Phase 07 added two beyond plan — see [03-lwc/PHASES.md](03-lwc-and-slds/PHASES.md). Phase 08 added two and renumbered phase 09; **phase 09 added two more and renumbered again**, this time with live inbound links — see [04-flow/PHASES.md](04-flow-and-automation/PHASES.md).)*
 
 ## Sequencing
 

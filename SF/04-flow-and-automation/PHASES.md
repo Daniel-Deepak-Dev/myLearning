@@ -1,10 +1,12 @@
 # Phases for 04 · Flow & Automation
 
-23 topics across 2 runs. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
+25 topics across 2 runs. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
 
 > **Runs after Apex (phases 03–07)** because Flow notes reference governor limits and invocable Apex signatures. Don't reorder.
 
 > **The area grew from 21 to 23 at phase-08 plan time**, and phase 09's block was renumbered from 12–21 to 13–23. This was safe because none of those files existed and **nothing in the vault links to area 04 by number** — every cross-link points at `INDEX.md`. Verified by grep before the change.
+
+> **It grew again to 25 at phase-09 plan time, and this renumber was *not* free.** Two topics were inserted at 19 and 20, pushing the old 19–23 to 21–25. By then files 01–12 *did* link forward by number and three other areas linked in by number. It was done anyway because the phase-08 debt sweep had to touch exactly those links in the same run — the marginal cost was one extra grep. **Do not renumber this area again without one.**
 
 ---
 
@@ -63,50 +65,55 @@
 
 **A vault defect found while verifying.** The post-phase line-count check used `Measure-Object -Line`, which **skips blank lines**: an 81-line file reported as 59, ~27% low, so the `-gt 85` gate was really at ~117 real lines and had never fired. Fixed in [../PHASES.md](../PHASES.md). All 12 files here are 60–64 real lines.
 
-**Known debt** — files 01–12 link forward to 13, 14, 18, 21 and 22 as `[NN · Title](INDEX.md)`, which is correct while those files do not exist. Sweep after phase 09, exactly as phase 07 did for area 03.
+**Known debt — cleared in phase 09.** Files 01–12 linked forward to 13, 14, 18, 21 and 22 as `[NN · Title](INDEX.md)`. All are now real file links, and the two that moved (21 → 23, 22 → 24) were rewritten in the same pass.
 
 ---
 
-## Phase 09 — Flow at scale · 11 files ⬜
+## Phase 09 — Flow at scale · 13 files ✅
 
 ```
-13-flow-limits-and-bulkification.md                ⚠️   (was 12)
+13-flow-limits-and-bulkification.md                ⚠️
 14-trigger-order-and-flow-trigger-explorer.md            ← added at phase-08 plan time
-15-flow-testing-and-debugging.md                         (was 13, GA Spring '23)
-16-flow-orchestrator.md                                  (was 14, GA Spring '22)
-17-approval-orchestration.md                       🆕⚠️  (was 15)
-18-migrate-to-flow-and-legacy-retirement.md        🆕⚠️  (was 16)
-19-flow-for-external-and-guest-users.md                  (was 17)
-20-data-cloud-triggered-flows-and-data-actions.md  🆕    (was 18)
-21-flows-as-agentforce-actions.md                  🆕    (was 19)
-22-flow-deployment-versioning-and-governance.md          (was 20)
-23-ai-assisted-flow-authoring.md                   🆕    (was 21)
+15-flow-testing-and-debugging.md                   ⚠️   ← flag added at plan time
+16-flow-orchestrator.md                                  (GA Spring '22)
+17-approval-orchestration.md                       🆕⚠️
+18-migrate-to-flow-and-legacy-retirement.md        🆕⚠️
+19-flow-run-context-and-sharing.md                 ⚠️   ← ADDED at plan time
+20-pause-wait-and-waiting-interviews.md            ⚠️   ← ADDED at plan time
+21-flow-for-external-and-guest-users.md                  (was 19)
+22-data-cloud-triggered-flows-and-data-actions.md  🆕    (was 20)
+23-flows-as-agentforce-actions.md                  🆕    (was 21)
+24-flow-deployment-versioning-and-governance.md    ⚠️   (was 22, flag added at plan time)
+25-ai-assisted-flow-authoring.md                   🆕    (was 23)
 ```
 
-**⚠️ corrections to lead with**
+**Two files added before the run, inserted rather than appended**, because both are foundational rather than advanced and the area is numbered in learning order. **19** closed the largest hole in the taxonomy: nothing in 01–23 owned *execution context*, and the one line that touched it (in **06**) was incomplete. **20** closed the second: no file in the area mentioned the **Wait** or **Pause** elements at all, in a 23-topic Flow area. Both carry a "the limit you read about was removed" correction, which is what tipped them over the bar.
 
-- **13** — Flow is **not** exempt from governor limits. It shares the Apex transaction budget, and DML inside a loop is the classic production failure. Phase 08 established the patterns in **09**; this note owns the numbers. **Also correct the belief phase 08 found: a subflow shares the transaction and buys no relief.**
-- **17** — Approval Orchestration is the modern path; classic approval processes are in maintenance. **State the status precisely from a source — do not invent a retirement date.** Note that [../CURRENCY.md](../CURRENCY.md) already records classic approvals as *not retired*, and phase 08 found the same shape for Workflow Rules. **Assume the plan's framing is wrong until a primary source says otherwise.**
-- **18** — the Migrate to Flow tool and the **support** timeline. Phase 08 corrected the vault-wide claim: **end of support 31 Dec 2025, creation blocked Winter '23, no retirement date announced, existing automations still run.** This note owns the conversion traps, and its premise is stronger for the correction — migration is urgent because *unsupported* automation that breaks stays broken, not because a switch-off is coming.
+### Retro
 
-**14 — brief.** Trigger Order is **1–2000** in Advanced Settings and orders only flows of the **same trigger type on the same object** — an after-save flow can never be made to run before a before-save one. Ties fall back to created/last-modified order. **Flow Trigger Explorer** has existed since **Spring '22**. Carry the one-flow-per-object-vs-many argument here; **03** forward-links to it.
+**⚠️ — the plan's framing for 17 was wrong, exactly as the plan itself suspected**
 
-**🆕 — research before writing:** **17**, **18**, **20**, **21**, **23**. All post-2024.
+- **17 — "classic approval processes are in maintenance" is not a thing Salesforce has said.** The plan flagged its own framing as suspect and told the run to assume it was wrong until a primary source said otherwise. It was wrong, and in the same shape as the phase-08 "Workflow Rules are retired" error and the phase-06 "Locker is retired" error: **classic approvals are fully supported, the docs were renamed *Classic Approval Processes*, Flow approvals are a "modern alternative", and no retirement date exists.** [../CURRENCY.md](../CURRENCY.md) and [01-admin · 12](../01-admin-and-declarative-platform/12-approval-processes-and-approval-orchestration.md) already had this right from phase 02 — the phase-09 plan text regressed against the vault's own record. **This is the sixth instance of "old ≠ dead" in this build.** The real ⚠️ for 17 turned out to be better anyway: **Summer '25 made a flow approval process callable from *any* flow** via an invocable action, so approvals stopped being confined to orchestration-type flows.
 
-**Summer '26 findings from phase 08 that belong to this run**
+**⚠️ the plan did not give, and the strongest finding in the run**
 
-- **Create Agent element in Flow Builder** (GA) — build or deploy an agent from the canvas → **21**.
-- **Troubleshoot Flow Errors with Agentforce** (**Beta**; needs Data 360, Agentforce provisioning, Einstein generative AI) → **15**.
-- **Visualize Execution Path when testing screen flows**, **Visual Flow Version Comparison**, **Element Error Rate column**, redesigned validation panel → **15** and **22**.
-- **Update Screen Flows with natural-language prompts** (GA, extends the earlier record-/schedule-triggered capability) → **23**.
-- **Unanimous approval for group-assigned steps** — every member gets their own work item and those items **cannot be reassigned**; dependency visibility is no longer gated on *Manage Flow* → **17**.
-- **Flow Orchestration became a standard feature on 2026-02-18**, no usage-based caps → **16**. Already in [../CURRENCY.md](../CURRENCY.md).
+- **13 — the 2,000-executed-elements limit was removed in Spring '23.** It is the most-quoted Flow limit on the internet, it is still in current listicles, and it is **version-gated**: gone only for flows saved at **API 57.0+**, so an inherited flow at 55.0 keeps it. Removing it moved the failure to **CPU time at 10 seconds**, which has a far worse error message. This also made a sentence in phase 08's **09** stale — *"the element executions cap is one of the limits people actually hit"* — corrected in place.
+- **15 — Flow Tests are much narrower than "Flow has tests now."** **Record-triggered flows only**, **immediate paths only**, **not delete**. Screen, autolaunched, schedule- and event-triggered flows have no automated test story at all, and **flow tests contribute nothing to Apex code coverage**. Summer '26's *Visualize Execution Path when testing screen flows* is a **debug-run** enhancement and does not extend Flow Tests — the release-notes headline reads as coverage and is not.
+- **24 — `FlowDefinition` is no longer how you activate a version.** Since **Metadata API v44** only the latest version is retrievable and deployable, the `Flow` type carries its own `status`, and file names dropped version numbers. Pipelines built before v44 still do it the old way. Also concrete: **50 versions per flow**, and *Send Process or Flow Email to* in Process Automation Settings — which is the fix for phase 08's finding in **10** that error emails go to the last modifier.
+- **20 — the org-wide paused/waiting interview cap was removed in Spring '23**, which is worse news than it sounds: nothing stops the accumulation, so nothing tells you it happened.
+- **21 — `Run Flows` was removed from the Guest User profile** (new orgs Winter '22, all orgs Spring '23). Access is per flow via **Enabled Flow Access**. Every older tutorial's instruction is now impossible to follow.
 
-**Cross-links, don't duplicate**
+**🆕 the plan under-specified**
 
-- **19** → [05-experience-cloud · 07 Guest user security](../05-experience-cloud-lwr/INDEX.md) (written later, phase 18 — this note owns the run-as context, that one owns site hardening).
-- **20** → [AI_Data/01-data-cloud/](../../AI_Data/01-data-cloud/INDEX.md).
-- **21, 23** → [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md). **21** should reuse the description-as-contract framing already written there.
-- **17** → [01-admin · 12](../01-admin-and-declarative-platform/12-approval-processes-and-approval-orchestration.md), written in phase 02.
+- **22 — activation-triggered flows (January 2026)** were not in the plan. A Data 360 **activation** as a flow start node is a newer entry point than the Data Cloud-triggered flow the plan named, and it closed a real gap. The plan also conflated three mechanisms the note now separates: **Data Cloud-triggered flow**, **data action** (targets: platform event, webhook, Marketing Cloud Engagement) and **activation**.
+- **25 — "describe-to-flow" is three capabilities, not one.** Flow Generation V2 (GA), natural-language *editing* of existing screen flows (GA Summer '26), and **flow summarisation**, which writes a generated description back into the flow's description metadata. The last one closes a loop with **23**: on an agent action that description **is** the contract another model reads.
+- **19 — the default is not a context.** *How to Run the Flow* defaults to the literally-named **"Depends on How Flow is Launched"**, which is why published sources contradict each other about "the autolaunched default". The fixed fact is the other half: **record-, schedule- and event-triggered flows run in system context without sharing and cannot be changed.** Phase 08's **06** said only "inherits the caller's context" — sharpened in place.
+- **Flow did not follow Apex's 67.0 security flip.** Apex defaults to user mode and `with sharing` at 67.0; Flow's triggered types did not move, so **the same logic is now more permissive in Flow than in Apex**. Recorded in [../CURRENCY.md](../CURRENCY.md) — it inverts the old "clicks are the safe option" assumption.
 
-**Seed harvest** — `Flow Updates` (2025) → **18** or **23**; check what it actually covers first. **`Limits based Things` (2025)** → **13**; found during the phase-08 harvest and not in the inventory, its highlight mentions iterating large query results, so read it before writing **13**.
+**Seed harvest** · *both mapped pages read, both substantive*
+
+- **13** — `Limits based Things` (**2025**). → *harvested with an inline correction. Its numbers hold (CPU 10 s / 60 s, heap 6 MB / 12 MB) and its list of CPU-burn causes is good, but its recommendation — "convert Process Builder, flows to Apex Triggers if possible" — is the exact belief the note exists to correct.*
+- **21** — `Flow Updates` (**2025**), which the inventory listed as unread and guessed might land in 18 or 23. → *it is neither: a **profile-by-profile audit of the `Run Flows` permission** in a production org. Harvested into 21, where it is the right exercise for internal profiles and impossible for guests since Spring '23.*
+- **[../\_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md) should be updated** — `Flow Updates` is mapped to the wrong destination there.
+
+**Rule 1 exceeded deliberately, with approval** — two files added, and the renumber they forced touched **01-admin** (`12`, `14`, `INDEX`, `PHASES`) and **03-lwc** (`INDEX`) as well as files 01–12 here. All verified by grep after the change.

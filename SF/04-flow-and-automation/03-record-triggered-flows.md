@@ -2,7 +2,7 @@
 
 > Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 08
 
-**Scope:** The single flow type that carries most declarative automation — trigger configuration, before-save vs after-save, and entry criteria. Run order across *several* flows on one object is [14 · Trigger order](INDEX.md).
+**Scope:** The single flow type that carries most declarative automation — trigger configuration, before-save vs after-save, and entry criteria. Run order across *several* flows on one object is [14 · Trigger order](14-trigger-order-and-flow-trigger-explorer.md).
 
 ## Core idea
 
@@ -57,6 +57,6 @@ A: It runs inside the save transaction before the record is written; callouts an
 
 ## Related
 
-- [14 · Trigger order & Flow Trigger Explorer](INDEX.md) — what happens when several flows sit on the same object
+- [14 · Trigger order & Flow Trigger Explorer](14-trigger-order-and-flow-trigger-explorer.md) — what happens when several flows sit on the same object
 - [01-admin · 14 Order of execution](../01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md) — the canonical 20-step pipeline steps 3 and 14 belong to
 - [10 · Fault paths & custom errors](10-fault-paths-and-custom-errors.md) — how a record-triggered flow blocks a save and rolls it back

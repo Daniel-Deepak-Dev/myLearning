@@ -33,7 +33,7 @@ The capability is stable; what has changed around it is where callouts get *plac
 - **Callouts count against the per-transaction callout limit** — 100 — and the total callout timeout of 120 seconds applies to the transaction, not to each call.
 - **There is no retry.** A transient 503 is a fault path, nothing more; anything needing backoff belongs in Apex. → [02-apex · 19](../02-apex-and-triggers/19-callouts-named-credentials-and-http-in-apex.md)
 - **You cannot do DML before a callout in the same transaction.** The uncommitted-work rule applies to Flow exactly as it does to Apex.
-- **The generated Apex classes are real metadata.** They deploy, they show in the org, and deleting the action without cleaning them up leaves orphans. → [22 · Deployment & versioning](INDEX.md)
+- **The generated Apex classes are real metadata.** They deploy, they show in the org, and deleting the action without cleaning them up leaves orphans. → [24 · Deployment & versioning](24-flow-deployment-versioning-and-governance.md)
 - **Request signing, custom headers per call and multipart bodies are Apex territory.** If the API needs any of them, the declarative route ends.
 - **A legacy named credential cannot express per-permission-set access.** Build on external credential + named credential.
 

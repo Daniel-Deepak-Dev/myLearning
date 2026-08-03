@@ -227,3 +227,14 @@ Extracted from [the roadmap](ai-salesforce-architect-roadmap.html) glossary tab,
 | Zero-shot forecasting | Forecasting a time series the model was never trained on — GIFT-Eval's target capability, and the forecasting analogue of a language model answering a question it never saw. |
 
 ## New terms (unsorted — file into sections above during weekly review)
+
+*Added in SF phase 09 (Flow at scale).*
+
+| Term | Definition |
+|---|---|
+| Activation-Triggered Flow | Data 360 addition, **January 2026**: a Data 360 **activation** used as a flow's start node, so post-activation fan-out (CRM writes, API calls, MuleSoft connectors) is orchestrated in Flow Builder instead of configured per target. Newer than, and distinct from, the **Data Cloud-triggered flow** that fires on a DMO or CIO change. |
+| Data Action Target | Where a Data 360 **data action** sends a change event. Three supported types: **Salesforce platform event**, **webhook**, and **Marketing Cloud Engagement**. The platform-event target is the useful bridge — it turns a Data 360 change into something a platform event-triggered flow already handles. Not the same as an **activation**, which pushes a segment or DMO to an activation target. |
+| Flow Approval Process | Approvals authored in Flow as an **approval orchestration** — GA **Spring '25**, recall path and single-approver template **Summer '25**, and since Summer '25 launchable from *any* flow via an invocable action. Free since Flow Orchestration became a standard feature on **2026-02-18**. Does **not** deprecate classic approval processes. |
+| Flow Run Context | What a flow is permitted to see and write, independent of its **running user**. Record-, schedule- and platform-event-triggered flows are **system context without sharing** and cannot be changed; screen and autolaunched flows expose *How to Run the Flow*, whose default — **"Depends on How Flow is Launched"** — is a deferral rather than a context. *System Context With Sharing* enforces record access only, **not** FLS or object permissions. |
+| Flow Trigger Explorer | Spring '22 Setup surface listing every record-triggered flow on an object, grouped into Fast Field Updates, Actions and Related Records, and Run Asynchronously, with drag-to-reorder since Summer '22. Shows **only flows** — not Apex triggers, Workflow Rules, Process Builder or validation rules — so it is a partial map of an inherited org. |
+| Trigger Order | A value **1–2,000** in a record-triggered flow's Advanced settings fixing its position among flows of the **same trigger type on the same object**. Does not order before-save against after-save, and cannot sequence a flow against Apex. Unnumbered flows run last, in created/last-modified order. |

@@ -2,7 +2,7 @@
 
 > Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 08
 
-**Scope:** What happens when a flow fails, and the three mechanisms for controlling it. Testing failure deliberately is [15 · Flow testing & debugging](INDEX.md).
+**Scope:** What happens when a flow fails, and the three mechanisms for controlling it. Testing failure deliberately is [15 · Flow testing & debugging](15-flow-testing-and-debugging.md).
 
 > **What changed.** *"Add a fault path"* is not error handling — it is error *reporting*. **A fault path does not roll back the transaction**: every record the flow already wrote stays written, and the flow simply continues down a different branch with partial data committed. The **Custom Error element (Winter '24) does roll back**, and it is the element most "handle the error" advice should have been naming since.
 
