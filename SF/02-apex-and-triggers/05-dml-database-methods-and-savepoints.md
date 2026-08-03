@@ -51,7 +51,7 @@ DML runs in **user mode by default** at 67.0, so `insert` now enforces the runni
 - **Rolling back to an earlier savepoint invalidates every savepoint taken after it.** Using a stale one is a runtime error, not a no-op.
 - **`SaveResult[]` is positional.** It matches the input list index for index, and that index is the only link back to the record that failed — `getId()` is null on a failed insert.
 - **`allOrNone = false` does not make the operation safe**, only survivable. Something still has to decide what a half-applied change means.
-- **`delete` is a soft delete** into the Recycle Bin and fires triggers; `Database.emptyRecycleBin()` and hard delete are separate, unrecoverable operations.
+- **`delete` is a soft delete** into the Recycle Bin and fires triggers; `Database.emptyRecycleBin()` and hard delete are separate, unrecoverable operations. At volume the distinction is a performance one — soft-deleted rows still cost query time → [08-data · 13](../08-data-modeling-and-large-data-volumes/13-deletes-recycle-bin-and-physical-deletion.md).
 - **A DML statement inside a loop burns the 150-statement limit at one per iteration** — the single most common cause of a failed trigger. → [08](08-bulkification-patterns.md)
 - **`undelete` restores children too**, which can resurrect records a later cleanup job assumed were gone.
 

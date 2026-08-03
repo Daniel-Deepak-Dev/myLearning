@@ -39,7 +39,7 @@ The v1 → 2.0 shift is complete in the sense that matters: **new capability lan
 
 - **`JobComplete` does not mean every record succeeded.** It means processing finished. This is the single most common Bulk defect.
 - **`Sforce-Enable-PKChunking` is a Bulk **v1** header.** Copying it into a 2.0 integration does nothing, and the tutorial that told you to is describing another API.
-- **Parent-child loads self-inflict lock contention.** Sorting the file by parent ID so one chunk touches one parent is the standard fix; serial mode is the fallback. → [08-data · skew](../08-data-modeling-and-large-data-volumes/INDEX.md)
+- **Parent-child loads self-inflict lock contention.** Sorting the file by parent ID so one chunk touches one parent is the standard fix; serial mode is the fallback. → [08-data · 12](../08-data-modeling-and-large-data-volumes/12-record-locking-and-concurrency.md)
 - **A hard-deleted record bypasses the Recycle Bin** and needs `Bulk API Hard Delete` — a permission worth treating as privileged.
 - **Bulk query has no relationship-subquery support** the way REST query does; reshape into separate jobs rather than fighting it.
 - **The results endpoints expire.** Collect them; a job whose results were never fetched is unrecoverable work.
@@ -65,5 +65,5 @@ A: No. It is legacy — still callable, but no new capability lands there.
 
 - [04 · REST API fundamentals](04-rest-api-fundamentals.md) — the synchronous surface below Bulk's threshold
 - [01-admin · 13 Data import, export & loading tools](../01-admin-and-declarative-platform/13-data-import-export-and-loading-tools.md) — Data Loader, and its Bulk checkboxes
-- [08-data · INDEX](../08-data-modeling-and-large-data-volumes/INDEX.md) — skew, selectivity and why large loads are slow
+- [08-data · 12 Record locking & concurrency](../08-data-modeling-and-large-data-volumes/12-record-locking-and-concurrency.md) — why large loads are slow, and the three fixes in order
 - [24 · API limits, monitoring & access control](INDEX.md) — the daily allowance Bulk draws on

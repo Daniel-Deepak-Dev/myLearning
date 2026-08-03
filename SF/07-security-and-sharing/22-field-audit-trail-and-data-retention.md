@@ -21,7 +21,7 @@ Standard field history tracking is a convenience feature wearing a compliance fe
 - **Archiving does not replace the standard object.** Salesforce keeps writing to `AccountHistory` and friends as normal; at the end of the standard window it moves those rows into `FieldHistoryArchive` instead of deleting them.
 - **`HistoryRetentionPolicy` is metadata, per object.** It states how many months of history to keep in the standard object before archiving, and how long to keep the archive. Deploy it like any other metadata — it is not a Setup checkbox.
 - **Defaults are 18 months in production and one month in sandboxes**, with archived data kept until you delete it. The sandbox default surprises people testing the feature.
-- **Query it with SOQL like any big object**, subject to big-object query rules: you filter on the index fields in order, and there is no arbitrary `WHERE`. → [08-data · INDEX](../08-data-modeling-and-large-data-volumes/INDEX.md)
+- **Query it subject to big-object rules**: filter on the index fields in the order defined, with no arbitrary `WHERE` — and note that **Async SOQL was retired in Summer '23**, so the route is Bulk API query or Batch Apex. → [08-data · 14](../08-data-modeling-and-large-data-volumes/14-big-objects-and-the-archive-tier.md)
 - **Turning field history tracking *on* is still per field, in Object Manager.** Field Audit Trail changes the ceiling and the destination, not the act of tracking.
 
 ## Gotchas
@@ -31,7 +31,7 @@ Standard field history tracking is a convenience feature wearing a compliance fe
 - **Deleting the tracked field deletes its meaning**, not its rows: the archive keeps entries referencing a field that no longer exists.
 - **The one-month sandbox default makes the feature look broken in testing.** Set `HistoryRetentionPolicy` explicitly in the sandbox before concluding anything.
 - **Big object queries are index-ordered, not ad hoc.** An "just query the archive" plan that assumes normal SOQL will not survive contact with it.
-- **Archived history is not covered by a normal data export.** Backup and restore tooling frequently skips big objects entirely — verify rather than assume. → [08-data · INDEX](../08-data-modeling-and-large-data-volumes/INDEX.md)
+- **Archived history is not covered by a normal data export.** Backup and restore tooling frequently skips big objects entirely — verify rather than assume. → [08-data · 14](../08-data-modeling-and-large-data-volumes/14-big-objects-and-the-archive-tier.md)
 - **This is a Shield SKU.** Scoping a compliance requirement around it without checking entitlement is the same mistake as designing around Who Sees What Explorer. → [24](24-security-center-and-health-check.md)
 - **Field Audit Trail answers *what the data was*. Setup Audit Trail answers *who changed the configuration*.** Different questions, different tools, routinely conflated in requirements documents. → [15](15-auditing-and-troubleshooting-access.md)
 

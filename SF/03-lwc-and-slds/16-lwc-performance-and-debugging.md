@@ -2,7 +2,7 @@
 
 > Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 07
 
-**Scope:** Why a page feels slow, how to find out, and the three refresh APIs — which one to reach for. Server-side cost is [02-apex · 01](../02-apex-and-triggers/INDEX.md) and [08-data · 07](../08-data-modeling-and-large-data-volumes/INDEX.md); this is the client.
+**Scope:** Why a page feels slow, how to find out, and the three refresh APIs — which one to reach for. Server-side cost is [02-apex · 01](../02-apex-and-triggers/INDEX.md) and [08-data · 09](../08-data-modeling-and-large-data-volumes/09-query-plan-and-performance-tuning.md); this is the client.
 
 ## Core idea
 
@@ -61,4 +61,4 @@ A: Without it the framework is minified and some development-time warnings are s
 - [06 · Lightning Data Service](06-lightning-data-service-and-ui-api-wires.md) — the cache that removes duplicate requests for free
 - [08 · Apex in LWC](08-apex-in-lwc-wire-vs-imperative.md) — `cacheable=true` and `refreshApex`
 - [20 · Offline LWC & mobile constraints](20-offline-lwc-and-mobile-constraints.md) — where every one of these costs is multiplied
-- [08-data · Query plan & performance tuning](../08-data-modeling-and-large-data-volumes/INDEX.md) — when the client is fine and the query is not
+- [08-data · 09 Query Plan & performance tuning](../08-data-modeling-and-large-data-volumes/09-query-plan-and-performance-tuning.md) — when the client is fine and the query is not

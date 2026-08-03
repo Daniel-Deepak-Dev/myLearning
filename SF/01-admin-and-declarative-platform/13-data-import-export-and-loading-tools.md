@@ -39,7 +39,7 @@ Legacy Salesforce Platform API versions **21.0–30.0 were deprecated in Summer 
 - Validation rules and required fields fire per row, so a 50,000-row load can half-succeed. Always keep the error file.
 - Assignment rules do **not** run on a load unless the assignment-rule setting is enabled — see [11 · Queues, assignment & escalation](11-queues-assignment-and-escalation-rules.md).
 - Hard delete is irreversible: no Recycle Bin, no undo, and it is a separate permission for exactly that reason.
-- Loading child records grouped by the same parent ID creates lock contention and ownership skew at volume — see [08-data](../08-data-modeling-and-large-data-volumes/INDEX.md).
+- Loading child records that share a parent creates lock contention at volume, and assigning every loaded record to one integration user creates ownership skew. Sorting the file **by parent Id** is the standard fix — see [08-data · 12](../08-data-modeling-and-large-data-volumes/12-record-locking-and-concurrency.md) and [08-data · 10](../08-data-modeling-and-large-data-volumes/10-data-skew.md).
 - Data Loader CLI mode stores credentials in an encrypted key file; treat that file as a secret in any scheduled setup.
 
 ## Recall

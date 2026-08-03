@@ -75,4 +75,4 @@ A: `System.TransientCursorException`. `System.FatalCursorException` is not retry
 
 - [14 · Batch Apex & stateful processing](14-batch-apex-and-stateful-processing.md) — the alternative when 50 M rows and platform-managed chunking are what you want
 - [13 · Queueable Apex & chaining](13-queueable-apex-and-chaining.md) — the chain that carries a cursor's position between transactions
-- [08-data · LDV performance](../08-data-modeling-and-large-data-volumes/INDEX.md) — making the underlying query selective enough that paging it is worth doing
+- [08-data · 08 Indexes & query selectivity](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md) — making the underlying query selective enough that paging it is worth doing

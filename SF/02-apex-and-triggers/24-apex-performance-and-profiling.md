@@ -2,7 +2,7 @@
 
 > Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 05
 
-**Scope:** Finding out *where* a transaction spends itself, and what to do about it. The limit table itself is [01](01-apex-language-core-and-governor-limits.md); making the underlying query selective is an [08-data](../08-data-modeling-and-large-data-volumes/INDEX.md) problem.
+**Scope:** Finding out *where* a transaction spends itself, and what to do about it. The limit table itself is [01](01-apex-language-core-and-governor-limits.md); making the underlying query selective is an [08-data · 09](../08-data-modeling-and-large-data-volumes/09-query-plan-and-performance-tuning.md) problem.
 
 ## Core idea
 
@@ -62,4 +62,4 @@ A: Daily, org-wide consumption — async executions, API calls, storage — rath
 
 - [01 · Apex language core & governor limits](01-apex-language-core-and-governor-limits.md) — the full per-transaction limit table
 - [08 · Bulkification patterns](08-bulkification-patterns.md) — the fix for almost every limit that is not CPU or heap
-- [08-data · LDV performance](../08-data-modeling-and-large-data-volumes/INDEX.md) — selectivity and Query Plan, where slow queries are actually solved
+- [08-data · 09 Query Plan & performance tuning](../08-data-modeling-and-large-data-volumes/09-query-plan-and-performance-tuning.md) — where slow queries are actually diagnosed and solved

@@ -34,7 +34,7 @@ Shield's encryption coverage keeps widening — platform events, Data 360 fields
 - **Criteria-based sharing rules cannot use encrypted fields**, which quietly couples an encryption decision to the access model. → [09](09-sharing-rules-and-manual-sharing.md)
 - **Duplicate management breaks on encrypted Account and Contact names** — matching rules need to compare, and they cannot.
 - **`MIN`/`MAX`/`GROUP BY` on an encrypted field fail**, so an encrypted currency or date field takes a report with it. → [02-apex · 03](../02-apex-and-triggers/03-soql-fundamentals-and-relationship-queries.md)
-- **External ID and unique fields conflict with probabilistic encryption**, so upsert keys and integration match fields need designing around it. → [08-data · INDEX](../08-data-modeling-and-large-data-volumes/INDEX.md)
+- **External ID and unique fields conflict with probabilistic encryption**, so upsert keys and integration match fields need designing around it. → [08-data · 03](../08-data-modeling-and-large-data-volumes/03-record-ids-external-ids-and-upsert.md)
 - **Managed packages may not tolerate encrypted fields** and the failure appears inside code you cannot read. Test in a sandbox with the package installed.
 - **Cache-Only Key Service turns your key service into a hard dependency.** If it is unreachable, the data is unreadable — which is correct behaviour and a production incident.
 - **Encryption does not satisfy a "restrict who can see it" requirement.** That is FLS plus sharing; saying otherwise in a compliance conversation is a credibility loss.

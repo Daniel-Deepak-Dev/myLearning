@@ -44,6 +44,6 @@ Every inbound and outbound path, with the 2024–2026 replacements. **26 topics*
 - **16 → 25** is a hard dependency, not a cross-reference: an external client app is the only documented way to connect an MCP client.
 - **18 → 19 → 25** is one pipeline: an Apex REST class becomes an OpenAPI document, a catalog entry, then an agent action or MCP tool.
 - **09** underpins [09-devops](../09-devops-sfdx-and-release-management/INDEX.md) — every pipeline is a Metadata API client.
-- **20** pairs with [08-data · 13 External objects vs replicated copies](../08-data-modeling-and-large-data-volumes/INDEX.md).
+- **20** pairs with [08-data · 17 External objects vs replicated copies](../08-data-modeling-and-large-data-volumes/INDEX.md) *(phase 15)*.
 - **25** continues in [AI_Data/02-salesforce-ai/11-agent-fabric-and-interop/notes.md](../../AI_Data/02-salesforce-ai/11-agent-fabric-and-interop/notes.md).
 - Currency anchor: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).

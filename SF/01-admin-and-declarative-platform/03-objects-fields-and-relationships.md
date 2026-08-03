@@ -2,7 +2,7 @@
 
 > Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 01
 
-**Scope:** The schema primitives — objects, field types, and the relationship types that connect them. Deliberately shallow on query performance: selectivity, indexing and ownership skew are [08-data](../08-data-modeling-and-large-data-volumes/INDEX.md).
+**Scope:** The schema primitives — objects, field types, and the relationship types that connect them. Deliberately shallow on consequences and performance: cascade, reparenting and sharing fallout are [08-data · 02](../08-data-modeling-and-large-data-volumes/02-relationships-deep-dive.md); selectivity, indexing and ownership skew are [08-data · 08](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md).
 
 ## Core idea
 
@@ -61,4 +61,4 @@ A: No. Only field-level required enforces on API and Data Loader writes.
 
 - [04 · Record types & picklist architecture](04-record-types-and-picklist-architecture.md) — the other half of schema configuration
 - [07 · Formula fields & roll-up summaries](07-formula-fields-and-roll-up-summaries.md) — what relationships let you compute
-- [08-data · INDEX](../08-data-modeling-and-large-data-volumes/INDEX.md) — selectivity, indexing, skew and large-volume consequences
+- [08-data · 02 Relationships deep dive](../08-data-modeling-and-large-data-volumes/02-relationships-deep-dive.md) — cascade, reparenting and the sharing consequences of the choices above

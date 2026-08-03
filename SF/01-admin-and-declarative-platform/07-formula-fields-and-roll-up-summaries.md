@@ -19,7 +19,7 @@ A **formula field** is computed every time it is read and stored nowhere. A **ro
 
 ## Gotchas
 
-- Formula fields are **not indexed**, so filtering a report or SOQL query on one is non-selective and degrades badly at volume — see [08-data](../08-data-modeling-and-large-data-volumes/INDEX.md).
+- Formula fields are **not indexed by default**, so filtering a report or SOQL query on one is non-selective and degrades badly at volume. The carve-out is worth knowing: Support **can** index a **deterministic** formula — one object only, no `TODAY()`/`NOW()`, no `Id`, owner or autonumber fields. Anything cross-object is non-deterministic and never indexable — see [08-data · 08](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md).
 - A formula containing `TODAY()` or `NOW()` re-evaluates on every read, so a report filtered on it gives different answers at different times and cannot be trusted for a snapshot.
 - Compile size counts *transitive* references. Adding one innocuous field to a shared formula can break unrelated formulas that reference it.
 - Roll-up summary recalculation happens in the save order **after** after-triggers, so an after-trigger reading the parent's roll-up sees the stale value. See [14 · Order of execution](14-order-of-execution-declarative-view.md).
@@ -40,7 +40,7 @@ Q: How far can a cross-object formula traverse, and what is the per-object ceili
 A: Up to 10 relationships away, with a maximum of 10 unique relationships per object across all its formulas.
 
 Q: Why is filtering a SOQL query on a formula field a performance problem?
-A: Formula fields are computed at read time and are not indexed, so the filter cannot be selective.
+A: It is computed at read time and normally unindexed, so the filter cannot be selective. Only a **deterministic**, single-object formula can be indexed, and only by Support — a cross-object one never can.
 
 Q: An after-trigger reads a roll-up summary on the parent and gets a stale number. Why?
 A: Roll-up recalculation happens later in the save order than after-triggers.
@@ -49,4 +49,4 @@ A: Roll-up recalculation happens later in the save order than after-triggers.
 
 - [03 · Objects, fields & relationships](03-objects-fields-and-relationships.md) — why roll-ups need master-detail
 - [14 · Order of execution](14-order-of-execution-declarative-view.md) — exactly when roll-ups recalculate
-- [08-data · INDEX](../08-data-modeling-and-large-data-volumes/INDEX.md) — selectivity and why formula filters hurt
+- [08-data · 08 Indexes & query selectivity](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md) — selectivity, and the one formula shape that *can* be indexed

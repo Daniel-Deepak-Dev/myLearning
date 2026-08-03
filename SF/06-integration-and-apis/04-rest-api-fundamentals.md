@@ -22,7 +22,7 @@ What matters most is the last property. **REST enforces the running user**, so e
 | Describe | `/sobjects/Account/describe` · `/sobjects/` for the global list |
 | Org limits | `/limits` |
 
-- **Upsert by external ID is the integration primitive.** It removes the "do I already have this record?" round trip and makes retries idempotent — the same call twice produces one record. → [21](INDEX.md), [14-data · external IDs](../08-data-modeling-and-large-data-volumes/INDEX.md)
+- **Upsert by external ID is the integration primitive.** It removes the "do I already have this record?" round trip and makes retries idempotent — the same call twice produces one record. → [21](INDEX.md), [08-data · 03](../08-data-modeling-and-large-data-volumes/03-record-ids-external-ids-and-upsert.md)
 - **Large query results paginate.** The response carries `nextRecordsUrl` until `done` is `true`; a client that ignores it silently processes the first page only.
 - **`Sforce-Limit-Info` comes back on every response** with the org's API request count against its 24-hour allowance. Read it rather than guessing. → [24](INDEX.md)
 - **Composite is still REST.** When one logical operation needs several calls, [06](06-composite-batch-and-graph-apis.md) keeps them in one round trip and one transaction — reach for it before writing a client-side loop.
@@ -35,7 +35,7 @@ What matters most is the last property. **REST enforces the running user**, so e
 ## Gotchas
 
 - **A `GET` on a record the user cannot see returns 404, not 403.** The platform will not confirm a record exists — correct, and it sends debugging toward "bad ID" when the fault is access.
-- **`/queryAll` is the only way to see soft-deleted rows.** `/query` silently excludes the Recycle Bin, which makes "the record vanished" reports hard to reproduce.
+- **`/queryAll` is the only way to see soft-deleted rows.** `/query` silently excludes the Recycle Bin, which makes "the record vanished" reports hard to reproduce → [08-data · 13](../08-data-modeling-and-large-data-volumes/13-deletes-recycle-bin-and-physical-deletion.md).
 - **Batch your reads with relationship queries, not with loops.** N+1 over `/sobjects/{id}` is the commonest way an integration exhausts the org's daily API allowance.
 - **Error responses are an array, even for one error.** Clients that read `body.message` instead of `body[0].message` log `undefined` and lose the actual cause.
 - **`describe` responses are large and stable** — cache them with the `If-Modified-Since` header rather than fetching per run.

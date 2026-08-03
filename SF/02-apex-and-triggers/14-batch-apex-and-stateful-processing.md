@@ -77,4 +77,4 @@ A: Its `QueryLocator` defaults to user mode, so the scope is filtered by the run
 
 - [17 · `Database.Cursor` & large result sets](17-database-cursor-and-large-result-sets.md) — the same problem solved inside a single transaction
 - [12 · Async Apex overview & choosing](12-async-apex-overview-and-choosing.md) — when the record set is not actually the reason to go async
-- [08-data · LDV performance](../08-data-modeling-and-large-data-volumes/INDEX.md) — selectivity and chunking at the volumes that make batch necessary
+- [08-data · 08 Indexes & query selectivity](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md) — making the `QueryLocator` selective at the volumes that make batch necessary

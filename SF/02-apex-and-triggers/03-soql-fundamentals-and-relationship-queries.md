@@ -2,7 +2,7 @@
 
 > Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 03
 
-**Scope:** Reading data with SOQL — traversal, aggregation, filtering and the row budget. Dynamic SOQL, SOSL and injection defence are [04](04-advanced-soql-sosl-and-dynamic-queries.md); selectivity and query plans are [08-data](../08-data-modeling-and-large-data-volumes/INDEX.md).
+**Scope:** Reading data with SOQL — traversal, aggregation, filtering and the row budget. Dynamic SOQL, SOSL and injection defence are [04](04-advanced-soql-sosl-and-dynamic-queries.md); selectivity is [08-data · 08](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md) and query plans are [08-data · 09](../08-data-modeling-and-large-data-volumes/09-query-plan-and-performance-tuning.md).
 
 ## Core idea
 
@@ -67,4 +67,4 @@ A: The query throws a `QueryException` rather than returning null — and sharin
 
 - [04 · Advanced SOQL, SOSL & dynamic queries](04-advanced-soql-sosl-and-dynamic-queries.md) — semi-joins, `TYPEOF`, `FOR UPDATE` and building queries at runtime
 - [08 · Bulkification patterns](08-bulkification-patterns.md) — why the map-from-query idiom exists and where to put the query
-- [08-data · INDEX](../08-data-modeling-and-large-data-volumes/INDEX.md) — selectivity, indexes and reading a Query Plan when a valid query is simply slow
+- [08-data · 08 Indexes & query selectivity](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md) — why a valid query is simply slow, and the thresholds that decide it

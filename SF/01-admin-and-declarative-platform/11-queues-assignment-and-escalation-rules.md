@@ -29,7 +29,7 @@ Queue-plus-assignment-rule remains correct for record routing, but it is no long
 - A queue has no role, so **role-hierarchy sharing does not grant access upward** from a queue-owned record — managers do not automatically see it.
 - Reassignment by an assignment rule does not re-trigger assignment rules, but it does re-run the save path for field updates, which can look like recursion in debug logs.
 - Escalation timing without configured **business hours** falls back to a default that is rarely what the business meant.
-- Changing owner re-evaluates sharing for that record and its children — cheap for one record, expensive in a bulk load. See [08-data](../08-data-modeling-and-large-data-volumes/INDEX.md).
+- Changing owner re-evaluates sharing for that record and its children — cheap for one record, expensive in a bulk load, and worst where one owner holds more than 10,000 records. See [08-data · 10](../08-data-modeling-and-large-data-volumes/10-data-skew.md).
 - Queue email notifications plus "send email to members" can flood a large queue on a bulk insert.
 - Deploying an assignment rule is an activation event: two deployments each carrying an "active" rule leave whichever landed last as the only active one.
 

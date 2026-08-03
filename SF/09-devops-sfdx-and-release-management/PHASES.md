@@ -68,4 +68,4 @@
 - **13** — the underdocumented failure is **parallel test contention** in CI. Depends on [02-apex · 20–21](../02-apex-and-triggers/INDEX.md).
 - **19** — the real constraint is that **debug logs are capped and expire**; production debugging needs a custom logging strategy plus Event Monitoring. Say so.
 - **20** — seam into [AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md](../../AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md), which already carries the `sf agent` command chain and the five ADLC phases. **Link, don't duplicate** — this note owns the *review discipline for generated code*, which that one doesn't cover.
-- **21** pairs with [08-data · 19](../08-data-modeling-and-large-data-volumes/INDEX.md): same platform shift, ops side vs data side.
+- **21** pairs with [08-data · 23](../08-data-modeling-and-large-data-volumes/INDEX.md) *(phase 15)*: same platform shift, ops side vs data side.

@@ -47,7 +47,7 @@ List<Account> safe = Database.queryWithBinds(
 
 - **`String.escapeSingleQuotes()` only escapes quotes.** It does nothing for an injected object name, field name, `LIMIT` or `ORDER BY` — those need an allowlist, not escaping. Prefer binds and use escaping only where a bind is impossible.
 - **A bind cannot substitute an identifier.** Object names, field names and clause keywords must be assembled from values you control.
-- **`FOR UPDATE` holds its locks until the transaction ends**, so a long transaction turns into `UNABLE_TO_LOCK_ROW` for everyone else. Lock late, commit fast.
+- **`FOR UPDATE` holds its locks until the transaction ends**, so a long transaction turns into `UNABLE_TO_LOCK_ROW` for everyone else. Lock late, commit fast — the 10-second wait and the parent-lock behaviour behind it are [08-data · 12](../08-data-modeling-and-large-data-volumes/12-record-locking-and-concurrency.md).
 - **SOSL returns one list per `RETURNING` clause, in declaration order**, and an object with no matches gives an empty list rather than being omitted — index positionally, never by guessing.
 - **SOSL needs at least two characters** in the search term and searches the index, so very recently created records may not be findable yet.
 - **`Schema.getGlobalDescribe()` builds a map of every object in the org** — real CPU and heap cost. Reach for `Type.forName()` or a named `Schema.SObjectType` instead.

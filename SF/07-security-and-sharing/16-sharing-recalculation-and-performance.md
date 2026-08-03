@@ -2,7 +2,7 @@
 
 > Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 11
 
-**Scope:** What it costs the platform to keep [06](06-org-wide-defaults-and-record-access.md)–[10](10-teams-territories-and-account-sharing.md) true, and why an access change that takes a second to configure takes hours to apply. Ownership skew as a *query* problem is [08-data · 08](../08-data-modeling-and-large-data-volumes/INDEX.md); the recalculation mechanics are here.
+**Scope:** What it costs the platform to keep [06](06-org-wide-defaults-and-record-access.md)–[10](10-teams-territories-and-account-sharing.md) true, and why an access change that takes a second to configure takes hours to apply. Ownership skew as a *query and lock* problem is [08-data · 10](../08-data-modeling-and-large-data-volumes/10-data-skew.md); the recalculation mechanics are here.
 
 > **What changed.** *"Change a group's membership and the share rows exist the moment the DML commits"* is on its way to being wrong. Salesforce now runs sharing recalculation **asynchronously** after group-membership and role changes when it judges that faster — rolled out from Summer '25, fully enabled April 2026, and a **Release Update available Spring '26 and enforced Spring '27**. Apex and Flow that update a group and then immediately act on newly-shared records will fail.
 
@@ -62,4 +62,4 @@ A: Restriction rules — they filter at runtime and create no share rows.
 - [07 · Role hierarchy & ownership](07-role-hierarchy-and-ownership.md) — ownership skew, the input this note prices
 - [08 · Groups, queues & the grantee model](08-groups-queues-and-the-grantee-model.md) — granular locking as the realignment tool
 - [10 · Teams, territories & account sharing](10-teams-territories-and-account-sharing.md) — where share-row multiplication actually comes from
-- [08-data · INDEX](../08-data-modeling-and-large-data-volumes/INDEX.md) — the query-side twin: skew as a selectivity problem
+- [08-data · 10 Data skew](../08-data-modeling-and-large-data-volumes/10-data-skew.md) — the query-side twin, and the 10,000-record threshold

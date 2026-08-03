@@ -64,4 +64,4 @@ A: Priming — Briefcase Builder configuration. Data that was not primed is abse
 - [08 · Apex in LWC](08-apex-in-lwc-wire-vs-imperative.md) — the dependency that makes a component online-only
 - [06 · Lightning Data Service](06-lightning-data-service-and-ui-api-wires.md) — the wire adapters that do survive offline
 - [16 · Performance & debugging](16-lwc-performance-and-debugging.md) — every client cost is larger on a phone
-- [08-data · Data modeling](../08-data-modeling-and-large-data-volumes/INDEX.md) — priming is a data-volume decision as much as a mobile one
+- [08-data · 07 Large data volume fundamentals](../08-data-modeling-and-large-data-volumes/07-large-data-volume-fundamentals.md) — priming is a data-volume decision as much as a mobile one

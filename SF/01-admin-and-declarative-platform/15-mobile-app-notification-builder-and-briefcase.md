@@ -62,4 +62,4 @@ A: The compact layout, not the page layout.
 
 - [05 · Dynamic Forms & Lightning App Builder](05-dynamic-forms-and-lightning-app-builder.md) — mobile record detail and form-factor visibility rules
 - [06 · Dynamic Actions & list views](06-dynamic-actions-and-list-views.md) — the mobile action bar and the org switch that gates it
-- [08-data · INDEX](../08-data-modeling-and-large-data-volumes/INDEX.md) — why briefcase filters are a data-volume decision
+- [08-data · 07 Large data volume fundamentals](../08-data-modeling-and-large-data-volumes/07-large-data-volume-fundamentals.md) — why briefcase filters are a data-volume decision

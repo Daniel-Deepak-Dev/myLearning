@@ -26,7 +26,7 @@ Nothing changed in the role hierarchy itself. What changed sits one step away an
 
 - **A role is not a permission container.** Nobody gets an object permission from a role; if access is missing, the role is almost never the answer. → [03](03-profiles-and-the-permission-set-led-model.md)
 - **Users with no role fall out of hierarchy-based sharing entirely**, including "Roles and Subordinates" grants that look like they should include them.
-- **Ownership skew is a sharing problem before it is a query problem.** The classic shape is an integration user owning every imported record. → [08-data · 08](../08-data-modeling-and-large-data-volumes/INDEX.md)
+- **Ownership skew is a sharing problem before it is a query problem.** The classic shape is an integration user owning every imported record, and the threshold is **10,000**. → [08-data · 10](../08-data-modeling-and-large-data-volumes/10-data-skew.md)
 - **Changing a user's role triggers a sharing recalculation** for every record they own and everything the hierarchy derives — do it in bulk, off-hours.
 - **Reassigning an owner deletes manual shares** on the record. Grants that must survive need an Apex sharing reason. → [02-apex · 11](../02-apex-and-triggers/11-sharing-keywords-and-apex-managed-sharing.md)
 - **You cannot stop upward inheritance on a standard object.** No setting exists; the answer is a different object or a restriction rule. → [11](11-restriction-rules.md)
@@ -54,4 +54,4 @@ A: Because record access is derived from ownership, so concentrated ownership ma
 - [06 · Org-wide defaults & record access](06-org-wide-defaults-and-record-access.md) — the baseline this hierarchy raises
 - [08 · Groups, queues & the grantee model](08-groups-queues-and-the-grantee-model.md) — queue ownership and the Summer '26 hierarchy exception
 - [10 · Teams, territories & account sharing](10-teams-territories-and-account-sharing.md) — the parallel hierarchy
-- [08-data · 08 Data skew](../08-data-modeling-and-large-data-volumes/INDEX.md) — the volume side of ownership concentration
+- [08-data · 10 Data skew](../08-data-modeling-and-large-data-volumes/10-data-skew.md) — the volume side of ownership concentration, and why the fix is to remove the owner from the hierarchy

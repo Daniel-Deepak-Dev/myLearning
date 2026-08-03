@@ -29,7 +29,7 @@ Nothing here changed in Summer '26, which is precisely the point: this is the st
 - **`allOrNone` defaults to false on composite.** The request returns HTTP 200 with failures buried in the body, and a client checking the status code reports success → [06](06-composite-batch-and-graph-apis.md).
 - **`JobComplete` on a Bulk job means processing finished, not that records succeeded.** Read the failed-results file → [07](07-bulk-api-2.md).
 - **A fault path in Flow does not roll back.** Error *reporting*, not error handling — records already written stay written → [04-flow · 10](../04-flow-and-automation/10-fault-paths-and-custom-errors.md).
-- **Row lock contention looks like a random failure.** `UNABLE_TO_LOCK_ROW` is retryable, and the fix is usually serialising by parent rather than retrying harder → [07](07-bulk-api-2.md).
+- **Row lock contention looks like a random failure.** `UNABLE_TO_LOCK_ROW` is retryable, and the fix is usually sorting by parent rather than retrying harder → [08-data · 12](../08-data-modeling-and-large-data-volumes/12-record-locking-and-concurrency.md), [07](07-bulk-api-2.md).
 - **A dedupe table with no retention policy becomes the largest object in the org.** Give the key an expiry from the day it is created.
 - **Silent success is the worst outcome.** An integration with no alert on its dead-letter path fails invisibly for months.
 
