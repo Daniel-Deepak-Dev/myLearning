@@ -2,7 +2,7 @@
 
 > Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 10
 
-**Scope:** Ownership as the primary record grant, and the hierarchy that propagates it upward. Groups and queues as grantees are [08](08-groups-queues-and-the-grantee-model.md); the performance consequences of concentrated ownership are [16](INDEX.md) *(phase 11)*.
+**Scope:** Ownership as the primary record grant, and the hierarchy that propagates it upward. Groups and queues as grantees are [08](08-groups-queues-and-the-grantee-model.md); the performance consequences of concentrated ownership are [16](16-sharing-recalculation-and-performance.md).
 
 ## Core idea
 

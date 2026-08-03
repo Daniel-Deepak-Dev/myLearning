@@ -13,7 +13,7 @@ Salesforce access is not one system. It is five independent gates, each answerin
 | # | Layer | Question | Granted by | Note |
 |---|---|---|---|---|
 | 1 | **Licence** | may this user be *granted* the feature at all? | user licence, PSL, feature licence | [02](02-licences-and-what-they-gate.md) |
-| 2 | **Org** | may this user log in, from here, now? | login hours, IP ranges, MFA, session | [17](INDEX.md) *(phase 11)* |
+| 2 | **Org** | may this user log in, from here, now? | login hours, IP ranges, MFA, session | [17](17-authentication-and-mfa.md), [18](18-session-security-login-policies-and-step-up.md) |
 | 3 | **Object** | may this user create/read/edit/delete this object? | profile + permission sets | [03](03-profiles-and-the-permission-set-led-model.md), [04](04-permission-set-groups-and-muting.md) |
 | 4 | **Record** | *which* rows of that object? | OWD → hierarchy → sharing → teams | [06](06-org-wide-defaults-and-record-access.md)–[10](10-teams-territories-and-account-sharing.md) |
 | 5 | **Field** | which columns of those rows? | field-level security | [13](13-field-level-security-and-visibility-layers.md) |
@@ -36,7 +36,7 @@ Two Summer '26 changes touch the layers themselves rather than the tooling: **qu
 - **Object access without record access shows an empty list view**, not an error. Users report "the tab is broken".
 - **Record access without field access shows the record with blank columns.** Users report "the data is missing".
 - **`View All Data` is not `Modify All Data`**, and neither is a role. Both are user permissions and both are audit findings when assigned casually.
-- **Layer 4 has no effect on objects whose OWD is Public Read/Write** — sharing rules on such an object are dead configuration that still costs recalculation time. → [16](INDEX.md) *(phase 11)*
+- **Layer 4 has no effect on objects whose OWD is Public Read/Write** — sharing rules on such an object are dead configuration that still costs recalculation time. → [16](16-sharing-recalculation-and-performance.md)
 - **Hiding a field on a layout is not layer 5.** Three mechanisms hide a field and only FLS is security. → [13](13-field-level-security-and-visibility-layers.md)
 - **Debug in layer order.** Licence → login → object → record → field. Jumping to sharing first is the habit worth breaking. → [15](15-auditing-and-troubleshooting-access.md)
 

@@ -17,7 +17,7 @@ Mark a phase ✅ when its files exist and its INDEX rows are live links.
 | 08 | ✅ | Flow fundamentals → Apex interop | 04 Flow | 12 | **WF/PB end of support, not retired** ⚠️, **fault paths don't roll back** ⚠️, reactive screens + Screen Actions 🆕, Transform 🆕, **+ HTTP callout** 🆕 |
 | 09 | ✅ | Flow at scale | 04 Flow | 13 | **2,000-element cap removed at API 57.0** ⚠️, Flow Tests are record-triggered only ⚠️, Orchestrator, Migrate to Flow 🆕⚠️, agent actions 🆕, **+ run context, + Pause/Wait** |
 | 10 | ✅ | Access model & record sharing | 07 Security | 15 | **profile-permissions retirement CANCELLED 2026-06-06** 🆕⚠️, restriction rules subtract ⚠️, **queue hierarchy default flip** 🆕⚠️, **+ licences, + grantee model, + access auditing** |
-| 11 | ⬜ | Identity, encryption & monitoring | 07 Security | 9 | MFA ⚠️, SSO, enhanced domains ⚠️, Shield, Event Monitoring, secure-coding checklist ⚠️ |
+| 11 | ✅ | Identity, encryption & monitoring | 07 Security | 11 | **MFA enforced, phishing-resistant for admins** 🆕⚠️, **async sharing recalc RU** 🆕⚠️, **domain redirections ended** ⚠️, step-up 🆕, **Security Center Essentials free** 🆕, **+ session/login policies, + Field Audit Trail** |
 | 12 | ⬜ | APIs: REST → legacy streaming | 06 Integration | 12 | API retirement treadmill 🆕⚠️, composite, Bulk 2.0 ⚠️, GraphQL 🆕, **Pub/Sub replaces CometD** 🆕⚠️ |
 | 13 | ⬜ | Auth, external apps & agent-facing integration | 06 Integration | 11 | OAuth ⚠️, **External Client Apps** 🆕⚠️, named credentials ⚠️, Event Relay 🆕, MCP servers 🆕 |
 | 14 | ⬜ | Data modeling & LDV performance | 08 Data | 10 | relationships, external IDs, selectivity, Query Plan, skew, skinny tables |
@@ -27,7 +27,7 @@ Mark a phase ✅ when its files exist and its INDEX rows are live links.
 | 18 | ⬜ | LWR sites: architecture → auth | 05 Experience | 10 | **LWR default, Aura legacy** 🆕⚠️, SSR/CDN, guest hardening ⚠️, licences, SSO |
 | 19 | ⬜ | Site content, headless, performance & agents | 05 Experience | 8 | Enhanced CMS 🆕, headless 🆕, SEO 🆕, ExperienceBundle ⚠️, embedded agents 🆕 |
 
-**199 topic files.** Exact file lists live in each area's `PHASES.md`. *(Phase 07 added two beyond plan — see [03-lwc/PHASES.md](03-lwc-and-slds/PHASES.md). Phase 08 added two and renumbered phase 09; **phase 09 added two more and renumbered again**, this time with live inbound links — see [04-flow/PHASES.md](04-flow-and-automation/PHASES.md). **Phase 10 added three and renumbered area 07 into learning order** — free, because no file in the area existed yet and only three inbound links named it by number; see [07-security/PHASES.md](07-security-and-sharing/PHASES.md).)*
+**201 topic files.** Exact file lists live in each area's `PHASES.md`. *(Phase 07 added two beyond plan — see [03-lwc/PHASES.md](03-lwc-and-slds/PHASES.md). Phase 08 added two and renumbered phase 09; **phase 09 added two more and renumbered again**, this time with live inbound links — see [04-flow/PHASES.md](04-flow-and-automation/PHASES.md). **Phase 10 added three and renumbered area 07 into learning order** — free, because no file in the area existed yet and only three inbound links named it by number. **Phase 11 added two more**, appending and shifting only 16–26 so the 15 existing files never moved; see [07-security/PHASES.md](07-security-and-sharing/PHASES.md).)*
 
 ## Sequencing
 
@@ -62,3 +62,11 @@ Get-ChildItem SF -Recurse -Filter *.md |
 > **Fixed in phase 08, two bugs.** It used `(Get-Content … | Measure-Object -Line).Lines`, which **does not count blank lines** — an 81-line file reported as 59, ~27% low, so the `-gt 85` gate was really at ~117 real lines and had never fired. It also scanned `INDEX.md`, `PHASES.md`, `CURRENCY.md` and `INVENTORY.md`, none of which the cap applies to; with the count fixed those became permanent false positives.
 
 Then grep the phase output for `WITH SECURITY_ENFORCED`, `sfdx force:`, `if:true`, `Locker`, `CometD` — each may appear **only** inside a ⚠️ correction, never as current guidance. Since phase 08, add **`retired`** near *Workflow* or *Process Builder*: end of support is not retirement. Since phase 10, add **`retire`/`retirement`/`deprecat` near *profile***, and any sentence implying a profile **end-of-life date** — the retirement of permissions in profiles was **cancelled on 2026-06-06** and there is no date to state.
+
+Since phase 11, five more — the mid-2026 enforcement wave turned a lot of advice into fact:
+
+- **MFA described as `recommended`, `optional` or `best practice`.** It is enforced, and phishing-resistant for privileged users.
+- **`Salesforce Authenticator`, `TOTP` or `SMS` offered as sufficient MFA** without the carve-out that they no longer qualify for admin-grade access.
+- **`Transaction Security` unqualified** where the current framework is meant — the legacy one is retired, *Enhanced* is the name.
+- **`Security Center` near `paid`** without the **Essentials** qualifier: Essentials has been free in every org since July 2026.
+- **Any claim a legacy My Domain URL `redirect`s.** Redirections ended in Spring '26; it 404s.

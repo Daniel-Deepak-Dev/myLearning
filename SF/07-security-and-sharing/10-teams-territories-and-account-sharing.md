@@ -32,7 +32,7 @@ No change to teams or ETM in Summer '26. The change that reaches them is elsewhe
 - **Territory hierarchy is a second upward-inheritance path** that most access reviews forget, and it can silently grant what the role hierarchy was carefully designed to withhold.
 - **Only one territory model is active.** Building the new one is safe; activating it re-derives every account assignment and every share in one operation.
 - **Removing a team member removes their share immediately**, including on records where they were the only reason anyone downstream had access.
-- **Teams and ETM both multiply share rows.** On a large account object this is where sharing recalculation time actually goes. → [16](INDEX.md) *(phase 11)*
+- **Teams and ETM both multiply share rows.** On a large account object this is where sharing recalculation time actually goes. → [16](16-sharing-recalculation-and-performance.md)
 
 ## Recall
 
