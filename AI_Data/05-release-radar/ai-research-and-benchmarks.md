@@ -75,11 +75,64 @@ Worth copying: #188's `pretrained` self-classification is the honest move. Claim
 
 **Sources:** [PR #185](https://github.com/SalesforceAIResearch/gift-eval/pull/185) · [PR #187](https://github.com/SalesforceAIResearch/gift-eval/pull/187) · [PR #188](https://github.com/SalesforceAIResearch/gift-eval/pull/188) · [PR #189](https://github.com/SalesforceAIResearch/gift-eval/pull/189) · [gift-eval commits](https://github.com/SalesforceAIResearch/gift-eval/commits/main) · scan note [2026-08-05](03-salesforce-ai-research/2026-08-05.md)
 
+## 2026-08-03 · SCUBA — the benchmark that argues against pointing a computer-use agent at Salesforce
+
+**What changed.** Nothing shipped. **SCUBA gets a durable home**, closing the open question raised 2026-08-02. The detail was never missing — it sat in the ephemeral scan note [2026-07-26](03-salesforce-ai-research/2026-07-26.md#background-scuba-the-salesforce-computer-use-benchmark) while [GLOSSARY.md](../GLOSSARY.md) and the README both recorded it as uncaptured. **A finding filed only in a dated note is a finding the study base cannot see.**
+
+**SCUBA** (Salesforce Computer Use Benchmark) evaluates **computer-use agents** — agents that drive a GUI by reading the screen and clicking, rather than by calling APIs — on CRM work in the Salesforce UI.
+
+- **Tasks.** 300 instances, derived from real user interviews rather than authored by the benchmark team.
+- **Personas.** Platform administrator, sales representative, service agent.
+- **Abilities tested.** Enterprise UI navigation, data manipulation, workflow automation, information retrieval, troubleshooting.
+- **Environment.** Live Salesforce orgs — the repo drives a **Developer Edition org**, not a mock — with parallel execution and **milestone-level** scoring rather than pass/fail.
+- **Observation.** Screenshots, the accessibility tree, and a flattened DOM string.
+- **Action.** **Playwright** for browser-use agents; **PyAutoGUI** on an **OSWorld**-derived Docker desktop for computer-use agents.
+
+**The numbers are the argument:**
+
+| Setting | Open-source models | Closed-source models |
+|---|---|---|
+| Zero-shot | **under 5%** task success | **39%** |
+| Demonstration-augmented | — | **~50%**, at **13–16%** less time and cost |
+
+**Why it matters.** This is the empirical answer to *"why build actions and MCP tools — can't we just point a computer-use agent at the Salesforce UI?"* Because at best it fails half the time, and on open models it fails nineteen times in twenty.
+
+That gap is the case for the Headless 360 direction in one number: give an agent typed, permissioned, API-shaped access instead of pixels. The same result also warns against reading a computer-use demo as capability.
+
+The second lesson is cheaper than the first. **Demonstrations bought more than a bigger model did** — and they bought speed and cost too, not just accuracy. Worked examples are the highest-yield thing you can add to an agent you already have.
+
+```mermaid
+flowchart TD
+    Q["Agent needs to do something in Salesforce"] --> A{"Is there an API,<br/>Apex action or MCP tool?"}
+    A -- yes --> B["Typed, permissioned call<br/><b>Headless 360 / custom action</b>"]
+    A -- no --> C{"Can one be built?"}
+    C -- yes --> B
+    C -- "no — third-party UI,<br/>legacy screen" --> D["Computer-use agent<br/><b>SCUBA: &lt;5% open · 39% closed</b>"]
+    D --> E["Add worked demonstrations<br/><b>~50%, 13–16% cheaper</b>"]
+    E --> F["Still a coin flip —<br/>gate behind human approval"]
+```
+
+**Gotchas:**
+- The repo pins **`npm install @salesforce/cli@2.86.9 --global`**. Reproducing SCUBA installs a CLI hundreds of versions behind today's `latest` (**2.145.6**) and predates every Node-22 change — do it in a container, not on your working machine.
+- **The two settings are two data files**, not a prompt trick: `data/test_zero_shot.json` versus `data/test_demo_aug.json`. "Demonstration-augmented" means a different task file.
+- Entry points are **`main_bu.py`** (browser-use) and **`main_cua.py`** (computer-use); the run flag that decides most results is **`--max_steps`** (10 in the documented example).
+- **Credentials land on disk.** `orgs/orgs_info.json` holds `client_key` / `client_secret` / `username` / `instance`; `.env` holds `ORG_ALIAS`, `SALESFORCE_USERNAME`, `DOCKER_PROVIDER_HOST`; and OAuth **refresh tokens** are cached to `data/oauth_refresh_token.json`. Check all three against `.gitignore` before your first run.
+- **The harness had to defeat MFA to run at all** — commit *"bypass the multi-factor-auth (#1)"*, 2025-10-23, then *"Login fix (#5)"*, 2026-04-21. A computer-use agent meets your login flow before it meets your business logic, and that is where these projects actually stall.
+- Python is pinned to **3.12.9** via conda, and browser-use dependencies are a **separate** `requirements_bu.txt`.
+- **Licence: Apache-2.0** — unlike `AnchorBench` and `SalesforceAIResearch/agentforce-adlc`, both **CC BY-NC 4.0**. SCUBA is the one of the three you can use on client work.
+- **The code is dormant.** Newest commit on `main` is **2026-06-02**, and it is a `SECURITY.md` compliance file from `sfdc-ospo-bot`; the newest *functional* commit is **2026-04-21**. 10 stars, 3 forks, 5 PRs total (checked **2026-08-03 02:52 UTC**). Treat the numbers as a 2025 measurement of a UI that has since changed.
+
+**Study action:** clone the repo and diff one task across `data/test_zero_shot.json` and `data/test_demo_aug.json` — read exactly what counts as a "demonstration". Then take the three tasks closest to something you have built as an Agentforce action and ask, for each, whether your action needs to touch a UI at all. Every "no" is a task you should never have given to pixels.
+
+**Status:** Published benchmark — [arXiv 2509.26506](https://arxiv.org/abs/2509.26506) (v1, 2025-09-30), also on OpenReview as `bkjKnO9s7T`. Code **Apache-2.0**, research-only, no product surface. Authors: Yutong Dai, Krithika Ramakrishnan, Jing Gu, Matthew Fernandez, Yanqi Luo, Viraj Prabhu, Zhenyu Hu, Silvio Savarese, Caiming Xiong, Zeyuan Chen, Ran Xu.
+
+**Sources:** [SCUBA (arXiv 2509.26506)](https://arxiv.org/abs/2509.26506) · [`SalesforceAIResearch/SCUBA`](https://github.com/SalesforceAIResearch/SCUBA) · [Meet SCUBA — Salesforce blog](https://www.salesforce.com/blog/scuba-benchmark/) · [project page](https://sfrcua.github.io/SCUBA/) · [OpenReview](https://openreview.net/pdf?id=bkjKnO9s7T) · first recorded in scan note [2026-07-26](03-salesforce-ai-research/2026-07-26.md#background-scuba-the-salesforce-computer-use-benchmark)
+
 ---
 
 ## 2026-07-31 · GIFT-Eval becomes neutral ground — and a leaderboard position is a claim, not a result
 
-> **Correction (2026-08-05):** this entry said #184–#186 "remain open." All three **merged on 2026-08-03** — see [the 08-03 entry above](#2026-08-03--the-gift-eval-backlog-cleared--and-the-leading-submissions-are-routers-not-models). The point they were cited for still holds: they sat open for roughly two days, so *submitted* and *on the leaderboard* were genuinely different states for that window.
+> **Correction (2026-08-05):** this entry said #184–#186 "remain open." All three **merged on 2026-08-03** — see [the 08-03 entry above](#2026-08-03--the-gift-eval-backlog-cleared--and-the-leading-submissions-are-routers-not-models). The point they were cited for still holds: they sat open for roughly two days, so *submitted* and *on the leaderboard* were genuinely different states for that window. **It also corrects the table below:** FastCastrage's `org` field was **wrong on the public leaderboard** and was changed to **`sme`** on 2026-08-03, so the "TW3 Partners" attribution this radar recorded on 2026-08-01 is the value that was withdrawn.
 
 **What changed.** Between **03:37 and 03:41 UTC on 2026-07-31**, five pull requests (**#179–#183**) merged into [`SalesforceAIResearch/gift-eval`](https://github.com/SalesforceAIResearch/gift-eval), taking the public leaderboard to **117 result sets**. Three more (**#184–#186**) were submitted the same day and remained **open** as of 2026-08-02 02:48 UTC.
 
@@ -95,7 +148,7 @@ Worth copying: #188's `pretrained` self-classification is the honest move. Claim
 |---|---|---|
 | STRIDE w/ Synapse (#183) | **Google Cloud AI Research** | `agentic` |
 | Metamorph1.0 / -4.5M (#182) | SRI International | `pretrained` |
-| FastCastrage (#181, #186) | TW3 Partners | `agentic` |
+| FastCastrage (#181, #186) | ~~TW3 Partners~~ → **`sme`** (corrected 2026-08-03) | `agentic` |
 | `limix_moe` (#180) | **none listed** | `agentic` |
 | goia-forecast-nano-v0 (#179) | Gredio, 4.73M params | `zero-shot` |
 
@@ -108,15 +161,17 @@ Note too that three of five entries are `agentic` rather than a single trained m
 **Gotchas:**
 - **Only `goia-forecast-nano-v0` declares `replication_code_available: "Yes"`.** The other four say `"No"`, including the Google Cloud entry; two ship neither a model link nor a code link. Four of five new positions are **unverifiable claims scored by a shared harness**.
 - **`testdata_leakage` is self-declared**, not audited. All five declare none.
-- **"On the leaderboard" and "submitted to the leaderboard" are different states.** #184–#186 were open nine hours after the merge batch, and stayed open until 2026-08-03.
-- **Entries are revised in place** — #186 is FastCastrage at **v5**. A GIFT-Eval number you quoted last month may not be the number that model reports today.
+- **"On the leaderboard" and "submitted to the leaderboard" are different states.** #184–#186 were open nine hours after the merge batch, and stayed open until **2026-08-03**.
+- **Entries are revised in place** — #186 is FastCastrage at **v5**, now an eight-model ensemble with an **AdaHedge** online blending layer over the original seven. A GIFT-Eval number you quoted last month may not be the number that model reports today.
+- **The disclosure metadata is itself corrected after the fact.** FastCastrage's `org` field was **wrong on the public board** until 2026-08-03. The four fields this entry tells you to read are contributor-supplied strings, fixable by a later PR — read them with a date attached.
+- **Merging is gated on the Salesforce CLA.** #184 could not merge until its LG AI Research contributor signed it. Being ranked on this leaderboard is a legal act, not just a data submission.
 - GIFT-Eval is **Apache-2.0** and stated to be *"intended for research purposes only."*
 
 **Study action:** open the `config.json` in [PR #183](https://github.com/SalesforceAIResearch/gift-eval/pull/183) and [PR #179](https://github.com/SalesforceAIResearch/gift-eval/pull/179) side by side, then write those four fields — model type, organisation, leakage, replication code — into your own vendor-evaluation checklist. Next time a vendor quotes a benchmark number, ask for all four.
 
-**Status:** Community leaderboard submissions, **not Salesforce research output**. #179–#183 merged 2026-07-31; #184–#186 merged 2026-08-03 (see the correction above). No paper, model or blog post accompanied them.
+**Status:** Community leaderboard submissions, **not Salesforce research output**. #179–#183 merged 2026-07-31; **#184–#186 merged 2026-08-03** (see the correction above), **#187 closed unmerged** as a duplicate. No paper, model or blog post accompanied any of them.
 
-**Sources:** [gift-eval](https://github.com/SalesforceAIResearch/gift-eval) · [pull requests](https://github.com/SalesforceAIResearch/gift-eval/pulls?q=is%3Apr+sort%3Aupdated-desc) · scan notes [2026-07-30](03-salesforce-ai-research/2026-07-30.md), [2026-08-01](03-salesforce-ai-research/2026-08-01.md)
+**Sources:** [gift-eval](https://github.com/SalesforceAIResearch/gift-eval) · [pull requests](https://github.com/SalesforceAIResearch/gift-eval/pulls?q=is%3Apr+sort%3Aupdated-desc) · [PR #184](https://github.com/SalesforceAIResearch/gift-eval/pull/184) · [PR #186](https://github.com/SalesforceAIResearch/gift-eval/pull/186) · [PR #187](https://github.com/SalesforceAIResearch/gift-eval/pull/187) · scan notes [2026-07-30](03-salesforce-ai-research/2026-07-30.md), [2026-08-01](03-salesforce-ai-research/2026-08-01.md), [2026-08-03](03-salesforce-ai-research/2026-08-03.md)
 
 ---
 

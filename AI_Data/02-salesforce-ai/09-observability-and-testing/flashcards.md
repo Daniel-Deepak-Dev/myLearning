@@ -108,3 +108,18 @@ A: In chat two completions are untidy and the user can scroll back. On a call th
 
 Q: What are the limits of sf-pi's repeated-surface detection?
 A: It is an exact surface match, not semantic. An agent that rewords the same non-answer on every turn still passes.
+
+Q: What does SCUBA measure, and what are its headline numbers?
+A: Computer-use agents — agents driving the Salesforce GUI by screenshot, accessibility tree and DOM rather than by API — on 300 CRM tasks across admin, sales and service personas. Zero-shot: under 5% success on open-source models, 39% on closed-source. With demonstrations: ~50%, at 13–16% less time and cost.
+
+Q: How do you use SCUBA's result in an architecture argument?
+A: It prices the alternative to building actions. If a capability is reachable as an Apex action, an API or an MCP tool, use that — pointing a computer-use agent at the UI is a coin flip at best. Pixels are the fallback for surfaces you cannot get an API to, and they need a human approval gate.
+
+Q: SCUBA's cheapest lesson is not about model size. What is it?
+A: Demonstrations beat scale. Adding worked examples moved success from 39% to ~50% *and* cut time and cost 13–16% — a bigger return than swapping models, and something you can add to an agent you have already shipped.
+
+Q: Why should you read SCUBA's numbers with a date attached?
+A: They are a 2025 measurement of a UI that has changed since. The repo's newest functional commit is 2026-04-21, and it pins `@salesforce/cli@2.86.9` — hundreds of versions behind current. Treat the gap between paradigms as the durable finding, not the exact percentages.
+
+Q: What non-obvious obstacle does SCUBA's commit history reveal about computer-use agents in an enterprise?
+A: Authentication. Its first substantive commit was "bypass the multi-factor-auth", and it needed a further "Login fix" months later. A computer-use agent meets your MFA and session handling before it meets any business logic — that is where these projects stall, not on reasoning.

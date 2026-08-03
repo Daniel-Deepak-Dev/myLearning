@@ -83,13 +83,16 @@ Q: What is a zip-slip, and which Salesforce code path had one?
 A: An archive entry whose stored path escapes the target directory (`../../../.git/hooks/pre-commit`), so extraction writes outside it. In `staticResourceMetadataTransformer.ts`, which unzips static resources of `contentType` `application/zip` or `application/jar` during metadata→source conversion — i.e. `sf project retrieve start`.
 
 Q: Why is `npm view @salesforce/cli dist-tags` worth running before you claim your CLI is current?
-A: dist-tags are not ordered by version. As of 2026-08-02, `latest` is 2.145.6, `latest-rc` 2.146.3 and `nightly` 2.147.3. A plain `npm install -g @salesforce/cli` follows `latest`, so the newest published version and the version you get are different.
+A: dist-tags are not ordered by version. As of 2026-08-03, `latest` is 2.145.6, `latest-rc` 2.146.3 and `nightly` 2.147.4. A plain `npm install -g @salesforce/cli` follows `latest`, so the newest published version and the version you get are different.
+
+Q: Does waiting for the next stable `sf` CLI get you the zip-slip fix?
+A: No. `latest-rc` 2.146.3 pins `plugin-deploy-retrieve` 3.24.61 → SDR `^12.36.7` → 12.37.2, unpatched. Promoting the current release candidate would ship an unpatched stable. The fix sits on the other side of the Node 22 major, not further down the release pipeline.
 
 Q: What is the security lesson from the SDR zip-slip that outlives the specific bug?
 A: `sf project retrieve` is an **inbound** trust boundary. It takes org-controlled bytes — which a packaging partner, a compromised sandbox or an agent with metadata write access can influence — and writes them onto a developer laptop or CI runner.
 
 Q: Which sf CLI version first required Node 22, and what else came with it?
-A: 2.147.3 (2026-08-01, `nightly` dist-tag): `engines.node >=22.0.0`, `@salesforce/core ^9.0.0`, `@salesforce/plugin-agent` 2.0.0 and `@salesforce/plugin-deploy-retrieve` 4.0.1. You cannot take the security patch without taking all of it.
+A: **2.147.0** (2026-07-31 14:16 UTC) — not 2.147.3, which was merely the version on `nightly` when an earlier scan read the tag. The 2.147 line carries `engines.node >=22.0.0`, `@salesforce/core ^9.0.0`, `@salesforce/plugin-agent` 2.0.0 and `@salesforce/plugin-deploy-retrieve` 4.0.1. You cannot take the security patch without taking all of it.
 
 Q: What is `relatedSkills` and why does it change how an agent picks a skill?
 A: A bidirectional list of sibling skill names in SKILL.md frontmatter under `metadata:`, added across 79 skills in sf-skills 1.34.0 (2026-08-07). It turns the catalogue into a graph the agent can traverse rather than re-searching descriptions each time — selection becomes navigation.

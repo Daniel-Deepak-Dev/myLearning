@@ -130,6 +130,9 @@ Seed profiles fix the other chronic eval problem. Hard-coded record IDs rot the 
 
 > **Re-checked (2026-08-05 03:14 UTC):** nothing below has changed and that is the finding. `latest` is still **2.145.6** and `latest-rc` still **2.146.3** — both unmoved since 2026-07-29 — while `nightly` has rolled four times to **2.147.6**. There is still **no 12.x backport** (`@salesforce/source-deploy-retrieve@12.37.3` returns 404 on the registry) and **no SDR 13.0.2**. The exposure window is now five days old on the stable channel.
 
+> **Correction (2026-08-03):** this entry calls `@salesforce/cli` **2.147.3** *"the first CLI to require Node ≥ 22."* **It was not — 2.147.0 was**, published to npm **2026-07-31 14:16 UTC**, already carrying `plugin-deploy-retrieve` 4.0.1 and therefore the fix. 2.147.3 was simply the version sitting on `nightly` when the 08-02 scan read the tag. **The lesson is the same one this entry is about:** a dist-tag tells you where a pointer is today, not when a version first existed. Read publish times, not tags.
+> _(This scan also concluded "the release candidate does not carry the fix" — true of 2.146.3, and superseded by the 08-08 correction above, which records the RC slot moving to the patched 2.147.7 line.)_
+
 **What changed.** [`@salesforce/source-deploy-retrieve`](https://github.com/forcedotcom/source-deploy-retrieve) **13.0.1** (npm 2026-07-31 16:21 UTC) fixes a **zip-slip** in static-resource conversion — work item `W-23558165`, [PR #1812](https://github.com/forcedotcom/source-deploy-retrieve/pull/1812). A day later `@salesforce/cli` **nightly 2.147.3** (2026-08-01 03:24 UTC) became the first CLI to require **Node ≥ 22**. These are one story.
 
 **Zip-slip**, first: an archive entry whose stored path escapes the target directory — `../../../.git/hooks/pre-commit` — so extracting it writes somewhere the extractor never intended.
@@ -145,7 +148,7 @@ flowchart TD
     B --> C["SDR 12.37.2<br/><b>zip-slip present</b>"]
     D["sf CLI 2.146.3<br/>dist-tag <b>latest-rc</b> · Node >=18.6"] --> E["plugin-deploy-retrieve 3.24.61<br/>SDR ^12.36.7"]
     E --> C
-    F["sf CLI 2.147.3<br/>dist-tag <b>nightly</b> · Node >=22"] --> G["plugin-deploy-retrieve 4.0.1<br/>SDR ^13.0.0"]
+    F["sf CLI 2.147.x<br/>dist-tag <b>nightly</b> · Node >=22<br/><i>2.147.0 first, 2.147.4 current</i>"] --> G["plugin-deploy-retrieve 4.0.1<br/>SDR ^13.0.0"]
     G --> H["SDR 13.0.1<br/><b>patched</b>"]
 ```
 
@@ -156,7 +159,8 @@ Anyone who can create a static resource in an org you retrieve from — a packag
 And the stable channel still resolves the unpatched line, so *"I upgraded the CLI"* is not the same sentence as *"I have the fix"*.
 
 **Gotchas:**
-- `npm dist-tags` for `@salesforce/cli` are **not** ordered by version: `latest` is **2.145.6**, `latest-rc` **2.146.3**, `nightly` **2.147.3** (checked 2026-08-02 02:55 UTC). `npm install -g @salesforce/cli` gets 2.145.6 and therefore SDR 12.37.2.
+- `npm dist-tags` for `@salesforce/cli` are **not** ordered by version: `latest` **2.145.6**, `latest-rc` **2.146.3**, `nightly` **2.147.4** (checked 2026-08-03 02:58 UTC; `nightly` read 2.147.3 on 2026-08-02). `npm install -g @salesforce/cli` gets 2.145.6 and therefore SDR 12.37.2.
+- **The release notes do not mention any of this.** [`forcedotcom/cli/releasenotes`](https://github.com/forcedotcom/cli/commits/main/releasenotes) has had **no commit since 2026-07-29** (checked 2026-08-03 02:59 UTC), and its newest entry describes **2.146.3** with a forward date of August 5. A whole major — the Node 22 floor, plugin 4.x, the SDR patch — shipped on `nightly` with **no release-note coverage at all**. Read npm, not the notes.
 - The guard fires **only** for `contentType` `application/zip` and `application/jar`. A static resource stored as `application/octet-stream` never enters that code path.
 - Taking the fix means taking **Node 22**, `@salesforce/core` 9.x and `@salesforce/plugin-agent` 2.0.0 in the same step — see [the Node 18/20 drop below](#2026-07-30--the-dx-node-library-stack-dropped-node-18-and-20--salesforceagents-is-200).
 - `@salesforce/core` also moved to **9.1.0** (2026-07-31 19:01 UTC) inside the same window; a minor, but it lands on the 9.x line only.
