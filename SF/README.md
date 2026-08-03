@@ -17,12 +17,12 @@ Sibling to [AI_Data/](../AI_Data/README.md), which covers the AI-Architect path 
 | [05-experience-cloud-lwr/](05-experience-cloud-lwr/INDEX.md) | LWR sites, guest security, CMS, headless, SEO | 18 |
 | [06-integration-and-apis/](06-integration-and-apis/INDEX.md) | REST/Bulk/GraphQL/Pub-Sub, endpoints, Metadata & Tooling, OAuth, External Client Apps, MCP, certificates | 26 |
 | [07-security-and-sharing/](07-security-and-sharing/INDEX.md) | Licences, permission-set-led access, sharing, restriction rules, access auditing, identity & MFA, Shield, posture | 26 |
-| [08-data-modeling-and-large-data-volumes/](08-data-modeling-and-large-data-volumes/INDEX.md) | Relationships, storage, selectivity, skew, locking, deletes, big objects, archiving, Hyperforce | 24 |
+| [08-data-modeling-and-large-data-volumes/](08-data-modeling-and-large-data-volumes/INDEX.md) | Relationships, storage, selectivity, skew, locking, deletes, big objects, archiving, migration, backup, Hyperforce | 26 |
 | [09-devops-sfdx-and-release-management/](09-devops-sfdx-and-release-management/INDEX.md) | `sf` CLI v2, 2GP, DevOps Center, CI/CD, Code Analyzer v5 | 22 |
 | [PHASES.md](PHASES.md) | The 19-run build plan — what each AI run produces | — |
 | [_notion-seed/INVENTORY.md](_notion-seed/INVENTORY.md) | The old Notion notes, mapped to target topics | — |
 
-**208 topics.** Rows in each `INDEX.md` are plain text until written, links once they exist.
+**210 topics.** Rows in each `INDEX.md` are plain text until written, links once they exist.
 
 ## Out of scope — deliberately
 

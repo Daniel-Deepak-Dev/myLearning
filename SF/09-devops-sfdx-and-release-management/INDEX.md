@@ -36,7 +36,7 @@ Source-driven delivery on `sf` v2 and 2GP. **22 topics** · phases [16](PHASES.m
 - **13** depends on [02-apex · 20–21 testing](../02-apex-and-triggers/INDEX.md).
 - **18** pairs with [01-admin · 02 Release cadence & Release Updates](../01-admin-and-declarative-platform/INDEX.md).
 - **20** is the seam into [AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md](../../AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md) — that note already carries the `sf agent` command chain.
-- **21** pairs with [08-data · 23 Hyperforce & residency](../08-data-modeling-and-large-data-volumes/INDEX.md) *(phase 15)* — same platform shift, ops side vs data side.
+- **21** pairs with [08-data · 23 Hyperforce, residency & data locality](../08-data-modeling-and-large-data-volumes/23-hyperforce-residency-and-data-locality.md) — same platform shift, ops side vs data side. **Migration delays ended 1 July 2026.**
 - **22** overlaps [03-lwc · 21 Local dev](../03-lwc-and-slds/INDEX.md).
 - Currency anchor: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
 

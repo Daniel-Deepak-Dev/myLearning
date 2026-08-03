@@ -1,8 +1,8 @@
 # Phases for 08 · Data Modeling & Large Data Volumes
 
-24 topics across 2 runs. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
+26 topics across 2 runs — **area complete.** Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
 
-> 📌 **Movable block.** Nothing downstream depends on this area. Phase 15 can run any time you want the data layer finished.
+> 📌 **Movable block.** Nothing downstream depended on this area, which is why it ran out of numeric order.
 
 ---
 
@@ -49,32 +49,64 @@ Area 08 had **no files**, and all ~25 inbound links pointed at `INDEX.md`. Five 
 
 ---
 
-## Phase 15 — Retention, federation & data operations · 10 files ⬜
+## Phase 15 — Retention, federation & data operations · 12 files ✅
 
 ```
 15-archiving-and-retention-strategy.md             🆕
 16-bulk-loading-strategy-for-ldv.md                ⚠️
-17-external-objects-vs-replicated-copies.md
+17-external-objects-vs-replicated-copies.md        ⚠️     ← flag added
 18-zero-copy-and-data-360-as-data-tier.md          🆕
 19-data-quality-deduplication-and-mdm.md
-20-sandboxes-seeding-and-data-mask.md
+20-sandboxes-seeding-and-data-mask.md              🆕     ← flag added
 21-backup-restore-and-recovery.md                  ⚠️
 22-multi-currency-multi-language-and-locale.md
-23-hyperforce-residency-and-data-locality.md       🆕
+23-hyperforce-residency-and-data-locality.md       🆕⚠️   ← flag added
 24-data-architecture-review-checklist.md
+25-data-migration-and-cutover.md                          ← added
+26-cross-org-data-sharing-and-consolidation.md     ⚠️🆕   ← added
 ```
 
-**⚠️ corrections to lead with**
-- **16** — Bulk API 2.0, and the **operational levers** most guides omit: defer sharing calculation, load order by dependency, PK chunking for extraction (a **v1** header — see [06-integration · 07](../06-integration-and-apis/07-bulk-api-2.md)). Lock contention is already owned by [12](12-record-locking-and-concurrency.md); link, don't restate.
-- **21** — **there is no free recovery service.** Salesforce's paid data recovery was discontinued and then reintroduced as a product. Design RPO/RTO deliberately; "Salesforce backs it up" is not a plan.
+### What the plan got wrong — five findings
 
-**🆕 — research before writing:** **15** (native archiving + offload to Data 360), **18** (zero-copy), **23** (Hyperforce residency).
+The area file told this phase to **re-verify the corrections themselves, not only what they correct**. That instruction paid for itself: the phase's headline ⚠️ was wrong, and three more topics had moved under it.
 
-> **Re-verify the corrections themselves, not only what they correct.** Phases 10, 11 and 14 each found the *plan's own framing* stale. For **21** in particular, confirm the current state of Salesforce's backup and recovery products against Help before writing a word — this is precisely the shape of claim that goes out of date quietly.
+**1. The ⚠️ for 21 conflated a service with a product, and called a live service dead.** The plan said *"there is no free recovery service — Salesforce's paid data recovery was discontinued and then reintroduced as a product."* Two lineages:
 
-**Notes on scope**
-- **18** is the seam into [AI_Data/01-data-cloud/](../../AI_Data/01-data-cloud/INDEX.md) — same topic from the core-platform side. The useful content is **when federation genuinely fits vs when it's a latency trap**. Link across; don't restate Data 360 architecture.
-- **17 and 18 overlap deliberately**: 17 is the classic Salesforce Connect trade-off, 18 is the 2026 answer. Write 17 first, then let 18 update it. Note that Salesforce Connect's per-hour ceilings are **gone on Hyperforce** — phase 13 found that, and it changes the copy-or-federate maths.
-- **15** must not duplicate [14](14-big-objects-and-the-archive-tier.md). That note owns the big-object **mechanism**; 15 owns **policy** — what to archive, when, and to which tier.
-- **20** overlaps [09-devops · 06](../09-devops-sfdx-and-release-management/INDEX.md); this note owns **data** (seeding, masking policy), that one owns **source tracking**.
-- **24** is the capstone — a review checklist, not prose. It should let you audit an unfamiliar org in an hour, and it should reuse the numbers already published in [06](06-storage-model-and-schema-limits.md), [08](08-indexes-and-query-selectivity.md), [10](10-data-skew.md) and [12](12-record-locking-and-concurrency.md) rather than restating them.
+- The **Data Recovery Service** — Support-requested, retired 31 Jul 2020, **reinstated 2021, still available in 2026**: **$10,000**, **6–8 weeks**, **data only, no metadata**, returned as **CSV you re-import yourself**, ~3 months of history, no guarantee. It came back as a *service*, not a product.
+- The **products** — *Backup and Restore* (2021) → renamed **Salesforce Backup** → and after the **Own Company acquisition** (announced Sept 2024), **Salesforce Backup & Recover** (formerly Own Recover / OwnBackup), with **Backup & Recover Next** announced as its successor.
+
+The durable point survives — *"Salesforce backs it up" is not a plan* — but the note now states the service **exists**, and is priced, slow and data-only. That is the stronger argument for designing RPO/RTO, not the weaker one.
+
+**2. The Own acquisition reshaped three planned topics at once.** Help **004634031** (11 Jul 2026) names the suite: **Backup & Recovery, Archive, Seed, Discover** — landing on **15**, **20** and **21** simultaneously. Any of the three written without it reproduces the 2023 answer.
+
+**3. "Native archiving" is now a named product with policy semantics.** **Salesforce Archive** has **archive policies** and a **retention vs purge** distinction: retention deletes on expiry, **purge deletes ad hoc outside the retention period** — which is how right-to-be-forgotten is served. **Purge is capped at 1,000,000 records/day**, and **editing a retention period applies retroactively** to everything already archived through that policy. It is licensed and partly a managed package, so **15** gives a policy that works with or without it.
+
+**4. Topic 23 needed a ⚠️, because the date had already passed.** Salesforce Help: *"Starting July 1, 2026, it is no longer possible to delay upgrades to Hyperforce."* Five weeks before the phase ran. Concrete developer-visible consequence: **file previews are generated as JPG, not SVG**, regardless of preference — pre-migration SVGs survive, new uploads do not.
+
+**5. Topic 18 is two features at different maturities, under a renamed product.** *Query federation* and **File Federation** (Apache Iceberg, read at the storage layer with Data 360's own compute — **no external compute bill**) are separate; AWS Glue is GA while Fabric OneLake is Beta, and [AI_Data](../../AI_Data/01-data-cloud/06-zero-copy-byol/notes.md) owns that table. **Data Cloud was renamed Data 360 on 14 Oct 2025**, so every older source uses the old name.
+
+### The retirement nobody had recorded
+
+**Salesforce-to-Salesforce is genuinely dying** (Help **005103355**): no new enablement from **Spring '26**, **support ended Summer '26**, **fully retired and non-functional in Spring '27**. Replacements named by Salesforce: Partner Cloud, Data Cloud One, MuleSoft Anypoint, MuleSoft for Flow.
+
+This is the **second** "old *and* dead" finding in the build, after phase 14's Async SOQL — and the vault had no note on S2S at all, so nothing was wrong, only missing. It is the reason **26** exists rather than a paragraph in 17.
+
+### Why two files were added, and why they were appended
+
+- **25** — [16](16-bulk-loading-strategy-for-ldv.md) owns the *levers*; nothing owned the *project*. Profiling, external-ID keying, dependency sequencing, dry run, reconciliation, rollback and the cutover freeze are a different discipline from job configuration, and it is the work most often actually asked for.
+- **26** — carries the S2S deadline, plus the cross-org adapter's Summer '26 named credential support and the consolidation-is-three-projects argument.
+
+**Appended as 25–26, not renumbered.** Unlike phase 14, this area now has real inbound references by number: [06-integration · INDEX](../06-integration-and-apis/INDEX.md) names **· 17**, [06-integration · 13](../06-integration-and-apis/13-change-data-capture.md) names **· 18**, and [09-devops · INDEX](../09-devops-sfdx-and-release-management/INDEX.md) and its `PHASES.md` name **· 23**. Renumbering would have broken four references to buy nothing — the same call phase 13 made, and the opposite of phase 14's.
+
+### Seed harvest — nothing to harvest
+
+[../\_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md) maps three pages to this area and **phase 14 consumed all three**. The corpus contains no page on retention, backup, federation, sandboxes, migration or residency, so this run has **no `> **From my notes.**` callouts** — stated here so the absence reads as a fact rather than an omission.
+
+### Scope boundaries held
+
+- **15** owns retention *policy*; [14](14-big-objects-and-the-archive-tier.md) keeps the big-object *mechanism*.
+- **17** owns the copy-or-federate *decision*; [06-integration · 20](../06-integration-and-apis/20-salesforce-connect-and-external-objects.md) keeps adapters and relationships.
+- **18** links to [AI_Data](../../AI_Data/01-data-cloud/06-zero-copy-byol/notes.md) for connector status rather than restating it.
+- **19** links to [01-admin · 08](../01-admin-and-declarative-platform/08-validation-rules-and-duplicate-management.md) for matching/duplicate rule mechanics.
+- **20** owns sandbox *data*; [09-devops](../09-devops-sfdx-and-release-management/INDEX.md) keeps source tracking.
+- **24** links every threshold to the note that owns it — no number is restated, because half-quoting is how this area's facts go wrong.
