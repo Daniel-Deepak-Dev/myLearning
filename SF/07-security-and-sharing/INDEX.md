@@ -43,7 +43,7 @@ Sharing & Visibility architect depth, updated for the access model as it stands 
 - **14** is also the security-side twin of [04-flow · 19 Flow run context](../04-flow-and-automation/19-flow-run-context-and-sharing.md). The two agree deliberately: **Apex flipped to user mode at 67.0 and Flow did not**, so the same logic is more permissive built in Flow.
 - **[16](16-sharing-recalculation-and-performance.md)** pairs with [08-data · 08 Data skew](../08-data-modeling-and-large-data-volumes/INDEX.md) — ownership skew is a sharing-recalc problem before it is a query problem, and this note landed first so it owns the mechanics.
 - **02, 06** hand off to [05-experience-cloud · 08 Licences](../05-experience-cloud-lwr/INDEX.md) and **· 09 Sharing for external users** — external licence types, sharing sets and share groups are owned there, not here.
-- **17–19** feed [06-integration · 13 OAuth](../06-integration-and-apis/INDEX.md) and [05-experience-cloud · 10 SSO](../05-experience-cloud-lwr/INDEX.md).
+- **17–19** feed [06-integration · 15 OAuth](../06-integration-and-apis/15-oauth-flows-and-authorization.md) and [05-experience-cloud · 10 SSO](../05-experience-cloud-lwr/INDEX.md).
 - **21–23 are Shield's three pillars** — encryption, field audit, event monitoring — and are licensed together. Scope a compliance requirement against entitlement before design.
 - **26** must reflect [03-lwc · 09 LWS](../03-lwc-and-slds/INDEX.md), not Locker-era XSS advice.
 - **15 is the note the other 25 depend on in practice.** With eight granting mechanisms, three narrowing ones and two hierarchies in play, reading the configuration stopped being a reliable way to answer an access question.

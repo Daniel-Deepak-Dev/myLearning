@@ -17,7 +17,7 @@ Authentication is the only layer where the platform's answer is binary and the b
 | **MFA** | all employee-licence users logging in directly | authenticator app, security key, built-in authenticator, SMS/email codes |
 | **Phishing-resistant MFA** | System Administrator profile, and anyone with `Modify All Data`, `View All Data`, `Customize Application` or `Author Apex` | **WebAuthn/FIDO2 only** — platform passkeys (Touch ID, Face ID, Windows Hello) or hardware keys (YubiKey, Titan) |
 | **Satisfied at the IdP** | SSO users | the IdP's own MFA — Salesforce does not re-prompt if the assertion carries it |
-| **Out of scope** | integration and API-only users authenticating by OAuth | the flow's own credentials — see [06 · 13](../06-integration-and-apis/INDEX.md) |
+| **Out of scope** | integration and API-only users authenticating by OAuth | the flow's own credentials — see [06 · 15](../06-integration-and-apis/15-oauth-flows-and-authorization.md) |
 
 - **Enforcement is wave-rolled, not flag-day.** Sandboxes led (from 22 June 2026), production followed (from 1 July 2026), and the exact date varied by org. "It hasn't hit us yet" is a schedule position, not an exemption.
 - **The four permissions, not the job title, define the privileged set.** A "read-only auditor" profile carrying `View All Data` is in scope for hardware-key MFA; check the permission, not the label. → [03](03-profiles-and-the-permission-set-led-model.md)
@@ -27,7 +27,7 @@ Authentication is the only layer where the platform's answer is binary and the b
 
 ## 2026 currency
 
-The enforcement dates and the wider wave they belong to are tabulated in [../CURRENCY.md](../CURRENCY.md); do not restate them in five notes. Two adjacent retirements close the loop, because a strong front door means nothing while a weak one stands open: the **OAuth username-password flow** is being retired for connected apps (Winter '27) and **SOAP `login()` for API versions 31.0–64.0** follows in Spring '27. Both are flows where a username and password alone produce a session, which is precisely what MFA was introduced to prevent — so treat any remaining use of them as an authentication finding, not an integration one. → [26](26-secure-coding-checklist.md)
+The enforcement dates and the wider wave they belong to are tabulated in [../CURRENCY.md](../CURRENCY.md); do not restate them in five notes. Two adjacent retirements close the loop, because a strong front door means nothing while a weak one stands open: the **OAuth username-password flow** is being retired for connected apps (Winter '27) and **SOAP `login()` for API versions 31.0–64.0** follows in Summer '27. Both are flows where a username and password alone produce a session, which is precisely what MFA was introduced to prevent — so treat any remaining use of them as an authentication finding, not an integration one. → [26](26-secure-coding-checklist.md)
 
 ## Gotchas
 
@@ -54,11 +54,11 @@ Q: How does SSO interact with the requirement?
 A: The IdP satisfies it, so Salesforce does not re-prompt — but the IdP's own MFA must meet the same strength for privileged users.
 
 Q: Which two legacy authentication paths are being retired for the same reason?
-A: The OAuth username-password flow (Winter '27) and SOAP `login()` for API 31.0–64.0 (Spring '27) — both mint a session from a password alone.
+A: The OAuth username-password flow (Winter '27) and SOAP `login()` for API 31.0–64.0 (Summer '27) — both mint a session from a password alone.
 
 ## Related
 
 - [18 · Session security, login policies & step-up](18-session-security-login-policies-and-step-up.md) — what the platform does once the login succeeds
 - [19 · SSO, SAML, OIDC & identity](19-sso-saml-oidc-and-identity.md) — moving the authentication decision to an external IdP
 - [01 · Security model layers overview](01-security-model-layers-overview.md) — where authentication sits in the debugging order
-- [06-integration · INDEX](../06-integration-and-apis/INDEX.md) — OAuth flows, and the two being retired
+- [06-integration · 15 OAuth flows & authorization](../06-integration-and-apis/15-oauth-flows-and-authorization.md) — the flows, and the two being retired

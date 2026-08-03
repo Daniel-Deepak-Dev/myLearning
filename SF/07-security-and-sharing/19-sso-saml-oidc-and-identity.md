@@ -2,7 +2,7 @@
 
 > Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 11
 
-**Scope:** Delegating the authentication decision of [17](17-authentication-and-mfa.md) to an external identity provider, and the licences that pay for it. OAuth as an *API authorization* protocol is [06-integration · 13](../06-integration-and-apis/INDEX.md); Experience Cloud login pages, self-registration and headless identity are [05-experience-cloud · 10](../05-experience-cloud-lwr/INDEX.md).
+**Scope:** Delegating the authentication decision of [17](17-authentication-and-mfa.md) to an external identity provider, and the licences that pay for it. OAuth as an *API authorization* protocol is [06-integration · 15](../06-integration-and-apis/15-oauth-flows-and-authorization.md); Experience Cloud login pages, self-registration and headless identity are [05-experience-cloud · 10](../05-experience-cloud-lwr/INDEX.md).
 
 ## Core idea
 
@@ -61,4 +61,4 @@ A: An expired signing certificate, at either end of the SAML trust. Rotation cyc
 - [17 · Authentication & MFA](17-authentication-and-mfa.md) — what SSO delegates, and the strength the IdP must still meet
 - [20 · My Domain, enhanced domains & Trusted URLs](20-my-domain-enhanced-domains-and-trusted-urls.md) — the prerequisite for SP-initiated SSO
 - [02 · Licences & what they gate](02-licences-and-what-they-gate.md) — Identity and External Identity in the licence hierarchy
-- [06-integration · INDEX](../06-integration-and-apis/INDEX.md) — OAuth for API authorization, the other half of the identity story
+- [06-integration · 15 OAuth flows & authorization](../06-integration-and-apis/15-oauth-flows-and-authorization.md) — OAuth for API authorization, the other half of the identity story

@@ -33,7 +33,7 @@ Public, partner and customer sites built **LWR-first**. **18 topics** · phases 
 
 - **06** depends on all of [03-lwc-and-slds](../03-lwc-and-slds/INDEX.md), especially **· 14 SLDS 2**.
 - **07, 09** are the site-facing projection of [07-security-and-sharing · 06 OWD](../07-security-and-sharing/INDEX.md) and **· 14 execution context**.
-- **10** depends on [06-integration · 13 OAuth flows](../06-integration-and-apis/INDEX.md).
-- **13** depends on [06-integration · 07 UI API](../06-integration-and-apis/INDEX.md).
+- **10** depends on [06-integration · 15 OAuth flows](../06-integration-and-apis/15-oauth-flows-and-authorization.md).
+- **13** depends on [06-integration · 08 UI API](../06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md).
 - **16** depends on [09-devops · 05 Metadata API](../09-devops-sfdx-and-release-management/INDEX.md).
 - **17** is a seam into [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md).

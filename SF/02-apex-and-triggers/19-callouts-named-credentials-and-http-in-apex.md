@@ -76,5 +76,6 @@ A: A long-running callout initiated from a Lightning component — up to three i
 ## Related
 
 - [13 · Queueable Apex & chaining](13-queueable-apex-and-chaining.md) — `Database.AllowsCallouts`, and the way a trigger actually reaches an external system
-- [06-integration · Auth, external apps & named credentials](../06-integration-and-apis/INDEX.md) — OAuth flows, External Client Apps and the inbound direction
+- [06-integration · 17 Named Credentials & External Credentials](../06-integration-and-apis/17-named-credentials-and-external-credentials.md) — the same two objects, from the integration side
+- [06-integration · 15 OAuth flows & authorization](../06-integration-and-apis/15-oauth-flows-and-authorization.md) — the inbound direction, and External Client Apps
 - [09 · Exception handling & custom exceptions](09-exception-handling-and-custom-exceptions.md) — turning a 500 from a partner into something the org can act on

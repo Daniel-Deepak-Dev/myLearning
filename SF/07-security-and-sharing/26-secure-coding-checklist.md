@@ -33,7 +33,7 @@ A secure-by-default platform does not remove the review, it moves it. When enfor
 
 ## 2026 currency
 
-Three lines above are new this year and worth stating as rules rather than checks. **The OAuth username-password flow and SOAP `login()` are on retirement paths** (Winter '27 and Spring '27), so any remaining use is an authentication finding — see [17](17-authentication-and-mfa.md). **New Connected Apps cannot be created** without a Salesforce Support exception; External Client Apps are the model, which makes "add a connected app" an outdated instruction in any runbook → [06-integration · 14](../06-integration-and-apis/INDEX.md). And **anonymous Apex execution from managed packages is being blocked** from Summer '27, which retires a small category of installed-package behaviour. Sourcing for all three: [../CURRENCY.md](../CURRENCY.md).
+Three lines above are new this year and worth stating as rules rather than checks. **The OAuth username-password flow and SOAP `login()` are on retirement paths** (Winter '27 and Summer '27), so any remaining use is an authentication finding — see [17](17-authentication-and-mfa.md). **New Connected Apps cannot be created** without a Salesforce Support exception; External Client Apps are the model, which makes "add a connected app" an outdated instruction in any runbook → [06-integration · 16](../06-integration-and-apis/16-external-client-apps.md). And **anonymous Apex execution from managed packages is being blocked** from Summer '27, which retires a small category of installed-package behaviour. Sourcing for all three: [../CURRENCY.md](../CURRENCY.md).
 
 ## Gotchas
 

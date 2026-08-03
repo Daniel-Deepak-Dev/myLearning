@@ -34,7 +34,7 @@
 - **06** — SSR-safe component rules are the practical trap: a component that touches `window` at module scope breaks the build. Depends on all of [03-lwc](../03-lwc-and-slds/INDEX.md), especially **· 14 SLDS 2**.
 - **08** — licence types drive architecture more than anything else here. Get the current external user licence list from a source. **Internal licence gating is now owned by [07-security · 02](../07-security-and-sharing/02-licences-and-what-they-gate.md)** (written in phase 10) — this note owns the external half only, and the two should state the boundary explicitly.
 - **09** — sharing sets and share groups are the external-user equivalents of sharing rules. Cross-link [07-security · 06, 09](../07-security-and-sharing/INDEX.md). **Carry forward from phase 10's seed harvest:** *sharing rules and manual sharing do not support high-volume community users*, who have no roles — which is the whole reason sharing sets exist.
-- **10** — depends on [06-integration · 13 OAuth](../06-integration-and-apis/INDEX.md).
+- **10** — depends on [06-integration · 15 OAuth](../06-integration-and-apis/15-oauth-flows-and-authorization.md).
 
 **Seed harvest** ([../_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md)) — nearly nothing. `Exp Cloud Certification Prep` (2022) is the only relevant page, and the one Experience Cloud database row is a **Visualforce** trick, out of scope. Treat this area as greenfield.
 
@@ -58,7 +58,7 @@
 **🆕 — research before writing:** **12** (Enhanced CMS — content types, workspaces, channels), **13** (headless over Connect APIs), **14**, **17**.
 
 **Notes on scope**
-- **13** depends on [06-integration · 07 UI API](../06-integration-and-apis/INDEX.md). The judgment call — when a headless front end is worth abandoning Experience Builder for — is the actual content.
+- **13** depends on [06-integration · 08 UI API](../06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md). The judgment call — when a headless front end is worth abandoning Experience Builder for — is the actual content.
 - **14** — LWR's SSR/CDN model is what makes real SEO possible here; this is where **02** pays off. Give concrete Lighthouse budgets if you can source them.
 - **17** — seam into [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md). An agent on a **public** site is the highest-risk deployment surface on the platform: unauthenticated input, guest-user context, and a reasoning engine. Cross-link the Trust Layer note rather than restating it, but do not soften the risk.
 - **18** — page-view limits and guest throttling are the capacity constraints that surprise people at launch. Get current numbers from a source.

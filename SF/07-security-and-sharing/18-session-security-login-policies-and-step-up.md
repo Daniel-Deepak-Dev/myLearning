@@ -32,7 +32,7 @@ Step-up authentication for report export reached production in **July 2026**, an
 ## Gotchas
 
 - **The auto-created policy landed only in Shield and Event Monitoring orgs.** Two orgs on the same release can behave differently on report export, and neither admin changed anything.
-- **10,000 rows is a UI-export threshold**, not an API one. Bulk API and Analytics extracts are governed elsewhere. → [06-integration · 22](../06-integration-and-apis/INDEX.md)
+- **10,000 rows is a UI-export threshold**, not an API one. Bulk API and Analytics extracts are governed elsewhere. → [06-integration · 24](../06-integration-and-apis/24-api-limits-monitoring-and-access-control.md)
 - **Login Hours terminate a session mid-work**, they do not merely prevent new logins — users lose unsaved work at the boundary.
 - **Session timeout is per profile and silently generous by default.** It is one of the first things Health Check flags. → [24](24-security-center-and-health-check.md)
 - **A high-assurance requirement on a permission does not warn the user usefully** — the permission simply appears absent, which sends the investigation to the permission set. → [15](15-auditing-and-troubleshooting-access.md)

@@ -33,8 +33,8 @@ Model it well, then keep it fast past 10M rows. **20 topics** · phases [14](PHA
 
 - **08** pairs with [07-security · 16 Sharing recalculation](../07-security-and-sharing/16-sharing-recalculation-and-performance.md) — ownership skew is a sharing problem first, and that note (phase 11) owns the recalculation mechanics.
 - **Big objects** are the storage behind [07-security · 22 Field Audit Trail](../07-security-and-sharing/22-field-audit-trail-and-data-retention.md) — `FieldHistoryArchive` is one, and archive queries obey big-object index rules.
-- **12** depends on [06-integration · 06 Bulk API 2.0](../06-integration-and-apis/INDEX.md).
-- **13** pairs with [06-integration · 18 Salesforce Connect](../06-integration-and-apis/INDEX.md).
+- **12** depends on [06-integration · 07 Bulk API 2.0](../06-integration-and-apis/07-bulk-api-2.md).
+- **13** pairs with [06-integration · 20 Salesforce Connect](../06-integration-and-apis/20-salesforce-connect-and-external-objects.md).
 - **14** is the seam into [AI_Data/01-data-cloud/](../../AI_Data/01-data-cloud/INDEX.md) — zero-copy federation is a Data 360 topic seen from the core-platform side.
 - **16** overlaps [09-devops · 06 Source tracking & sandbox workflow](../09-devops-sfdx-and-release-management/INDEX.md).
 

@@ -18,8 +18,8 @@ Mark a phase ✅ when its files exist and its INDEX rows are live links.
 | 09 | ✅ | Flow at scale | 04 Flow | 13 | **2,000-element cap removed at API 57.0** ⚠️, Flow Tests are record-triggered only ⚠️, Orchestrator, Migrate to Flow 🆕⚠️, agent actions 🆕, **+ run context, + Pause/Wait** |
 | 10 | ✅ | Access model & record sharing | 07 Security | 15 | **profile-permissions retirement CANCELLED 2026-06-06** 🆕⚠️, restriction rules subtract ⚠️, **queue hierarchy default flip** 🆕⚠️, **+ licences, + grantee model, + access auditing** |
 | 11 | ✅ | Identity, encryption & monitoring | 07 Security | 11 | **MFA enforced, phishing-resistant for admins** 🆕⚠️, **async sharing recalc RU** 🆕⚠️, **domain redirections ended** ⚠️, step-up 🆕, **Security Center Essentials free** 🆕, **+ session/login policies, + Field Audit Trail** |
-| 12 | ⬜ | APIs: REST → legacy streaming | 06 Integration | 12 | API retirement treadmill 🆕⚠️, composite, Bulk 2.0 ⚠️, GraphQL 🆕, **Pub/Sub replaces CometD** 🆕⚠️ |
-| 13 | ⬜ | Auth, external apps & agent-facing integration | 06 Integration | 11 | OAuth ⚠️, **External Client Apps** 🆕⚠️, named credentials ⚠️, Event Relay 🆕, MCP servers 🆕 |
+| 12 | ✅ | APIs: REST → legacy streaming | 06 Integration | 14 | API retirement treadmill 🆕⚠️ (**410 GONE**), composite, Bulk 2.0 ⚠️, GraphQL 🆕, **Pub/Sub is recommended, it replaced nothing** 🆕⚠️, **+ endpoints/instanced-URL deadline, + Metadata/Tooling/Connect** |
+| 13 | ✅ | Auth, external apps & agent-facing integration | 06 Integration | 12 | OAuth ⚠️, **External Client Apps** 🆕⚠️ (**device flow blocked since Sept 2025**), named credentials ⚠️ (**deprecated, no date**), API Catalog 🆕, Event Relay 🆕, MCP servers 🆕 (**no M2M flow**), **+ certificates & the PKI clock** 🆕⚠️ |
 | 14 | ⬜ | Data modeling & LDV performance | 08 Data | 10 | relationships, external IDs, selectivity, Query Plan, skew, skinny tables |
 | 15 | ⬜ | Retention, federation & data operations | 08 Data | 10 | big objects, archiving 🆕, zero-copy Data 360 🆕, backup ⚠️, Hyperforce 🆕 |
 | 16 | ⬜ | Source-driven dev & 2GP packaging | 09 DevOps | 11 | **`sf` v2 replaces `sfdx`** 🆕⚠️, scratch orgs, unlocked 2GP 🆕⚠️, DevOps Center 🆕⚠️ |
@@ -27,7 +27,7 @@ Mark a phase ✅ when its files exist and its INDEX rows are live links.
 | 18 | ⬜ | LWR sites: architecture → auth | 05 Experience | 10 | **LWR default, Aura legacy** 🆕⚠️, SSR/CDN, guest hardening ⚠️, licences, SSO |
 | 19 | ⬜ | Site content, headless, performance & agents | 05 Experience | 8 | Enhanced CMS 🆕, headless 🆕, SEO 🆕, ExperienceBundle ⚠️, embedded agents 🆕 |
 
-**201 topic files.** Exact file lists live in each area's `PHASES.md`. *(Phase 07 added two beyond plan — see [03-lwc/PHASES.md](03-lwc-and-slds/PHASES.md). Phase 08 added two and renumbered phase 09; **phase 09 added two more and renumbered again**, this time with live inbound links — see [04-flow/PHASES.md](04-flow-and-automation/PHASES.md). **Phase 10 added three and renumbered area 07 into learning order** — free, because no file in the area existed yet and only three inbound links named it by number. **Phase 11 added two more**, appending and shifting only 16–26 so the 15 existing files never moved; see [07-security/PHASES.md](07-security-and-sharing/PHASES.md).)*
+**204 topic files.** Exact file lists live in each area's `PHASES.md`. *(Phase 07 added two beyond plan — see [03-lwc/PHASES.md](03-lwc-and-slds/PHASES.md). Phase 08 added two and renumbered phase 09; **phase 09 added two more and renumbered again**, this time with live inbound links — see [04-flow/PHASES.md](04-flow-and-automation/PHASES.md). **Phase 10 added three and renumbered area 07 into learning order** — free, because no file in the area existed yet and only three inbound links named it by number. **Phase 11 added two more**, appending and shifting only 16–26 so the 15 existing files never moved; see [07-security/PHASES.md](07-security-and-sharing/PHASES.md). **Phase 12 added two and renumbered area 06 into learning order** — again free, no file in the area existed, and all 13 inbound numeric references were link *text* over an `INDEX.md` href, so nothing broke; see [06-integration/PHASES.md](06-integration-and-apis/PHASES.md). **Phase 13 added one and appended it**, honouring phase 12's own warning — 15–25 were already named by number from areas 02 and 07, so certificates went on the end as **26** and nothing moved.)*
 
 ## Sequencing
 
@@ -70,3 +70,21 @@ Since phase 11, five more — the mid-2026 enforcement wave turned a lot of advi
 - **`Transaction Security` unqualified** where the current framework is meant — the legacy one is retired, *Enhanced* is the name.
 - **`Security Center` near `paid`** without the **Essentials** qualifier: Essentials has been free in every org since July 2026.
 - **Any claim a legacy My Domain URL `redirect`s.** Redirections ended in Spring '26; it 404s.
+
+Since phase 12, four more — and one **amendment to the rule above**:
+
+- **`CometD` is no longer a banned-as-current term.** The old rule said it may appear only inside a ⚠️ correction. That was built on the belief that Pub/Sub replaced it, which is wrong: `lightning/empApi` is supported, current, and CometD-based. **Grep instead for `CometD` or `Streaming API` within a line of `retired`, `dead`, `replaced`, `superseded` or `deprecated`** — those are the false claims. *(`superseded` added in phase 13: it was missing from this list, and a line in [04-flow · 07](04-flow-and-automation/07-platform-event-and-async-path-flows.md) reading "CometD is superseded by the Pub/Sub API" survived the phase-12 sweep because of it. Fixed.)*
+- **`lightning/empApi` described as legacy.** It is the supported in-org LWC subscriber. Only *PushTopic* and *generic* events carry the docs' *(Legacy)* label.
+- **Any asserted retirement date for an API version above 30.0.** 21.0–30.0 retired Summer '25; **no next wave is announced.** Also flag any sentence that turns the SOAP `login()` retirement (API 31.0–64.0, **Summer '27**) into a *version* retirement — it withdraws one call, not those versions.
+- **`SOAP` near `retired` or `dead`.** `login()` is retiring; the API is not, and it *gained* JWT support at 67.0.
+- **`Sforce-Enable-PKChunking` presented as Bulk API 2.0.** It is a **v1** header and does nothing in 2.0.
+
+Since phase 13, seven more — and note that the phase-13 defect was a **wrong date on a correct retirement**, not another "old ≠ dead". Both failure modes now have rules:
+
+- **`login()` near `Spring '27`.** The date is **Summer '27** (Help article 005132110). It was wrong in seven lines across five files for two phases. **Verify a date against the Help article, never against another note in this vault.**
+- **`Connected App` presented as the way to set up a new integration**, or any runbook step reading *"create a connected app"*. Creation is Support-gated since Spring '26. Equally flag **`Connected App` near `retired`** — existing ones are not.
+- **username-password flow described as blocked `by default`** without the **new-orgs-only** carve-out. Blocked by default from Summer '23 for orgs created then or later; an older org may still be running it.
+- **`legacy named credential` near any date.** Deprecated, **no retirement date published**.
+- **`Event Relay` near `Azure`, `GCP` or `Google`.** Amazon EventBridge is the only destination.
+- **`MCP` near `service account`, `client credentials` or `machine-to-machine`.** Authorization code only — there is no M2M flow.
+- **`certificate pinning` presented as good practice.** Salesforce's guidance is to stop; validity reaches 47 days in 2029.

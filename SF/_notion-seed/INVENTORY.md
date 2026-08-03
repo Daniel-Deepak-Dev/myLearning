@@ -87,9 +87,9 @@ Neither blocks any phase. This inventory informs gotcha-harvesting and ordering,
 
 | Notion page | Target |
 |---|---|
-| Bulk API | `06-bulk-api-2` ⚠️ note is v1-era |
-| Platform Event / Salesforce Events | `10-platform-event-design` |
-| IN | `03-rest-api-fundamentals` (unclear — inspect) |
+| Bulk API | `07-bulk-api-2` — ⚠️ **confirmed v1-era in phase 12**: batch splitting, the 10,000-record batch ceiling and `Sforce-Enable-PKChunking`, all three v1 mechanics, corrected inline. Its durable lesson survives — **lock contention, not row count, makes a large load slow** |
+| Platform Event / Salesforce Events | `12-platform-event-design` — thin; harvested as one line, that **an event is a published contract** |
+| IN | ⛔ **inspected in phase 12: it is SOQL, not REST.** Belongs with the area-02 `IN`/semi-join cluster already covered in phase 03. Not an area-06 page |
 
 ## Mapping — Flow DB → area 04
 
@@ -121,7 +121,7 @@ Grouped by destination. Dates are creation dates — anything 2019–2021 needs 
 `Exp Cloud Certification Prep` (2022) · `VFpage Grey Background Problem in Community` — ⛔ VF, skip
 
 **→ 06 Integration & APIs**
-`SOAP API` (2019) · `SF - Integration Patterns and Practices` (**2026-02**) — read first, likely the most current page in the corpus · `Apex REST Callouts` (2021) · `Apex Rest Web Services` (2021) · `Change data capture` (2023) · `lightning/empApi - Change Data Capture` (2023) · `CometD` (**2025**) — ⚠️ retired in favour of Pub/Sub API · `Salesforce Edge Network` (2023)
+`SOAP API` (2019) → **05**, ✅ structure only as predicted — enterprise/partner split and header model hold; its example authenticates with `login()` and presents SOAP as the default for new work · `SF - Integration Patterns and Practices` (**2026-02**) → **01**, ✅ **read first in phase 12 and it earned the billing** — taxonomy matched what was written; one stale line naming outbound messaging as a first-choice fire-and-forget mechanism, corrected inline · `Apex REST Callouts` (2021) + `Apex Rest Web Services` (2021) → **18**, ✅ **confirmed structure-only in phase 13** — annotations and a worked example, no prose. Two things they predate: the **user-mode default at 67.0** inverts their implicit system-mode assumption, and a published endpoint is now a candidate **agent action**. Harvested as one callout · `Change data capture` (2023) + `lightning/empApi - Change Data Capture` (2023) → **13**, ✅ both still structurally correct; one thing added rather than corrected — `empApi` is how you subscribe **inside a component**, not how an external system should · `CometD` (**2025**) → **14**, ✅ harvested — long-polling mechanics still correct, and it became the ⚠️ hook **in the opposite direction to the one the plan expected**: ⚠️ **not** retired in favour of Pub/Sub API, which is *recommended*, not a replacement · `Salesforce Edge Network` (2023) → **03**, ✅ *previously unrouted, now has a home* — treats Edge purely as a latency switch, still true and now incomplete since hostname choice became a supportability question
 
 **→ 07 Security & Sharing**
 `Sharing and Visibility Architect` (2023) · `Salesforce Certified Sharing and Visibility Architect` (**2025**) · `UserRecordAccess Query Problem` (**2025**) — ✅ real gotcha · `Transaction Security Policies` (**2025**)
