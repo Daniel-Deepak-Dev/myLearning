@@ -32,8 +32,8 @@
 **Notes on scope**
 - **02** is the note that makes everything else make sense: **LWR sites are built and served, not rendered per request like Aura.** That single fact explains the caching model, the SEO story and the SSR-safe component rules. Write it first.
 - **06** — SSR-safe component rules are the practical trap: a component that touches `window` at module scope breaks the build. Depends on all of [03-lwc](../03-lwc-and-slds/INDEX.md), especially **· 14 SLDS 2**.
-- **08** — licence types drive architecture more than anything else here. Get the current external user licence list from a source.
-- **09** — sharing sets and share groups are the external-user equivalents of sharing rules. Cross-link [07-security · 05, 07](../07-security-and-sharing/INDEX.md).
+- **08** — licence types drive architecture more than anything else here. Get the current external user licence list from a source. **Internal licence gating is now owned by [07-security · 02](../07-security-and-sharing/02-licences-and-what-they-gate.md)** (written in phase 10) — this note owns the external half only, and the two should state the boundary explicitly.
+- **09** — sharing sets and share groups are the external-user equivalents of sharing rules. Cross-link [07-security · 06, 09](../07-security-and-sharing/INDEX.md). **Carry forward from phase 10's seed harvest:** *sharing rules and manual sharing do not support high-volume community users*, who have no roles — which is the whole reason sharing sets exist.
 - **10** — depends on [06-integration · 13 OAuth](../06-integration-and-apis/INDEX.md).
 
 **Seed harvest** ([../_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md)) — nearly nothing. `Exp Cloud Certification Prep` (2022) is the only relevant page, and the one Experience Cloud database row is a **Visualforce** trick, out of scope. Treat this area as greenfield.
