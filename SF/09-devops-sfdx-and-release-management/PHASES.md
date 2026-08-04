@@ -1,6 +1,6 @@
 # Phases for 09 · DevOps, SFDX & Release Management
 
-24 topics across 2 runs. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
+25 topics across 2 runs. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
 
 > **Runs before Experience Cloud (phases 18–19)**, which assumes 2GP and pipeline vocabulary.
 > Currency anchor: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
@@ -47,10 +47,10 @@
 
 ---
 
-## Phase 17 — CI/CD, code quality & release ops · 11 files ⬜
+## Phase 17 — CI/CD, code quality & release ops · 12 files ✅
 
 ```
-14-ci-cd-with-github-actions.md
+14-ci-cd-with-github-actions.md                    ⚠️  (upgraded — see below)
 15-apex-test-strategy-in-ci.md
 16-code-analyzer-v5.md                             🆕⚠️
 17-apexguru-and-performance-review.md              🆕
@@ -61,18 +61,31 @@
 22-agentforce-dx-and-ai-assisted-development.md    🆕
 23-hyperforce-and-instance-operations.md           🆕
 24-vscode-code-builder-and-tooling.md              ⚠️
+25-deployment-rollback-hotfix-and-destructive-changes.md   ⚠️  ← beyond plan
 ```
 
-**⚠️ corrections to lead with**
-- **16** — **Code Analyzer v5** unified the engines under one config. **v4 is end-of-life**, and the `@salesforce/sfdx-scanner` plugin was removed from the CLI's just-in-time list — so `sf scanner …` now needs a manual install and is teaching a retired tool.
-- **20** — Release Updates **auto-enforce**. Preview-window testing is not optional. Pairs with [01-admin · 02](../01-admin-and-declarative-platform/INDEX.md).
-- **24** — several tools in the old ecosystem are retired. Name what's current — extension pack, **Live Preview** (renamed from Local Dev), **Web Console (Beta)**, Agentforce Vibes — and don't inventory history.
+**One file added, one planned addition dropped — and the drop is the more useful record.** Phase 17 was drafted against the pre-renumber plan and reached the same conclusion phase 16 had: the area taught the pipeline and never taught its boundary. It wrote *Metadata coverage gaps & manual steps*. Phase 16 got there first with **[12](12-metadata-coverage-and-manual-steps.md)**, which is the better note — it has the three-category taxonomy and the per-channel reading of the Coverage Report — so phase 17's version was **deleted rather than merged**, and its four inbound links were repointed at 12. Two phases converging on the same missing topic from opposite ends is the strongest signal in this build that the gap was real.
 
-**🆕 — research before writing:** **16**, **17** (ApexGuru), **21**, **22**, **23**.
+- **25 · Deployment rollback, hotfix & destructive changes.** The surviving addition, and it sits *above* [05](05-metadata-api-and-deployment-mechanics.md) rather than beside it: 05 owns the destructive manifests and the atomicity guarantee, 25 owns what a team does at 2 a.m. — roll forward from a tag, ship behind a custom metadata kill switch, branch a hotfix from production and merge it back everywhere. No docs page argues that, and *"we'll roll it back"* is said in planning meetings constantly.
 
-**Notes on scope — updated by what phase 16 found**
-- **14** must carry the **credential-redaction fallout** from [03](03-org-auth-and-environment-management.md) and the **connected-app gate** on JWT setup; also `SF_CI_UPDATE_FREQUENCY_MS` / `SF_CI_HEARTBEAT_FREQUENCY_MS` for CI-aware output, and the **npm dist-tag ordering trap** — pinning the CLI version in CI is not optional.
-- **15** — the underdocumented failure is **parallel test contention** in CI. Depends on [02-apex · 20–21](../02-apex-and-triggers/INDEX.md). **`RunRelevantTests` is Beta** and pairs with quick deploy → [05](05-metadata-api-and-deployment-mechanics.md).
-- **21** — the real constraint is that **debug logs are capped and expire**; production debugging needs a custom logging strategy plus Event Monitoring. Say so.
-- **22** — seam into [AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md](../../AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md) and into [13](13-dx-mcp-server-and-agent-driven-development.md). **Link, don't duplicate** — this note owns the *review discipline for generated code*; 13 owns the tool surface.
-- **23** pairs with [08-data · 23](../08-data-modeling-and-large-data-volumes/23-hyperforce-residency-and-data-locality.md): same platform shift, ops side vs data side. **Hyperforce migration delays ended 1 July 2026**, so this is not a future-tense topic.
+**Appended at 25, nothing renumbered.** Phase 16 had just rewritten six inbound references across four areas to land on `· 16`, `· 23` and `· 24`; moving anything again would have invalidated a commit that was one day old for no gain.
+
+**⚠️ corrections as written**
+- **14 — upgraded to ⚠️, and it carries two corrections rather than one.** The plan had this unflagged. *"Create a connected app for JWT"* has been Support-gated since Spring '26, and *"pipe `sf org display --verbose` into `grep`"* died on **27 May 2026** with the credential redaction phase 16 found. Both sit in the first ten lines of every CI tutorial written before mid-2026.
+- **16** — **Code Analyzer v4 is end-of-life since August 2025.** Stated with phase 16's addition: the `@salesforce/sfdx-scanner` plugin is no longer installed just-in-time, so `sf scanner …` running at all means someone installed it by hand.
+- **20** — Release Updates **auto-activate** on their enforcement release. The worked example is the invocable no-arg-constructor requirement: it begins at **API 66.0** — the release-note ID carries `_v66` — and Summer '26 is only when the update auto-activates, which is why it is so widely mis-dated to 67.0.
+- **24** — **two directions in one file.** Code Builder was *renamed* Agentforce Vibes IDE, and the Developer Console is *labelled legacy with no announced retirement date*. The phase-15 product-name failure class and the standing "old ≠ dead" class, on the same page.
+- **25** — **there is no rollback**, and unlike every other correction in this area nothing changed: the belief was always wrong, so no release note will ever surface it.
+
+**🆕 researched:** **16**, **17** (ApexGuru), **21**, **22**, **23**. The finding that most changed a note was **17**: ApexGuru ships with **Scale Center** — UE production and full-copy sandboxes, Signature Success, Scale Test — and is **not supported on Government Cloud Plus**. Most orgs cannot run it, and almost no write-up leads with that. Logged in [../CURRENCY.md](../CURRENCY.md) as a third failure class: *real, current, correctly described, and unavailable to the reader.*
+
+**Scope notes phase 16 left, and what happened to them**
+- **14** carries the redaction fallout and the connected-app gate as its ⚠️, plus `SF_CI_UPDATE_FREQUENCY_MS` / `SF_CI_HEARTBEAT_FREQUENCY_MS` and the npm dist-tag ordering trap. Validate/quick-deploy *mechanics* stayed in [05](05-metadata-api-and-deployment-mechanics.md); 14 links rather than restates.
+- **15** carries **`RunRelevantTests` (Beta)** and names its real adoption cost — it is steered by `@IsTest(testFor=…)` annotations nobody backfills onto a legacy suite. The underdocumented failure it leads with is still **parallel test contention**.
+- **21** leads with the caps, quoted whole: **20 MB** per log, **24 h** system / **7 days** monitoring retention, **1,000 MB in 15 minutes disables every trace flag in the org**.
+- **22** links to [13](13-dx-mcp-server-and-agent-driven-development.md) and to [AI_Data · ADLC](../../AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md) and duplicates neither: **13 owns the tool surface, 22 owns the review discipline.**
+- **23** is not future-tense — **Hyperforce migration delays ended 1 July 2026.**
+
+**Seed harvest — under phase 16's finding that `_notion-seed/` holds INVENTORY.md and no note bodies.** Two harvests were still possible because the inventory *quotes* what it flags, and both callouts now say so on their face. `Lead Broker Field Migration` (2023) → **19**: renaming a relationship commits you to a report-type deployment, because report types are built on relationship paths. `Salesforce force VSC and Chrome extensions` (2019) → **24**: the list has turned over entirely, and the one durable line is that a browser extension reading your org has your session.
+
+**Area complete.** 25 topics, phases 16–17. Next: 18–19, Experience Cloud.

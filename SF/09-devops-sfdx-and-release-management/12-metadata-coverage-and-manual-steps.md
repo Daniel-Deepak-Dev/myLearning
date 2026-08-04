@@ -60,4 +60,4 @@ A: It should shrink — each release converts one or two steps into scripted aut
 - [05 · Metadata API & deployment mechanics](05-metadata-api-and-deployment-mechanics.md) — what a deployment can carry
 - [08 · Unlocked packages (2GP)](08-unlocked-packages-2gp.md) — a second, stricter coverage column
 - [01-admin · 09 Custom metadata vs custom settings](../01-admin-and-declarative-platform/09-custom-metadata-vs-custom-settings.md) — the deployable-configuration decision
-- [20 · Release management & org upgrades](INDEX.md) — where the runbook is executed
+- [20 · Release management & org upgrades](20-release-management-and-org-upgrades.md) — where the runbook is executed
