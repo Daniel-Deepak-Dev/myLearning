@@ -60,3 +60,4 @@ A: 72 hours, after which they are unrecoverable.
 - [03 · Record-triggered flows](03-record-triggered-flows.md) — where an async path is configured, and why only after-save flows have one
 - [02-apex · 18 Platform events & CDC in Apex](../02-apex-and-triggers/18-platform-events-and-cdc-in-apex.md) — the coded subscriber, including the batch-size control Flow lacks
 - [10 · Fault paths & custom errors](10-fault-paths-and-custom-errors.md) — why an unhandled async path failure is invisible
+- [06-integration · 27 Event bus allocations, limits & monitoring](../06-integration-and-apis/27-event-bus-allocations-limits-and-monitoring.md) — a flow subscriber costs no delivery allocation, and `EventBusSubscriber` is where its health shows

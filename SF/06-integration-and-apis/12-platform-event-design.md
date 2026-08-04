@@ -15,7 +15,7 @@ The design decisions are not about mechanics but about **contract**. An event is
 | Choice | Options | Consequence |
 |---|---|---|
 | **Publish behaviour** | *Publish After Commit* / *Publish Immediately* | after-commit is rolled back with the transaction; immediate is not |
-| **Event type** | standard-volume / **high-volume** | high-volume is the modern default and scales differently |
+| **Event type** | **high-volume — the only option** | standard-volume has been uncreatable since Spring '19 and is retiring → [27](27-event-bus-allocations-limits-and-monitoring.md) |
 | **Subscriber** | Apex trigger, Flow, Pub/Sub client, `empApi`, Event Relay | each has its own retry and error story |
 
 - ***Publish After Commit* is the one that behaves like you expect.** The event fires only if the transaction commits, so a rolled-back save publishes nothing. *Publish Immediately* fires regardless — useful for logging an attempt, dangerous for anything else.
@@ -38,7 +38,7 @@ Event *design* has been stable; the surrounding platform has not. **Apex subscri
 - **Adding a required field breaks existing subscribers.** Additive-and-optional is the only safe evolution.
 - **A rollback does not recall a *Publish Immediately* event**, and neither does a composite `allOrNone` failure. → [06](06-composite-batch-and-graph-apis.md)
 - **Event triggers are bulk by construction** — the subscriber receives a batch, never one event, and code written for one is the classic defect. → [02-apex · 18](../02-apex-and-triggers/18-platform-events-and-cdc-in-apex.md)
-- **Publishing is not free.** Events consume org allocations; a per-field-change event on a busy object exhausts them.
+- **Publishing is not free, and the two meters have different windows.** Enterprise gets **250,000 publishes per hour** and a separate **25,000 deliveries per rolling 24 hours** — the latter shared with CDC and spent only by external subscribers. A per-field-change event on a busy object exhausts them. → [27](27-event-bus-allocations-limits-and-monitoring.md)
 
 ## Recall
 
@@ -61,5 +61,6 @@ A: You write a record as well. Past events are not queryable, and retention is t
 
 - [11 · Pub/Sub API](11-pub-sub-api.md) — how external subscribers receive these
 - [13 · Change Data Capture](13-change-data-capture.md) — when the requirement is "the record changed"
+- [27 · Event bus allocations, limits & monitoring](27-event-bus-allocations-limits-and-monitoring.md) — what publishing costs, and the standard-volume retirement
 - [02-apex · 18 Platform events & CDC in Apex](../02-apex-and-triggers/18-platform-events-and-cdc-in-apex.md) — publishing and subscribing in code
 - [04-flow · 07 Platform event & async path flows](../04-flow-and-automation/07-platform-event-and-async-path-flows.md) — the declarative subscriber and its ceiling

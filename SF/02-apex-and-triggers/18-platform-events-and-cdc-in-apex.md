@@ -74,3 +74,5 @@ A: It records the last message successfully processed, so a retry resumes from t
 - [14 · Batch Apex & stateful processing](14-batch-apex-and-stateful-processing.md) — `BatchApexErrorEvent`, the same subscription pattern applied to job failures
 - [06-integration · Platform events & Pub/Sub API](../06-integration-and-apis/INDEX.md) — event design, external subscribers and the transport this note deliberately skips
 - [09 · Exception handling & custom exceptions](09-exception-handling-and-custom-exceptions.md) — where the dead-letter record belongs once retries are exhausted
+- [26 · Testing platform events & CDC](26-testing-platform-events-and-cdc.md) — forcing delivery, and why an untested subscriber passes green
+- [06-integration · 27 Event bus allocations, limits & monitoring](../06-integration-and-apis/27-event-bus-allocations-limits-and-monitoring.md) — `EventBusSubscriber` health and parallel subscriptions at 67.0

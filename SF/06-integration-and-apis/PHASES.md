@@ -1,6 +1,6 @@
 # Phases for 06 · Integration & APIs
 
-26 topics across 2 runs. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
+27 topics across 3 runs. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
 
 > **Runs after security (phases 10–11).** OAuth, named credentials and API access control all rest on the access model.
 > Currency anchor for this area: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
@@ -111,3 +111,28 @@ The only genuinely homeless topic in the area, and dated: **dual-use public-CA r
 - **18** — `Apex REST Callouts` + `Apex Rest Web Services` (2021). → *structure only, exactly as the inventory predicted — annotations and a worked example, no prose. Two things they predate: the **user-mode default at 67.0** inverts their implicit system-mode assumption, and a published endpoint is now a candidate agent action. Harvested as one callout.*
 
 **Rule 1 exceeded deliberately, with approval** — one file added, and the `login()` date sweep reached [../CURRENCY.md](../CURRENCY.md), [../PHASES.md](../PHASES.md), [../README.md](../README.md), [07-security · 17](../07-security-and-sharing/17-authentication-and-mfa.md), [07-security · 26](../07-security-and-sharing/26-secure-coding-checklist.md), [AI_Data/GLOSSARY.md](../../AI_Data/GLOSSARY.md) and [../_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md). **Sixth phase running to make the same call** — and the third where a published sentence was wrong rather than merely a planned one.
+
+---
+
+## Phase 20 — Event bus allocations, limits & monitoring · 1 file ✅
+
+```
+27-event-bus-allocations-limits-and-monitoring.md    🆕⚠️
+```
+
+**Appended as 27.** Area 06 is named by number from areas 02, 07 and 09, so renumbering was not free — the same call phases 13, 15 and 17 made.
+
+**⚠️ — and the wrong sentence was this area's own.** [12](12-platform-event-design.md) carried a table row reading *"standard-volume / **high-volume** | high-volume is the modern default and scales differently"*, published since phase 12. **Standard-volume platform events have been uncreatable since Spring '19** — only events defined before that release exist — they receive **no support and no bug fixes**, and Salesforce has announced their **retirement** in Help **002280033**, with a migration tool to high-volume by Summer '26. Offering them as one of two choices is offering a retired feature. The row was corrected in the same commit. **This is the vault's second "assumed alive, actually dead"** after Async SOQL in phase 14, and the first where the claim was in published prose rather than a plan's file list.
+
+**A date this phase deliberately did not pin.** Help 002280033 reads **Winter '27**; several published round-ups say **June 2027**. Repeated attempts to re-read the Help article returned a loading shell rather than content, so **27 states the retirement as certain and the date as needing verification in the reader's own org release notes.** Phase 13's defect was a wrong date on a correct retirement, quoted confidently across seven lines; the lesson there was to verify against the Help article, and the honest answer when the article will not load twice is to say so rather than pick the more convenient of two numbers.
+
+**The numbers the note exists for**, all of which the area previously stated as "not free" or "capped by entitlement":
+
+- **Two meters, two windows** — publishing **per hour** (EE/UE/Performance 250,000, Developer 50,000), delivery **per rolling 24 h** (UE/Performance 50,000, EE 25,000, Developer 10,000).
+- **Delivery is spent only by external subscribers** — Pub/Sub API, CometD, `empApi`, event relays. **Apex triggers, flows and Process Builder consume none of it.** This inverts the usual worry: an in-org subscriber is free on this meter, one external client can drain the org's day.
+- **High-volume platform events and CDC share one delivery pool.** There is no separate CDC budget.
+- **CDC caps at 5 entities** across all channels; **custom channels cap at 100**; messages cap at **1 MB**; concurrent CometD clients at **UE 2,000 / EE 1,000 / Developer 20**. The add-on adds **100,000 deliveries a day (3 M a month)** and **25,000 publishes an hour**, removes the 5-entity cap, and moves the org to a monthly usage-based entitlement with a grace allocation.
+
+**The monitoring finding, which is a shape rather than a number.** `EventBusSubscriber` and `PlatformEventUsageMetric` cover **disjoint halves of the same bus**: the first represents triggers, flows and processes and **explicitly excludes CometD and Pub/Sub API subscribers**; the second counts deliveries to exactly those external clients and relays and ignores in-org subscribers. Three notes in this vault said *nothing tells you a subscriber failed* and none said how to look — the answer is both objects, and naming either alone leaves half the bus dark. `PlatformEventUsageMetric` is API 50.0+, keyed on `PLATFORM_EVENTS_PUBLISHED` / `PLATFORM_EVENTS_DELIVERED` / `CHANGE_EVENTS_PUBLISHED` / `CHANGE_EVENTS_DELIVERED`, retained **at least 45 days**, updated **hourly** — so it is retrospective, never live. **Enhanced Usage Metrics (API 58.0+) is opt-in** and is the only way to attribute a spike to an event name or client.
+
+**Corrections made to [13](13-change-data-capture.md) while writing.** Gap events were mentioned without being enumerated — they are a `changeType`, not a channel: `GAP_CREATE`, `GAP_UPDATE`, `GAP_DELETE`, `GAP_UNDELETE`, `GAP_OVERFLOW`. And the loop-prevention advice named `commitUser` or a marker field, when **`changeOrigin` is the documented mechanism** — `com/salesforce/api/<API_Name>/<API_Version>;client=<Client_ID>`, whose stated purpose is *"to detect whether your app initiated the change to not process the change again."* `commitUser` works only while the integration owns a dedicated user; `changeOrigin` survives sharing one. Also added: **`nulledFields` and `diffFields` reach Apex and Pub/Sub subscribers only.**

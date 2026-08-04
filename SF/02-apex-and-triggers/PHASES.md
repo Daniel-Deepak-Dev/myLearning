@@ -1,6 +1,6 @@
 # Phases for 02 · Apex & Triggers
 
-24 topics across 3 runs — **phases 03–05 complete, the area is done.** Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
+26 topics across 4 runs — **phases 03–05 and 20 complete, the area is done.** Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
 
 > **The area-wide constraint.** Three defaults flipped at API 67.0 — user mode, `with sharing`, `WITH SECURITY_ENFORCED` retired. Phase 04 owns them, but **every phase must be written as if they are already true.** Never show a code sample that relies on the old defaults without labelling it. Anchor: [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
 
@@ -109,3 +109,24 @@ Closes Apex, opens [03-lwc-and-slds](../03-lwc-and-slds/INDEX.md). See that area
 - **The Stub API's restriction list is the story, not the API.** No static (incl. `@future`) or private methods, **no properties — getters and setters both**, no triggers, inner classes, system types, `Batchable` classes, private-constructor-only classes, or iterators as parameter/return types; and the stub must share the caller's namespace. Those exclude most utility classes, so stubbing is a **design** constraint: interface or `virtual`, injected not instantiated inline. Dispatch is on the method name **as a `String`**, so a rename leaves the stub compiling and silently returning `null`.
 - **Two testing features the plan missed.** **Apex Integration Tests** — Developer Preview at 67.0, and narrower than the name: the feature is *for **Agentforce and Data 360 Services***, scratch orgs only via the `ApexIntegrationTests` feature (`@IntegrationTest`, `IntegrationTest.commitTestOnly()`, `@TearDown`). **`RunRelevantTests`** — Beta from Spring '26, steered by `@IsTest(testFor=…)` and overridden by `@IsTest(critical=true)`; Unified Logic Testing (Beta) runs Apex and Flow tests in one request, which matters because **22** is the seam between them.
 - **Three small facts that earned their place.** `System.runAs` **costs one DML statement per call** — easy to hit in a loop over test users. **No coverage is calculated for a non-test method called from `@TestSetup`**, so building data through your own service layer looks like it covers that layer and does not. The `Assert` class is **Winter '23 (API 56.0)** and `System.assertEquals` is **not** deprecated with no announced retirement — "the old methods are dead" is a common overstatement.
+
+---
+
+## Phase 20 — Platform Cache & event testing · 2 files ✅
+
+**The area was marked done at 24 topics and had two holes in it.** Both were found by grepping the finished vault rather than by working through a plan — the first maintenance run in the build.
+
+```
+25-platform-cache.md
+26-testing-platform-events-and-cdc.md
+```
+
+**Appended, not renumbered.** Area 02 is named by number from at least four other areas, so 25–26 went on the end. See the master [../PHASES.md](../PHASES.md) for the standing position on this.
+
+**25 — no `## 2026 currency` section, deliberately.** Research found nothing about Platform Cache that changed in the 2024–2026 window; the template's own instruction is to delete the heading rather than pad it, and this is the first note in the vault to take that option. The facts that carry the note are old and stable: **LRU eviction on partition fill**, TTL ceilings of **8 h session / 48 h org** (org defaults to 24 h), **100 KB per item**, **50-character keys**, and capacity of **EE 10 MB · UE/Performance 30 MB · Developer 0 until trial · Professional none**. What makes it worth a topic is the design consequence, which most write-ups bury: **a cache miss is the normal path, not an error branch** — Salesforce's own wording is *"Ensure that your code handles cache misses by testing cache requests that return null."*
+
+**Two things 25 says that the internet mostly does not.** Cache **enforces neither FLS nor sharing on read**, so what you cache is what any later caller gets — cache the computed answer, not raw record data. And **custom settings and custom metadata are already in an application cache**, so config is the wrong thing to reach for Platform Cache with; callout responses and expensive aggregates are the right thing.
+
+**26 exists because an event subscriber can be entirely broken and still show green.** Publishing inside a test does not run the subscriber — the message sits on a test-context bus until `Test.getEventBus().deliver()` or `Test.stopTest()`. A test that asserts on the `SaveResult` alone proves the bus accepted a message and nothing more. Specifics that earned their place: `deliver()` delivers **only what was published since the last `deliver()` call**, which is what makes stepping through a retry sequence possible; `Test.enableChangeDataCapture()` must be **the first statement, before any DML**; `EventBusSubscriber.Retries` counts attempts while **`Position` does not advance** on a `RetryableException`; and test context delivers **at most 500** change event messages.
+
+**One 67.0 discovery that reached three files.** **Parallel subscriptions for Apex platform event triggers are GA at Summer '26** — up to **10 internal partitions** via `PlatformEventSubscriberConfig`, keyed on a required custom field or the standard `EventUuid`, for **custom high-volume platform events only** (not standard events, not change events). The testing consequence is the reason it is in 26 as well as [06-integration · 27](../06-integration-and-apis/27-event-bus-allocations-limits-and-monitoring.md): **order holds within a partition and not across them**, so a test asserting that one event's effect precedes another's asserts something a partitioned production subscriber no longer guarantees. Neither 18 nor 04-flow · 07 knew this feature existed.

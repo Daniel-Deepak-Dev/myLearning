@@ -65,3 +65,4 @@ A: Developer Preview, Agentforce and Data 360 only, scratch orgs only — `@Inte
 - [20 · Apex testing fundamentals](20-apex-testing-fundamentals.md) — isolation, `@TestSetup` and the limit resets these tests still obey
 - [19 · Callouts, Named Credentials & HTTP](19-callouts-named-credentials-and-http-in-apex.md) — the real callout a mock stands in for
 - [22 · Invocable Apex & Agentforce actions](22-invocable-apex-and-agentforce-actions.md) — the seam Unified Logic Testing exists to cover
+- [26 · Testing platform events & CDC](26-testing-platform-events-and-cdc.md) — `Test.getEventBus().deliver()` and stepping through a retry sequence

@@ -79,3 +79,4 @@ A: User mode and the `with sharing` default mean the running identity decides th
 - [21 · Apex testing advanced & mocking](21-apex-testing-advanced-and-mocking.md) — faking callouts and dependencies once the data problem is solved
 - [10 · Apex security: user mode & FLS](10-apex-security-user-mode-and-fls.md) — why `System.runAs` became load-bearing at 67.0
 - [09 · Exception handling & custom exceptions](09-exception-handling-and-custom-exceptions.md) — asserting on a thrown exception rather than swallowing it
+- [26 · Testing platform events & CDC](26-testing-platform-events-and-cdc.md) — the subscriber that passes green without ever running

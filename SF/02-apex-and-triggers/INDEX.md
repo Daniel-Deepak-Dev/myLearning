@@ -1,6 +1,6 @@
 # 02 · Apex & Triggers
 
-Expert Apex, including the **API 67.0 security rewrite that invalidates most published examples**. **24 topics** · phases [03](PHASES.md), [04](PHASES.md), [05](PHASES.md) — **area complete ✅**.
+Expert Apex, including the **API 67.0 security rewrite that invalidates most published examples**. **26 topics** · phases [03](PHASES.md), [04](PHASES.md), [05](PHASES.md), [20](PHASES.md) — **area complete ✅**.
 
 > Currency: **Summer '26 (API 67.0)** · [flag legend](../README.md#flag-legend) · [what changed](../CURRENCY.md)
 
@@ -32,6 +32,8 @@ Expert Apex, including the **API 67.0 security rewrite that invalidates most pub
 | 22 | [Invocable Apex & Agentforce actions](22-invocable-apex-and-agentforce-actions.md) 🆕 | `@InvocableMethod` contract; no-arg constructor from **66.0**, enforced Summer '26 | 05 |
 | 23 | [`UserDefinedType` & typed interop](23-userdefinedtype-and-typed-interop.md) 🆕 | **no such interface exists** — ADTs, `@InvocableVariable`, `equals`/`hashCode` | 05 |
 | 24 | [Apex performance & profiling](24-apex-performance-and-profiling.md) | CPU and heap are the two that bite; `Limits` deltas over whole-log reading | 05 |
+| 25 | [Platform Cache](25-platform-cache.md) | `Cache.Org`/`Cache.Session`, `CacheBuilder`, LRU eviction — **a miss is the normal path** | 20 |
+| 26 | [Testing platform events & CDC](26-testing-platform-events-and-cdc.md) | `Test.getEventBus().deliver()`, `Test.enableChangeDataCapture()`; an undelivered subscriber passes green | 20 |
 
 ## Related
 

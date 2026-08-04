@@ -65,3 +65,4 @@ A: After the event is processed. Persisting on receipt loses events across a cra
 - [12 · Platform Event design](12-platform-event-design.md) — what belongs in the payload
 - [13 · Change Data Capture](13-change-data-capture.md) — the record-change stream on the same transport
 - [02-apex · 18 Platform events & CDC in Apex](../02-apex-and-triggers/18-platform-events-and-cdc-in-apex.md) — the in-org half
+- [27 · Event bus allocations, limits & monitoring](27-event-bus-allocations-limits-and-monitoring.md) — the delivery allocation a Pub/Sub client spends, and the concurrent-client cap

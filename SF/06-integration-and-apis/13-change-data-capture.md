@@ -19,7 +19,7 @@ It is delivered on the same event bus as platform events, with the same replay a
 | **Custom channel** | a chosen set of objects, so a subscriber gets only what it needs |
 | **Enablement** | Setup → Change Data Capture, per object, with an entitlement cap |
 
-- **The payload carries the *changed fields only*, plus a header.** The `ChangeEventHeader` holds `changeType`, `changedFields`, `recordIds`, `commitTimestamp`, `commitNumber` and `commitUser` — that header is where most of the useful information lives.
+- **The payload carries the *changed fields only*, plus a header.** The `ChangeEventHeader` holds `changeType`, `changedFields`, `recordIds`, `entityName`, `commitTimestamp`, `commitNumber`, `commitUser`, `changeOrigin`, `transactionKey` and `sequenceNumber` — that header is where most of the useful information lives. **`nulledFields` and `diffFields` reach Apex and Pub/Sub API subscribers only.**
 - **One message can cover many records.** `recordIds` is a list, because a bulk update commits together — so subscribers are bulk by construction.
 - **`commitNumber` and `commitTimestamp` are how you order things.** Arrival order is not guaranteed to be commit order.
 - **Enrichment fields** add selected fields to *every* message even when unchanged, which is how a downstream system gets a stable external ID it can match on without a callback query.
@@ -37,9 +37,9 @@ CDC is the recommended replacement for **PushTopic events**, which are the piece
 - **CDC is not an audit trail.** Three-day retention, and it captures the change, not the reason. Field History and Field Audit Trail are the audit answer. → [07-security · 22](../07-security-and-sharing/22-field-audit-trail-and-data-retention.md)
 - **`changedFields` is empty on create and delete** — everything is "changed" on insert and nothing is on delete. Branch on `changeType` first.
 - **Enabling CDC on a busy object is a volume decision.** Every automated update publishes, including your own integrations' writes — which is how a sync loop starts.
-- **Gap events exist.** When the platform cannot deliver the detail it publishes a gap event; a subscriber that ignores them will silently diverge.
-- **Your own writes come back to you.** Filter on `commitUser` or a marker field, or a two-way sync will oscillate.
-- **Enablement is capped by entitlement**, so "enable it on everything" is usually not available and should not be the design anyway.
+- **Gap events exist, and they are a `changeType`, not a separate channel.** `GAP_CREATE`, `GAP_UPDATE`, `GAP_DELETE`, `GAP_UNDELETE` and `GAP_OVERFLOW` arrive when the platform cannot generate full detail — branch on them or a subscriber silently diverges. Some picklist field conversions generate a `GAP_UPDATE` for every affected record.
+- **Your own writes come back to you, and `changeOrigin` is the documented defence.** It carries `com/salesforce/api/<API_Name>/<API_Version>;client=<Client_ID>`, so a client that sets its ID can recognise and skip its own changes. `commitUser` works only while the integration has a dedicated user; `changeOrigin` survives sharing one.
+- **Enablement caps at 5 entities** across all channels by default in Enterprise, Performance and Developer — only the add-on licence lifts it, so "enable it on everything" is not available and should not be the design anyway. → [27](27-event-bus-allocations-limits-and-monitoring.md)
 
 ## Recall
 
@@ -63,4 +63,5 @@ A: Three-day retention, and it records the change rather than the reason. Field 
 - [11 · Pub/Sub API](11-pub-sub-api.md) — the transport, replay and retention model
 - [12 · Platform Event design](12-platform-event-design.md) — when you author the message instead
 - [14 · Legacy streaming & outbound messaging](14-legacy-streaming-and-outbound-messaging.md) — PushTopic, which this replaces
+- [27 · Event bus allocations, limits & monitoring](27-event-bus-allocations-limits-and-monitoring.md) — the 5-entity cap and the delivery pool CDC shares with platform events
 - [02-apex · 18 Platform events & CDC in Apex](../02-apex-and-triggers/18-platform-events-and-cdc-in-apex.md) — subscribing in code

@@ -63,3 +63,4 @@ A: Daily, org-wide consumption — async executions, API calls, storage — rath
 - [01 · Apex language core & governor limits](01-apex-language-core-and-governor-limits.md) — the full per-transaction limit table
 - [08 · Bulkification patterns](08-bulkification-patterns.md) — the fix for almost every limit that is not CPU or heap
 - [08-data · 09 Query Plan & performance tuning](../08-data-modeling-and-large-data-volumes/09-query-plan-and-performance-tuning.md) — where slow queries are actually diagnosed and solved
+- [25 · Platform Cache](25-platform-cache.md) — skipping the work entirely, when the result survives being lost
