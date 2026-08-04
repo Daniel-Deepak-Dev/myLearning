@@ -23,7 +23,7 @@ Everything here reduces to rows in a **share table**. Every object whose OWD is 
 - **Manual sharing needs the *Sharing* button**, which only appears when the object's OWD is more restrictive than Public Read/Write — the button's absence is the OWD telling you there is nothing to grant.
 - **Access levels are Read Only, Read/Write and Full Access**, and Full Access is owner-only — you cannot grant it, and you cannot grant *less* than the OWD.
 - **Rule limits are per object and per type**, and criteria-based rules are the scarcer of the two; check the current per-object caps before designing a model that needs dozens.
-- **Guest sharing rules are the only way a guest user sees a record**, are read-only by construction, and guests cannot own records at all. → [05-experience-cloud · 07](../05-experience-cloud-lwr/INDEX.md)
+- **Guest sharing rules are the only way a guest user sees a record**, are read-only by construction, and guests cannot own records at all. → [05-experience-cloud · 07](../05-experience-cloud-lwr/07-guest-user-security-model.md)
 
 ## 2026 currency
 

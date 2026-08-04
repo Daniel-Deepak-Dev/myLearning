@@ -29,7 +29,7 @@ The reason this matters architecturally is **maintenance**. A mobile app built o
 - **Picklist values are record-type dependent**, which is why the record type ID is in the path. A client that caches one global picklist will offer invalid values.
 - **`record-defaults/create` is how you build a correct new-record form** — defaults, required flags and layout, without reimplementing the org's configuration.
 - **It is scoped to Lightning Experience semantics.** UI API does not expose everything REST does; it exposes what a Salesforce-shaped UI needs.
-- **The natural consumers are mobile and headless front ends**, including Experience Cloud built outside Experience Builder. → [05-experience-cloud · 13](../05-experience-cloud-lwr/INDEX.md)
+- **The natural consumers are mobile and headless front ends**, including Experience Cloud built outside Experience Builder. → [05-experience-cloud · 15](../05-experience-cloud-lwr/INDEX.md)
 
 ## 2026 currency
 

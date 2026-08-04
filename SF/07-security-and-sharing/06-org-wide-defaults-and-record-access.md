@@ -18,7 +18,7 @@ Org-wide defaults set the **floor**, and everything else in record access only e
 | **Public Read/Write/Transfer** | as above plus change of owner — Case and Lead only |
 | **Controlled by Parent** | the child's access is the parent's, exactly |
 
-- **Every object has two OWDs — internal and external.** The external default governs Experience Cloud and portal users and cannot be more permissive than the internal one. → [05-experience-cloud · 07](../05-experience-cloud-lwr/INDEX.md)
+- **Every object has two OWDs — internal and external.** The external default governs Experience Cloud and portal users and cannot be more permissive than the internal one. → [05-experience-cloud · 07](../05-experience-cloud-lwr/07-guest-user-security-model.md)
 - **`Grant Access Using Hierarchies`** is a per-object switch. It is **forced on for standard objects** and optional for custom ones; turning it off on a custom object stops managers inheriting their subordinates' records. → [07](07-role-hierarchy-and-ownership.md)
 - **Implicit sharing is created by the platform and is not configurable.** The important cases: a contact, case, opportunity or order under an account grants **read** on the parent account; account access can imply access to its children depending on the child object's OWD; and a portal user's account and contact are implicitly shared to them.
 - **Tightening an OWD triggers a full sharing recalculation** of that object and everything below it. On a large object this is measured in hours, not seconds. → [16](16-sharing-recalculation-and-performance.md)
@@ -35,7 +35,7 @@ Record access is the most stable part of the platform and the OWD values have no
 - **You cannot restrict with a sharing rule.** If the OWD is too open, no amount of rule-writing fixes it — only changing the OWD does. → [11](11-restriction-rules.md)
 - **Implicit sharing means "Private" is not private.** A user with access to a child record gets read on the parent account whether you wanted that or not.
 - **`Controlled by Parent` is not a lookup behaviour.** It is master-detail, and it removes the child's own OWD, sharing rules and manual sharing entirely. → [08-data · 02](../08-data-modeling-and-large-data-volumes/02-relationships-deep-dive.md)
-- **The external OWD is a separate setting that people forget exists.** Leaving it at the internal value is how guest and community users end up over-privileged. → [05-experience-cloud · 07](../05-experience-cloud-lwr/INDEX.md)
+- **The external OWD is a separate setting that people forget exists.** Leaving it at the internal value is how guest and community users end up over-privileged. → [05-experience-cloud · 07](../05-experience-cloud-lwr/07-guest-user-security-model.md)
 - **Loosening an OWD is fast; tightening it is a recalculation.** Plan tightening for a maintenance window and use deferred sharing for a batch of changes.
 - **Sharing rules on a Public Read/Write object are dead configuration** that still consumes recalculation time and still appears in audits as intent.
 - **`Grant Access Using Hierarchies` cannot be turned off for standard objects**, so "managers must not see their reports' opportunities" is unachievable declaratively on Opportunity.
