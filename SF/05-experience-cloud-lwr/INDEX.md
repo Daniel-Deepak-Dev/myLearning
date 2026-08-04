@@ -24,14 +24,14 @@ Public, partner and customer sites built **LWR-first**. **20 topics** · phases 
 | 10 | [Authentication, self-registration & SSO](10-authentication-self-registration-and-sso.md) | Login & Registration, JIT, login flows, Headless Identity | 18 |
 | 11 | [Public site exposure audit](11-public-site-exposure-audit.md) 🆕⚠️ | **the 7 Mar 2026 advisory**; the eight-item guest audit | 18 |
 | 12 | [Aura to LWR: migration & coexistence](12-aura-to-lwr-migration-and-coexistence.md) 🆕⚠️ | **no converter exists**; rebuild and cut over, or don't | 18 |
-| 13 | Navigation, search & audiences | nav menus, search config, audience targeting | 19 |
-| 14 | Enhanced CMS & content delivery 🆕 | content types, workspaces, channels | 19 |
-| 15 | Headless sites & Connect APIs 🆕 | decoupled front ends over Connect/Headless APIs | 19 |
-| 16 | Site performance, caching & SEO 🆕 | SSR caching, Lighthouse budgets, LWR SEO | 19 |
-| 17 | Mobile Publisher & PWA delivery | branded apps, PWA option, review pipeline | 19 |
-| 18 | Experience Cloud DevOps ⚠️ | ExperienceBundle vs DigitalExperienceBundle, deployment gotchas | 19 |
-| 19 | Embedded messaging & agents in sites 🆕 | embedded service deployment, agent on public sites | 19 |
-| 20 | Site monitoring, limits & scale | page view limits, guest throttling, capacity planning | 19 |
+| 13 | [Navigation, search & audiences](13-navigation-search-and-audiences.md) | nav menus, search config, audience targeting | 19 |
+| 14 | [Enhanced CMS & content delivery](14-enhanced-cms-and-content-delivery.md) 🆕 | content types, workspaces, channels, enhanced-LWR-only | 19 |
+| 15 | [Headless sites & Connect APIs](15-headless-sites-and-connect-apis.md) 🆕 | decoupled front ends over Connect/Headless APIs | 19 |
+| 16 | [Site performance, caching & SEO](16-site-performance-caching-and-seo.md) 🆕 | SSR caching, Lighthouse budgets, Experience Delivery **Beta** | 19 |
+| 17 | [Mobile Publisher & PWA delivery](17-mobile-publisher-and-pwa-delivery.md) | branded apps, PWA option, review pipeline | 19 |
+| 18 | [Experience Cloud DevOps](18-experience-cloud-devops.md) ⚠️ | ExperienceBundle vs DigitalExperienceBundle, deployment gotchas | 19 |
+| 19 | [Embedded messaging & agents in sites](19-embedded-messaging-and-agents-in-sites.md) 🆕 | embedded service deployment, agent on public sites | 19 |
+| 20 | [Site monitoring, limits & scale](20-site-monitoring-limits-and-scale.md) | page view limits, guest throttling, capacity planning | 19 |
 
 ## Related
 
