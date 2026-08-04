@@ -50,4 +50,4 @@ Topics are numbered in the order they were written, not strictly in learning ord
 - **13 and 14 are one story split in two.** Custom properties are the only thing that crosses a shadow boundary, which is why styling hooks — not class overrides — are the supported customization surface.
 - **07's off-platform counterpart** is the standalone GraphQL API in [06-integration](../06-integration-and-apis/INDEX.md); Summer '26 mutation chaining landed there, **not** in the wire adapter.
 - **19** feeds [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md) — how agent action output renders.
-- **21** overlaps [09-devops · 22 VS Code & tooling](../09-devops-sfdx-and-release-management/INDEX.md).
+- **21** overlaps [09-devops · 24 VS Code & tooling](../09-devops-sfdx-and-release-management/INDEX.md).

@@ -2,7 +2,7 @@
 
 > Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 07
 
-**Scope:** Seeing a component change in a browser without deploying — the `sf lightning dev` commands and the VS Code preview. Installing and configuring the CLI itself is [09-devops · 22](../09-devops-sfdx-and-release-management/INDEX.md); this owns the authoring loop.
+**Scope:** Seeing a component change in a browser without deploying — the `sf lightning dev` commands and the VS Code preview. Installing and configuring the CLI itself is [09-devops · 24](../09-devops-sfdx-and-release-management/INDEX.md); this owns the authoring loop.
 
 > **What changed — twice, and the name is the trap.** The 2019-era `sfdx force:lightning:lwc:start` local dev server is **dead**, and it was a different product: it rendered components against mocks, off-org. What replaced it is `sf lightning dev`, backed by a real org. Then the branding moved: **the VS Code extension was renamed *Local Dev* → *Live Preview*, and LWC Component Preview reached GA at API 67.0** with faster, more memory-efficient hot module reloading. Anything written before Summer '26 uses a name that no longer exists.
 

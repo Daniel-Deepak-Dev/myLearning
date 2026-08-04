@@ -43,7 +43,7 @@ describe('c-my-cmp', () => {
 
 ## 2026 currency
 
-The **direct-emit wire pattern has been the recommendation since Spring '21**, but the `register*TestWireAdapter` form is what nearly every blog post and older Trailhead screenshot shows, so expect to meet it in an existing codebase — it is not broken, just superseded. The runner moved with the CLI: `sfdx force:lightning:lwc:test:*` belongs to `sfdx` v1 and is gone → [09-devops · 01](../09-devops-sfdx-and-release-management/INDEX.md). Newer surfaces are only partly testable this way — a component written against **State Managers** ([24](24-lwc-state-managers.md)) is tested by exercising the state module directly, which is most of the argument for extracting state in the first place.
+The **direct-emit wire pattern has been the recommendation since Spring '21**, but the `register*TestWireAdapter` form is what nearly every blog post and older Trailhead screenshot shows, so expect to meet it in an existing codebase — it is not broken, just superseded. The runner moved with the CLI: `sfdx force:lightning:lwc:test:*` belongs to `sfdx` v1 and is gone → [09-devops · 01](../09-devops-sfdx-and-release-management/01-sf-cli-v2-fundamentals.md). Newer surfaces are only partly testable this way — a component written against **State Managers** ([24](24-lwc-state-managers.md)) is tested by exercising the state module directly, which is most of the argument for extracting state in the first place.
 
 ## Gotchas
 

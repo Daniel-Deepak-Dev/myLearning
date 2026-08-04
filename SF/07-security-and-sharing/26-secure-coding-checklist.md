@@ -42,7 +42,7 @@ Three lines above are new this year and worth stating as rules rather than check
 - **Test coverage proves nothing about security.** Tests run as an admin unless you use `System.runAs`, and after the async sharing update even that lags. → [16](16-sharing-recalculation-and-performance.md)
 - **A `catch` that returns the raw exception message leaks schema and row data** to the client. Log the detail, return a generic message.
 - **`Schema.describe` calls are for deciding what to render**, not for guarding a write — the platform guards the write now.
-- **Code Analyzer catches some of this and not the interesting parts.** Escalation intent, guest reachability and agent scope are human review. → [09-devops · 14](../09-devops-sfdx-and-release-management/INDEX.md)
+- **Code Analyzer catches some of this and not the interesting parts.** Escalation intent, guest reachability and agent scope are human review. → [09-devops · 16](../09-devops-sfdx-and-release-management/INDEX.md)
 - **The same logic is more permissive built in Flow than in Apex at 67.0.** "Clicks are safer than code" is backwards, and a Flow diff deserves this checklist too. → [04-flow · 19](../04-flow-and-automation/19-flow-run-context-and-sharing.md)
 
 ## Recall

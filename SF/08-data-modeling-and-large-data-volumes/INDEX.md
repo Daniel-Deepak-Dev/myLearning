@@ -47,8 +47,8 @@ Model it well, then keep it fast past 10M rows. **26 topics** · phases [14](PHA
 - **[16](16-bulk-loading-strategy-for-ldv.md)** depends on [06-integration · 07 Bulk API 2.0](../06-integration-and-apis/07-bulk-api-2.md).
 - **[17](17-external-objects-vs-replicated-copies.md)** pairs with [06-integration · 20 Salesforce Connect](../06-integration-and-apis/20-salesforce-connect-and-external-objects.md).
 - **[18](18-zero-copy-and-data-360-as-data-tier.md)** is the seam into [AI_Data/01-data-cloud/](../../AI_Data/01-data-cloud/INDEX.md) — zero-copy federation is a Data 360 topic seen from the core-platform side, and that vault owns the connector status table.
-- **[20](20-sandboxes-seeding-and-data-mask.md)** overlaps [09-devops · 06 Source tracking & sandbox workflow](../09-devops-sfdx-and-release-management/INDEX.md) — this note owns the *data*, that one owns source tracking.
-- **[23](23-hyperforce-residency-and-data-locality.md)** pairs with [09-devops · 21](../09-devops-sfdx-and-release-management/INDEX.md) — same platform shift, data side vs ops side.
+- **[20](20-sandboxes-seeding-and-data-mask.md)** overlaps [09-devops · 06 Source tracking & sandbox workflow](../09-devops-sfdx-and-release-management/06-source-tracking-and-sandbox-workflow.md) — this note owns the *data*, that one owns source tracking.
+- **[23](23-hyperforce-residency-and-data-locality.md)** pairs with [09-devops · 23](../09-devops-sfdx-and-release-management/INDEX.md) — same platform shift, data side vs ops side.
 - **[25](25-data-migration-and-cutover.md)** and **[26](26-cross-org-data-sharing-and-consolidation.md)** were added in phase 15; see [PHASES.md](PHASES.md) for why.
 
 ## Seed notes

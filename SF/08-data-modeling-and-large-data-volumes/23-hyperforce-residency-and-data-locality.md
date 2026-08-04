@@ -2,7 +2,7 @@
 
 > Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 15
 
-**Scope:** Where the org's data physically runs, what the migration changes underneath you, and what residency does and does not promise. The ops-side view is [09-devops · 21](../09-devops-sfdx-and-release-management/INDEX.md).
+**Scope:** Where the org's data physically runs, what the migration changes underneath you, and what residency does and does not promise. The ops-side view is [09-devops · 23](../09-devops-sfdx-and-release-management/INDEX.md).
 
 > **What changed.** Hyperforce is no longer something to plan for. Salesforce Help is explicit: **"Starting July 1, 2026, it is no longer possible to delay upgrades to Hyperforce."** Any guidance that treats the move as optional, or as a project you schedule when convenient, is out of date — you get **30 days' notice** and a **15-day reminder**, and that is the whole window.
 

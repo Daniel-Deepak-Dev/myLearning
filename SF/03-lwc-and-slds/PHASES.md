@@ -130,7 +130,7 @@ Shares a run with the Apex closeout — see [02-apex-and-triggers/PHASES.md](../
 **🆕 — research before writing**
 - **19** Custom Lightning Types — how typed agent action results render on desktop vs mobile. Cross-link [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md); don't duplicate the agent side.
 - **20** Offline LWC — offline GraphQL, draft records, and the real constraint list.
-- **21** `sf lightning dev app|site` — the hot-reload workflow. Overlaps [09-devops · 22](../09-devops-sfdx-and-release-management/INDEX.md); this note owns the component-authoring angle, that one owns the tooling install.
+- **21** `sf lightning dev app|site` — the hot-reload workflow. Overlaps [09-devops · 24](../09-devops-sfdx-and-release-management/INDEX.md); this note owns the component-authoring angle, that one owns the tooling install.
 
 **Seed harvest** — `Local Dev` (2024) maps to **21** and may be the most current LWC note in the corpus. Read it before writing — but note it is **named for a thing that has been renamed**: phase 05 found that **LWC Component Preview went GA at 67.0** and the VS Code extension is now **Live Preview**, not Local Dev. Treat the page's terminology as dated even where its workflow is not.
 

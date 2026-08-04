@@ -53,7 +53,7 @@
 18-site-monitoring-limits-and-scale.md
 ```
 
-**⚠️** — **16**: **ExperienceBundle vs SiteDotCom** is the deployment trap. The metadata type you get depends on the template, they behave differently in source control, and this breaks pipelines regularly. Depends on [09-devops · 05](../09-devops-sfdx-and-release-management/INDEX.md).
+**⚠️** — **16**: **ExperienceBundle vs SiteDotCom** is the deployment trap. The metadata type you get depends on the template, they behave differently in source control, and this breaks pipelines regularly. Depends on [09-devops · 05](../09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md).
 
 **🆕 — research before writing:** **12** (Enhanced CMS — content types, workspaces, channels), **13** (headless over Connect APIs), **14**, **17**.
 
