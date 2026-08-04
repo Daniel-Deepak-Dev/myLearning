@@ -3,7 +3,7 @@
 > Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 01
 Human UI: Record Types strictly enforce which picklist values a user can select.
 
-Agent API: The API bypasses these UI restrictions.
+Agent API: The API bypasses the picklist subset, but still enforces record type availability.
 
 Agent Context: Agents use Record Types simply as a blueprint to guide which picklist values are appropriate for a specific process, as the system will not block them from inserting mismatched values.
 
@@ -23,42 +23,24 @@ A record type lets one object serve several business processes without splitting
 - **Dependent picklists** filter a dependent field's values by a controlling field. The controlling field must be a picklist of **300 values or fewer**, or a checkbox. Multi-select picklists cannot control.
 - **Business processes** must exist before a record type can be created on `Opportunity`, `Case`, `Lead` and `Solution` — the record type form asks for one.
 
+## Human vs Agent
+
+| Behaviour | Human (UI) | Agent / API |
+|---|---|---|
+| Picklist subset per record type | enforced | **not enforced** |
+| Record type availability | enforced | enforced — `INVALID_CROSS_REFERENCE_KEY` |
+| Page layout per profile | applied | irrelevant |
+
+- **Discover:** `GET /ui-api/object-info/{obj}/picklist-values/{recordTypeId}/{field}` — scoped values plus `validFor` → [06-integration · 08](../06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md).
+- **Gap:** DML accepts a value the record type does not offer; availability is still checked.
+- **Close it:** a validation rule on `RecordType.DeveloperName`, or an invocable the agent calls instead of raw DML. UI API writes may also enforce it *(unverified — confirm in org)*.
+- **Agent identity:** the Agentforce agent user — its profile or permission set grants the record type.
+- **Example:** `Case.Reason` unions all four values, so an agent can file a `Refund` on a `Technical` case.
+- **Dead weight:** layout-per-profile assignment; an agent never renders it.
+
 ## 2026 currency
 
 The layout half of a record type's job is being displaced. Field visibility and section arrangement now belong to **Dynamic Forms**, and button/action visibility to **Dynamic Actions** — both driven by visibility rules rather than by layout-per-record-type assignment. Record types remain the right tool for picklist subsetting and process differentiation. See [05 · Dynamic Forms](INDEX.md) and [06 · Dynamic Actions](INDEX.md), phase 02.
-
-## For AI and headless users
-
-An agent never renders a layout, so that half of a record type is dead weight to it. The picklist half is worth *more* than it is to a human: a model asked to set a field sees the union of every value across every process unless something narrows it, and it will pick a plausible wrong one. The record type is that narrowing — a machine-readable enum per process.
-
-- **Read the scoped set, never hardcode it.** UI API returns exactly the values legal for one record type, plus the `validFor` bitmaps encoding the dependent-picklist rules:
-  - `GET /services/data/v67.0/ui-api/object-info/Case/picklist-values/{recordTypeId}/Reason`
-  - `GET /services/data/v67.0/ui-api/record-defaults/create/Case?recordTypeId={id}` — defaults *and* scoped picklists in one call; the usual agent-side "what may I write?" probe.
-- **Record type filtering is a UI rule, not a DML rule.** A plain REST/SOAP insert can set a value the record type does not offer and the platform accepts it. `Restricted` validates against the *field's* value set, never the record-type subset. Headless, a record type is guidance — not a guardrail.
-- **Enforcement is added deliberately:** a validation rule pairing `RecordType.DeveloperName` with the value, an invocable Apex/Flow the agent calls instead of doing raw DML, or writing through UI API, which does honour record-type constraints.
-- **The agent is a real user.** Agentforce runs its actions as an assigned agent user, so record type availability and defaults come from that user's permission sets. Granting an agent only the record types it should touch is real blast-radius control and makes intent auditable.
-- **Record type as a routing key.** Agentforce actions and prompt templates branch on `RecordTypeId` exactly as UI automation does — one "log a case" action resolves the record type and serves several processes, instead of shipping one action per process.
-- **Server-side automation is unaffected.** Validation rules, assignment rules, criteria-based sharing and record-triggered flows all read `RecordTypeId` regardless of write path, so an agent-created record still lands in the right process.
-
-### Example — `Case` with `Billing` and `Technical`
-
-`Reason` holds the union of both processes: `Invoice_Dispute`, `Refund`, `Hardware_Failure`, `Installation`. An agent handed the raw field describe sees all four and may file a `Refund` on a `Technical` case — and the API will write it.
-
-Ground the model on the scoped list, passing only those values into the tool schema:
-
-```
-GET /services/data/v67.0/ui-api/object-info/Case/picklist-values/012.../Reason
-→ { "values": [ { "value": "Hardware_Failure" }, { "value": "Installation" } ] }
-```
-
-Then enforce it, because the read above is only advisory:
-
-```
-AND(
-  RecordType.DeveloperName = "Technical",
-  OR(ISPICKVAL(Reason, "Invoice_Dispute"), ISPICKVAL(Reason, "Refund"))
-)
-```
 
 ## Gotchas
 
