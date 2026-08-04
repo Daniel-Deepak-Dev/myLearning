@@ -19,6 +19,20 @@ Dynamic Forms replaces the single opaque **Record Detail** component with indivi
 - **Mobile.** Dynamic Forms on Mobile went GA in Winter '24 and is **on by default in new orgs** since Spring '24. If the org has *not* opted in, migration adds a **Record Detail - Mobile** component for the Phone form factor; if it has, that component is not added.
 - **Still the page layout's job:** related lists, actions, compact layouts, Classic record pages, and the **required / read-only** field properties. Some fields arrive locked to Read-Only or Required and the properties panel will not let you change that — the layout decided it.
 
+## Human vs Agent
+
+| Behaviour | Human (UI) | Agent / API |
+|---|---|---|
+| Field / Field Section visibility rule | Component hidden on the page | Ignored — field reads and writes normally |
+| `Required` inherited from the layout | Save blocked until filled | Ignored — only universally required fields block |
+| `Read-Only` inherited from the layout | Input greyed out | Writable unless FLS says otherwise |
+
+- **Discover:** Tooling/Metadata API `FlexiPage` → `itemInstances[].fieldInstance.visibilityRule` (`UiFormulaCriterion`)
+- **Gap:** UI API `record-ui` returns a Record Layout built from the **page layout** — Dynamic Forms is invisible to it
+- **Close it:** validation rule for conditional required; [FLS](../07-security-and-sharing/13-field-level-security-and-visibility-layers.md) for hiding — never a visibility rule
+- **Agent identity:** runs as the agent user (Service) or logged-in user (Employee); FLS + sharing gate fields, no page is evaluated
+- **Dead weight:** columns, tabs, accordions, form-factor rules, collapsible sections, the migration wizard
+
 ## 2026 currency
 
 Object coverage completed at **Winter '24**; there is no remaining "custom objects only" caveat to work around. What is *not* true is that page layouts are deprecated — no retirement has been announced, and an org running Dynamic Forms everywhere still maintains layouts. Treat "page layout" in pre-2023 tutorials as meaning "the form design surface" and mentally redirect it.
