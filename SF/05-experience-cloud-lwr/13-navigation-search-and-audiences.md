@@ -17,7 +17,7 @@ Three separate systems decide what a user encounters. **Navigation** is menu str
 
 ## 2026 currency
 
-Enhanced LWR sites expanded audience criteria beyond the classic profile/location set to **record- and CMS-driven** targeting, so personalization can key off the CMS content a page renders rather than only who the user is. Guest-facing search continues to tighten: a searchable object still surfaces nothing a guest sharing rule hasn't granted. Detail: [AI_Data/05-release-radar/README.md](../../AI_Data/05-release-radar/README.md).
+Enhanced LWR sites expanded audience criteria beyond the classic profile/location set to **record- and CMS-driven** targeting, so personalization can key off the CMS content a page renders rather than only who the user is. Guest-facing search continues to tighten: a searchable object still surfaces nothing a guest sharing rule hasn't granted.
 
 ## Gotchas
 

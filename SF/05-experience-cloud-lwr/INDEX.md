@@ -8,12 +8,14 @@ Public, partner and customer sites built **LWR-first**. **20 topics** · phases 
 
 > ⚠️ **"LWR" is two products.** LWR and **enhanced LWR** use different metadata types, and the *Upgrade to Enhanced LWR Sites* Release Update — scheduled for enforcement in Spring '26 — **has not been enforced since Summer '25** → [02](02-lwr-architecture-and-build-model.md).
 
+> ⚠️ **There is no server-side rendering to plan for.** **Experience Delivery is being discontinued in Winter '27 and is already closed to new enablement** — if the org never turned it on, no toggle exists; those that did have until **October 2026**. It was Beta from Summer '24 and never flipped. Phase 18 recorded it as "still Beta", which was true and is now beside the point: **an LWR site's performance story is static build + CDN, full stop** → [02](02-lwr-architecture-and-build-model.md), [16](16-site-performance-caching-and-seo.md).
+
 > ⚠️ Runs **late** (phases 18–19) on purpose: guest-user hardening depends on [07-security-and-sharing](../07-security-and-sharing/INDEX.md), and site deployment depends on [09-devops](../09-devops-sfdx-and-release-management/INDEX.md).
 
 | # | Topic | Scope | Phase |
 |---|---|---|---|
 | 01 | [Template choice & site landscape](01-template-choice-and-site-landscape.md) 🆕⚠️ | **two LWR templates, five Aura ones, none retired** | 18 |
-| 02 | [LWR architecture & build model](02-lwr-architecture-and-build-model.md) 🆕⚠️ | built not rendered; enhanced LWR; Experience Delivery **Beta** | 18 |
+| 02 | [LWR architecture & build model](02-lwr-architecture-and-build-model.md) 🆕⚠️ | built not rendered; enhanced LWR; Experience Delivery **discontinued Winter '27** | 18 |
 | 03 | [Site setup, domains & publishing](03-site-setup-domains-and-publishing.md) | irreversible names, Salesforce CDN vs Cloudflare, publish ≠ activate | 18 |
 | 04 | [Experience Builder layouts & theme layouts](04-experience-builder-layouts-and-theme-layouts.md) | theme vs page layout, slots, the LWR targets | 18 |
 | 05 | [Branding sets, design tokens & SLDS 2](05-branding-sets-design-tokens-and-slds-2.md) 🆕 | `--dxp` hooks, branding sets, **tokens inert under SLDS 2** | 18 |
@@ -27,11 +29,11 @@ Public, partner and customer sites built **LWR-first**. **20 topics** · phases 
 | 13 | [Navigation, search & audiences](13-navigation-search-and-audiences.md) | nav menus, search config, audience targeting | 19 |
 | 14 | [Enhanced CMS & content delivery](14-enhanced-cms-and-content-delivery.md) 🆕 | content types, workspaces, channels, enhanced-LWR-only | 19 |
 | 15 | [Headless sites & Connect APIs](15-headless-sites-and-connect-apis.md) 🆕 | decoupled front ends over Connect/Headless APIs | 19 |
-| 16 | [Site performance, caching & SEO](16-site-performance-caching-and-seo.md) 🆕 | SSR caching, Lighthouse budgets, Experience Delivery **Beta** | 19 |
+| 16 | [Site performance, caching & SEO](16-site-performance-caching-and-seo.md) 🆕⚠️ | **no SSR to plan for** — static build + CDN is the whole story | 19 |
 | 17 | [Mobile Publisher & PWA delivery](17-mobile-publisher-and-pwa-delivery.md) | branded apps, PWA option, review pipeline | 19 |
 | 18 | [Experience Cloud DevOps](18-experience-cloud-devops.md) ⚠️ | ExperienceBundle vs DigitalExperienceBundle, deployment gotchas | 19 |
-| 19 | [Embedded messaging & agents in sites](19-embedded-messaging-and-agents-in-sites.md) 🆕 | embedded service deployment, agent on public sites | 19 |
-| 20 | [Site monitoring, limits & scale](20-site-monitoring-limits-and-scale.md) | page view limits, guest throttling, capacity planning | 19 |
+| 19 | [Embedded messaging & agents in sites](19-embedded-messaging-and-agents-in-sites.md) 🆕⚠️ | **Enhanced Chat** (renamed 2025); legacy Chat **retired 14 Feb 2026**; agent on public sites | 19 |
+| 20 | [Site monitoring, limits & scale](20-site-monitoring-limits-and-scale.md) ⚠️ | **overage disables sites**, not just bills; EE 500k/mo, UE/PE 1M/mo | 19 |
 
 ## Related
 

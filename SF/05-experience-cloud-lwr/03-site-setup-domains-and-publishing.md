@@ -14,7 +14,7 @@ After that the model is simple and worth stating plainly because two words get c
 
 - **Setup → Digital Experiences → Settings** enables the feature and takes the org-wide domain (`<name>.my.site.com`). One-time, irreversible, and it is *not* your My Domain name — though it inherits My Domain's fate → [07-security · 20](../07-security-and-sharing/20-my-domain-enhanced-domains-and-trusted-urls.md).
 - **Each site gets a URL prefix** appended to that domain. Also permanent.
-- **Custom domains** are added under **Setup → Domains → Add a Domain**, then mapped to a site under **Custom URLs**. Choose *Serve the domain with the Salesforce CDN* for Experience Cloud; tick the **Cloudflare** option for Experience Delivery and Commerce LWR sites, which is a different CDN partner from the **Akamai**-served default.
+- **Custom domains** are added under **Setup → Domains → Add a Domain**, then mapped to a site under **Custom URLs**. Choose *Serve the domain with the Salesforce CDN* for Experience Cloud; the **Cloudflare** option belongs to Commerce LWR sites and to Experience Delivery, which is **being discontinued in Winter '27** → [02](02-lwr-architecture-and-build-model.md). The default Salesforce CDN path is **Akamai**.
 - **Custom domains are production-only** and need Enterprise, Performance or Unlimited — you cannot rehearse them in a Developer Edition org, and sandbox site URLs differ from production by construction.
 - **Three statuses**: *Preview* (builder-visible, members can't reach it), *Active* (live to members), *Inactive* (serves the **Service Not Available** page, which is itself customisable).
 - **Publish is per-site and ships everything currently saved in the builder** — including another person's in-progress edits. There is no per-change publish.
@@ -43,7 +43,7 @@ Q: What is the difference between publishing and activating a site?
 A: Publish makes Experience Builder changes live; activate makes the site reachable by members. They are independent.
 
 Q: Which CDN serves an Experience Delivery site?
-A: Cloudflare — the default Salesforce CDN path for other Experience Cloud domains is Akamai.
+A: Cloudflare — the default Salesforce CDN path for other Experience Cloud domains is Akamai. Note Experience Delivery itself is being discontinued in Winter '27, so Cloudflare's remaining Experience Cloud case is Commerce LWR.
 
 Q: What happens when a site is set to Inactive?
 A: It serves the customisable Service Not Available page; the published assets are unaffected.

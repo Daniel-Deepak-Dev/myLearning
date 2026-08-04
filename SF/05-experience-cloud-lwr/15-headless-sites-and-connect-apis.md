@@ -1,4 +1,4 @@
-# Headless Sites & Connect APIs 🆕
+# Headless Sites & Connect APIs
 
 > Area: 05-experience-cloud-lwr · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
@@ -17,12 +17,12 @@
 
 ## 2026 currency
 
-Under the "Headless 360" theme every capability is reachable as an API, which is what makes a fully decoupled customer site practical. But the platform's rendering advantages don't come with it: going headless hands you responsibility for SSR, caching and sitemaps that an LWR site would have done for you → [16](16-site-performance-caching-and-seo.md). Detail: [AI_Data/05-release-radar/README.md](../../AI_Data/05-release-radar/README.md).
+Under the **Headless 360** theme every capability is reachable as an API, which is what makes a fully decoupled customer site practical → [AI_Data · Headless 360](../../AI_Data/05-release-radar/developer-tooling-and-apis.md). The trade sharpened in Summer '26: LWR's own rendering advantage shrank when **Experience Delivery was slated for discontinuation**, so "we lose SSR by going headless" is no longer the argument against it — an LWR site has no server-side rendering to lose → [16](16-site-performance-caching-and-seo.md). What you still take on is caching and sitemaps.
 
 ## Gotchas
 
 - **Headless still requires a site.** Provision an Experience Cloud site even if it renders zero Experience Builder pages — Headless Identity and the guest/licensing context are exposed through it.
-- **You lose the platform's SSR/SEO.** The LWR build no longer renders or caches for you — you own it now, [16](16-site-performance-caching-and-seo.md).
+- **You lose the platform's build, CDN and sitemap** — not its SSR, which is going away anyway ([16](16-site-performance-caching-and-seo.md)). Caching, sitemaps and meta tags become yours. The upside is that you can add real SSR in your own stack, which the platform no longer offers.
 - **Guest data exposure moves to your API calls.** Any endpoint a public front end calls runs as the guest user — the exposure audit applies unchanged, [11](11-public-site-exposure-audit.md).
 - **API limits are the org's aggregate**, consumed by every headless request; a chatty front end can exhaust them, [20](20-site-monitoring-limits-and-scale.md).
 - **CORS and Trusted URLs** must include the front end's origin, or browser calls silently fail.
@@ -37,7 +37,7 @@ Q: Where is Headless Identity covered, and should this note restate it?
 A: In [10 · Authentication](10-authentication-self-registration-and-sso.md) — this note cross-links it rather than restating the login/registration/passwordless flows.
 
 Q: What do you give up by going headless that Experience Builder gave you for free?
-A: Platform-managed SSR, edge caching and SEO — you must own server-side rendering and sitemaps yourself.
+A: The static build, the CDN, the auto-generated sitemap and per-page meta — you own caching and SEO yourself. Not SSR: with Experience Delivery being discontinued, the platform has none to give up, so a headless stack is now the *only* way to get server-side rendering.
 
 Q: What is the main judgment call for choosing headless?
 A: Bespoke UX / native app / external design system versus Experience Builder's faster launch and admin maintainability — pick headless only when UX control genuinely outweighs those.
@@ -48,5 +48,5 @@ A: The guest user — so the guest exposure audit and sharing rules govern every
 ## Related
 
 - [10 · Authentication, self-registration & SSO](10-authentication-self-registration-and-sso.md) — where Headless Identity is actually taught
-- [16 · Site performance, caching & SEO](16-site-performance-caching-and-seo.md) — what you inherit responsibility for when you leave Experience Builder
+- [16 · Site performance, caching & SEO](16-site-performance-caching-and-seo.md) — what you inherit responsibility for when you leave Experience Builder, and why there is no SSR to lose
 - [06-integration · 08 UI API](../06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md) — the metadata-aware data API the front end calls

@@ -1,4 +1,4 @@
-# Experience Cloud DevOps ⚠️
+# Experience Cloud DevOps
 
 > Area: 05-experience-cloud-lwr · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
@@ -24,7 +24,7 @@ The metadata type behind a site is decided by its **template + runtime**, and th
 
 ## 2026 currency
 
-Enhanced sites being the default means `DigitalExperienceBundle` is the type you'll meet most, and the one stale tutorials get wrong by reaching for `ExperienceBundle` or `SiteDotCom`. Pipeline tooling (DevOps Center, Gearset-style tools) supports it — only if the manifest is right. Detail: [AI_Data/05-release-radar/README.md](../../AI_Data/05-release-radar/README.md).
+Enhanced sites being the default means `DigitalExperienceBundle` is the type you'll meet most, and the one stale tutorials get wrong by reaching for `ExperienceBundle` or `SiteDotCom`. Pipeline tooling (DevOps Center, Gearset-style tools) supports it — only if the manifest is right. CLI and deployment currency: [AI_Data · developer tooling](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
 
 ## Gotchas
 

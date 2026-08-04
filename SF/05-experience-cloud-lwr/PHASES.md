@@ -33,11 +33,11 @@
 
 **⚠️ corrections that landed, and how they differ from the plan's**
 - **01** — the plan's ⚠️ was *"LWR is the default; Aura templates are legacy"* and asked what still forces Aura. **The answer is: most purpose-built templates.** Only Build Your Own (LWR) and Microsite (LWR) are LWR. **This is the fifth phase where the plan's own correction was the stale thing** — see [../CURRENCY.md](../CURRENCY.md).
-- **02** — unplanned, and the larger of the two: **LWR ≠ enhanced LWR**, different metadata types, and the upgrade Release Update **stopped being enforced in Summer '25** after being scheduled for Spring '26.
+- **02** — unplanned, and the larger of the two: **LWR ≠ enhanced LWR**, different metadata types, and the upgrade Release Update **stopped being enforced in Summer '25** after being scheduled for Spring '26. *(This note's Experience Delivery content was rewritten by phase 19 — see that phase's section.)*
 - **07** — as planned, and it held: hardened by default, guest sharing rules only, read-only, no ownership, read/create only.
 - **12** — **"no converter exists"** is the correction, and it is inconvenient rather than interesting, which is why it needed writing down.
 
-**🆕 researched before writing:** **01**, **02** (Experience Delivery **is still Beta**, Summer '24 onward; islands, `lwr:hydrate`, Cloudflare vs Akamai), **05** (`--dxp` hooks, SLDS 2 token removal), **06**, **11**, **12**.
+**🆕 researched before writing:** **01**, **02** (Experience Delivery ~~**is still Beta**~~ — *true when written; **phase 19 found it is being discontinued in Winter '27**, see below* — Summer '24 onward; islands, `lwr:hydrate`, Cloudflare vs Akamai), **05** (`--dxp` hooks, SLDS 2 token removal), **06**, **11**, **12**.
 
 **Seed harvest** ([../_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md)) — as predicted, nearly nothing. `Exp Cloud Certification Prep` (2022) is the only relevant page and the one Experience Cloud database row is a **Visualforce** trick, out of scope. The one genuinely useful line came second-hand, via phase 10's harvest: *sharing rules and manual sharing do not support high-volume community users* — quoted in **09**, where it belongs.
 
@@ -56,16 +56,26 @@
 20-site-monitoring-limits-and-scale.md
 ```
 
-**⚠️** — **18**: the deployment trap is **`ExperienceBundle` vs `DigitalExperienceBundle` + `DigitalExperienceConfig`**, and phase 18 · **02** already owns the distinction — this note owns what it does to a pipeline. Note the sharper framing phase 18 found: **`ExperienceBundle` does not identify the runtime**, because Aura sites and non-enhanced LWR sites both use it. Depends on [09-devops · 05](../09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md).
+**No files added, nothing renumbered — the only phase in the build to do neither.** Area 05 was fully planned by phase 18, so 13–20 landed exactly as listed. The work that mattered was not authoring; it was **the verification pass, which overturned phase 18's headline finding one release after it was recorded.**
 
-**🆕 — research before writing:** **14** (Enhanced CMS — content types, workspaces, channels; note these are **enhanced-LWR-only**), **15** (headless over Connect APIs), **16**, **19**.
+**⚠️ corrections as written — three, where the plan anticipated one**
 
-**Notes on scope**
-- **15** depends on [06-integration · 08 UI API](../06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md). The judgment call — when a headless front end is worth abandoning Experience Builder for — is the actual content. **Headless Identity is already covered in [10](10-authentication-self-registration-and-sso.md)**; do not restate it.
-- **16** — LWR's SSR/CDN model is what makes real SEO possible, and this is where **02** pays off. **Carry forward that Experience Delivery is Beta** — a performance note that assumes it is GA is wrong. Give concrete Lighthouse budgets if you can source them.
-- **19** — seam into [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md). An agent on a **public** site is the highest-risk deployment surface on the platform: unauthenticated input, guest-user context, and a reasoning engine. Cross-link the Trust Layer note rather than restating it, and cross-link **[11](11-public-site-exposure-audit.md)** — an agent is a new item on that audit, not a separate subject.
-- **20** — page-view limits and guest throttling are the capacity constraints that surprise people at launch. Phase 18 sourced two numbers to build on: **100 sites per org** (counting inactive, preview and Visualforce sites) and an edition-scaled annual guest page-view allowance. Get the current per-edition figures from a source.
+- **18** — as planned, and it held. The deployment trap is **`ExperienceBundle` vs `DigitalExperienceBundle` + `DigitalExperienceConfig`**; phase 18 · **02** owns the distinction, this note owns what it does to a pipeline. The sharper framing carried through: **`ExperienceBundle` does not identify the runtime**, because Aura and non-enhanced LWR both use it. Depends on [09-devops · 05](../09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md).
+- **16 — upgraded to ⚠️, and it is the phase's headline.** The plan said *"Carry forward that Experience Delivery is Beta."* **It is being discontinued in Winter '27 and is already closed to new enablement** — orgs that never turned it on have no toggle; those that did run until **October 2026**. The note's entire SSR framing had to be rebuilt around **static build + CDN with no SSR at all**. This is the **sixth** time a plan's own ⚠️ was stale — and the first time the stale correction was **one phase old**, not four.
+- **19 — upgraded to ⚠️, two directions on one page**, the same shape as [09-devops · 24](../09-devops-sfdx-and-release-management/24-vscode-code-builder-and-tooling.md). **Messaging for In-App and Web was renamed Enhanced Chat in June 2025** (v2 in Winter '26) — a product-name error the note shipped with. And **legacy Chat / Live Agent genuinely was retired, 14 February 2026** — which the note asserted correctly but undated, the one claim shape this vault demands evidence for.
+- **20 — upgraded to ⚠️.** The plan said *"get the current per-edition figures from a source"*; the draft instead told the reader to go look them up, and asserted **overage is "billed, not blocked."** That is wrong: **110% for four consecutive months, or 300% in one month, and Salesforce can disable the sites.** The comfortable version of a limit is the one that gets written down.
+
+**🆕 researched:** **14** (Enhanced CMS — enhanced-LWR-only; **100 active custom content types**, **2,000 workspaces**, collections **50 manual / 250 dynamic** — the second tier was missing), **15** (headless over Connect APIs), **16**, **19**. The finding that most changed a note was **16**'s, and the second was that **Salesforce publishes no Lighthouse budget for Experience Cloud** — the plan asked for concrete budgets "if you can source them", and the sourced answer is that none exist. Logged in [../CURRENCY.md](../CURRENCY.md) as a fourth failure class: **withdrawn from Beta without ever reaching GA.**
+
+**Scope notes the plan left, and what happened to them**
+- **15** carries the judgment call as its content, depends on [06-integration · 08 UI API](../06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md), and does **not** restate Headless Identity — [10](10-authentication-self-registration-and-sso.md) owns it. Its sharpest line is that **headless still requires a site**.
+- **19** seams into [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md), cross-links the Trust Layer rather than restating it, and treats an embedded agent as **a new line item on [11](11-public-site-exposure-audit.md)**, not a separate subject.
+- **20** kept phase 18's **100 sites per org** (counting inactive, preview and Visualforce) and replaced the hedged allowance with the sourced one.
+
+**Seed harvest — none, and that was correct.** [../\_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md) line 121 maps only `Exp Cloud Certification Prep` (2022) and a ⛔-skip Visualforce row to this area, both already spent by phase 18. Recording zero here so a later reader does not mistake it for an omission.
 
 ## Closing the area
 
-Phase 19 is the **last content run in the build**. When it lands: flip the final ⬜ in [../PHASES.md](../PHASES.md), and sweep every area `INDEX.md` to confirm all 215 rows are live links.
+**Area complete.** 20 topics, phases 18–19 — and phase 19 was the last content run in the build. All 215 rows across the nine areas are live links; the final ⬜ in [../PHASES.md](../PHASES.md) is flipped.
+
+> **What this area proved, and it is the reason the standing rules exist.** Phase 18 found that the vault's own INDEX, area plan and `CURRENCY.md` all asserted the same wrong thing about Aura, and concluded: *when a phase overturns a correction, grep the vault for every place it was ever asserted.* Phase 19 had to run exactly that procedure against **phase 18's own finding**, correcting five notes and three plan-level artefacts. **A correction is not a durable fact; it is a dated observation.** Re-check at the source.

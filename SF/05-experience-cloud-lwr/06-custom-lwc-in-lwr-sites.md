@@ -41,7 +41,7 @@ The security default that reached Apex at 67.0 matters more here than anywhere e
 - **Module-scope browser access breaks the build**, not the page — the error arrives at publish and reads like a bundler problem.
 - **`renderedCallback()` runs repeatedly.** Guarding client-only work with a flag is not optional there.
 - **A hydration mismatch shows as UI shifting**, because the framework silently re-renders to recover. Test with the SSR assertions rather than by eye.
-- **Base components are not uniformly SSR-capable.** Experience Delivery has been adding support release by release; check before assuming.
+- **Base components are not uniformly SSR-capable.** Experience Delivery added support release by release and is now **being discontinued in Winter '27** → [02](02-lwr-architecture-and-build-model.md) — so on-platform SSR is not something to design against at all.
 - **An old Apex class behind a guest-facing component bypasses the access model** even though a 67.0 class would not → [07](07-guest-user-security-model.md).
 
 ## Recall

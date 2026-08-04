@@ -1,11 +1,6 @@
 # Record Types & Picklist Architecture (UI only restriction)
 
 > Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 01
-Human UI: Record Types strictly enforce which picklist values a user can select.
-
-Agent API: The API bypasses the picklist subset, but still enforces record type availability.
-
-Agent Context: Agents use Record Types simply as a blueprint to guide which picklist values are appropriate for a specific process, as the system will not block them from inserting mismatched values.
 
 **Scope:** Record types as a process-differentiation mechanism, and the picklist machinery they filter — global value sets, dependent picklists, restricted picklists.
 
@@ -52,8 +47,7 @@ The layout half of a record type's job is being displaced. Field visibility and 
 - Dependent picklist rules are stored on the *dependent* field, so exporting the controlling field alone loses the dependency.
 - The controlling field's 300-value ceiling is on the **controlling** side only — the dependent field can be larger.
 - Record type availability is granted by profile *or* permission set; auditing only profiles gives an incomplete answer. See [07-security](../07-security-and-sharing/INDEX.md).
-- The record-type picklist subset is not enforced on DML — the inverse of the restricted-picklist trap above. An agent or integration writing raw REST/SOAP can set an out-of-process value and succeed silently.
-- Deriving an agent's allowed values from `getPicklistValues()` in Apex returns the whole field value set, not the record-type subset. Record-type-aware reads come from UI API.
+- The record-type picklist subset is not enforced on DML — the inverse of the restricted-picklist trap above — and `getPicklistValues()` in Apex compounds it by returning the whole field value set rather than the subset. Raw REST/SOAP writes succeed silently; record-type-aware reads come from UI API.
 
 ## Recall
 

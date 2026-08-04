@@ -33,7 +33,7 @@ The honest framing is a trade, not an upgrade. LWR is faster, is where Salesforc
 
 ## 2026 currency
 
-Summer '26's Experience Cloud items are additive rather than directional: 10 GB file uploads (was 2 GB) on Aura **and** LWR, AI-assisted Self-Service components on **both** runtimes, malware scanning for Salesforce Files GA, and Chatter enablement in new orgs. Read that list the right way — **Salesforce is still shipping to Aura sites in 2026**, which is the strongest available evidence against "Aura is retired". What is true is the asymmetry: SSR, Experience Delivery (Beta), enhanced CMS and Data 360 site integration are LWR-only, so the gap widens in one direction only.
+Summer '26's Experience Cloud items are additive rather than directional: 10 GB file uploads (was 2 GB) on Aura **and** LWR, AI-assisted Self-Service components on **both** runtimes, malware scanning for Salesforce Files GA, and Chatter enablement in new orgs. Read that list the right way — **Salesforce is still shipping to Aura sites in 2026**, which is the strongest available evidence against "Aura is retired". What is true is the asymmetry: enhanced CMS and Data 360 site integration are LWR-only, so the gap widens in one direction only. **Note that SSR is no longer part of that asymmetry** — Experience Delivery is being discontinued in Winter '27 and is closed to new enablement → [02](02-lwr-architecture-and-build-model.md), so the LWR case now rests on the static build, the CDN and where new capability lands.
 
 ## Gotchas
 
