@@ -61,4 +61,4 @@ A: No. It runs as your authenticated user; hosted MCP servers support authorizat
 - [11 · DevOps Center](11-devops-center.md) — the pipeline these tools now drive
 - [12 · Metadata coverage & manual steps](12-metadata-coverage-and-manual-steps.md) — the rules generated metadata still obeys
 - [06-integration · 25 MCP servers & agent-facing APIs](../06-integration-and-apis/25-mcp-servers-and-agent-facing-apis.md) — the org-side, hosted counterpart
-- [22 · Agentforce DX & AI-assisted development](INDEX.md) — reviewing what the agent produced
+- [22 · Agentforce DX & AI-assisted development](22-agentforce-dx-and-ai-assisted-development.md) — reviewing what the agent produced

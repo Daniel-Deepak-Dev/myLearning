@@ -2,7 +2,7 @@
 
 > Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 16
 
-**Scope:** Salesforce's own change-and-release product — work items, pipelines and what it does to your repo. The CI/CD you build yourself is [14 CI/CD with GitHub Actions](INDEX.md).
+**Scope:** Salesforce's own change-and-release product — work items, pipelines and what it does to your repo. The CI/CD you build yourself is [14 CI/CD with GitHub Actions](14-ci-cd-with-github-actions.md).
 
 > **What changed — twice, and the second one is recent.** **DevOps Center is no longer a managed package.** The **Next-Generation DevOps Center**, announced at **TDX 2026 (April 2026)** and **generally available**, is a **native platform capability**: nothing to install, no package version to manage, enabled in the hub org and immediately usable. Everything written between its December 2022 GA and early 2026 describes the managed-package product with a fixed pipeline and GitHub as the only option. And the older ⚠️ still stands with a correction of its own: **Change Sets are superseded, not retired.** They still work, and Salesforce has announced no end-of-life for them.
 
@@ -26,7 +26,7 @@ The move from managed package to native capability is the substantive change: no
 
 ## Gotchas
 
-- **It is free and it is not a full DevOps platform.** No test orchestration, no static analysis, no data seeding, no environment provisioning. Those remain [14 CI/CD with GitHub Actions](INDEX.md), [16 Code Analyzer v5](INDEX.md) and [08-data · 20](../08-data-modeling-and-large-data-volumes/20-sandboxes-seeding-and-data-mask.md), or a paid vendor.
+- **It is free and it is not a full DevOps platform.** No test orchestration, no static analysis, no data seeding, no environment provisioning. Those remain [14 CI/CD with GitHub Actions](14-ci-cd-with-github-actions.md), [16 Code Analyzer v5](16-code-analyzer-v5.md) and [08-data · 20](../08-data-modeling-and-large-data-volumes/20-sandboxes-seeding-and-data-mask.md), or a paid vendor.
 - **It commits what you select, not what changed.** A component nobody ticked is not in the work item, and the pipeline is perfectly happy — the same failure mode as a Change Set, one layer up.
 - **It owns the branches it creates.** Pushing to a work-item branch by hand desynchronises the UI from the repository, and the UI is what governs the promotion.
 - **Anything outside the Metadata API is still manual.** A pipeline does not change what is deployable → [12](12-metadata-coverage-and-manual-steps.md).
@@ -55,5 +55,5 @@ A: It writes ordinary commits to ordinary branches in your own repository, so th
 
 - [07 · Branching strategy for Salesforce](07-branching-strategy-for-salesforce.md) — the model DevOps Center imposes if you let it
 - [13 · The DX MCP server & agent-driven development](13-dx-mcp-server-and-agent-driven-development.md) — how it is operated agentically
-- [14 · CI/CD with GitHub Actions](INDEX.md) — what DevOps Center does not do
+- [14 · CI/CD with GitHub Actions](14-ci-cd-with-github-actions.md) — what DevOps Center does not do
 - [01-admin · 02 Release cadence & Release Updates](../01-admin-and-declarative-platform/INDEX.md) — the other calendar a pipeline lives inside
