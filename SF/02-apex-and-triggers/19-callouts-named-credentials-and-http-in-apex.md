@@ -79,3 +79,4 @@ A: A long-running callout initiated from a Lightning component — up to three i
 - [06-integration · 17 Named Credentials & External Credentials](../06-integration-and-apis/17-named-credentials-and-external-credentials.md) — the same two objects, from the integration side
 - [06-integration · 15 OAuth flows & authorization](../06-integration-and-apis/15-oauth-flows-and-authorization.md) — the inbound direction, and External Client Apps
 - [09 · Exception handling & custom exceptions](09-exception-handling-and-custom-exceptions.md) — turning a 500 from a partner into something the org can act on
+- [29 · JSON, serialization & untyped data](29-json-serialization-and-untyped-data.md) — reading the body once it arrives, and why a partner's field named `currency` forces `deserializeUntyped`

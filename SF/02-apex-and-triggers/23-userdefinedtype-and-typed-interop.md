@@ -70,4 +70,5 @@ A: Flow Data Tables can render them, not only sObjects — removing the throwawa
 
 - [22 · Invocable Apex & Agentforce actions](22-invocable-apex-and-agentforce-actions.md) — the signature the typed payload plugs into, and the constructor rule
 - [01 · Apex language core & governor limits](01-apex-language-core-and-governor-limits.md) — collection semantics these types have to satisfy
+- [29 · JSON, serialization & untyped data](29-json-serialization-and-untyped-data.md) — the wire format underneath these annotations, and what serialization silently drops
 - [AI_Data · custom agent actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) — why a typed return beats prose for an agent, and Custom Lightning Types

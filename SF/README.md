@@ -11,7 +11,7 @@ Sibling to [AI_Data/](../AI_Data/README.md), which covers the AI-Architect path 
 | Area | Covers | Topics |
 |---|---|---|
 | [01-admin-and-declarative-platform/](01-admin-and-declarative-platform/INDEX.md) | Org anatomy, data model config, Dynamic Forms, CMDT, order of execution | 19 |
-| [02-apex-and-triggers/](02-apex-and-triggers/INDEX.md) | Apex language, SOQL/SOSL, triggers, async, user-mode security, testing, Platform Cache | 26 |
+| [02-apex-and-triggers/](02-apex-and-triggers/INDEX.md) | Apex language, SOQL/SOSL, triggers, async, user-mode security, testing, Platform Cache, enterprise patterns & DI, serialization | 30 |
 | [03-lwc-and-slds/](03-lwc-and-slds/INDEX.md) | LWC component model, LDS, GraphQL wire, LWS, SLDS 2, Jest, State Managers | 24 |
 | [04-flow-and-automation/](04-flow-and-automation/INDEX.md) | Flow Builder end-to-end, HTTP callout, Orchestrator, run context, testing, agent actions | 25 |
 | [05-experience-cloud-lwr/](05-experience-cloud-lwr/INDEX.md) | LWR sites, guest security & exposure audit, Aura→LWR, CMS, headless, SEO | 20 |
@@ -19,15 +19,16 @@ Sibling to [AI_Data/](../AI_Data/README.md), which covers the AI-Architect path 
 | [07-security-and-sharing/](07-security-and-sharing/INDEX.md) | Licences, permission-set-led access, sharing, restriction rules, access auditing, identity & MFA, Shield, posture | 26 |
 | [08-data-modeling-and-large-data-volumes/](08-data-modeling-and-large-data-volumes/INDEX.md) | Relationships, storage, selectivity, skew, locking, deletes, big objects, archiving, migration, backup, Hyperforce | 26 |
 | [09-devops-sfdx-and-release-management/](09-devops-sfdx-and-release-management/INDEX.md) | `sf` CLI v2, 2GP, DevOps Center, metadata coverage, DX MCP, CI/CD, Code Analyzer v5, release ops & rollback | 25 |
-| [PHASES.md](PHASES.md) | The 20-run build plan — what each AI run produces | — |
+| [10-soql-and-sosl/](10-soql-and-sosl/INDEX.md) | Query anatomy, filtering & literals, relationships, aggregates & ROLLUP, semi-joins, dynamic SOQL, **SOSL in depth**, cross-store & tooling | 10 |
+| [PHASES.md](PHASES.md) | The 22-run build plan — what each AI run produces | — |
 | [_notion-seed/INVENTORY.md](_notion-seed/INVENTORY.md) | The old Notion notes, mapped to target topics | — |
 
-**218 topics.** Rows in each `INDEX.md` are plain text until written, links once they exist.
+**232 topics.** Rows in each `INDEX.md` are plain text until written, links once they exist.
 
 ## Out of scope — deliberately
 
 - **Aura components** and **Visualforce.** Both are legacy; LWC is the only UI framework here. They appear only where a note must explain a migration or a coexistence rule. **Legacy in direction, not dead** — phase 18 found five of the seven Experience Cloud templates are still Aura and still receiving features → [05-experience · 01](05-experience-cloud-lwr/01-template-choice-and-site-landscape.md).
-- **OmniStudio**, **Reporting & Analytics**, **Sales/Service Cloud functional depth.** Not excluded on merit — just not in this build. Add as areas 10–12 later if wanted.
+- **OmniStudio**, **Reporting & Analytics**, **Sales/Service Cloud functional depth.** Not excluded on merit — just not in this build. Add as areas 11–13 later if wanted. *(The reserved area-10 slot was taken by [SOQL & SOSL](10-soql-and-sosl/INDEX.md) in phase 22 — the query language had no owner and SOSL was the vault's largest single gap.)*
 - **Agentforce / Data 360 / Claude.** Those live in [AI_Data/](../AI_Data/README.md). Notes here link across instead of repeating.
 
 ## The note format

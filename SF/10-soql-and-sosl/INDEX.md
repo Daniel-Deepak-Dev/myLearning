@@ -1,0 +1,34 @@
+# 10 · SOQL & SOSL
+
+The query language as its own subject — including **the SOSL surface that had eight lines in the whole vault before this area existed**. **10 topics** · phase [22](PHASES.md) — **area complete ✅**.
+
+> Currency: **Summer '26 (API 67.0)** · [flag legend](../README.md#flag-legend) · [what changed](../CURRENCY.md)
+
+> ⚠️ **This area owns the query *language*. It does not own query *performance*.** Selectivity thresholds, Query Plan, skinny tables, record locking and soft deletes all live in [08-data](../08-data-modeling-and-large-data-volumes/INDEX.md) and are linked from here rather than restated — the numbers exist in exactly one place. Likewise the *Apex* side of querying stays in [02-apex · 03](../02-apex-and-triggers/03-soql-fundamentals-and-relationship-queries.md) and [· 04](../02-apex-and-triggers/04-advanced-soql-sosl-and-dynamic-queries.md).
+
+**How to read it.** **01–07 are SOQL**, roughly outside-in: the statement's shape ([01](01-query-anatomy-and-the-soql-model.md)) → what goes in the `WHERE` clause ([02](02-filtering-operators-and-literals.md), [03](03-date-datetime-and-locale-literals.md)) → reaching other objects, in both the "fetch" sense ([04](04-relationship-queries-in-depth.md)) and the "filter by" sense ([06](06-semi-joins-anti-joins-and-set-filtering.md)) → summarising ([05](05-aggregates-group-by-rollup-and-cube.md)) → and what breaks when the query becomes a string ([07](07-dynamic-soql-and-injection-defence.md)). **08–09 are SOSL**, a different engine over a different store. **[10](10-querying-across-stores-and-tooling.md) is the reminder that one grammar spans several stores** that do not share behaviour.
+
+| # | Topic | Scope | Phase |
+|---|---|---|---|
+| 01 | [Query anatomy & the SOQL model](01-query-anatomy-and-the-soql-model.md) | clause order, no joins, `USING SCOPE`; **`LIMIT` doesn't reduce the scan** | 22 |
+| 02 | [Filtering, operators & literals](02-filtering-operators-and-literals.md) | `LIKE`, `IN`; **`INCLUDES` — semicolon is AND, comma is OR**; `toLabel()`, `FORMAT()` | 22 |
+| 03 | [Date, datetime & locale literals](03-date-datetime-and-locale-literals.md) | fiscal vs calendar periods, `DAY_ONLY()`, `convertTimezone()`; **grouping a Datetime is GMT** | 22 |
+| 04 | [Relationship queries in depth](04-relationship-queries-in-depth.md) | 5 up / 1 down, 20 subqueries, `__r` vs `__c`, `TYPEOF`; **FLS throws, sharing returns null** | 22 |
+| 05 | [Aggregates, GROUP BY, ROLLUP & CUBE](05-aggregates-group-by-rollup-and-cube.md) | `AggregateResult`, **`ROLLUP` caps at 3 fields**, `GROUPING()` = 1 for subtotals, 2,000-row cap | 22 |
+| 06 | [Semi-joins, anti-joins & set filtering](06-semi-joins-anti-joins-and-set-filtering.md) | `IN (SELECT …)`, **two per query, hard**; **an anti-join returns *more* to a low-privilege user** ⚠️ | 22 |
+| 07 | [Dynamic SOQL & injection defence](07-dynamic-soql-and-injection-defence.md) | binds are for values, **identifiers need an allowlist**; user mode limits blast radius, not the attack | 22 |
+| 08 | [SOSL mechanics & the search index](08-sosl-mechanics-and-the-search-index.md) | a different engine; the five `SEARCH GROUP`s, `RETURNING` is **positional**; **no leading wildcard** | 22 |
+| 09 | [SOSL search modifiers & relevance](09-sosl-search-modifiers-and-relevance.md) | the `WITH` clauses; **`SPELL_CORRECTION` is on by default**; stemming; **no relevance score exists** | 22 |
+| 10 | [Querying across stores & the tooling surface](10-querying-across-stores-and-tooling.md) 🆕 | CMDT costs **no query**; big-object index rules; **Named Query API GA Spring '26** | 22 |
+
+## Related
+
+- **[02-apex · 03](../02-apex-and-triggers/03-soql-fundamentals-and-relationship-queries.md) and [· 04](../02-apex-and-triggers/04-advanced-soql-sosl-and-dynamic-queries.md) are the Apex-facing slice, and this area is the reference.** Those two notes were the vault's only SOQL coverage until phase 22; they now keep what is genuinely *Apex* — the SOQL `for` loop's heap behaviour, `:variable` binding, the governor budget, `Database.queryWithBinds` and `AccessLevel`, `Search.find()`, and schema describe including the `validFor` bitmap — and defer the language itself here. Same pattern as [02-apex · 07](../02-apex-and-triggers/07-order-of-execution-and-recursion.md) deferring the save order to `01-admin · 14`.
+- **Performance is [08-data](../08-data-modeling-and-large-data-volumes/INDEX.md), deliberately.** [08](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md) selectivity, [09](../08-data-modeling-and-large-data-volumes/09-query-plan-and-performance-tuning.md) Query Plan, [11](../08-data-modeling-and-large-data-volumes/11-skinny-tables-and-support-levers.md) skinny tables, [12](../08-data-modeling-and-large-data-volumes/12-record-locking-and-concurrency.md) locking and `FOR UPDATE` semantics, [13](../08-data-modeling-and-large-data-volumes/13-deletes-recycle-bin-and-physical-deletion.md) `ALL ROWS`. **This area owns the `FOR UPDATE` clause; area 08 owns what the lock does.**
+- **[08–09](08-sosl-mechanics-and-the-search-index.md) close the largest single gap phase 22 found.** SOSL had roughly eight lines in the entire vault, inside a shared Apex note. `SEARCH GROUP`, every `WITH` modifier, wildcard and escaping rules, stemming and `Test.setFixedSearchResults()` appeared nowhere at all.
+- **[07-security · 11 Restriction rules](../07-security-and-sharing/11-restriction-rules.md) reaches further than sharing does** — it applies to SOQL, **SOSL, search, lookups and related lists**, and `View All Data` does not exempt you. It is named from both SOSL notes because search is where users experience it as "the record does not exist".
+- **[10](10-querying-across-stores-and-tooling.md) is the seam into [06-integration](../06-integration-and-apis/INDEX.md)** — `/query` and `/queryAll` are [· 04](../06-integration-and-apis/04-rest-api-fundamentals.md), Bulk query is [· 07](../06-integration-and-apis/07-bulk-api-2.md), Tooling is [· 09](../06-integration-and-apis/09-metadata-tooling-and-connect-apis.md), and **Named Query API is the new alternative to [· 18 Apex REST](../06-integration-and-apis/18-apex-rest-and-custom-endpoints.md)**.
+
+## Seed notes
+
+[_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md) maps four SOQL pages here, all previously assigned to `02-apex · 03`. Three were genuinely consumed there. **The fourth — *Group By Rollup / Aggregate Functions* — was marked ✅ and never written**: `03-soql-fundamentals` contains no `ROLLUP`, and a vault-wide grep for `ROLLUP` returned only the LWC GraphQL adapter note. It is now [05](05-aggregates-group-by-rollup-and-cube.md). See [PHASES.md](PHASES.md) — a ✅ in the inventory recorded an *intent*, not a verified outcome, and that is a defect in the checking, not in the note.

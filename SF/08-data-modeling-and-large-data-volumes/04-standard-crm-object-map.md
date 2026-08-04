@@ -21,7 +21,7 @@ The graph also has two joints that behave unlike ordinary lookups — **polymorp
 | Service | `Case` → `CaseComment`, `Entitlement`, `Solution`/Knowledge | `Case` is usually the volume leader |
 | Activity | `Task`, `Event` | polymorphic; `ActivityHistory`/`OpenActivity` are read-only views |
 
-- **`WhoId` and `WhatId` are the polymorphic joints.** `WhoId` points at a **Lead or Contact**; `WhatId` at an Account, Opportunity, Case, Campaign or custom object. Query them with `TYPEOF` → [02-apex · 04](../02-apex-and-triggers/04-advanced-soql-sosl-and-dynamic-queries.md).
+- **`WhoId` and `WhatId` are the polymorphic joints.** `WhoId` points at a **Lead or Contact**; `WhatId` at an Account, Opportunity, Case, Campaign or custom object. Query them with `TYPEOF` → [10-soql · 04](../10-soql-and-sosl/04-relationship-queries-in-depth.md).
 - **`OwnerId` is polymorphic too** — a User *or* a Queue, which is why owner-based logic needs a key-prefix check → [01-admin · 11](../01-admin-and-declarative-platform/11-queues-assignment-and-escalation-rules.md).
 - **Lead conversion is a one-way transformation.** The Lead becomes read-only with `IsConverted = true`; it is not deleted, so converted Leads accumulate as real volume.
 - **`AccountContactRelation`** is the junction enabling *Contacts to Multiple Accounts*. The Contact's own `AccountId` remains the **primary** account and does not go away.

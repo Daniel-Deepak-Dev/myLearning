@@ -62,6 +62,8 @@ A: Developer Preview, Agentforce and Data 360 only, scratch orgs only — `@Inte
 
 ## Related
 
+- [28 · Dependency injection & pluggable Apex](28-dependency-injection-and-pluggable-apex.md) — the design change the restriction list above forces: a class that instantiates collaborators inline exposes no seam the Stub API can reach
+
 - [20 · Apex testing fundamentals](20-apex-testing-fundamentals.md) — isolation, `@TestSetup` and the limit resets these tests still obey
 - [19 · Callouts, Named Credentials & HTTP](19-callouts-named-credentials-and-http-in-apex.md) — the real callout a mock stands in for
 - [22 · Invocable Apex & Agentforce actions](22-invocable-apex-and-agentforce-actions.md) — the seam Unified Logic Testing exists to cover

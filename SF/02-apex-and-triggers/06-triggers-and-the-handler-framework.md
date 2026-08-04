@@ -74,4 +74,5 @@ A: At most 200. Larger operations invoke the trigger repeatedly, in chunks.
 
 - [07 · Order of execution & recursion](07-order-of-execution-and-recursion.md) — when this fires relative to everything else, and how to stop it firing twice
 - [08 · Bulkification patterns](08-bulkification-patterns.md) — what the handler must do with a 200-record list
+- [27 · Apex Enterprise Patterns & layered design](27-apex-enterprise-patterns-and-layered-design.md) — what replaces the retired `TriggerFactory` scaffolding once one handler class stops being enough
 - [04-flow · INDEX](../04-flow-and-automation/INDEX.md) — the before-save flow that is often the cheaper answer to a same-record field update

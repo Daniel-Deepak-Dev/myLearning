@@ -74,14 +74,18 @@ Neither blocks any phase. This inventory informs gotcha-harvesting and ordering,
 | TIPS!: Get Picklist Value / Get Dependent Picklist Values | `04-advanced-soql-sosl-and-dynamic-queries` | ✅ schema-describe recipes |
 | Utils | — | unclassifiable |
 
-## Mapping — SOQL & SOSL → area 02
+## Mapping — SOQL & SOSL → area 10
+
+*(Repointed in phase 22. These four were assigned to `02-apex · 03` when area 02 was the vault's only SOQL coverage; [10-soql-and-sosl](../10-soql-and-sosl/INDEX.md) now owns the query language.)*
 
 | Notion page | Target | Value |
 |---|---|---|
-| Alias Notation : SOQL | `03-soql-fundamentals-and-relationship-queries` | ✅ |
-| Group By | `03-soql-fundamentals-and-relationship-queries` | ⚠️ **contains a contradiction — verify before reuse** |
-| Group By Rollup / Aggregate Functions + Group By Rollup | `03-soql-fundamentals-and-relationship-queries` | ✅ |
-| Date functions | `03-soql-fundamentals-and-relationship-queries` | ✅ |
+| Alias Notation : SOQL | `10-soql · 05-aggregates-group-by-rollup-and-cube` | ✅ consumed — aliases and `ar.get('alias')` |
+| Group By | `10-soql · 05-aggregates-group-by-rollup-and-cube` | ✅ **the contradiction is now the note's callout** — the page's own `select count() from case group by status` example does not run |
+| Group By Rollup / Aggregate Functions + Group By Rollup | `10-soql · 05-aggregates-group-by-rollup-and-cube` | ✅ **consumed in phase 22 — see below** |
+| Date functions | `10-soql · 03-date-datetime-and-locale-literals` | ✅ consumed |
+
+> ⚠️ **A ✅ in this file recorded an intent, not a verified outcome — found in phase 22.** The *Group By Rollup* row was marked ✅ against `02-apex · 03` from phase 03 onward. **That note contains no `ROLLUP`, and never did**; a vault-wide grep for the token returned only the LWC GraphQL adapter note, describing a different feature. Nothing here was ever *wrong* — the material was simply absent while marked present, which no currency check would ever catch. It is now genuinely written, in [10-soql · 05](../10-soql-and-sosl/05-aggregates-group-by-rollup-and-cube.md). **Treat every remaining ✅ in this file as unverified until the target note has been grepped for the page's actual subject.**
 
 ## Mapping — Apex Callouts → area 06
 

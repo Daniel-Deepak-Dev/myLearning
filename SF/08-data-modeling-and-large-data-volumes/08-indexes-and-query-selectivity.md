@@ -2,7 +2,7 @@
 
 > Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 14
 
-**Scope:** Which fields are indexed, what "selective" means numerically, and what silently disables an index. Diagnosing a specific query is [09](09-query-plan-and-performance-tuning.md); SOQL syntax is [02-apex · 03](../02-apex-and-triggers/03-soql-fundamentals-and-relationship-queries.md).
+**Scope:** Which fields are indexed, what "selective" means numerically, and what silently disables an index. Diagnosing a specific query is [09](09-query-plan-and-performance-tuning.md); SOQL syntax is [10-soql · 01](../10-soql-and-sosl/01-query-anatomy-and-the-soql-model.md).
 
 ## Core idea
 

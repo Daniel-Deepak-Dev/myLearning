@@ -1,70 +1,64 @@
-# SOQL Fundamentals & Relationship Queries
+# SOQL in Apex
 
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 03
+> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 03 *(narrowed in phase 22)*
 
-**Scope:** Reading data with SOQL — traversal, aggregation, filtering and the row budget. Dynamic SOQL, SOSL and injection defence are [04](04-advanced-soql-sosl-and-dynamic-queries.md); selectivity is [08-data · 08](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md) and query plans are [08-data · 09](../08-data-modeling-and-large-data-volumes/09-query-plan-and-performance-tuning.md).
+**Scope:** SOQL **as Apex sees it** — inline queries and binding, the `for` loop's heap behaviour, the governor budget, and reading `AggregateResult`. **The query language itself is [10-soql · 01–07](../10-soql-and-sosl/INDEX.md)**, which owns clause order, traversal rules, operators, date literals and aggregate syntax. Selectivity is [08-data · 08](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md); query plans are [08-data · 09](../08-data-modeling-and-large-data-volumes/09-query-plan-and-performance-tuning.md).
 
 ## Core idea
 
-SOQL reads one object at a time and reaches everything else through **relationships**, which is the single structural difference from SQL: there are no joins, only traversal along fields that already exist in the schema. That constraint is what makes the query planner predictable and what makes the direction of a relationship matter so much. Going *up* from child to parent is cheap dot notation and can climb five levels. Going *down* from parent to children needs a subquery and only goes one level. Almost every SOQL design question — one query or two, subquery or map — is really a question about which direction you are travelling and how many rows come back, because rows retrieved is a governor limit and the shape of the query decides it.
+Apex embeds SOQL in the language rather than passing it as a string, and that one decision produces everything specific about querying from Apex. **The query is compile-checked** — a misspelled field fails the deployment, not the transaction — and it can reference Apex variables directly with a colon. In exchange, the shape of the query is fixed at compile time; anything decided at runtime needs [04](04-advanced-soql-sosl-and-dynamic-queries.md). The second Apex-specific concern is that a query's result has to live somewhere: **the difference between assigning to a `List` and iterating with a SOQL `for` loop is the difference between materialising the whole result set in heap and holding 200 records at a time.** Nearly every Apex query decision is one of those two — is it compile-time or runtime, and does the result fit in heap.
 
 ## How it works
 
-- **Child-to-parent uses dot notation, up to five levels.** `Contact.Account.Owner.Manager.Name`. Custom relationships take the `__r` suffix: `Opportunity.Custom_Deal__r.Owner.Email`.
-- **Parent-to-child uses a subquery, one level only**, and the relationship name is plural — `SELECT Id, (SELECT Id, Amount FROM Opportunities) FROM Account`. A query may reference at most 20 parent-to-child relationships.
-- **Aggregates return `AggregateResult`, not sObjects.** `COUNT(field)`, `SUM`, `AVG`, `MIN`, `MAX` combine with `GROUP BY` and `HAVING`; alias each column and read it back with `ar.get('alias')`, casting to the type you expect.
-
-> **From my notes.** *"`COUNT()` cannot be used with `GROUP BY` — use `COUNT(Id)`."* The rule is correct and still current — but the same note then gives `select count() from case group by status` as an example, and **that query does not run.** `COUNT()` has been invalid with `GROUP BY` since API 19.0, and it must be the only element in the `SELECT` list.
-
-- **Date literals beat computing dates in Apex.** `TODAY`, `LAST_N_DAYS:30`, `THIS_FISCAL_QUARTER`, `NEXT_WEEK` are evaluated against the org's locale and fiscal calendar, which your `Date.today().addDays(-30)` is not.
-- **`FIELDS(ALL)`, `FIELDS(STANDARD)` and `FIELDS(CUSTOM)`** save typing during exploration. `FIELDS(ALL)` requires a `LIMIT` of 200 or fewer and is a poor fit for production code, where naming fields is the documentation.
+- **Bind an Apex variable with `:`**, including collections, which is how a bulkified query filters by a set gathered earlier:
 
 ```apex
-// COUNT(Id), not COUNT() — GROUP BY requires the field form
-for (AggregateResult ar : [
-    SELECT StageName stage, COUNT(Id) deals, SUM(Amount) total
-    FROM Opportunity
-    WHERE CloseDate = THIS_FISCAL_QUARTER
-    GROUP BY StageName
-    HAVING COUNT(Id) > 5
-]) {
-    System.debug(ar.get('stage') + ' ' + (Integer) ar.get('deals'));
+Set<Id> accountIds = Trigger.newMap.keySet();
+for (Opportunity o : [SELECT Id, Amount, Account.Name FROM Opportunity
+                      WHERE AccountId IN :accountIds]) {   // collection bind
+    // …
 }
 ```
 
+- **The SOQL `for` loop chunks records 200 at a time and keeps heap flat.** Assigning the same query to a `List` materialises everything. On a large result set this is the difference between working and a heap limit → [01](01-apex-language-core-and-governor-limits.md).
+- **Aggregates return `AggregateResult`, not SObjects.** Alias every column and read it back with `ar.get('alias')`, casting to the type you expect. Unaliased columns arrive as `expr0`, `expr1` in declaration order.
+- **The budget is per transaction: 100 queries (200 async) and 50,000 rows.** `Limits.getQueries()` and `getQueryRows()` read the current consumption, which is how a service class defends itself before the failure rather than after → [24](24-apex-performance-and-profiling.md).
+- **`Database.getQueryLocator()`** hands the query to Batch Apex instead of executing it, raising the reach to 50 M rows → [14](14-batch-apex-and-stateful-processing.md).
+
 ## 2026 currency
 
-SOQL runs in **user mode by default** at 67.0, and that changes what a query means rather than how you write it. Field-level security is enforced, so selecting a field the running user cannot read raises a `QueryException` instead of returning null — and because sharing applies too, the same query returns different row counts for different users. Two practical consequences: `FIELDS(ALL)` now resolves to *accessible* fields only, and a query tested as a System Administrator proves nothing about what a support agent will get. Full detail in [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
+SOQL runs in **user mode by default** at 67.0, and from Apex that changes what a query means rather than how you write it. FLS is enforced, so selecting a field the running user cannot read raises a `QueryException` instead of returning null; sharing applies, so the same query returns different row counts for different users. Two consequences specific to Apex: `FIELDS(ALL)` resolves to *accessible* fields only, so the same code returns different columns per user, and **a query tested as a System Administrator proves nothing about what a support agent gets** — which is why `System.runAs` moved from optional to necessary in tests. Pass `AccessLevel.SYSTEM_MODE` or use `WITH SYSTEM_MODE` where elevation is genuinely intended. → [10](10-apex-security-user-mode-and-fls.md), [20](20-apex-testing-fundamentals.md), [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md)
 
 ## Gotchas
 
-- **`COUNT()` returns an `Integer`; `COUNT(fieldName)` returns `AggregateResult` rows and skips nulls.** `COUNT(Id)` matches `COUNT()` only because `Id` is never null — `COUNT(Phone)` will not.
-- **Aggregate queries cap at 2,000 rows in the result set.** A `GROUP BY` over a high-cardinality field silently hits a ceiling you did not ask about.
-- **Each row an aggregate query *returns* costs one against the 50,000-row limit**, not each row it scanned — which is exactly what makes `COUNT()` cheap over a large object.
-- **A subquery's child rows count toward the row limit too.** Ten thousand accounts each with five opportunities is 60,000 rows, and the query fails rather than truncating.
-- **`ORDER BY` puts nulls first by default.** Say `NULLS LAST` when the ordering is user-visible.
-- **`OFFSET` caps at 2,000** and re-runs the whole query each page. For real paging, filter on the last Id seen instead.
-- **A SOQL `for` loop chunks records 200 at a time and keeps the heap flat**; assigning the same query to a `List` materialises everything. On large result sets this is the difference between working and a heap limit. → [01](01-apex-language-core-and-governor-limits.md)
+- **A SOQL `for` loop over a `List` variable does not chunk.** The chunking comes from iterating the *query*; `for (Account a : someList)` has already paid the heap cost.
+- **Each row an aggregate query *returns* costs one against the 50,000-row limit**, not each row it scanned — which is what makes `COUNT()` cheap over a very large object.
+- **A subquery's child rows count toward the row limit too**, and the query fails rather than truncating → [10-soql · 01](../10-soql-and-sosl/01-query-anatomy-and-the-soql-model.md).
+- **Querying inside a loop is the canonical governor-limit bug**, and it is easiest to write by accident when the query is short → [08](08-bulkification-patterns.md).
+- **A bind variable cannot substitute an identifier** — only values. An object or field name decided at runtime means dynamic SOQL → [04](04-advanced-soql-sosl-and-dynamic-queries.md).
+- **Accessing a field that was not in the `SELECT` list throws at runtime**, not compile time, when the SObject came from a query. The exception names the field, which is the only helpful part.
+- **`Limits.getQueryRows()` counts rows retrieved across the whole transaction**, including rows a `for` loop has already discarded — a flat heap does not mean a small row count.
 
 ## Recall
 
-Q: How many levels can you traverse child-to-parent, and parent-to-child?
-A: Five levels up with dot notation; one level down with a subquery, and at most 20 parent-to-child relationships per query.
-
-Q: Why can't you use `COUNT()` with `GROUP BY`?
-A: `COUNT()` returns a bare `Integer` and must be the only element in the `SELECT` list. `GROUP BY` needs the `COUNT(fieldName)` form, which returns `AggregateResult`.
-
-Q: What is the row ceiling on an aggregate query's result set?
-A: 2,000 rows. Grouping on a high-cardinality field hits it silently.
-
 Q: What does a SOQL `for` loop do that a `List` assignment does not?
-A: It processes records in chunks of 200, keeping heap flat instead of materialising the entire result set.
+A: It processes records in chunks of 200, keeping heap flat instead of materialising the whole result set. The chunking comes from iterating the query itself.
+
+Q: How do you filter a query by a set of Ids gathered earlier in the transaction?
+A: A collection bind — `WHERE AccountId IN :accountIds`. This is the core of the bulkification idiom.
+
+Q: Which rows of an aggregate query count against the 50,000-row limit?
+A: Only the rows returned, not the rows scanned — which is why `COUNT()` over a very large object is cheap.
 
 Q: In user mode, what happens when you select a field the running user cannot read?
-A: The query throws a `QueryException` rather than returning null — and sharing means the row count varies by user too.
+A: The query throws a `QueryException` rather than returning null. Sharing separately means the row count varies by user.
+
+Q: What can a bind variable not do?
+A: Substitute an identifier. Object names, field names and clause keywords are not bindable — that requires dynamic SOQL.
 
 ## Related
 
-- [04 · Advanced SOQL, SOSL & dynamic queries](04-advanced-soql-sosl-and-dynamic-queries.md) — semi-joins, `TYPEOF`, `FOR UPDATE` and building queries at runtime
+- [10-soql · INDEX](../10-soql-and-sosl/INDEX.md) — **the reference for the query language itself.** Clause order and the row budget are [· 01](../10-soql-and-sosl/01-query-anatomy-and-the-soql-model.md), traversal [· 04](../10-soql-and-sosl/04-relationship-queries-in-depth.md), aggregates and `ROLLUP` [· 05](../10-soql-and-sosl/05-aggregates-group-by-rollup-and-cube.md)
+- [04 · Dynamic SOQL, SOSL & describe in Apex](04-advanced-soql-sosl-and-dynamic-queries.md) — when the shape is not known until runtime
 - [08 · Bulkification patterns](08-bulkification-patterns.md) — why the map-from-query idiom exists and where to put the query
 - [08-data · 08 Indexes & query selectivity](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md) — why a valid query is simply slow, and the thresholds that decide it

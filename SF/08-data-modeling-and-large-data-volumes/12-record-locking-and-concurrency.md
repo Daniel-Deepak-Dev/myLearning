@@ -2,7 +2,7 @@
 
 > Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 14
 
-**Scope:** Why concurrent writes fail at volume, and how to make them stop. The read-path chain ends at [11](11-skinny-tables-and-support-levers.md); this opens the write path. `FOR UPDATE` syntax is [02-apex · 04](../02-apex-and-triggers/04-advanced-soql-sosl-and-dynamic-queries.md); retry policy is [06-integration · 23](../06-integration-and-apis/23-idempotency-retries-and-error-handling.md).
+**Scope:** Why concurrent writes fail at volume, and how to make them stop. The read-path chain ends at [11](11-skinny-tables-and-support-levers.md); this opens the write path. `FOR UPDATE` syntax is [10-soql · 01](../10-soql-and-sosl/01-query-anatomy-and-the-soql-model.md); retry policy is [06-integration · 23](../06-integration-and-apis/23-idempotency-retries-and-error-handling.md).
 
 ## Core idea
 
@@ -19,7 +19,7 @@ The part that surprises people is **which** records get locked. Writing a child 
   1. **Sort the load file by parent Id**, so records sharing a parent land in the same chunk rather than being split across parallel batches.
   2. **Reduce the batch size**, shortening how long each lock is held.
   3. **Switch to serial mode**, which trades throughput for the guarantee that only one batch runs at a time.
-- **`FOR UPDATE` holds its locks until the transaction ends** — there is no early release, so a long transaction that locks early converts other users' saves into failures → [02-apex · 04](../02-apex-and-triggers/04-advanced-soql-sosl-and-dynamic-queries.md).
+- **`FOR UPDATE` holds its locks until the transaction ends** — there is no early release, so a long transaction that locks early converts other users' saves into failures → [10-soql · 01](../10-soql-and-sosl/01-query-anatomy-and-the-soql-model.md).
 - **Group membership has its own lock**, on the group maintenance tables, and **granular locking** is the lever that narrows it → [07-security · 08](../07-security-and-sharing/08-groups-queues-and-the-grantee-model.md).
 - **`UNABLE_TO_LOCK_ROW` is retryable**, unlike a validation error — but retrying harder without changing the shape just moves the failure → [06-integration · 23](../06-integration-and-apis/23-idempotency-retries-and-error-handling.md).
 
