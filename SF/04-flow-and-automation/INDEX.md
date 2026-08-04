@@ -41,5 +41,5 @@ Flow as the **only** declarative automation tool you may build in, after Workflo
 - **12** pairs with [02-apex · 19 Callouts & named credentials](../02-apex-and-triggers/19-callouts-named-credentials-and-http-in-apex.md) — one credential model, two ways to reach it.
 - **17** pairs with [01-admin · 12 Approval processes](../01-admin-and-declarative-platform/12-approval-processes-and-approval-orchestration.md).
 - **19** is the security spine of the area — [02-apex · 10](../02-apex-and-triggers/10-apex-security-user-mode-and-fls.md) is its coded counterpart, and Flow did **not** follow Apex's 67.0 flip to user mode.
-- **21** pairs with [05-experience-cloud · guest user security](../05-experience-cloud-lwr/INDEX.md).
+- **21** pairs with [05-experience-cloud · 07 Guest user security model](../05-experience-cloud-lwr/07-guest-user-security-model.md), and every flow on *Enabled Flow Access* is an item on [**· 11** the public site exposure audit](../05-experience-cloud-lwr/11-public-site-exposure-audit.md).
 - **22–23, 25** are seams into [AI_Data/](../../AI_Data/README.md) — the agent and Data 360 story lives there.

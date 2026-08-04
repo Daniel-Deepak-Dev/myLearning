@@ -29,7 +29,7 @@ Sharing rules, manual shares, teams and Apex managed sharing all do the same thi
 - **`Grant access using hierarchies by default in new queues`** on the Sharing Settings page controls the org-wide default for *new* queues only. Existing queues keep their setting, and each queue can override it.
 - **Report and dashboard folders share to these grantees too** — users, roles, roles-and-subordinates and public groups — but **not to queues**, which is the one grantee type folder sharing does not accept.
 
-> **From my notes.** Two facts from my 2025 prep that only ever appear as exam answers and are genuinely useful. **Granular locking is the tool Salesforce enables for large-scale role-hierarchy realignment** — it is not a general performance setting, it is specifically what makes a mass reparent survivable, and it is the right thing to ask for *before* the migration rather than after the first `UNABLE_TO_LOCK_ROW`. And **three roles are created by default when the first external user is created on a partner account**, which is why partner-heavy orgs approach the role limit from a direction nobody planned for. → [05-experience-cloud · 08](../05-experience-cloud-lwr/INDEX.md)
+> **From my notes.** Two facts from my 2025 prep that only ever appear as exam answers and are genuinely useful. **Granular locking is the tool Salesforce enables for large-scale role-hierarchy realignment** — it is not a general performance setting, it is specifically what makes a mass reparent survivable, and it is the right thing to ask for *before* the migration rather than after the first `UNABLE_TO_LOCK_ROW`. And **three roles are created by default when the first external user is created on a partner account**, which is why partner-heavy orgs approach the role limit from a direction nobody planned for. → [05-experience-cloud · 08](../05-experience-cloud-lwr/08-licences-and-external-user-types.md)
 
 ## 2026 currency
 
@@ -39,7 +39,7 @@ The queue hierarchy setting is the change (above), and it is worth reading as pa
 
 - **New queues do not grant up the hierarchy.** Created Summer '26 or later, `Grant Access Using Hierarchies` is off by default and the org-level switch does not retrofit existing queues.
 - **"Role" and "Role and Subordinates" are different grantees.** Picking Role shares with the handful of people holding exactly that role — usually not what was meant.
-- **"Role and Subordinates" includes portal and community roles.** Use the *Internal* variant unless you intend external users to inherit. → [05-experience-cloud · 09](../05-experience-cloud-lwr/INDEX.md)
+- **"Role and Subordinates" includes portal and community roles.** Use the *Internal* variant unless you intend external users to inherit. → [05-experience-cloud · 09](../05-experience-cloud-lwr/09-sharing-for-external-users.md)
 - **Bulk user updates deadlock on group maintenance.** Serialise role and group changes, or enable granular locking, before a large user migration.
 - **User Access Policies manage only directly-added group and queue members** — anyone inheriting through a role, territory or nested group is out of reach. → [05](05-user-access-policies-and-lifecycle.md)
 - **Removing someone from a public group silently revokes every grant made through it**, across every sharing rule that names it, with no warning at removal time.

@@ -2,7 +2,7 @@
 
 > Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 10
 
-**Scope:** The outermost gate — what a user may be *granted* before any permission is assigned. Internal licences only; **external and community user types are [05-experience-cloud · 08](../05-experience-cloud-lwr/INDEX.md)**. Editions and org shape are [01-admin · 01](../01-admin-and-declarative-platform/01-org-anatomy-and-editions.md).
+**Scope:** The outermost gate — what a user may be *granted* before any permission is assigned. Internal licences only; **external and community user types are [05-experience-cloud · 08](../05-experience-cloud-lwr/08-licences-and-external-user-types.md)**. Editions and org shape are [01-admin · 01](../01-admin-and-declarative-platform/01-org-anatomy-and-editions.md).
 
 ## Core idea
 
@@ -58,5 +58,5 @@ A: Permissions are locks, licences are rings of keys. A permission without the m
 
 - [03 · Profiles & the permission-set-led model](03-profiles-and-the-permission-set-led-model.md) — what you assign once the licence permits it
 - [05 · User Access Policies & lifecycle](05-user-access-policies-and-lifecycle.md) — automating PSL and permission set assignment together
-- [05-experience-cloud · 08 Licences & external user types](../05-experience-cloud-lwr/INDEX.md) — the customer, partner and external identity half of this note
+- [05-experience-cloud · 08 Licences & external user types](../05-experience-cloud-lwr/08-licences-and-external-user-types.md) — the customer, partner and external identity half of this note
 - [01-admin · 01 Org anatomy & editions](../01-admin-and-declarative-platform/01-org-anatomy-and-editions.md) — the note that hands off to this one

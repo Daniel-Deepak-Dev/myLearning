@@ -2,7 +2,7 @@
 
 > Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 11
 
-**Scope:** Delegating the authentication decision of [17](17-authentication-and-mfa.md) to an external identity provider, and the licences that pay for it. OAuth as an *API authorization* protocol is [06-integration · 15](../06-integration-and-apis/15-oauth-flows-and-authorization.md); Experience Cloud login pages, self-registration and headless identity are [05-experience-cloud · 10](../05-experience-cloud-lwr/INDEX.md).
+**Scope:** Delegating the authentication decision of [17](17-authentication-and-mfa.md) to an external identity provider, and the licences that pay for it. OAuth as an *API authorization* protocol is [06-integration · 15](../06-integration-and-apis/15-oauth-flows-and-authorization.md); Experience Cloud login pages, self-registration and headless identity are [05-experience-cloud · 10](../05-experience-cloud-lwr/10-authentication-self-registration-and-sso.md).
 
 ## Core idea
 
