@@ -14,9 +14,45 @@ That matters to a practitioner for a reason beyond taste. The benchmarks are a *
 
 ---
 
+## 2026-08-03 · The GIFT-Eval backlog cleared — and the leading submissions are routers, not models
+
+**What changed.** The three pull requests that sat open for two days all **merged on 2026-08-03**, and two more opened behind them.
+
+- **#184** EXAONE-Forecast (`junhyeokkang`, LG AI Research) — merged, commit `1ad2a44`.
+- **#185** EXAONE-Forecast-Agent (`istarjun`, LG AI Research) — merged, commit `ff006d0`.
+- **#186** FastCastrage v5 + an `org` field correction (`matisdsp`, TW3 Partners) — merged, commit `1404c62`.
+- **#187** — opened and **closed the same day** as a duplicate of #186's one-line `org` fix.
+- **#188** Recursive Moirai 2 (`ecntu`) and **#189** an EXAONE-Forecast-Agent update (`junhyeokkang`) — **open** as of 2026-08-05 03:05 UTC.
+
+**"Agent" here does not mean an LLM.** EXAONE-Forecast-Agent is a **learned per-window router**: gradient-boosted trees (**XGBoost**) choose among Chronos-2, TimesFM-2.5, FlowState, Toto-2.0-2.5B, TiRex-2, Timer and LG's in-house EXAONE-Forecast. The submission states explicitly that no LLM is involved in routing.
+
+**The contrast is #188.** Recursive Moirai 2 is a from-scratch **9.1M-parameter** JAX/Flax model that rolls the transformer's latent state forward instead of autoregressing decoded quantiles. It declares no leakage, replication code available — and classifies itself **`pretrained`, not `zero-shot`**, because its training mixture touched GIFT-Eval histories with test regions excluded.
+
+**Why it matters.** Two entries can sit adjacent on one leaderboard and not be comparable objects at all. A router is **N foundation-model calls per window**; a 9.1M-parameter model is one small forward pass. Rank says nothing about either cost.
+
+The second lesson is about metadata. #186 and #187 exist because FastCastrage's `org` field was **wrong on the public leaderboard** — self-declared free text, fixed by pull request. Attribution on a leaderboard is a claim, like everything else on it.
+
+Worth copying: #188's `pretrained` self-classification is the honest move. Claiming the weaker category when your training data brushed the benchmark is what a trustworthy submission looks like.
+
+**Gotchas:**
+- `model_type` values seen so far are `zero-shot`, `pretrained` and `agentic`. Nothing enforces the choice — #188 declaring `pretrained` is voluntary.
+- The `org` field lives in `results/<model>/config.json`, and the repo is **not the only copy**: the submitter of #187 had to open a **separate fix against the Hugging Face leaderboard Space**. The two can drift.
+- **#189 changes only `all_results.csv` and leaves `config.json` untouched** — an entry's declarations can go stale relative to its numbers.
+- #187 shows the duplicate-PR pattern: two PRs carrying the same one-line fix, one closed in favour of the other. Read the **merged** commit, not the first PR you find.
+
+**Study action:** open `results/FastCastrage/config.json` on `main` and the same file in the Hugging Face leaderboard Space and diff them. Then read #185's description and write down how many model calls its router makes per forecast window — that number, not the MASE, is what an `agentic` entry would cost you in production.
+
+**Status:** Community leaderboard submissions, **not Salesforce research output**. #184–#186 merged 2026-08-03; #187 closed the same day; #188 (2026-08-03) and #189 (2026-08-04) open as of 2026-08-05 03:05 UTC. No paper or model release accompanied any of them.
+
+**Sources:** [PR #185](https://github.com/SalesforceAIResearch/gift-eval/pull/185) · [PR #187](https://github.com/SalesforceAIResearch/gift-eval/pull/187) · [PR #188](https://github.com/SalesforceAIResearch/gift-eval/pull/188) · [PR #189](https://github.com/SalesforceAIResearch/gift-eval/pull/189) · [gift-eval commits](https://github.com/SalesforceAIResearch/gift-eval/commits/main) · scan note [2026-08-05](03-salesforce-ai-research/2026-08-05.md)
+
+---
+
 ## 2026-07-31 · GIFT-Eval becomes neutral ground — and a leaderboard position is a claim, not a result
 
-**What changed.** Between **03:37 and 03:41 UTC on 2026-07-31**, five pull requests (**#179–#183**) merged into [`SalesforceAIResearch/gift-eval`](https://github.com/SalesforceAIResearch/gift-eval), taking the public leaderboard to **117 result sets**. Three more (**#184–#186**) were submitted the same day and remain **open** as of 2026-08-02 02:48 UTC.
+> **Correction (2026-08-05):** this entry said #184–#186 "remain open." All three **merged on 2026-08-03** — see [the 08-03 entry above](#2026-08-03--the-gift-eval-backlog-cleared--and-the-leading-submissions-are-routers-not-models). The point they were cited for still holds: they sat open for roughly two days, so *submitted* and *on the leaderboard* were genuinely different states for that window.
+
+**What changed.** Between **03:37 and 03:41 UTC on 2026-07-31**, five pull requests (**#179–#183**) merged into [`SalesforceAIResearch/gift-eval`](https://github.com/SalesforceAIResearch/gift-eval), taking the public leaderboard to **117 result sets**. Three more (**#184–#186**) were submitted the same day and remained **open** as of 2026-08-02 02:48 UTC.
 
 **GIFT-Eval** is Salesforce AI Research's benchmark for **general time-series forecasting** — predicting future values of a sequence such as demand, load or traffic. Its target is **zero-shot** forecasting: the model forecasts a series it was never trained on.
 
@@ -43,13 +79,13 @@ Note too that three of five entries are `agentic` rather than a single trained m
 **Gotchas:**
 - **Only `goia-forecast-nano-v0` declares `replication_code_available: "Yes"`.** The other four say `"No"`, including the Google Cloud entry; two ship neither a model link nor a code link. Four of five new positions are **unverifiable claims scored by a shared harness**.
 - **`testdata_leakage` is self-declared**, not audited. All five declare none.
-- **"On the leaderboard" and "submitted to the leaderboard" are different states.** #184–#186 were open nine hours after the merge batch and still are.
+- **"On the leaderboard" and "submitted to the leaderboard" are different states.** #184–#186 were open nine hours after the merge batch, and stayed open until 2026-08-03.
 - **Entries are revised in place** — #186 is FastCastrage at **v5**. A GIFT-Eval number you quoted last month may not be the number that model reports today.
 - GIFT-Eval is **Apache-2.0** and stated to be *"intended for research purposes only."*
 
 **Study action:** open the `config.json` in [PR #183](https://github.com/SalesforceAIResearch/gift-eval/pull/183) and [PR #179](https://github.com/SalesforceAIResearch/gift-eval/pull/179) side by side, then write those four fields — model type, organisation, leakage, replication code — into your own vendor-evaluation checklist. Next time a vendor quotes a benchmark number, ask for all four.
 
-**Status:** Community leaderboard submissions, **not Salesforce research output**. #179–#183 merged 2026-07-31; #184–#186 open. No paper, model or blog post accompanied them.
+**Status:** Community leaderboard submissions, **not Salesforce research output**. #179–#183 merged 2026-07-31; #184–#186 merged 2026-08-03 (see the correction above). No paper, model or blog post accompanied them.
 
 **Sources:** [gift-eval](https://github.com/SalesforceAIResearch/gift-eval) · [pull requests](https://github.com/SalesforceAIResearch/gift-eval/pulls?q=is%3Apr+sort%3Aupdated-desc) · scan notes [2026-07-30](03-salesforce-ai-research/2026-07-30.md), [2026-08-01](03-salesforce-ai-research/2026-08-01.md)
 

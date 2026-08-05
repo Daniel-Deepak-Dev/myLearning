@@ -4,7 +4,56 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-04 · `sf-pi` makes Agent Script evals deterministic — Eval Studio, SOQL seed profiles, and a response-integrity gate
+
+**What changed.** [`salesforce/sf-pi`](https://github.com/salesforce/sf-pi) shipped **v0.253.0 → v0.257.0** between 2026-08-03 21:14 UTC and 2026-08-04 16:05 UTC. Every feature commit lands on the `sf-agentscript` extension, and together they move Agent Script evaluation away from *ask a model* and toward *check the recorded evidence*.
+
+- **v0.253.0 — Eval Studio** (commit `e590e4e`, ADR `0097`). A **local-first** review and execution workspace for source-controlled Agent Script Eval Suites, Agent Script Release Eval Contracts and locally persisted run evidence. It consults Salesforce only to resolve a version or to actually execute.
+- **v0.253.0 — SOQL seed profiles** (ADR `0098`). A source-only declaration inside one eval suite that resolves **exactly one row** from **one bounded read-only SOQL query** against the Eval Run Target org, mapping scalar fields or constants into ordinary Scenario context variables.
+- **v0.254.0 — the quality catalogue goes 18 → 20 rules** (commit `c1e956b`): `variable-description-max-length` (**High**) and `instruction-template-syntax` (**Moderate**).
+- **v0.255.0 / v0.256.0** — the **full LLM response sequence** is preserved in run evidence and rendered in Eval Studio, rather than only the final message.
+- **v0.257.0 — `turn_response_integrity`** (commit `ac290d5`): a source-controlled policy that fails an eval when one turn emits more than one non-empty LLM completion.
+
+**Response integrity is the item to actually learn.** The check parses every `lastExecution.llmEvents` entry with **no model calls**, so it is deterministic and free. In strict mode it also requires **exactly one `agent.get_state` after each `agent.send_message`**.
+
+```mermaid
+flowchart TD
+    A["Eval suite in source<br/>+ <code>sf_pi.turn_response_integrity</code>"] --> B["Seed profiles<br/>1 bounded read-only SOQL query → 1 row"]
+    B -->|"0 rows / >1 row / null / mistyped"| X["Fail <b>before</b> the run is created"]
+    B --> C["Local preflight<br/>parse <code>lastExecution.llmEvents</code> · no model call"]
+    C -->|"severity: error<br/>and policy violated"| Y["Fail <b>before</b> any org call"]
+    C --> D["Org execution"]
+    D --> E["Evaluation API<br/><b>policy never sent</b>"]
+    E --> F["Run output<br/><code>response_integrity_evidence</code> (separate field)"]
+```
+
+**Why it matters.** Double-texting — an agent emitting two non-empty completions in one turn — is a real Agentforce failure that LLM-judge evals miss, because a judge reads the final message and the final message is usually fine.
+
+Parsing the event log instead catches it deterministically, for no tokens, and **before** the run costs an org call. That is the general lesson: the cheapest agent test is the one that reads evidence you already have.
+
+Seed profiles fix the other chronic eval problem. Hard-coded record IDs rot the moment the suite moves to another org; a bounded query that must return exactly one row moves with it.
+
+**Gotchas:**
+- The policy block is `sf_pi.turn_response_integrity`, with `max_nonempty_llm_contents` (integer **1–100**) and `severity` (`"warning"` | `"error"`). **A suite without the block keeps advisory-only behaviour** — the gate is opt-in, so an unmodified suite is not protected by the upgrade.
+- `severity: "error"` also **fails on missing evidence**: unavailable `llmEvents` counts as incomplete, not as a pass.
+- Findings land in a **separate `response_integrity_evidence` field** in run output. They are not folded into the ordinary verdict, so a green verdict is not the whole answer.
+- The policy is preserved in source snapshots, executed snapshots and release digests but is **never sent to the Evaluation API**. The gate is yours, not the platform's — the same agent passing in another tool tells you nothing about it.
+- `variable-description-max-length` fires **above 255 characters** (Salesforce's publication limit); exactly 255 is valid. `instruction-template-syntax` is **non-suppressible** — it is promoted from the compiler/LSP diagnostic, which would fire anyway.
+- **A reused seed profile executes once per run**, not once per scenario. Two scenarios sharing a profile share the row.
+- `sf-pi` is an extension pack for the **pi** coding agent, **not** the `sf` CLI. `sf-pi` v0.257.0 and `@salesforce/cli` 2.147.6 are unrelated number lines.
+- Cadence is bursty — **ten releases in the ~19 hours** spanning Aug 3–4. Pin a version; do not track head.
+
+**Study action:** take one existing Agent Script eval suite, add `"sf_pi": {"turn_response_integrity": {"max_nonempty_llm_contents": 1, "severity": "error"}}`, run it, and read `response_integrity_evidence` — not the verdict. Then replace one hard-coded record ID in a scenario with a seed profile and run the same suite against two different orgs.
+
+**Status:** Open source, Apache-2.0. `salesforce/sf-pi` **v0.257.0**, released 2026-08-04 16:05 UTC. Pre-1.0 — the version line moves daily.
+
+**Sources:** [sf-pi releases](https://github.com/salesforce/sf-pi/releases) · [commit `ac290d5` — gate evals on response integrity](https://github.com/salesforce/sf-pi/commit/ac290d5) · [commit `c1e956b` — expand quality checks](https://github.com/salesforce/sf-pi/commit/c1e956b) · [commit `e590e4e` — eval studio and dynamic seed profiles](https://github.com/salesforce/sf-pi/commit/e590e4e) · builds on [the 07-30 sf-pi entry below](#2026-07-30--sf-pi-ships-agent-script-quality-gates--and-a-better-way-to-expire-test-evidence)
+
+---
+
 ## 2026-08-01 · A path-traversal fix in the retrieve path — and most `sf` installs cannot reach it yet
+
+> **Re-checked (2026-08-05 03:14 UTC):** nothing below has changed and that is the finding. `latest` is still **2.145.6** and `latest-rc` still **2.146.3** — both unmoved since 2026-07-29 — while `nightly` has rolled four times to **2.147.6**. There is still **no 12.x backport** (`@salesforce/source-deploy-retrieve@12.37.3` returns 404 on the registry) and **no SDR 13.0.2**. The exposure window is now five days old on the stable channel.
 
 **What changed.** [`@salesforce/source-deploy-retrieve`](https://github.com/forcedotcom/source-deploy-retrieve) **13.0.1** (npm 2026-07-31 16:21 UTC) fixes a **zip-slip** in static-resource conversion — work item `W-23558165`, [PR #1812](https://github.com/forcedotcom/source-deploy-retrieve/pull/1812). A day later `@salesforce/cli` **nightly 2.147.3** (2026-08-01 03:24 UTC) became the first CLI to require **Node ≥ 22**. These are one story.
 

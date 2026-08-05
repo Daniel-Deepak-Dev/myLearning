@@ -75,3 +75,24 @@ A: An agent that explores exhaustively is not simply "better" — under Flex Cre
 
 Q: What is the method warning AnchorBench raises about your own evaluations?
 A: Do not measure what the agent *says about itself* at checkpoints. Checkpoint answers held steady while live behaviour drifted, so measure what the agent *does* across a long conversation.
+
+Q: What does `sf_pi.turn_response_integrity` catch that an LLM-judge eval cannot?
+A: Double-texting — a turn emitting more than one non-empty LLM completion. A judge reads the final message, and the final message is usually fine. The policy parses `lastExecution.llmEvents` deterministically instead, with no model call.
+
+Q: Why does response-integrity gating run before the org call rather than after the run?
+A: At `severity: "error"` it fails local preflight, so a violating suite never spends an org call or an Evaluation API request. The general principle: the cheapest agent test reads evidence you already have.
+
+Q: A suite upgraded to `sf-pi` v0.257.0 shows no integrity findings. Is it protected?
+A: No. A suite without the `sf_pi.turn_response_integrity` block keeps advisory-only behaviour — the gate is opt-in. Also check `response_integrity_evidence`, a separate field from the verdict.
+
+Q: What problem does an Agent Script Eval seed profile solve, and what is its hard constraint?
+A: Hard-coded record IDs that rot when a suite moves org. A seed profile resolves exactly one row from one bounded read-only SOQL query; zero rows, several rows, null or mistyped fields fail before the run is created. A reused profile executes once per run, not once per scenario.
+
+Q: On the GIFT-Eval leaderboard, what does `model_type: agentic` actually mean?
+A: An orchestrator picking among forecasters — not necessarily an LLM. EXAONE-Forecast-Agent routes with XGBoost over seven foundation models, no LLM involved. A router costs N model calls per window; a rank next to a single small model is not a like-for-like comparison.
+
+Q: Two GIFT-Eval PRs carried the same one-line `org` fix and one was closed. What is the durable lesson?
+A: The `org` column is self-declared free text in `results/<model>/config.json`, corrected by pull request, and mirrored into a separate Hugging Face leaderboard Space that can drift. Attribution on a leaderboard is a claim like everything else on it.
+
+Q: A React Native Agentforce app on iOS never fires `onAgentResponse`, with no error. What is the diagnosis?
+A: It was a no-op on iOS until `@salesforce/react-native-agentforce` 0.4.0 (2026-08-03), while working on Android. Audit for polling or UI-scraping workarounds before upgrading — the workaround becomes the bug.
