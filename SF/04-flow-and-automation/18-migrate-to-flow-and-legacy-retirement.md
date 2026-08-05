@@ -2,7 +2,7 @@
 
 > Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 09
 
-**Scope:** Getting Workflow Rules and Process Builder off an org — the tool, what it converts, and the traps in what it produces. The tool-choice argument is [01](01-automation-landscape-and-tool-selection.md).
+**Scope:** The **tool** — what it converts, and the traps in what it produces. Reading the legacy automation first is [26](26-reading-inherited-workflow-and-process-builder.md); sequencing the migration is [27](27-legacy-automation-migration-runbook.md). The tool-choice argument is [01](01-automation-landscape-and-tool-selection.md).
 
 > **What changed.** *"Workflow Rules and Process Builder are retired"* is wrong and it is the most common thing said about them. **Support ended 31 December 2025** — no bug fixes, no support cases. **Creation was blocked in Winter '23.** **No retirement date has been announced, and existing automations still run today.** That makes the migration argument stronger, not weaker: unsupported automation that breaks stays broken, and you cannot open a case about it.
 
@@ -18,7 +18,7 @@ The **Migrate to Flow** tool at Setup → Process Automation → Migrate to Flow
 | Process Builder | criteria and actions per node | **recursion**, some invocable configurations |
 | Approval processes | **nothing** — not supported by the tool | all of it |
 
-- **The tool does not deactivate the source.** The new flow and the old rule both exist, and if both are active the logic runs **twice**. Deactivation is a deliberate, separate step.
+- **The migrated flow is created inactive, and the tool ships a `Switch Activations` button** that deactivates the source rule and activates the flow **together**. So the default outcome of a migration is not double-running — it is **nothing changing**, with correct flows sitting in Draft while the old rules carry on. Double-running is the *second* trap, reached by activating the flow by hand and leaving the rule alone. Sequencing is [27](27-legacy-automation-migration-runbook.md).
 - **Process Builder recursion is not supported.** A process configured to re-evaluate is migrated so that the record is evaluated **once only** — behaviour silently changes.
 - **The `does not contain` operator has no direct equivalent** in entry criteria; convert it with custom condition logic.
 - **Unsupported entry criteria become a Decision element** inside the flow rather than a start condition — which works, but the flow now starts and pays to start on every save. → [03](03-record-triggered-flows.md)
@@ -31,7 +31,7 @@ The support boundary passed on 31 December 2025, so the whole subject moved from
 ## Gotchas
 
 - **Saying "retired" in a scoping call is a credibility loss.** Out of support, creation blocked, still running, no retirement date.
-- **Running the old rule and the new flow at the same time doubles the automation.** The tool will not stop you.
+- **The migration that changes nothing is more common than the one that doubles.** The flow arrives inactive; use **Switch Activations** rather than activating it by hand. → [27](27-legacy-automation-migration-runbook.md)
 - **Migrated Process Builder recursion silently evaluates once.** Nothing errors; the behaviour just changes.
 - **One-to-one conversion preserves your mess.** Five bad rules become five bad flows unless you consolidate afterwards.
 - **Time-dependent workflow actions become scheduled paths**, which run in a different context and against different limits than the queue-based originals. → [06](06-scheduled-and-autolaunched-flows.md)
@@ -45,7 +45,7 @@ Q: Are Workflow Rules and Process Builder retired?
 A: No. Out of support since 31 December 2025, creation blocked since Winter '23, still executing, no retirement date announced.
 
 Q: What does the Migrate to Flow tool do to the original Workflow Rule?
-A: Nothing. It stays active unless you deactivate it — and until you do, the logic runs twice.
+A: Nothing on its own — but the migrated flow is created **inactive** and the **Switch Activations** button deactivates the rule and activates the flow together. Skip it and nothing changes; activate the flow by hand instead and the logic runs twice.
 
 Q: What happens to a Process Builder process that relies on recursion?
 A: It is migrated so the record is evaluated once only. The behaviour changes without an error.
@@ -58,6 +58,8 @@ A: Approval processes.
 
 ## Related
 
+- [26 · Reading inherited Workflow Rules & Process Builder](26-reading-inherited-workflow-and-process-builder.md) — how the thing you are converting actually fires
+- [27 · Legacy automation migration runbook](27-legacy-automation-migration-runbook.md) — cutover order, and the queue that outlives deactivation
 - [01 · Automation landscape & tool selection](01-automation-landscape-and-tool-selection.md) — why Flow is the only tool you may build in now
 - [14 · Trigger order & Flow Trigger Explorer](14-trigger-order-and-flow-trigger-explorer.md) — why Explorer is not a complete picture of an inherited object
 - [25 · AI-assisted flow authoring](25-ai-assisted-flow-authoring.md) — the tooling that makes post-migration consolidation affordable

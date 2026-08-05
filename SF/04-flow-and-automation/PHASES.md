@@ -1,6 +1,6 @@
 # Phases for 04 · Flow & Automation
 
-25 topics across 2 runs. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
+27 topics across 3 runs. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
 
 > **Runs after Apex (phases 03–07)** because Flow notes reference governor limits and invocable Apex signatures. Don't reorder.
 
@@ -117,3 +117,40 @@
 - **[../\_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md) should be updated** — `Flow Updates` is mapped to the wrong destination there.
 
 **Rule 1 exceeded deliberately, with approval** — two files added, and the renumber they forced touched **01-admin** (`12`, `14`, `INDEX`, `PHASES`) and **03-lwc** (`INDEX`) as well as files 01–12 here. All verified by grep after the change.
+
+---
+
+## Phase 24 — Reading and retiring the legacy tools · 2 files ✅
+
+```
+26-reading-inherited-workflow-and-process-builder.md   ⚠️
+27-legacy-automation-migration-runbook.md              🆕
+```
+
+**Appended, not inserted, and this time the warning above was obeyed.** Phase 09 renumbered this area with live inbound links and left the instruction *"Do not renumber this area again without one [a grep]"*. Appending at 26–27 makes the question moot — no existing number moved, so no grep was needed. Same call phases 13, 15, 17, 20, 21 and 23 made.
+
+**Why a maintenance phase at all.** A coverage grep — the phase-21 instrument — returned **zero hits across both vaults** for `WorkflowRule`, `evaluation criteria`, `Time-Based Workflow`, `workflow queue`, `time trigger`, `cross-object field update` and `immediate action`, while *Workflow Rule* and *Process Builder* appeared in **16 files**. This is the phase-22 defect — *a subject split across areas has no owner* — in a new form: **a subject mentioned constantly and owned nowhere.** Every one of those 16 mentions was a status correction; none taught the mechanics. The vault could say the tools still execute at steps 11 and 13 and could not help you read what was there.
+
+### Retro
+
+**⚠️ — the vault published a wrong sentence about the tool, and the error was directional**
+
+- **18 said *"The tool does not deactivate the source… Deactivation is a deliberate, separate step."*** Both halves are wrong. The migrated flow is created **inactive**, and the tool ships a **Switch Activations** button that deactivates the rule and activates the flow **together**. The note therefore had the *direction* of the failure backwards: it warned about double-running, when the default outcome of a migration is **nothing changing** — correct flows sitting in Draft while the old rules carry on, a migration that reports success and alters no behaviour. Double-running is real but is the *second* trap, reachable only by activating the flow by hand. Fixed in the note body, in its Recall pair, and in one Gotcha. **This is the same failure class phase 19 named** — the vault's own prose, one release behind.
+
+**🆕 the strongest finding, and it had zero coverage anywhere**
+
+- **Deactivating a workflow rule does not empty the time-based workflow queue.** Pending time-dependent actions **remain and still fire** while the record meets criteria; they leave only when processed or when re-evaluation finds criteria false. Three consequences the vault had none of: they are visible **only** at Setup → Monitoring → **Time-Based Workflow**; **a rule with pending actions cannot be deleted at all**, which makes the queue a hard blocker on decommissioning and sets a migration's real end date; and **time-dependent actions cannot be added or edited on a deactivated rule that has pending actions**, which is how a half-migrated org gets stuck unable to move either way.
+- **Winter '24 added a conditional that reads like a sweep.** *An at-rest pending time-based action is migrated to a scheduled path **when the associated record is changed**.* So pending actions on records nobody touches stay in the legacy queue indefinitely. Quoting the first half of that sentence would have been the phase-14 half-quote defect exactly.
+- **Process Builder recursion has a number.** The *"Allow process to evaluate a record multiple times in a single save operation"* option permits **five** evaluations per transaction. The vault had the qualitative fact in 18 — migration silently drops recursion — without the quantity.
+- **Time triggers are blocked on one evaluation criteria and it is not the intuitive one.** *created, and every time it's edited* cannot carry them — the record could requeue endlessly — while *created* and *created, and any time it's edited to subsequently meet criteria* both can. **The plan's own draft had this on the wrong row** and a verification search caught it before writing: rule 3 applied to a plan rather than to a release note, the same catch phase 23 recorded.
+- **Creation-block dates are two dates, not one.** Workflow Rules **Winter '23**, Process Builder **Summer '23**. Phase 08 wrote *"with Process Builder following"*, which is true and unquotable; both INDEX and this file now carry the pair.
+
+**Verified correct, changed nothing** — recorded because the plan expected defects and found none:
+
+- **Help article `001096524` is the right citation** for end of support. The plan flagged a competing ID (`000389396`) surfaced by search and required the discrepancy be resolved before writing; the ID this vault has carried since phase 08 is the one Salesforce's own announcement links to. **A suspected date defect that turns out clean still needs recording**, or the next audit re-opens it.
+- **No retirement date exists as of 2026-08.** Re-checked rather than inherited from phase 09, because the EOS date has now passed and that is precisely when a date would appear. It has not.
+- **Migrate to Flow is GA** — Workflow Rules **Summer '22**, Process Builder **Spring '23**. Checked in the *inverse* of the phase-19 direction: the risk here was not a Beta assumed GA but a GA feature still labelled *(Beta)* in older write-ups, including the first one this run read.
+
+**A research hazard worth naming.** Searching for workflow-queue behaviour surfaces **Oracle CRM On Demand** documentation high in the results, and it says the **opposite** — that deactivating a rule stops pending actions firing. Different product, same vocabulary. One draft of this run's headline finding was nearly reversed by it. **Check the host, not just the wording**, when one source contradicts three others.
+
+**Cap pressure.** Both new files landed at **64 lines** and amended 18 at **65** — inside the area's 60–64 band. 27 wanted more: the inventory tooling was held to two lines and cross-linked to 09-devops and 10-soql rather than restated.

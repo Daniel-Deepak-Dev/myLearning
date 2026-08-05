@@ -33,13 +33,13 @@ One record save is a fixed pipeline, not a set of independent automations. Knowi
 | 19 | **Commit** all DML | |
 | 20 | **Post-commit logic** | email, async jobs, async flow paths |
 
-- Steps 11 and 13 are **not vestigial.** Workflow Rules and Process Builder went **out of support on 31 December 2025 but were not retired**, so in an org that never migrated these slots still execute. You cannot create new ones — creation was blocked in Winter '23 — but you can inherit hundreds. See [CURRENCY.md](../CURRENCY.md).
+- Steps 11 and 13 are **not vestigial.** Workflow Rules and Process Builder went **out of support on 31 December 2025 but were not retired**, so in an org that never migrated these slots still execute. You cannot create new ones — blocked in **Winter '23** for Workflow Rules and **Summer '23** for Process Builder — but you can inherit hundreds. Reading what is in those two slots is [04-flow · 26](../04-flow-and-automation/26-reading-inherited-workflow-and-process-builder.md). See [CURRENCY.md](../CURRENCY.md).
 - A field update at step 11 or 16–17 can **re-enter** the before/after update trigger path, which is why the same trigger appears twice in a debug log.
 - Nothing before step 19 is durable. An unhandled exception at step 18 discards the step-7 write.
 
 ## 2026 currency
 
-All *new* declarative automation now lands at steps 3 and 14, which is the practical argument for record-triggered Flows: you choose your position in the save order explicitly instead of inheriting whatever slot the old tool occupied. The nuance to hold on to when debugging an inherited org is that steps 11 and 13 can still be live — **end of support is not retirement**, and an unmigrated workflow rule will happily fire between your after-trigger and your after-save flow. → [04-flow · 01](../04-flow-and-automation/01-automation-landscape-and-tool-selection.md); migration mechanics are [04-flow · 18](../04-flow-and-automation/18-migrate-to-flow-and-legacy-retirement.md).
+All *new* declarative automation now lands at steps 3 and 14, which is the practical argument for record-triggered Flows: you choose your position in the save order explicitly instead of inheriting whatever slot the old tool occupied. The nuance to hold on to when debugging an inherited org is that steps 11 and 13 can still be live — **end of support is not retirement**, and an unmigrated workflow rule will happily fire between your after-trigger and your after-save flow. → [04-flow · 01](../04-flow-and-automation/01-automation-landscape-and-tool-selection.md); migration mechanics are [04-flow · 18](../04-flow-and-automation/18-migrate-to-flow-and-legacy-retirement.md) and the cutover sequence [· 27](../04-flow-and-automation/27-legacy-automation-migration-runbook.md).
 
 ## Gotchas
 

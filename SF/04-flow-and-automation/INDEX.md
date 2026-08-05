@@ -1,10 +1,10 @@
 # 04 · Flow & Automation
 
-Flow as the **only** declarative automation tool you may build in, after Workflow Rules and Process Builder went out of support. **25 topics** · phases [08](PHASES.md), [09](PHASES.md).
+Flow as the **only** declarative automation tool you may build in, after Workflow Rules and Process Builder went out of support. **27 topics** · phases [08](PHASES.md), [09](PHASES.md), [24](PHASES.md).
 
 > Currency: **Summer '26 (API 67.0)** · [flag legend](../README.md#flag-legend) · [what changed](../CURRENCY.md)
 
-> ⚠️ **Workflow Rules and Process Builder are *out of support*, not retired.** Support ended **31 December 2025** — no bug fixes, no support cases — and creation was blocked back in Winter '23. **Existing automations still run and no retirement date has been announced.** Any tutorial offering a three-way declarative decision tree is out of date; so is anyone telling a client the old tools have stopped.
+> ⚠️ **Workflow Rules and Process Builder are *out of support*, not retired.** Support ended **31 December 2025** — no bug fixes, no support cases — and creation was blocked in **Winter '23** for Workflow Rules and **Summer '23** for Process Builder. **Existing automations still run and no retirement date has been announced.** Any tutorial offering a three-way declarative decision tree is out of date; so is anyone telling a client the old tools have stopped. Because they still execute, reading them is a live skill — **26** — and retiring them is a programme with a tail, **27**.
 
 | # | Topic | Scope | Phase |
 |---|---|---|---|
@@ -33,6 +33,8 @@ Flow as the **only** declarative automation tool you may build in, after Workflo
 | 23 | [Flows as Agentforce actions](23-flows-as-agentforce-actions.md) 🆕 | autolaunched only, description-as-contract, the locked interface | 09 |
 | 24 | [Flow deployment, versioning & governance](24-flow-deployment-versioning-and-governance.md) ⚠️ | **`FlowDefinition` is not how you activate**; 50 versions; error email | 09 |
 | 25 | [AI-assisted flow authoring](25-ai-assisted-flow-authoring.md) 🆕 | generate, edit and summarise in natural language — and how to review it | 09 |
+| 26 | [Reading inherited Workflow Rules & Process Builder](26-reading-inherited-workflow-and-process-builder.md) ⚠️ | the three evaluation criteria, the re-evaluate checkbox, PB recursion **×5** | 24 |
+| 27 | [Legacy automation migration runbook](27-legacy-automation-migration-runbook.md) 🆕 | 7 stages, **Switch Activations**, and the queue that outlives deactivation | 24 |
 
 ## Related
 
@@ -42,4 +44,5 @@ Flow as the **only** declarative automation tool you may build in, after Workflo
 - **17** pairs with [01-admin · 12 Approval processes](../01-admin-and-declarative-platform/12-approval-processes-and-approval-orchestration.md).
 - **19** is the security spine of the area — [02-apex · 10](../02-apex-and-triggers/10-apex-security-user-mode-and-fls.md) is its coded counterpart, and Flow did **not** follow Apex's 67.0 flip to user mode.
 - **21** pairs with [05-experience-cloud · 07 Guest user security model](../05-experience-cloud-lwr/07-guest-user-security-model.md), and every flow on *Enabled Flow Access* is an item on [**· 11** the public site exposure audit](../05-experience-cloud-lwr/11-public-site-exposure-audit.md).
+- **18, 26, 27** are one subject split three ways and the boundary is deliberate: **26** owns how the legacy automation fires, **18** owns the conversion tool, **27** owns the programme. **26** is the declarative twin of [01-admin · 14](../01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md) steps 11 and 13.
 - **22–23, 25** are seams into [AI_Data/](../../AI_Data/README.md) — the agent and Data 360 story lives there.
