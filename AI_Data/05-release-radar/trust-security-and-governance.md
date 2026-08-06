@@ -4,34 +4,40 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
-## 2026-08-05 · Agentforce 360 is authorized at DoD Impact Level 5 — and getting there meant switching a model vendor off
+## 2026-08-05 · Agentforce 360 is IL5-authorized — agents on CUI, inside a GovCloud boundary
 
-**What changed.** Salesforce announced that **Agentforce 360 is authorized at US Department of Defense Impact Level 5 (IL5)**, delivered through the **Missionforce National Security** platform and hosted on **AWS GovCloud**. The **U.S. Army Human Resources Command (HRC)** is the first Department of War organization to deploy it.
+**What changed.** Salesforce announced that **Agentforce 360** — the whole portfolio of agents, data capabilities and apps — is authorized at **US Department of Defense Impact Level 5 (IL5)** and embedded in the **Missionforce National Security** platform. It is the first Agentforce compliance boundary this radar has recorded above the FedRAMP baseline.
 
-- **IL5** is the highest DoD impact level for **Controlled Unclassified Information (CUI)** and **National Security System (NSS)** data. It is not a classified-network authorization.
+- **IL5** covers **Controlled Unclassified Information (CUI)** and unclassified **National Security System (NSS)** data — one step below classified. It is not a classified-network authorization.
+- **Hosting is AWS GovCloud**, described in the release as *"physically and logically isolated"* and *"operated exclusively by U.S. personnel."*
 - **The accreditation cost a model vendor.** Salesforce attested to the Pentagon that **generative AI models and capabilities supplied by Anthropic were disabled** in the IL5 environment. The platform stays model-agnostic in design and can re-add them if DoD policy changes.
-- **The deployment.** Agentforce agents sit on HRC's **Digital Front Door** (Experience Cloud + Agentforce), serving **9.2 million** Soldiers, Veterans, civilians and families.
-- **Scale figures.** Over **1,500 cases/day** get automated case summarization; **55M+ agent conversations per month** are projected at full scale; **$6M/yr** in projected savings.
-- **Humans keep the decision.** Benefits and other sensitive determinations still route to HRC specialists.
+- **Data 360 is named as the grounding layer**, reaching sensitive records *where they live* via **zero-copy** rather than duplicating them into a new store.
+- **Named mission workloads:** defense logistics, recruit onboarding and training, military-family administration, real-time command insight. Intelligence-community capabilities are described as additional.
+- **The release uses "Department of War (DOW)"** throughout, not DoD.
+- **First deployment** is the U.S. Army HRC — see [agentforce-platform.md](agentforce-platform.md#2026-08-05--army-hrc-is-the-first-il5-agentforce-deployment--55m-conversations-a-month-and-a-human-holding-the-decision).
 
-**Why it matters.** The Einstein Trust Layer is usually described as *which safeguards run*. This announcement shows the other half: it also decides **which models exist at all**, and that roster is a property of the accreditation boundary, not of the product.
+**Why it matters.** Two things landed at once, and the second is the one people will miss.
 
-An architecture that pins a specific model — per-agent model pinning, BYOM through Bedrock, a prompt tuned to one vendor's behaviour — is portable across orgs but **not necessarily across environments**. Moving a working design from commercial to GovCloud to IL5 can silently remove the model it was tuned on.
+The first is the compliance story catching up to the architecture story. For two years the answer to *"can an agent touch regulated data?"* was to move the data somewhere the agent was allowed to look — which is exactly the sprawl that creates the exposure. Zero-copy grounding inverts that, and IL5 is the first authorization to bless it at this classification.
 
-It is also the first Salesforce announcement in eight scans that changes what an architect can promise. "Agentforce can run on CUI" is now true, with named conditions.
+The second: the Einstein Trust Layer is usually described as *which safeguards run*. Disabling a vendor to obtain the accreditation shows it also decides **which models exist at all**, and that roster belongs to the **environment**, not the product or the org.
+
+So an architecture that pins a specific model — per-agent model pinning, BYOM through Bedrock, a prompt tuned to one vendor's behaviour — is portable across orgs but **not necessarily across environments**. Moving a working design from commercial to GovCloud to IL5 can silently remove the model it was tuned on.
 
 **Gotchas:**
-- **Three names, one stack, different scopes.** *Agentforce Public Sector* is the product framing, *Missionforce National Security* is the delivery platform, and *Government Cloud Plus Defense* is the underlying infrastructure authorization. A statement of work should name which one it means.
-- **Model availability is environment-scoped, not org-scoped.** In commercial GovCloud the Trust Layer restricts agents to FedRAMP-validated models (Azure OpenAI, Anthropic Claude via Bedrock). At IL5 the Anthropic path is off. Confirm the roster in the target environment before designing to a model.
+- **IL5 authorization is environment-scoped, not feature-scoped.** It says Agentforce 360 may run in that boundary. It does **not** mean every Agentforce feature is available there — Government Cloud Plus already excludes **Agentforce Coworker**, **Agentforce Vibes** and **ApexGuru/Scale Center**. Assume exclusions until you see the feature named.
+- **Model availability is environment-scoped too.** In commercial GovCloud the Trust Layer restricts agents to FedRAMP-validated models (Azure OpenAI, Anthropic Claude via Bedrock). At IL5 the Anthropic path is off. Confirm the roster in the target environment before designing to a model.
+- **Three names, one stack, different scopes.** *Agentforce Public Sector* is the product framing, *Missionforce National Security* is the purchasable estate, and *Government Cloud Plus Defense* is the underlying infrastructure authorization. **"Agentforce 360" is a marketing portfolio name, not a SKU.** A statement of work should say which it means.
+- **Zero-copy is not zero-permission.** Records staying in place does not grant the agent access to them; sharing and field-level security still decide what grounding returns. See [Apex user-mode defaults](#2026-07-26--apex-database-operations-run-in-user-mode-by-default).
 - **IL5 ≠ classified.** CUI and NSS data, not Secret or above. Do not read this as blanket DoD coverage.
-- **Sandbox parity is not implied.** Nothing in the announcement says an IL5 sandbox exposes the same model roster as its production peer — verify before building an eval suite that assumes it.
-- **AWS GovCloud is a distinct region** operated exclusively by US personnel; latency, feature lag and data residency all differ from commercial. Feature GA dates in the main release notes are not automatically true there.
+- **Sandbox parity is not implied.** Nothing says an IL5 sandbox exposes the same model roster as its production peer — verify before building an eval suite that assumes it.
+- **No authorizing body, authorization date or ATO package identifier is named** in any source located. Treat "IL5-authorized" as the company's claim until you see the DISA listing.
 
-**Study action:** in any org you can reach, open **Setup → Einstein Setup → Model Builder** (or run `sf agent generate` and inspect the generated model reference) and write down every agent or prompt template that names a specific model. That list is your portability risk register — each entry is something that may not exist in a FedRAMP or IL5 environment.
+**Study action:** open your own org's compliance posture and write down which of Agentforce Coworker, Vibes, Voice and Data 360 federation are actually available on Government Cloud Plus — Salesforce's [compliance document portal](https://compliance.salesforce.com/) is the first-party source. Then, separately, open **Setup → Einstein Setup → Model Builder** (or run `sf agent generate` and inspect the generated model reference) and list every agent or prompt template naming a specific model. The first list is the scope of any regulated bid; the second is your portability risk register.
 
-**Status:** Announced / authorized — **2026-08-05**. Agentforce 360 IL5-authorized via Missionforce National Security on AWS GovCloud; Army HRC deployment in progress.
+**Status:** Announced / authorized **2026-08-05**. Agentforce 360 at IL5 on AWS GovCloud, delivered through Missionforce National Security. Army HRC deployment in progress.
 
-**Sources:** [Missionforce National Security unveils IL5-authorized AI agents](https://www.salesforce.com/news/press-releases/2026/08/05/dow-agentforce-mission-readiness/) · [U.S. Army HRC deploys Agentforce](https://www.salesforce.com/news/press-releases/2026/08/05/us-army-hrc-agentforce-ai-powered-support/) · [DefenseScoop — Salesforce previews plans to deliver newly authorized AI agents across DOD](https://defensescoop.com/2026/08/05/salesforce-plans-deliver-newly-authorized-ai-agents-across-dod/) · [MeriTalk — Salesforce secures IL5 authorization](https://www.meritalk.com/articles/salesforce-secures-il5-authorization-for-agentforce-army-hrc-first-to-deploy/) · [DoD IL5 — Salesforce Government Cloud Plus Defense](https://compliance.salesforce.com/en/documents/a006e000014OxBVAA0)
+**Sources:** [Missionforce National Security press release](https://www.salesforce.com/news/press-releases/2026/08/05/dow-agentforce-mission-readiness/) · [U.S. Army HRC press release](https://www.salesforce.com/news/press-releases/2026/08/05/us-army-hrc-agentforce-ai-powered-support/) · [Salesforce investor relations copy](https://investor.salesforce.com/news/news-details/2026/Missionforce-National-Security-Unveils-IL5-Authorized-AI-Agents-and-Apps-to-Drive-Decision-Advantage-Readiness-and-Enhanced-Warfighter-Support/default.aspx) · [DefenseScoop](https://defensescoop.com/2026/08/05/salesforce-plans-deliver-newly-authorized-ai-agents-across-dod/) · [MeriTalk](https://www.meritalk.com/articles/salesforce-secures-il5-authorization-for-agentforce-army-hrc-first-to-deploy/) · [DoD IL5 — Government Cloud Plus Defense](https://compliance.salesforce.com/en/documents/a006e000014OxBVAA0) · grounding cross-link: [data-360.md](data-360.md#2026-08-05--data-360-zero-copy-is-the-il5-grounding-story-cross-link)
 
 ---
 

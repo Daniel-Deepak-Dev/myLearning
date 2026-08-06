@@ -123,3 +123,12 @@ A: They are a 2025 measurement of a UI that has changed since. The repo's newest
 
 Q: What non-obvious obstacle does SCUBA's commit history reveal about computer-use agents in an enterprise?
 A: Authentication. Its first substantive commit was "bypass the multi-factor-auth", and it needed a further "Login fix" months later. A computer-use agent meets your MFA and session handling before it meets any business logic — that is where these projects stall, not on reasoning.
+
+Q: Why should you not cite SCUBA's scores as evidence about Agentforce?
+A: Different modality. SCUBA grades agents that navigate by screenshot, accessibility tree and DOM with a 19- or 15-action mouse/keyboard space. Agentforce acts through invocable actions and APIs. SCUBA is evidence about the screenshot-and-click approach, not about Agentforce.
+
+Q: What is the trap in quoting a SCUBA percentage?
+A: Scoring is milestone-based, so partial progress accrues on tasks that never complete. A 39% milestone score is not 39% of tasks finished — check which figure a citation means.
+
+Q: What does SCUBA's OSWorld comparison tell you about general-purpose agents?
+A: Performance drops sharply moving from generic desktop benchmarks into enterprise CRM. Broad computer-use ability does not transfer to Salesforce — which is the practical argument for giving agents APIs rather than a cursor.

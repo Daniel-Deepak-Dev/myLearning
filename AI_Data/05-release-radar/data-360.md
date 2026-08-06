@@ -65,6 +65,14 @@ And it turns a data-residency question into an architecture question: **companio
 
 ---
 
+## 2026-08-05 · Data 360 zero-copy is the IL5 grounding story (cross-link)
+
+Salesforce's IL5 announcement names **Data 360 as the grounding layer**, connecting to sensitive records *where they live* so data is *"never copied, moved, or duplicated outside its secure boundary."* Zero-copy stops being a cost-and-freshness argument and becomes a **classification-boundary** argument. Full entry: [trust-security-and-governance.md](trust-security-and-governance.md#2026-08-05--agentforce-360-is-il5-authorized--agents-on-cui-inside-a-govcloud-boundary).
+
+**No new Data 360 technical surface shipped with it** — no API, no connector, no release-note change. This is positioning, recorded because it is the strongest public statement yet of *why* zero-copy federation exists.
+
+---
+
 ## 2026-08-01 · The Data 360 grounding reference app is renamed — NextGenWealth is now Agentic Advisor
 
 **What changed.** [`salesforce/next-gen-wealth`](https://github.com/salesforce/next-gen-wealth) — Salesforce's Apache-2.0 Financial Services Cloud reference app, and the only public worked example of Data-360-grounded prompt templates this radar has found — **renamed itself from NextGenWealth to Agentic Advisor** on 2026-08-01 (commit `79d77b4`, PR #15, work item `@W-23668628`). README and skill text changed with it.

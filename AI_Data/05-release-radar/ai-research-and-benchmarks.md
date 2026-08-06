@@ -337,6 +337,41 @@ The confidentiality result is the one to act on: an agent discloses what it can 
 
 ---
 
+## 2025-09 · SCUBA — the benchmark for agents that drive the Salesforce UI, and they are bad at it
+
+> **Backfill (recorded 2026-08-06).** SCUBA was named repeatedly in this radar as part of Salesforce's evaluation line and had **no captured detail anywhere in the study base** — the open question raised 2026-08-02. It is now resolved. Dated to the paper, not to the scan.
+
+**What changed.** **SCUBA — Salesforce Computer Use Benchmark** ([arXiv 2509.26506](https://arxiv.org/abs/2509.26506)) evaluates **computer-use agents** on real CRM work. Not tool-calling against an API: agents drive the actual Salesforce UI the way a person does.
+
+- **300 task instances**, derived from **real user interviews** rather than authored by the researchers.
+- **Three personas:** platform administrator, sales representative, service agent.
+- **Runs in real Salesforce sandbox orgs**, with parallel execution supported.
+- **Observations:** screenshots, accessibility trees, and flattened DOM strings.
+- **Two action spaces:** **19 actions** for browser-use agents, **15** for computer-use agents, driven by **Playwright** and **PyAutoGUI**.
+- **Milestone-based scoring** — partial progress is measured, not just pass/fail.
+- **Abilities tested:** enterprise UI navigation, data manipulation, workflow automation, information retrieval, troubleshooting.
+
+**Why it matters.** The headline result is the useful one: **open-source agents score under 5%, closed-source around 39% zero-shot.** Both are low, and the gap between them is smaller than the gap between either and a competent human.
+
+SCUBA also documents a **sharp drop moving from generic desktop benchmarks like OSWorld into enterprise CRM** — general computer-use ability does not transfer to Salesforce.
+
+The architectural conclusion follows directly: **if you want an agent to act in Salesforce, give it APIs, not a mouse.** That is why Headless 360, MCP servers and invocable actions exist. SCUBA is the evidence that the alternative does not work yet.
+
+**Gotchas:**
+- **SCUBA measures UI-driving agents, and Agentforce is not one.** Do not read these scores as Agentforce's capability — different modality entirely. It is the benchmark for the *screenshot-and-click* approach.
+- **Personas are not equally weighted or equally hard.** Quote the persona split, not just the aggregate, or you will overstate the sales-rep result with an admin number.
+- **Milestone scoring inflates apparent progress.** A 39% milestone score is not 39% of tasks completed — partial credit accrues on tasks that never finish. Check which figure a citation means.
+- The paper is **September 2025**, so every model result in it is stale by roughly a year. Treat the *methodology and the ordering* as durable and the *absolute numbers* as historical.
+- `arxiv.org` returns **403** to automated fetching, so this entry is built from the abstract and secondary summaries, not from a full read of the PDF. Read it in a browser before quoting a specific table.
+
+**Study action:** open the SCUBA paper's task taxonomy and pick the three tasks closest to something you have automated in Apex or Flow. For each, write down which surface you would give an agent today — invocable action, MCP tool, or UI — and why. The exercise is the argument for API-first agent design, made concrete on your own work.
+
+**Status:** Research benchmark, published **September 2025** by Salesforce AI Research. Not a product. Repository and licence not verified this run.
+
+**Sources:** [arXiv 2509.26506](https://arxiv.org/abs/2509.26506) · [Salesforce blog — Meet SCUBA](https://www.salesforce.com/blog/scuba-benchmark/) · [OpenReview](https://openreview.net/pdf?id=bkjKnO9s7T) · [Literature review summary](https://www.themoonlight.io/en/review/scuba-salesforce-computer-use-benchmark)
+
+---
+
 ## Standing limitation on this file
 
 `arxiv.org`, `huggingface.co` and `salesforce.com` return **HTTP 403** to automated fetching, so a model published to Hugging Face without a GitHub commit or a blog post is **invisible to this radar**. Read every negative here as *"nothing found through reachable sources"* — GitHub-backed negatives are strong, the rest are weaker.

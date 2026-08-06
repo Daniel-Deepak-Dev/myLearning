@@ -102,3 +102,12 @@ A: `cliTools` (2026-07-30) — the local CLI a skill needs; `accessCheck` (2026-
 
 Q: What breaking change hid inside the sf-skills release titled "79 updated skills"?
 A: `automation-flow-generate` raised its minimum API version from 51.0 to 60.0. A sandbox or managed package pinned below 60.0 loses the skill, with nothing in the release title to warn you.
+
+Q: On 2026-08-05 the `sf` CLI `latest` dist-tag moved from 2.145.6 to 2.146.3. Did that fix the SDR zip-slip?
+A: No. 2.146.3 pins `@salesforce/plugin-deploy-retrieve` 3.24.61, which pins SDR `^12.36.7` and resolves to the unpatched 12.37.2. The stable channel advanced and stayed vulnerable — so a newer CLI version is actively misleading evidence.
+
+Q: What is the fastest reliable check that your `sf` install has the patched SDR line?
+A: Read the resolved SDR version, not the CLI version — `npm ls @salesforce/source-deploy-retrieve` — or check `engines.node`: `>=18.6.0` means the unpatched 12.x line, `>=22.0.0` means 13.x.
+
+Q: npm dist-tags moved without any package being published. How do you spot that?
+A: The registry's package-level `modified` timestamp advances while no new version appears in `time`. For `@salesforce/cli` on 2026-08-05, the newest publish was 2.147.7 at 03:24 UTC but `modified` read 18:41:04 UTC — that gap is the tag move.
