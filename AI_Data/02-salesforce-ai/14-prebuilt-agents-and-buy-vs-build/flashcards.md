@@ -51,3 +51,15 @@ A: No. Flex Credits, voice credit rates and Einstein Trust Layer behaviour apply
 
 Q: What is Missionforce?
 A: The public-sector and health vertical agent estate — Agentforce Public Sector and Agentforce Health — behind the VA's $1.6B Agentic Enterprise License Agreement, providing 24/7 virtual contact centre support for patient triage, intake and care coordination.
+
+Q: What is Missionforce National Security, as distinct from "Agentforce 360"?
+A: The defense and intelligence vertical estate — the thing a government customer actually buys. "Agentforce 360" is the portfolio name for the agents, data capabilities and apps inside it, not a SKU.
+
+Q: In the U.S. Army HRC deployment, what stays with the human?
+A: The decision. The agent answers routine inquiries, summarizes case histories and surfaces policy and career information from approved Army sources; anything touching benefits or other sensitive determinations routes to an HRC specialist who retains decision-making authority.
+
+Q: Why is "retrieve and summarize, human decides" the design worth copying from Army HRC?
+A: It gets an autonomous agent past a risk review by scoping what it is allowed to conclude, rather than by making it more accurate. Accuracy is unbounded work; scope is a design decision you can assert and test.
+
+Q: The Army HRC release cites 55M agent conversations a month and $6M annual savings. How should you cite them?
+A: As projections at full scale, not results. 55M across 9.2M people is about six conversations per person per month — plausible as a ceiling, not an observed rate. The deployment was announced as in progress.

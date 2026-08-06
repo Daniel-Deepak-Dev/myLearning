@@ -96,3 +96,15 @@ A: The `org` column is self-declared free text in `results/<model>/config.json`,
 
 Q: A React Native Agentforce app on iOS never fires `onAgentResponse`, with no error. What is the diagnosis?
 A: It was a no-op on iOS until `@salesforce/react-native-agentforce` 0.4.0 (2026-08-03), while working on Android. Audit for polling or UI-scraping workarounds before upgrading — the workaround becomes the bug.
+
+Q: What does SCUBA measure, and what were the headline scores?
+A: Computer-use agents driving the real Salesforce UI — 300 task instances from real user interviews across platform admin, sales rep and service agent personas, run in real sandbox orgs. Open-source agents scored under 5%, closed-source around 39% zero-shot.
+
+Q: Why should you not cite SCUBA's scores as evidence about Agentforce?
+A: Different modality. SCUBA grades agents that navigate by screenshot, accessibility tree and DOM with a 19- or 15-action mouse/keyboard space. Agentforce acts through invocable actions and APIs. SCUBA is evidence about the screenshot-and-click approach, not about Agentforce.
+
+Q: What is the trap in quoting a SCUBA percentage?
+A: Scoring is milestone-based, so partial progress accrues on tasks that never complete. A 39% milestone score is not 39% of tasks finished — check which figure a citation means.
+
+Q: What does SCUBA's OSWorld comparison tell you about general-purpose agents?
+A: Performance drops sharply moving from generic desktop benchmarks into enterprise CRM. Broad computer-use ability does not transfer to Salesforce — which is the practical argument for giving agents APIs rather than a cursor.

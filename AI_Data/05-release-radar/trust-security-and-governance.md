@@ -4,6 +4,36 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-05 · Agentforce 360 is IL5-authorized — agents on CUI, inside a GovCloud boundary
+
+**What changed.** Salesforce announced that **Agentforce 360** — the whole portfolio of agents, data capabilities and apps — is **IL5-authorized** and embedded in the **Missionforce National Security** platform. It is the first time this radar has recorded an Agentforce compliance boundary above FedRAMP-baseline.
+
+- **IL5** is the U.S. Department of Defense cloud impact level covering **Controlled Unclassified Information (CUI)** and **unclassified National Security Systems (NSS)** data — one step below classified.
+- **Hosting is AWS GovCloud**, described in the release as a region *"physically and logically isolated"* and *"operated exclusively by U.S. personnel"*.
+- **Data 360 is named as the grounding layer**, connecting to sensitive records *where they live* via **zero-copy** rather than duplicating them into a new store.
+- **Named mission workloads:** defense logistics, recruit onboarding and training, military-family administration, and real-time command insight. Intelligence-community capabilities are described as additional.
+- **The release uses "Department of War (DOW)"** throughout, not DoD.
+
+**Why it matters.** This is the compliance story catching up to the architecture story.
+
+For two years the answer to *"can an agent touch regulated data?"* was to move the data somewhere the agent was allowed to look — which is exactly the sprawl that creates the exposure.
+
+Zero-copy grounding inverts that, and IL5 is the first authorization to bless it at this classification. Expect the same argument in every regulated-industry conversation, not just defense.
+
+**Gotchas:**
+- **IL5 authorization is environment-scoped, not feature-scoped.** It says Agentforce 360 may run in that boundary. It does **not** mean every Agentforce feature is available there — Government Cloud Plus already excludes **Agentforce Coworker**, **Agentforce Vibes** and **ApexGuru/Scale Center**. Assume exclusions until you see the feature named.
+- **"Agentforce 360" is the marketing portfolio name**, not a SKU you buy. The purchasable estate here is **Missionforce National Security**.
+- **Zero-copy is not zero-permission.** Records staying in place does not grant the agent access to them; sharing and field-level security still decide what grounding returns. See [Apex user-mode defaults](#2026-07-26--apex-database-operations-run-in-user-mode-by-default).
+- No authorizing body, authorization date or ATO package identifier is named in any source located — treat "IL5-authorized" as the company's claim until you see the DISA listing.
+
+**Study action:** open your own org's compliance posture and write down which of Agentforce Coworker, Vibes, Voice and Data 360 federation are actually available on Government Cloud Plus. Then compare that list against the capabilities this release implies — the delta is the real scope of any regulated bid. Salesforce's [compliance document portal](https://compliance.salesforce.com/) is the first-party source.
+
+**Status:** Announced **2026-08-05**. IL5 authorization for Agentforce 360 on AWS GovCloud, delivered through Missionforce National Security. First deployment is the **U.S. Army HRC** — see [agentforce-platform.md](agentforce-platform.md#2026-08-05--army-hrc-is-the-first-il5-agentforce-deployment--55m-conversations-a-month-and-a-human-holding-the-decision).
+
+**Sources:** [Missionforce National Security press release](https://www.salesforce.com/news/press-releases/2026/08/05/dow-agentforce-mission-readiness/) · [Salesforce investor relations copy](https://investor.salesforce.com/news/news-details/2026/Missionforce-National-Security-Unveils-IL5-Authorized-AI-Agents-and-Apps-to-Drive-Decision-Advantage-Readiness-and-Enhanced-Warfighter-Support/default.aspx) · [DefenseScoop coverage](https://defensescoop.com/2026/08/05/salesforce-plans-deliver-newly-authorized-ai-agents-across-dod/) · grounding cross-link: [data-360.md](data-360.md#2026-08-05--data-360-zero-copy-is-the-il5-grounding-story-cross-link)
+
+---
+
 ## 2026-08-01 · A path-traversal in metadata retrieve (cross-link)
 
 `@salesforce/source-deploy-retrieve` 13.0.1 fixed a **zip-slip** in static-resource conversion (`W-23558165`) — org metadata writing outside the project on the machine that retrieves it, with **no 12.x backport** and the stable `sf` channel still on the unpatched line. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-01--a-path-traversal-fix-in-the-retrieve-path--and-most-sf-installs-cannot-reach-it-yet).

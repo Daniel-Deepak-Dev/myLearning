@@ -53,6 +53,15 @@ Seed profiles fix the other chronic eval problem. Hard-coded record IDs rot the 
 
 ## 2026-08-01 · A path-traversal fix in the retrieve path — and most `sf` installs cannot reach it yet
 
+> **Correction (2026-08-06):** this entry said the stable channel was **2.145.6** and that the fix existed only on `nightly`. **Both dist-tags rolled on 2026-08-05** — package `modified` 18:41:04 UTC, with no version published after 2.147.7 at 03:24 UTC, so this was a tag move, not a release.
+>
+> - `latest` **2.145.6 → 2.146.3** — pins plugin **3.24.61** → SDR `^12.36.7` → **12.37.2**, `engines.node >=18.6.0`. **Still unpatched.**
+> - `latest-rc` **2.146.3 → 2.147.7** — pins plugin **4.0.1** → SDR `^13.0.0` → **13.0.1**, `engines.node >=22.0.0`. **Patched**, and now equal to `nightly`.
+>
+> So the answer to *"when does this reach an ordinary install?"* moved from *"not queued"* to *"queued behind a Node 22 major."* Still no 12.x backport, no SDR 13.0.2, no CVE. Verified 2026-08-06 03:08 UTC.
+>
+> **The trap this creates is worse than the one before it.** Anyone running `npm install -g @salesforce/cli` this week gets a **newer** CLI than last week and is **still on the unpatched SDR line**. A version bump is now actively misleading evidence.
+
 > **Re-checked (2026-08-05 03:14 UTC):** nothing below has changed and that is the finding. `latest` is still **2.145.6** and `latest-rc` still **2.146.3** — both unmoved since 2026-07-29 — while `nightly` has rolled four times to **2.147.6**. There is still **no 12.x backport** (`@salesforce/source-deploy-retrieve@12.37.3` returns 404 on the registry) and **no SDR 13.0.2**. The exposure window is now five days old on the stable channel.
 
 **What changed.** [`@salesforce/source-deploy-retrieve`](https://github.com/forcedotcom/source-deploy-retrieve) **13.0.1** (npm 2026-07-31 16:21 UTC) fixes a **zip-slip** in static-resource conversion — work item `W-23558165`, [PR #1812](https://github.com/forcedotcom/source-deploy-retrieve/pull/1812). A day later `@salesforce/cli` **nightly 2.147.3** (2026-08-01 03:24 UTC) became the first CLI to require **Node ≥ 22**. These are one story.
@@ -64,13 +73,15 @@ Seed profiles fix the other chronic eval problem. Hard-coded record IDs rot the 
 - **There is no 12.x backport.** The newest 12.x is **12.37.2**, published 2026-07-13. The patch exists only on the 13.x line.
 - **So reachability is gated behind a major.** `@salesforce/plugin-deploy-retrieve` **3.24.61** pins SDR `^12.36.7` — a range that can never resolve to a patched build. **4.0.0/4.0.1** (2026-07-30) pin `^13.0.0` and raise `engines.node` to `>=22.0.0`.
 
+**Dist-tag → resolved SDR, as of 2026-08-06 03:08 UTC.** (For the 2026-08-01 assignment this replaces, read the correction above — the versions moved, the shape did not.)
+
 ```mermaid
 flowchart TD
-    A["sf CLI 2.145.6<br/>npm dist-tag <b>latest</b> · Node >=18.6"] --> B["plugin-deploy-retrieve 3.24.59<br/>SDR ^12.36.7"]
+    A["sf CLI 2.145.6<br/>no longer tagged · Node >=18.6"] --> B["plugin-deploy-retrieve 3.24.59<br/>SDR ^12.36.7"]
     B --> C["SDR 12.37.2<br/><b>zip-slip present</b>"]
-    D["sf CLI 2.146.3<br/>dist-tag <b>latest-rc</b> · Node >=18.6"] --> E["plugin-deploy-retrieve 3.24.61<br/>SDR ^12.36.7"]
+    D["sf CLI 2.146.3<br/>dist-tag <b>latest</b> · Node >=18.6"] --> E["plugin-deploy-retrieve 3.24.61<br/>SDR ^12.36.7"]
     E --> C
-    F["sf CLI 2.147.3<br/>dist-tag <b>nightly</b> · Node >=22"] --> G["plugin-deploy-retrieve 4.0.1<br/>SDR ^13.0.0"]
+    F["sf CLI 2.147.7<br/>dist-tags <b>latest-rc</b> + <b>nightly</b> · Node >=22"] --> G["plugin-deploy-retrieve 4.0.1<br/>SDR ^13.0.0"]
     G --> H["SDR 13.0.1<br/><b>patched</b>"]
 ```
 
@@ -81,7 +92,8 @@ Anyone who can create a static resource in an org you retrieve from — a packag
 And the stable channel still resolves the unpatched line, so *"I upgraded the CLI"* is not the same sentence as *"I have the fix"*.
 
 **Gotchas:**
-- `npm dist-tags` for `@salesforce/cli` are **not** ordered by version: `latest` is **2.145.6**, `latest-rc` **2.146.3**, `nightly` **2.147.3** (checked 2026-08-02 02:55 UTC). `npm install -g @salesforce/cli` gets 2.145.6 and therefore SDR 12.37.2.
+- `npm dist-tags` for `@salesforce/cli` are **not** ordered by version, and **they move without a publish**. Checked 2026-08-02 02:55 UTC: `latest` **2.145.6**, `latest-rc` **2.146.3**, `nightly` **2.147.3**. Checked 2026-08-06 03:08 UTC: `latest` **2.146.3**, `latest-rc` **2.147.7**, `nightly` **2.147.7**. Either way `npm install -g @salesforce/cli` resolves **SDR 12.37.2**.
+- **A newer CLI version is not evidence of the fix.** The only reliable check is the resolved SDR version — `npm ls @salesforce/source-deploy-retrieve`, or read `engines.node`: `>=18.6.0` means the unpatched 12.x line, `>=22.0.0` means 13.x.
 - The guard fires **only** for `contentType` `application/zip` and `application/jar`. A static resource stored as `application/octet-stream` never enters that code path.
 - Taking the fix means taking **Node 22**, `@salesforce/core` 9.x and `@salesforce/plugin-agent` 2.0.0 in the same step — see [the Node 18/20 drop below](#2026-07-30--the-dx-node-library-stack-dropped-node-18-and-20--salesforceagents-is-200).
 - `@salesforce/core` also moved to **9.1.0** (2026-07-31 19:01 UTC) inside the same window; a minor, but it lands on the 9.x line only.
@@ -89,7 +101,7 @@ And the stable channel still resolves the unpatched line, so *"I upgraded the CL
 
 **Study action:** run `npm view @salesforce/cli dist-tags`, then in a scratch project `npm ls @salesforce/source-deploy-retrieve` — read off the version your deploy path actually resolves to. Then build a static resource whose zip contains an entry named `../escaped.txt`, deploy it, retrieve it on both SDR 12.37.2 and 13.0.1, and watch one write outside the project and the other throw `error_static_resource_attempting_zip_slip`. Do it in a scratch org.
 
-**Status:** Shipped. SDR **13.0.1**, 2026-07-31 (release commit `364ced7`), Apache-2.0. `@salesforce/cli` **2.147.3** on the `nightly` dist-tag, 2026-08-01. No CVE or security advisory was published — the only public identifier is `W-23558165`.
+**Status:** Shipped, **not yet on stable**. SDR **13.0.1**, 2026-07-31 (release commit `364ced7`), Apache-2.0. As of **2026-08-06 03:08 UTC** the fix ships in `@salesforce/cli` **2.147.7** on `latest-rc` and `nightly`; `latest` is **2.146.3** and still resolves SDR **12.37.2**. No CVE or security advisory was published — the only public identifier is `W-23558165`.
 
 **Sources:** [SDR 13.0.1 release](https://github.com/forcedotcom/source-deploy-retrieve/releases/tag/13.0.1) · [PR #1812 — resolved zip-slip vulnerability](https://github.com/forcedotcom/source-deploy-retrieve/pull/1812) · [`@salesforce/source-deploy-retrieve` on npm](https://www.npmjs.com/package/@salesforce/source-deploy-retrieve) · [`@salesforce/cli` on npm](https://www.npmjs.com/package/@salesforce/cli) · [salesforcecli/cli releases](https://github.com/salesforcecli/cli/releases) · security cross-link: [trust-security-and-governance.md](trust-security-and-governance.md#2026-08-01--a-path-traversal-in-metadata-retrieve-cross-link)
 

@@ -39,3 +39,15 @@ A: Which protections still apply end-to-end on your own model endpoint — the g
 
 Q: Which governance question does GA hosted MCP raise for a security review?
 A: Who is allowed to create custom hosted MCP servers — they expose org data to external AI clients, so it belongs on a review checklist rather than in a developer's discretion.
+
+Q: What does IL5 authorization for Agentforce 360 (announced 2026-08-05) actually permit?
+A: Running Agentforce inside a DoD Impact Level 5 boundary on AWS GovCloud — a region described as physically and logically isolated and operated exclusively by U.S. personnel — so agents may work over Controlled Unclassified Information (CUI) and unclassified National Security Systems (NSS) data. One step below classified.
+
+Q: Why is IL5 authorization environment-scoped rather than feature-scoped?
+A: It says Agentforce 360 may run in that boundary, not that every feature is available there. Government Cloud Plus already excludes Agentforce Coworker, Agentforce Vibes and ApexGuru/Scale Center. Assume exclusions until you see a feature named.
+
+Q: How does the IL5 announcement change the argument for zero-copy grounding?
+A: It moves it from cost-and-freshness to classification boundary. Data 360 connects to sensitive records where they live so data is never copied, moved or duplicated outside its secure boundary — the alternative, moving regulated data somewhere the agent may look, is the thing that creates the exposure.
+
+Q: Does zero-copy grounding grant an agent access to the records it reaches?
+A: No. Records staying in place is orthogonal to permission. Sharing rules and field-level security still decide what grounding returns — which is why the API 67.0 user-mode defaults matter underneath it.
