@@ -4,6 +4,34 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-05 · Agentforce is authorized at DoD Impact Level 5 — autonomous agents cleared for CUI
+
+**What changed.** Salesforce announced **IL5 authorization for Agentforce 360**, delivered through **Missionforce National Security**, its defense-sector platform. The **U.S. Army Human Resources Command (HRC)** is the first Department of War organization to deploy on it.
+
+- **IL5** is the DoD Cloud Computing SRG impact level covering **Controlled Unclassified Information (CUI)** and National Security Systems information — the highest tier **below classified**.
+- Announced in **two press releases on 2026-08-05**: the [platform authorization](https://www.salesforce.com/news/press-releases/2026/08/05/dow-agentforce-mission-readiness/) and the [Army HRC deployment](https://www.salesforce.com/news/press-releases/2026/08/05/us-army-hrc-agentforce-ai-powered-support/).
+- **Scale claimed:** 9.2M Soldiers, Veterans, civilians and family members; **1,500+ cases/day**, ~**600,000 cases/year**; projected **55M+ agent conversations per month** at full scale, delivered via **Experience Cloud with Agentforce**.
+- **Agent scope is deliberately bounded:** answer routine inquiries, summarize case histories, surface policy and career information **from approved Army sources**. Benefits and other sensitive decisions **route to human specialists, who retain decision authority**.
+
+**Why it matters.** Until now the interesting question about an Agentforce deployment was what the agent could *do*. IL5 makes the prior question explicit: what data is the agent permitted to *reason over at all*. An accreditation boundary is a governance control that sits underneath every Trust Layer setting, and it is the first thing a regulated buyer asks about.
+
+The deployment shape is the transferable part. At 55M conversations/month the design still **hard-stops autonomy at the benefits decision** and hands off to a human. That is not timidity — it is what makes the accreditation defensible, and it is the pattern to copy in any regulated build.
+
+**Gotchas:**
+- **IL5 is an environment authorization, not a product feature.** It attaches to the accredited enclave (Government Cloud / Missionforce), not to Agentforce as installed in a commercial org. Nothing about your production org changes because of this announcement.
+- **"Department of War" is the current name** for what older sources call the Department of Defense. Searching "DoD Agentforce" will miss 2026 material; search **DoW** as well.
+- **Missionforce National Security is the delivery vehicle**, distinct from **Agentforce Public Sector**, the SKU name used in the HRC release. Coverage uses the two interchangeably; a contract will not.
+- **The authorizing body and the exact authorization date were not stated** in either release, and `salesforce.com` and `meritalk.com` both returned **HTTP 403** to automated fetching on 2026-08-07 03:2x UTC. Detail here is from search extracts and syndicated wire copy, not first-party retrieval. **Do not cite a DISA provisional-authorization date you have not seen.**
+- IL5 sits **below** IL6 (Secret). An IL5 authorization says nothing about classified workloads.
+
+**Study action:** take one agent design you have written and mark, line by line, where it would have to hand off to a human if its grounding data were CUI. If the answer is "nowhere", the design has no accreditation story — and that boundary, not the model, is what a regulated customer will review.
+
+**Status:** **Announced 2026-08-05.** Agentforce 360 IL5-authorized within Missionforce National Security; Army HRC deployment in progress, no completion date given. Authorizing body and authorization date not disclosed in the announcements.
+
+**Sources:** [Missionforce National Security Unveils IL5-Authorized AI Agents and Apps](https://www.salesforce.com/news/press-releases/2026/08/05/dow-agentforce-mission-readiness/) · [U.S. Army HRC Deploys Agentforce](https://www.salesforce.com/news/press-releases/2026/08/05/us-army-hrc-agentforce-ai-powered-support/) · [Businesswire wire copy](https://www.businesswire.com/news/home/20260805744958/en/) · [Salesforce investor relations](https://investor.salesforce.com/news/news-details/2026/Missionforce-National-Security-Unveils-IL5-Authorized-AI-Agents-and-Apps-to-Drive-Decision-Advantage-Readiness-and-Enhanced-Warfighter-Support/default.aspx) · [MeriTalk coverage](https://www.meritalk.com/articles/salesforce-secures-il5-authorization-for-agentforce-army-hrc-first-to-deploy/) (403 to automated fetching)
+
+---
+
 ## 2026-08-01 · A path-traversal in metadata retrieve (cross-link)
 
 `@salesforce/source-deploy-retrieve` 13.0.1 fixed a **zip-slip** in static-resource conversion (`W-23558165`) — org metadata writing outside the project on the machine that retrieves it, with **no 12.x backport** and the stable `sf` channel still on the unpatched line. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-01--a-path-traversal-fix-in-the-retrieve-path--and-most-sf-installs-cannot-reach-it-yet).

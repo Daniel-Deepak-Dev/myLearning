@@ -4,6 +4,12 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 ---
 
+## 2026-08-05 · Agentforce at DoD Impact Level 5 (cross-link)
+
+Agentforce 360 is **IL5-authorized** inside **Missionforce National Security**, with **U.S. Army HRC** the first Department of War deployment — 9.2M people, a projected 55M agent conversations/month over **Experience Cloud with Agentforce**, and a hard human handoff at benefits decisions. Full entry: [trust-security-and-governance.md](trust-security-and-governance.md#2026-08-05--agentforce-is-authorized-at-dod-impact-level-5--autonomous-agents-cleared-for-cui).
+
+---
+
 ## 2026-08-03 · React Native Agentforce 0.4.0 — `onAgentResponse` was a no-op on iOS
 
 **What changed.** [`salesforce/AgentforceMobileSDK-ReactNative`](https://github.com/salesforce/AgentforceMobileSDK-ReactNative) released **v0.4.0**, titled **262.1.2**; `@salesforce/react-native-agentforce` **0.4.0** reached npm on 2026-08-03 at 16:49 UTC under Apache-2.0. It is the React Native bridge picking up [the iOS major recorded below](#2026-07-31--agentforce-mobile-sdk-26212--a-patch-that-is-a-major-and-five-new-gen-ui-components).

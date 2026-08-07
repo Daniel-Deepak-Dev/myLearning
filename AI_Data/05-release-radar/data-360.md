@@ -16,6 +16,41 @@ Salesforce began calling Data Cloud **"Data 360"** at Dreamforce 2025 (Oct 14, 2
 
 ---
 
+## 2026-08-07 · The Summer '26 "semi-joins" feature is CRM Analytics, not Data 360 — one open question closed
+
+_Data 360 gap check, run because the window was empty for a sixth consecutive scan. This removes an item from the radar rather than adding one._
+
+**What changed.** Nothing shipped. The **08-01 open question** listed three Summer '26 features named in release notes and absent from this study base, one of them *"identify duplicate and non-matching rows without coding"* — a no-code **semi-join / anti-join** builder, suspected of belonging to **CRM Analytics** rather than Data 360. **The suspicion was correct.**
+
+- The documentation page is **`analytics.bi_explorer_data_join.htm`** — the `analytics` namespace, not `data`.
+- Its title is **"Optimize Data Operations with Semi and Anti Joins (Beta)"** — **Beta**, contradicting the "GA in Summer '26" the release-note summary implied.
+- The UI path is a **CRM Analytics lens** → **Add** → **Join Data Source (BETA)**. Lenses are a CRM Analytics construct; Data 360 has no lens.
+
+**Three distinct things share this vocabulary**, which is why search conflates them:
+
+| Thing | Where it lives | What it is |
+|---|---|---|
+| **Semi/anti joins in a lens (Beta)** | CRM Analytics Data Explorer | No-code join builder — **this release-note item** |
+| **`join semi` / `join anti`** | SAQL | CRM Analytics query language, long-standing |
+| **`IN` / `NOT IN` subqueries** | SOQL, and GraphQL API filter joins | Platform semi/anti-join, years old |
+
+**Why it matters.** A radar that records a feature under the wrong product is worse than one that records nothing — it plants a false capability in a design conversation, and Data 360 has been quiet enough this month that a plausible-looking item would not get challenged. Closing an open question as *"not ours, and Beta not GA"* is a real result.
+
+It also names the trap: **Data 360 and CRM Analytics share both a vocabulary and a release-notes neighbourhood.** Joins, lenses, dashboards and query performance all appear under both. Check the **doc page ID namespace** — `data.` versus `analytics.` — before believing a product attribution.
+
+**Gotchas:**
+- **`analytics.` in a `help.salesforce.com` article ID means CRM Analytics.** Data 360 pages are `data.` or `release-notes.rn_c360_*`. This is the cheapest available attribution check.
+- SOQL semi-joins have existed for years (`SELECT Id FROM Account WHERE Id IN (SELECT AccountId FROM Opportunity)`). Someone citing "new semi-join support" may mean any of the three rows above.
+- **Still unresolved and still Data 360:** *Currency Reporting* and *Result Reuse for Data 360 Live*. Both remain title-only; `help.salesforce.com` returned **403** again on 2026-08-07 03:2x UTC, so no technical detail was obtainable. They stay open questions — **deliberately not written up**.
+
+**Study action:** open the Summer '26 Data 360 release notes in a browser (not a fetcher) and, for each feature title, read the article ID in the URL. Write down how many sit in the `analytics.` namespace. That count is how much of "Data 360's release" is not Data 360.
+
+**Status:** **Correction to this radar's own open questions, not a product change.** The lens-based semi/anti join builder is **Beta** in CRM Analytics Data Explorer. Sourced from search extracts of the help article — `help.salesforce.com` is 403 to automated fetching, so the Beta label is read from the article **title**, not the body.
+
+**Sources:** [Optimize Data Operations with Semi and Anti Joins (Beta)](https://help.salesforce.com/s/articleView?id=analytics.bi_explorer_data_join.htm&language=en_US&type=5) · [SAQL `join semi` / `join anti`](https://developer.salesforce.com/docs/atlas.en-us.bi_dev_guide_saql.meta/bi_dev_guide_saql/bi_saql_statement_join_semi_anti.htm) · [GraphQL semi-join and anti-join filters](https://developer.salesforce.com/docs/platform/graphql/guide/filter-joins.html) · open question raised in [README](README.md#open-questions-to-chase)
+
+---
+
 ## 2026-08-01 · The Data 360 grounding reference app is renamed — NextGenWealth is now Agentic Advisor
 
 **What changed.** [`salesforce/next-gen-wealth`](https://github.com/salesforce/next-gen-wealth) — Salesforce's Apache-2.0 Financial Services Cloud reference app, and the only public worked example of Data-360-grounded prompt templates this radar has found — **renamed itself from NextGenWealth to Agentic Advisor** on 2026-08-01 (commit `79d77b4`, PR #15, work item `@W-23668628`). README and skill text changed with it.

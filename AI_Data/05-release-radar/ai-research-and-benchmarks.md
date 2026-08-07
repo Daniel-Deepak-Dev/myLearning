@@ -16,6 +16,8 @@ That matters to a practitioner for a reason beyond taste. The benchmarks are a *
 
 ## 2026-08-03 · The GIFT-Eval backlog cleared — and the leading submissions are routers, not models
 
+> **Correction (2026-08-07):** the status line below read *"#188 and #189 open as of 2026-08-05 03:05 UTC."* **Re-checked 2026-08-07 03:1x UTC: both are still open**, four days on, and a third has joined them — **#190, "Add LS-Agent results to the leaderboard"**, opened **2026-08-06**. #189 was also **updated on 2026-08-06** while still open. The queue is now **3 open / 150 closed**. The 08-03 read that merges clear in a batch does not generalise: **#184–#186 merged in two days, #188 has waited four.** Treat "submitted" as an indefinite state.
+
 **What changed.** The three pull requests that sat open for two days all **merged on 2026-08-03**, and two more opened behind them.
 
 - **#184** EXAONE-Forecast (`junhyeokkang`, LG AI Research) — merged, commit `1ad2a44`.
@@ -250,6 +252,49 @@ The confidentiality result is the one to act on: an agent discloses what it can 
 **Status:** Research system announced **2025-10-24**. Not a supported product.
 
 **Sources:** [Salesforce AI Research](https://www.salesforceairesearch.com/) · scan note [2026-07-28](03-salesforce-ai-research/2026-07-28.md)
+
+---
+
+## 2025-09 · SCUBA — 300 real CRM tasks, and the number that ends the "agents can just drive the UI" conversation
+
+_Gap-fill, written 2026-08-07: SCUBA has been named in this radar since 07-26 as part of Salesforce's evaluation line with **no captured detail anywhere in the study base**. This closes the open question raised 2026-08-02._
+
+**What changed.** **SCUBA — Salesforce Computer Use Benchmark** ([arXiv 2509.26506](https://arxiv.org/abs/2509.26506), September 2025; Yutong Dai, Krithika Ramakrishnan et al., Salesforce AI Research) evaluates **computer-use agents** — agents that operate software through the GUI, by screenshot and synthetic clicks, rather than through an API — on real Salesforce CRM work.
+
+- **300 task instances**, derived from **real user interviews**, not synthesised.
+- **Three personas:** platform **administrator**, **sales representative**, **service agent**.
+- **Five ability categories:** enterprise UI navigation, data manipulation, workflow automation, information retrieval, troubleshooting.
+- **Runs against live Salesforce sandbox orgs**, with parallel execution and **milestone-level scoring** rather than pass/fail only.
+
+**The headline result, zero-shot:**
+
+| Agent class | Task success |
+|---|---|
+| Open-source-model computer-use agents (strong on OSWorld) | **< 5%** |
+| Closed-source-model agents | up to **39%** |
+| With demonstrations added | up to **~50%**, at **13–16%** lower time and cost |
+
+**Why it matters.** "Let the agent use the existing UI" is the standing answer to *we have no API for that*. SCUBA prices it: on real CRM work the best closed-source agent fails **six times in ten**, and the open-source agents that look competitive on generic desktop benchmarks are **at noise**.
+
+That gap is the argument for Headless 360 in one number. Every capability Salesforce exposed in 2026 as an API, MCP tool or CLI command is a task moved out of the <5–39% band and into deterministic execution.
+
+**Milestone scoring is the method to steal.** Binary pass/fail on a long enterprise task throws away everything about *where* it broke. Partial-credit checkpoints tell you whether the agent misread the UI, lost the plot mid-workflow, or fumbled the final commit — three different fixes.
+
+**Gotchas:**
+- **Reproducing it is not cheap.** It needs a real **Salesforce Developer org**, a **Connected App** with OAuth Authorization Code flow and a refresh token persisted to `data/oauth_refresh_token.json`, plus **Docker** hosting the desktop environment (the paper's setup runs it on GCP).
+- Pinned toolchain: **Python 3.12.9** (conda), **Salesforce CLI 2.86.9**, npm, Playwright. That CLI pin is **far behind** current `latest` **2.146.3** — expect drift, and do not read the pin as a supported floor.
+- Config lives in `.env` (from `.env.example`) and **`orgs/orgs_info.json`** (from `orgs/orgs_info.json.example`). Model keys are `OPENAI_API_KEY` / `ANTHROPIC_API_KEY`; org selection is `ORG_ALIAS` and `SALESFORCE_USERNAME`; the desktop host is `DOCKER_PROVIDER_HOST` / `DOCKER_PROVIDER_PORT`.
+- **The two evaluation settings are separate data files** — `data/test_zero_shot.json` and `data/test_demo_aug.json`. Quoting a SCUBA number without saying which file it came from is quoting nothing: the settings differ by roughly **10 percentage points**.
+- Three requirements files ship — `requirements.txt`, `requirements_bu.txt`, `requirements_cu.txt` — for different agent harnesses. Installing the wrong one produces an agent that cannot see the screen.
+- **Licence: Apache-2.0** — commercially usable, unlike [AnchorBench](#2026-07-30--anchorbenchs-licence-swallowed-the-code--and-bars-use-against-three-named-competitors). Read that entry before assuming licences in this org are uniform.
+
+**Study action:** take the last workflow you were tempted to automate with UI clicks, locate it in SCUBA's five ability categories, then check whether Salesforce ships an API, MCP tool or `sf` command for it. If it does, you just avoided the 39% band. If it does not, you now know the success rate you were signing up for.
+
+**Status:** Published **September 2025**, arXiv **2509.26506**; also on OpenReview (`bkjKnO9s7T`). Code and data at [`SalesforceAIResearch/SCUBA`](https://github.com/SalesforceAIResearch/SCUBA), **Apache-2.0**, 6 commits on `main` as of 2026-08-07 03:26 UTC — a paper artifact, **not** a maintained product.
+
+> **Sourcing caveat.** `arxiv.org`, `openreview.net` and `themoonlight.io` all returned **403** to automated fetching. Every number above comes from search extracts plus the GitHub README. **Verify the results table against the PDF in a browser before quoting it in a deck.**
+
+**Sources:** [`SalesforceAIResearch/SCUBA`](https://github.com/SalesforceAIResearch/SCUBA) · [arXiv 2509.26506](https://arxiv.org/abs/2509.26506) · [OpenReview](https://openreview.net/pdf?id=bkjKnO9s7T) · [Meet SCUBA (Salesforce blog)](https://www.salesforce.com/blog/scuba-benchmark/) · [author page](https://roth.rbind.io/publication/scuba/)
 
 ---
 

@@ -39,3 +39,15 @@ A: Which protections still apply end-to-end on your own model endpoint — the g
 
 Q: Which governance question does GA hosted MCP raise for a security review?
 A: Who is allowed to create custom hosted MCP servers — they expose org data to external AI clients, so it belongs on a review checklist rather than in a developer's discretion.
+
+Q: What is IL5, and what did Salesforce achieve on 2026-08-05?
+A: The DoD Cloud Computing SRG tier covering Controlled Unclassified Information — the highest level below classified (IL6 = Secret). Agentforce 360 was authorized at IL5 inside Missionforce National Security, with U.S. Army HRC the first Department of War deployment.
+
+Q: Does the Agentforce IL5 authorization change anything about your production org?
+A: No. IL5 is an environment authorization attached to the accredited enclave, not a product feature of Agentforce as installed commercially. It sits underneath Trust Layer settings rather than replacing any of them.
+
+Q: Army HRC projects 55M+ agent conversations a month. Where does the design stop the agent?
+A: At the decision. Agents answer routine inquiries, summarise case histories and surface policy from approved Army sources; benefits and other sensitive decisions route to human specialists who retain decision authority. That hard boundary is what makes the accreditation defensible.
+
+Q: Why will searching "DoD Agentforce" miss 2026 material?
+A: The department is now the Department of War (DoW). Search both names.
