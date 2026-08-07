@@ -132,3 +132,15 @@ A: Scoring is milestone-based, so partial progress accrues on tasks that never c
 
 Q: What does SCUBA's OSWorld comparison tell you about general-purpose agents?
 A: Performance drops sharply moving from generic desktop benchmarks into enterprise CRM. Broad computer-use ability does not transfer to Salesforce — which is the practical argument for giving agents APIs rather than a cursor.
+
+Q: On SCUBA, open-source-model computer-use agents score under 5% while closed-source reach 39%. What decision does that number drive?
+A: It prices "just let the agent drive the existing UI". The best agent fails six times in ten on real CRM work, so any capability reachable as an API, MCP tool or `sf` command should be taken there instead. That gap is the argument for Headless 360 in one number.
+
+Q: Why does SCUBA use milestone scoring instead of pass/fail?
+A: Binary scoring throws away where a long enterprise task broke. Partial credit distinguishes misreading the UI, losing the plot mid-workflow, and fumbling the final commit — three different fixes.
+
+Q: Someone quotes "SCUBA: 50%". What must you ask before believing it?
+A: Which setting. Zero-shot and demonstration-augmented are separate data files (`data/test_zero_shot.json`, `data/test_demo_aug.json`) and differ by roughly 10 percentage points. ~50% is the demonstration-augmented figure, not zero-shot.
+
+Q: GIFT-Eval #184–#186 merged within two days; #188 has been open four. What does that teach about leaderboard submissions?
+A: "Submitted" is an indefinite state, not a queue position. Merge latency is not predictable from a previous batch, so a submission is not a result until you see the merged commit.

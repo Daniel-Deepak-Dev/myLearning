@@ -111,3 +111,18 @@ A: Read the resolved SDR version, not the CLI version — `npm ls @salesforce/so
 
 Q: npm dist-tags moved without any package being published. How do you spot that?
 A: The registry's package-level `modified` timestamp advances while no new version appears in `time`. For `@salesforce/cli` on 2026-08-05, the newest publish was 2.147.7 at 03:24 UTC but `modified` read 18:41:04 UTC — that gap is the tag move.
+
+Q: On 2026-08-06 the `sf` CLI `latest` dist-tag moved from 2.145.6 to 2.146.3. Did that ship the SDR zip-slip fix?
+A: No. 2.146.3 is the previous release candidate promoted unchanged — still `engines.node >=18.6.0`, still pinning `@salesforce/plugin-deploy-retrieve` 3.24.61, which pins SDR `^12.36.7` and resolves to the unpatched 12.37.2. "I am on the newest stable" became a true statement that is also unpatched.
+
+Q: Which dist-tag now carries the patched SDR, and what does taking it cost you?
+A: `latest-rc`, now 2.147.7 — the Node 22 line promoted up from `nightly`. It requires `engines.node >=22.0.0` and `@salesforce/plugin-deploy-retrieve` 4.0.1 (SDR `^13.0.0` → 13.0.1). The patch is only reachable through a Node-major upgrade; there is still no 12.x backport.
+
+Q: After `sf-pi` v0.258.0, a fresh CI container shows zero gateway models. Bug or expected?
+A: Expected. ADR 0077 removed the bundled catalogue: model IDs come only from authenticated discovery, cached per provider, so an uncached provider exposes no models until discovery succeeds. Do not add a fallback list — that is exactly what was deleted.
+
+Q: What is the general lesson behind deleting `sf-pi`'s bundled model catalogue?
+A: A hardcoded inventory of a remote system's capabilities is a cache with no invalidation. It drifts silently and lies most convincingly when you are least authenticated — so the tool looks configured before it is authenticated, and the credential failure surfaces later as something else.
+
+Q: `sf-pi` shows a saved configuration override. Are you authenticated?
+A: Not necessarily. Since v0.259.1 setup persists overrides without awaiting the network, and status output deliberately distinguishes a saved override from an active authenticated provider. Reading one as the other is the new misread; discovery failure hands off to Doctor.

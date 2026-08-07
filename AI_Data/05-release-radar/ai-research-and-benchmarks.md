@@ -45,6 +45,8 @@ The re-submission four days later is the second lesson: **a leaderboard row is m
 
 ## 2026-08-03 · The GIFT-Eval backlog cleared — and the leading submissions are routers, not models
 
+> **Correction (2026-08-07):** the status line below read *"#188 and #189 open as of 2026-08-05 03:05 UTC."* **Re-checked 2026-08-07 03:1x UTC: both are still open**, four days on, and a third has joined them — **#190, "Add LS-Agent results to the leaderboard"**, opened **2026-08-06**. #189 was also **updated on 2026-08-06** while still open. The queue is now **3 open / 150 closed**. The 08-03 read that merges clear in a batch does not generalise: **#184–#186 merged in two days, #188 has waited four.** Treat "submitted" as an indefinite state.
+
 **What changed.** The three pull requests that sat open for two days all **merged on 2026-08-03**, and two more opened behind them.
 
 - **#184** EXAONE-Forecast (`junhyeokkang`, LG AI Research) — merged, commit `1ad2a44`.
@@ -74,61 +76,6 @@ Worth copying: #188's `pretrained` self-classification is the honest move. Claim
 **Status:** Community leaderboard submissions, **not Salesforce research output**. #184–#186 merged 2026-08-03; #187 closed the same day; #188 (2026-08-03) and #189 (2026-08-04) open as of 2026-08-05 03:05 UTC. No paper or model release accompanied any of them.
 
 **Sources:** [PR #185](https://github.com/SalesforceAIResearch/gift-eval/pull/185) · [PR #187](https://github.com/SalesforceAIResearch/gift-eval/pull/187) · [PR #188](https://github.com/SalesforceAIResearch/gift-eval/pull/188) · [PR #189](https://github.com/SalesforceAIResearch/gift-eval/pull/189) · [gift-eval commits](https://github.com/SalesforceAIResearch/gift-eval/commits/main) · scan note [2026-08-05](03-salesforce-ai-research/2026-08-05.md)
-
-## 2026-08-03 · SCUBA — the benchmark that argues against pointing a computer-use agent at Salesforce
-
-**What changed.** Nothing shipped. **SCUBA gets a durable home**, closing the open question raised 2026-08-02. The detail was never missing — it sat in the ephemeral scan note [2026-07-26](03-salesforce-ai-research/2026-07-26.md#background-scuba-the-salesforce-computer-use-benchmark) while [GLOSSARY.md](../GLOSSARY.md) and the README both recorded it as uncaptured. **A finding filed only in a dated note is a finding the study base cannot see.**
-
-**SCUBA** (Salesforce Computer Use Benchmark) evaluates **computer-use agents** — agents that drive a GUI by reading the screen and clicking, rather than by calling APIs — on CRM work in the Salesforce UI.
-
-- **Tasks.** 300 instances, derived from real user interviews rather than authored by the benchmark team.
-- **Personas.** Platform administrator, sales representative, service agent.
-- **Abilities tested.** Enterprise UI navigation, data manipulation, workflow automation, information retrieval, troubleshooting.
-- **Environment.** Live Salesforce orgs — the repo drives a **Developer Edition org**, not a mock — with parallel execution and **milestone-level** scoring rather than pass/fail.
-- **Observation.** Screenshots, the accessibility tree, and a flattened DOM string.
-- **Action.** **Playwright** for browser-use agents; **PyAutoGUI** on an **OSWorld**-derived Docker desktop for computer-use agents.
-
-**The numbers are the argument:**
-
-| Setting | Open-source models | Closed-source models |
-|---|---|---|
-| Zero-shot | **under 5%** task success | **39%** |
-| Demonstration-augmented | — | **~50%**, at **13–16%** less time and cost |
-
-**Why it matters.** This is the empirical answer to *"why build actions and MCP tools — can't we just point a computer-use agent at the Salesforce UI?"* Because at best it fails half the time, and on open models it fails nineteen times in twenty.
-
-That gap is the case for the Headless 360 direction in one number: give an agent typed, permissioned, API-shaped access instead of pixels. The same result also warns against reading a computer-use demo as capability.
-
-The second lesson is cheaper than the first. **Demonstrations bought more than a bigger model did** — and they bought speed and cost too, not just accuracy. Worked examples are the highest-yield thing you can add to an agent you already have.
-
-```mermaid
-flowchart TD
-    Q["Agent needs to do something in Salesforce"] --> A{"Is there an API,<br/>Apex action or MCP tool?"}
-    A -- yes --> B["Typed, permissioned call<br/><b>Headless 360 / custom action</b>"]
-    A -- no --> C{"Can one be built?"}
-    C -- yes --> B
-    C -- "no — third-party UI,<br/>legacy screen" --> D["Computer-use agent<br/><b>SCUBA: &lt;5% open · 39% closed</b>"]
-    D --> E["Add worked demonstrations<br/><b>~50%, 13–16% cheaper</b>"]
-    E --> F["Still a coin flip —<br/>gate behind human approval"]
-```
-
-**Gotchas:**
-- The repo pins **`npm install @salesforce/cli@2.86.9 --global`**. Reproducing SCUBA installs a CLI hundreds of versions behind today's `latest` (**2.145.6**) and predates every Node-22 change — do it in a container, not on your working machine.
-- **The two settings are two data files**, not a prompt trick: `data/test_zero_shot.json` versus `data/test_demo_aug.json`. "Demonstration-augmented" means a different task file.
-- Entry points are **`main_bu.py`** (browser-use) and **`main_cua.py`** (computer-use); the run flag that decides most results is **`--max_steps`** (10 in the documented example).
-- **Credentials land on disk.** `orgs/orgs_info.json` holds `client_key` / `client_secret` / `username` / `instance`; `.env` holds `ORG_ALIAS`, `SALESFORCE_USERNAME`, `DOCKER_PROVIDER_HOST`; and OAuth **refresh tokens** are cached to `data/oauth_refresh_token.json`. Check all three against `.gitignore` before your first run.
-- **The harness had to defeat MFA to run at all** — commit *"bypass the multi-factor-auth (#1)"*, 2025-10-23, then *"Login fix (#5)"*, 2026-04-21. A computer-use agent meets your login flow before it meets your business logic, and that is where these projects actually stall.
-- Python is pinned to **3.12.9** via conda, and browser-use dependencies are a **separate** `requirements_bu.txt`.
-- **Licence: Apache-2.0** — unlike `AnchorBench` and `SalesforceAIResearch/agentforce-adlc`, both **CC BY-NC 4.0**. SCUBA is the one of the three you can use on client work.
-- **The code is dormant.** Newest commit on `main` is **2026-06-02**, and it is a `SECURITY.md` compliance file from `sfdc-ospo-bot`; the newest *functional* commit is **2026-04-21**. 10 stars, 3 forks, 5 PRs total (checked **2026-08-03 02:52 UTC**). Treat the numbers as a 2025 measurement of a UI that has since changed.
-
-**Study action:** clone the repo and diff one task across `data/test_zero_shot.json` and `data/test_demo_aug.json` — read exactly what counts as a "demonstration". Then take the three tasks closest to something you have built as an Agentforce action and ask, for each, whether your action needs to touch a UI at all. Every "no" is a task you should never have given to pixels.
-
-**Status:** Published benchmark — [arXiv 2509.26506](https://arxiv.org/abs/2509.26506) (v1, 2025-09-30), also on OpenReview as `bkjKnO9s7T`. Code **Apache-2.0**, research-only, no product surface. Authors: Yutong Dai, Krithika Ramakrishnan, Jing Gu, Matthew Fernandez, Yanqi Luo, Viraj Prabhu, Zhenyu Hu, Silvio Savarese, Caiming Xiong, Zeyuan Chen, Ran Xu.
-
-**Sources:** [SCUBA (arXiv 2509.26506)](https://arxiv.org/abs/2509.26506) · [`SalesforceAIResearch/SCUBA`](https://github.com/SalesforceAIResearch/SCUBA) · [Meet SCUBA — Salesforce blog](https://www.salesforce.com/blog/scuba-benchmark/) · [project page](https://sfrcua.github.io/SCUBA/) · [OpenReview](https://openreview.net/pdf?id=bkjKnO9s7T) · first recorded in scan note [2026-07-26](03-salesforce-ai-research/2026-07-26.md#background-scuba-the-salesforce-computer-use-benchmark)
-
----
 
 ## 2026-07-31 · GIFT-Eval becomes neutral ground — and a leaderboard position is a claim, not a result
 
@@ -337,38 +284,62 @@ The confidentiality result is the one to act on: an agent discloses what it can 
 
 ---
 
-## 2025-09 · SCUBA — the benchmark for agents that drive the Salesforce UI, and they are bad at it
+## 2025-09 · SCUBA — 300 real CRM tasks, and the number that ends the "agents can just drive the UI" conversation
 
-> **Backfill (recorded 2026-08-06).** SCUBA was named repeatedly in this radar as part of Salesforce's evaluation line and had **no captured detail anywhere in the study base** — the open question raised 2026-08-02. It is now resolved. Dated to the paper, not to the scan.
+> **Backfill.** SCUBA was named repeatedly in this radar as part of Salesforce's evaluation line with **no captured detail anywhere in the study base** — the open question raised 2026-08-02. Recorded across the 08-03, 08-06 and 08-07 scans, **consolidated here on 2026-08-08** into one entry. Dated to the paper, not to the scan.
 
-**What changed.** **SCUBA — Salesforce Computer Use Benchmark** ([arXiv 2509.26506](https://arxiv.org/abs/2509.26506)) evaluates **computer-use agents** on real CRM work. Not tool-calling against an API: agents drive the actual Salesforce UI the way a person does.
+**What changed.** **SCUBA — Salesforce Computer Use Benchmark** ([arXiv 2509.26506](https://arxiv.org/abs/2509.26506)) evaluates **computer-use agents** on real CRM work. Not tool-calling against an API: the agents drive the actual Salesforce UI the way a person does.
 
 - **300 task instances**, derived from **real user interviews** rather than authored by the researchers.
 - **Three personas:** platform administrator, sales representative, service agent.
-- **Runs in real Salesforce sandbox orgs**, with parallel execution supported.
-- **Observations:** screenshots, accessibility trees, and flattened DOM strings.
-- **Two action spaces:** **19 actions** for browser-use agents, **15** for computer-use agents, driven by **Playwright** and **PyAutoGUI**.
+- **Five ability categories:** enterprise UI navigation, data manipulation, workflow automation, information retrieval, troubleshooting.
+- **Environment:** live Salesforce orgs — the repo drives a **Developer Edition org**, not a mock — with parallel execution.
+- **Observations:** screenshots, accessibility trees, flattened DOM strings.
+- **Two action spaces:** **19 actions** for browser-use agents (**Playwright**), **15** for computer-use agents (**PyAutoGUI** on an **OSWorld**-derived Docker desktop).
 - **Milestone-based scoring** — partial progress is measured, not just pass/fail.
-- **Abilities tested:** enterprise UI navigation, data manipulation, workflow automation, information retrieval, troubleshooting.
 
-**Why it matters.** The headline result is the useful one: **open-source agents score under 5%, closed-source around 39% zero-shot.** Both are low, and the gap between them is smaller than the gap between either and a competent human.
+**The numbers are the argument:**
 
-SCUBA also documents a **sharp drop moving from generic desktop benchmarks like OSWorld into enterprise CRM** — general computer-use ability does not transfer to Salesforce.
+| Setting | Open-source models | Closed-source models |
+|---|---|---|
+| Zero-shot | **under 5%** task success | **39%** |
+| Demonstration-augmented | — | **~50%**, at **13–16%** less time and cost |
 
-The architectural conclusion follows directly: **if you want an agent to act in Salesforce, give it APIs, not a mouse.** That is why Headless 360, MCP servers and invocable actions exist. SCUBA is the evidence that the alternative does not work yet.
+**Why it matters.** This is the empirical answer to *"why build actions and MCP tools — can't we just point a computer-use agent at the Salesforce UI?"* Because at best it fails half the time, and on open models it fails nineteen times in twenty.
+
+That gap is the case for the Headless 360 direction in one number: give an agent typed, permissioned, API-shaped access instead of pixels. SCUBA also documents a **sharp drop moving from generic desktop benchmarks like OSWorld into enterprise CRM** — broad computer-use ability does not transfer to Salesforce.
+
+The second lesson is cheaper than the first. **Demonstrations bought more than a bigger model did** — and they bought speed and cost too, not just accuracy. Worked examples are the highest-yield thing you can add to an agent you already have.
+
+```mermaid
+flowchart TD
+    Q["Agent needs to do something in Salesforce"] --> A{"Is there an API,<br/>Apex action or MCP tool?"}
+    A -- yes --> B["Typed, permissioned call<br/><b>Headless 360 / custom action</b>"]
+    A -- no --> C{"Can one be built?"}
+    C -- yes --> B
+    C -- "no — third-party UI,<br/>legacy screen" --> D["Computer-use agent<br/><b>SCUBA: &lt;5% open · 39% closed</b>"]
+    D --> E["Add worked demonstrations<br/><b>~50%, 13–16% cheaper</b>"]
+    E --> F["Still a coin flip —<br/>gate behind human approval"]
+```
 
 **Gotchas:**
 - **SCUBA measures UI-driving agents, and Agentforce is not one.** Do not read these scores as Agentforce's capability — different modality entirely. It is the benchmark for the *screenshot-and-click* approach.
-- **Personas are not equally weighted or equally hard.** Quote the persona split, not just the aggregate, or you will overstate the sales-rep result with an admin number.
-- **Milestone scoring inflates apparent progress.** A 39% milestone score is not 39% of tasks completed — partial credit accrues on tasks that never finish. Check which figure a citation means.
-- The paper is **September 2025**, so every model result in it is stale by roughly a year. Treat the *methodology and the ordering* as durable and the *absolute numbers* as historical.
-- `arxiv.org` returns **403** to automated fetching, so this entry is built from the abstract and secondary summaries, not from a full read of the PDF. Read it in a browser before quoting a specific table.
+- **Milestone scoring inflates apparent progress.** A 39% milestone score is **not** 39% of tasks completed; partial credit accrues on tasks that never finish. Check which figure a citation means.
+- **The two settings are two data files**, not a prompt trick: `data/test_zero_shot.json` versus `data/test_demo_aug.json`. **A SCUBA number without its setting means nothing.**
+- **Personas are not equally hard.** Quote the persona split, not just the aggregate, or you will overstate the sales-rep result with an admin number.
+- The repo pins **`npm install @salesforce/cli@2.86.9 --global`** — hundreds of versions behind current, predating every Node-22 change. Reproduce it in a container, not on your working machine.
+- Entry points are **`main_bu.py`** (browser-use) and **`main_cua.py`** (computer-use); the run flag that decides most results is **`--max_steps`** (10 in the documented example). Python is pinned to **3.12.9** via conda, and browser-use dependencies are a separate `requirements_bu.txt`.
+- **Credentials land on disk.** `orgs/orgs_info.json` holds `client_key` / `client_secret` / `username` / `instance`; `.env` holds `ORG_ALIAS`, `SALESFORCE_USERNAME`, `DOCKER_PROVIDER_HOST`; OAuth **refresh tokens** cache to `data/oauth_refresh_token.json`. Check all three against `.gitignore` before your first run.
+- **The harness had to defeat MFA to run at all** — commit *"bypass the multi-factor-auth (#1)"* (2025-10-23), then *"Login fix (#5)"* (2026-04-21). A computer-use agent meets your login flow before it meets your business logic, and that is where these projects actually stall.
+- **Licence: Apache-2.0** — unlike `AnchorBench` and `SalesforceAIResearch/agentforce-adlc`, both **CC BY-NC 4.0**. SCUBA is the one of the three you can use on client work.
+- **The code is dormant.** Newest `main` commit is **2026-06-02**, a `SECURITY.md` compliance file from `sfdc-ospo-bot`; newest *functional* commit is **2026-04-21**. 10 stars, 3 forks, 5 PRs total (checked **2026-08-03 02:52 UTC**). Treat the methodology and the ordering as durable, the absolute numbers as a 2025 measurement of a UI that has since changed.
+- `arxiv.org` returns **403** to automated fetching, so this entry is built from the abstract, the repo and secondary summaries. Read the PDF in a browser before quoting a specific table.
 
-**Study action:** open the SCUBA paper's task taxonomy and pick the three tasks closest to something you have automated in Apex or Flow. For each, write down which surface you would give an agent today — invocable action, MCP tool, or UI — and why. The exercise is the argument for API-first agent design, made concrete on your own work.
+**Study action:** clone the repo and diff one task across `data/test_zero_shot.json` and `data/test_demo_aug.json` — read exactly what counts as a "demonstration". Then take the three tasks closest to something you have built as an Agentforce action and ask, for each, whether your action needs to touch a UI at all. Every "no" is a task you should never have given to pixels.
 
-**Status:** Research benchmark, published **September 2025** by Salesforce AI Research. Not a product. Repository and licence not verified this run.
+**Status:** Published benchmark — [arXiv 2509.26506](https://arxiv.org/abs/2509.26506) (v1, 2025-09-30), also on OpenReview as `bkjKnO9s7T`. Code **Apache-2.0**, research-only, no product surface. Authors: Yutong Dai, Krithika Ramakrishnan, Jing Gu, Matthew Fernandez, Yanqi Luo, Viraj Prabhu, Zhenyu Hu, Silvio Savarese, Caiming Xiong, Zeyuan Chen, Ran Xu.
 
-**Sources:** [arXiv 2509.26506](https://arxiv.org/abs/2509.26506) · [Salesforce blog — Meet SCUBA](https://www.salesforce.com/blog/scuba-benchmark/) · [OpenReview](https://openreview.net/pdf?id=bkjKnO9s7T) · [Literature review summary](https://www.themoonlight.io/en/review/scuba-salesforce-computer-use-benchmark)
+**Sources:** [SCUBA (arXiv 2509.26506)](https://arxiv.org/abs/2509.26506) · [`SalesforceAIResearch/SCUBA`](https://github.com/SalesforceAIResearch/SCUBA) · [Meet SCUBA — Salesforce blog](https://www.salesforce.com/blog/scuba-benchmark/) · [project page](https://sfrcua.github.io/SCUBA/) · [OpenReview](https://openreview.net/pdf?id=bkjKnO9s7T) · first recorded in scan note [2026-07-26](03-salesforce-ai-research/2026-07-26.md#background-scuba-the-salesforce-computer-use-benchmark)
 
 ---
 
