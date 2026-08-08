@@ -4,6 +4,37 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-05 · Agentforce 360 is authorized at DoD Impact Level 5 — and getting there meant switching a model vendor off
+
+**What changed.** Salesforce announced that **Agentforce 360 is authorized at US Department of Defense Impact Level 5 (IL5)**, delivered through the **Missionforce National Security** platform and hosted on **AWS GovCloud**. The **U.S. Army Human Resources Command (HRC)** is the first Department of War organization to deploy it.
+
+- **IL5** is the highest DoD impact level for **Controlled Unclassified Information (CUI)** and **National Security System (NSS)** data. It is not a classified-network authorization.
+- **The accreditation cost a model vendor.** Salesforce attested to the Pentagon that **generative AI models and capabilities supplied by Anthropic were disabled** in the IL5 environment. The platform stays model-agnostic in design and can re-add them if DoD policy changes.
+- **The deployment.** Agentforce agents sit on HRC's **Digital Front Door** (Experience Cloud + Agentforce), serving **9.2 million** Soldiers, Veterans, civilians and families.
+- **Scale figures.** Over **1,500 cases/day** get automated case summarization; **55M+ agent conversations per month** are projected at full scale; **$6M/yr** in projected savings.
+- **Humans keep the decision.** Benefits and other sensitive determinations still route to HRC specialists.
+
+**Why it matters.** The Einstein Trust Layer is usually described as *which safeguards run*. This announcement shows the other half: it also decides **which models exist at all**, and that roster is a property of the accreditation boundary, not of the product.
+
+An architecture that pins a specific model — per-agent model pinning, BYOM through Bedrock, a prompt tuned to one vendor's behaviour — is portable across orgs but **not necessarily across environments**. Moving a working design from commercial to GovCloud to IL5 can silently remove the model it was tuned on.
+
+It is also the first Salesforce announcement in eight scans that changes what an architect can promise. "Agentforce can run on CUI" is now true, with named conditions.
+
+**Gotchas:**
+- **Three names, one stack, different scopes.** *Agentforce Public Sector* is the product framing, *Missionforce National Security* is the delivery platform, and *Government Cloud Plus Defense* is the underlying infrastructure authorization. A statement of work should name which one it means.
+- **Model availability is environment-scoped, not org-scoped.** In commercial GovCloud the Trust Layer restricts agents to FedRAMP-validated models (Azure OpenAI, Anthropic Claude via Bedrock). At IL5 the Anthropic path is off. Confirm the roster in the target environment before designing to a model.
+- **IL5 ≠ classified.** CUI and NSS data, not Secret or above. Do not read this as blanket DoD coverage.
+- **Sandbox parity is not implied.** Nothing in the announcement says an IL5 sandbox exposes the same model roster as its production peer — verify before building an eval suite that assumes it.
+- **AWS GovCloud is a distinct region** operated exclusively by US personnel; latency, feature lag and data residency all differ from commercial. Feature GA dates in the main release notes are not automatically true there.
+
+**Study action:** in any org you can reach, open **Setup → Einstein Setup → Model Builder** (or run `sf agent generate` and inspect the generated model reference) and write down every agent or prompt template that names a specific model. That list is your portability risk register — each entry is something that may not exist in a FedRAMP or IL5 environment.
+
+**Status:** Announced / authorized — **2026-08-05**. Agentforce 360 IL5-authorized via Missionforce National Security on AWS GovCloud; Army HRC deployment in progress.
+
+**Sources:** [Missionforce National Security unveils IL5-authorized AI agents](https://www.salesforce.com/news/press-releases/2026/08/05/dow-agentforce-mission-readiness/) · [U.S. Army HRC deploys Agentforce](https://www.salesforce.com/news/press-releases/2026/08/05/us-army-hrc-agentforce-ai-powered-support/) · [DefenseScoop — Salesforce previews plans to deliver newly authorized AI agents across DOD](https://defensescoop.com/2026/08/05/salesforce-plans-deliver-newly-authorized-ai-agents-across-dod/) · [MeriTalk — Salesforce secures IL5 authorization](https://www.meritalk.com/articles/salesforce-secures-il5-authorization-for-agentforce-army-hrc-first-to-deploy/) · [DoD IL5 — Salesforce Government Cloud Plus Defense](https://compliance.salesforce.com/en/documents/a006e000014OxBVAA0)
+
+---
+
 ## 2026-08-01 · A path-traversal in metadata retrieve (cross-link)
 
 `@salesforce/source-deploy-retrieve` 13.0.1 fixed a **zip-slip** in static-resource conversion (`W-23558165`) — org metadata writing outside the project on the machine that retrieves it, with **no 12.x backport** and the stable `sf` channel still on the unpatched line. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-01--a-path-traversal-fix-in-the-retrieve-path--and-most-sf-installs-cannot-reach-it-yet).

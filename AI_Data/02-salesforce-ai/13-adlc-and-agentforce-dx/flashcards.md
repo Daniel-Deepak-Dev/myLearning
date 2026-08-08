@@ -90,3 +90,12 @@ A: `sf project retrieve` is an **inbound** trust boundary. It takes org-controll
 
 Q: Which sf CLI version first required Node 22, and what else came with it?
 A: 2.147.3 (2026-08-01, `nightly` dist-tag): `engines.node >=22.0.0`, `@salesforce/core ^9.0.0`, `@salesforce/plugin-agent` 2.0.0 and `@salesforce/plugin-deploy-retrieve` 4.0.1. You cannot take the security patch without taking all of it.
+
+Q: What is `relatedSkills` and why does it change how an agent picks a skill?
+A: A bidirectional list of sibling skill names in SKILL.md frontmatter under `metadata:`, added across 79 skills in sf-skills 1.34.0 (2026-08-07). It turns the catalogue into a graph the agent can traverse rather than re-searching descriptions each time — selection becomes navigation.
+
+Q: Name the three structural metadata fields sf-skills added in late July / early August 2026, and what each declares.
+A: `cliTools` (2026-07-30) — the local CLI a skill needs; `accessCheck` (2026-07-31) — the org permission it needs, so it fails fast; `relatedSkills` (2026-08-07) — its neighbours in the catalogue graph.
+
+Q: What breaking change hid inside the sf-skills release titled "79 updated skills"?
+A: `automation-flow-generate` raised its minimum API version from 51.0 to 60.0. A sandbox or managed package pinned below 60.0 loses the skill, with nothing in the release title to warn you.

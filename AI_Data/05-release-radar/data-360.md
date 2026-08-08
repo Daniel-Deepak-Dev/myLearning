@@ -16,6 +16,55 @@ Salesforce began calling Data Cloud **"Data 360"** at Dreamforce 2025 (Oct 14, 2
 
 ---
 
+## 2026-08-08 · Gap check — Data Cloud One, the multi-org architecture this radar never recorded
+
+**What changed.** Nothing shipped. This entry exists because Data 360 produced **no product news for the sixth consecutive scan**, so the run spent itself on a gap check — and found that **"Data Cloud One" has zero mentions anywhere in this study base**, despite being the recommended pattern for any customer with more than one Salesforce org.
+
+- **One Data 360 instance, many orgs.** One org is the **home org** and holds the Data 360 tenant. Others attach as **companion orgs**.
+- **All ingestion is central.** Data streams, connectors, identity resolution, harmonization, governance policies, tagging and masking are configured **only in the home org**.
+- **Data spaces are the sharing unit.** A [dataspace](../GLOSSARY.md) is the logical partition holding DLOs, DMOs, identity-resolution rulesets, segments and activation targets. You choose which data spaces a companion org sees.
+- **Companions get metadata, not data.** The records stay in the home org's tenant; companion orgs consume the model and the unified profile through it.
+- **Three companion connections are included**; more require add-on licensing.
+
+```mermaid
+flowchart TD
+    subgraph HOME["Home org — holds the Data 360 tenant"]
+        I["Ingestion · connectors · streams"] --> H["Harmonization + Identity Resolution"]
+        H --> DS1["Data space: EMEA"]
+        H --> DS2["Data space: AMER"]
+        H --> DS3["Data space: Brand-X<br/><i>not shared</i>"]
+        G["Governance · tagging · masking<br/><b>configured here only</b>"] -.-> H
+    end
+    DS1 --> C1["Companion org 1<br/><i>metadata only</i>"]
+    DS2 --> C1
+    DS2 --> C2["Companion org 2"]
+    DS1 --> C3["Companion org 3"]
+    DS3 -.->|"no path"| C1
+    HOME -->|"data residency follows<br/><b>the home org's region</b>"| R["All companions inherit<br/>home-org residency"]
+```
+
+**Why it matters.** The instinct when a client has five orgs is to ask which one "owns" Data 360, or to propose five instances. Data Cloud One is the answer to both, and it reframes the question: you are not choosing an owner, you are **choosing a partition boundary**.
+
+That choice is close to irreversible. Data spaces cannot share a customer graph across the boundary, so drawing the line by brand when the real requirement was by region means rebuilding identity resolution later.
+
+And it turns a data-residency question into an architecture question: **companion data lives in the home org's region**, whatever the companion's own region is. For an EU subsidiary attached to a US home org, that is the whole conversation.
+
+**Gotchas:**
+- **Sandbox and production do not cross.** A sandbox home org can only pair with sandbox CRM orgs; a production home org only with production orgs. Plan the SDLC topology in both tiers or you cannot test the connection at all.
+- **Residency follows the home org, not the companion.** This is the trap that disqualifies the pattern outright for some EU/UK-regulated subsidiaries — separate instances are then the correct answer, not the lazy one.
+- **Three companion connections are included in the implementation**; the fourth is a commercial conversation, not a config change.
+- **Companion users see a subset of Data 360 functionality** via the Data Cloud One app — do not promise a companion-org admin the full Setup surface.
+- **A data space is not an access-control mechanism.** Use it only for boundaries that must never be crossed — distinct legal entities, incompatible residency regimes. For "different teams see different data", use permission sets and feature permissions and keep the unified profile intact.
+- Recall the existing SOQL trap this compounds: **a query against a DLO must name its dataspace** (`SET OPTIONS`) or it silently returns zero rows. In a multi-space org that failure mode gets much easier to hit.
+
+**Study action:** in a Developer Edition org with Data 360 provisioned, open **Setup → Data 360 Setup → Data Spaces**, create a second data space, then run the same DLO query with and without a `SET OPTIONS` dataspace clause and record which one returns zero rows. Then write down, for an org estate you actually know, whether the boundary you would draw is brand, region or legal entity — and what breaks if you pick wrong.
+
+**Status:** GA. Data Cloud One has been generally available since 2024 and carries into Data 360 unchanged; the name has not been rebranded to "Data 360 One" in first-party docs as of 2026-08-08.
+
+**Sources:** [Data 360 Provisioning decision guide](https://architect.salesforce.com/docs/architect/decision-guides/guide/data-360-provisioning) · [Connect Multiple Orgs with Data Cloud One (Trailhead)](https://trailhead.salesforce.com/content/learn/modules/data-cloud-one-quick-look/connect-multiple-orgs-with-data-cloud-one) · [Data Cloud One setup and architecture (Trailhead)](https://trailhead.salesforce.com/content/learn/modules/data-cloud-one-quick-look/get-started-with-data-cloud-one) · [Data Cloud One now generally available (Salesforce Ben)](https://www.salesforceben.com/data-cloud-one-now-generally-available-connect-multiple-orgs-with-clicks-not-code/)
+
+---
+
 ## 2026-08-01 · The Data 360 grounding reference app is renamed — NextGenWealth is now Agentic Advisor
 
 **What changed.** [`salesforce/next-gen-wealth`](https://github.com/salesforce/next-gen-wealth) — Salesforce's Apache-2.0 Financial Services Cloud reference app, and the only public worked example of Data-360-grounded prompt templates this radar has found — **renamed itself from NextGenWealth to Agentic Advisor** on 2026-08-01 (commit `79d77b4`, PR #15, work item `@W-23668628`). README and skill text changed with it.

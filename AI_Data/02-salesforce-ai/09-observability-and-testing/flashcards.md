@@ -96,3 +96,15 @@ A: The `org` column is self-declared free text in `results/<model>/config.json`,
 
 Q: A React Native Agentforce app on iOS never fires `onAgentResponse`, with no error. What is the diagnosis?
 A: It was a no-op on iOS until `@salesforce/react-native-agentforce` 0.4.0 (2026-08-03), while working on Android. Audit for polling or UI-scraping workarounds before upgrading — the workaround becomes the bug.
+
+Q: sf-pi records a turn with no `llmEvents` as `unavailable`, never a passing zero. What hole did that leave, and how was it closed?
+A: A looping agent whose instrumentation never arrived produced no verdict at all. v0.260.1 (2026-08-07) added exact repeated-surface detection, which reads what the agent actually said rather than the event log, so it fires even when `llmEvents` evidence is absent.
+
+Q: What changed for Voice eval suites in sf-pi v0.260.0?
+A: Generated Voice suites now declare strict `sf_pi.turn_response_integrity` automatically, and an exact-version Voice release contract refuses a designated suite that omits it. Hand-written or older suites still have no policy and get refused late, at release rather than at authoring.
+
+Q: Why is double-texting worse on voice than in chat?
+A: In chat two completions are untidy and the user can scroll back. On a call they are two voices talking over each other with no recovery — which is why the strict policy is automatic for Voice suites specifically.
+
+Q: What are the limits of sf-pi's repeated-surface detection?
+A: It is an exact surface match, not semantic. An agent that rewords the same non-answer on every turn still passes.

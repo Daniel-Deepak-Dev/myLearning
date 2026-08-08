@@ -39,3 +39,12 @@ A: Which protections still apply end-to-end on your own model endpoint — the g
 
 Q: Which governance question does GA hosted MCP raise for a security review?
 A: Who is allowed to create custom hosted MCP servers — they expose org data to external AI clients, so it belongs on a review checklist rather than in a developer's discretion.
+
+Q: What is IL5, and what did Salesforce have to give up to obtain it for Agentforce 360?
+A: DoD Impact Level 5 — the highest authorization for Controlled Unclassified Information and National Security System data (not classified networks). Authorized 2026-08-05 via Missionforce National Security on AWS GovCloud. Salesforce had to attest to the Pentagon that Anthropic-supplied generative AI models were disabled in that environment.
+
+Q: The Trust Layer is usually described as "which safeguards run". What is the other half the IL5 authorization exposed?
+A: It also determines which models exist at all. The model roster is a property of the accreditation boundary — commercial, GovCloud, IL5 — not of the org. A design that pins a specific model is portable across orgs but not necessarily across environments.
+
+Q: Your agent uses per-agent model pinning to a specific vendor. What is the portability risk?
+A: The environment may not offer that model. Commercial GovCloud restricts to FedRAMP-validated models; the IL5 environment has the Anthropic path disabled. Confirm the roster in the target environment before designing to a model.

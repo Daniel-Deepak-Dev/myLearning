@@ -14,6 +14,35 @@ That matters to a practitioner for a reason beyond taste. The benchmarks are a *
 
 ---
 
+## 2026-08-07 · Someone reimplemented Salesforce's own model and put it on Salesforce's own leaderboard
+
+**What changed.** [`SalesforceAIResearch/gift-eval`](https://github.com/SalesforceAIResearch/gift-eval) merged **three submissions inside eleven minutes** on 2026-08-07 (03:11–03:22 UTC), taking the leaderboard past 120 result sets.
+
+- **[#188 Recursive Moirai 2](https://github.com/SalesforceAIResearch/gift-eval/pull/188)** — a **9.1M-parameter JAX/Flax** model by an **independent researcher** (`ecntu`), *"inspired by Moirai 2"* but written from scratch. It rolls the transformer's latent state forward instead of autoregressing decoded quantiles for long horizons.
+- **[#190 LS-Agent](https://github.com/SalesforceAIResearch/gift-eval/pull/190)** — an agentic forecasting system from LongShine AI Research.
+- **[#189](https://github.com/SalesforceAIResearch/gift-eval/pull/189)** — LG AI Research refreshed its EXAONE-Forecast-Agent numbers, four days after first submitting.
+- #188 declares **leakage: No** and **replication code: Yes**, across all **97 dataset configurations** and **11 official metrics** — a 98-line CSV.
+
+**Why it matters.** **Moirai is Salesforce's own time-series foundation model.** An outsider reimplementing it in a different framework, at 9.1M parameters, and being ranked on Salesforce's benchmark is the clearest signal yet that GIFT-Eval is functioning as neutral infrastructure rather than a marketing surface.
+
+It also sharpens a distinction the [08-03 entry below](#2026-08-03--the-gift-eval-backlog-cleared--and-the-leading-submissions-are-routers-not-models) opened. #188 is **`pretrained`, not `zero-shot`** — it trained on a mixture including GIFT-Eval train/validation splits with test regions excluded. That is legitimate and disclosed, and it is not comparable to a zero-shot entry. **Read the regime label before the rank.**
+
+The re-submission four days later is the second lesson: **a leaderboard row is mutable.** A number you quote from it has an implicit as-of date.
+
+**Gotchas:**
+- The regime field (`zero-shot` vs `pretrained`) is **self-declared by the submitter**, exactly like the leakage flag. Nothing in the harness verifies it.
+- "Inspired by Moirai 2" is not "Moirai 2". Do not read #188's position as a data point about Salesforce's published model.
+- **#189 overwrote an existing row.** Rows are updated in place, so a screenshot and a citation can silently disagree.
+- Every submission must cover all **97 configurations** and **11 metrics**; a partial run is not a leaderboard entry, which is why comparing against a paper's cherry-picked subset is invalid.
+
+**Study action:** open [PR #188](https://github.com/SalesforceAIResearch/gift-eval/pull/188) and read the submitted CSV's header row — note where `leakage` and the training-regime declaration sit, then check how many of the current top ten declare `replication_code_available: "Yes"`. That ratio is the honest confidence interval on the whole board.
+
+**Status:** Open — merged to `main` 2026-08-07 03:11–03:22 UTC. GIFT-Eval is Salesforce AI Research's public time-series forecasting benchmark.
+
+**Sources:** [gift-eval commits](https://github.com/SalesforceAIResearch/gift-eval/commits/main) · [PR #188 — Recursive Moirai 2](https://github.com/SalesforceAIResearch/gift-eval/pull/188) · [PR #189](https://github.com/SalesforceAIResearch/gift-eval/pull/189) · [PR #190 — LS-Agent](https://github.com/SalesforceAIResearch/gift-eval/pull/190)
+
+---
+
 ## 2026-08-03 · The GIFT-Eval backlog cleared — and the leading submissions are routers, not models
 
 **What changed.** The three pull requests that sat open for two days all **merged on 2026-08-03**, and two more opened behind them.

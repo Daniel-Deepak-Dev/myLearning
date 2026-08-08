@@ -4,6 +4,72 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-07 · `sf-skills` gives the catalogue a graph — `relatedSkills` lands on 79 skills, and 9 new ones ship the same day
+
+**What changed.** [`forcedotcom/sf-skills`](https://github.com/forcedotcom/sf-skills) cut **two releases in one Friday**: **1.34.0** (05:05 UTC, commit `7d5916d`) and **1.35.0** (13:30 UTC, commit `f38d98d`).
+
+- **1.34.0 — "Release 79 updated skills."** 108 files, **+753 / −222**. Almost all of it is one repeated edit: a `metadata.relatedSkills` list added to `SKILL.md` frontmatter, declared **bidirectionally** (`agentforce-observe` ↔ `agentforce-test`).
+- **1.34.0 also carries two behaviour changes** hidden in the sweep: `automation-flow-generate` raises its **minimum API version from 51.0 to 60.0**, and `dx-code-analyzer-configure` adds **`git`** to its allowed tools.
+- **1.35.0 — 9 new + 1 updated skills.** 66 files, **+15,417 / −1**.
+  - DevOps: `dx-devops-pipeline-manage`, `dx-devops-promote`
+  - Experience Cloud front end: `experience-lwc-base-components-integrate`, `experience-lwc-rtl-validate`, `experience-lwc-typescript-migrate`, `experience-ui-bundle-localize`
+  - Platform: `platform-custom-lightning-type-generate`, `platform-mcp-tool-widget-coordinate`, `automation-sandbox-post-copy-config-generate`
+  - Updated: `dx-apexguru-scan`
+
+**Why it matters.** `relatedSkills` is the **third** structural metadata field in nine days — after `cliTools` (2026-07-30) and `accessCheck` (2026-07-31) — and the three together describe a shift in what a skill library is.
+
+A flat catalogue makes an agent re-search descriptions every time it needs the next step. A graph lets it **traverse**: run `agentforce-test`, follow the edge, find `agentforce-observe`. The selection problem moves from retrieval to navigation, which is cheaper and far more predictable.
+
+The practical read: **stop treating skills as independent files.** Editing one now means checking what points at it, exactly like a code dependency.
+
+**Gotchas:**
+- The field is `metadata.relatedSkills` in `SKILL.md` YAML frontmatter, a list of skill directory names. Edges are declared on **both** ends — add one and you owe the reverse edit, or the graph is directional by accident.
+- **`automation-flow-generate` now refuses orgs below API 60.0.** This is a silent breaking change buried inside a "79 updated skills" release title. If a sandbox or a managed package pins an older API version, that skill stops working after the upgrade.
+- Two releases landed **eight hours apart on the same Friday**. Pinning "the Friday release" is no longer unambiguous — pin the version.
+- The repo's own warning still applies: skills "may be renamed, restructured, or removed between releases" and carry **no GA stability guarantee**. `relatedSkills` is not a versioned contract.
+- `forcedotcom/afv-library` **redirects to this repository** — same repo under an older name, not a second library. Links and clones from either name resolve to the same place.
+- The dual-licence standing note is unchanged: identical skills ship in `SalesforceAIResearch/agentforce-adlc` under **CC BY-NC 4.0**. Take the `sf-skills` copy for commercial work.
+
+**Study action:** clone `forcedotcom/sf-skills` at **1.35.0** and run `grep -A5 'relatedSkills' */SKILL.md` to dump the edge list, then check whether any edge is one-way. Separately, open `automation-flow-generate/SKILL.md` and confirm the `51.0 → 60.0` bump against the API version of a sandbox you actually use.
+
+**Status:** Open source, Apache-2.0. `forcedotcom/sf-skills` **1.35.0**, released 2026-08-07 13:30 UTC. Weekly Friday train.
+
+**Sources:** [sf-skills CHANGELOG](https://github.com/forcedotcom/sf-skills/blob/main/CHANGELOG.md) · [commit `7d5916d` — 79 updated skills](https://github.com/forcedotcom/sf-skills/commit/7d5916d271809f7f375e3e40f0ffd3e4ec39f5e4) · [commit `f38d98d` — 9 new + 1 updated](https://github.com/forcedotcom/sf-skills/commit/f38d98dba5eea86b5313b93c5fb4616a0c3faf92) · builds on [the `sf-skills` 1.33.0 entry below](#2026-07-31--sf-skills-1330--a-help-agent-skill-and-skills-that-declare-their-own-preconditions)
+
+---
+
+## 2026-08-07 · `sf-pi` closes the Voice eval loophole — strict integrity is default for Voice, and repetition is caught without LLM evidence
+
+**What changed.** [`salesforce/sf-pi`](https://github.com/salesforce/sf-pi) shipped **v0.258.0 → v0.260.1** between 2026-08-05 16:14 UTC and 2026-08-07 18:58 UTC. Two commits change how Agent Script evals behave; the rest is infrastructure.
+
+- **v0.260.0 — Voice suites gate themselves** (commit `a0e169f`). Generated **Voice** eval suites now declare strict `sf_pi.turn_response_integrity` **automatically**, and an **exact-version Voice release contract refuses a designated Suite that omits it**.
+- **v0.260.1 — exact repeated-surface detection** (commit `9325a4a`). The run now counts turns where the agent emits the **identical surface sentence** again, and this fires **even when `lastExecution.llmEvents` evidence is absent**. Under `severity: "error"`, repetition Fails alongside excess completions.
+- **v0.260.0 — Conversation Replay** (`lib/render/conversation.ts`, `lib/eval/conversation-summary.ts`). Ending a multi-turn preview session, or completing an eval run, renders a bounded replay: every user/agent utterance, per-turn route path, latency and integrity proof. LLM-facing tool text stays compact.
+- **v0.259.6 — `fix(security): patch dependency advisories and file race`** ([#583](https://github.com/salesforce/sf-pi/pull/583)) — sf-pi patching itself, not the platform.
+- **v0.258.0 / v0.259.x** — `sf-llm-gateway` gets a **dynamic model catalog** and Pi 0.84 support; `sf-herdr` lane planning is normalised.
+
+**Why it matters.** The [08-04 entry below](#2026-08-04--sf-pi-makes-agent-script-evals-deterministic--eval-studio-soql-seed-profiles-and-a-response-integrity-gate) recorded response integrity as **opt-in**, with missing evidence recorded as `unavailable` rather than a pass. That was honest, and it was also a hole: a looping agent whose `llmEvents` never arrived produced no verdict at all.
+
+Repeated-surface detection closes it by reading the thing that is always present — **what the agent actually said** — instead of the instrumentation that sometimes isn't. It is the same lesson as the original gate, applied one level lower: check the cheapest evidence you already hold.
+
+Making the policy automatic **for Voice specifically** is the right asymmetry. Double-texting a chat user is untidy; double-texting a caller is two voices talking over each other, and the caller cannot scroll back.
+
+**Gotchas:**
+- **Automatic only for *generated* Voice suites.** A hand-written suite, or one generated before v0.260.0, still has no policy — the release contract will refuse it at exact-version release rather than at authoring time, i.e. late.
+- Repetition detection is **exact surface match**, not semantic. An agent that reworders the same non-answer each turn still passes.
+- **`severity: "error"` now has two failure causes**: excess non-empty completions *and* exact surface repetition. A suite that was green on the first can go red on the second after upgrading.
+- Conversation Replay is **bounded** — collapsed cards summarize, expansion shows all bounded turns. It is not a full transcript archive; `raw.json` remains authoritative.
+- Policy shape is unchanged (`sf_pi.turn_response_integrity`, `max_nonempty_llm_contents` 1–100, `severity` `"warning"` | `"error"`, [ADR 0099](https://github.com/salesforce/sf-pi/blob/main/docs/adr/0099-agentscript-turn-response-integrity-policy.md)) and is still **never sent to the Evaluation API**.
+- Ten releases in three days, four inside 90 minutes on Aug 7. **Pin the version.** `sf-pi` is an extension pack for the **pi** coding agent, not the `sf` CLI.
+
+**Study action:** generate a Voice eval suite with `sf-pi` at **v0.260.1** and diff its JSON against one generated at v0.257.0 — the `sf_pi.turn_response_integrity` block should be present in the new one and absent in the old. Then write a scenario that makes an agent repeat one sentence across two turns and confirm the run reports a repeated-surface count with `llmEvents` unavailable.
+
+**Status:** Open source, Apache-2.0. `salesforce/sf-pi` **v0.260.1**, released 2026-08-07 18:58 UTC. Pre-1.0.
+
+**Sources:** [sf-pi releases](https://github.com/salesforce/sf-pi/releases) · [commit `9325a4a` — detect deterministic route loops](https://github.com/salesforce/sf-pi/commit/9325a4a) · [commit `a0e169f` — harden voice transition eval evidence](https://github.com/salesforce/sf-pi/commit/a0e169f) · [`sf-agentscript` README](https://github.com/salesforce/sf-pi/blob/main/extensions/sf-agentscript/README.md)
+
+---
+
 ## 2026-08-04 · `sf-pi` makes Agent Script evals deterministic — Eval Studio, SOQL seed profiles, and a response-integrity gate
 
 **What changed.** [`salesforce/sf-pi`](https://github.com/salesforce/sf-pi) shipped **v0.253.0 → v0.257.0** between 2026-08-03 21:14 UTC and 2026-08-04 16:05 UTC. Every feature commit lands on the `sf-agentscript` extension, and together they move Agent Script evaluation away from *ask a model* and toward *check the recorded evidence*.
@@ -52,6 +118,15 @@ Seed profiles fix the other chronic eval problem. Hard-coded record IDs rot the 
 ---
 
 ## 2026-08-01 · A path-traversal fix in the retrieve path — and most `sf` installs cannot reach it yet
+
+> **Correction (2026-08-08):** the dist-tag map below has moved, and this entry previously said the fix was reachable only on `nightly`. **It is now on `latest-rc`.** Checked 2026-08-08 03:15 UTC:
+> - **`latest` 2.145.6 → 2.146.3.** The unpatched release candidate was promoted to stable. 2.146.3 pins `@salesforce/plugin-deploy-retrieve` **3.24.61** → SDR `^12.36.7` → **12.37.2, still vulnerable**. `engines.node` remains `>=18.6.0`. **Upgrading stable today does not get you the fix.**
+> - **`latest-rc` 2.146.3 → 2.147.7** (published 2026-08-05 03:24 UTC). It pins plugin **4.0.1** → SDR `^13.0.0` → **13.0.1, patched**, and `engines.node` `>=22.0.0`. This is the first time the fix sits on a channel Salesforce ships to customers.
+> - **`nightly` 2.147.6 → 2.148.1** (2026-08-07 03:19 UTC), same plugin 4.0.1.
+> - **`@salesforce/plugin-deploy-retrieve` `latest` is now 4.0.2** (2026-08-07 22:43 UTC) — the 4.x major is the default plugin release, ahead of the CLI that bundles it.
+> - Unchanged: SDR newest is still **13.0.1**, `13.0.2` is 404, `12.37.3` is 404 — **still no 12.x backport**, and still no CVE or GitHub security advisory.
+>
+> **What this corrects, precisely:** the 08-02 reading that "the release candidate queued to become stable cannot carry the fix" was right about *that* candidate — 2.146.3 shipped unpatched — but the RC slot has since been handed to the Node 22 line. The exposure window on stable is now **eight days**, and the remaining question is no longer *whether* the fix reaches stable but *when 2.147.x is promoted*, which will drag the Node 22 floor along with it.
 
 > **Re-checked (2026-08-05 03:14 UTC):** nothing below has changed and that is the finding. `latest` is still **2.145.6** and `latest-rc` still **2.146.3** — both unmoved since 2026-07-29 — while `nightly` has rolled four times to **2.147.6**. There is still **no 12.x backport** (`@salesforce/source-deploy-retrieve@12.37.3` returns 404 on the registry) and **no SDR 13.0.2**. The exposure window is now five days old on the stable channel.
 

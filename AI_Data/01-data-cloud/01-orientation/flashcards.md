@@ -39,3 +39,21 @@ A: Salesforce Certified Data 360 Consultant — renamed from Data Cloud Consulta
 
 Q: Which three data decisions cap agent quality?
 A: Ingestion freshness (stale data → confident wrong answers), identity-resolution quality (duplicates → wrong profile), and chunking strategy (the biggest lever on retrieval quality).
+
+Q: A client has five Salesforce orgs and wants one customer view. What is the recommended Data 360 pattern?
+A: Data Cloud One — one Data 360 instance in a designated home org, with other orgs attached as companion orgs. Three companion connections are included; more need add-on licensing.
+
+Q: In Data Cloud One, what actually reaches a companion org?
+A: Metadata, not data. Records stay in the home org's tenant; the companion consumes the shared data spaces and the unified profile through it, with a subset of Data 360 functionality via the Data Cloud One app.
+
+Q: Which Data Cloud One constraint most often disqualifies the pattern outright?
+A: Data residency follows the home org's region, not the companion's. An EU subsidiary attached to a US home org inherits US residency — separate instances are then the correct answer.
+
+Q: When should you create a second data space rather than use permission sets?
+A: Only for boundaries that must never be crossed — distinct legal entities that cannot share a customer graph, or incompatible data-residency regimes. For "different teams see different data", use permission sets and keep the unified profile intact.
+
+Q: Why does Data Cloud One make the SET OPTIONS dataspace clause more dangerous to forget?
+A: A SOQL query against a DLO without its dataspace returns zero records silently, with no error. More data spaces means more ways to hit that failure without noticing.
+
+Q: What sandbox constraint applies to Data Cloud One connections?
+A: A sandbox home org may only pair with sandbox CRM orgs, and a production home org only with production orgs. The topology has to be planned in both tiers or the connection cannot be tested at all.
