@@ -65,6 +65,40 @@ Data 360 is **not** a replacement for your CRM org. It sits alongside:
 
 CRM remains the system of record for transactions. Data 360 is the system of *context*.
 
+### When there's more than one org: Data Cloud One
+
+The diagram above shows *one* Data 360 beside *one* CRM org. Most enterprises don't look like that — they have five orgs from five acquisitions and want one customer view. The instinct is to ask which org "owns" Data 360, or to propose five instances. **Data Cloud One** is the answer to both, and it reframes the question.
+
+**One Data 360 instance, many orgs.** One org is the **home org** and holds the tenant. Others attach as **companion orgs**.
+
+```
+        Home org — holds the Data 360 tenant
+   ┌──────────────────────────────────────────────┐
+   │  ingestion · connectors · streams            │
+   │  identity resolution · harmonization         │
+   │  governance · tagging · masking              │
+   │       (all configured HERE, only here)       │
+   │                                              │
+   │   data space: EMEA   AMER   Brand-X          │
+   └───────┬──────────────┬────────┬──────────────┘
+           │              │        └── not shared
+           ▼              ▼
+     Companion org 1   Companion org 2
+     (metadata, not data — records stay home)
+```
+
+| Fact | Consequence |
+|---|---|
+| All ingestion, resolution and governance live in the home org | Companion-org admins configure nothing; don't promise them the full Setup surface |
+| Data spaces are the sharing unit | You pick which spaces each companion sees |
+| Companions receive **metadata, not data** | Records never leave the home tenant; a subset of functionality via the Data Cloud One app |
+| **Three companion connections are included** | The fourth is a commercial conversation, not a config change |
+| **Data residency follows the home org's region** | An EU subsidiary on a US home org inherits US residency |
+
+**You are not choosing an owner — you are choosing a partition boundary.** That choice is close to irreversible: data spaces cannot share a customer graph across the boundary, so drawing the line by *brand* when the real requirement was by *region* means rebuilding identity resolution later.
+
+And residency turns a compliance question into an architecture question. For some EU/UK-regulated subsidiaries it disqualifies the pattern outright — separate instances are then the correct answer, not the lazy one.
+
 ## How it works
 
 ### The five-step flow
@@ -88,6 +122,8 @@ Step 5 is where 2026 changed: "activate" used to mean marketing activation. It n
 - [ ] Get a Data 360 trial or Dev org and walk the five-step flow end to end with sample data.
 - [ ] Map one real business question ("which customers are at churn risk?") through all five steps on paper before touching the UI.
 - [ ] Bookmark the monthly release-notes section and check it once a week.
+- [ ] **Data spaces:** in a Dev org with Data 360 provisioned, open **Setup → Data 360 Setup → Data Spaces**, create a second space, then run the same DLO query with and without a `SET OPTIONS` dataspace clause — record which one silently returns zero rows.
+- [ ] For an org estate you actually know, write down whether the partition boundary would be brand, region or legal entity — and what breaks if you pick wrong.
 
 ## Gotchas & sharp edges
 
@@ -98,6 +134,9 @@ Step 5 is where 2026 changed: "activate" used to mean marketing activation. It n
 - **DLOs don't behave like Platform objects.** Different semantics around nulls and empty strings, and dataspace is required when querying them. See [data modeling](../03-data-modeling-dso-dlo-dmo/notes.md).
 - **Pricing changed to profile-based on March 2, 2026** (~$240 per 1,000 profiles). A "profile" is a **unified individual after identity resolution**, so poor matching directly inflates a recurring bill.
 - **Some Summer '26 features are Beta.** Read the label literally: Fabric OneLake federation is Beta, AWS Glue is GA. One is proposal-safe, the other isn't.
+- **A data space is not an access-control mechanism.** Use it only for boundaries that must never be crossed — distinct legal entities, incompatible residency regimes. For "different teams see different data", use permission sets and keep the unified profile intact.
+- **Data Cloud One sandboxes and production don't cross.** A sandbox home org pairs only with sandbox CRM orgs, production only with production. Plan the SDLC topology in both tiers or you cannot test the connection at all.
+- **Data Cloud One hasn't been renamed.** It is still "Data Cloud One" in first-party docs as of 2026-08-08 — not "Data 360 One". Search accordingly.
 
 ## Related topics
 
@@ -106,4 +145,6 @@ Step 5 is where 2026 changed: "activate" used to mean marketing activation. It n
 - [Identity resolution](../04-identity-resolution/notes.md) — step 3, and the cost lever
 - [RAG on platform](../08-rag-on-platform/notes.md) — how grounding actually works
 - [Salesforce AI Landscape](../../02-salesforce-ai/01-landscape/notes.md) — the other half of the platform
+- [Data 360 DevOps](../09-data-360-devops/notes.md) — sandbox → production, which Data Cloud One constrains
 - [Release radar: Data 360](../../05-release-radar/data-360.md) — the running story, with sources
+- [Release radar: Data Cloud One](../../05-release-radar/data-360.md#2026-08-08--gap-check--data-cloud-one-the-multi-org-architecture-this-radar-never-recorded) — the full multi-org write-up

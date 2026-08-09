@@ -9,7 +9,7 @@ Cert target: **[Data 360 Consultant](_cert-data-cloud-consultant/exam-guide.md)*
 
 | Topic | What it covers | Quick recall |
 |---|---|---|
-| [Orientation](01-orientation/notes.md) | Lakehouse platform, the Data 360 rename and full lineage, how it sits beside core CRM, the end-to-end flow | [cheatsheet](01-orientation/cheatsheet.md) · [flashcards](01-orientation/flashcards.md) |
+| [Orientation](01-orientation/notes.md) | Lakehouse platform, the Data 360 rename and full lineage, how it sits beside core CRM, **multi-org via Data Cloud One**, the end-to-end flow | [cheatsheet](01-orientation/cheatsheet.md) · [flashcards](01-orientation/flashcards.md) |
 | [Ingestion](02-ingestion/notes.md) | Data streams, connectors, batch vs streaming vs **Accelerated Data Ingest (GA)** — and why stale grounding is the #1 agent failure | [cheatsheet](02-ingestion/cheatsheet.md) · [flashcards](02-ingestion/flashcards.md) |
 | [Data Modeling: DSO → DLO → DMO](03-data-modeling-dso-dlo-dmo/notes.md) | Raw → lake → canonical model; **`SET OPTIONS`**, dataspaces, SQL from Apex. The heart of the Consultant exam | [cheatsheet](03-data-modeling-dso-dlo-dmo/cheatsheet.md) · [flashcards](03-data-modeling-dso-dlo-dmo/flashcards.md) |
 | [Harmonization & Identity Resolution](04-identity-resolution/notes.md) | Match and reconciliation rules — and why profile-based pricing made match quality a recurring cost | [cheatsheet](04-identity-resolution/cheatsheet.md) · [flashcards](04-identity-resolution/flashcards.md) |
