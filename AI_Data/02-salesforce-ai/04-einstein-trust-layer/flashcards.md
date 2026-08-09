@@ -48,3 +48,27 @@ A: It also determines which models exist at all. The model roster is a property 
 
 Q: Your agent uses per-agent model pinning to a specific vendor. What is the portability risk?
 A: The environment may not offer that model. Commercial GovCloud restricts to FedRAMP-validated models; the IL5 environment has the Anthropic path disabled. Confirm the roster in the target environment before designing to a model.
+
+Q: What does IL5 authorization for Agentforce 360 (announced 2026-08-05) actually permit?
+A: Running Agentforce inside a DoD Impact Level 5 boundary on AWS GovCloud — a region described as physically and logically isolated and operated exclusively by U.S. personnel — so agents may work over Controlled Unclassified Information (CUI) and unclassified National Security Systems (NSS) data. One step below classified.
+
+Q: Why is IL5 authorization environment-scoped rather than feature-scoped?
+A: It says Agentforce 360 may run in that boundary, not that every feature is available there. Government Cloud Plus already excludes Agentforce Coworker, Agentforce Vibes and ApexGuru/Scale Center. Assume exclusions until you see a feature named.
+
+Q: How does the IL5 announcement change the argument for zero-copy grounding?
+A: It moves it from cost-and-freshness to classification boundary. Data 360 connects to sensitive records where they live so data is never copied, moved or duplicated outside its secure boundary — the alternative, moving regulated data somewhere the agent may look, is the thing that creates the exposure.
+
+Q: Does zero-copy grounding grant an agent access to the records it reaches?
+A: No. Records staying in place is orthogonal to permission. Sharing rules and field-level security still decide what grounding returns — which is why the API 67.0 user-mode defaults matter underneath it.
+
+Q: What is IL5, and what did Salesforce achieve on 2026-08-05?
+A: The DoD Cloud Computing SRG tier covering Controlled Unclassified Information — the highest level below classified (IL6 = Secret). Agentforce 360 was authorized at IL5 inside Missionforce National Security, with U.S. Army HRC the first Department of War deployment.
+
+Q: Does the Agentforce IL5 authorization change anything about your production org?
+A: No. IL5 is an environment authorization attached to the accredited enclave, not a product feature of Agentforce as installed commercially. It sits underneath Trust Layer settings rather than replacing any of them.
+
+Q: Army HRC projects 55M+ agent conversations a month. Where does the design stop the agent?
+A: At the decision. Agents answer routine inquiries, summarise case histories and surface policy from approved Army sources; benefits and other sensitive decisions route to human specialists who retain decision authority. That hard boundary is what makes the accreditation defensible.
+
+Q: Why will searching "DoD Agentforce" miss 2026 material?
+A: The department is now the Department of War (DoW). Search both names.

@@ -108,3 +108,39 @@ A: In chat two completions are untidy and the user can scroll back. On a call th
 
 Q: What are the limits of sf-pi's repeated-surface detection?
 A: It is an exact surface match, not semantic. An agent that rewords the same non-answer on every turn still passes.
+
+Q: What does SCUBA measure, and what are its headline numbers?
+A: Computer-use agents — agents driving the Salesforce GUI by screenshot, accessibility tree and DOM rather than by API — on 300 CRM tasks across admin, sales and service personas. Zero-shot: under 5% success on open-source models, 39% on closed-source. With demonstrations: ~50%, at 13–16% less time and cost.
+
+Q: How do you use SCUBA's result in an architecture argument?
+A: It prices the alternative to building actions. If a capability is reachable as an Apex action, an API or an MCP tool, use that — pointing a computer-use agent at the UI is a coin flip at best. Pixels are the fallback for surfaces you cannot get an API to, and they need a human approval gate.
+
+Q: SCUBA's cheapest lesson is not about model size. What is it?
+A: Demonstrations beat scale. Adding worked examples moved success from 39% to ~50% *and* cut time and cost 13–16% — a bigger return than swapping models, and something you can add to an agent you have already shipped.
+
+Q: Why should you read SCUBA's numbers with a date attached?
+A: They are a 2025 measurement of a UI that has changed since. The repo's newest functional commit is 2026-04-21, and it pins `@salesforce/cli@2.86.9` — hundreds of versions behind current. Treat the gap between paradigms as the durable finding, not the exact percentages.
+
+Q: What non-obvious obstacle does SCUBA's commit history reveal about computer-use agents in an enterprise?
+A: Authentication. Its first substantive commit was "bypass the multi-factor-auth", and it needed a further "Login fix" months later. A computer-use agent meets your MFA and session handling before it meets any business logic — that is where these projects stall, not on reasoning.
+
+Q: Why should you not cite SCUBA's scores as evidence about Agentforce?
+A: Different modality. SCUBA grades agents that navigate by screenshot, accessibility tree and DOM with a 19- or 15-action mouse/keyboard space. Agentforce acts through invocable actions and APIs. SCUBA is evidence about the screenshot-and-click approach, not about Agentforce.
+
+Q: What is the trap in quoting a SCUBA percentage?
+A: Scoring is milestone-based, so partial progress accrues on tasks that never complete. A 39% milestone score is not 39% of tasks finished — check which figure a citation means.
+
+Q: What does SCUBA's OSWorld comparison tell you about general-purpose agents?
+A: Performance drops sharply moving from generic desktop benchmarks into enterprise CRM. Broad computer-use ability does not transfer to Salesforce — which is the practical argument for giving agents APIs rather than a cursor.
+
+Q: On SCUBA, open-source-model computer-use agents score under 5% while closed-source reach 39%. What decision does that number drive?
+A: It prices "just let the agent drive the existing UI". The best agent fails six times in ten on real CRM work, so any capability reachable as an API, MCP tool or `sf` command should be taken there instead. That gap is the argument for Headless 360 in one number.
+
+Q: Why does SCUBA use milestone scoring instead of pass/fail?
+A: Binary scoring throws away where a long enterprise task broke. Partial credit distinguishes misreading the UI, losing the plot mid-workflow, and fumbling the final commit — three different fixes.
+
+Q: Someone quotes "SCUBA: 50%". What must you ask before believing it?
+A: Which setting. Zero-shot and demonstration-augmented are separate data files (`data/test_zero_shot.json`, `data/test_demo_aug.json`) and differ by roughly 10 percentage points. ~50% is the demonstration-augmented figure, not zero-shot.
+
+Q: GIFT-Eval #184–#186 merged within two days; #188 has been open four. What does that teach about leaderboard submissions?
+A: "Submitted" is an indefinite state, not a queue position. Merge latency is not predictable from a previous batch, so a submission is not a result until you see the merged commit.

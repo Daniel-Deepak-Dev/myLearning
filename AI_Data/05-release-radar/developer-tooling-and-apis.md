@@ -70,6 +70,54 @@ Making the policy automatic **for Voice specifically** is the right asymmetry. D
 
 ---
 
+## 2026-08-06 · `sf-pi` deletes its bundled model catalogue — gateway models now exist only after authenticated discovery
+
+**What changed.** [`salesforce/sf-pi`](https://github.com/salesforce/sf-pi) shipped **v0.258.0 → v0.259.2** between 2026-08-05 16:23 UTC and 2026-08-06 19:53 UTC. Every feature commit lands on the **`sf-llm-gateway`** extension, and the four together replace a static model list with a discovery protocol.
+
+- **v0.258.0 — dynamic model catalogue** (commit `30bb1ca`, **ADR `0077`**). The exact-ID preset catalogue module is **deleted**: 36 files, 405 additions, **1,071 deletions**.
+- **v0.259.0 — hardened public gateway client** (commit `e41fd67`).
+- **v0.259.1 — `sf-llm-gateway` setup hardening and Pi 0.84 support** (commit `12c5faf`).
+- **v0.259.2 — stale gateway routing references removed** (commit `87f7f90`).
+
+**The SF LLM Gateway** is Salesforce's internal model-serving endpoint. `sf-pi` calls it to run Agent Script evals, so *which models it can reach* decides what an eval can execute against.
+
+**The rule ADR 0077 states, verbatim in effect:** `sf-pi` obtains gateway model IDs **only** from authenticated discovery and uses Pi's **provider-scoped cache** as the last-known catalogue — so **a fresh, uncached provider exposes no models at all until discovery succeeds.**
+
+```mermaid
+flowchart TD
+    A["Fresh install / new CI container<br/>provider cache empty"] --> B{"Authenticated<br/>discovery"}
+    B -->|"succeeds"| C["Callable model IDs<br/>written to provider-scoped cache"]
+    B -->|"fails: auth, network, endpoint"| D["<b>Zero models</b><br/>not a fallback list — an empty catalogue"]
+    C --> E{"Default model needed?"}
+    E -->|"previous choice still discovered"| F["Preserve existing choice"]
+    E -->|"previous choice gone"| G["First stable discovered callable model"]
+    D --> H["Bounded guidance<br/>→ Doctor handoff"]
+    style D fill:#8a1c1c,color:#ffffff
+```
+
+**Why it matters.** A bundled catalogue lets a tool *look* configured before it is authenticated — you see model names, pick one, and discover the credential problem later, at run time, as a confusing failure.
+
+Deleting it makes the failure arrive at the right moment and with the right cause. The cost is that **an empty model list is now a legitimate, correct state**, and CI images that assumed a populated list will read as broken when they are merely unauthenticated.
+
+The general lesson is worth more than the tool: **a hardcoded inventory of a remote system's capabilities is a cache with no invalidation.** It drifts silently, and it lies most convincingly when you are least authenticated.
+
+**Gotchas:**
+- **Empty ≠ broken.** On a fresh uncached provider, zero models is expected until discovery succeeds. Do not add a fallback list to "fix" it — that is the thing that was just removed.
+- The cache is **provider-scoped**, not global. Two providers do not warm each other, so adding a provider in CI reintroduces the cold-start emptiness.
+- **Default-model selection changed semantics:** `sf-pi` now *preserves* a still-discoverable prior choice and otherwise takes the **first stable discovered callable model**. A pipeline that relied on a bundled default now depends on discovery order.
+- **Pi version window is enforced in CI:** the required audit range is **`>=0.82.0 <0.85.0`**, with **0.84.0** now the latest audited edge (previously 0.83). `sf-pi` is an extension pack for the **pi** coding agent, so the pi runtime version is a real dependency, not a detail.
+- **0.82/0.83 still work** via a Gateway adapter that absorbs the argument-shape difference in Pi 0.84's cancellable model-registry refresh. That compatibility shim is the thing most likely to be dropped next.
+- Setup now **persists configuration overrides without awaiting the network**, and status output **distinguishes a saved override from an active authenticated provider**. Reading "override saved" as "authenticated" is the new misread.
+- Discovery failure produces bounded guidance with a **Doctor handoff** — run the doctor rather than re-reading config.
+
+**Study action:** in a clean container with no `sf-pi` provider cache, run the gateway setup **without** valid credentials and record exactly what the model list shows; then authenticate and run it again. The difference between those two outputs is what your CI will report the first time a gateway credential expires.
+
+**Status:** Open source, Apache-2.0. `salesforce/sf-pi` **v0.259.2**, released 2026-08-06 19:53 UTC. Pre-1.0 — nine releases in the four days to 08-06. Pin a version; do not track head.
+
+**Sources:** [sf-pi releases](https://github.com/salesforce/sf-pi/releases) · [commit `30bb1ca` — make gateway model catalog dynamic](https://github.com/salesforce/sf-pi/commit/30bb1ca) · [commit `12c5faf` — harden setup and Pi 0.84 support](https://github.com/salesforce/sf-pi/commit/12c5faf) · [commit history](https://github.com/salesforce/sf-pi/commits/main) · builds on [the 08-04 sf-pi entry below](#2026-08-04--sf-pi-makes-agent-script-evals-deterministic--eval-studio-soql-seed-profiles-and-a-response-integrity-gate)
+
+---
+
 ## 2026-08-04 · `sf-pi` makes Agent Script evals deterministic — Eval Studio, SOQL seed profiles, and a response-integrity gate
 
 **What changed.** [`salesforce/sf-pi`](https://github.com/salesforce/sf-pi) shipped **v0.253.0 → v0.257.0** between 2026-08-03 21:14 UTC and 2026-08-04 16:05 UTC. Every feature commit lands on the `sf-agentscript` extension, and together they move Agent Script evaluation away from *ask a model* and toward *check the recorded evidence*.
@@ -128,7 +176,21 @@ Seed profiles fix the other chronic eval problem. Hard-coded record IDs rot the 
 >
 > **What this corrects, precisely:** the 08-02 reading that "the release candidate queued to become stable cannot carry the fix" was right about *that* candidate — 2.146.3 shipped unpatched — but the RC slot has since been handed to the Node 22 line. The exposure window on stable is now **eight days**, and the remaining question is no longer *whether* the fix reaches stable but *when 2.147.x is promoted*, which will drag the Node 22 floor along with it.
 
+> **Correction (2026-08-06):** this entry said the stable channel was **2.145.6** and that the fix existed only on `nightly`. **Both dist-tags rolled on 2026-08-05** — package `modified` 18:41:04 UTC, with no version published after 2.147.7 at 03:24 UTC, so this was a tag move, not a release.
+>
+> - `latest` **2.145.6 → 2.146.3** — pins plugin **3.24.61** → SDR `^12.36.7` → **12.37.2**, `engines.node >=18.6.0`. **Still unpatched.**
+> - `latest-rc` **2.146.3 → 2.147.7** — pins plugin **4.0.1** → SDR `^13.0.0` → **13.0.1**, `engines.node >=22.0.0`. **Patched**, and now equal to `nightly`.
+>
+> So the answer to *"when does this reach an ordinary install?"* moved from *"not queued"* to *"queued behind a Node 22 major."* Still no 12.x backport, no SDR 13.0.2, no CVE. Verified 2026-08-06 03:08 UTC.
+>
+> **The trap this creates is worse than the one before it.** Anyone running `npm install -g @salesforce/cli` this week gets a **newer** CLI than last week and is **still on the unpatched SDR line**. A version bump is now actively misleading evidence.
+>
+> **The practitioner reading:** stable `sf` moved for the first time since 2026-07-29 and the exposure survived the move. *"I am on the newest stable"* is now a **true statement that is also unpatched** — a worse position than being visibly behind.
+
 > **Re-checked (2026-08-05 03:14 UTC):** nothing below has changed and that is the finding. `latest` is still **2.145.6** and `latest-rc` still **2.146.3** — both unmoved since 2026-07-29 — while `nightly` has rolled four times to **2.147.6**. There is still **no 12.x backport** (`@salesforce/source-deploy-retrieve@12.37.3` returns 404 on the registry) and **no SDR 13.0.2**. The exposure window is now five days old on the stable channel.
+
+> **Correction (2026-08-03):** this entry calls `@salesforce/cli` **2.147.3** *"the first CLI to require Node ≥ 22."* **It was not — 2.147.0 was**, published to npm **2026-07-31 14:16 UTC**, already carrying `plugin-deploy-retrieve` 4.0.1 and therefore the fix. 2.147.3 was simply the version sitting on `nightly` when the 08-02 scan read the tag. **The lesson is the same one this entry is about:** a dist-tag tells you where a pointer is today, not when a version first existed. Read publish times, not tags.
+> _(This scan also concluded "the release candidate does not carry the fix" — true of 2.146.3, and superseded by the 08-08 correction above, which records the RC slot moving to the patched 2.147.7 line.)_
 
 **What changed.** [`@salesforce/source-deploy-retrieve`](https://github.com/forcedotcom/source-deploy-retrieve) **13.0.1** (npm 2026-07-31 16:21 UTC) fixes a **zip-slip** in static-resource conversion — work item `W-23558165`, [PR #1812](https://github.com/forcedotcom/source-deploy-retrieve/pull/1812). A day later `@salesforce/cli` **nightly 2.147.3** (2026-08-01 03:24 UTC) became the first CLI to require **Node ≥ 22**. These are one story.
 
@@ -139,14 +201,19 @@ Seed profiles fix the other chronic eval problem. Hard-coded record IDs rot the 
 - **There is no 12.x backport.** The newest 12.x is **12.37.2**, published 2026-07-13. The patch exists only on the 13.x line.
 - **So reachability is gated behind a major.** `@salesforce/plugin-deploy-retrieve` **3.24.61** pins SDR `^12.36.7` — a range that can never resolve to a patched build. **4.0.0/4.0.1** (2026-07-30) pin `^13.0.0` and raise `engines.node` to `>=22.0.0`.
 
+**Dist-tag → resolved SDR, as of 2026-08-06 03:08 UTC.** (For the 2026-08-01 assignment this replaces, read the correction above — the versions moved, the shape did not.)
+
 ```mermaid
 flowchart TD
-    A["sf CLI 2.145.6<br/>npm dist-tag <b>latest</b> · Node >=18.6"] --> B["plugin-deploy-retrieve 3.24.59<br/>SDR ^12.36.7"]
+    A["sf CLI 2.145.6<br/>was <b>latest</b> until 2026-08-06 · Node >=18.6"] --> B["plugin-deploy-retrieve 3.24.59<br/>SDR ^12.36.7"]
     B --> C["SDR 12.37.2<br/><b>zip-slip present</b>"]
-    D["sf CLI 2.146.3<br/>dist-tag <b>latest-rc</b> · Node >=18.6"] --> E["plugin-deploy-retrieve 3.24.61<br/>SDR ^12.36.7"]
+    D["sf CLI 2.146.3<br/>now dist-tag <b>latest</b> · Node >=18.6"] --> E["plugin-deploy-retrieve 3.24.61<br/>SDR ^12.36.7"]
     E --> C
-    F["sf CLI 2.147.3<br/>dist-tag <b>nightly</b> · Node >=22"] --> G["plugin-deploy-retrieve 4.0.1<br/>SDR ^13.0.0"]
+    F["sf CLI 2.147.7<br/>now dist-tag <b>latest-rc</b> · Node >=22"] --> G["plugin-deploy-retrieve 4.0.1<br/>SDR ^13.0.0"]
+    I["sf CLI 2.148.1<br/>dist-tag <b>nightly</b> · Node >=22"] --> G
     G --> H["SDR 13.0.1<br/><b>patched</b>"]
+    style C fill:#8a1c1c,color:#ffffff
+    style H fill:#12603a,color:#ffffff
 ```
 
 **Why it matters.** Retrieve feels read-only, and it is not. It takes attacker-influenceable bytes out of an org and writes them onto a developer laptop or a CI runner.
@@ -156,7 +223,9 @@ Anyone who can create a static resource in an org you retrieve from — a packag
 And the stable channel still resolves the unpatched line, so *"I upgraded the CLI"* is not the same sentence as *"I have the fix"*.
 
 **Gotchas:**
-- `npm dist-tags` for `@salesforce/cli` are **not** ordered by version: `latest` is **2.145.6**, `latest-rc` **2.146.3**, `nightly` **2.147.3** (checked 2026-08-02 02:55 UTC). `npm install -g @salesforce/cli` gets 2.145.6 and therefore SDR 12.37.2.
+- `npm dist-tags` for `@salesforce/cli` are **not** ordered by version, and **they move without a publish**. Checked 2026-08-02 02:55 UTC: `latest` **2.145.6**, `latest-rc` **2.146.3**, `nightly` **2.147.3**. Checked 2026-08-06 03:08 UTC: `latest` **2.146.3**, `latest-rc` **2.147.7**, `nightly` **2.147.7**. Either way `npm install -g @salesforce/cli` resolves **SDR 12.37.2**.
+- **A newer CLI version is not evidence of the fix.** The only reliable check is the resolved SDR version — `npm ls @salesforce/source-deploy-retrieve`, or read `engines.node`: `>=18.6.0` means the unpatched 12.x line, `>=22.0.0` means 13.x.
+- **The release notes do not mention any of this.** [`forcedotcom/cli/releasenotes`](https://github.com/forcedotcom/cli/commits/main/releasenotes) has had **no commit since 2026-07-29** (checked 2026-08-03 02:59 UTC), and its newest entry describes **2.146.3** with a forward date of August 5. A whole major — the Node 22 floor, plugin 4.x, the SDR patch — shipped on `nightly` with **no release-note coverage at all**. Read npm, not the notes.
 - The guard fires **only** for `contentType` `application/zip` and `application/jar`. A static resource stored as `application/octet-stream` never enters that code path.
 - Taking the fix means taking **Node 22**, `@salesforce/core` 9.x and `@salesforce/plugin-agent` 2.0.0 in the same step — see [the Node 18/20 drop below](#2026-07-30--the-dx-node-library-stack-dropped-node-18-and-20--salesforceagents-is-200).
 - `@salesforce/core` also moved to **9.1.0** (2026-07-31 19:01 UTC) inside the same window; a minor, but it lands on the 9.x line only.
@@ -164,7 +233,7 @@ And the stable channel still resolves the unpatched line, so *"I upgraded the CL
 
 **Study action:** run `npm view @salesforce/cli dist-tags`, then in a scratch project `npm ls @salesforce/source-deploy-retrieve` — read off the version your deploy path actually resolves to. Then build a static resource whose zip contains an entry named `../escaped.txt`, deploy it, retrieve it on both SDR 12.37.2 and 13.0.1, and watch one write outside the project and the other throw `error_static_resource_attempting_zip_slip`. Do it in a scratch org.
 
-**Status:** Shipped. SDR **13.0.1**, 2026-07-31 (release commit `364ced7`), Apache-2.0. `@salesforce/cli` **2.147.3** on the `nightly` dist-tag, 2026-08-01. No CVE or security advisory was published — the only public identifier is `W-23558165`.
+**Status:** Shipped, **not yet on stable**. SDR **13.0.1**, 2026-07-31 (release commit `364ced7`), Apache-2.0. As of **2026-08-06 03:08 UTC** the fix ships in `@salesforce/cli` **2.147.7** on `latest-rc` and `nightly`; `latest` is **2.146.3** and still resolves SDR **12.37.2**. No CVE or security advisory was published — the only public identifier is `W-23558165`.
 
 **Sources:** [SDR 13.0.1 release](https://github.com/forcedotcom/source-deploy-retrieve/releases/tag/13.0.1) · [PR #1812 — resolved zip-slip vulnerability](https://github.com/forcedotcom/source-deploy-retrieve/pull/1812) · [`@salesforce/source-deploy-retrieve` on npm](https://www.npmjs.com/package/@salesforce/source-deploy-retrieve) · [`@salesforce/cli` on npm](https://www.npmjs.com/package/@salesforce/cli) · [salesforcecli/cli releases](https://github.com/salesforcecli/cli/releases) · security cross-link: [trust-security-and-governance.md](trust-security-and-governance.md#2026-08-01--a-path-traversal-in-metadata-retrieve-cross-link)
 
