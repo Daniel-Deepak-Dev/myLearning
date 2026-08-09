@@ -63,3 +63,18 @@ A: It gets an autonomous agent past a risk review by scoping what it is allowed 
 
 Q: The Army HRC release cites 55M agent conversations a month and $6M annual savings. How should you cite them?
 A: As projections at full scale, not results. 55M across 9.2M people is about six conversations per person per month — plausible as a ceiling, not an observed rate. The deployment was announced as in progress.
+
+Q: What is Agentforce Operations, and when did it go GA?
+A: The back-office prebuilt agent family — supply chain, procurement, finance and IT — GA 2026-04-29. Its agents do process coordination, data verification, compliance clearance and approvals, rather than converse with a customer.
+
+Q: What is a "digital blueprint"?
+A: Agentforce Operations' authoring artifact — an unstructured document or diagram converted into an executable workflow, then updated in plain language rather than redrawn.
+
+Q: Why is the digital blueprint worth noticing next to Agent Script?
+A: They are opposite trades shipped in the same year. Agent Script made authoring explicit and version-controlled; a blueprint is generated and prose-edited. One governance model does not cover both.
+
+Q: Agentforce Operations claims blueprints "trigger actions with Salesforce Flows". What is the catch?
+A: That ecosystem integration was Beta from May 2026, not GA at the 2026-04-29 launch. At GA it was a promise, not a shipped surface.
+
+Q: How should you quote Agentforce Operations' "50-70% cycle time" and "80% less manual data entry"?
+A: As vendor claims with no published methodology — and note that no first-party page was reachable to verify them. Pricing and licensing are also unestablished, so the buy-vs-build comparison cannot be closed on cost.

@@ -4,6 +4,79 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-09 · `sf-pi`'s `sf-data360` extension — eleven Data 360 tools, and no MCP runtime in sight
+
+**What changed.** Nothing shipped today. This entry closes the open question raised on 2026-08-08: `salesforce/sf-pi` carries an **`sf-data360`** extension — **stable, enabled by default**, category *Agent Tool* — that this radar had never examined while reporting Data 360 as empty for seven consecutive scans.
+
+**Eleven LLM tools**, ten compact facades plus one escape hatch:
+
+| Tools | What they cover |
+|---|---|
+| `data360_discover` · `data360_connect` | Capability discovery and connection setup |
+| `data360_prepare` · `data360_harmonize` | Ingestion prep and harmonization into the canonical model |
+| `data360_segment` · `data360_activate` | Segmentation and activation targets |
+| `data360_query` · `data360_semantic` | Querying and the semantic layer |
+| `data360_observe` · `data360_orchestrate` | Observability and orchestration |
+| `data360_api` | **Direct REST escape hatch** — the uncompacted path |
+
+- **Panel:** `/sf-data360`. **Management:** `/sf-pi status sf-data360`, `/sf-pi enable sf-data360`, `/sf-pi disable sf-data360`.
+- **Triggers:** `session_start`, `session_shutdown`, `resources_discover`.
+- **No MCP runtime and no Java subprocess.** It routes through sf-pi's shared action registry and the existing safety gates.
+- **Mutating calls are classified by method/path** and confirmed when required; the docs push **dry-runs and compact summaries** before broad or mutating calls.
+- **It contributes reference docs, not Agent Skills** — so it will never appear in `sf-skills`.
+
+**Relevant to:** **Developer** — a default-enabled Data 360 tool surface already present in any sf-pi session, with named tools you can call today; **Architect** — it is a *third* Data 360 agent-access pattern beside the Data 360 MCP Server and raw REST, and the one with no MCP runtime to stand up.
+
+**Why it matters.** The radar has spent seven scans concluding "Data 360 is quiet" from press releases and release notes, while a Data 360 developer surface shipped inside a repository it already tracks weekly. The finding is as much about sourcing as about the tool: **product silence is not platform silence.**
+
+The design point worth stealing is the shape — **ten verb-shaped facades over ~one API, plus one honest escape hatch.** An agent that must first learn ~200 REST operations will not use them; an agent given `data360_harmonize` will. `data360_api` exists so the facade set does not have to be complete, which is what makes shipping it possible at all.
+
+**Gotchas:**
+- **Default-enabled means it is already in your sessions.** If you have run sf-pi against a Data 360-connected org, these tools were available whether or not you knew. Check with `/sf-pi status sf-data360`.
+- **`data360_api` bypasses the compact facades, not the gates.** Mutating calls are still classified by method/path, so a POST through the escape hatch still hits the confirm prompt.
+- **Not the Data 360 MCP Server.** Same domain, different mechanism — that one is a Developer Preview MCP server with three facade tools over ~200 REST operations; this has **no MCP runtime**. Do not conflate them in a design doc. See [Data 360 MCP Server](#2026-07-29--data-360-mcp-server--200-rest-operations-behind-three-facade-tools).
+- **Grepping `sf-skills` will never find it.** It ships plain reference docs; the skills catalogue does not know it exists.
+- **Four sibling extensions remain unexamined** by this radar: `sf-soql`, `sf-data-explorer`, `sf-guardrail` (now partly covered — see below) and `sf-brain`.
+
+**Study action:** run `/sf-pi status sf-data360`, then open `/sf-data360` against a Data 360-enabled scratch org and call `data360_discover`. Write the returned capability list beside the **three** facade tools of the Data 360 MCP Server — the diff is the answer to "which surface do I build against?"
+
+**Status:** Stable, **enabled by default**, in `salesforce/sf-pi` (`docs/extensions/sf-data360.md`). Checked **2026-08-09, 03:45 UTC**.
+
+**Sources:** [`sf-data360` extension docs](https://github.com/salesforce/sf-pi/blob/main/docs/extensions/sf-data360.md) · [`salesforce/sf-pi`](https://github.com/salesforce/sf-pi) · Data 360 cross-link: [data-360.md](data-360.md#2026-08-09--sf-pi-ships-an-sf-data360-agent-tool-extension-cross-link)
+
+---
+
+## 2026-08-08 · `sf-guardrail` mediates Pi credential output — `pi auth print-api-key` now needs a human
+
+**What changed.** [`salesforce/sf-pi`](https://github.com/salesforce/sf-pi) released **v0.260.2** on **2026-08-08 at 18:04 UTC** ([#588](https://github.com/salesforce/sf-pi/pull/588), commit `93cc70d`), a single fix: **`fix(guardrail): mediate Pi credential output`**. A new bundled rule in the `sf-guardrail` extension gates model-issued commands that would print the developer's own credentials.
+
+- **Rule ID `pi-credential-output`**, in the **`commandGate`** family, shipped in `extensions/sf-guardrail/SF_GUARDRAIL_DEFAULTS.json`.
+- **Gated commands:** `pi auth check --credentials`, `pi auth print-api-key`, `pi auth print-bearer-token`. Plain `pi auth check` stays unrestricted.
+- **Also blocked:** the `SF_TEMP_SHOW_SECRETS=true` environment-variable pattern.
+- **Detection is structural, not string-matching** — direct invocation, environment-prefixed calls, shell wrappers (`bash -c`, `sudo`, `timeout`), and `npx` forms all resolve to the same rule (`lib/bash-ast.ts`, `lib/command-gate.ts`).
+- **Shipped alongside:** `chore(runtime): audit Pi 0.84.1`.
+
+**Relevant to:** **Developer** — a guardrail behaviour change that reaches your machine on the next sf-pi update, with a new confirm prompt in an existing workflow and a documented override path.
+
+**Why it matters.** The guardrails this radar has recorded so far protect the **org** from the model — unqualified `DELETE`, ungated actions, destructive DML. This one protects the **developer's own credentials** from the model, and the attack it anticipates is mundane: an agent that has a shell, a plausible reason to "check auth," and an output stream someone else can read.
+
+The design detail worth copying is that the rule is enforced on the **parsed command**, not on the literal string. A guardrail matched on text is defeated by `sudo`, a wrapper, or an `npx` prefix — which is to say, by accident, long before anyone attacks it.
+
+**Gotchas:**
+- **"Allow for this session" outlives the session you granted it in.** Approvals persist via `pi.appendEntry` and are **inherited by `/resume` and `/fork`**. A grant made once in a throwaway branch follows the fork. Clear with **`/sf-guardrail forget`**; inspect with **`/sf-guardrail audit`**.
+- **Overrides live outside the repo**, in `~/.pi/agent/sf-guardrail/rules.json` — so one developer disabling a rule is invisible to everyone else. Disable by stable rule ID: `{"id": "pi-credential-output", "enabled": false}`.
+- **Three behaviours, and only one has an approval path.** `off` disables, `confirm` prompts via `ctx.ui.select` (Allow once / Allow for session / Block), `block` is a hard stop with no override.
+- **Bundled defaults are not the effective config.** `SF_GUARDRAIL_DEFAULTS.json` is what ships; `rules.json` is what runs. Read both before concluding a rule is active.
+- **`pi auth check` and `pi auth check --credentials` are one flag apart** and land on opposite sides of the gate.
+
+**Study action:** update sf-pi to **v0.260.2**, ask the agent to print your API key and watch the confirm prompt; choose **Allow for session**, then `/fork` and ask again — confirm the grant carried across. Then run `/sf-guardrail forget`, re-ask, and read `/sf-guardrail audit` to see all three decisions recorded.
+
+**Status:** Released **2026-08-08**, `salesforce/sf-pi` **v0.260.2**. Newest release as of **2026-08-09, 03:40 UTC**.
+
+**Sources:** [sf-pi v0.260.2](https://github.com/salesforce/sf-pi/releases/tag/v0.260.2) · [PR #588](https://github.com/salesforce/sf-pi/pull/588) · [commit `93cc70d`](https://github.com/salesforce/sf-pi/commit/93cc70d45d0a54a447c00661b98da94734121491) · [`sf-guardrail` README](https://github.com/salesforce/sf-pi/blob/main/extensions/sf-guardrail/README.md)
+
+---
+
 ## 2026-08-07 · `sf-skills` gives the catalogue a graph — `relatedSkills` lands on 79 skills, and 9 new ones ship the same day
 
 **What changed.** [`forcedotcom/sf-skills`](https://github.com/forcedotcom/sf-skills) cut **two releases in one Friday**: **1.34.0** (05:05 UTC, commit `7d5916d`) and **1.35.0** (13:30 UTC, commit `f38d98d`).

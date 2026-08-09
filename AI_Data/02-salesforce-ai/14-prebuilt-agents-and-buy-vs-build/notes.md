@@ -17,6 +17,7 @@ Prepackaged agents with guided setup, sold as products rather than as capabiliti
 | **Agentforce Commerce** | Three agents: **Shopper** (B2C — discovery → checkout → post-purchase), **Buyer** (B2B via WhatsApp and SMS), **Merchant** (back office — catalogue and trends in natural language) | **GA July 6, 2026** |
 | **IT Service Domain Pack** | 50+ prebuilt agents into Slack, Teams and the IT Service Desk | GA — see the [2026-07-27 scan](../../05-release-radar/01-agentforce/2026-07-27.md) |
 | **Agentforce Contact Center** | Native CCaaS — see [12-voice-and-contact-center](../12-voice-and-contact-center/notes.md) | **GA February 23, 2026** |
+| **Agentforce Operations** | Back-office execution — supply chain, procurement, finance, IT. Agents do process coordination, data verification, compliance clearance and approvals. Authored as a **digital blueprint** (document or diagram → workflow, then edited in plain language). Flow integration was **Beta from May 2026**, Slack/Teams from June 2026. **Pricing: unknown** — no SKU or Flex Credits mapping located | **GA April 29, 2026** — see [agentforce-platform.md](../../05-release-radar/agentforce-platform.md#2026-04-29--agentforce-operations--the-fifth-prebuilt-agent-family-ga-for-102-days-and-never-recorded-here) |
 | **Industry packs** — Agentforce Public Sector, Agentforce Health, **Missionforce** | Vertical agent estates; behind the VA's $1.6B agreement | GA |
 
 ### The Help Agent benchmark worth memorising

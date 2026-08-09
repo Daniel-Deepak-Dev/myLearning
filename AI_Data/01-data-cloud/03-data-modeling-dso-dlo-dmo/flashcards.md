@@ -36,3 +36,18 @@ A: Unmapped DLO fields still cost storage but add no downstream value.
 
 Q: Which modeling decision is most painful to change later?
 A: The primary key — identity resolution consumes it, so changing it means reworking matching and everything built on the resulting profiles.
+
+Q: Which Apex namespace runs Data 360 SQL, and what are its five classes?
+A: `sfsqlquery` — `SqlStatement` (execute), `SqlRowIterator` (iterate), `Row` (typed accessors like `getString`/`getInteger`), `QueryHandle` (re-fetch an earlier query's results) and `SqlQueueable` (async for large sets). Added in the Winter '27 release notes.
+
+Q: What are the three `sfsqlquery` workflows and when do you pick each?
+A: `SqlStatement` → `SqlRowIterator` → `Row` when the query is small and the caller waits; `QueryHandle` → `SqlRowIterator` → `Row` to re-fetch results of a query that already ran; `SqlQueueable` → `SqlRowIterator` → `Row` for large sets or anything outliving the transaction.
+
+Q: What limit bites a polling loop built on `SqlQueueable`?
+A: The queueable chain ceiling — stack depth caps at 50 in production. A poll-until-complete loop is a chain, so budget the polls.
+
+Q: Does the dataspace trap apply to `sfsqlquery`?
+A: Yes. Omit the dataspace on a DLO query and you get zero rows, silently, with no error — exactly as with `SET OPTIONS` in SOQL.
+
+Q: Why does `sfsqlquery` matter for agent grounding specifically?
+A: An Apex-backed agent action can compute a rolling aggregate or multi-table join at the moment the agent asks, instead of reading an insight refreshed on someone else's schedule. Grounding moves from "recently true" to "true now".

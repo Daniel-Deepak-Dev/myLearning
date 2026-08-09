@@ -16,6 +16,53 @@ Salesforce began calling Data Cloud **"Data 360"** at Dreamforce 2025 (Oct 14, 2
 
 ---
 
+## 2026-08-09 · `sfsqlquery` — Data 360 SQL from Apex finally has a namespace, five classes and three shapes
+
+**What changed.** The **Winter '27** release notes add the **`sfsqlquery`** Apex namespace for executing **Data 360 SQL** queries. This study base has recorded *"SQL from Apex (Summer '26)"* in five places with **no named class anywhere** — this is the surface behind that sentence, and the docs call it the **recommended** way to query Data 360 from Apex.
+
+**Five classes:**
+
+- **`SqlStatement`** — executes a new query.
+- **`SqlRowIterator`** — iterates the result set.
+- **`Row`** — one row, with typed accessors (`getString`, `getInteger`, …).
+- **`QueryHandle`** — fetches the results of a query executed earlier.
+- **`SqlQueueable`** — runs the query asynchronously for large datasets.
+
+**Three workflows, and picking the wrong one is the whole design decision:**
+
+| Shape | Chain | Use when |
+|---|---|---|
+| Synchronous | `SqlStatement` → `SqlRowIterator` → `Row` | The query is small and the caller is waiting |
+| Re-fetch | `QueryHandle` → `SqlRowIterator` → `Row` | The query already ran; you want its results again |
+| Asynchronous | `SqlQueueable` → `SqlRowIterator` → `Row` | Large result sets, or anything that could outlive a transaction |
+
+**Relevant to:** **Developer** — a new first-party namespace replaces HTTP callouts to the Direct API as the Apex path into Data 360; **Architect** — the async shape and its queueable stack ceiling decide whether an agent action can compute live aggregates at all, or must fall back to a scheduled insight.
+
+**Why it matters.** SOQL cannot express the joins, aggregations and window functions lakehouse work needs, so the honest previous answer was *"call the Direct API over HTTP from Apex"* — with the callout limits, retry code and mock-in-tests burden that implies. A typed namespace with an iterator removes that whole layer.
+
+The consequence for agents is the interesting one. An Apex-backed agent action can now compute a rolling aggregate **at the moment the agent asks**, rather than reading an insight refreshed on someone else's schedule. That moves grounding from *recently true* to *true now* — which is precisely the failure mode Accelerated Data Ingest addressed on the ingestion side.
+
+**Gotchas:**
+- **`SqlQueueable` inherits the queueable chain ceiling — stack depth caps at 50 in production.** A poll-until-complete loop *is* a chain. Budget it, or the fiftieth poll throws.
+- **A synchronous `SqlStatement` is not a promise of results.** Long-running queries need polling, an explicit status check for failure, and retry logic. Validate with a `LIMIT` clause before running the real thing.
+- **The dataspace trap carries straight over.** Omit the dataspace on a DLO query and you get **zero rows, silently, with no error** — the same trap as `SET OPTIONS` in SOQL. See [`SET OPTIONS`](#2026-07-26--set-options-clause-in-soql).
+- **`Row` accessors are typed.** `getString` on an integer column fails at runtime, not at compile time — there is no schema to check against.
+- **Two different things are both called "SQL from Apex."** The Summer '26 capability and this Winter '27 namespace are the feature and its API. Search on `sfsqlquery`, not on the phrase.
+
+**Study action:** in a Data 360-enabled dev org, write one Apex class that runs the *same* aggregate query three ways — `SqlStatement` synchronously, then re-fetch it via `QueryHandle`, then `SqlQueueable` — and log `Limits.getCpuTime()`, `Limits.getHeapSize()` and the row count for each. Then re-run the DLO query with the dataspace omitted and confirm it returns zero rows rather than an error.
+
+**Status:** Announced in the **Winter '27** release notes (live as of **2026-08-09**); documented in the Data 360 Query Guide as the recommended Apex query path. Verify availability against your org's release before building on it.
+
+**Sources:** [Query Data 360 Data with Apex](https://developer.salesforce.com/docs/data/data-cloud-query-guide/guide/dc-apex-query.html) · [Data 360 In Apex — Apex Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/DataCloudInApex.htm) · [Data 360 SQL Reference](https://developer.salesforce.com/docs/data/data-cloud-query-guide/references/dc-sql-reference/syntax.html) · [Salesforce Winter '27 Release Notes](https://help.salesforce.com/s/articleView?id=release-notes.salesforce_release_notes.htm&language=en_US) · study-base cross-ref: [SQL from Apex](../01-data-cloud/03-data-modeling-dso-dlo-dmo/notes.md)
+
+---
+
+## 2026-08-09 · `sf-pi` ships an `sf-data360` agent-tool extension (cross-link)
+
+`salesforce/sf-pi` carries a **default-enabled** `sf-data360` extension exposing **eleven `data360_*` LLM tools** — discover, connect, prepare, harmonize, segment, activate, query, semantic, observe, orchestrate, plus a `data360_api` REST escape hatch — with **no MCP runtime involved**. It is a different artifact from the [Data 360 MCP Server](#2026-07-26--data-360-mcp-server-developer-preview--moved). Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-09--sf-pis-sf-data360-extension--eleven-data-360-tools-and-no-mcp-runtime-in-sight).
+
+---
+
 ## 2026-08-08 · Gap check — Data Cloud One, the multi-org architecture this radar never recorded
 
 **What changed.** Nothing shipped. This entry exists because Data 360 produced **no product news for the sixth consecutive scan**, so the run spent itself on a gap check — and found that **"Data Cloud One" has zero mentions anywhere in this study base**, despite being the recommended pattern for any customer with more than one Salesforce org.
