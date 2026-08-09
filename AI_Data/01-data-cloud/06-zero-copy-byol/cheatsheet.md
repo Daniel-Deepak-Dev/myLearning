@@ -4,12 +4,13 @@
 
 ## In one sentence
 
-Query Snowflake / BigQuery / Databricks / Redshift **in place** — no movement, no duplication, no reconciliation jobs — at the cost of inheriting the source's query performance.
+Query Snowflake / BigQuery / Databricks / Redshift **in place** — no ETL, no duplication, no reconciliation jobs — at the cost of inheriting the source's query performance.
 
 ## Key terms
 | Term | Definition |
 |---|---|
 | Zero copy / BYOL | Federation: bring your own lake, query where the data lives. |
+| ETL / ELT | The pipeline zero copy removes. Ingestion *is* the ELT path; zero copy is its absence. |
 | AWS Glue federation | **GA** — proposal-safe. |
 | Fabric OneLake federation | **Beta** — prototype only, no support commitment. |
 | Databricks IdP auth | Summer '26 — the security-review unlock, not a feature win. |

@@ -5,6 +5,9 @@
 - Set up the Code Extension SDK and CLI plugin — https://developer.salesforce.com/docs/data/data-cloud-code-ext/guide/set-up-sdk.html
 - Data Custom Code Python SDK (PyPI) — https://pypi.org/project/salesforce-data-customcode/
 - Deploy code extensions with data kits (release note) — https://help.salesforce.com/s/articleView?id=release-notes.rn_cdp_2026_summer_code_extension_data_kit.htm&release=262&type=5
+- **Packages and data kits** (the two kinds, and managed-package locking) — https://developer.salesforce.com/docs/data/data-cloud-dev/guide/packages-data-kits.html
+- Data 360 Extensibility Readiness Matrix — which components are actually packageable — https://developer.salesforce.com/docs/data/data-cloud-dmo-mapping/guide/c360a-api-isv-readiness-data.html
+- Trailhead: Packaging and Data Kits — https://trailhead.salesforce.com/content/learn/modules/packaging-and-data-kits-in-salesforce-cdp
 - Data 360 hosted MCP server (GA — for querying) — https://developer.salesforce.com/docs/platform/hosted-mcp-servers/references/reference/data-cloud-sql.html
 
 ## Courses & videos

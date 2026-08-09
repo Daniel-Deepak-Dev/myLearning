@@ -10,6 +10,7 @@ Insights compute metrics on a schedule, segments slice audiences from them, acti
 | Term | Definition |
 |---|---|
 | Calculated Insight | Scheduled metric over DMOs, SQL-like definition (LTV, engagement, churn risk). |
+| RFM | Recency / Frequency / Monetary — the other canonical insight. Emits a **tier label**, not a number. |
 | Segment | Audience slice from profiles + attributes + insights. The unit you activate. |
 | Tableau Semantics | The semantic layer — standardizes what a metric *means*, in business language. |
 | OSI | Vendor-neutral YAML standard for semantic models. Core spec finalized Feb 2026. |
@@ -26,6 +27,7 @@ Insights compute metrics on a schedule, segments slice audiences from them, acti
 - **Agents never ask what a metric means** — ambiguity yields confident wrong numbers.
 - Insights run **on a schedule**, so an agent can ground on a stale metric.
 - Insights compute **per unified profile** — fragmented profiles produce wrong metrics; the bug is upstream in identity resolution.
+- **RFM ranks are relative** — quintiles re-cut every run, so a tier can change because the population moved, not the customer.
 - **SQL from Apex** (Summer '26) carries the same dataspace trap: omit it on a DLO query → zero records, silently.
 - A metric with two definitions is a **governance** problem; the semantic layer surfaces it, it doesn't decide.
 

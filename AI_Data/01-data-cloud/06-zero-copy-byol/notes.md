@@ -11,6 +11,8 @@
 
 The data stays in the source. Data 360 gets a queryable view of it.
 
+**In the vocabulary clients and exam questions use, zero copy means no ETL.** That's how the question actually arrives — *"can we do this without building an ETL pipeline?"* — so keep the word attached to the concept.
+
 ## Why it matters (for the AI-Salesforce architect role)
 
 **Zero copy is how Data 360 reaches enterprise data without an enterprise data migration** — which is usually the thing that kills the project timeline. It's one of the three legs of grounding at scale: reach without copying.
@@ -42,6 +44,8 @@ The data stays in the source. Data 360 gets a queryable view of it.
 | It's already governed where it lives | The source can't serve interactive queries |
 | Freshness matters and the source is current | You need predictable query latency |
 | Compliance forbids copying it | It's needed for real-time agent grounding |
+
+**Name the right-hand column properly:** ingestion *is* the classic **ETL/ELT** path — extract from the source, load into Data 360, transform there. Zero copy is the absence of that pipeline, not a faster version of it. See [ETL/ELT trade-offs, vendor-neutral](../../00-core-skills/04-data-engineering/notes.md).
 
 **The trap in both directions:** teams federate everything to avoid duplication and then discover identity resolution and segmentation need the data locally; or they ingest everything and pay to store what a query could have reached.
 

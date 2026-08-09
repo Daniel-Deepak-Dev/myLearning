@@ -17,7 +17,19 @@ Q: Where do Code Extension failures surface?
 A: The code extensions log DLO. They aren't obvious anywhere else.
 
 Q: What is a data kit?
-A: The DevOps package that promotes code extensions — or the data transforms built from them — from sandbox to production. Adding such a transform automatically pulls in its associated code extension.
+A: A container that organizes Data 360 metadata before packaging — a package can contain more than one. Two kinds exist: DevOps (sandbox → production migration) and standard (a distributable solution bundle).
+
+Q: How do DevOps and standard data kits differ?
+A: DevOps — created from any data space, must deploy to the SAME data space in the target org, purpose is sandbox → prod migration. Standard — created from the default data space, deploys to ANY data space, purpose is packaging a solution to share or distribute.
+
+Q: What happens when you add a data transform to a DevOps data kit?
+A: Its associated code extension is pulled in automatically, so you don't hand-track the dependency. Convenient — but check what came along.
+
+Q: How does a partner distribute a Data 360 solution on AppExchange?
+A: A standard data kit wrapped in a managed package. Data streams, batch data transforms, calculated insights and data graphs deploy into the subscriber org via Package Manager.
+
+Q: What is the constraint on Data 360 metadata shipped in a managed package?
+A: It's locked. Subscribers can add new entities alongside it but cannot modify what shipped, so correcting a wrong calculated insight means releasing a new package version.
 
 Q: Why do data kits matter?
 A: Data 360 logic can now be promoted through a CI/CD pipeline the same way Apex and LWC metadata are. This closed one of the more painful gaps in Data Cloud DevOps.

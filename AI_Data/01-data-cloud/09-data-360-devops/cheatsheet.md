@@ -10,7 +10,7 @@ Python Code Extensions, data kits for promotion, `@IntegrationTest` for real cal
 | Term | Definition |
 |---|---|
 | Code Extension | Custom Python in isolated containers. Headline use: **custom chunking**. |
-| Data kit | Promotes code extensions + data transforms sandbox → prod, pulling dependencies automatically. |
+| Data kit | Container for Data 360 metadata before packaging. **DevOps** kit = sandbox → prod. **Standard** kit = distributable. |
 | `@IntegrationTest` | Apex tests with live callouts + `commitTestOnly()`. **Scratch orgs only.** |
 | Facade tools | `search` / `payload_examples` / `execute` over ~200 REST ops. |
 
@@ -27,6 +27,8 @@ Python Code Extensions, data kits for promotion, `@IntegrationTest` for real cal
 - `@IntegrationTest` is scratch-org only, async, one at a time — not CI-ready.
 - Code Extension is **Python only** so far; other languages are promised, not shipped.
 - Data kits pull dependencies automatically — convenient, but check what came along.
+- **Two kinds of data kit.** DevOps must deploy to the *same* data space; standard deploys to *any*. The data-space rule is the giveaway on an exam question.
+- Data 360 metadata inside a **managed package is locked** — subscribers add alongside it, never modify it. Fixes ship as a new version.
 
 ## Minimal example
 

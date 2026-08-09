@@ -55,7 +55,20 @@ Salesforce recommends pairing the [code extension Agent Skill](https://github.co
 
 ### Data kits
 
-A DevOps **data kit** moves code extensions — or the data transforms built from them — from sandbox to production. Adding such a transform to a data kit automatically pulls in its associated code extension, so you don't hand-track the dependency.
+A **data kit** is a container for Data 360 metadata — the thing you put components into before packaging them. A package can hold more than one. **There are two kinds, and confusing them is the mistake worth avoiding:**
+
+| | DevOps data kit | Standard data kit |
+|---|---|---|
+| Purpose | Migrate metadata sandbox → production | Package a solution to share or distribute |
+| Created from | Any data space | The **default** data space |
+| Deploys to | The **same** data space in the target org | **Any** data space in the target org |
+| Typical author | Whoever runs the pipeline | A partner, or an internal team building a reusable asset |
+
+A **DevOps data kit** moves code extensions — or the data transforms built from them — from sandbox to production. Adding such a transform to a data kit automatically pulls in its associated code extension, so you don't hand-track the dependency.
+
+A **standard data kit** is the packaging path. Wrapped in a **managed package**, it's how partners ship Data 360 solutions on **AppExchange** — data streams, batch data transforms, calculated insights and data graphs land in the subscriber org via Package Manager. Note the constraint: **all Data 360 feature metadata in a managed package is locked.** Subscribers can add new entities alongside what you shipped, but cannot modify it. A calculated insight whose definition was slightly wrong is a new package version, not a five-minute fix.
+
+**The architect's question is which one you're building** — a one-off promotion, or a reusable accelerator. The data-space rule forces the answer early: a DevOps kit pinned to one data space doesn't quietly become a distributable asset later.
 
 ### `@IntegrationTest` (Developer Preview)
 

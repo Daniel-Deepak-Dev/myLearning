@@ -47,6 +47,10 @@ Defined with SQL-like expressions over DMOs, computed on a schedule, and stored 
 
 Because they're SQL-like, this is where your [SQL fluency](../../00-core-skills/01-sql/notes.md) pays off directly — aggregations, window functions and CTEs are the working vocabulary.
 
+**LTV answers "how much is this customer worth?"; RFM answers "what kind of customer is this?"** — and the second question is the one segmentation usually needs. **RFM** scores each profile on three axes: **Recency** (how long since the last purchase), **Frequency** (how often they buy), **Monetary** (how much they spend). Each axis is ranked — quintiles are the convention — and the three ranks combine into a tier: champion, loyal, at risk, lapsed.
+
+The structural difference from LTV is what matters. LTV emits **one number per profile**, so a segment filters it with a threshold and someone has to decide what "high value" means. RFM emits **a classification**, so a segment filters it by label and the meaning travels with the value. That makes RFM the more natural thing to hand an agent — and a natural candidate for the semantic layer: define "champion" once, and every consumer agrees.
+
 **Summer '26 addition:** you can now **run SQL from Apex** against Data 360. That means an Apex-backed agent action can compute a rolling aggregate or a multi-table join inline, rather than depending on a pre-computed insight refreshed on a schedule. Note the same dataspace trap as everywhere else — omit it on a DLO query and you get zero records, silently.
 
 ### Segmentation
@@ -66,6 +70,7 @@ An agent grounded on calculated insights answers questions like *"is this custom
 <!-- create ./labs/ when you build something; link the files here -->
 
 - [ ] Write a calculated insight for lifetime value using a window function.
+- [ ] Build an RFM insight: quintile-rank recency, frequency and monetary per profile, then combine the three ranks into one tier label. Check whether your tier boundaries survive contact with real data.
 - [ ] Build a segment on that insight and activate it to a target.
 - [ ] **The semantic-layer lab:** ask an agent a metric question ("what was churn last quarter") before and after defining the metric in the semantic layer. The before-answer is the whole argument for the feature.
 - [ ] Write an Apex method that runs SQL from Apex for an aggregate an agent action needs live.
@@ -77,6 +82,7 @@ An agent grounded on calculated insights answers questions like *"is this custom
 - **Segment refresh is a cost lever.** Match cadence to activation, not to "as often as possible".
 - **Over-publishing to activation targets costs without benefit.** Check the target's own rhythm.
 - **SQL from Apex has the dataspace trap** — omit it on a DLO query and get zero records with no error.
+- **RFM ranks are relative, not absolute.** Quintiles re-cut on every run, so a profile can fall from champion to loyal because the population moved, not because its behaviour changed. Say this out loud before someone builds a churn alert on the transition.
 - **Insights compute per unified profile**, so fragmented profiles produce wrong metrics. The error originates in [identity resolution](../04-identity-resolution/notes.md).
 - **A metric with two definitions in two systems is a governance problem, not a tooling one.** The semantic layer makes the disagreement visible; it doesn't decide for you.
 

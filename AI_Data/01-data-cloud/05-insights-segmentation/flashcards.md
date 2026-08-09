@@ -7,6 +7,12 @@
 Q: What is a calculated insight?
 A: A metric (e.g. lifetime value, engagement score) computed over Data 360 data on a schedule with a SQL-like definition.
 
+Q: What is RFM, and how does it differ structurally from LTV?
+A: Recency, Frequency, Monetary — each axis ranked (conventionally into quintiles) and combined into a tier such as champion, loyal, at risk or lapsed. LTV emits one number per profile, so a segment filters it by threshold; RFM emits a classification, so a segment filters it by label and the meaning travels with the value.
+
+Q: What is the trap with RFM ranks?
+A: They are relative, not absolute. Quintiles re-cut on every run, so a profile's tier can change because the population moved rather than because its behaviour did.
+
 Q: What is a segment?
 A: A defined audience slice built from profiles, attributes, and insights — the unit you activate to other systems.
 
