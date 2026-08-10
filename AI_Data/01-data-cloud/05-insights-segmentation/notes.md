@@ -69,6 +69,8 @@ An agent grounded on calculated insights answers questions like *"is this custom
 ## Hands-on / labs
 <!-- create ./labs/ when you build something; link the files here -->
 
+**→ [lab-05](../10-lab-environment/labs/lab-05-insights-and-segments.md)** — build one insight and one segment, then validate both against hand-written SQL rather than trusting the UI count.
+
 - [ ] Write a calculated insight for lifetime value using a window function.
 - [ ] Build an RFM insight: quintile-rank recency, frequency and monetary per profile, then combine the three ranks into one tier label. Check whether your tier boundaries survive contact with real data.
 - [ ] Build a segment on that insight and activate it to a target.

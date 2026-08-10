@@ -76,8 +76,8 @@ Ingestion's job ends at the DLO. Everything after that is [data modeling](../03-
 ## Hands-on / labs
 <!-- create ./labs/ when you build something; link the files here -->
 
-- [ ] Configure a CRM data stream and watch the DLO populate.
-- [ ] Set up a batch stream and a streaming stream, then compare observed latency.
+- [ ] Configure a CRM data stream and watch the DLO populate — [lab-01](../10-lab-environment/labs/lab-01-home-org-crm-connector.md), then [lab-02](../10-lab-environment/labs/lab-02-external-org-connection.md) for an org that isn't the home org.
+- [ ] Set up a batch stream and a streaming stream, then compare observed latency — [lab-03](../10-lab-environment/labs/lab-03-ingestion-api-any-org.md) does both over the Ingestion API.
 - [ ] **The instructive lab:** ground an agent on a scheduled stream, change the source record, and ask the agent about it before the refresh. Watch it answer confidently and wrongly. That's the failure mode, made visible.
 - [ ] Audit an org's streams and mark each one agent-facing or analytics-facing.
 

@@ -66,7 +66,7 @@ An agent answer is only as trustworthy as the weakest of the three.
 ## Hands-on / labs
 <!-- create ./labs/ when you build something; link the files here -->
 
-- [ ] Set up one federated connection (Snowflake or BigQuery trial) and query it from Data 360.
+- [ ] Set up one federated connection (Snowflake or BigQuery trial) and query it from Data 360 — scoped out in [lab-99](../10-lab-environment/labs/lab-99-parked-external-sources.md), parked until an account exists.
 - [ ] Compare query latency federated vs. ingested for the same dataset. The number is the argument.
 - [ ] Try running identity resolution against federated data and note where the constraints appear.
 - [ ] Write down, for one real dataset, which of the two you'd choose and why. That paragraph is the deliverable clients actually value.

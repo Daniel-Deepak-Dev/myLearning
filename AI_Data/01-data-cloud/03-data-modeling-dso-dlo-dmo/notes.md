@@ -69,8 +69,8 @@ An Apex-backed Agentforce action can now compute a rolling aggregate or a multi-
 ## Hands-on / labs
 <!-- create ./labs/ when you build something; link the files here -->
 
-- [ ] Map one DLO to a standard DMO end to end, then query the DMO.
-- [ ] **The trap lab:** run a SOQL query against a DLO *without* `SET OPTIONS`, observe zero records with no error, then add the dataspace and watch it work. Fifteen minutes that saves an afternoon later.
+- [ ] Map one DLO to a standard DMO end to end, then query the DMO — [lab-01](../10-lab-environment/labs/lab-01-home-org-crm-connector.md).
+- [ ] **The trap lab:** run a SOQL query against a DLO *without* `SET OPTIONS`, observe zero records with no error, then add the dataspace and watch it work. Fifteen minutes that saves an afternoon later. (It's the *break it on purpose* step of [lab-01](../10-lab-environment/labs/lab-01-home-org-crm-connector.md).)
 - [ ] Run the same query with `honorEmptyStrings` true and false against data containing both `NULL` and `''`. Compare row counts.
 - [ ] Write one Apex method that runs SQL against Data 360 and returns an aggregate.
 

@@ -18,6 +18,7 @@ Cert target: **[Data 360 Consultant](_cert-data-cloud-consultant/exam-guide.md)*
 | [Vector Database & Unstructured Data](07-vector-db-unstructured/notes.md) | Search indexes, embeddings, **custom chunking via Code Extension**, Intelligent Context | [cheatsheet](07-vector-db-unstructured/cheatsheet.md) · [flashcards](07-vector-db-unstructured/flashcards.md) |
 | [RAG on Platform](08-rag-on-platform/notes.md) | Retrievers, data graphs, **Agentforce Data Libraries + the ADL Connect API** — Salesforce's productized RAG | [cheatsheet](08-rag-on-platform/cheatsheet.md) · [flashcards](08-rag-on-platform/flashcards.md) |
 | [Data 360 DevOps](09-data-360-devops/notes.md) 🆕 | Python Code Extension, data kits, `@IntegrationTest`, the Data 360 MCP server and its facade-tool pattern | [cheatsheet](09-data-360-devops/cheatsheet.md) · [flashcards](09-data-360-devops/flashcards.md) |
+| [Lab Environment & Testing Craft](10-lab-environment/notes.md) 🆕 | **The practice topic.** Which orgs you can connect to what (and which need a licence), plus how to prove each layer worked — and the [lab ladder](10-lab-environment/labs/README.md) the other nine topics' checkboxes became | [cheatsheet](10-lab-environment/cheatsheet.md) · [flashcards](10-lab-environment/flashcards.md) |
 
 ## Cert prep
 - [Exam guide breakdown](_cert-data-cloud-consultant/exam-guide.md) — renamed to **Data 360 Consultant**

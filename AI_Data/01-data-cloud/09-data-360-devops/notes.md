@@ -97,6 +97,8 @@ There is also a **Data 360 standard hosted MCP server (GA)** for queries and gra
 ## Hands-on / labs
 <!-- create ./labs/ when you build something; link the files here -->
 
+**→ [lab-07](../10-lab-environment/labs/lab-07-promotion-and-packaging.md)** — retrieve Data 360 metadata with the CLI and find out what *doesn't* come back. That list is the manual-steps section of every promotion runbook you'll write.
+
 - [ ] Install the Python SDK and CLI plugin, scaffold a project, deploy a trivial Code Extension.
 - [ ] Write a custom chunking extension that splits on document headings.
 - [ ] Promote it between orgs with a data kit and confirm the dependency was pulled in automatically.

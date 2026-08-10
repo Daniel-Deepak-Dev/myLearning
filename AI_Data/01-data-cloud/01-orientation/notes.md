@@ -118,8 +118,10 @@ Step 5 is where 2026 changed: "activate" used to mean marketing activation. It n
 ## Hands-on / labs
 <!-- create ./labs/ when you build something; link the files here -->
 
+**→ [The lab ladder](../10-lab-environment/labs/README.md)** — the environment these run in, and which orgs you can connect to it.
+
 - [ ] Trailhead: **Data Cloud Basics** (Phase 1 milestone badge — note Trailhead content may still use the old name)
-- [ ] Get a Data 360 trial or Dev org and walk the five-step flow end to end with sample data.
+- [ ] Walk the five-step flow end to end in a Dev org: [lab-00](../10-lab-environment/labs/lab-00-tenant-baseline.md) → [lab-05](../10-lab-environment/labs/lab-05-insights-and-segments.md).
 - [ ] Map one real business question ("which customers are at churn risk?") through all five steps on paper before touching the UI.
 - [ ] Bookmark the monthly release-notes section and check it once a week.
 - [ ] **Data spaces:** in a Dev org with Data 360 provisioned, open **Setup → Data 360 Setup → Data Spaces**, create a second space, then run the same DLO query with and without a `SET OPTIONS` dataspace clause — record which one silently returns zero rows.

@@ -80,6 +80,8 @@ Before tuning, know your baseline: **profile count vs. source-record count**. A 
 ## Hands-on / labs
 <!-- create ./labs/ when you build something; link the files here -->
 
+**→ [lab-04](../10-lab-environment/labs/lab-04-identity-resolution.md)** runs all of this across three sources, with a test set designed so the ruleset can visibly fail.
+
 - [ ] Build a ruleset with exact-email matching, then add a fuzzy rule and compare profile counts. The delta is the money.
 - [ ] **Deliberately over-match** in a sandbox (fuzzy name + address on test data with two people at one address) and look at the merged profile. Seeing the privacy failure once makes it memorable.
 - [ ] Set different reconciliation strategies per attribute and verify which value won.
