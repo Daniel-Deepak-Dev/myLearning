@@ -87,3 +87,21 @@ A: Create or refresh a sandbox before 2026-08-27 18:00 PT (2026-08-28 01:00 UTC)
 
 Q: What changes about Email Change Verification in Winter '27?
 A: Salesforce Support loses the ability to disable it, so bulk user-email updates now require each user to verify individually. The escape hatch is gone.
+
+Q: Winter '27 ends support for API traffic using an "incorrect instanced URL". What is an instanced URL, and what makes one incorrect?
+A: A hard-coded instance host such as `na45.salesforce.com` or `cs109.salesforce.com` used as an API base instead of the org's My Domain host. It becomes incorrect when it is no longer your org's instance — typically after Salesforce migrates the org — and the redirect that kept it working is what ends.
+
+Q: Why can't you plan the instanced-URL migration around an upgrade date?
+A: Enforcement is rolling, applied shortly after the org receives Winter '27 rather than on the upgrade weekend itself. A clean upgrade weekend is not evidence the org is clear.
+
+Q: How do you cause the instanced-URL failure early, on your own schedule?
+A: Setup → My Domain → Redirections → enable "Block API traffic that uses an incorrect instanced URL". It has been testable since 2026-06-19. The switch is on the My Domain page, not the Release Updates page.
+
+Q: What is the correct API base URL for an integration, if not a hard-coded host?
+A: The `instance_url` field returned in the OAuth token response. Any integration that hard-codes a host is carrying the bug regardless of which host it holds today.
+
+Q: Why is the instanced-URL break harder to find than the OAuth username-password retirement?
+A: The OAuth break is a pattern you can grep for — `grant_type=password` is present or absent. The instanced-URL break is a value that was correct when it was typed and went stale silently, with nothing in the codebase recording that it did.
+
+Q: How does the instanced-URL end-of-support differ from Enhanced Domains?
+A: Enhanced Domains changes the format of your My Domain host. This ends the use of instance hosts altogether. An org fully on Enhanced Domains can still have integrations calling `na45.salesforce.com`.

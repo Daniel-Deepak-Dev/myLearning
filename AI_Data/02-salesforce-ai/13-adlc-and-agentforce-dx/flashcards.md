@@ -147,3 +147,18 @@ A: The grant persists via `pi.appendEntry` and is inherited by `/resume` and `/f
 
 Q: Where does the effective `sf-guardrail` config live, and why does that matter on a team?
 A: In `~/.pi/agent/sf-guardrail/rules.json`, outside the repo. `SF_GUARDRAIL_DEFAULTS.json` is only what ships — so one developer disabling a rule by ID is invisible to everyone else.
+
+Q: `sf-pi` reports an org's API version as `50.0`. What does that most likely mean?
+A: Not that the org is on 50.0 — it means nothing was configured and JSforce used its built-in default (Spring '21). Since v0.262.1 sf-pi labels this "unverified SDK fallback" rather than reporting it as an observed org fact.
+
+Q: What are the three API-version provenance states sf-pi now distinguishes?
+A: `configured` (an explicit `org-api-version` override), resolved from the Project Source API (`sourceApiVersion` in `sfdx-project.json`), and unverified SDK fallback (JSforce's `50.0` default).
+
+Q: What is the difference between Project Source API and Connection API?
+A: Project Source API comes from `sourceApiVersion` in `sfdx-project.json` and governs the shape of metadata deploy and retrieve. Connection API is what the SDK selected for REST calls. They are separate fields and are allowed to disagree.
+
+Q: Why does an unverified `50.0` fallback matter beyond cosmetics?
+A: Platform defaults are version-gated. At API 67.0 Apex DML and SOQL run in user mode and classes default to `with sharing`. Operating at 50.0 while believing you are at 67.0 means reasoning about behaviour you do not have.
+
+Q: sf-pi's environment status looks stale. How do you force the truth?
+A: Snapshots are cache-first by design; run `/sf-org refresh` or `/sf-devbar refresh`, which call `refreshSharedSfEnvironment()` for an explicit serialized deep refresh.
