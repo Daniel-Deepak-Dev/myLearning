@@ -126,3 +126,39 @@ A: A hardcoded inventory of a remote system's capabilities is a cache with no in
 
 Q: `sf-pi` shows a saved configuration override. Are you authenticated?
 A: Not necessarily. Since v0.259.1 setup persists overrides without awaiting the network, and status output deliberately distinguishes a saved override from an active authenticated provider. Reading one as the other is the new misread; discovery failure hands off to Doctor.
+
+Q: What does the `sf-data360` extension in `sf-pi` expose, and what does it deliberately not use?
+A: Eleven LLM tools — `data360_discover`, `_connect`, `_prepare`, `_harmonize`, `_segment`, `_activate`, `_query`, `_semantic`, `_observe`, `_orchestrate`, plus `data360_api` as a REST escape hatch. It uses no MCP runtime and no Java subprocess, routing through sf-pi's shared action registry instead.
+
+Q: Is `sf-data360` the same thing as the Data 360 MCP Server?
+A: No. Same domain, different mechanism — the MCP Server is a Developer Preview MCP server with three facade tools over ~200 REST operations; `sf-data360` is a default-enabled sf-pi extension with no MCP runtime at all.
+
+Q: Why will grepping `sf-skills` never find `sf-data360`?
+A: It ships plain reference docs rather than contributing Agent Skills, so the skills catalogue has no record of it.
+
+Q: What does the `pi-credential-output` guardrail rule gate?
+A: `pi auth check --credentials`, `pi auth print-api-key` and `pi auth print-bearer-token`, plus the `SF_TEMP_SHOW_SECRETS=true` pattern. Plain `pi auth check` is unaffected.
+
+Q: Why does `sf-guardrail` match on the parsed command rather than the string?
+A: Because a text match is defeated by `sudo`, `bash -c`, `timeout`, an environment prefix or an `npx` wrapper — by accident long before anyone attacks it. Structural detection resolves all those forms to the same rule.
+
+Q: What is the trap in choosing "Allow for this session" on a guardrail prompt?
+A: The grant persists via `pi.appendEntry` and is inherited by `/resume` and `/fork`, so it outlives the session you granted it in. Clear it with `/sf-guardrail forget`; review decisions with `/sf-guardrail audit`.
+
+Q: Where does the effective `sf-guardrail` config live, and why does that matter on a team?
+A: In `~/.pi/agent/sf-guardrail/rules.json`, outside the repo. `SF_GUARDRAIL_DEFAULTS.json` is only what ships — so one developer disabling a rule by ID is invisible to everyone else.
+
+Q: `sf-pi` reports an org's API version as `50.0`. What does that most likely mean?
+A: Not that the org is on 50.0 — it means nothing was configured and JSforce used its built-in default (Spring '21). Since v0.262.1 sf-pi labels this "unverified SDK fallback" rather than reporting it as an observed org fact.
+
+Q: What are the three API-version provenance states sf-pi now distinguishes?
+A: `configured` (an explicit `org-api-version` override), resolved from the Project Source API (`sourceApiVersion` in `sfdx-project.json`), and unverified SDK fallback (JSforce's `50.0` default).
+
+Q: What is the difference between Project Source API and Connection API?
+A: Project Source API comes from `sourceApiVersion` in `sfdx-project.json` and governs the shape of metadata deploy and retrieve. Connection API is what the SDK selected for REST calls. They are separate fields and are allowed to disagree.
+
+Q: Why does an unverified `50.0` fallback matter beyond cosmetics?
+A: Platform defaults are version-gated. At API 67.0 Apex DML and SOQL run in user mode and classes default to `with sharing`. Operating at 50.0 while believing you are at 67.0 means reasoning about behaviour you do not have.
+
+Q: sf-pi's environment status looks stale. How do you force the truth?
+A: Snapshots are cache-first by design; run `/sf-org refresh` or `/sf-devbar refresh`, which call `refreshSharedSfEnvironment()` for an explicit serialized deep refresh.

@@ -262,6 +262,42 @@ Context for anything built on the current platform:
 
 ---
 
+## 2026-04-29 · Agentforce Operations — the fifth prebuilt agent family, GA for 102 days and never recorded here
+
+> **Backfill (recorded 2026-08-09).** Found by a gap check, not a news window. **"Agentforce Operations" had zero mentions anywhere in this study base** — including the buy-vs-build framework whose entire job is to enumerate the prebuilt agent families. Dated to its GA, not to the scan.
+
+**What changed.** Salesforce made **Agentforce Operations** generally available on **2026-04-29**: a suite of specialized agents that execute **back-office** work — supply chain, procurement, finance and IT — rather than front-office conversation.
+
+- **The authoring surface is a "digital blueprint."** Unstructured documents and diagrams are converted into executable workflows; the process is then updated in **plain language** rather than re-drawn.
+- **The agents do coordination work**, not chat: process coordination, data verification, compliance clearance, approval management.
+- **Named worked examples:** manufacturing fulfillment (inventory checks, approvals, supplier sync), bank underwriting (extract, validate, chase missing inputs), insurance claims intake and validation.
+- **Every agent action is recorded** for an audit-ready trail.
+- **Staged, not complete at GA.** Ecosystem integration — auto-sync data and **trigger actions with Salesforce Flows** — entered **Beta in May 2026**; **Slack and Microsoft Teams** surfaces followed in **June 2026**.
+- **Vendor claims:** 50–70% reduction in process cycle time, 80% reduction in manual data entry.
+
+**Relevant to:** **Architect** — a fifth prebuilt family the buy-vs-build decision has to account for, and its Flow integration decides whether it composes with the automation an org already owns or duplicates it; **Admin** — blueprint authoring and plain-language process updates are a new configuration surface someone has to own.
+
+**Why it matters.** Every Agentforce family this radar has recorded — Help Agent, Commerce, IT Service, Missionforce — puts an agent in front of a *person*. Operations puts one in front of a *process*, and that changes the design question from "what can it say?" to "what is it allowed to commit?"
+
+It also inverts the authoring story the rest of 2026 has been telling. Agent Script made authoring **more** explicit and version-controlled; a digital blueprint generated from a diagram and edited in prose is the opposite trade. Both ship in the same year, aimed at different owners — which is the thing to notice before a client assumes one governance model covers both.
+
+**Gotchas:**
+- **No first-party detail was obtainable.** `salesforce.com` and every secondary source located were unreachable to automated fetching this run. GA date, the staged Beta dates and the percentage claims all come from **search-result snippets**. Verify against the product page before any of it reaches a proposal.
+- **"Triggers actions with Salesforce Flows" was Beta in May 2026, not GA at launch.** A blueprint that composes with your existing automation was a promise on 2026-04-29, not a shipped surface.
+- **The percentages are vendor claims with no published methodology.** Quote them as claims or not at all.
+- **Pricing and licensing are unknown.** No Flex Credits mapping, SKU or entitlement was located — so the buy-vs-build comparison cannot be completed on cost yet.
+- **The name collides with the "operations" of AgentOps/observability.** In a design review, say *Agentforce Operations, the back-office product* the first time.
+
+**Study action:** add Agentforce Operations as a fifth row to the prebuilt-agent comparison in [02-salesforce-ai/14-prebuilt-agents-and-buy-vs-build](../02-salesforce-ai/14-prebuilt-agents-and-buy-vs-build/notes.md), leaving the pricing cell explicitly **unknown**. Then, in a dev org, open **Setup → Agentforce** and write down which prebuilt families your edition actually exposes — the gap between the marketing list and that list is the real buy-vs-build shortlist.
+
+**Status:** **GA 2026-04-29.** Flow ecosystem integration **Beta from May 2026**; Slack and Microsoft Teams surfaces **from June 2026**. Pricing not established.
+
+**Sources:** [Salesforce Launches Agentforce Operations to End Back-Office Bottlenecks](https://www.salesforce.com/news/stories/agentforce-operations-announcement/) · [Agentforce Operations product page](https://www.salesforce.com/agentforce/operations/) · [Salesforce launches Agentforce Operations to automate back-office work (MarTech)](https://martech.org/salesforce-launches-agentforce-operations-to-automate-back-office-work/) · [Demand Gen Report](https://www.demandgenreport.com/industry-news/news-brief/salesforce-launches-agentforce-operations-to-eliminate-back-office-bottlenecks/52762/)
+
+**Study folder:** [02-salesforce-ai/14-prebuilt-agents-and-buy-vs-build](../02-salesforce-ai/14-prebuilt-agents-and-buy-vs-build/notes.md)
+
+---
+
 ## 2026-02-23 · Agentforce Contact Center is GA — and Voice is a product line, not a channel
 
 > **Backfill (recorded 2026-07-28).** Voice had exactly one line in this radar (a bullet in the Agentforce 360 baseline entry) and **"Contact Center" appeared nowhere** — despite Contact Center being GA since February. Dated to the GA, not the scan.

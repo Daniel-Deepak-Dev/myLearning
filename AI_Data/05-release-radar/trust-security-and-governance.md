@@ -4,6 +4,95 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-10 · Winter '27's other API break — instanced URLs in API traffic reach end of support
+
+**What changed.** A gap check on the Winter '27 Release Update roster (the open question raised 08-09) found a **second** enforced update that stops integrations, absent from this radar entirely: **Update Instanced URLs in API Traffic**. In Winter '27, Salesforce **ends support for API traffic that uses an incorrect instanced URL**.
+
+- **An instanced URL is a hard-coded instance host** — `na45.salesforce.com`, `cs109.salesforce.com` — instead of the org's My Domain host, `mycompany.my.salesforce.com`.
+- **"Incorrect" is the operative word.** The host is wrong for *your* org — typically because Salesforce moved the org to a different instance and the old host kept working by redirect. That redirect is what ends.
+- **Enforcement is rolling**, applied *shortly after* your org receives Winter '27 — **not** on the upgrade weekend itself.
+- **It has been testable since 2026-06-19**: Setup → **My Domain** → **Redirections** → enable **Block API traffic that uses an incorrect instanced URL**.
+- **Doc IDs:** `release-notes.rn_update_instanced_urls_in_api_traffic.htm`, `release-notes.rn_security_domains_api_instanced_urls.htm`, knowledge article **005228941**.
+- **Third Winter '27 Release Update located this run:** a batch of **accessibility enhancements** to base components — cards, docked containers, menu lists, panels, date pickers, popovers, utility bars, record headers, modal windows.
+
+**Relevant to:** **Architect** — every hard-coded endpoint is now a dated asset Salesforce can invalidate without telling you; **Developer** — configs holding an instance host stop getting a response, and the fix is to read `instance_url` at auth time; **Admin** — a Release Update to review and a My Domain switch to flip in a sandbox first.
+
+**Why it matters.** This is the same shape as the [username-password retirement below](#2026-08-09--winter-27-release-notes-are-live--and-the-oauth-username-password-flow-retires-on-your-orgs-upgrade-date) — an integration that has worked for years stops working with no code change — but it is harder to find, and for an instructive reason.
+
+The OAuth break is a **pattern** you can grep for: `grant_type=password` is either present or not. This one is a **value** that was correct when someone typed it and became incorrect later, silently, because Salesforce migrated the org between instances. Nothing in the codebase records that it went stale.
+
+And there is no date to plan against. "Shortly after your org gets this release, on a rolling basis" means a clean upgrade weekend is not evidence you are clear. The only way to know is to cause the failure yourself, early, with the My Domain switch.
+
+**Gotchas:**
+- **Grep for the host shape, not for a specific instance.** Anything matching `^[a-z]{2,4}[0-9]+\.salesforce\.com` in code, config, secrets managers, middleware, Postman collections or CI variables is a candidate. `*.my.salesforce.com` is fine.
+- **The authoritative base URL is the `instance_url` field in the OAuth token response.** Any integration that hard-codes a host instead of reading that field is carrying the bug regardless of which host it holds today.
+- **A sandbox refresh can change the instance**, so a sandbox integration that passed last quarter can be "incorrect" this quarter with no edit.
+- **The switch is not on the Release Updates page.** The Release Update describes the change; the control is Setup → My Domain → **Redirections**. Looking only at Release Updates finds no way to test it.
+- **Not the same as Enhanced Domains.** Enhanced Domains changes the *format* of your My Domain host; this ends the use of *instance* hosts altogether. An org fully on Enhanced Domains can still have integrations calling `na45`.
+- **Earlier steps of this update are already enforced** — sandboxes at Winter '26, all orgs by Spring '26. Winter '27 is the final step, so an org that "already did the My Domain update" is not automatically clear.
+- **Sourcing caveat:** every detail here comes from search-result snippets of the Salesforce Help pages named above. `help.salesforce.com` returned **EGRESS_BLOCKED** on 2026-08-10 03:50 UTC, so none of it was read first-party. Confirm the enable/disable direction of the My Domain switch in Setup before acting.
+
+**Study action:** in a sandbox, enable **Block API traffic that uses an incorrect instanced URL** (Setup → My Domain → Redirections), then fetch an OAuth token, read the `instance_url` from the response and confirm `GET {instance_url}/services/data/v67.0/limits` succeeds. Then grep every integration config for `^[a-z]{2,4}[0-9]+\.salesforce\.com` — the hit count is the size of the migration.
+
+**Status:** **Release Update**, final step enforced with **Winter '27** on a rolling basis after each org's upgrade (production weekends **2026-08-29 / 10-03 / 10-10**). Testable since **2026-06-19**. Recorded from secondary sources **2026-08-10**.
+
+**Sources:** [Update Instanced URLs in API Traffic (Release Update)](https://help.salesforce.com/s/articleView?id=release-notes.rn_update_instanced_urls_in_api_traffic.htm&language=en_US&type=5) · [Update Instanced URLs in API Traffic](https://help.salesforce.com/s/articleView?id=release-notes.rn_security_domains_api_instanced_urls.htm&language=en_US&release=256&type=5) · [End-of-Support Schedule for Incorrect Instanced URLs](https://help.salesforce.com/s/articleView?id=005228941&language=en_US&type=1) · [Enhanced Domains Timeline](https://help.salesforce.com/s/articleView?id=sf.domain_name_enhanced_timeline.htm&language=en_US&type=5)
+
+---
+
+## 2026-08-09 · Winter '27 release notes are live — and the OAuth username-password flow retires on your org's upgrade date
+
+**What changed.** The **Winter '27** release notes are published (confirmed live **2026-08-09, 03:50 UTC**), ending the "not public yet" note this radar has carried since 2026-07-27. The headline for this file is a **Release Update**, not a feature: *Retirement of OAuth 2.0 Username-Password Flow for Connected Apps*.
+
+- **What breaks.** Any integration that posts `grant_type=password` with a username, password and security token to `/services/oauth2/token` stops receiving an access token.
+- **Release Updates are not optional.** Enforcement lands on **your org's Winter '27 upgrade date**, which differs per instance.
+- **Doc ID:** `release-notes.rn_security_unpw_flow_retirement.htm`.
+- **Recommended replacements:** the OAuth 2.0 **web-server flow** or the **client credentials flow**.
+- **Second enforcement in the same release — Email Change Verification.** Salesforce Support loses the ability to disable it, so bulk user-email updates now require **each user** to verify individually.
+- **Winter '27 also tightens Data 360's role under Agentforce** — see the [`sfsqlquery` namespace](data-360.md#2026-08-09--sfsqlquery--data-360-sql-from-apex-finally-has-a-namespace-five-classes-and-three-shapes).
+
+**Relevant to:** **Architect** — every server-to-server integration pattern in the estate needs re-deciding, and the replacement changes the running identity; **Developer** — code posting `grant_type=password` stops working and the client credentials path returns no refresh token; **Admin** — a Release Update to review, a sandbox-refresh deadline, and Email Change Verification losing its Support escape hatch.
+
+**The calendar, because two of these dates are hard stops:**
+
+| Date (2026) | What |
+|---|---|
+| **Aug 27, 18:00 PT** (Aug 28, 01:00 UTC) | Last moment to **create or refresh a sandbox** so it lands on a preview instance |
+| **Aug 28–29** | Preview instances upgrade to Winter '27; testing opens **Aug 30** |
+| **Aug 29 · Oct 3 · Oct 10** | Production upgrade weekends — **your enforcement date is one of these** |
+
+**Why it matters.** Username-password was the flow people reached for because it needed no callback URL and no browser — which is exactly why it ends up buried in scripts, middleware and one-off jobs nobody owns.
+
+The failure mode is not a deprecation warning. It is a 4xx on a token request, in an integration that has worked for years, on a weekend, with no code change to blame.
+
+Neither replacement is a drop-in. The **web-server flow** needs a callback URL and a user-interactive consent step. The **client credentials flow** needs a **run-as user** configured on the connected app and returns **no refresh token**. Both change who the integration runs as, which means sharing and field-level security can change what it sees — a functional break wearing an auth costume.
+
+```mermaid
+flowchart TD
+    A["Integration posts<br/>grant_type=password"] --> B{"Is a human present<br/>to consent?"}
+    B -->|Yes| C["OAuth 2.0<br/><b>web-server flow</b><br/>needs callback URL"]
+    B -->|"No — server to server"| D["OAuth 2.0<br/><b>client credentials flow</b><br/>needs run-as user"]
+    D --> E{"Does the run-as user<br/>see the same records?"}
+    E -->|No| F["Re-check sharing + FLS<br/>before the upgrade weekend"]
+    E -->|Yes| G["No refresh token —<br/>re-request on expiry"]
+```
+
+**Gotchas:**
+- **Grep for `grant_type=password`, but do not stop there.** The tell is also a password field with a **security token appended**, and SOAP `login()` callers — which retire separately in **Summer '27**, see [below](#2026-07-26--soap-login-retires-in-summer-27--plan-now).
+- **There is no single enforcement date.** Trust Status → search your instance → **Maintenance** tab gives the org's actual Winter '27 date. A programme plan built on "October" can be four weeks wrong in the dangerous direction.
+- **Client credentials issues no refresh token.** Code that caches a refresh token and never re-authenticates will work in test and fail at first expiry.
+- **The sandbox cutoff is the deadline that actually binds.** Miss **Aug 27, 18:00 PT** and you cannot test on Winter '27 before it reaches production — the auth migration then happens unrehearsed.
+- **Email Change Verification's escape hatch is gone.** If a user-email migration is on your roadmap, the Support-disable route no longer exists; plan around per-user verification and authorized email domains.
+- **The Winter '27 API version is unconfirmed.** Summer '26 is 67.0, so 68.0 is the obvious inference — but no first-party source was reachable this run to state it. Do not write a version number into anything yet.
+
+**Study action:** in a dev org, create a connected app and fetch a token today with `curl -d "grant_type=password&client_id=…&client_secret=…&username=…&password=<pw><token>" https://login.salesforce.com/services/oauth2/token`. Then enable client credentials on the same app, set a run-as user, fetch a token with `grant_type=client_credentials`, and **diff the two JSON responses** — note the missing `refresh_token` and the different `id` URL. That diff is the migration, in miniature.
+
+**Status:** **Release Update**, enforced with **Winter '27** on each org's upgrade date (production weekends **2026-08-29 / 10-03 / 10-10**). Release notes live as of **2026-08-09**.
+
+**Sources:** [Retirement of OAuth 2.0 Username-Password Flow for Connected Apps (Release Update)](https://help.salesforce.com/s/articleView?id=release-notes.rn_security_unpw_flow_retirement.htm&language=en_US&release=262&type=5) · [Salesforce Winter '27 Release: What to Expect and How to Prepare](https://www.salesforceben.com/salesforce-winter-27-release-what-to-expect-and-how-to-prepare/) · [Salesforce Winter '27 Release Date + Preview Information](https://www.salesforceben.com/salesforce-winter-27-release-date-preview-information/) · [Salesforce Retires the OAuth Username-Password Flow in Winter '27](https://www.softwareinsights.dev/posts/salesforce-oauth-username-password-flow-retirement-winter-27/)
+
+---
+
 ## 2026-08-05 · Agentforce 360 is IL5-authorized — agents on CUI, inside a GovCloud boundary
 
 **What changed.** Salesforce announced that **Agentforce 360** — the whole portfolio of agents, data capabilities and apps — is authorized at **US Department of Defense Impact Level 5 (IL5)** and embedded in the **Missionforce National Security** platform. It is the first Agentforce compliance boundary this radar has recorded above the FedRAMP baseline.
