@@ -57,6 +57,12 @@ The consequence for agents is the interesting one. An Apex-backed agent action c
 
 ---
 
+## 2026-08-11 · `sf-data360` raw REST calls must drop the version segment (cross-link)
+
+`sf-pi` **v0.263.0** rejects caller-owned `/services/data/vNN.N/…` resource paths from the `data360_api` escape hatch and its siblings — pass a **versionless** path and let `lib/common/sf-conn/path.ts` version it against whatever the org advertises. Same release stops `sf-data360` falling back to JSforce's `50.0` and fails the call instead. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-11--sf-pi-deletes-the-500-fallback--one-connection-module-and-the-orgs-advertised-api-version-outranks-your-config).
+
+---
+
 ## 2026-08-09 · `sf-pi` ships an `sf-data360` agent-tool extension (cross-link)
 
 `salesforce/sf-pi` carries a **default-enabled** `sf-data360` extension exposing **eleven `data360_*` LLM tools** — discover, connect, prepare, harmonize, segment, activate, query, semantic, observe, orchestrate, plus a `data360_api` REST escape hatch — with **no MCP runtime involved**. It is a different artifact from the [Data 360 MCP Server](#2026-07-26--data-360-mcp-server-developer-preview--moved). Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-09--sf-pis-sf-data360-extension--eleven-data-360-tools-and-no-mcp-runtime-in-sight).

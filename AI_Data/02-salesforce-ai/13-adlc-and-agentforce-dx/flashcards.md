@@ -162,3 +162,24 @@ A: Platform defaults are version-gated. At API 67.0 Apex DML and SOQL run in use
 
 Q: sf-pi's environment status looks stale. How do you force the truth?
 A: Snapshots are cache-first by design; run `/sf-org refresh` or `/sf-devbar refresh`, which call `refreshSharedSfEnvironment()` for an explicit serialized deep refresh.
+
+Q: In `sf-pi` v0.263.0, what wins when the org advertises API 68.0 and you have `org-api-version=60.0` configured?
+A: 68.0. `sf-conn` treats discovery as authoritative and configuration as the fallback — the inverse of the usual precedence. `org-api-version` is consulted only when the `/services/data` catalog request fails.
+
+Q: What does `sf-pi` v0.263.0 do when API-version discovery fails and no `org-api-version` is configured?
+A: It rejects the operation before sending the business request. The JSforce `50.0` implicit default is no longer used as an authoritative value — v0.262.1 labelled that fallback, v0.263.0 removed it.
+
+Q: Why does a Data 360 raw REST call through `sf-pi` fail after v0.263.0 if it passes `/services/data/v63.0/ssot/...`?
+A: Callers must now pass versionless resource paths. `lib/common/sf-conn/path.ts` constructs the versioned path itself; a caller-owned `/services/data/vNN.N` segment is rejected rather than rewritten.
+
+Q: A `sf-conn` request returns 403. Will it be retried after an auth refresh?
+A: No. Only a definite expired session triggers the shared authentication refresh. An ordinary permission 403 is not replayed — it is a permissions problem, not an auth problem.
+
+Q: What does `bypassUser` control, and which value belongs to an employee agent?
+A: Which identity the agent session runs under. `bypassUser: false` for employee agents (`AgentforceEmployeeAgent`), which run as the authenticated Salesforce user; `true` for customer-facing agents, which run with no user identity. Sharing, FLS, `UserInfo` and record ownership follow from it.
+
+Q: `sf agent preview start --api-name <employee agent>` returns `400 Invalid user ID`. What is wrong?
+A: Not authentication. Before `@salesforce/agents` 2.0.1 the `--api-name` path hard-coded `bypassUser: true` for every agent type, so the Agent API rejected employee-agent sessions. The `--authoring-bundle` path already branched correctly, which is why the same agent previewed fine locally.
+
+Q: Why can a team on stable `sf` 2.146.3 not get the `@salesforce/agents` 2.0.1 fix?
+A: `latest` 2.146.3 ships `@salesforce/plugin-agent` 1.45.0, which pins `@salesforce/agents ^1.11.1` — a range capping at 1.11.7 that no 2.x build satisfies. The fix needs `latest-rc` 2.147.7 or `nightly` 2.148.1 (plugin-agent 2.0.0, `^2.0.0`), which also raise the Node floor to 22.

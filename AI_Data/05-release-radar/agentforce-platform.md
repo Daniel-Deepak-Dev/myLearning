@@ -4,6 +4,12 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 ---
 
+## 2026-08-11 · Employee agents run *as* a user — and `sf agent preview` had forgotten (cross-link)
+
+`bypassUser` is the flag that separates the two agent identities: **customer-facing agents run with no Salesforce user**, **employee agents (`AgentforceEmployeeAgent`) run as the authenticated one** — which decides sharing, FLS, `UserInfo` and record ownership. `sf agent preview start --api-name` hard-coded `bypassUser: true` for both and returned **`400 Invalid user ID`** on every employee agent; fixed in `@salesforce/agents` **2.0.1**. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-11--salesforceagents-201--employee-agents-can-be-previewed-again-and-not-from-stable-sf).
+
+---
+
 ## 2026-08-05 · Army HRC is the first IL5 Agentforce deployment — 55M conversations a month, and a human holding the decision
 
 **What changed.** **U.S. Army Human Resources Command (HRC)** selected **Missionforce National Security** to run autonomous agents for HR support, and is the **first Department of War organization** to deploy the newly IL5-authorized Agentforce on CUI workloads. The compliance side is in [trust-security-and-governance.md](trust-security-and-governance.md#2026-08-05--agentforce-360-is-il5-authorized--agents-on-cui-inside-a-govcloud-boundary).

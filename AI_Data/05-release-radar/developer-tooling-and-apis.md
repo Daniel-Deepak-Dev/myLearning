@@ -4,7 +4,85 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-11 · `sf-pi` deletes the `50.0` fallback — one connection module, and the org's advertised API version outranks your config
+
+**What changed.** [`salesforce/sf-pi`](https://github.com/salesforce/sf-pi) **v0.263.0** (released **2026-08-10**, PR [#593](https://github.com/salesforce/sf-pi/pull/593), commit [`7ee4e98`](https://github.com/salesforce/sf-pi/commit/7ee4e98ad38922fe0d87ca4e4ce0d63bc65e6c97), **139 files, +4,594 / −1,914**) routes every Salesforce connection through one new module, `lib/common/sf-conn`. It ships as a **breaking change**, and it reverses yesterday's entry: the JSforce `50.0` fallback is not labelled any more, it is gone.
+
+```mermaid
+flowchart TD
+    A["Resolve target org<br/>+ explicit org-api-version"] --> B["GET unversioned<br/>/services/data catalog"]
+    B -- success --> C["Highest numeric version<br/>the org advertises WINS<br/>even over a configured value"]
+    B -- discovery fails --> D{"explicit<br/>org-api-version<br/>set?"}
+    D -- yes --> E["Use the configured value"]
+    D -- no --> F["REJECT before the<br/>business request is sent"]
+    style C fill:#0b6,color:#fff
+    style F fill:#b00,color:#fff
+```
+
+- **Extensions folded in.** `sf-apex`, `sf-soql`, `sf-agentscript`, `sf-data360`, `sf-data-explorer`, `sf-code-analyzer` (ApexGuru), `sf-browser` (route verification) and environment status — each previously carried its own connection helper.
+- **Data 360 raw REST callers must now pass versionless paths.** A caller-owned `/services/data/vNN.N/…` path is **rejected**. `lib/common/sf-conn/path.ts` builds the versioned path and returns provenance beside the result.
+- **One refresh per expired session.** Definite expired-session retries share a single authentication refresh (`auth-refresh.ts`); an ordinary permission **403 is not replayed**.
+- **Status surfaces stay local and cache-first**; connection and discovery are lazy and run only on an explicit operation.
+- **Decision record:** `docs/adr/0103-shared-salesforce-connection-module.md`.
+
+**Relevant to:** **Developer** — a tool that yesterday displayed `50.0` now either reports the org's real version or refuses to run, and any Data 360 raw-REST call carrying a hard-coded `/services/data/v63.0/` stops working; **Architect** — "which API version is this org on" becomes a fact discovered from the org rather than a value held in config, which moves where that setting belongs.
+
+**Why it matters.** Yesterday's release made the `50.0` fallback *honest*. This one makes it *absent*. Only the second changes behaviour: a missing version is now a hard failure before the request, not a silent 2021 default sent to a 2026 org.
+
+The resolution rule also inverts the usual precedence. Most Salesforce tooling treats configuration as authoritative and discovery as the fallback. `sf-conn` treats **discovery as authoritative** and configuration as the fallback — so `org-api-version=67.0` no longer pins anything if the org advertises 68.0.
+
+That is right for a tool whose job is reporting the truth about an org, and wrong if you were using config to hold a version deliberately. Know which you are doing before you upgrade.
+
+**Gotchas:**
+- **`org-api-version` no longer pins.** It is consulted *only* when `/services/data` discovery fails. There is no supported way to hold a lower version against an org that advertises a higher one.
+- **Versioned Data 360 resource paths are rejected, not rewritten.** Strip `/services/data/vNN.N` from caller-owned paths and let `path.ts` version them.
+- **A 403 is not retried.** Only a *definite expired session* triggers the shared refresh. A 403 means permissions — stop debugging auth.
+- **Discovery and config both missing is now an error, not a degradation.** An unreachable or unauthenticated org fails before the operation instead of returning something wrong.
+- **`sf-pi` is an extension pack for the `pi` coding agent, not the `sf` CLI**, and it is pre-1.0 — this is its second behavioural change to API-version handling in two days. **Pin the version.**
+
+**Study action:** on `sf-pi` **v0.263.0**, set `sf config set org-api-version=60.0` against a scratch org and run `/sf-org refresh` — confirm the reported Connection API is the org's *highest advertised* version, not the 60.0 you set. Then repeat against a **Winter '27 preview instance**: that number settles which API version Winter '27 carries.
+
+**Status:** Open source, Apache-2.0. `salesforce/sf-pi` **v0.263.0**, released 2026-08-10 — **breaking change**. Newest release **v0.265.1** as of **2026-08-11 03:50 UTC**. Pre-1.0.
+
+**Sources:** [PR #593](https://github.com/salesforce/sf-pi/pull/593) · [commit `7ee4e98`](https://github.com/salesforce/sf-pi/commit/7ee4e98ad38922fe0d87ca4e4ce0d63bc65e6c97) · [ADR 0103](https://github.com/salesforce/sf-pi/blob/main/docs/adr/0103-shared-salesforce-connection-module.md) · [`sf-pi` CHANGELOG](https://github.com/salesforce/sf-pi/blob/main/CHANGELOG.md) · [releases](https://github.com/salesforce/sf-pi/releases)
+
+---
+
+## 2026-08-11 · `@salesforce/agents` 2.0.1 — employee agents can be previewed again, and not from stable `sf`
+
+**What changed.** `@salesforce/agents` **2.0.1** published to npm **2026-08-10 21:36 UTC**, four days after the fix landed on `main`. One bug fix: [#329](https://github.com/forcedotcom/agents/issues/329), *send `bypassUser:false` for employee agents on `--api-name` preview*.
+
+- **The bug.** The `--api-name` preview path hard-coded `bypassUser: true` for every agent type. An **employee agent** (`AgentforceEmployeeAgent`) is built to run **as the authenticated user**, so the Agent API rejected the session.
+- **The symptom.** `sf agent preview start --api-name <employee agent>` failed with **`400 Invalid user ID`**.
+- **The tell.** The `--authoring-bundle` path already branched on agent type, so the same agent previewed fine from a local bundle and failed against the org.
+- **The fix.** `bypassUser: false` for employee agents, `true` for everything else — `--api-name` now matches `--authoring-bundle`.
+
+**Relevant to:** **Developer** — a preview command that returned an auth-shaped error on a correctly-built agent now works, and the fix is only reachable on a CLI channel most teams are not on.
+
+**Why it matters.** `bypassUser` encodes a real product distinction rather than a transport detail: **customer-facing agents run without a Salesforce user identity, employee agents run as one.** Sharing, FLS, `UserInfo` and the ownership of records the agent creates all follow from which side of that flag the agent sits on.
+
+So a hard-coded `true` did not only break a command — it asked the platform to preview the wrong execution context. The 400 was the API refusing to do that, which is the good outcome.
+
+The reachability is the second lesson, and it is the zip-slip pattern one package over: the fix exists, is published, and cannot arrive on the channel most people install from.
+
+**Gotchas:**
+- **Stable `sf` cannot receive this fix.** `latest` = **2.146.3** → `@salesforce/plugin-agent` **1.45.0** → `@salesforce/agents` **`^1.11.1`**, which caps at **1.11.7**. No 2.x build satisfies that range.
+- **The fix rides a caret, not a plugin release.** `plugin-agent` **2.0.0** pins `@salesforce/agents` **`^2.0.0`**, so a *fresh* install of `sf` 2.147.7+ resolves 2.0.1 with nothing new published. An existing install with a lockfile does not move.
+- **Taking it drags the Node floor.** `latest-rc` **2.147.7** and `nightly` **2.148.1** declare `engines.node >= 22.0.0`; `latest` 2.146.3 still declares `>= 18.6.0`.
+- **`400 Invalid user ID` was never an auth problem.** Before this fix it meant the preview path sent the wrong `bypassUser` for the agent type. Do not go re-issuing tokens.
+- **`@salesforce/agents` 2.x requires `@salesforce/source-deploy-retrieve` `^13.0.0`**, so it is on the zip-slip-patched line by construction — see the SDR entry below.
+
+**Study action:** in a scratch org build one employee agent and one customer-facing agent, then run `sf agent preview start --api-name` against each on `sf` **2.147.7** (`npm install -g @salesforce/cli@latest-rc`). Repeat on `latest` **2.146.3** and watch only the employee agent fail with `400 Invalid user ID`. That diff is the entry.
+
+**Status:** Released. `@salesforce/agents` **2.0.1**, npm **2026-08-10 21:36 UTC**. Reachable through `@salesforce/cli` **`latest-rc` 2.147.7** and **`nightly` 2.148.1** only — **not on `latest` 2.146.3**.
+
+**Sources:** [issue #329](https://github.com/forcedotcom/agents/issues/329) · [forcedotcom/agents releases](https://github.com/forcedotcom/agents/releases) · [`@salesforce/agents` on npm](https://www.npmjs.com/package/@salesforce/agents)
+
+---
+
 ## 2026-08-10 · `sf-pi` stops calling JSforce's `50.0` an org fact — API version status becomes provenance-aware
+
+> **Correction (2026-08-11):** this entry concluded that the fix "changes **honesty, not behaviour** — the fallback is still `50.0`". That held for one day. **v0.263.0** (2026-08-10) **removes** the fallback: a missing API version now fails before the request is sent, and the org's highest advertised version outranks a configured `org-api-version`. The provenance labels below still stand; the "it does not remove it" gotcha does not. See [the 2026-08-11 entry](#2026-08-11--sf-pi-deletes-the-500-fallback--one-connection-module-and-the-orgs-advertised-api-version-outranks-your-config).
 
 **What changed.** [`salesforce/sf-pi`](https://github.com/salesforce/sf-pi) shipped **v0.261.0 → v0.262.1** on **2026-08-09** between 15:37 and 21:47 UTC. One of the three matters: **v0.262.1** ([#591](https://github.com/salesforce/sf-pi/pull/591), commit `d8a8e81`, 17 files, **+587 / −86**), *`fix(sf-environment): expose API version fallback`*.
 
