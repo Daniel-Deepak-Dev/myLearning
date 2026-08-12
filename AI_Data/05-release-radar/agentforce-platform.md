@@ -4,6 +4,12 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 ---
 
+## 2026-08-11 · The ADLC now ships as four subagents and a `.agent` validator hook (cross-link)
+
+Salesforce's `salesforce-development` Claude Code plugin bundles the Agent Development Life Cycle as **agents, not just skills**: `adlc-orchestrator` (plan-mode coordinator) delegating to `adlc-author` (writes `.agent` files), `adlc-engineer` (scaffolds Flow/Apex, deploys bundles) and `adlc-qa` (tests, optimizes, security-assesses). An **Agent Script syntax validator** runs after every `Write`/`Edit` and reports non-blocking findings. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-11--salesforce-ships-a-claude-code-plugin--salesforce-development-1100-41-skills-five-agents-and-a-deploy-gate).
+
+---
+
 ## 2026-08-11 · Employee agents run *as* a user — and `sf agent preview` had forgotten (cross-link)
 
 `bypassUser` is the flag that separates the two agent identities: **customer-facing agents run with no Salesforce user**, **employee agents (`AgentforceEmployeeAgent`) run as the authenticated one** — which decides sharing, FLS, `UserInfo` and record ownership. `sf agent preview start --api-name` hard-coded `bypassUser: true` for both and returned **`400 Invalid user ID`** on every employee agent; fixed in `@salesforce/agents` **2.0.1**. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-11--salesforceagents-201--employee-agents-can-be-previewed-again-and-not-from-stable-sf).

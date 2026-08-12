@@ -4,6 +4,112 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-11 · Salesforce ships a Claude Code plugin — `salesforce-development` 1.10.0, 41 skills, five agents and a deploy gate
+
+**What changed.** [`forcedotcom/sf-skills`](https://github.com/forcedotcom/sf-skills) **1.36.0** (2026-08-11 07:37 UTC, PR [#1138](https://github.com/forcedotcom/sf-skills/pull/1138)) publishes **`salesforce-development` 1.10.0** — a first-party **Claude Code plugin**, distributed from a **plugin marketplace in the same repository**.
+
+The plugin is not new. It shipped at **1.9.0** in `sf-skills` **1.34.0** and **1.35.0**, both of which this radar wrote up without naming it.
+
+```text
+/plugin marketplace add forcedotcom/sf-skills
+/plugin install salesforce-development@salesforce
+```
+
+**The plugin's routing rule is the design point** — capabilities resolve in a fixed order, and the CLI is the *second* choice:
+
+```mermaid
+flowchart LR
+    P["Natural-language request<br/>in a DX project"] --> S["1 · Skills<br/>41 validated SKILL.md workflows"]
+    S -- "no skill covers it" --> C["2 · Salesforce CLI<br/>sf ... shelled out"]
+    C -- "no command covers it" --> M["3 · Salesforce MCP<br/>hosted servers / direct API"]
+    style S fill:#0b6,color:#fff
+    style M fill:#b60,color:#fff
+```
+
+**What is in the box:**
+
+- **41 skills** — Apex (generate, anonymous run, test generate/run, log debug), declarative metadata, deploy/retrieve, manifests, SOQL, security, Code Analyzer, reporting, and the three ADLC skills (`agentforce-generate`, `agentforce-test`, `agentforce-observe`).
+- **Five agents** — `salesforce-dev` (auto-activates when `sfdx-project.json` is present), `architecture-review` (read-only Well-Architected grading on Trusted / Easy / Adaptable), and the ADLC set `adlc-orchestrator` → `adlc-author` / `adlc-engineer` / `adlc-qa`.
+- **Three MCP servers** — `salesforce-api-context`, `salesforce-metadata-experts`, and **`salesforce-lsp`**, a local host that lazily spawns the **Apex and SOQL language servers** and re-exposes them as MCP tools.
+- **Ten slash commands** — `/salesforce-development:discovery`, `:setup`, `:status`, `:org`, `:login`, `:logout`, `:set-default`, `:project`, `:reset-source-tracking`, `:welcome`.
+- **Hooks on eight events** — org detection at `SessionStart`, a production deploy-safety gate and an Apex pre-deploy diagnostic on `sf project deploy`, a scaffold gate on `sf project generate*`, and an Agent Script (`.agent`) validator after every `Write`/`Edit`.
+
+**What 1.10.0 itself changed** (CHANGELOG dated 2026-08-05, public 08-11):
+
+- **Ambient UI modes** via a new `ui_mode` user config — `full` (default), `compact`, `plain`, `off` — plus an optional status line carrying project context.
+- **Claude Code ≥ 2.1.222 is now required.**
+- **The discovery journey stopped lying.** Connect → Project → Build → Test → Deploy → Observe now marks *Test* complete only after a **real, successful Apex test run**.
+- **Security:** capability discovery no longer reveals descriptions of skills you have not installed — only skills **verified installed and unmodified** disclose theirs.
+
+**Relevant to:** **Developer** — this is an installable, versioned surface that changes what happens when you type `sf project deploy` in an agent session, and it now demands a minimum Claude Code version; **Architect** — the fixed **Skills → CLI → MCP** precedence is a vendor's answer to "how should an agent reach Salesforce", and it puts hosted MCP *last*.
+
+**Why it matters.** The radar has tracked `sf-skills` as a *catalogue* for six weeks — counting skills, reading frontmatter, noting `relatedSkills` edges. It is also a **runtime**: agents, hooks, slash commands and a bundled language-server MCP host, versioned separately from the catalogue that carries it.
+
+That distinction decides what you install. Taking the skills (`npx skills add forcedotcom/sf-skills`) gets you instructions. Taking the plugin gets you the gates — and a hook that can auto-deploy on a file write.
+
+The precedence order is the transferable idea. Salesforce ranks **deterministic instructions above its own CLI, and its own CLI above its own hosted MCP servers**. MCP is the fallback, not the front door.
+
+**Gotchas:**
+- **`dependencies: []` in `plugin.json` is not the prerequisite list.** The real ones are the Salesforce CLI, **Node LTS** (the language servers run under `node`) and **Python 3.8+** — the org-detection, deploy-safety and `hooks/scripts/agent-validator.py` hooks are Python.
+- **A `PostToolUse` hook runs `sf-deploy-gate auto-deploy`** on `Edit`/`Write`/`MultiEdit` matching `force-app/**`. Know that before you let an agent edit metadata.
+- **The plugin ships no `settings.json`.** Permission allow-rules for `sf`, `node`, `npm` and read-only `git` are yours to add in the project's `.claude/settings.json`, or every hook prompts.
+- **Two names, and they are not the same name.** The marketplace is **`salesforce`**; the plugin is **`salesforce-development`**. Install is `salesforce-development@salesforce`; removing the plugin leaves the marketplace behind (`/plugin marketplace remove salesforce`).
+- **Below Claude Code 2.1.222 the manifest is unsupported** — check `/plugin` before assuming a silent hook is a bug.
+- **The bundled Apex language server is vendored third-party code**, attributed in the plugin's `NOTICE` — it is not Apache-2.0 by inheritance.
+- **`platform-capability-search` counts are self-reported**: 102 released and 40 foundation capabilities, 29 overlapping, 113 visible. That is the plugin's view of the platform, not the platform.
+
+**Study action:** install the marketplace and plugin into a DX project, run `/salesforce-development:discovery journey inspect` to see the Connect → … → Observe state, then run `sf project deploy start` against a scratch org and note which hooks fire in order — `sf-context verify-org`, `sf-deploy-gate prod-check`, `bin/lsp-precheck`. Then point it at a production alias and confirm the gate blocks.
+
+**Status:** Open source, Apache-2.0. `salesforce-development` **1.10.0**, shipped in `forcedotcom/sf-skills` **1.36.0**, 2026-08-11 07:37 UTC. Requires **Claude Code ≥ 2.1.222**. Related study topic: [13-adlc-and-agentforce-dx](../02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md).
+
+**Sources:** [plugin README](https://github.com/forcedotcom/sf-skills/blob/main/plugins/builder/salesforce-development/README.md) · [`plugin.json`](https://github.com/forcedotcom/sf-skills/blob/main/plugins/builder/salesforce-development/.claude-plugin/plugin.json) · [plugin CHANGELOG](https://github.com/forcedotcom/sf-skills/blob/main/plugins/builder/salesforce-development/CHANGELOG.md) · [`marketplace.json`](https://github.com/forcedotcom/sf-skills/blob/main/.claude-plugin/marketplace.json) · [sf-skills 1.36.0](https://github.com/forcedotcom/sf-skills/releases/tag/1.36.0)
+
+---
+
+## 2026-08-11 · The eleven `data360_*` tools are one dispatcher over a generated action registry — and the legacy facade loses its live-proof claim
+
+**What changed.** [`salesforce/sf-pi`](https://github.com/salesforce/sf-pi) **v0.266.0** (2026-08-11 21:59 UTC, commit [`c049b20`](https://github.com/salesforce/sf-pi/commit/c049b205f329eb8afb50bece71f7470acc83ddf8), **28 files, +1,281 / −4,857**) accepts **ADR 0106**, making the **v2 registry and dispatcher** the only Data 360 path with live proof. It supersedes **ADR 0010**.
+
+Reading it surfaced **ADR 0027** (accepted **2026-06-01**), which this radar never recorded — and which reframes the eleven tools entirely.
+
+**ADR 0027 — the surface is an envelope, not a tool list:**
+
+- Each `data360_*` tool is a **family tool over one shared action registry and dispatcher**, called with an **action string**: `stream.create_ingest_api`, `sql.verify_rows`, `ingest_csv.plan`.
+- The envelope carries `params`, `target_org`, `dry_run`, `allow_confirmed`, `output_mode` and timeout controls.
+- Catalogues load **on demand** through meta actions — `actions.search`, `action.describe`, `examples.get` — so tool schemas stay small.
+- The registry lives in `extensions/sf-data360/registry/v2/`: `action-rules.json`, `action-overrides.json`, **`actions.json`** (generated, committed, consumed at runtime) and `journeys.json`.
+- **Legacy `d360`, `d360_metadata`, `d360_probe`, `d360_api` still exist** as migration adapters, hidden from the default public surface.
+
+**ADR 0106 — one sweep, and a target-independent safety rule:**
+
+- One authoritative sweep, `scripts/e2e/data360-v2-action-sweep.ts`, executing through **`runData360V2Action`** on the same contracts as an ordinary `data360_*` call.
+- Confirmed live proof is **one fixture-owned DLO lifecycle** on `PiV2SweepDlo_<runId>__dll`: absence check → `data360_prepare dlo.create` (dry-run, then execute) → `dlo.get` → `dlo.delete` → absence check, with **bounded retries for Data 360 propagation**.
+- The facade-first E2E script and its planner tests are **deleted**, along with `npm run e2e:d360-sweep`.
+
+**Relevant to:** **Developer** — what you program against is a generated action map, so `actions.search` is how you find an operation and the eleven tool names tell you almost nothing; **Architect** — there are now **two different destructive-safety rules** on the same extension depending on which path a caller is on.
+
+**Why it matters.** The 08-09 entry below described this as *"ten verb-shaped facades over ~one API, plus one escape hatch."* That was the shape of the **legacy** `d360` surface. The public one is a dispatcher: eleven families fronting **`actions.json`**, where every supported operation resolves to **exactly one** primary tool/action unless explicitly exempted and tested.
+
+That single-owner rule is the useful constraint. There is no second route to an operation by design, so an action name is a stable address rather than one of several spellings.
+
+The safety half is the part to copy. Headless destructive execution is not gated on a flag but on a **conjunction** — non-production target, explicit opt-in, and a run ID that scopes deletion to one resource the harness created itself.
+
+**Gotchas:**
+- **Headless destructive execution requires all four:** an authenticated **non-production** target, `--mutate`, an **8–32-character alphanumeric run ID**, and two exact env gates — **`SF_PI_D360_V2_SWEEP_MUTATION_TARGET_ORG`** and **`D360_V2_SWEEP_ALLOW_DESTRUCTIVE`**. Only the DLO name derived from that run ID may be deleted.
+- **Two destructive rules coexist.** The legacy facade keeps its dedicated-target rule; **v2 interactive** destructive calls need a non-production authenticated target *plus* explicit acknowledgement *plus* human confirmation. Production, unresolved and mismatched targets stay blocked on both.
+- **`actions.json` is generated but committed.** It is the runtime source of action names — read it, do not guess from the tool names.
+- **`npm run e2e:d360-sweep` no longer exists.** Any local script or CI job invoking it fails at the npm layer, not the Data 360 layer.
+- **Mutating journeys are plan-first.** `data360_orchestrate` resolves actions, endpoints, resources, safety decisions and verification steps *before* execution — an unreviewed plan is not an execution.
+- **Retry exhaustion is a failed run, not a pass.** Delete-acceptance and final absence checks retry for propagation; exhaustion names the owned resource in a private artifact.
+
+**Study action:** clone `sf-pi` at **v0.266.0**, open `extensions/sf-data360/registry/v2/actions.json` and count how many actions each of the eleven tools owns. The distribution is the real shape of the surface. Then call `data360_prepare` with `dry_run` on `dlo.create` in a Data 360 scratch org and compare the returned plan to the entry in the registry.
+
+**Status:** Open source, Apache-2.0. `salesforce/sf-pi` **v0.266.0**, released 2026-08-11 21:59 UTC — newest release as of **2026-08-12, 03:40 UTC**. **ADR 0106** accepted 2026-08-11; **ADR 0027** accepted 2026-06-01. Pre-1.0. Cross-link: [data-360.md](data-360.md#2026-08-09--sf-pi-ships-an-sf-data360-agent-tool-extension-cross-link).
+
+**Sources:** [ADR 0106](https://github.com/salesforce/sf-pi/blob/main/docs/adr/0106-data-360-live-proof-uses-the-v2-dispatcher.md) · [ADR 0027](https://github.com/salesforce/sf-pi/blob/main/docs/adr/0027-data-360-v2-family-tools.md) · [commit `c049b20`](https://github.com/salesforce/sf-pi/commit/c049b205f329eb8afb50bece71f7470acc83ddf8) · [`sf-pi` CHANGELOG](https://github.com/salesforce/sf-pi/blob/main/CHANGELOG.md)
+
+---
+
 ## 2026-08-11 · `sf-pi` deletes the `50.0` fallback — one connection module, and the org's advertised API version outranks your config
 
 **What changed.** [`salesforce/sf-pi`](https://github.com/salesforce/sf-pi) **v0.263.0** (released **2026-08-10**, PR [#593](https://github.com/salesforce/sf-pi/pull/593), commit [`7ee4e98`](https://github.com/salesforce/sf-pi/commit/7ee4e98ad38922fe0d87ca4e4ce0d63bc65e6c97), **139 files, +4,594 / −1,914**) routes every Salesforce connection through one new module, `lib/common/sf-conn`. It ships as a **breaking change**, and it reverses yesterday's entry: the JSforce `50.0` fallback is not labelled any more, it is gone.
@@ -49,6 +155,8 @@ That is right for a tool whose job is reporting the truth about an org, and wron
 ---
 
 ## 2026-08-11 · `@salesforce/agents` 2.0.1 — employee agents can be previewed again, and not from stable `sf`
+
+> **Correction (2026-08-12):** this entry said the fix "**cannot arrive on the channel most people install from**" and was reachable only through a caret on a *fresh* install. **`@salesforce/plugin-agent` 2.0.1 published 2026-08-11 15:32 UTC** pinning `@salesforce/agents` **`^2.0.1`**, and **`@salesforce/cli` 2.148.3** (2026-08-12 03:13 UTC) pins that plugin explicitly — so the fix now travels in a released CLI rather than resolving by luck. **The conclusion still holds for `latest`:** dist-tags are unchanged for a sixth day (`latest` **2.146.3**, `latest-rc` **2.147.7**), and 2.148.3 is **`nightly`**.
 
 **What changed.** `@salesforce/agents` **2.0.1** published to npm **2026-08-10 21:36 UTC**, four days after the fix landed on `main`. One bug fix: [#329](https://github.com/forcedotcom/agents/issues/329), *send `bypassUser:false` for employee agents on `--api-name` preview*.
 
@@ -124,6 +232,8 @@ The fix worth copying is that it changes **honesty, not behaviour**. The fallbac
 ---
 
 ## 2026-08-09 · `sf-pi`'s `sf-data360` extension — eleven Data 360 tools, and no MCP runtime in sight
+
+> **Correction (2026-08-12):** this entry described the surface as *"ten verb-shaped facades over ~one API, plus one honest escape hatch"* and implied a flat tool list. **ADR 0027 (2026-06-01) says otherwise:** the eleven `data360_*` tools are **family tools over one shared action registry and dispatcher**, called with an action string and a compact envelope; the flat-facade shape is the **legacy** `d360` / `d360_metadata` / `d360_probe` / `d360_api` surface those tools replaced. The tool table, default-enablement, safety-gate and no-MCP-runtime facts below are unchanged. See [the 2026-08-11 entry](#2026-08-11--the-eleven-data360_-tools-are-one-dispatcher-over-a-generated-action-registry--and-the-legacy-facade-loses-its-live-proof-claim).
 
 **What changed.** Nothing shipped today. This entry closes the open question raised on 2026-08-08: `salesforce/sf-pi` carries an **`sf-data360`** extension — **stable, enabled by default**, category *Agent Tool* — that this radar had never examined while reporting Data 360 as empty for seven consecutive scans.
 

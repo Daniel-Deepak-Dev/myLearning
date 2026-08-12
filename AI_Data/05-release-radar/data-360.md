@@ -16,6 +16,17 @@ Salesforce began calling Data Cloud **"Data 360"** at Dreamforce 2025 (Oct 14, 2
 
 ---
 
+## 2026-08-11 · The `data360_*` tools are a dispatcher over a generated action registry (cross-link)
+
+The eleven `data360_*` tools in `sf-pi`'s `sf-data360` extension are **not eleven endpoints** — they are family tools over one shared action registry, called with an action string (`stream.create_ingest_api`, `sql.verify_rows`) plus `params`, `target_org`, `dry_run` and `allow_confirmed`.
+
+- **Action names live in a generated-but-committed map**, `extensions/sf-data360/registry/v2/actions.json`, with exactly one owner per operation.
+- **Headless destructive execution needs both `SF_PI_D360_V2_SWEEP_MUTATION_TARGET_ORG` and `D360_V2_SWEEP_ALLOW_DESTRUCTIVE`**, plus a non-production target and a run-ID-scoped resource name.
+
+Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-11--the-eleven-data360_-tools-are-one-dispatcher-over-a-generated-action-registry--and-the-legacy-facade-loses-its-live-proof-claim).
+
+---
+
 ## 2026-08-09 · `sfsqlquery` — Data 360 SQL from Apex finally has a namespace, five classes and three shapes
 
 **What changed.** The **Winter '27** release notes add the **`sfsqlquery`** Apex namespace for executing **Data 360 SQL** queries. This study base has recorded *"SQL from Apex (Summer '26)"* in five places with **no named class anywhere** — this is the surface behind that sentence, and the docs call it the **recommended** way to query Data 360 from Apex.

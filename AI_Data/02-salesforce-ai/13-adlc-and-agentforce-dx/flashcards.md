@@ -183,3 +183,39 @@ A: Not authentication. Before `@salesforce/agents` 2.0.1 the `--api-name` path h
 
 Q: Why can a team on stable `sf` 2.146.3 not get the `@salesforce/agents` 2.0.1 fix?
 A: `latest` 2.146.3 ships `@salesforce/plugin-agent` 1.45.0, which pins `@salesforce/agents ^1.11.1` — a range capping at 1.11.7 that no 2.x build satisfies. The fix needs `latest-rc` 2.147.7 or `nightly` 2.148.1 (plugin-agent 2.0.0, `^2.0.0`), which also raise the Node floor to 22.
+
+Q: `@salesforce/agents` 2.0.1 shipped on 2026-08-10. What had to happen before it could reach anyone through the CLI, and had it by 2026-08-12?
+A: Two more publishes. `@salesforce/plugin-agent` 2.0.1 (2026-08-11 15:32 UTC) had to pin `@salesforce/agents ^2.0.1`, then `@salesforce/cli` 2.148.3 (2026-08-12 03:13 UTC) had to pin that plugin. Both happened — but 2.148.3 is on `nightly`. `latest` was still 2.146.3 for a sixth day.
+
+Q: What are the two ways to consume `forcedotcom/sf-skills`, and what do you get from each?
+A: `npx skills add forcedotcom/sf-skills` takes the **catalogue** — SKILL.md instructions only. `/plugin marketplace add forcedotcom/sf-skills` then `/plugin install salesforce-development@salesforce` takes the **runtime** — 41 skills plus five agents, three MCP servers, ten slash commands and hooks on eight events.
+
+Q: In what order does the `salesforce-development` plugin resolve a capability, and what does the order say about Salesforce's own MCP servers?
+A: Skills (primary) → Salesforce CLI (secondary) → Salesforce MCP (last resort). Salesforce ranks deterministic instructions above its own CLI, and its own CLI above its own hosted MCP servers — MCP is the fallback, not the front door.
+
+Q: The `salesforce-development` plugin declares `"dependencies": []`. What do you actually have to install?
+A: Claude Code ≥ 2.1.222, the Salesforce CLI, Node LTS (the bundled Apex and SOQL language servers run under `node`) and Python 3.8+ (the org-detection, deploy-safety and `agent-validator.py` hooks are Python). The empty array is the plugin's *plugin* dependencies, not its prerequisites.
+
+Q: Which agents does the `salesforce-development` plugin ship for the ADLC, and how do they divide the work?
+A: `adlc-orchestrator` is a plan-mode lifecycle coordinator delegating to `adlc-author` (writes `.agent` files), `adlc-engineer` (scaffolds Flow/Apex and deploys bundles) and `adlc-qa` (tests, optimizes and security-assesses). Alongside them: `salesforce-dev` and the read-only `architecture-review`.
+
+Q: Why is the "Test" stage of the plugin's discovery journey different after 1.10.0?
+A: It only completes after a real, successful Apex test run. Previously the journey could mark progress that had not actually happened. Inspect or clear it with `/salesforce-development:discovery journey inspect` / `journey reset`.
+
+Q: What is the security change in `salesforce-development` 1.10.0?
+A: Capability discovery no longer discloses descriptions of skills you have not installed. Only skills verified as installed **and unmodified** reveal their descriptions.
+
+Q: You edit a file under `force-app/` in a session with the `salesforce-development` plugin installed. What runs?
+A: A `PostToolUse` hook invokes `sf-deploy-gate auto-deploy` on `Edit`/`Write`/`MultiEdit` matching `force-app/**`, plus the `.agent` syntax validator on any `Write`/`Edit`. Metadata edits are not inert in that session.
+
+Q: Are the eleven `data360_*` tools eleven endpoints?
+A: No. Per sf-pi ADR 0027 (2026-06-01) they are **family tools over one shared action registry and dispatcher**, each called with an action string (`stream.create_ingest_api`, `sql.verify_rows`, `ingest_csv.plan`) plus `params`, `target_org`, `dry_run`, `allow_confirmed` and `output_mode`. The flat-facade shape was the legacy `d360` surface they replaced.
+
+Q: Where do you look up a valid `data360_*` action name, and why not the tool schemas?
+A: The generated-but-committed action map at `extensions/sf-data360/registry/v2/actions.json`, or the meta actions `actions.search` / `action.describe` / `examples.get`. Tool schemas stay deliberately small — catalogues load only after intent, to keep the prompt footprint bounded.
+
+Q: What does sf-pi require before it will run a headless destructive Data 360 action (ADR 0106)?
+A: All four: an authenticated **non-production** target, `--mutate`, an 8–32-character alphanumeric run ID, and both env gates `SF_PI_D360_V2_SWEEP_MUTATION_TARGET_ORG` and `D360_V2_SWEEP_ALLOW_DESTRUCTIVE`. Only the DLO name derived from that run ID may be deleted.
+
+Q: After ADR 0106, how many destructive-safety rules does `sf-data360` have?
+A: Two. The legacy facade keeps its dedicated-target rule for legacy callers; v2 **interactive** destructive calls need a non-production authenticated target plus explicit acknowledgement plus human confirmation. Production, unresolved and mismatched targets are blocked on both paths.
