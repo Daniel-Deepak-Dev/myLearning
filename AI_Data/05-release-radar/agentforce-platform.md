@@ -4,6 +4,12 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 ---
 
+## 2026-08-12 · An agent's *runtime* metadata gets a name — `AiAgentDefinition` / `AiAgentDefinitionVersion` (cross-link)
+
+Agentforce now has three metadata layers: **authoring** (`AiAuthoringBundle` — the XML plus the `.agent` Agent Script file you version-control), **runtime** (the new v68 pair, generated on activation and now retrievable), and **reasoning** (`GenAiPlannerBundle`, `GenAiPlugin`, `GenAiFunction`). `AiAgentDefinitionVersion` is registered as a **peer of `Bot`** — both are legal values for `rootTypesWithDependencies`, i.e. roots of an agent's dependency graph. `AiAgentDefinitionPlanner` is named in v68 but **not supported by DX**. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-12--winter-27-is-api-680-confirmed--and-it-brings-a-new-agent-runtime-metadata-pair-aiagentdefinition--aiagentdefinitionversion).
+
+---
+
 ## 2026-08-11 · The ADLC now ships as four subagents and a `.agent` validator hook (cross-link)
 
 Salesforce's `salesforce-development` Claude Code plugin bundles the Agent Development Life Cycle as **agents, not just skills**: `adlc-orchestrator` (plan-mode coordinator) delegating to `adlc-author` (writes `.agent` files), `adlc-engineer` (scaffolds Flow/Apex, deploys bundles) and `adlc-qa` (tests, optimizes, security-assesses). An **Agent Script syntax validator** runs after every `Write`/`Edit` and reports non-blocking findings. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-11--salesforce-ships-a-claude-code-plugin--salesforce-development-1100-41-skills-five-agents-and-a-deploy-gate).

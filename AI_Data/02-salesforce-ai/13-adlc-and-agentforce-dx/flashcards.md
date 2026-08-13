@@ -219,3 +219,30 @@ A: All four: an authenticated **non-production** target, `--mutate`, an 8–32-c
 
 Q: After ADR 0106, how many destructive-safety rules does `sf-data360` have?
 A: Two. The legacy facade keeps its dedicated-target rule for legacy callers; v2 **interactive** destructive calls need a non-production authenticated target plus explicit acknowledgement plus human confirmation. Production, unresolved and mismatched targets are blocked on both paths.
+
+Q: What API version is Winter '27, and where was it confirmed?
+A: **68.0**. Confirmed from the `## Next Release (v68)` section of `METADATA_SUPPORT.md` in `forcedotcom/source-deploy-retrieve` — a generated coverage report in a repo, not an org endpoint or a release note. It lists 59 new v68 metadata types: 21 DX-supported, 37 not, 1 partial.
+
+Q: Name the three metadata layers of an Agentforce agent after v68.
+A: **Authoring** — `AiAuthoringBundle` (API 65+, `aiAuthoringBundles/<name>/`, XML plus an `.agent` Agent Script file). **Runtime** — `AiAgentDefinition` and `AiAgentDefinitionVersion` (new in v68), with `Bot`/`BotVersion` as the legacy runtime. **Reasoning** — `GenAiPlannerBundle`, `GenAiPlugin`, `GenAiFunction`, `GenAiPromptTemplate`.
+
+Q: What is odd about `AiAgentDefinitionVersion`'s registry entry?
+A: It has **no `suffix`**. It uses the `bundle` adapter with `strictDirectoryName: true`, so it is a directory under `aiAgentDefinitionVersions/` whose folder name *is* the API name — renaming the folder renames the component. Its sibling `AiAgentDefinition` is a single file (`aiAgents/`, suffix `aiAgentDefinition`) with `strictDirectoryName: false`.
+
+Q: What are the only two legal values of `rootTypesWithDependencies`, and why does the pair matter?
+A: `Bot` and `AiAgentDefinitionVersion`. Both are roots from which a whole agent's dependent metadata is retrieved — which is the clearest evidence that the v68 pair is the successor to `Bot`/`BotVersion` rather than a side feature.
+
+Q: Which agent-adjacent v68 metadata types can DX *not* deploy or retrieve?
+A: `AiAgentDefinitionPlanner`, `BotEmailDefinition`, all four telephony-provider types (`TelephonyProvider`, `SecondaryTelephonyProvider`, `TrustedTelephonyProvider`, `ScndTelephPrvdOtbdDtl`) and three security types (`SecurityCustomBaseline`, `ScopedAccess`, `SensitiveDataRuleElmntGrp`). `AiAgentScorerDefinition` is partial — deploy/retrieve works, **source tracking does not**.
+
+Q: `sf` `latest` sat at one version for six days. Stall or schedule?
+A: Schedule. The CLI release notes state that stable ships **on Wednesdays**, with that week's release candidate published the same day, so an RC soaks about a week before promotion. 2.147.7 published to npm on 2026-08-05 and was promoted on 2026-08-12. Check whether a project publishes its cadence before calling a static tag a stall.
+
+Q: `## 2.148.3 (August 19, 2026)` appears in the CLI release notes. What date is that?
+A: The **planned stable-promotion date**, not the publish date — that build reached npm on 2026-08-12 03:13 UTC. Reading the heading as a publish date puts every CLI fact about a week into the future.
+
+Q: `sf` 2.147.7 pins `@salesforce/plugin-agent` 2.0.0, which predates the employee-agent preview fix. Why does a fresh install still get the fix?
+A: plugin-agent 2.0.0 **ranges** `@salesforce/agents` at `^2.0.0`, which resolves forward to 2.0.1 at install time. The fix comes from range resolution, not the pin — so an existing `node_modules` or a committed lockfile can hold you on the broken build while a colleague's fresh install is clean.
+
+Q: What breaks when `sf` `latest` moves to 2.147.7?
+A: `engines.node` goes from `>=18.6.0` to `>=22.0.0`. A `npm install -g @salesforce/cli` on a Node 18 or 20 CI image now emits only an `EBADENGINE` **warning** at install time and fails later in ways that read as metadata errors. Installer and tarball users are insulated — `sf update stable` moves a bundled Node 24 runtime and never consults system Node.

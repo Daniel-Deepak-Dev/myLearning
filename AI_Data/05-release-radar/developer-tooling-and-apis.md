@@ -4,7 +4,97 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-12 · `sf` 2.147.7 is promoted to `latest` — Node 22 becomes the stable floor, and two waiting fixes ride in with it
+
+**What changed.** `@salesforce/cli` **`latest` moved 2.146.3 → 2.147.7** on 2026-08-12. Every dist-tag advanced one slot: `latest-rc` → **2.148.3**, `nightly` → **2.149.0**. Observed at 2.146.3 on 2026-08-12 03:37 UTC and at 2.147.7 on 2026-08-13 03:37 UTC.
+
+**What arrives on stable, all at once:**
+
+- **A hard Node floor.** `engines.node` goes `>=18.6.0` → **`>=22.0.0`**. Node 18 and 20 are dropped; the installer's bundled runtime is **Node 24**.
+- **The SDR zip-slip fix.** 2.147.7 pins `@salesforce/plugin-deploy-retrieve` **4.0.1**, which ranges `@salesforce/source-deploy-retrieve` **`^13.0.0`** — a range that can only resolve at or above the patched **13.0.1**.
+- **Employee-agent preview.** It pins `@salesforce/plugin-agent` **2.0.0**, which ranges `@salesforce/agents` **`^2.0.0`** — so a fresh install resolves **2.0.1** and `sf agent preview start --api-name` works for employee agents.
+- **A scratch-org workaround**, new in this release: `SF_SCRATCH_SIGNUP_CONNECTED_APP` and `SF_SCRATCH_SIGNUP_CALLBACK_URL`, for Dev Hubs authenticated by JWT against an external client app.
+
+**Relevant to:** **Developer** — `npm install -g @salesforce/cli` on a Node 18/20 image now fails, and the same command is what finally delivers two fixes you could not get on stable; **Architect** — the promotion drags a runtime-version floor into every CI image tracking `latest`, which is a platform decision, not a tooling one; **Admin** — nothing to click, but scratch-org creation against a JWT-authenticated Dev Hub needs two environment variables set.
+
+**Why it matters.** This radar tracked the promotion as a *stall* for five consecutive scans — "unchanged for a sixth day" was the 08-12 reading. It was never a stall. The CLI release notes state the cadence plainly: **stable ships on Wednesdays**, with that week's release candidate published the same day. 2.147.7 was published to npm on **2026-08-05** and soaked as `latest-rc` for exactly one week.
+
+So the question worth asking was never *"when will they promote it?"* but *"which Wednesday does this RC land on?"* — a schedule, readable in advance, that five scans treated as a decision.
+
+The practical consequence is unchanged and now urgent: the version bump that was **actively misleading evidence** on 08-06 is now genuinely load-bearing, and it costs a Node upgrade to take.
+
+**Gotchas:**
+- **The release notes date a version by its planned *stable* date, not its npm publish date.** `## 2.148.3 (August 19, 2026) [stable-rc]` describes a build published to npm on **2026-08-12 03:13 UTC**. Reading that heading as a publish date puts every CLI fact a week into the future.
+- **Range resolution is doing the work, not the pin.** 2.147.7 pins plugin-agent `2.0.0` exactly, and 2.0.0 predates the employee-agent fix. You get the fix because `^2.0.0` resolves *forward* to 2.0.1 at install time — so **an existing `node_modules` or a lockfile can hold you at the broken build** while a colleague's fresh install works.
+- **Installer and tarball users are on a different clock.** `sf update stable` moves the bundled tree; it does not consult your system Node, so the Node 22 break is an `npm`-install problem specifically.
+- **`EBADENGINE` is a warning, not a failure.** npm on Node 20 still installs, then breaks later in ways that read as metadata errors. Check CI images, not laptops.
+- The queue behind `latest` is now `latest-rc` **2.148.3** (plugin-agent 2.0.1, plugin-deploy-retrieve 4.0.2) and `nightly` **2.149.0**.
+
+**Study action:** run `npm view @salesforce/cli@latest dependencies` and `npm ls @salesforce/source-deploy-retrieve` inside a fresh global install, and confirm SDR resolves **≥ 13.0.1**. Then repeat the install on a Node 20 image and record exactly where it fails — the failure is not at install time.
+
+**Status:** GA. `@salesforce/cli` **2.147.7** on `latest`, promoted 2026-08-12 (npm publish 2026-08-05 03:24 UTC). Supersedes the open question raised 2026-08-02.
+
+**Sources:** [CLI release notes](https://github.com/forcedotcom/cli/blob/main/releasenotes/README.md) · [npm dist-tags](https://registry.npmjs.org/-/package/@salesforce/cli/dist-tags) · [cli PR #2851](https://github.com/salesforcecli/cli/pull/2851) · [GitHub issue #3515](https://github.com/forcedotcom/cli/issues/3515)
+
+---
+
+## 2026-08-12 · Winter '27 is API **68.0**, confirmed — and it brings a new agent runtime metadata pair, `AiAgentDefinition` / `AiAgentDefinitionVersion`
+
+**What changed.** `@salesforce/source-deploy-retrieve` **13.1.0** (2026-08-12 19:49 UTC, PR [#1819](https://github.com/forcedotcom/source-deploy-retrieve/pull/1819), `W-23818734`) adds two metadata types to the DX registry. Its regenerated coverage report carries a **`## Next Release (v68)`** section — which settles the API version question this radar has held open since 2026-08-09.
+
+**The two new types, exactly as registered:**
+
+| Type | `directoryName` | `suffix` | Shape |
+|---|---|---|---|
+| `AiAgentDefinition` | `aiAgents` | `aiAgentDefinition` | single file, `strictDirectoryName: false` |
+| `AiAgentDefinitionVersion` | `aiAgentDefinitionVersions` | **none** | **bundle** adapter, `strictDirectoryName: true` |
+
+**And one line of TypeScript is the tell.** `RetrieveOptions.rootTypesWithDependencies` now documents its supported values as **`Bot`, `AiAgentDefinitionVersion`** — the new type is registered as a *peer of `Bot`*: a root from which a whole agent's dependency graph is pulled.
+
+**Where it sits.** Agentforce now has three metadata layers, and only the middle one is new:
+
+```mermaid
+flowchart TD
+    A["<b>Authoring</b><br/>AiAuthoringBundle · API 65+<br/>aiAuthoringBundles/&lt;name&gt;/<br/>XML + .agent (Agent Script)"] -->|"version + activate"| B
+    B["<b>Runtime — new in v68</b><br/>AiAgentDefinition<br/>AiAgentDefinitionVersion (bundle)"] --> C
+    L["<b>Legacy runtime</b><br/>Bot / BotVersion"] --> C
+    C["<b>Reasoning</b><br/>GenAiPlannerBundle · GenAiPlugin<br/>GenAiFunction · GenAiPromptTemplate"]
+    style B fill:#0b6,color:#fff
+    style L fill:#777,color:#fff
+```
+
+**The rest of the v68 list, since it is now readable:** **59 new metadata types** — **21** supported by the registry, **37** not, **1** partial. Agent-adjacent entries worth knowing:
+
+- **`AgentforcePlatformTracingSettings`** ✅ — Agentforce tracing becomes an org setting you can deploy.
+- **`MissionforceSettings`** ✅ — the IL5 / national-security product gets a settings type.
+- **`AiAgentDefinitionPlanner`** ❌ and **`BotEmailDefinition`** ❌ — named in v68, not movable by DX.
+- **Four telephony types all ❌** — `TelephonyProvider`, `SecondaryTelephonyProvider`, `TrustedTelephonyProvider`, `ScndTelephPrvdOtbdDtl`. Agentforce Voice provider config is not source-controllable yet.
+- **Three security types ❌** — `SecurityCustomBaseline`, `ScopedAccess`, `SensitiveDataRuleElmntGrp`.
+
+**Relevant to:** **Architect** — a new dependency root changes how an agent is packaged and promoted between orgs, and seven agent/voice/security types in v68 cannot cross an org boundary through DX at all; **Developer** — two new source directories, a bundle with no file suffix, and a new legal value for `rootTypesWithDependencies`; **Admin** — Winter '27 is confirmed as **68.0**, which is the version every enforcement date and Release Update in that release attaches to.
+
+**Why it matters.** The version question was declared unobtainable from this environment twice — on 08-09 and again on 08-10, when even the unauthenticated `/services/data/` version list was blocked at the proxy. It was answerable the whole time, from a **generated markdown file in a repository this radar reads weekly**. That is the third scan running where the answer sat in a repo rather than an announcement.
+
+The metadata finding is the more durable half. `AiAuthoringBundle` — the `.agent` file you version-control — has always been the *authoring* artifact, with the runtime metadata generated on activation and effectively opaque. v68 gives that runtime side a name, a directory and a retrieve path.
+
+**Gotchas:**
+- **`AiAgentDefinitionVersion` has no `suffix`.** It is a **bundle**: a directory whose name *is* the API name, with `strictDirectoryName: true`. Renaming the folder renames the component. Do not go looking for a `.aiAgentDefinitionVersion-meta.xml`.
+- **`AiAgentDefinition` sets `strictDirectoryName: false`** while its version type sets `true` — the pair does not behave uniformly under source resolution.
+- **`AiAgentScorerDefinition` is ⚠️, not ✅** — "Supports deploy/retrieve but not source tracking". A scorer edited in the org will not show up in `sf project retrieve start` change detection.
+- **The coverage report's headline count is still v67**: 768/836. The v68 section is a forward-looking diff, not the current supported total.
+- **You need SDR ≥ 13.1.0 to see any of this**, which means `sf` `latest` **2.147.7** or newer *and* a fresh install — plugin-deploy-retrieve 4.0.1 ranges `^13.0.0`, so a stale lockfile resolves 13.0.1 and the types simply do not exist.
+
+**Study action:** in a Winter '27 preview org, run `sf project retrieve start --metadata AiAgentDefinition` and then retrieve the same agent with `rootTypesWithDependencies` set to `AiAgentDefinitionVersion`; diff the two trees against a `Bot`-rooted retrieve of a legacy agent and note which `GenAi*` components each pulls in.
+
+**Status:** Open source, Apache-2.0. SDR **13.1.0**, 2026-08-12 19:49 UTC. The metadata types are **API 68.0 (Winter '27)** — registry support shipped; no first-party documentation for `AiAgentDefinition` was reachable (`developer.salesforce.com` is EGRESS_BLOCKED), so the layering above is **inference from the registry, the coverage report and `types.ts`**, not from a doc page.
+
+**Sources:** [SDR CHANGELOG](https://github.com/forcedotcom/source-deploy-retrieve/blob/main/CHANGELOG.md) · [`metadataRegistry.json`](https://github.com/forcedotcom/source-deploy-retrieve/blob/main/src/registry/metadataRegistry.json) · [`METADATA_SUPPORT.md`](https://github.com/forcedotcom/source-deploy-retrieve/blob/main/METADATA_SUPPORT.md) · [`src/client/types.ts`](https://github.com/forcedotcom/source-deploy-retrieve/blob/main/src/client/types.ts) · [AiAuthoringBundle (Metadata API guide)](https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_aiauthoringbundle.htm)
+
+---
+
 ## 2026-08-11 · Salesforce ships a Claude Code plugin — `salesforce-development` 1.10.0, 41 skills, five agents and a deploy gate
+
+> **Correction (2026-08-13):** this said the plugin installs from a marketplace **in the `sf-skills` repository** (`/plugin marketplace add forcedotcom/sf-skills` → `/plugin install salesforce-development@salesforce`). The Salesforce CLI release notes for **2.148.3** now document it as shipping in the **official Claude Code plugin marketplace** — `/plugin install salesforce-development@claude-plugins-official`, listed at [claude.com/plugins/salesforce-development](https://claude.com/plugins/salesforce-development). The repo-hosted marketplace still exists; it is no longer the only channel, and the marketplace name in the install string differs between the two.
 
 **What changed.** [`forcedotcom/sf-skills`](https://github.com/forcedotcom/sf-skills) **1.36.0** (2026-08-11 07:37 UTC, PR [#1138](https://github.com/forcedotcom/sf-skills/pull/1138)) publishes **`salesforce-development` 1.10.0** — a first-party **Claude Code plugin**, distributed from a **plugin marketplace in the same repository**.
 
