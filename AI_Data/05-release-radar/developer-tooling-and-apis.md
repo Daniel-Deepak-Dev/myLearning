@@ -4,6 +4,119 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-13 · SDR 13.1.1 patches a *second* path escape in the same transformer — a TOCTOU symlink write
+
+**What changed.** `@salesforce/source-deploy-retrieve` **13.1.1** (npm **2026-08-13 16:01:37 UTC**, PR [#1820](https://github.com/forcedotcom/source-deploy-retrieve/pull/1820), `W-23808206`) fixes a **TOCTOU** symlink escape in `staticResourceMetadataTransformer.ts` — the same file, same class and same code path as the zip-slip patched 13 days earlier in 13.0.1.
+
+- **TOCTOU** — *time-of-check-to-time-of-use*: a path is validated, then something changes underneath it before the write happens.
+- **The escape.** The zip-slip fix validated the *resolved destination*. But a **symbolic link already on disk** — the project's own repo content, not the archive — could still redirect an in-bounds write outside the extraction directory.
+- **The fix.** A new `findSymlinkOnPath(baseDestinationPath, fullDest)` walks **every path segment** between extraction root and destination and refuses the write if any segment is a symlink.
+- **New error key** `error_static_resource_symlink` in `messages/sdr.md`: *"Entry '%s' in static resource '%s' would be written through a symbolic link ('%s')."*
+
+**Why it matters.** The trigger is `sf project retrieve` unzipping a `StaticResource` of content type `application/zip` or `application/jar` — an everyday command, not an exotic one. And the attacker input is **your working tree**, not only the org: a symlink committed to a repo you cloned is enough. Metadata conversion is an inbound trust boundary in both directions.
+
+**The reachability is the opposite of the zip-slip's, and the reason is a pinning asymmetry:**
+
+```mermaid
+graph LR
+  A["sf 2.147.7 (latest)"] -->|exact pin<br/>= 4.0.1| B["plugin-deploy-retrieve 4.0.1"]
+  B -->|caret range<br/>^13.0.0| C["SDR 13.1.1 ✅ patched"]
+  A -.->|"feature in a plugin<br/>never arrives"| D["--root-type-with-dependencies ❌"]
+```
+
+Library fixes **flow to stable by range resolution**; plugin features **do not**, because `sf` pins each plugin to an exact version. So the TOCTOU fix is on `latest` today, while the flag two entries below is not.
+
+**Gotchas:**
+- **A lockfile or an existing `node_modules` defeats the range.** Verify with `npm ls @salesforce/source-deploy-retrieve` — you want **13.1.1**, not 13.0.1 or 13.1.0.
+- **The 12.x line has neither fix.** `12.37.3` is **HTTP 404** (checked 2026-08-14 03:52 UTC), and `@salesforce/plugin-deploy-retrieve` **3.x** ranges SDR `^12.36.7`, which can never reach 13.x. Anyone still on PDR 3.x is unpatched for *both*.
+- **No 13.1.2, no CVE and no GitHub security advisory** located — the changelog line is the only public notice.
+- The guard covers the **StaticResource unzip path only**. Other transformers were not in scope of this fix.
+
+**Relevant to:** **Developer** — `sf project retrieve` is the affected command, and the version you need is a transitive dependency you have to check explicitly; **Architect** — confirms metadata conversion as a two-way trust boundary and makes SDR-version floors a CI-image requirement, not a preference.
+
+**Study action:** In a scratch org project, retrieve a zipped `StaticResource`; before re-running, replace one intermediate directory under `staticresources/` with a symlink pointing outside the project, retrieve again, and confirm you get `error_static_resource_symlink` rather than a file written outside the tree.
+
+**Status:** Shipped — `@salesforce/source-deploy-retrieve` 13.1.1, 2026-08-13. Reaches `sf` `latest` (2.147.7) on a fresh install via `^13.0.0`.
+
+**Sources:** [SDR CHANGELOG 13.1.1](https://github.com/forcedotcom/source-deploy-retrieve/blob/main/CHANGELOG.md) · [PR #1820](https://github.com/forcedotcom/source-deploy-retrieve/pull/1820) · [npm registry metadata](https://registry.npmjs.org/@salesforce/source-deploy-retrieve)
+
+---
+
+## 2026-08-13 · `mcpTools` — Agent Skills can now declare which MCP servers and tools they need
+
+**What changed.** `forcedotcom/sf-skills` **1.37.0** (**2026-08-13 04:05 UTC**, commit `933c8df`, `W-23536091`) reconciled **`mcpTools`** declarations across 15 files. The reformat is churn; the finding is that the field exists at all — this radar has covered `sf-skills` five times and never recorded it.
+
+**The declaration, verbatim from `skills/platform-value-set-generate/SKILL.md`:**
+
+```yaml
+metadata:
+  mcpTools:
+    metadata-grounding:
+      tools: ["query_metadata", "search_metadata"]
+      semver: ">=1.0.0"
+```
+
+Keyed by **MCP server name**, each with a `tools` array and an optional `semver` range.
+
+**It completes a four-field dependency contract** built over six weeks, all under the same work item family:
+
+| Field | Declares | First seen |
+|---|---|---|
+| `cliTools` | local binaries + semver (`sf`, `jq`, `python3`) | 2026-07-30 |
+| `accessCheck` | the **org permission** the skill needs | 2026-08-01 |
+| `relatedSkills` | sibling skills, bidirectional — the traversal graph | 1.34.0, 2026-08-07 |
+| **`mcpTools`** | **MCP servers + tool names + semver** | **1.37.0, 2026-08-13** |
+
+**Why it matters.** A skill can now fail fast on a missing prerequisite instead of dying inside a tool call, and the four fields together are a portable pattern for any capability catalogue: declare what you need, in machine-readable form, beside the instructions. The declarations also **enumerate MCP servers Salesforce never announced** — `metadata-grounding`, `salesforce-api-context` and `metadata-experts` appear only here.
+
+**Named MCP tools, exactly as declared:**
+- `salesforce-lsp` — `apex.diagnostics`, `apex.documentSymbol`, `apex.hover`, `lsp.health`, `refresh_org_schema`, `check_soql_selectivity`, `complete_soql`, `extract_soql_from_apex`, `validate_soql`
+- `metadata-grounding` — `query_metadata`, `search_metadata`
+- `salesforce-api-context` — `get_metadata_type_context`, `get_metadata_type_fields`, `get_metadata_type_fields_properties`, `get_metadata_type_sections`, `get_metadata_type_shape`, `search_metadata_types`
+
+**Gotchas:**
+- **Underscores, not hyphens.** This release fixed a doc that wrote `query-metadata`; the tool is `query_metadata`.
+- **Every skill exists twice** — `skills/<name>/SKILL.md` and `plugins/builder/salesforce-development/skills/<name>/SKILL.md`, reconciled by a `SKILL.overlay.patch`. The catalogue copy and the plugin copy are **not guaranteed identical**.
+- **`catalog/discovery.json` carries per-skill `skillMdSha256` and `treeSha256`** — that is the mechanism behind the 1.10.0 "verified installed and unmodified" fix. Edit a `SKILL.md` locally and it drops out of capability discovery.
+- **`discovery.json` records `publicRelease.releaseRef: "1.32.0"` while the repo is at 1.37.0** (checked 2026-08-14 03:48 UTC) — the catalogue's release pointer lags its own hashes.
+- **The "weekly, on Fridays" cadence this radar recorded on 2026-08-01 is dead.** 1.34.0 and 1.35.0 shipped Friday 08-07, **1.36.0 Tuesday 08-11, 1.37.0 Thursday 08-13**. Poll the tags, don't wait for Friday.
+
+**Relevant to:** **Developer** — a frontmatter field you must write when authoring a skill, plus the exact names of three MCP servers and their tools; **Architect** — the four-field contract is the governance model for declaring and verifying agent capability prerequisites.
+
+**Study action:** Run `npx skills add` for `platform-value-set-generate`, open its `SKILL.md`, and check its `metadata.mcpTools` block against the MCP servers actually registered in your client — then add one character to the file and confirm it disappears from capability discovery.
+
+**Status:** Shipped — `forcedotcom/sf-skills` 1.37.0, 2026-08-13, Apache-2.0.
+
+**Sources:** [sf-skills CHANGELOG](https://github.com/forcedotcom/sf-skills/blob/main/CHANGELOG.md) · [commit 933c8df](https://github.com/forcedotcom/sf-skills/commit/933c8dfb04878d081715b9a107670332d913f629) · [platform-value-set-generate SKILL.md](https://github.com/forcedotcom/sf-skills/blob/main/skills/platform-value-set-generate/SKILL.md)
+
+---
+
+## 2026-08-12 · `sf project retrieve start --root-type-with-dependencies` — the CLI half of the v68 agent metadata story, and it takes exactly two values
+
+**What changed.** `@salesforce/plugin-deploy-retrieve` **4.1.0** (npm **2026-08-12 22:15:34 UTC**, PR [#1626](https://github.com/salesforcecli/plugin-deploy-retrieve/pull/1626)) adds a flag that retrieves a root metadata type **together with its whole dependency graph**. Its work item, **`W-23818734`**, is the *same one* that added `AiAgentDefinition` / `AiAgentDefinitionVersion` in SDR 13.1.0 — this is that feature's command-line surface.
+
+- **The flag is a closed enum.** `Flags.string({ multiple: true, options: ['Bot', 'AiAgentDefinitionVersion'] })` — two legal values, nothing else, repeatable.
+- **What it pulls.** Retrieve `force-app`; if anything retrieved is a `Bot`, also retrieve its dependent `GenAiPlannerBundle`, `GenAiPlugin` and `GenAiFunction` components.
+- **It is a platform API field, not a CLI convenience.** It maps to `rootTypesWithDependencies` on the SOAP Metadata API `RetrieveRequest` body (`src/client/metadataApiRetrieve.ts:268`), so **any Metadata API caller can send it** — Ant, a custom client, a CI script.
+
+**Why it matters.** Getting a complete agent out of an org has meant hand-maintaining a manifest of planner bundles, plugins and functions, and a missed dependency produces an agent that deploys and then misbehaves. One flag replaces that manifest. Naming `AiAgentDefinitionVersion` alongside `Bot` also confirms the new v68 runtime pair is a **first-class graph root**, not a leaf.
+
+**Gotchas:**
+- **The changelog names the flag wrong.** It says `--root-with-dependencies`; the flag is **`--root-type-with-dependencies`**. Trust the source, not the release note.
+- **The shipped help text has a single-dash typo** — `messages/retrieve.start.md` shows `-root-type-with-dependencies Bot`. Copy that example and it fails.
+- **`nightly` only.** `sf` pins its plugins **exactly**: `latest` **2.147.7** → PDR 4.0.1, `latest-rc` **2.148.3** → PDR 4.0.2, `nightly` **2.149.1** → PDR 4.1.1. The flag needs **≥ 4.1.0**, so it first appears in `sf` **2.149.0**. Stable ships Wednesdays, so the earliest realistic stable landing is **2026-08-26** at best.
+- Anything outside the two enum values is rejected by oclif before a request is sent — this is not a general "retrieve with dependencies" facility.
+
+**Relevant to:** **Developer** — a new flag with an exact name the changelog gets wrong, unavailable on the CLI channel you probably run; **Architect** — agent dependency retrieval becomes a supported Metadata API operation, so agent source-control strategy no longer depends on a hand-written manifest.
+
+**Study action:** Install `sf@nightly` in a throwaway container, run `sf project retrieve start --metadata Bot:<YourAgent> --root-type-with-dependencies Bot`, and diff the retrieved tree against what the same retrieve produces without the flag.
+
+**Status:** Shipped in `@salesforce/plugin-deploy-retrieve` 4.1.0 (2026-08-12); reachable only via `sf` **`nightly`** as of 2026-08-14 03:41 UTC.
+
+**Sources:** [plugin-deploy-retrieve CHANGELOG](https://github.com/salesforcecli/plugin-deploy-retrieve/blob/main/CHANGELOG.md) · [`retrieve/start.ts`](https://github.com/salesforcecli/plugin-deploy-retrieve/blob/main/src/commands/project/retrieve/start.ts) · [npm registry metadata](https://registry.npmjs.org/@salesforce/cli)
+
+---
+
 ## 2026-08-12 · `sf` 2.147.7 is promoted to `latest` — Node 22 becomes the stable floor, and two waiting fixes ride in with it
 
 **What changed.** `@salesforce/cli` **`latest` moved 2.146.3 → 2.147.7** on 2026-08-12. Every dist-tag advanced one slot: `latest-rc` → **2.148.3**, `nightly` → **2.149.0**. Observed at 2.146.3 on 2026-08-12 03:37 UTC and at 2.147.7 on 2026-08-13 03:37 UTC.

@@ -4,6 +4,12 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 ---
 
+## 2026-08-12 · Retrieving a *whole* agent becomes one flag — `--root-type-with-dependencies` (cross-link)
+
+`sf project retrieve start` gains **`--root-type-with-dependencies`**, whose only legal values are **`Bot`** and **`AiAgentDefinitionVersion`**. Naming a `Bot` as the root also retrieves its dependent `GenAiPlannerBundle`, `GenAiPlugin` and `GenAiFunction` components, replacing the hand-maintained manifest that agent source control has needed until now. It maps to `rootTypesWithDependencies` on the Metadata API `RetrieveRequest`, so it is available to any API caller — but on the CLI it is **`nightly`-only** as of 2026-08-14. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-12--sf-project-retrieve-start---root-type-with-dependencies--the-cli-half-of-the-v68-agent-metadata-story-and-it-takes-exactly-two-values).
+
+---
+
 ## 2026-08-12 · An agent's *runtime* metadata gets a name — `AiAgentDefinition` / `AiAgentDefinitionVersion` (cross-link)
 
 Agentforce now has three metadata layers: **authoring** (`AiAuthoringBundle` — the XML plus the `.agent` Agent Script file you version-control), **runtime** (the new v68 pair, generated on activation and now retrievable), and **reasoning** (`GenAiPlannerBundle`, `GenAiPlugin`, `GenAiFunction`). `AiAgentDefinitionVersion` is registered as a **peer of `Bot`** — both are legal values for `rootTypesWithDependencies`, i.e. roots of an agent's dependency graph. `AiAgentDefinitionPlanner` is named in v68 but **not supported by DX**. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-12--winter-27-is-api-680-confirmed--and-it-brings-a-new-agent-runtime-metadata-pair-aiagentdefinition--aiagentdefinitionversion).

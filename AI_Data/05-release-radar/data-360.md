@@ -27,6 +27,12 @@ Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-0
 
 ---
 
+## 2026-08-11 · `sf-data360` raw REST calls must drop the version segment (cross-link)
+
+`sf-pi` **v0.263.0** rejects caller-owned `/services/data/vNN.N/…` resource paths from the `data360_api` escape hatch and its siblings — pass a **versionless** path and let `lib/common/sf-conn/path.ts` version it against whatever the org advertises. Same release stops `sf-data360` falling back to JSforce's `50.0` and fails the call instead. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-11--sf-pi-deletes-the-500-fallback--one-connection-module-and-the-orgs-advertised-api-version-outranks-your-config).
+
+---
+
 ## 2026-08-09 · `sfsqlquery` — Data 360 SQL from Apex finally has a namespace, five classes and three shapes
 
 **What changed.** The **Winter '27** release notes add the **`sfsqlquery`** Apex namespace for executing **Data 360 SQL** queries. This study base has recorded *"SQL from Apex (Summer '26)"* in five places with **no named class anywhere** — this is the surface behind that sentence, and the docs call it the **recommended** way to query Data 360 from Apex.
@@ -65,12 +71,6 @@ The consequence for agents is the interesting one. An Apex-backed agent action c
 **Status:** Announced in the **Winter '27** release notes (live as of **2026-08-09**); documented in the Data 360 Query Guide as the recommended Apex query path. Verify availability against your org's release before building on it.
 
 **Sources:** [Query Data 360 Data with Apex](https://developer.salesforce.com/docs/data/data-cloud-query-guide/guide/dc-apex-query.html) · [Data 360 In Apex — Apex Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/DataCloudInApex.htm) · [Data 360 SQL Reference](https://developer.salesforce.com/docs/data/data-cloud-query-guide/references/dc-sql-reference/syntax.html) · [Salesforce Winter '27 Release Notes](https://help.salesforce.com/s/articleView?id=release-notes.salesforce_release_notes.htm&language=en_US) · study-base cross-ref: [SQL from Apex](../01-data-cloud/03-data-modeling-dso-dlo-dmo/notes.md)
-
----
-
-## 2026-08-11 · `sf-data360` raw REST calls must drop the version segment (cross-link)
-
-`sf-pi` **v0.263.0** rejects caller-owned `/services/data/vNN.N/…` resource paths from the `data360_api` escape hatch and its siblings — pass a **versionless** path and let `lib/common/sf-conn/path.ts` version it against whatever the org advertises. Same release stops `sf-data360` falling back to JSforce's `50.0` and fails the call instead. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-11--sf-pi-deletes-the-500-fallback--one-connection-module-and-the-orgs-advertised-api-version-outranks-your-config).
 
 ---
 

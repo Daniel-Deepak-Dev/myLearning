@@ -4,6 +4,12 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-13 · A second path escape in the same metadata transformer — and the pinning rule that decides whether a fix reaches you (cross-link)
+
+`@salesforce/source-deploy-retrieve` **13.1.1** fixes a **TOCTOU symlink escape** in `staticResourceMetadataTransformer.ts`, 13 days after the zip-slip in the *same* file. The governance point is not the bug count but the **threat model**: the malicious input is a symlink **in your own working tree**, so a cloned repository is an attack surface for `sf project retrieve`, not just an untrusted org. The propagation rule generalises beyond this fix — **`sf` pins plugins exactly and plugins range their libraries**, so a library security patch reaches stable on a fresh install while a plugin feature does not. Neither the 12.x line nor `plugin-deploy-retrieve` 3.x can ever receive either fix. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-13--sdr-1311-patches-a-second-path-escape-in-the-same-transformer--a-toctou-symlink-write).
+
+---
+
 ## 2026-08-12 · Winter '27 is confirmed as **API 68.0**, and the zip-slip fix finally reaches stable `sf` (cross-link)
 
 Two governance points from the tooling window. **First, the version is settled**: the DX metadata coverage report carries a `## Next Release (v68)` section, so every Winter '27 enforcement date and Release Update on this page attaches to **68.0** — the successor to Summer '26's 67.0, where user mode and `with sharing` defaults arrived. Three new v68 security types (`SecurityCustomBaseline`, `ScopedAccess`, `SensitiveDataRuleElmntGrp`) are **not deployable via DX**. **Second, the SDR zip-slip patch is on a stable channel at last** — `sf` `latest` moved to **2.147.7**, which ranges SDR `^13.0.0`; the generalised point stands unchanged, that **a CLI version bump was misleading evidence for a fortnight** and the fix arrives bundled with a Node 22 floor. Full entries: [Winter '27 / v68 metadata](developer-tooling-and-apis.md#2026-08-12--winter-27-is-api-680-confirmed--and-it-brings-a-new-agent-runtime-metadata-pair-aiagentdefinition--aiagentdefinitionversion) · [the `latest` promotion](developer-tooling-and-apis.md#2026-08-12--sf-21477-is-promoted-to-latest--node-22-becomes-the-stable-floor-and-two-waiting-fixes-ride-in-with-it).

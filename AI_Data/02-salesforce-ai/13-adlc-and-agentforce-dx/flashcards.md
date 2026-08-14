@@ -246,3 +246,24 @@ A: plugin-agent 2.0.0 **ranges** `@salesforce/agents` at `^2.0.0`, which resolve
 
 Q: What breaks when `sf` `latest` moves to 2.147.7?
 A: `engines.node` goes from `>=18.6.0` to `>=22.0.0`. A `npm install -g @salesforce/cli` on a Node 18 or 20 CI image now emits only an `EBADENGINE` **warning** at install time and fails later in ways that read as metadata errors. Installer and tarball users are insulated — `sf update stable` moves a bundled Node 24 runtime and never consults system Node.
+
+Q: SDR 13.0.1 fixed the zip-slip. What did 13.1.1 fix, and why in the same file?
+A: A **TOCTOU symlink escape** in the same class, `StaticResourceMetadataTransformer`. 13.0.1 validated the *resolved destination path*; 13.1.1 adds `findSymlinkOnPath`, which walks **every path segment** between the extraction root and the destination, because a symlink already on disk could redirect an in-bounds write outside the extraction directory. New error key: `error_static_resource_symlink`.
+
+Q: For the SDR TOCTOU fix, what is the malicious input?
+A: **Your own working tree** — a symlink committed to a repository you cloned — not only an untrusted org. `sf project retrieve` unzips any `StaticResource` of content type `application/zip` or `application/jar` during metadata→source conversion, so cloning a repo is enough to expose the path.
+
+Q: Why does the SDR TOCTOU fix reach stable `sf` immediately when the `--root-type-with-dependencies` flag does not?
+A: A pinning asymmetry. `sf` pins each **plugin** to an exact version (`= 4.0.1`), but a plugin **ranges** its libraries (`^13.0.0`). So a library security patch resolves forward on a fresh install, while a plugin feature needs a new `sf` release. Verify with `npm ls @salesforce/source-deploy-retrieve`.
+
+Q: What are the only two legal values of `sf project retrieve start --root-type-with-dependencies`?
+A: **`Bot`** and **`AiAgentDefinitionVersion`** — a closed oclif enum, repeatable. Naming `Bot` also retrieves its dependent `GenAiPlannerBundle`, `GenAiPlugin` and `GenAiFunction` components. Two traps: the changelog calls it `--root-with-dependencies` (wrong), and the shipped help example writes a single dash.
+
+Q: Is `--root-type-with-dependencies` a CLI convenience or a platform capability?
+A: A platform capability. It maps to `rootTypesWithDependencies` on the SOAP Metadata API `RetrieveRequest` body, so any Metadata API caller — Ant, a custom client, a CI script — can send it, regardless of which `sf` version is installed.
+
+Q: What does `mcpTools` declare in an Agent Skill, and what completes it?
+A: The **MCP servers and tool names** a skill needs, with an optional `semver` range, nested under `metadata:`. It is the fourth field in the skill dependency contract: `cliTools` (local binaries), `accessCheck` (org permission), `relatedSkills` (sibling graph), `mcpTools` (MCP servers). Added across `forcedotcom/sf-skills` in 1.37.0, 2026-08-13.
+
+Q: How does the `salesforce-development` plugin know a skill has not been tampered with?
+A: `catalog/discovery.json` carries a per-skill `skillMdSha256` and `treeSha256`. That is the mechanism behind the 1.10.0 fix that limits capability discovery to skills **verified installed and unmodified** — edit a `SKILL.md` locally and it drops out of discovery.
