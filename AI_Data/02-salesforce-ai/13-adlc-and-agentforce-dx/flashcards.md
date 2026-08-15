@@ -267,3 +267,27 @@ A: The **MCP servers and tool names** a skill needs, with an optional `semver` r
 
 Q: How does the `salesforce-development` plugin know a skill has not been tampered with?
 A: `catalog/discovery.json` carries a per-skill `skillMdSha256` and `treeSha256`. That is the mechanism behind the 1.10.0 fix that limits capability discovery to skills **verified installed and unmodified** — edit a `SKILL.md` locally and it drops out of discovery.
+
+Q: `sf agent preview --context-variables Name=Value` runs without error against a published agent, but the agent behaves as if it got nothing. What was wrong?
+A: `@salesforce/agents` ≤ 2.0.1. The `--api-name` path builds a **`ProductionAgent`**, whose session-start body omitted the variables entirely; the `--authoring-bundle` path builds a **`ScriptAgent`**, which sent them. Fixed in **2.0.2** (2026-08-14). The plugin was never at fault — it passed `{ contextVariables }` from 2.0.0 onward.
+
+Q: You grep the Agentforce session payload for `contextVariables` and find nothing. Why?
+A: Wrong name. `contextVariables` is the SDK option (`AgentPreviewStartOptions.contextVariables`); the JSON field posted to `POST <apiBase>/agents/<agentId>/sessions` is **`variables`**.
+
+Q: How does the agent runtime tell a linked context variable from a mutable state variable?
+A: By **name shape only** — `$Context.<Name>` is linked, a bare `<developerName>` is mutable state. The CLI passes both through verbatim and transforms neither, so a typo in the `$Context.` prefix silently addresses the other namespace.
+
+Q: Why can't you set a Number or Boolean context variable from `sf agent preview`?
+A: `parseContextVariables` in `plugin-agent`'s `flags.js` hard-codes `type: 'Text'` for every `Name=Value` entry, even though `ContextVariable.type` accepts `Object`, `Boolean`, `DateTime`, `Money`, `Number`, `Text`, `Ref` and `List`.
+
+Q: On `@salesforce/agents` ≤ 2.0.1, what org-visible side effect did `--context-variables` have on a published-agent preview?
+A: It switched **Apex debugging** on without `--apex-debug`, creating **TraceFlags** and consuming debug-log storage. `startPreview(apexDebugging)` did `if (apexDebugging !== undefined) this.apexDebugging = apexDebugging`, and the plugin passed an options **object** — not `undefined`, and truthy.
+
+Q: A skill's `accessCheck` lists one permission. Is that the permission set a user needs to run it?
+A: No. The array is **ANDed with no OR operator**, so a skill needing "`ModifyAllData` or `ModifyMetadata`" declares only one to avoid falsely gating an admin who holds the other. `accessCheck` is a lower bound on one path, not an entitlement model.
+
+Q: `accessCheck` has how many `type` values, and what are they?
+A: Two in use — **`userPerm`** (`ModifyAllData`, `ManageSandboxes`) and **`orgPref`** (`Package2Enabled`, on `experience-ui-bundle-2gp-deploy`, added in `sf-skills` 1.38.0).
+
+Q: What distinguishes `allowed-tools` from `cliTools` in an Agent Skill?
+A: Scope and position. `cliTools` sits under `metadata:` and declares a **binary plus a semver range** (`sf >= 2.0.0`). `allowed-tools` is a **top-level** frontmatter key allowlisting **individual invocations** — `Bash(sf api request rest)`, `Bash(sf data query)`, `Bash(jq)`. One is a dependency declaration; the other is a permission boundary.

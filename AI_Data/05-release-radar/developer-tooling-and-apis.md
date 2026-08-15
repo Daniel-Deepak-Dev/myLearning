@@ -4,6 +4,93 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-14 · `@salesforce/agents` 2.0.2 — `sf agent preview --api-name` was silently discarding `--context-variables`
+
+**What changed.** `@salesforce/agents` **2.0.2** (npm **2026-08-14 18:29:42 UTC**, PR [#335](https://github.com/forcedotcom/agents/pull/335), `W-23842329`) makes `ProductionAgent.startPreview` send context variables on session start. Before 2.0.2 the `--api-name` path built its request body without them, so the flag parsed, validated, and then went nowhere.
+
+**Two preview paths, one flag, different behaviour:**
+
+```mermaid
+graph TD
+  F["sf agent preview<br/>--context-variables Name=Value"] --> P{"which flag<br/>selects the agent?"}
+  P -->|"--authoring-bundle"| S["ScriptAgent<br/>local Agent Script"]
+  P -->|"--api-name"| R["ProductionAgent<br/>published + activated"]
+  S -->|"variables: [...] ✅<br/>since 2.0.0"| OK["agent sees them"]
+  R -->|"body omits variables ❌<br/>&le; 2.0.1"| BAD["agent runs without them,<br/>no error, no warning"]
+  R -->|"variables: [...] ✅<br/>2.0.2"| OK
+```
+
+- **The wire field is `variables`, not `contextVariables`.** `contextVariables` is the SDK-side option name (`AgentPreviewStartOptions.contextVariables`); the JSON posted to the org uses `variables`. Grepping for the wrong one finds nothing.
+- **Endpoint:** `POST <apiBase>/agents/<agentId>/sessions` — the committed-agent session endpoint, which accepted `variables` all along.
+- **The plugin was never at fault.** `@salesforce/plugin-agent` has passed `{ contextVariables }` since 2.0.0; its compiled `lib/` is byte-identical in 2.0.0 and 2.0.2. The library discarded them.
+- **A second, unannounced bug rode along.** `preview.start()` is typed `(apexDebugging?: boolean)`, and `startPreview` did `if (apexDebugging !== undefined) this.apexDebugging = apexDebugging`. The plugin passes an **object**, which is neither `undefined` nor falsy — so `this.apexDebugging` became truthy and `if (this.apexDebugging && this.canApexDebug())` fired.
+- **2.0.2's fix is a runtime shim, not a signature change.** `start()` now branches on `typeof arg === 'object'`, so library consumers calling `start(true)` still work.
+
+**Why it matters.** A dropped context variable does not throw. The agent answers plausibly from a session it was never given — the worst shape a bug can take in the step where you decide the agent is correct.
+
+This is the **second consecutive release** fixing an `--api-name` vs `--authoring-bundle` divergence: 2.0.1 fixed `bypassUser`, 2.0.2 fixes `variables`. Treat them as two clients of one agent, not one command with two selectors.
+
+**Gotchas:**
+- **The CLI hard-codes `type: "Text"`.** `ContextVariable.type` accepts `'Object' | 'Boolean' | 'DateTime' | 'Money' | 'Number' | 'Text' | 'Ref' | 'List'`, but `parseContextVariables` in `plugin-agent`'s `flags.js` emits `Text` for every entry. You **cannot** set a Number, Boolean or Ref context variable from `--context-variables`.
+- **Two namespaces, distinguished only by name shape.** `$Context.<Name>` is a *linked context variable*; a bare `<developerName>` is a *mutable state variable*. The CLI passes both through verbatim and transforms neither — a typo in the `$Context.` prefix silently changes which namespace you addressed.
+- **Syntax is `Name=Value`, comma-delimited, repeatable** (`Flags.string({ multiple: true, delimiter: ',' })`). An entry with no `=` throws `Invalid --context-variables: … Expected Name=Value.`; the value may itself contain `=` (only the first is split on).
+- **On ≤ 2.0.1, passing `--context-variables` to `--api-name` also switched Apex debugging on** without `--apex-debug`, which sets a **TraceFlag** in the org and consumes debug-log storage. If you previewed published agents with context variables last week, check Setup → Debug Logs for trace flags you did not ask for.
+- **It reaches stable `sf` today, by range — not by a new CLI.** `sf` 2.147.7 (`latest`) pins `plugin-agent` **2.0.0**, which ranges `@salesforce/agents` at **`^2.0.0`**. A fresh install resolves 2.0.2. A committed lockfile or an existing `node_modules` does not — verify with `npm ls @salesforce/agents`.
+
+**Relevant to:** **Developer** — `sf agent preview` is the day-to-day loop for both authoring models, and until 2.0.2 half of it lied about what the agent received; **Admin** — the accidental trace flags are an org-visible side effect, and grounding that depends on `$Context.*` cannot be validated in preview on an unpatched build.
+
+**Study action:** In a dev org, preview one published agent twice with `sf agent preview --api-name <Agent> --context-variables '$Context.EndUserLanguage=fr,MyState=abc'` — once with `@salesforce/agents` pinned to 2.0.1 and once at 2.0.2 — and diff the saved API responses under `./temp/agent-preview`. Then check Setup → Debug Logs after the 2.0.1 run.
+
+**Status:** Shipped — `@salesforce/agents` 2.0.2 and `@salesforce/plugin-agent` 2.0.2 (2026-08-14 19:52:32 UTC), both Node ≥ 22. On `sf` `nightly` 2.149.3; reaches `latest` 2.147.7 by range resolution on a fresh install.
+
+**Sources:** [forcedotcom/agents CHANGELOG](https://github.com/forcedotcom/agents/blob/main/CHANGELOG.md) · [PR #335](https://github.com/forcedotcom/agents/pull/335) · [plugin-agent CHANGELOG](https://github.com/salesforcecli/plugin-agent/blob/main/CHANGELOG.md) · npm registry metadata and published tarballs for `@salesforce/agents` 2.0.1 / 2.0.2 and `@salesforce/plugin-agent` 2.0.0 / 2.0.2
+
+---
+
+## 2026-08-14 · `sf-skills` 1.38.0 — 17 new skills, and `accessCheck` turns out to be an AND
+
+**What changed.** `forcedotcom/sf-skills` **1.38.0** (**2026-08-14 11:59 UTC**, commit `b64ed9a`, `W-23857172`, 348 files) ships **17 new + 21 updated skills**. Eleven of the seventeen are verified new by path (`200` at 1.38.0, `404` at 1.37.0); the remaining six sort alphabetically past `platform-custom-tab-generate` and could not be enumerated — see *Gotchas*.
+
+**The eleven, and what they are for:**
+
+| Skill | Surface it covers |
+|---|---|
+| `experience-aura-lwc-migrate` | Aura bundle → framework-agnostic PRD. **Phase 1 analysis only** — writes no `.html`/`.js`/`.css`/`.js-meta.xml` |
+| `experience-lwc-security-validate` | Lightning Web Security review; rule catalog `lws-001`…`lws-023b`; **SARIF 2.1.0** in score mode |
+| `experience-lwc-accessibility-validate` | WCAG conformance of an LWC — keyboard, screen reader. Ships at **version 1.1**, the only one of the eleven past 1.0 |
+| `experience-lwc-design-generate` | Orchestrator: Figma or PRD → LWC across five phases (requirements → generate → optimize → lint/compile → test) |
+| `experience-lwc-runtime-observe` | Runs `sf lightning dev` / Local Dev and extracts the **rendered shadow DOM** — what actually renders vs the template |
+| `experience-lds-graphql-generate` | Introspects the org's **LDS GraphQL schema**, builds a validated `gql` query, wires it via `lightning/uiGraphQLApi` |
+| `experience-lds-best-practices-apply` | UIAPI vs Apex, `refreshApex` / `notifyRecordUpdateAvailable`, `@salesforce/schema` imports |
+| `experience-ui-bundle-2gp-deploy` | UI Bundle as a **2GP managed/unlocked package** — create, install, upgrade, promote |
+| `experience-content-media-stock-image-search` | Licensed stock images via the **`media-management` MCP server** (`search_stock_images`) |
+| `dx-org-devhub-configure` | Enable Dev Hub (`enableScratchOrgManagementPref`) and read scratch-org allocation |
+| `automation-sandbox-post-copy-configure` | Applies a post-copy JSON config: derives the Tooling API sobject from `ConfigurationName`, then PATCHes the compound `Metadata` field via `sf api request rest` |
+
+**Why it matters.** Ten of the eleven are **front-end**, and four of those *validate* rather than generate. The library's centre of gravity is moving from "write me a component" to "gate the component I wrote" — the shape a catalogue takes once teams start shipping what it generates.
+
+Two consequences: `experience-lwc-security-validate` emits **SARIF 2.1.0**, so it belongs in a CI gate rather than a chat window; and `experience-aura-lwc-migrate` is the first checked-in answer to the Aura backlog, though it stops before writing code.
+
+**Gotchas:**
+- **A fifth MCP server is named, and nobody announced it either.** `experience-content-media-stock-image-search` declares `mcpTools: { media-management: { tools: ["search_stock_images"] } }`. The 08-13 entry listed four servers found in this field; `media-management` is new in 1.38.0 and appears nowhere else — the predecessor `experience-content-media-search` carries no `mcpTools` block at 1.37.0. **`mcpTools` frontmatter is now a reliable early-warning channel for unannounced MCP servers.** Still no `data360-*` server.
+- **`accessCheck` entries are ANDed, and there is no OR.** `dx-org-devhub-configure` needs `ModifyAllData` **or** `ModifyMetadata`, and its frontmatter declares only `ModifyAllData` — with a comment saying declaring both "would read as AND and could falsely gate an admin holding only one". A skill's `accessCheck` is therefore a *lower bound on one path*, not the permission truth.
+- **`accessCheck` has a second `type`.** The radar recorded it on 2026-08-01 as an org permission; it is a typed array. `type: "userPerm"` (`ModifyAllData`) and `type: "orgPref"` (`Package2Enabled`, on `experience-ui-bundle-2gp-deploy`) are both in use.
+- **`allowed-tools` is a *top-level* frontmatter key, not under `metadata:`.** `dx-org-devhub-configure` allowlists individual commands — `Bash(sf api request rest)`, `Bash(sf data query)`, `Bash(sf project deploy)`, `Bash(jq)`. It is a distinct surface from `cliTools`, which only declares a binary and a semver range.
+- **`minApiVersion` floors differ per skill and are real:** `47.0` for `dx-org-devhub-configure` (the Tooling API `DevHubSettings` endpoint), `58.0` for `experience-ui-bundle-2gp-deploy`.
+- **`experience-aura-lwc-migrate` has an internal-only dependency.** Resolver-assisted lookup (Phase 2, step 7) wants `@sfdc-internal/adk-knowledge`, an unpublishable scope — externally the skill degrades to reporting unknowns rather than resolving them. It also states plainly that **no checked-in skill covers Lightning Out Beta → 2.0 host-page migration**.
+- **The six unnamed new skills.** GitHub's tree view truncates `skills/` at 100 entries and `compare/1.37.0...1.38.0` fails to render ("this comparison is taking too long"); probing 28 plausible names returned no hits. They are new, and they are not identified here.
+- **The Friday cadence is back, but do not rely on it.** 1.36.0 shipped Tuesday and 1.37.0 Thursday; 1.38.0 is Friday. Poll the tags.
+
+**Relevant to:** **Developer** — eleven new skill names to install, plus an LWS rule catalog and SARIF output that can gate a build; **Admin** — `dx-org-devhub-configure` performs an **irreversible** Dev Hub enablement (`enableScratchOrgManagementPref`) that does not work in sandboxes; **Architect** — the AND semantics of `accessCheck` decide whether a declared prerequisite can be trusted as a gate.
+
+**Study action:** `npx skills add forcedotcom/sf-skills`, run `experience-lwc-security-validate` in **score mode** against one existing LWC, and feed the SARIF output into your CI's code-scanning ingest. Then open `skills/dx-org-devhub-configure/SKILL.md` and read the `accessCheck` comment before you write an `accessCheck` block of your own.
+
+**Status:** Shipped — `forcedotcom/sf-skills` 1.38.0, 2026-08-14, Apache-2.0.
+
+**Sources:** [sf-skills CHANGELOG](https://github.com/forcedotcom/sf-skills/blob/main/CHANGELOG.md) · [release 1.38.0](https://github.com/forcedotcom/sf-skills/releases/tag/1.38.0) · [`experience-lwc-security-validate`](https://github.com/forcedotcom/sf-skills/blob/1.38.0/skills/experience-lwc-security-validate/SKILL.md) · [`dx-org-devhub-configure`](https://github.com/forcedotcom/sf-skills/blob/1.38.0/skills/dx-org-devhub-configure/SKILL.md) · [`experience-ui-bundle-2gp-deploy`](https://github.com/forcedotcom/sf-skills/blob/1.38.0/skills/experience-ui-bundle-2gp-deploy/SKILL.md)
+
+---
+
 ## 2026-08-13 · SDR 13.1.1 patches a *second* path escape in the same transformer — a TOCTOU symlink write
 
 **What changed.** `@salesforce/source-deploy-retrieve` **13.1.1** (npm **2026-08-13 16:01:37 UTC**, PR [#1820](https://github.com/forcedotcom/source-deploy-retrieve/pull/1820), `W-23808206`) fixes a **TOCTOU** symlink escape in `staticResourceMetadataTransformer.ts` — the same file, same class and same code path as the zip-slip patched 13 days earlier in 13.0.1.

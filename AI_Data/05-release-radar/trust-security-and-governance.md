@@ -4,6 +4,17 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-14 · A declared prerequisite that reads as AND, and a debug flag nobody asked for (cross-link)
+
+Two governance points from the tooling window, both about **declarations you might mistake for guarantees**.
+
+- **An Agent Skill's `accessCheck` array is ANDed and has no OR operator.** `dx-org-devhub-configure` needs `ModifyAllData` *or* `ModifyMetadata`, so it declares only one. A skill's declared permission is a **lower bound on one path**, never the permission truth — do not build an entitlement review on it.
+- **A truthy options object created TraceFlags nobody asked for.** On `@salesforce/agents` ≤ 2.0.1, `--context-variables` on a published-agent preview set `this.apexDebugging` by accident, enabling Apex debugging without `--apex-debug`. An options object landed in a `boolean` parameter and changed org state.
+
+Full entries: [`sf-skills` 1.38.0](developer-tooling-and-apis.md#2026-08-14--sf-skills-1380--17-new-skills-and-accesscheck-turns-out-to-be-an-and) · [`@salesforce/agents` 2.0.2](developer-tooling-and-apis.md#2026-08-14--salesforceagents-202--sf-agent-preview---api-name-was-silently-discarding---context-variables).
+
+---
+
 ## 2026-08-13 · A second path escape in the same metadata transformer — and the pinning rule that decides whether a fix reaches you (cross-link)
 
 `@salesforce/source-deploy-retrieve` **13.1.1** fixes a **TOCTOU symlink escape** in `staticResourceMetadataTransformer.ts`, 13 days after the zip-slip in the *same* file. The governance point is not the bug count but the **threat model**: the malicious input is a symlink **in your own working tree**, so a cloned repository is an attack surface for `sf project retrieve`, not just an untrusted org. The propagation rule generalises beyond this fix — **`sf` pins plugins exactly and plugins range their libraries**, so a library security patch reaches stable on a fresh install while a plugin feature does not. Neither the 12.x line nor `plugin-deploy-retrieve` 3.x can ever receive either fix. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-13--sdr-1311-patches-a-second-path-escape-in-the-same-transformer--a-toctou-symlink-write).

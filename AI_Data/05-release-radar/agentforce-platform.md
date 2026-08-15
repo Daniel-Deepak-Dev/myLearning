@@ -4,6 +4,18 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 ---
 
+## 2026-08-14 · Previewing by `--api-name` is not the same client as `--authoring-bundle` (cross-link)
+
+`sf agent preview` selects between two library classes, and they have now diverged twice in five days: `--authoring-bundle` builds a **`ScriptAgent`**, `--api-name` builds a **`ProductionAgent`**.
+
+- **2.0.1** gave `ProductionAgent` the correct `bypassUser` for employee agents; **2.0.2** (2026-08-14) gave it the session's **context variables**, which it had been dropping.
+- **The wire field is `variables`**, not `contextVariables` — the latter is only the SDK/CLI option name.
+- **Two namespaces, told apart by name shape alone:** `$Context.<Name>` is a *linked context variable*, a bare `<developerName>` is a *mutable state variable*. The CLI transforms neither.
+
+A preview that silently loses its context is a preview that validated nothing. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-14--salesforceagents-202--sf-agent-preview---api-name-was-silently-discarding---context-variables).
+
+---
+
 ## 2026-08-12 · Retrieving a *whole* agent becomes one flag — `--root-type-with-dependencies` (cross-link)
 
 `sf project retrieve start` gains **`--root-type-with-dependencies`**, whose only legal values are **`Bot`** and **`AiAgentDefinitionVersion`**. Naming a `Bot` as the root also retrieves its dependent `GenAiPlannerBundle`, `GenAiPlugin` and `GenAiFunction` components, replacing the hand-maintained manifest that agent source control has needed until now. It maps to `rootTypesWithDependencies` on the Metadata API `RetrieveRequest`, so it is available to any API caller — but on the CLI it is **`nightly`-only** as of 2026-08-14. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-12--sf-project-retrieve-start---root-type-with-dependencies--the-cli-half-of-the-v68-agent-metadata-story-and-it-takes-exactly-two-values).

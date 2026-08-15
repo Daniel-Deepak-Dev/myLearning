@@ -144,3 +144,9 @@ A: Which setting. Zero-shot and demonstration-augmented are separate data files 
 
 Q: GIFT-Eval #184–#186 merged within two days; #188 has been open four. What does that teach about leaderboard submissions?
 A: "Submitted" is an indefinite state, not a queue position. Merge latency is not predictable from a previous batch, so a submission is not a result until you see the merged commit.
+
+Q: Why should `sf agent preview --api-name` and `--authoring-bundle` be treated as two clients rather than one command with two selectors?
+A: They instantiate different library classes — `ProductionAgent` and `ScriptAgent` — and have diverged twice in five days. 2.0.1 fixed `bypassUser` for employee agents on the `--api-name` path; 2.0.2 fixed dropped session `variables` on the same path. A behaviour verified through one flag is not evidence about the other.
+
+Q: What makes a silently dropped context variable worse than a preview that errors?
+A: Preview is the step where you decide the agent is correct. An error tells you to look; a dropped variable produces a plausible answer from a session the agent was never given, so the wrong conclusion is the one you carry forward into testing.
