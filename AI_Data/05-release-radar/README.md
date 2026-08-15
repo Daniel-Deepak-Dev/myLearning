@@ -58,7 +58,7 @@ Five things define the current Salesforce AI landscape. If you only retain five,
 
 ## Writing contract
 
-The `Salesforce AI release radar` routine writes to this contract. It lives here rather than in the prompt so the rules travel with the repo. Where the prompt and this section disagree, **this section wins**.
+The `Salesforce AI release radar` routine writes to this contract. It lives here rather than in the prompt so the rules travel with the repo. Where the prompt and this section disagree, **this section wins**. The routine's own prompt is version-controlled at [ROUTINE-PROMPT.md](ROUTINE-PROMPT.md).
 
 ### The signal gate — what gets written at all
 
