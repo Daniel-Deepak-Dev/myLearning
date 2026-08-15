@@ -118,7 +118,7 @@ Note too that three of five entries are `agentic` rather than a single trained m
 
 **Status:** Community leaderboard submissions, **not Salesforce research output**. #179–#183 merged 2026-07-31; **#184–#186 merged 2026-08-03** (see the correction above), **#187 closed unmerged** as a duplicate. No paper, model or blog post accompanied any of them.
 
-**Sources:** [gift-eval](https://github.com/SalesforceAIResearch/gift-eval) · [pull requests](https://github.com/SalesforceAIResearch/gift-eval/pulls?q=is%3Apr+sort%3Aupdated-desc) · [PR #184](https://github.com/SalesforceAIResearch/gift-eval/pull/184) · [PR #186](https://github.com/SalesforceAIResearch/gift-eval/pull/186) · [PR #187](https://github.com/SalesforceAIResearch/gift-eval/pull/187) · scan notes [2026-07-30](03-salesforce-ai-research/2026-07-30.md), [2026-08-01](03-salesforce-ai-research/2026-08-01.md), [2026-08-03](03-salesforce-ai-research/2026-08-03.md)
+**Sources:** [gift-eval](https://github.com/SalesforceAIResearch/gift-eval) · [pull requests](https://github.com/SalesforceAIResearch/gift-eval/pulls?q=is%3Apr+sort%3Aupdated-desc) · [PR #184](https://github.com/SalesforceAIResearch/gift-eval/pull/184) · [PR #186](https://github.com/SalesforceAIResearch/gift-eval/pull/186) · [PR #187](https://github.com/SalesforceAIResearch/gift-eval/pull/187) · scan notes [2026-07-30](03-salesforce-ai-research/2026-07-30.md), [2026-08-03](03-salesforce-ai-research/2026-08-03.md)
 
 ---
 
