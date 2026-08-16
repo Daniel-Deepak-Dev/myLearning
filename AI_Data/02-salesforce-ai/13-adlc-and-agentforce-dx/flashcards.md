@@ -267,3 +267,21 @@ A: The **MCP servers and tool names** a skill needs, with an optional `semver` r
 
 Q: How does the `salesforce-development` plugin know a skill has not been tampered with?
 A: `catalog/discovery.json` carries a per-skill `skillMdSha256` and `treeSha256`. That is the mechanism behind the 1.10.0 fix that limits capability discovery to skills **verified installed and unmodified** — edit a `SKILL.md` locally and it drops out of discovery.
+
+Q: The hosted `headless-360` MCP server exposes how many tools, and what are they?
+A: **Four meta-tools**, not a per-operation catalogue: `discover` (semantic search over an indexed operation catalog), `describe` (input schema and canonical route for one operation), `dispatch_readonly` (GET) and `dispatch` (POST/PATCH/DELETE). This corrects the "~100 admin-facing skills" framing.
+
+Q: What does `mcp__headless-360__dispatch` actually take as arguments?
+A: **Raw HTTP** — `{url, method, body?, queryParams?}` — not `{operation_id, arguments}`. `queryParams` must be camelCase; the tool rejects `query_params`. The response envelope is `{"status_code": …, "body": {…}}`.
+
+Q: Which org does a `headless-360` dispatch call hit, and why does that matter?
+A: The org bound to the **OAuth JWT of the current MCP session**. No org id, alias or credential appears in the call — which is why the same skill works against production and sandbox, and why the only thing separating a sandbox write from a production write is which session you are connected to.
+
+Q: `mcp__headless-360__discover` returns nothing for a route you need. What does that prove?
+A: Nothing. Documented Setup and Connect routes are not all indexed in the discovery corpus. Dispatch the exact path directly; only a real `404` from the call itself proves the route is unavailable on that org.
+
+Q: `sf-skills` is Apache-2.0 — so is the npm package safe for client work?
+A: Not unambiguously. `@salesforce/afv-skills` declares `"license": "CC-BY-NC-4.0"` in `package.json` on every published version, while the same tarball ships a byte-identical Apache-2.0 `LICENSE.txt`. SBOM and licence scanners read the manifest, so they will flag NonCommercial. The GitHub copy — what `npx skills add` fetches — is the defensible one.
+
+Q: Two `@salesforce/agents` patches in five days hit the same code path. What is the shared root cause?
+A: `sf agent preview --api-name` builds a preview session that is initialised differently from `--authoring-bundle`. 2.0.1 sent the wrong `bypassUser` (breaking employee agents); 2.0.2 sent no context variables. Both fail **silently** — the agent reasons without the values rather than erroring.

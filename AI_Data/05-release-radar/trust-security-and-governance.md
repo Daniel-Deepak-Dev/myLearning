@@ -4,6 +4,12 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-14 · One error code, two gates — and a hosted MCP dispatcher that carries no org identifier (cross-link)
+
+Two governance points out of `sf-skills` 1.38.0. **First, `403 FUNCTIONALITY_NOT_ENABLED` is overloaded**: for Service Cloud ITSM CMDB it means the org feature is off **or** the running user holds no CMDB permission set, and the skills have to disambiguate on feature `status == ENABLED` rather than on a data read. Any org-plus-user double gate that collapses to one code will be diagnosed wrongly at least once. **Second, the hosted `headless-360` MCP server derives its org from the OAuth JWT bound to the session** — no alias, no org id, no credential in the call — and it dispatches **raw HTTP** over the Connect/Setup surface. Convenient, and it means the only thing separating a sandbox write from a production write is which session is connected; it sits behind org gate `api.agentic.access.enableHeadless360McpServer`. Full entries: [the CMDB gate](developer-tooling-and-apis.md#2026-08-14--service-cloud-itsm-cmdb-gets-a-six-skill-setup-path--and-it-publishes-the-five-layer-gate-behind-one-error-code) · [the dispatcher shape](developer-tooling-and-apis.md#2026-08-14--headless-360-appears-in-skill-frontmatter--and-the-hosted-server-turns-out-to-be-four-meta-tools-not-a-tool-catalogue).
+
+---
+
 ## 2026-08-13 · A second path escape in the same metadata transformer — and the pinning rule that decides whether a fix reaches you (cross-link)
 
 `@salesforce/source-deploy-retrieve` **13.1.1** fixes a **TOCTOU symlink escape** in `staticResourceMetadataTransformer.ts`, 13 days after the zip-slip in the *same* file. The governance point is not the bug count but the **threat model**: the malicious input is a symlink **in your own working tree**, so a cloned repository is an attack surface for `sf project retrieve`, not just an untrusted org. The propagation rule generalises beyond this fix — **`sf` pins plugins exactly and plugins range their libraries**, so a library security patch reaches stable on a fresh install while a plugin feature does not. Neither the 12.x line nor `plugin-deploy-retrieve` 3.x can ever receive either fix. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-13--sdr-1311-patches-a-second-path-escape-in-the-same-transformer--a-toctou-symlink-write).

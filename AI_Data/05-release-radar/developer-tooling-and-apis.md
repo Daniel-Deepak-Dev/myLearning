@@ -4,6 +4,110 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-14 · Service Cloud ITSM CMDB gets a six-skill setup path — and it publishes the five-layer gate behind one error code
+
+**What changed.** `forcedotcom/sf-skills` **1.38.0** (2026-08-14, 17 new + 21 updated skills, 121 → **138** skills) adds six `service-itsm-*` skills. Five are a coordinated **CMDB** (Configuration Management Database) enablement set; the sixth configures the Incident Priority Matrix.
+
+- **The orchestrator** `service-itsm-agentic-setup-cmdb-coordinate` delegates to four child skills, one per layer, and verifies each before advancing.
+- **The gate every CMDB Connect API checks** is published verbatim: `orgHasCMDBEnabled = orgHasCMDBPermission (org perm ITSrvcsCnfgMgmnt) && OrgPreferences.CMDBEnabled`.
+- **Failing it returns `403 FUNCTIONALITY_NOT_ENABLED`** — the same code at every layer, which is the whole problem the skills exist to solve.
+
+```mermaid
+flowchart TD
+    L0["<b>Layer 0</b> — Org SKU / licence<br/>org perm <code>ITSrvcsCnfgMgmnt</code><br/><i>no API can grant it — verify only</i>"]
+    L1["<b>Layer 1</b> — ITOM tenant<br/>status must reach <code>PROVISIONED</code> (async)"]
+    L2["<b>Layer 2</b> — Feature enable<br/>feature <code>service-cloud-itsm-cmdb-integration</code><br/><i>this is what flips CMDBEnabled</i>"]
+    L3["<b>Layer 3</b> — User access<br/>4 permission sets + their PSLs"]
+    L4["<b>Layer 4</b> — Content<br/>install <b>CMDB Foundation</b> base bundle"]
+    L5["<b>Layer 5</b> — Asset Discovery<br/>feature <code>service-cloud-itsm-discovery-integration</code><br/>+ IT Service Discovery Manager perm set"]
+    L0 --> L1 --> L2 --> L3 --> L4 --> L5
+    L0 -.->|"SKU absent"| STOP["Setup cannot proceed.<br/>Nothing downstream helps."]
+```
+
+**The four user-level permission sets**, each license-backed and each needing its own permission-set licence:
+
+| Role | Permission set (`Name`) | Backing PSL (`DeveloperName`) |
+|---|---|---|
+| Reader | `ItSrvcCnfgItmReadPermissionSet` | `ItSrvcCnfgItmReadPsl` |
+| Owner | `ItSrvcCnfgItmOwnerPermissionSet` | `ItSrvcCnfgItmOwnerPsl` |
+| Type Reader | `ItSrvcCnfgItmTypReadPermissionSet` | `ItSrvcCnfgItmTypReadPsl` |
+| Type Manager | `ItSrvcCnfgItmTypManagerPermissionSet` | `ItSrvcCnfgItmTypMgrPsl` |
+
+**Why it matters.** A licence-gated feature with six ordered prerequisites and **one undifferentiated error code** is the shape that burns days. The durable value is not the skills but the published gate expression: it tells you what to check, and in what order, whether or not you run one. It all runs through the **hosted Headless-360 MCP server**, so it works against production.
+
+**Gotchas:**
+- **`403 FUNCTIONALITY_NOT_ENABLED` has two distinct causes** — feature off at the org, *or* the running user holds no CMDB permission set. Disambiguate on the feature `status == ENABLED`, **never** on a CMDB data read such as `bundleListView`.
+- **Layer 0 is unrecoverable in-flight.** `ITSrvcsCnfgMgmnt` comes from the edition, licence or org template; **no API can grant it**. If the org was not born with the CMDB SKU, stop.
+- **`CMDBEnabled` is not directly settable.** It flips as a side effect of enabling `service-cloud-itsm-cmdb-integration` — don't hunt for a preference toggle.
+- **Bundle management needs Type Manager specifically.** Reader / Owner / Type Reader all still get `403` on `GET /connect/cmdb/bundles/details` and other bundle operations.
+- **Cheapest Layer 0 probe:** query for the PSL `ItSrvcCnfgItmReadPsl`. It exists only on orgs carrying the CMDB SKU, and it works on scratch and sandbox orgs where org-permission reads may not.
+- **A `discover` miss is not absence.** The Setup/Connect routes these skills use are documented but not always indexed in the Headless-360 discovery corpus — dispatch the exact path, and only treat a route as unavailable on a real `404`.
+- The sixth skill, `service-itsm-incident-priority-configure`, is the **`sf` CLI** path (≥ 2.60.0) and needs `CustomizeApplication` plus org pref `ITSMIncidentMgmtEnabled` — a different Impact × Urgency → Priority surface, not part of the CMDB stack.
+
+**Relevant to:** **Architect** — Layer 0 is a licence decision that no amount of configuration can undo, so CMDB has to be settled at SKU-selection time; **Admin** — six ordered enablement steps, four permission sets and two feature toggles that must be clicked or dispatched in order; **Developer** — exact feature keys, permission-set and PSL API names, and the gate expression to test against.
+
+**Study action:** in a dev org, dispatch a read for the PSL `ItSrvcCnfgItmReadPsl` (`SELECT Id, DeveloperName FROM PermissionSetLicense WHERE DeveloperName = 'ItSrvcCnfgItmReadPsl'`). Whichever way it answers, you have executed the Layer 0 check on a real org and learned what "the SKU is absent" looks like before a client asks.
+
+**Status:** Shipped — `forcedotcom/sf-skills` 1.38.0 / npm `@salesforce/afv-skills` 1.38.0, published **2026-08-14 11:59:53 UTC**. Skills declare `minApiVersion: "67.0"`. The underlying CMDB feature is a Service Cloud ITSM capability; no Salesforce announcement accompanied the skills.
+
+**Sources:** [sf-skills CHANGELOG 1.38.0](https://github.com/forcedotcom/sf-skills/blob/main/CHANGELOG.md) · [`service-itsm-agentic-setup-cmdb-coordinate`](https://github.com/forcedotcom/sf-skills/blob/main/skills/service-itsm-agentic-setup-cmdb-coordinate/SKILL.md) · [`…-cmdb-configure`](https://github.com/forcedotcom/sf-skills/blob/main/skills/service-itsm-agentic-setup-cmdb-configure/SKILL.md) · [`…-cmdb-access-assign`](https://github.com/forcedotcom/sf-skills/blob/main/skills/service-itsm-agentic-setup-cmdb-access-assign/SKILL.md) · [`…-cmdb-bundle-deploy`](https://github.com/forcedotcom/sf-skills/blob/main/skills/service-itsm-agentic-setup-cmdb-bundle-deploy/SKILL.md) · [npm `@salesforce/afv-skills`](https://www.npmjs.com/package/@salesforce/afv-skills)
+
+---
+
+## 2026-08-14 · `headless-360` appears in skill frontmatter — and the hosted server turns out to be four meta-tools, not a tool catalogue
+
+**What changed.** The `mcpTools` frontmatter field added in 1.37.0 went from **7 skills / 3 servers** to **13 skills / 6 servers** in 1.38.0. Three server keys are new: **`headless-360`** (5 skills), **`media-management`**, **`content-readonly`**. `headless-360` had **zero** mentions anywhere in the 1.37.0 catalogue.
+
+**The shape of the hosted server, as its consumers describe it:**
+
+- **Four meta-tools, not ~100 skills** — `discover` (semantic search over an indexed operation catalog), `describe` (schema + canonical route for one operation), `dispatch_readonly` (GET), `dispatch` (POST/PATCH/DELETE).
+- **`dispatch` takes raw HTTP**, not `{operation_id, arguments}`: `{url, method, body?, queryParams?}`.
+- **The org comes from the OAuth JWT bound to the MCP session.** No org id, alias or credential ever passes through the skill — which is why these skills work identically against production and sandbox with **no per-user MCP install**.
+- **Response envelope** is `{"status_code": 200, "body": {…}}` — read the field off `body`.
+- **An org gate is named for the first time:** `api.agentic.access.enableHeadless360McpServer`.
+
+**Why it matters.** This corrects a model this radar has carried since 2026-07-26, which recorded the server as a Beta "with ~100 admin-facing skills". Its consumers describe a **generic dispatcher over the whole Connect/Setup surface** — a much larger blast radius and a much smaller thing to learn. "Is this operation supported?" is answered by the REST route, not a tool list.
+
+**Gotchas:**
+- **`queryParams` is camelCase.** The tool rejects `query_params`.
+- **`discover` returning nothing does not mean the route is absent.** Documented Setup and Connect routes are not all indexed. Dispatch the exact path; only a real `404` from the call proves absence.
+- **`semver: ">=1.0.0"` is a declared floor, not evidence of GA.** It says the skill needs a 1.x server; it does not by itself retire the Beta status recorded on 2026-07-26.
+- **Verify the session's org before any write.** With no alias in the call, the only thing standing between a sandbox change and a production change is which session you are in.
+- `content-readonly` declares `semver: "^1.0.0"` while the other new servers declare `>=1.0.0` — the field carries real ranges, not a boilerplate string.
+- **No `data360-*` MCP server appears in any `mcpTools` block** (checked across all 138 skills, 2026-08-16 03:39 UTC), closing the watch item raised on 08-14 negatively.
+
+**Relevant to:** **Developer** — the actual call shape of the hosted server, its envelope, and the two traps (`queryParams` casing, discovery misses); **Architect** — a session-bound, alias-free dispatcher over Connect/Setup changes how you reason about blast radius and about which org an agent is pointed at.
+
+**Study action:** grep the installed catalogue for the field — `grep -rl "mcpTools:" skills/*/SKILL.md` after `npx skills add forcedotcom/sf-skills` — then open one `references/mcp-invocation.md` and copy its `dispatch_readonly` call shape into your own MCP client against a dev org.
+
+**Status:** Shipped in `forcedotcom/sf-skills` 1.38.0, **2026-08-14**. The `headless-360` server itself has no new announcement; these are first-party consumers documenting it. Hosted MCP standard servers are GA; the Headless 360 server's own Beta status is **unchanged and unconfirmed** by this release.
+
+**Sources:** [`service-itsm-agentic-setup-cmdb-configure/references/mcp-invocation.md`](https://github.com/forcedotcom/sf-skills/blob/main/skills/service-itsm-agentic-setup-cmdb-configure/references/mcp-invocation.md) · [`service-itsm-incident-priority-configure`](https://github.com/forcedotcom/sf-skills/blob/main/skills/service-itsm-incident-priority-configure/SKILL.md) · [`experience-content-media-stock-image-search`](https://github.com/forcedotcom/sf-skills/blob/main/skills/experience-content-media-stock-image-search/SKILL.md) · [Headless 360: What It Means for Developers](https://developer.salesforce.com/blogs/2026/05/headless-360-what-it-means-for-developers)
+
+---
+
+## 2026-08-14 · `@salesforce/agents` 2.0.2 — the `--api-name` preview path drops context variables
+
+**What changed.** `@salesforce/agents` **2.0.2** (npm **2026-08-14 18:29:41 UTC**, PR [#335](https://github.com/forcedotcom/agents/issues/335), `W-23842329`) makes `sf agent preview --api-name` **send context variables** when previewing a published agent. `@salesforce/plugin-agent` **2.0.2** (19:52:32 UTC) bumps to it; `sf` **2.149.4** (`nightly`) pins that plugin.
+
+**Why it matters.** Second defect in five days in the same code path, both the same class: **`--api-name` builds a preview session the way `--authoring-bundle` does not.** 2.0.1 sent the wrong `bypassUser`; 2.0.2 sent no context variables. An agent branching on a context variable previews as if every variable were empty — it does not error, it behaves like a different agent.
+
+**Gotchas:**
+- **Silent, not loud.** No exception is raised; the agent simply reasons without the values, so a preview can "pass" against behaviour you will never see in production.
+- **`--authoring-bundle` was never affected.** If you previewed from the bundle and shipped, then debugged from `--api-name`, the two paths genuinely disagreed — that is a tooling bug, not your agent.
+- **Neither 2.0.1 nor 2.0.2 is on stable `sf` yet.** `latest` is **2.147.7**, whose `plugin-agent` **2.0.0** ranges `@salesforce/agents` `^2.0.0` — so a *fresh* install resolves 2.0.2 by range, but a lockfile or existing `node_modules` does not. Verify with `npm ls @salesforce/agents`.
+- The pinning asymmetry from 08-13 holds: the library fix propagates to stable by range, the plugin bump does not until a new `sf` ships. Earliest `latest-rc` per the Wednesday cadence is **2026-08-19**.
+
+**Relevant to:** **Developer** — `sf agent preview --api-name` is the everyday debug loop for a published agent, and until 2.0.2 resolves it silently under-reports what the agent does.
+
+**Study action:** publish an agent whose instructions reference a context variable, preview it once with `--authoring-bundle` and once with `--api-name` on `@salesforce/agents` 2.0.1, and diff the two transcripts — then upgrade to 2.0.2 and confirm the difference disappears.
+
+**Status:** Shipped — `@salesforce/agents` 2.0.2 and `@salesforce/plugin-agent` 2.0.2, both **2026-08-14**. On `nightly` `sf` 2.149.4 (2026-08-16 02:45 UTC); not yet on `latest` or `latest-rc`.
+
+**Sources:** [forcedotcom/agents CHANGELOG](https://github.com/forcedotcom/agents/blob/main/CHANGELOG.md) · [plugin-agent CHANGELOG](https://github.com/salesforcecli/plugin-agent/blob/main/CHANGELOG.md) · [npm `@salesforce/agents`](https://www.npmjs.com/package/@salesforce/agents)
+
+---
+
 ## 2026-08-13 · SDR 13.1.1 patches a *second* path escape in the same transformer — a TOCTOU symlink write
 
 **What changed.** `@salesforce/source-deploy-retrieve` **13.1.1** (npm **2026-08-13 16:01:37 UTC**, PR [#1820](https://github.com/forcedotcom/source-deploy-retrieve/pull/1820), `W-23808206`) fixes a **TOCTOU** symlink escape in `staticResourceMetadataTransformer.ts` — the same file, same class and same code path as the zip-slip patched 13 days earlier in 13.0.1.

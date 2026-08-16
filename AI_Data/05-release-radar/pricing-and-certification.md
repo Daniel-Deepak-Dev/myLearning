@@ -4,7 +4,47 @@ Commercial model and exam changes — the two things clients and recruiters ask 
 
 ---
 
+## 2026-08-16 · `sf-skills` is Apache-2.0 on GitHub and **CC BY-NC 4.0 on npm** — one tree, two licence statements
+
+**What changed.** Nothing shipped; a contradiction was found inside the artifact the entry below calls the commercially-safe copy. `forcedotcom/sf-skills` publishes to npm as **`@salesforce/afv-skills`**, and that package's manifest declares `"license": "CC-BY-NC-4.0"` — on **every published version**, including all 12 released after the 2026-06-29 Apache-2.0 relicensing.
+
+- **Repo `LICENSE.txt`** — Apache License 2.0, "Copyright (c) 2026 Salesforce, Inc."
+- **Repo `package.json`** — `"license": "CC-BY-NC-4.0"`
+- **The tarball ships both.** `@salesforce/afv-skills@1.38.0` contains `package/LICENSE.txt` **byte-identical** to the repo's (md5 `609f9a6b02ce4af3f8b94db949dec35c`) alongside a manifest saying NonCommercial.
+- **Continuous, not a slip in one release.** All 25 versions from 1.14.0 (2026-06-03) through 1.38.0 (2026-08-14) declare `CC-BY-NC-4.0`.
+
+```mermaid
+flowchart TD
+    REPO["forcedotcom/sf-skills<br/>one git tree"]
+    REPO -->|"npx skills add forcedotcom/sf-skills<br/><i>the README's own install path</i>"| GH["GitHub copy<br/><b>Apache-2.0</b> per LICENSE.txt"]
+    REPO -->|"npm publish"| NPM["@salesforce/afv-skills<br/><b>CC-BY-NC-4.0</b> per package.json"]
+    NPM --> TAR["…whose tarball also contains<br/>an Apache-2.0 LICENSE.txt"]
+    GH --> OK["Commercial use: defensible"]
+    TAR --> AMB["Commercial use: <b>ambiguous</b><br/>SBOM and licence scanners read<br/>package.json, not LICENSE.txt"]
+```
+
+**Why it matters.** The entry below concluded that the licence "attaches to the copy you took, not to the skill" — right, but the unit is finer than *repository*. Two copies of one commit disagree. Licence tooling reads the manifest, so a project pulling this package is flagged **NonCommercial** by its own compliance pipeline whatever `LICENSE.txt` says.
+
+**Gotchas:**
+- **`npm view @salesforce/afv-skills license` returns `CC-BY-NC-4.0`.** That string, not the file, is what npmjs.com displays and what SPDX/SBOM generators record.
+- **The README's install path is the safer one.** `npx skills add forcedotcom/sf-skills` reads GitHub. **Agentforce Vibes auto-installs** the skills, and which channel it uses is not stated anywhere public.
+- **`grep`ping `LICENSE`/`LICENSE.txt` cannot find this** — which is exactly what the study action on the entry below tells you to do. Check `package.json` `license` fields too.
+- **Do not read this as Salesforce revoking Apache-2.0.** The likelier reading is that the June relicensing updated `LICENSE.txt` and missed the manifest. Either way, an unresolved contradiction is not a permission.
+- **Nothing here changes `agentforce-adlc`**, which remains unambiguously CC BY-NC 4.0.
+
+**Relevant to:** **Architect** — a client-deliverable dependency whose two licence statements disagree is a procurement question, not an engineering one, and it needs raising before the skills are vendored; **Developer** — `npm ls` / SBOM output will report NonCommercial for a package your `LICENSE.txt` check cleared.
+
+**Study action:** run `npm view @salesforce/afv-skills license` and `npm pack @salesforce/afv-skills@1.38.0`, then `tar xzf` the tarball and read `package/LICENSE.txt` next to `package/package.json`. Seeing the two statements side by side in one artifact is the point — then apply the same two-place check to every vendored dependency you have cleared on a LICENSE file alone.
+
+**Status:** Standing finding, verified **2026-08-16 03:38–03:39 UTC** against the npm registry and `raw.githubusercontent.com`. Not announced, not a change — a discrepancy that has been live since at least 2026-06-03. No Salesforce statement located either way.
+
+**Sources:** [npm `@salesforce/afv-skills`](https://www.npmjs.com/package/@salesforce/afv-skills) · [sf-skills `package.json`](https://github.com/forcedotcom/sf-skills/blob/main/package.json) · [sf-skills `LICENSE.txt`](https://github.com/forcedotcom/sf-skills/blob/main/LICENSE.txt) · [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+
+---
+
 ## 2026-08-01 · The same Agentforce skills ship under two licences — only one permits client work
+
+> **Correction (2026-08-16):** this entry said `forcedotcom/sf-skills` is **Apache-2.0** and therefore the copy to take for commercial work. That holds for the **GitHub** copy and for `npx skills add`, and the table below is unchanged. It does **not** hold for the **npm** copy: `@salesforce/afv-skills` has declared `"license": "CC-BY-NC-4.0"` in its manifest on every version, before and after the 2026-06-29 relicensing. The rule "the licence attaches to the copy you took" survives — the unit is the **channel**, not the repository. See the entry above.
 
 **What changed.** The three `agentforce-*` Agent Skills are published in **two public repositories from one internal source**, at identical versions, under **different licences**.
 

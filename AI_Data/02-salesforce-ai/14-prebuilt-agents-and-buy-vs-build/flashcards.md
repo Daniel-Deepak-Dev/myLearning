@@ -78,3 +78,21 @@ A: That ecosystem integration was Beta from May 2026, not GA at the 2026-04-29 l
 
 Q: How should you quote Agentforce Operations' "50-70% cycle time" and "80% less manual data entry"?
 A: As vendor claims with no published methodology — and note that no first-party page was reachable to verify them. Pricing and licensing are also unestablished, so the buy-vs-build comparison cannot be closed on cost.
+
+Q: What single expression gates every Service Cloud ITSM CMDB Connect API?
+A: `orgHasCMDBEnabled = orgHasCMDBPermission && OrgPreferences.CMDBEnabled`, where the first term is the org permission `ITSrvcsCnfgMgmnt`. Until both hold, every CMDB API returns `403 FUNCTIONALITY_NOT_ENABLED`.
+
+Q: Why is Layer 0 of CMDB enablement different in kind from the layers above it?
+A: `ITSrvcsCnfgMgmnt` comes from the org's edition, licence or template and **no API can grant it**. Every other layer is something you can turn on; this one is a purchasing decision made before the org existed. If it is absent, setup stops — nothing downstream helps.
+
+Q: A user gets `403 FUNCTIONALITY_NOT_ENABLED` from a CMDB read. What are the two possible causes, and how do you tell them apart?
+A: Either the org feature is off, or the running user holds no CMDB permission set. Disambiguate on the **feature `status == ENABLED`** — never on a CMDB data read such as `bundleListView`, because that read enforces both gates and returns the same code for each.
+
+Q: Name the four CMDB permission sets and the one that bundle management specifically requires.
+A: `ItSrvcCnfgItmReadPermissionSet` (Reader), `ItSrvcCnfgItmOwnerPermissionSet` (Owner), `ItSrvcCnfgItmTypReadPermissionSet` (Type Reader), `ItSrvcCnfgItmTypManagerPermissionSet` (Type Manager) — each with its own backing PSL. **Type Manager** is the one that clears `403` on bundle operations; the other three do not.
+
+Q: What is the cheapest reliable probe for whether an org carries the CMDB SKU?
+A: Query for the permission-set licence `ItSrvcCnfgItmReadPsl`. It is provisioned by the same licence that grants `ITSrvcsCnfgMgmnt`, and unlike an org-permission read it works on every org type including scratch and sandbox.
+
+Q: Why does `CMDBEnabled` not appear as a toggle you can set?
+A: It is not directly settable. It flips as a side effect of enabling the feature `service-cloud-itsm-cmdb-integration` (Layer 2). Looking for a preference to flip is the wrong search.

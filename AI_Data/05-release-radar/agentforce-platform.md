@@ -4,6 +4,18 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 ---
 
+## 2026-08-14 · The prebuilt IT Service surface gets a real enablement path — and it is licence-gated at Layer 0 (cross-link)
+
+Agentforce **IT Service** is one of the five prebuilt agent families in the buy-vs-build framework, and its **CMDB** (Configuration Management Database) foundation now has a six-skill setup path in `sf-skills` 1.38.0. The architectural fact worth carrying into a buy-vs-build conversation: CMDB sits behind org perm **`ITSrvcsCnfgMgmnt`**, which comes from the edition or licence and which **no API can grant** — so "we'll turn it on later" is not available. Above it sit five more ordered layers (ITOM tenant → feature → four permission sets → content bundle → Asset Discovery), all failing with the single code `403 FUNCTIONALITY_NOT_ENABLED`. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-14--service-cloud-itsm-cmdb-gets-a-six-skill-setup-path--and-it-publishes-the-five-layer-gate-behind-one-error-code).
+
+---
+
+## 2026-08-14 · `sf agent preview --api-name` silently drops context variables (cross-link)
+
+`@salesforce/agents` **2.0.2** fixes the second defect in five days in the same preview path: `--api-name` now sends **context variables** when previewing a published agent (2.0.1 fixed `bypassUser` for employee agents). Both are the same class of bug — **`--api-name` initialises a preview session differently from `--authoring-bundle`** — and both fail silently, so the agent reasons without the values instead of erroring. If a preview from an api-name and a preview from a bundle ever disagreed for you, that was the tooling. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-14--salesforceagents-202--the---api-name-preview-path-drops-context-variables).
+
+---
+
 ## 2026-08-12 · Retrieving a *whole* agent becomes one flag — `--root-type-with-dependencies` (cross-link)
 
 `sf project retrieve start` gains **`--root-type-with-dependencies`**, whose only legal values are **`Bot`** and **`AiAgentDefinitionVersion`**. Naming a `Bot` as the root also retrieves its dependent `GenAiPlannerBundle`, `GenAiPlugin` and `GenAiFunction` components, replacing the hand-maintained manifest that agent source control has needed until now. It maps to `rootTypesWithDependencies` on the Metadata API `RetrieveRequest`, so it is available to any API caller — but on the CLI it is **`nightly`-only** as of 2026-08-14. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-12--sf-project-retrieve-start---root-type-with-dependencies--the-cli-half-of-the-v68-agent-metadata-story-and-it-takes-exactly-two-values).
