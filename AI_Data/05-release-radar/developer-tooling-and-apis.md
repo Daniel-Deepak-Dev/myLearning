@@ -195,6 +195,36 @@ Keyed by **MCP server name**, each with a `tools` array and an optional `semver`
 
 ---
 
+## 2026-08-12 · `sf org generate password` starts rejecting what it used to silently fix — and two smaller changes ride the same release
+
+**What changed.** `sf` **2.148.3** — `latest-rc` since 2026-08-12, scheduled for `latest` on **2026-08-19** — carries three practitioner-facing changes that the 08-13 read of this same release-notes file did not enumerate. The lead is a **breaking change**: `sf org generate password` now **errors** on `--length` below 20 or `--complexity` below 3.
+
+- **The old behaviour was silent correction, not rejection.** `@salesforce/plugin-user` **5.0.0** (npm **2026-08-10 22:34 UTC**) records both as `feat!` — commits [`17162b3`](https://github.com/salesforcecli/plugin-user/commit/17162b35ec2748b04f0bd70fab0a9a2d9e622ba7) (complexity) and [`30a97ff`](https://github.com/salesforcecli/plugin-user/commit/30a97ff3d5ff84fcce6aea3cfe7325858592ebd3) (length). Its `BREAKING CHANGES` block: values below the floor "now error instead of being silently raised".
+- **Only half of it was ever deprecated.** The 2026-04-01 notice (`sf` **2.129.8**) warned about `--complexity` alone — *"Starting in Summer '26, the command will fail if you specify a complexity value less than 3"* — and never mentioned `--length`.
+- **`--skip-assignment-rules`** arrives on `sf data create record` and `sf data update record`, stopping Account, Case and Lead assignment rules from firing on that call (plugin-data PR [#1492](https://github.com/salesforcecli/plugin-data/pull/1492)). The default is unchanged: omit it and rules still run.
+- **`api request rest` and `api request graphql` are GA**, no longer beta (plugin-api PR [#194](https://github.com/salesforcecli/plugin-api/pull/194)).
+
+**Relevant to:** **Developer** — a hard break in a command that sits in scratch-org setup and CI scripts, with a known date and two flags to grep for; **Admin** — org-setup runbooks that generate user passwords need both values raised before 08-19, and `--skip-assignment-rules` changes what a CLI data load does to Lead, Case and Account ownership; **Architect** — a silently-corrected input was never an auditable control, which is a pattern worth finding elsewhere.
+
+**Why it matters.** A scratch-org setup script carrying `sf org generate password --length 12` has never produced a 12-character password — the CLI quietly raised it and moved on. On 2026-08-19 that script stops working, and it fails as a validation error rather than a weak credential. The change makes an old lie audible; it does not change what any org receives.
+
+Reachability runs the *safe* way here, by the pinning rule recorded on 08-14: **`sf` pins `plugin-user` to an exact version**, so no lockfile, cache or fresh install pulls 5.0.0 early — and none dodges it once 2.148.3 is `latest`. There is no partial rollout to reason about, only a date.
+
+**Gotchas:**
+- The floors are **`--length` ≥ 20** and **`--complexity` ≥ 3**; below either is a hard validation error, not a warning. Complexity 3 means lower case, upper case and numbers only.
+- **Grep for `--length`, not just `--complexity`.** Anyone who acted on the April 2026 deprecation notice fixed the half that was announced; the length floor exists only in the `plugin-user` `CHANGELOG` and the 2.148.3 notes.
+- **`sf` 2.147.7 — today's `latest` — pins `plugin-user` 4.0.0** and still corrects silently. Testing on current stable tells you nothing about 08-19.
+- The deprecation promised *"Starting in Summer '26"*; it actually reaches the CLI on **2026-08-19**, in Winter '27 preview season. Date the change by the CLI version, not by the release name in the notice.
+- `--skip-assignment-rules` is opt-out only, and per-command — it changes nothing about Bulk API loads or about calls that omit it.
+
+**Study action:** against a scratch org on today's stable `sf` (2.147.7), run `sf org generate password --length 15 --complexity 2` and note that it succeeds; then `npm i -g @salesforce/cli@latest-rc` and run the identical command — it should fail validation. Then grep CI and setup scripts for `org generate password` and fix both flags.
+
+**Status:** Breaking change, shipped in `@salesforce/plugin-user` **5.0.0** (2026-08-10). Riding `sf` **2.148.3**, `latest-rc` since 2026-08-12, **scheduled for `latest` 2026-08-19** under the published Wednesday cadence. `api request rest` / `api request graphql`: **GA**.
+
+**Sources:** [Salesforce CLI release notes — 2.148.3](https://github.com/forcedotcom/cli/blob/main/releasenotes/README.md) · [`plugin-user` CHANGELOG 5.0.0](https://github.com/salesforcecli/plugin-user/blob/main/CHANGELOG.md) · [`@salesforce/plugin-user` on npm](https://www.npmjs.com/package/@salesforce/plugin-user)
+
+---
+
 ## 2026-08-12 · `sf project retrieve start --root-type-with-dependencies` — the CLI half of the v68 agent metadata story, and it takes exactly two values
 
 **What changed.** `@salesforce/plugin-deploy-retrieve` **4.1.0** (npm **2026-08-12 22:15:34 UTC**, PR [#1626](https://github.com/salesforcecli/plugin-deploy-retrieve/pull/1626)) adds a flag that retrieves a root metadata type **together with its whole dependency graph**. Its work item, **`W-23818734`**, is the *same one* that added `AiAgentDefinition` / `AiAgentDefinitionVersion` in SDR 13.1.0 — this is that feature's command-line surface.

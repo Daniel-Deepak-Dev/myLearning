@@ -285,3 +285,21 @@ A: Not unambiguously. `@salesforce/afv-skills` declares `"license": "CC-BY-NC-4.
 
 Q: Two `@salesforce/agents` patches in five days hit the same code path. What is the shared root cause?
 A: `sf agent preview --api-name` builds a preview session that is initialised differently from `--authoring-bundle`. 2.0.1 sent the wrong `bypassUser` (breaking employee agents); 2.0.2 sent no context variables. Both fail **silently** — the agent reasons without the values rather than erroring.
+
+Q: A CI script runs `sf org generate password --length 12`. What does the org actually get, and what happens on 2026-08-19?
+A: Not a 12-character password — the CLI **silently raised** it. From `sf` 2.148.3 (stable 2026-08-19, `@salesforce/plugin-user` 5.0.0) the command **errors** instead: `--length` must be ≥ 20 and `--complexity` ≥ 3. The break makes an old lie audible; it changes nothing the org ever received.
+
+Q: You read the April 2026 deprecation notice for `sf org generate password` and fixed your scripts. Why might they still break?
+A: The notice warned about **`--complexity` only** — "Starting in Summer '26, the command will fail if you specify a complexity value less than 3". The **`--length` ≥ 20** floor was never announced; it exists only in the `plugin-user` CHANGELOG (`30a97ff`, `feat!`) and the 2.148.3 release notes. Grep for both flags.
+
+Q: Could a lockfile, a stale cache or a fresh install change *when* the `org generate password` break reaches you?
+A: No. `sf` **pins** `@salesforce/plugin-user` to an exact version, so nothing pulls 5.0.0 early and nothing dodges it once 2.148.3 is `latest`. That is the opposite of a library fix like the SDR zip-slip, which `plugin-deploy-retrieve` **ranges** and which therefore arrives by resolution. Ask which layer a change lives in.
+
+Q: How do you create a Lead via the CLI without triggering assignment rules?
+A: `sf data create record --sobject Lead --values "..." --skip-assignment-rules`, new in `sf` 2.148.3 and also on `sf data update record`. It is **opt-out only and per-command** — omit it and Account/Case/Lead assignment rules still fire, including on API writes.
+
+Q: `npm install @salesforce/react-native-agentforce` — what version do you get, and what is wrong with it?
+A: **0.5.0**, which is the package's only dist-tag (`latest`) and is simultaneously marked **Pre-release** on GitHub, titled *262.1.3-RC4*. There is no `rc` or `next` tag to avoid it and no RC marker in the version string. The last non-RC build is **0.4.0**; GitHub's "Latest" badge still sits there.
+
+Q: Why is npm a bad source for the React Native Agentforce bridge's release history?
+A: The registry holds only `0.0.0`, `0.3.0`, `0.4.0`, `0.5.0` — GitHub releases `0.1.0` (260.4) and `0.2.0` (260.5) never published. Combined with marketing names that diverge entirely from npm versions (`0.5.0` = *262.1.3-RC4*), neither number predicts the other. Read the releases page.

@@ -16,6 +16,12 @@ Two governance points out of `sf-skills` 1.38.0. **First, `403 FUNCTIONALITY_NOT
 
 ---
 
+## 2026-08-12 · A password floor stops being advisory — `sf org generate password` errors below length 20 / complexity 3 (cross-link)
+
+`sf` **2.148.3**, scheduled for `latest` on **2026-08-19**, makes `sf org generate password` **fail** on `--length` < 20 or `--complexity` < 3 instead of silently raising them. The governance point is what the old behaviour concealed: an org-setup script asking for a weak password **was never getting one**, so nobody's audit of that script ever matched what the CLI did. A silently-corrected input is an unverifiable control — the value in source and the value applied were free to disagree indefinitely, and only the hard error reveals which teams were relying on the correction. Note that **only the complexity floor was ever deprecated publicly** (2026-04-01); the length floor appears solely in the `plugin-user` `CHANGELOG`. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-12--sf-org-generate-password-starts-rejecting-what-it-used-to-silently-fix--and-two-smaller-changes-ride-the-same-release).
+
+---
+
 ## 2026-08-12 · Winter '27 is confirmed as **API 68.0**, and the zip-slip fix finally reaches stable `sf` (cross-link)
 
 Two governance points from the tooling window. **First, the version is settled**: the DX metadata coverage report carries a `## Next Release (v68)` section, so every Winter '27 enforcement date and Release Update on this page attaches to **68.0** — the successor to Summer '26's 67.0, where user mode and `with sharing` defaults arrived. Three new v68 security types (`SecurityCustomBaseline`, `ScopedAccess`, `SensitiveDataRuleElmntGrp`) are **not deployable via DX**. **Second, the SDR zip-slip patch is on a stable channel at last** — `sf` `latest` moved to **2.147.7**, which ranges SDR `^13.0.0`; the generalised point stands unchanged, that **a CLI version bump was misleading evidence for a fortnight** and the fix arrives bundled with a Node 22 floor. Full entries: [Winter '27 / v68 metadata](developer-tooling-and-apis.md#2026-08-12--winter-27-is-api-680-confirmed--and-it-brings-a-new-agent-runtime-metadata-pair-aiagentdefinition--aiagentdefinitionversion) · [the `latest` promotion](developer-tooling-and-apis.md#2026-08-12--sf-21477-is-promoted-to-latest--node-22-becomes-the-stable-floor-and-two-waiting-fixes-ride-in-with-it).

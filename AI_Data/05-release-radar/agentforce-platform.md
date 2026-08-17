@@ -16,6 +16,34 @@ Agentforce **IT Service** is one of the five prebuilt agent families in the buy-
 
 ---
 
+## 2026-08-13 · The React Native Agentforce bridge's npm `latest` is a release candidate — 0.5.0 is `262.1.3-RC4`
+
+**What changed.** `@salesforce/react-native-agentforce` **0.5.0** published to npm on **2026-08-13 13:27 UTC** and holds the package's **only** dist-tag, `latest`. The matching GitHub release [`v0.5.0`](https://github.com/salesforce/AgentforceMobileSDK-ReactNative/releases/tag/v0.5.0) is titled **262.1.3-RC4** and is **marked Pre-release**; GitHub's "Latest" badge still sits on **v0.4.0**.
+
+- **New JS surface.** Direct launch into **Voice mode**, a **per-agent splash screen**, appearance customization, exposed voice **caption defaults and close behavior**, user silence timeout flags, and a fix to initial Agentforce context timing.
+- **Native pins.** iOS Agentforce SDK bumped to **262.1.3 RC4**; iOS Agentforce **Voice pinned to 2.8.2**.
+- **npm is not the release history.** The registry holds exactly four versions — `0.0.0`, `0.3.0`, `0.4.0`, `0.5.0`. GitHub's `0.1.0` (260.4, April) and `0.2.0` (260.5, June) never reached npm at all.
+
+**Relevant to:** **Developer** — the default install of a shipping mobile dependency is an RC, and the new Voice-mode launch, splash-screen and caption APIs only exist in it; **Architect** — a package with a single dist-tag carries no stability signal, so "pin explicitly" becomes a policy decision rather than a preference for this dependency.
+
+**Why it matters.** `npm install @salesforce/react-native-agentforce` resolves to a build the vendor's own repository labels a release candidate, and there is no second dist-tag to opt out with — no `next`, no `rc`, no `stable`. A team that pinned `0.4.0` is fine. A team taking the default is shipping an RC into a mobile app.
+
+This is the mobile-SDK naming trap running one layer up. On 07-31 the lesson was *read the git tag, not the release title*, because "262.1.2" hid a Swift 6 major. Here the release **title** is the honest artifact and the **npm tag** is the misleading one. Neither channel is reliably authoritative — check both before upgrading.
+
+**Gotchas:**
+- Three names, one artifact: npm `@salesforce/react-native-agentforce`, repo `salesforce/AgentforceMobileSDK-ReactNative`, package directory `AgentforceSDK-ReactNative-Bridge`.
+- The package is **pre-1.0**, so `^0.5.0` behaves exactly like `~0.5.0` — both resolve only `0.5.x`. A caret gives you no protection here because it grants no latitude either.
+- Marketing version and npm version have fully diverged: npm `0.5.0` = release title `262.1.3-RC4`. Neither number predicts the other, and the RC suffix appears in **neither** the npm version nor the dist-tag.
+- Voice arrives with a hard native pin — **iOS Agentforce Voice 2.8.2** — so a host app already resolving a different Voice version has a conflict to settle before it can take 0.5.0.
+
+**Study action:** in any React Native app depending on the bridge, run `npm view @salesforce/react-native-agentforce dist-tags` and `npm ls @salesforce/react-native-agentforce`, then open the [releases page](https://github.com/salesforce/AgentforceMobileSDK-ReactNative/releases) and check whether the version you actually resolved carries the **Pre-release** badge. Pin to `0.4.0` explicitly if you need the last non-RC build.
+
+**Status:** **Pre-release** on GitHub (`v0.5.0` / *262.1.3-RC4*, 2026-08-13), and simultaneously **`latest` on npm** (`0.5.0`, 2026-08-13 13:27 UTC). Apache-2.0, still pre-1.0. Covers Service Agent and Employee Agent.
+
+**Sources:** [`v0.5.0` release](https://github.com/salesforce/AgentforceMobileSDK-ReactNative/releases/tag/v0.5.0) · [AgentforceMobileSDK-ReactNative releases](https://github.com/salesforce/AgentforceMobileSDK-ReactNative/releases) · [`@salesforce/react-native-agentforce` on npm](https://www.npmjs.com/package/@salesforce/react-native-agentforce)
+
+---
+
 ## 2026-08-12 · Retrieving a *whole* agent becomes one flag — `--root-type-with-dependencies` (cross-link)
 
 `sf project retrieve start` gains **`--root-type-with-dependencies`**, whose only legal values are **`Bot`** and **`AiAgentDefinitionVersion`**. Naming a `Bot` as the root also retrieves its dependent `GenAiPlannerBundle`, `GenAiPlugin` and `GenAiFunction` components, replacing the hand-maintained manifest that agent source control has needed until now. It maps to `rootTypesWithDependencies` on the Metadata API `RetrieveRequest`, so it is available to any API caller — but on the CLI it is **`nightly`-only** as of 2026-08-14. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-12--sf-project-retrieve-start---root-type-with-dependencies--the-cli-half-of-the-v68-agent-metadata-story-and-it-takes-exactly-two-values).
@@ -218,7 +246,7 @@ The [Agentforce Mobile SDK](https://github.com/salesforce/AgentforceMobileSDK-iO
 
 | Artifact | Version line | Latest seen |
 |---|---|---|
-| `salesforce/AgentforceMobileSDK-ReactNative` (npm `@salesforce/react-native-agentforce`) | 0.x | **0.3.0**, 2026-07-28 — bundles Agentforce SDK **262.1** (iOS 17.31.6) |
+| `salesforce/AgentforceMobileSDK-ReactNative` (npm `@salesforce/react-native-agentforce`) | 0.x | **0.5.0**, 2026-08-13 13:27 UTC — GitHub **Pre-release** *262.1.3-RC4*, yet npm `latest`; last non-RC is **0.4.0** ([entry](#2026-08-13--the-react-native-agentforce-bridges-npm-latest-is-a-release-candidate--050-is-26213-rc4)) |
 | `forcedotcom/AgentforceMobileService-iOS` | 6.11.x | **6.11.2**, 2026-07-31 19:51 UTC (commit `f86eb61`) |
 | `salesforce/AgentforceMobileSDK-iOS` | independent (tag ≠ marketing name) | **tag `18.26.8`** = "262.1.2", 2026-07-31 20:34 UTC — [entry above](#2026-07-31--agentforce-mobile-sdk-26212--a-patch-that-is-a-major-and-five-new-gen-ui-components) |
 
