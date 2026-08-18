@@ -4,6 +4,14 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-17 · A prerequisite you deleted is a control you can no longer audit (cross-link)
+
+`sf-skills` **1.39.0** removes the `compatibility:` key from all **13** skills that carried it, and for two of them nothing else states the requirement — `commerce-b2b-store-create` loses `"Requires Commerce licenses, Experience Cloud, Salesforce CLI"`, and `experience-cms-brand-apply` loses its `get_brand_instructions` / `search_media_cms_channels` dependency with no `mcpTools` block to fall back on.
+
+The point generalises past Salesforce: **a declared prerequisite is the only machine-readable form of a gate.** Dropping the field without moving the fact to a typed one turns an auditable claim into tribal knowledge — and no deprecation notice fires, because free text has no schema to deprecate. Full entry: [`sf-skills` 1.39.0 deletes `compatibility`](developer-tooling-and-apis.md#2026-08-17--sf-skills-1390-deletes-the-compatibility-frontmatter-field--and-two-prerequisites-have-nowhere-left-to-live).
+
+---
+
 ## 2026-08-14 · One error code, two gates — and a hosted MCP dispatcher that carries no org identifier (cross-link)
 
 Two governance points out of `sf-skills` 1.38.0. **First, `403 FUNCTIONALITY_NOT_ENABLED` is overloaded**: for Service Cloud ITSM CMDB it means the org feature is off **or** the running user holds no CMDB permission set, and the skills have to disambiguate on feature `status == ENABLED` rather than on a data read. Any org-plus-user double gate that collapses to one code will be diagnosed wrongly at least once. **Second, the hosted `headless-360` MCP server derives its org from the OAuth JWT bound to the session** — no alias, no org id, no credential in the call — and it dispatches **raw HTTP** over the Connect/Setup surface. Convenient, and it means the only thing separating a sandbox write from a production write is which session is connected; it sits behind org gate `api.agentic.access.enableHeadless360McpServer`. Full entries: [the CMDB gate](developer-tooling-and-apis.md#2026-08-14--service-cloud-itsm-cmdb-gets-a-six-skill-setup-path--and-it-publishes-the-five-layer-gate-behind-one-error-code) · [the dispatcher shape](developer-tooling-and-apis.md#2026-08-14--headless-360-appears-in-skill-frontmatter--and-the-hosted-server-turns-out-to-be-four-meta-tools-not-a-tool-catalogue).

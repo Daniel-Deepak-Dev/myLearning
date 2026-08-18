@@ -303,3 +303,24 @@ A: **0.5.0**, which is the package's only dist-tag (`latest`) and is simultaneou
 
 Q: Why is npm a bad source for the React Native Agentforce bridge's release history?
 A: The registry holds only `0.0.0`, `0.3.0`, `0.4.0`, `0.5.0` — GitHub releases `0.1.0` (260.4) and `0.2.0` (260.5) never published. Combined with marketing names that diverge entirely from npm versions (`0.5.0` = *262.1.3-RC4*), neither number predicts the other. Read the releases page.
+
+Q: You preview a published agent with `sf agent preview --api-name` and want to know why it picked the topic it picked. What did you get before 2026-08-18?
+A: Nothing. `@salesforce/agents` recorded **no reasoning trace** for `--api-name` previews until **2.0.4**, which added recording via the **v1.1 plans endpoint**. `--authoring-bundle` previews recorded them all along — so the two paths disagreed on what evidence even existed, not just on behaviour.
+
+Q: Four `@salesforce/agents` patches in nine days all hit `--api-name` preview. What do the work-item numbers tell you?
+A: `W-23896220`, `W-23896239` and `W-23896240` are near-consecutive, so 2.0.3 and 2.0.4 are **one audit filed in one sitting**, not three independent bug reports. After 2.0.2 fixed context variables, someone swept the whole path. Read the surface as recently repaired rather than long stable.
+
+Q: `@salesforce/agents` 2.0.4 is out. Do you need to wait for a new `sf` release to get it?
+A: No. `sf` `latest` 2.147.7 pins `plugin-agent` **2.0.0**, which ranges `@salesforce/agents` **`^2.0.0`**; `latest-rc` 2.148.3 pins **2.0.1** → **`^2.0.1`**. Both resolve **2.0.4** on a *fresh* install. A lockfile or an existing `node_modules` will not — check with `npm ls @salesforce/agents`.
+
+Q: `@salesforce/agents` 2.0.3 is a patch version. Why might it break your build?
+A: `createSpec` now **throws** when `groundingContext` is passed without `promptTemplateName`. Code that passed only `groundingContext` used to run. The version number says `patch`; for that call the behaviour change is `major`.
+
+Q: `sf-skills` 1.39.0 removed `compatibility:` from all seven `data360-*` skills. Does that mean `sf data360` is now supported Salesforce software?
+A: No — and this is the over-read to avoid. The field was removed **package-wide**, from all 13 skills that had it, not just the Data 360 ones. `skills/data360-orchestrate/references/plugin-setup.md` still says *"sf-skills does not vendor or fork that plugin."* Test whether a removal is targeted before inferring intent from it.
+
+Q: Which two prerequisites did `sf-skills` 1.39.0 delete with nothing left to replace them?
+A: `commerce-b2b-store-create`'s licence gate — `"Requires Commerce licenses, Experience Cloud, Salesforce CLI"` — and `experience-cms-brand-apply`'s dependency on the `get_brand_instructions` / `search_media_cms_channels` MCP tools. The second is the subtle one: that skill has **no `mcpTools` block**, so the typed field did not absorb it. `mcpTools` held at 13 skills across both releases.
+
+Q: `sf-skills` 1.39.0 says "25 skills updated." How do you tell a content release from a lint pass?
+A: Compare the tarballs, not the changelog. 1.38.0 and 1.39.0 both ship **4305 files** — nothing added or removed — and the diffs are a deleted frontmatter key, emoji stripped from prose, bare ``` fences retagged ```` ```text ````, and `metadata:` keys reordered. Identical file count plus mechanical diffs means a linter landed.

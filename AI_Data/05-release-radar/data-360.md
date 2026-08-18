@@ -16,6 +16,14 @@ Salesforce began calling Data Cloud **"Data 360"** at Dreamforce 2025 (Oct 14, 2
 
 ---
 
+## 2026-08-17 · All seven `data360-*` skills drop their "external community plugin" declaration (cross-link)
+
+`sf-skills` **1.39.0** deletes the `compatibility:` frontmatter key **package-wide** — 13 skills → 0 — and six of the seven `data360-*` skills used it to say *"Requires an external community `sf data360` CLI plugin and a Data Cloud-enabled org."*
+
+**Nothing changed about the plugin.** The statement demoted from parseable frontmatter to prose and now survives in one place: `skills/data360-orchestrate/references/plugin-setup.md`, still reading *"sf-skills does not vendor or fork that plugin."* Read that page, not the frontmatter, before treating `sf data360` as supported. Full entry: [`sf-skills` 1.39.0 deletes `compatibility`](developer-tooling-and-apis.md#2026-08-17--sf-skills-1390-deletes-the-compatibility-frontmatter-field--and-two-prerequisites-have-nowhere-left-to-live).
+
+---
+
 ## 2026-08-11 · The `data360_*` tools are a dispatcher over a generated action registry (cross-link)
 
 The eleven `data360_*` tools in `sf-pi`'s `sf-data360` extension are **not eleven endpoints** — they are family tools over one shared action registry, called with an action string (`stream.create_ingest_api`, `sql.verify_rows`) plus `params`, `target_org`, `dry_run` and `allow_confirmed`.

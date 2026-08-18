@@ -4,6 +4,17 @@ Commercial model and exam changes — the two things clients and recruiters ask 
 
 ---
 
+## 2026-08-17 · A licence gate disappears from `sf-skills`, and the npm manifest still says NonCommercial (cross-link)
+
+Two licence facts out of `sf-skills` **1.39.0**:
+
+- **A capability's licence prerequisite was deleted.** `commerce-b2b-store-create` carried `compatibility: "Requires Commerce licenses, Experience Cloud, Salesforce CLI"`. The field is gone package-wide and nothing replaces it, so the entitlements needed to scope a B2B store build are stated nowhere in the artifact an agent reads to do the work.
+- **The standing watch item is answered negatively.** `@salesforce/afv-skills@1.39.0` still declares `"license": "CC-BY-NC-4.0"`, so the channel split below is unchanged. It also shipped on a **Monday** — there is no Friday `sf-skills` cadence to plan around.
+
+Full entry: [`sf-skills` 1.39.0 deletes `compatibility`](developer-tooling-and-apis.md#2026-08-17--sf-skills-1390-deletes-the-compatibility-frontmatter-field--and-two-prerequisites-have-nowhere-left-to-live).
+
+---
+
 ## 2026-08-16 · `sf-skills` is Apache-2.0 on GitHub and **CC BY-NC 4.0 on npm** — one tree, two licence statements
 
 **What changed.** Nothing shipped; a contradiction was found inside the artifact the entry below calls the commercially-safe copy. `forcedotcom/sf-skills` publishes to npm as **`@salesforce/afv-skills`**, and that package's manifest declares `"license": "CC-BY-NC-4.0"` — on **every published version**, including all 12 released after the 2026-06-29 Apache-2.0 relicensing.

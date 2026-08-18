@@ -4,6 +4,12 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 ---
 
+## 2026-08-18 · `sf agent preview --api-name` finally records reasoning traces (cross-link)
+
+`@salesforce/agents` **2.0.4** makes an `--api-name` preview record its reasoning trace, via the **v1.1 plans endpoint**. Until 2026-08-18 that path recorded **none**, while `--authoring-bundle` recorded them normally — so if you evaluated published agents from `--api-name` runs, the traces are simply missing. Fourth defect in nine days on this path. Full entry: [`@salesforce/agents` 2.0.3 and 2.0.4](developer-tooling-and-apis.md#2026-08-18--salesforceagents-203-and-204--three-more---api-name-preview-defects-filed-as-one-batch).
+
+---
+
 ## 2026-08-14 · The prebuilt IT Service surface gets a real enablement path — and it is licence-gated at Layer 0 (cross-link)
 
 Agentforce **IT Service** is one of the five prebuilt agent families in the buy-vs-build framework, and its **CMDB** (Configuration Management Database) foundation now has a six-skill setup path in `sf-skills` 1.38.0. The architectural fact worth carrying into a buy-vs-build conversation: CMDB sits behind org perm **`ITSrvcsCnfgMgmnt`**, which comes from the edition or licence and which **no API can grant** — so "we'll turn it on later" is not available. Above it sit five more ordered layers (ITOM tenant → feature → four permission sets → content bundle → Asset Discovery), all failing with the single code `403 FUNCTIONALITY_NOT_ENABLED`. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-14--service-cloud-itsm-cmdb-gets-a-six-skill-setup-path--and-it-publishes-the-five-layer-gate-behind-one-error-code).

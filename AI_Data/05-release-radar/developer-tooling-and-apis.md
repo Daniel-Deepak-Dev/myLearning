@@ -4,6 +4,78 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-18 · `@salesforce/agents` 2.0.3 and 2.0.4 — three more `--api-name` preview defects, filed as one batch
+
+**What changed.** Two patches published **six minutes apart** — **2.0.3** (npm **2026-08-18 01:24:00 UTC**) and **2.0.4** (**01:30:47 UTC**) — carry three fixes, two of them on `sf agent preview --api-name`.
+
+- **`x-attributed-client: no-builder` is now sent** when an `--api-name` preview starts — PR [#338](https://github.com/forcedotcom/agents/issues/338), `W-23896240`.
+- **Reasoning traces are recorded** for `--api-name` previews, via the **v1.1 plans endpoint** — PR [#340](https://github.com/forcedotcom/agents/issues/340), `W-23896220`.
+- **`createSpec` now throws** when `groundingContext` is passed without `promptTemplateName` — PR [#339](https://github.com/forcedotcom/agents/issues/339), `W-23896239`.
+
+**Why it matters.** Fourth `--api-name` defect in nine days, after 2.0.1 (`bypassUser`) and 2.0.2 (context variables). The work-item numbers are near-consecutive — `W-23896220`, `-239`, `-240` — so these are not four independent reports: someone audited the path after 2.0.2 and filed everything at once. Treat `--api-name` preview as recently repaired, not long stable.
+
+**Gotchas:**
+- **The reasoning-trace gap is the expensive one.** Before 2.0.4 an `--api-name` preview recorded **no trace**, so the artifact you read to learn *why* a published agent picked a topic was empty. `--authoring-bundle` was never affected — the same asymmetry as 2.0.1 and 2.0.2.
+- **`createSpec` is a breaking change shipped as a patch.** A call passing `groundingContext` without `promptTemplateName` used to run and now throws. The version says `patch`; for that call the behaviour is `major`.
+- **What `x-attributed-client: no-builder` changes downstream is not documented.** It tells the service the session did not originate in Builder. Whether that reclassifies usage or consumption reporting is stated nowhere — do not assume it does.
+- **No new `sf` is needed to get these.** `latest` **2.147.7** pins `plugin-agent` **2.0.0**, which ranges `@salesforce/agents` **`^2.0.0`**; `latest-rc` **2.148.3** pins **2.0.1** → **`^2.0.1`**. Both resolve **2.0.4** on a *fresh* install. A lockfile or an existing `node_modules` does not — check `npm ls @salesforce/agents`.
+
+**Relevant to:** **Developer** — `--api-name` is the daily debug loop for a published agent, and `createSpec` callers can start throwing on a patch bump. **Architect** — an evaluation loop previewing agents by API name collected **no reasoning traces** before 2.0.4, so conclusions from that corpus are unsupported.
+
+**Study action:** run `npm ls @salesforce/agents` inside your global `sf` install and confirm it resolves **2.0.4**; then preview one published agent with `--api-name` and the same agent with `--authoring-bundle`, and confirm both now emit a reasoning trace where only the bundle path did before.
+
+**Status:** Shipped — `@salesforce/agents` **2.0.3** and **2.0.4**, both **2026-08-18**. No `sf` release pins either; `@salesforce/plugin-agent` `latest` is **2.0.2**, which ranges `^2.0.2`.
+
+**Sources:** [forcedotcom/agents CHANGELOG](https://github.com/forcedotcom/agents/blob/main/CHANGELOG.md) · [npm `@salesforce/agents`](https://www.npmjs.com/package/@salesforce/agents) · [npm `@salesforce/plugin-agent`](https://www.npmjs.com/package/@salesforce/plugin-agent)
+
+---
+
+## 2026-08-17 · `sf-skills` 1.39.0 deletes the `compatibility` frontmatter field — and two prerequisites have nowhere left to live
+
+**What changed.** `forcedotcom/sf-skills` / npm `@salesforce/afv-skills` **1.39.0** (**2026-08-17 09:37:43 UTC**, "Release 25 skills updated", PRs #1270, #1162, #1238, #1210) removes the `compatibility:` frontmatter key. It was on **13** `SKILL.md` files in 1.38.0 and is on **0** in 1.39.0, on both channels.
+
+- **No skills were added or removed.** Both tarballs ship **4305 files**; unpacked size moved 39,273,479 → 39,272,419 bytes. This is a lint pass, not a content release.
+- **Two other mechanical edits ride along.** Emoji (`❌` `✅` `⚠️`) are stripped from prose and table cells, and bare ``` fences become ```` ```text ````.
+- **`metadata:` keys were reordered** to a canonical `version` → `minApiVersion` → `relatedSkills` → `cliTools`.
+
+`compatibility` was free-text, so the 13 removals do not land the same way. Four had a typed field or a prose page already saying the same thing. Two did not.
+
+```mermaid
+flowchart LR
+    C["<b>compatibility:</b><br/>13 skills in 1.38.0<br/><b>0</b> in 1.39.0"]
+    C --> R1["7 × <code>data360-*</code><br/>external community plugin<br/>+ Data-Cloud-enabled org"]
+    C --> R2["2 × &quot;Salesforce CLI (sf) v2+&quot;<br/><code>dx-org-switch</code><br/><code>platform-metadata-retrieve</code>"]
+    C --> R3["1 × <code>experience-content-media-search</code><br/>MCP tool dependency"]
+    C --> R4["1 × <code>external-diagram-mermaid-generate</code><br/>Mermaid-capable renderer"]
+    C --> L1["1 × <code>commerce-b2b-store-create</code><br/>Commerce licences + Experience Cloud"]
+    C --> L2["1 × <code>experience-cms-brand-apply</code><br/>MCP tool dependency"]
+    R1 --> P["<b>Relocated</b> — prose only<br/><code>data360-orchestrate/references/plugin-setup.md</code>"]
+    R2 --> S["<b>Redundant</b> — already typed<br/><code>metadata.cliTools[].semver: &quot;&gt;=2.0.0&quot;</code>"]
+    R3 --> M["<b>Covered</b> — typed field<br/><code>metadata.mcpTools</code>"]
+    R4 --> A["<b>Advisory</b> — no structured home, no loss"]
+    L1 --> X["<b>Lost</b> — stated nowhere<br/>in the skill any more"]
+    L2 --> X
+```
+
+**Why it matters.** This radar's standing note calls `sf-skills` a primary product source — licence gates arrive as skill frontmatter before they arrive anywhere else. `compatibility` was the one field carrying *"you need this licence, this plugin, these MCP tools."* Deleting it is safe where a typed field repeats the fact, lossy where nothing does.
+
+**Gotchas:**
+- **`mcpTools` did not absorb the removals.** It holds at **13 skills in both 1.38.0 and 1.39.0**, and `experience-cms-brand-apply` is not one of them — its frontmatter is now `metadata:` with `version: "1.0"` and nothing else. Its dependency on `get_brand_instructions` / `search_media_cms_channels` is unstated.
+- **The Commerce licence gate is gone outright.** `commerce-b2b-store-create` said `"Requires Commerce licenses, Experience Cloud, Salesforce CLI"`. No licence statement replaces it anywhere in the skill body.
+- **The `sf data360` plugin is still external community software.** Six of the seven `data360-*` skills said so; the statement now lives only in `skills/data360-orchestrate/references/plugin-setup.md`, which is explicit: *"sf-skills does not vendor or fork that plugin."* Do not read the frontmatter removal as Salesforce adopting it.
+- **Anything parsing `compatibility` now reads `undefined`, silently.** Frontmatter is the skill dependency contract (`cliTools`, `accessCheck`, `relatedSkills`, `mcpTools`) — a key vanishing is a schema change with no deprecation notice.
+- **npm `license` is unchanged at 1.39.0** — still `CC-BY-NC-4.0`, so the [channel split](pricing-and-certification.md#2026-08-16--sf-skills-is-apache-20-on-github-and-cc-by-nc-40-on-npm--one-tree-two-licence-statements) stands.
+
+**Relevant to:** **Architect** — the entitlements for `commerce-b2b-store-create` (Commerce licences + Experience Cloud) are no longer stated in the artifact you would read to scope that work, so scoping needs a second source. **Developer** — a parseable frontmatter key is gone from all 13 holders with no deprecation, and `mcpTools` is no substitute.
+
+**Study action:** run `npm pack @salesforce/afv-skills@1.38.0 && npm pack @salesforce/afv-skills@1.39.0`, extract both, and run `grep -rl "^compatibility:" package/skills/*/SKILL.md | wc -l` against each — 13 versus 0. Then grep your own skill-consuming tooling for `compatibility` and see whether it fails loudly or just stops finding anything.
+
+**Status:** Shipped — `forcedotcom/sf-skills` and npm `@salesforce/afv-skills` **1.39.0**, published **2026-08-17 09:37:43 UTC**. Verified on both channels; GitHub `main` `package.json` reads `1.39.0`.
+
+**Sources:** [sf-skills releases](https://github.com/forcedotcom/sf-skills/releases) · [`data360-query/SKILL.md`](https://github.com/forcedotcom/sf-skills/blob/main/skills/data360-query/SKILL.md) · [`commerce-b2b-store-create/SKILL.md`](https://github.com/forcedotcom/sf-skills/blob/main/skills/commerce-b2b-store-create/SKILL.md) · [`experience-cms-brand-apply/SKILL.md`](https://github.com/forcedotcom/sf-skills/blob/main/skills/experience-cms-brand-apply/SKILL.md) · [`plugin-setup.md`](https://github.com/forcedotcom/sf-skills/blob/main/skills/data360-orchestrate/references/plugin-setup.md) · [npm `@salesforce/afv-skills`](https://www.npmjs.com/package/@salesforce/afv-skills)
+
+---
+
 ## 2026-08-14 · Service Cloud ITSM CMDB gets a six-skill setup path — and it publishes the five-layer gate behind one error code
 
 **What changed.** `forcedotcom/sf-skills` **1.38.0** (2026-08-14, 17 new + 21 updated skills, 121 → **138** skills) adds six `service-itsm-*` skills. Five are a coordinated **CMDB** (Configuration Management Database) enablement set; the sixth configures the Incident Priority Matrix.
