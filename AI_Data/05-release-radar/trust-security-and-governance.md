@@ -4,6 +4,18 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-17 · A first-party skill catalogue whose Data 360 path runs on a 3-star personal repo (cross-link)
+
+Two supply-chain points from `sf-skills` 1.39.0/1.40.0.
+
+- **Provenance does not propagate.** The seven `data360-*` skills are Apache-2.0, published by `forcedotcom`, and now ship inside an official Claude Code plugin — but every command they emit requires `Jaganpro/sf-cli-plugin-data360`: MIT, 3 stars, self-described as *"NOT an official Salesforce product… unsupported, experimental"*, absent from npm, linked from a source clone with **no version to pin**.
+- **And the declaration went the wrong way.** 1.39.0 deleted the `compatibility:` line that named the dependency, while the documented repair path is a `curl … | python3 -` from a personal account.
+- **A stale generated catalogue silently pinned installs to a fortnight-old release.** `discovery.json` sat at `releaseRef: 1.32.0` while the tree reached 1.38.0, and that ref is the `#<ref>` in the install command the plugin executes.
+
+Full entries: [the community plugin](data-360.md#2026-08-17--the-seven-data360--skills-run-on-an-unofficial-community-cli-plugin--and-1390-deleted-the-line-that-said-so) · [the catalogue lag](developer-tooling-and-apis.md#2026-08-17--sf-skills-regenerates-a-capability-catalogue-frozen-six-releases-back--and-the-install-command-it-emits-was-pinned-to-the-stale-snapshot).
+
+---
+
 ## 2026-08-14 · One error code, two gates — and a hosted MCP dispatcher that carries no org identifier (cross-link)
 
 Two governance points out of `sf-skills` 1.38.0. **First, `403 FUNCTIONALITY_NOT_ENABLED` is overloaded**: for Service Cloud ITSM CMDB it means the org feature is off **or** the running user holds no CMDB permission set, and the skills have to disambiguate on feature `status == ENABLED` rather than on a data read. Any org-plus-user double gate that collapses to one code will be diagnosed wrongly at least once. **Second, the hosted `headless-360` MCP server derives its org from the OAuth JWT bound to the session** — no alias, no org id, no credential in the call — and it dispatches **raw HTTP** over the Connect/Setup surface. Convenient, and it means the only thing separating a sandbox write from a production write is which session is connected; it sits behind org gate `api.agentic.access.enableHeadless360McpServer`. Full entries: [the CMDB gate](developer-tooling-and-apis.md#2026-08-14--service-cloud-itsm-cmdb-gets-a-six-skill-setup-path--and-it-publishes-the-five-layer-gate-behind-one-error-code) · [the dispatcher shape](developer-tooling-and-apis.md#2026-08-14--headless-360-appears-in-skill-frontmatter--and-the-hosted-server-turns-out-to-be-four-meta-tools-not-a-tool-catalogue).

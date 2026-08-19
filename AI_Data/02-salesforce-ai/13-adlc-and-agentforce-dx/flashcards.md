@@ -303,3 +303,21 @@ A: **0.5.0**, which is the package's only dist-tag (`latest`) and is simultaneou
 
 Q: Why is npm a bad source for the React Native Agentforce bridge's release history?
 A: The registry holds only `0.0.0`, `0.3.0`, `0.4.0`, `0.5.0` — GitHub releases `0.1.0` (260.4) and `0.2.0` (260.5) never published. Combined with marketing names that diverge entirely from npm versions (`0.5.0` = *262.1.3-RC4*), neither number predicts the other. Read the releases page.
+
+Q: `sf agent preview --api-name <ApiName>` shows no reasoning trace. Is the agent not reasoning?
+A: Probably not — before `@salesforce/agents` **2.0.4** (2026-08-18) `ProductionAgent.getTrace()` returned `undefined` unconditionally, so the `--api-name` path never asked for a trace. It now GETs `v1.1/preview/sessions/{sessionId}/plans/{planId}`. Trace fetches are also swallowed (`.catch(() => undefined)`), so a missing trace can equally be a permission or endpoint failure.
+
+Q: Why do `sf agent preview --api-name` and `--authoring-bundle` keep behaving differently?
+A: They are two client classes. `--authoring-bundle` runs `ScriptAgent` against local `.agent` source; `--api-name` runs `ProductionAgent` against the published agent. Four behaviours were implemented in the first and missing from the second in nine days — identity (`bypassUser`, 2.0.1), context variables (2.0.2), the `x-attributed-client: no-builder` header (2.0.3) and reasoning traces (2.0.4). The path that matches production is the less complete one.
+
+Q: Stable `sf` 2.147.7 pins `@salesforce/plugin-agent` 2.0.0. Do you get the 2.0.4 agent fixes?
+A: On a **fresh install, yes** — plugin-agent 2.0.0 *ranges* `@salesforce/agents` `^2.0.0`, which resolves 2.0.4. An existing `node_modules` or a lockfile does not. `^2.0.0` **permits** the fix; only `plugin-agent` 2.0.3's `^2.0.4` **compels** it, and that ships on `nightly` only.
+
+Q: The `salesforce-development` plugin offers to add a skill. What decides which version you get?
+A: `publicRelease.releaseRef` in the plugin's generated `discovery.json` — it becomes the `#<ref>` in `npx skills@1.5.20 add forcedotcom/sf-skills#<ref> …`. The catalogue is a snapshot on its own refresh schedule: it sat at **1.32.0** while the repo shipped 1.36.0, 1.37.0 and 1.38.0, and was refreshed to 1.38.0 only at 1.39.0. Read the ref before trusting the counts.
+
+Q: You want every Agent Skill tagged "Data 360". Which field do you search, and with what value?
+A: Two answers, and they differ. `SKILL.md` frontmatter carries `metadata.domains: ["Data 360"]` (Title Case, 1–3 per skill, added in 1.40.0). The catalogue and its `sf-context discovery domain` command carry a singular lowercase `domain: "data360"` derived from the name prefix. `domains` appears **zero** times in `discovery.json`, so the new field is invisible to the search command.
+
+Q: Your delivery plan automates Data 360 with the `data360-*` Agent Skills. What is the supportability risk?
+A: Every command they emit runs on `sf data360`, which is **`Jaganpro/sf-cli-plugin-data360`** — MIT, 3 stars, *"NOT an official Salesforce product… unsupported, experimental"*, absent from npm, installed by `sf plugins link` from a source clone with **no version to pin**. The Apache-2.0, `forcedotcom`-published skills do not make the runtime first-party. `sf-skills` 1.39.0 deleted the `compatibility:` line that declared this.

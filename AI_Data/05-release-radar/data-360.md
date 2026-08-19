@@ -4,6 +4,50 @@ Newest entries at the top. Data 360 ships **monthly**, not per-seasonal-release 
 
 ---
 
+## 2026-08-17 · The seven `data360-*` skills run on an unofficial community CLI plugin — and 1.39.0 deleted the line that said so
+
+**What changed.** At `sf-skills` **1.38.0**, all seven `data360-*` skills carried a top-level `compatibility:` string naming their prerequisite. **1.39.0** (2026-08-17) removed it from all seven; `compatibility` now appears **zero** times repo-wide. The dependency did not go away — `data360-query` alone still issues `sf data360 …` twelve times.
+
+The deleted line, verbatim from `skills/data360-query/SKILL.md` at tag 1.38.0:
+
+```yaml
+compatibility: "Requires an external community sf data360 CLI plugin and a Data Cloud-enabled org"
+```
+
+- **The runtime is `github.com/Jaganpro/sf-cli-plugin-data360`** — MIT, 3 stars, 23 commits, **159 commands across 23 topics**. Its own README says it is *"NOT an official Salesforce product… unsupported, experimental… created for internal exploration and demo purposes."*
+- **It is not on npm.** `sf plugins install` does not reach it. The documented path is `git clone` → `yarn install` → `npx tsc` → `sf plugins link .`, into `~/.sf-community-tools/datacloud/sf-cli-plugin-data360`.
+- **There is no version to pin.** `references/plugin-setup.md` tells you to *"update the community runtime to the latest upstream commit"* for newer command families such as `sf data360 query hybrid`.
+- **`sf-skills` states the arrangement deliberately:** *"sf-skills does not vendor or fork that plugin"* — it keeps the catalogue to "skills, prompts, docs, and templates" and lets the runtime evolve independently.
+
+```mermaid
+flowchart TD
+    S["<b>7 Salesforce-published skills</b><br/><code>data360-connect · prepare · harmonize</code><br/><code>segment · activate · query · orchestrate</code><br/>Apache-2.0, in <code>forcedotcom/sf-skills</code>"]
+    S -->|"every command they emit"| P["<b>sf data360</b><br/>community plugin, MIT, 3 stars<br/><i>'NOT an official Salesforce product'</i>"]
+    P --> ORG["Data Cloud Connect API<br/>in a live org"]
+    S -.->|"<code>compatibility:</code> deleted at 1.39.0"| GONE["the only machine-readable<br/>statement of this is gone"]
+    P -.->|"not on npm · linked from source<br/>· no version pin"| SUP["nothing to pin, nothing to<br/>raise a support case against"]
+```
+
+**Why it matters.** A capability that reads as first-party — Apache-2.0 skills in a `forcedotcom` repo, now shipped inside an official Claude Code plugin — bottoms out in one person's experimental side project. That is a supportability and supply-chain fact, not a detail. Deleting `compatibility:` removed the one place a reader or a tool could learn it without opening a reference file.
+
+**Gotchas:**
+- **The plugin has three different names.** Repo `Jaganpro/sf-cli-plugin-data360`; oclif package `@gthoppae/sf-cli-plugin-data360` (which is what the linked-ESM warning prints, and which is **not published to npm**); and an older clone path `gthoppae/sf-cli-plugin-data360` that a stale installer still tries.
+- **The documented repair is a curl-pipe-to-python from a personal account** — `curl -sSL https://raw.githubusercontent.com/Jaganpro/sf-skills/main/tools/install.py | python3 - --with-datacloud-runtime`. Note `Jaganpro/sf-skills`, not `forcedotcom/sf-skills`.
+- **`cliTools` cannot express this.** All seven skills declare only `node >=18.0.0` and `sf >=2.0.0`, so the fast-fail contract never covered the one prerequisite that actually blocks them.
+- **`sf data360 doctor` is advisory, not a gate.** On partially provisioned orgs it fails while read-only Data Cloud commands still work; the skills fall back to `verify-plugin.sh` and `diagnose-org.mjs -o <org> --phase <phase> --json`.
+- **A globally `sudo`-installed `sf` breaks the link** — the data directory ends up root-owned. Set `SF_DATA_DIR="${HOME}/.local/share/sf"` before `sf plugins link .`.
+- **Separately, a real Salesforce plugin is misnamed in the docs.** `data360-code-extension-generate` uses the correct `@salesforce/plugin-data-code-extension` (npm, **1.4.0**) in `SKILL.md`, but `references/README.md` and `references/quick-reference.md` say `@salesforce/plugin-data-codeextension` **four times** — including in both "Plugin not found" troubleshooting tables. That package does not exist.
+
+**Relevant to:** **Architect** — the automated Data 360 path depends on an unversioned, unsupported third-party plugin, which changes build-vs-buy and supportability assumptions for any delivery that leans on it; **Developer** — the exact repo, install path, package-name aliases and the four wrong `sf plugins install` lines you will otherwise hit.
+
+**Study action:** run `sf plugins install @salesforce/plugin-data-codeextension` and watch it fail, then run it with the correct `@salesforce/plugin-data-code-extension` — you will have proved the doc bug in under a minute. Then open `skills/data360-orchestrate/references/plugin-setup.md` and decide, before a client does, whether `sf plugins link` from a 3-star repo belongs in your delivery.
+
+**Status:** Shipped — the removal is `forcedotcom/sf-skills` **1.39.0**, 2026-08-17 09:37:27 UTC (commit `b12ff20`, "Release 25 skills updated"), unchanged through **1.40.0**. Verified against tag 1.38.0 and a clone of `main` at 2026-08-19 03:26 UTC. The community plugin is **unsupported and experimental by its own README**; `@salesforce/plugin-data-code-extension` is a genuine Salesforce package at **1.4.0**.
+
+**Sources:** [`plugin-setup.md`](https://github.com/forcedotcom/sf-skills/blob/main/skills/data360-orchestrate/references/plugin-setup.md) · [`data360-query/SKILL.md` at 1.38.0](https://github.com/forcedotcom/sf-skills/blob/1.38.0/skills/data360-query/SKILL.md) · [`Jaganpro/sf-cli-plugin-data360`](https://github.com/Jaganpro/sf-cli-plugin-data360) · [npm `@salesforce/plugin-data-code-extension`](https://www.npmjs.com/package/@salesforce/plugin-data-code-extension) · [sf-skills CHANGELOG](https://github.com/forcedotcom/sf-skills/blob/main/CHANGELOG.md)
+
+---
+
 ## Naming: "Data Cloud" vs "Data 360" — get this straight
 
 Salesforce began calling Data Cloud **"Data 360"** at Dreamforce 2025 (Oct 14, 2025), positioning it inside the **Agentforce 360** platform umbrella. Underlying product, licence, integrations and data model are unchanged. Salesforce's own developer documentation now consistently writes "Data 360."

@@ -4,6 +4,104 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-18 · Two more `--api-name` preview defects in `@salesforce/agents` — the published-agent path is a second client, and it keeps arriving incomplete
+
+**What changed.** `@salesforce/agents` **2.0.3** and **2.0.4** published 2026-08-18, six minutes apart (01:24:00 and 01:30:47 UTC). Both fix `sf agent preview --api-name`. That is **four defects in nine days** in one code path, plus one unrelated validation change.
+
+- **2.0.4 — `--api-name` previews had no reasoning trace at all.** `ProductionAgent.getTrace()` returned `undefined` unconditionally. It now GETs `v1.1/preview/sessions/{sessionId}/plans/{planId}`, built by stripping the trailing `/v1` from the agent's `apiBase`, exactly as `ScriptAgent` already did. (PR [#340](https://github.com/forcedotcom/agents/pull/340))
+- **2.0.3 — a missing header changed the response format.** `x-attributed-client: 'no-builder'` was not sent on session start (`POST /sessions`), alongside the existing `x-client-name: 'afdx'`. Its documented effect is that it **removes markdown from responses**. (PR [#338](https://github.com/forcedotcom/agents/pull/338))
+- **2.0.3 — `createSpec` stops silently dropping input.** `groundingContext` passed without `promptTemplateName` was accepted and discarded; it now throws `GroundingContextRequiresPromptTemplateError`. (PR [#339](https://github.com/forcedotcom/agents/pull/339))
+
+**The four defects, all in the same place:**
+
+| Version | Date | `--api-name` was… | Symptom |
+|---|---|---|---|
+| 2.0.1 | 2026-08-10 | hard-coding `bypassUser: true` | employee-agent preview died on `400 Invalid user ID` |
+| 2.0.2 | 2026-08-14 | dropping context variables | agent behaved as if the variables were unset |
+| 2.0.3 | 2026-08-18 | omitting `x-attributed-client` | responses came back with markdown the builder path strips |
+| 2.0.4 | 2026-08-18 | never fetching plans | no reasoning trace to debug a routing decision with |
+
+```mermaid
+flowchart TD
+    CLI["<code>sf agent preview</code>"]
+    CLI -->|"<code>--authoring-bundle</code>"| SA["<b>ScriptAgent</b><br/>previews the local <code>.agent</code> source"]
+    CLI -->|"<code>--api-name</code>"| PA["<b>ProductionAgent</b><br/>previews the <i>published</i> agent"]
+    SA --> OK["identity · context vars · headers · traces<br/><i>all implemented</i>"]
+    PA --> GAP["each of the four re-implemented late<br/><i>2.0.1 → 2.0.4</i>"]
+    GAP -.->|"the path that matches production<br/>is the less complete one"| RISK["you debug the agent you are<br/><b>not</b> going to ship"]
+```
+
+**Why it matters.** Previewing a published agent and previewing an authoring bundle are two different client classes, and the one that mirrors what users will actually hit is the one that has been under-implemented. Every defect here is silent: nothing errors, the preview just behaves unlike the real thing. Absent traces are the worst of the four — you conclude the agent has no reasoning rather than that the CLI never asked for it.
+
+**Gotchas:**
+- **Reachability runs on the range, not the pin.** Stable `sf` **2.147.7** pins `@salesforce/plugin-agent` **2.0.0**, which ranges `@salesforce/agents` **`^2.0.0`** — so a *fresh* install resolves **2.0.4** and gets all four fixes today. An existing `node_modules` or a lockfile does not.
+- **`^2.0.0` permits the fix; `^2.0.4` compels it.** Only `plugin-agent` **2.0.3** carries the compelling floor, and it ships in `sf` **`nightly` 2.149.8+** only. `latest-rc` **2.148.3** pins `plugin-agent` 2.0.1 (`^2.0.1`).
+- **`getTrace` failures are swallowed by design** — `await this.getTrace(planId).catch(() => undefined)`. A trace that does not appear may be a permission or endpoint problem, not an agent that did not reason.
+- **The `createSpec` throw is a breaking change for callers**, not just a guard: a spec generator that has always passed `groundingContext` with no `promptTemplateName` worked (uselessly) until 2.0.3 and now fails.
+
+**Relevant to:** **Developer** — `sf agent preview --api-name` is the command you debug published agents with, and four of its behaviours have differed from the authoring-bundle path over nine days; the fixes reach you only on a fresh dependency resolve.
+
+**Study action:** in a dev org with one published agent, run `sf agent preview --api-name <ApiName>` on a freshly installed `sf`, confirm a reasoning trace is emitted, then run `npm ls @salesforce/agents` inside the CLI install and check the resolved version is ≥ 2.0.4. Repeat the same prompt through `--authoring-bundle` and diff the two transcripts for markdown.
+
+**Status:** Shipped — npm `@salesforce/agents` **2.0.3** and **2.0.4**, both 2026-08-18; `@salesforce/plugin-agent` **2.0.3** (2026-08-18 17:24:25 UTC) ranges `^2.0.4`. No `sf` stable or release-candidate build pins that plugin version as of 2026-08-19 03:37 UTC.
+
+**Sources:** [`forcedotcom/agents` CHANGELOG](https://github.com/forcedotcom/agents/blob/main/CHANGELOG.md) · [commit `0f1babb` — plans endpoint](https://github.com/forcedotcom/agents/commit/0f1babb5166e16e55f32cf90fd049af35b35fcda) · [commit `3701ca9` — `x-attributed-client`](https://github.com/forcedotcom/agents/commit/3701ca9b185aff4f534e527130379d338e6ba1c5) · [commit `bcea0e6` — `createSpec` validation](https://github.com/forcedotcom/agents/commit/bcea0e61e93c9d01895e16d43f3664d9316bce2d) · [npm `@salesforce/plugin-agent`](https://www.npmjs.com/package/@salesforce/plugin-agent)
+
+---
+
+## 2026-08-17 · `sf-skills` regenerates a capability catalogue frozen six releases back — and the install command it emits was pinned to the stale snapshot
+
+**What changed.** `sf-skills` **1.39.0** (2026-08-17 09:37:27 UTC) regenerated the plugin's discovery catalogue at `plugins/builder/salesforce-development/catalog/discovery.json`. `publicRelease.releaseRef` moved **1.32.0 → 1.38.0** and `counts.public` **102 → 138**. **1.40.0** (2026-08-18 17:18:08 UTC) then added a fifth frontmatter field, `metadata.domains`.
+
+- **The catalogue is a snapshot, and it had stopped tracking the tree it ships in.** Fetched at each tag: **1.36.0, 1.37.0 and 1.38.0** all declare `releaseRef: "1.32.0"`, commit `7baeb07b`, **102** public skills. **1.39.0 and 1.40.0** declare `1.38.0`, commit `ba78d387`, **138**.
+- **The stale ref reached the install command.** `platform-capability-search` will only install a skill whose catalogue-emitted `installInstruction` matches, exactly, `npx skills@1.5.20 add forcedotcom/sf-skills#1.38.0 --skill <name> --agent claude-code --yes` — where `#<ref>` *is* `publicRelease.releaseRef`.
+- **`metadata.domains` lands on all 138 catalogue skills** — 109 single-valued, 27 with two, 2 with three; 14 distinct values.
+- **It is a second taxonomy, not the one the search command uses.** `domains` appears **zero** times in `discovery.json`, which keeps its own singular, lowercase, name-prefix-derived `domain` (one per skill).
+
+**The two taxonomies, side by side:**
+
+| | `SKILL.md` → `metadata.domains` | `discovery.json` → `domain` |
+|---|---|---|
+| Cardinality | 1–3 per skill | exactly 1 |
+| Form | Title Case, spaced — `"Data 360"`, `"Developer Experience"` | lowercase slug — `data360`, `dx` |
+| Derivation | curated | the skill-name prefix (0 exceptions in 148) |
+| Read by | nothing yet | `sf-context discovery domain <domain>` |
+
+Values in use: `Platform` 66 · `Experience` 36 · `Developer Experience` 29 · `Agentforce` 19 · `Data 360` 15 · `Service` 10 · `OmniStudio` 8 · `Integration` 4 · `Design Systems` 4 · `Automation` 4 · `Mobile` 3 · `Commerce` 3 · `Sales` 1 · `External` 1.
+
+```mermaid
+flowchart LR
+    TREE["repo tree<br/><b>1.40.0</b> · 138 skills<br/>carries <code>metadata.domains</code>"]
+    CAT["<code>discovery.json</code><br/><code>releaseRef: 1.38.0</code><br/>no <code>domains</code> field"]
+    CMD["<code>sf-context discovery</code><br/>overview · domain · skill · index"]
+    INST["<code>npx skills@1.5.20 add<br/>forcedotcom/sf-skills#1.38.0</code>"]
+    TREE -->|"regenerated at 1.39.0<br/><i>previously frozen at 1.32.0</i>"| CAT
+    CAT --> CMD
+    CAT -->|"releaseRef becomes the<br/>install pin"| INST
+    TREE -.->|"<code>domains</code> never crosses"| CMD
+```
+
+**Why it matters.** The plugin advertises "installed-versus-available capability discovery", and both halves of that answer come from one generated file that is refreshed on its own schedule. While it sat at 1.32.0, the guarded add flow was pinning every install to a fortnight-old release — a wrong-version install with no error and no warning. `releaseRef` is the only field that admits it.
+
+**Gotchas:**
+- **Read `publicRelease.releaseRef` before trusting a count.** `counts.public` describes the snapshot, not the release you installed. Today: catalogue `1.38.0`, tree `1.40.0`.
+- **A skill missing from the catalogue is not installable through the plugin at all.** The flow continues only on `status: "available"`, `publicAvailable: true`, `foundationInstalled: false` — so the 36 skills added between 1.32.0 and 1.38.0 were unreachable that way until 08-17.
+- **The installer is pinned too** — `npx skills@1.5.20`, fixed in the skill text, not resolved.
+- **`domains` and `domain` are not interchangeable.** `sf-context discovery domain data360` resolves; `sf-context discovery domain "Data 360"` does not.
+- **10 `SKILL.md` files carry no `domains`** — all of them foundation-only plugin skills, matching `counts.foundationOnly: 10` (`platform-capability-search`, `platform-quick-deploy`, `dx-project-create` and seven more).
+- **`domains` never contradicts the prefix** — 0 of 138 omit their prefix-derived domain, so it only ever *adds*. Treat it as secondary labels, not a re-classification.
+- **1.39.0 also deleted a prerequisite declaration**, not just refreshed the catalogue — see [data-360.md](data-360.md#2026-08-17--the-seven-data360--skills-run-on-an-unofficial-community-cli-plugin--and-1390-deleted-the-line-that-said-so) for the `compatibility:` removal across the seven `data360-*` skills.
+
+**Relevant to:** **Developer** — the skill version the plugin installs comes from `releaseRef` rather than the release you cloned, and the new domain field is invisible to the only command that searches by domain.
+
+**Study action:** install `salesforce-development@claude-plugins-official`, run `${CLAUDE_PLUGIN_ROOT}/scripts/sf-context discovery overview`, and compare the release ref it prints against the newest tag on `forcedotcom/sf-skills`. Then clone the repo and run `grep -h '^  domains:' skills/*/SKILL.md | sort | uniq -c` to build the taxonomy the catalogue does not carry.
+
+**Status:** Shipped — `forcedotcom/sf-skills` **1.39.0** (2026-08-17) and **1.40.0** (2026-08-18); npm `@salesforce/afv-skills` at the same versions; bundled plugin `salesforce-development` now **1.11.0** (was 1.10.0 on 08-11). No Salesforce announcement accompanied either release. `metadata.domains` is the **fifth** field in the dependency contract tabled under [the `mcpTools` entry](#2026-08-14--headless-360-appears-in-skill-frontmatter--and-the-hosted-server-turns-out-to-be-four-meta-tools-not-a-tool-catalogue), and it is undocumented — no schema, README or validation script defines its allowed values.
+
+**Sources:** [sf-skills CHANGELOG](https://github.com/forcedotcom/sf-skills/blob/main/CHANGELOG.md) · [commit `1db8f4e` — `metadata.domains`](https://github.com/forcedotcom/sf-skills/commit/1db8f4eff426ccadfb67a2a751c07a683901ab39) · [`platform-capability-search/SKILL.md`](https://github.com/forcedotcom/sf-skills/blob/main/plugins/builder/salesforce-development/skills/platform-capability-search/SKILL.md) · [`discovery.json` at 1.38.0](https://github.com/forcedotcom/sf-skills/blob/1.38.0/plugins/builder/salesforce-development/catalog/discovery.json) · [npm `@salesforce/afv-skills`](https://www.npmjs.com/package/@salesforce/afv-skills)
+
+---
+
 ## 2026-08-14 · Service Cloud ITSM CMDB gets a six-skill setup path — and it publishes the five-layer gate behind one error code
 
 **What changed.** `forcedotcom/sf-skills` **1.38.0** (2026-08-14, 17 new + 21 updated skills, 121 → **138** skills) adds six `service-itsm-*` skills. Five are a coordinated **CMDB** (Configuration Management Database) enablement set; the sixth configures the Incident Priority Matrix.
