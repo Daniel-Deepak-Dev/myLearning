@@ -51,3 +51,15 @@ A: Agentforce Voice is the AI agent handling the call. Salesforce Voice is the S
 
 Q: Who was the first customer live on Agentforce Contact Center?
 A: Compass Working Capital, deployed by TTEC Digital, announced July 23, 2026.
+
+Q: What happens if an Agent Script `modality voice:` block mixes v1 and v2 keys?
+A: The compile fails — "Invalid modality voice configuration. Both Voice schema versions were detected, use only one at a time." Adding one nested `outbound:` block to a working v1 script breaks the whole compile; it is not a merge.
+
+Q: How does Agent Script voice v2 express per-language settings?
+A: `language_settings:` maps a BCP 47 tag to its own `inbound:` / `outbound:` pair, with the agent-level block as the default. Any string is accepted as a key (`allowTypelessEntries: true`), so a mistyped locale parses cleanly and fails later in the linter.
+
+Q: What are the two values of `session_language_switching` in Agent Script voice v2?
+A: `Monolingual` (the default — one language per session) and `Multilingual` (any language on any turn).
+
+Q: Where does Agent Script voice v2 output land in the compiled config?
+A: Under `voice2_config`, with the shared `additional_configs` moved into it. Anything reading the compiled `voice` config by its v1 shape sees an empty object.

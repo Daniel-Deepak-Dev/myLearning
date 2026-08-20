@@ -4,6 +4,77 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 ---
 
+## 2026-08-19 · Agent Script 3.x adds a second agent topology — `GoalBasedAgent` agents run on a schedule, not on a conversation
+
+**What changed.** Two internal→open-source syncs landed in `salesforce/agentscript` on 2026-08-19 (commits `5901dbe` 00:57 UTC and `5e6404e` 02:14 UTC, 358 files, +36,856 / −11,734). The second cut three majors at once and introduces `config.agent_type: "GoalBasedAgent"`, which switches the grammar to a different agent shape.
+
+- **Three majors in one sync.** `@agentscript/agentscript` **2.23.0 → 3.4.0**, `@agentscript/compiler` **2.42.1 → 3.8.1**, `@agentscript/language` **2.20.0 → 3.2.3**. The `agentforce` dialect went 2.37.0 → **2.53.0** across both syncs.
+- **The new topology is autonomous, not conversational.** A `trigger:` block fires a `workflows:` entry on a **cron schedule** — `schedule: "*/5 * * * *"`, `target: @workflows.engineering` — with no user turn involved.
+- **`orchestrator` replaces `start_agent` as the entry point.** A workflow dispatches either to a `connected_subagent` (`agent: @connected_subagent.agent_1`, itself `target: "agent://Agent_1"`) or to a bare `prompt:` string.
+- **The internal name is AgentIQ.** The lint pass `agentiq-validation` "validates AgentIQ workflow, trigger, and orchestrator semantics"; `schema.ts` describes the type as *"goal-based agents (AgentIQ)"*.
+- **Separately, `additional_parameter__` config fields are now governed.** Six are deprecated in favour of `config.runtime.*` fields, and one is a hard error.
+
+**Why it matters.** Agentforce has spent 2026 with one authoring topology: a conversation enters at `start_agent`, and subagents route it. This is a second one, and the difference is not syntax — a goal-based agent has **no inbound turn to authorise against**. Whatever identity the scheduled run adopts decides its sharing, FLS and record ownership, and nothing in the script says which. Decide that before writing a `trigger:` block.
+
+```mermaid
+flowchart LR
+  subgraph CONV["agent_type unset — conversational"]
+    U["User turn"] --> SA["start_agent"] --> SUB["subagent"]
+  end
+  subgraph GBA["agent_type: GoalBasedAgent"]
+    T["trigger: cron"] --> WF["workflows"]
+    WF --> CS["connected_subagent<br/>agent://Agent_1"]
+    WF --> P["prompt string"]
+    ORCH["orchestrator<br/>(entry point)"] --> WF
+  end
+  CONV -. "blocks are mutually exclusive" .- GBA
+```
+
+**Gotchas:**
+- **The two topologies are mutually exclusive, and the linter enforces it both ways.** Outside a `GoalBasedAgent`, the top-level blocks `bundles`, `workflows`, `trigger`, `actions` and `orchestrator` each raise error code **`gba-only-<block>`**. Inside one, `subagent` and `start_agent` raise **`gba-forbidden-<block>`**.
+- **`agent_type` is matched case-insensitively but suggested as one string.** The check is `agentType.trim().toLowerCase() === 'goalbasedagent'`; `.suggest(['GoalBasedAgent'])` is the only completion offered, and the schema accepts "any valid backend agent type" — so a typo yields a *conversational* agent that then fails on every GBA block, not an unknown-type error.
+- **Six `additional_parameter__` fields are deprecated to `config.runtime.*`**, code `deprecated-additional-parameter`, Warning severity, struck through in editors: `reset_to_initial_node` → `reset_to_initial_node`, `disable_groundedness` and `enable_groundedness` → `groundedness`, `disable_streaming` → `streaming`, `disable_citation` → `citation`, `enable_thought_chunks` → `thought_chunks`.
+- **`additional_parameter__disable_graph_runtime` is a hard Error**, code `disabled-additional-parameter` — *"Disabling the graph runtime is not permitted. Please reach out to support if you need that."* There is no runtime replacement.
+- **The plugin dialects are exempt.** `gba-only-blocks` returns early when the schema context has no `config` namespace, so a plugin-dialect script may carry `workflows:` and `actions:` with no diagnostic — do not read a clean lint there as proof the blocks are allowed in an agent script.
+
+**Relevant to:** **Architect** — a second agent topology with no inbound user turn, so the run-as identity, sharing and FLS story has to be designed rather than inherited from the conversation; **Developer** — new top-level blocks (`orchestrator`, `workflows`, `trigger`, `actions`, `bundles`), five `gba-only-*` / two `gba-forbidden-*` error codes, and six `additional_parameter__` fields that now warn; **Admin** — a cron-scheduled agent is a new thing running in the org on its own clock, with nothing in the conversation log to notice it by.
+
+**Study action:** clone `salesforce/agentscript` at `5e6404e`, copy the `AUTONOMOUS_AE` fixture out of `dialect/agentscript/src/tests/agentiq-complete-example.test.ts` into a `.agent` file, then delete the `agent_type` line and re-lint. The five `gba-only-*` errors you get back are the exact boundary between the two topologies.
+
+**Status:** Open source (Apache-2.0), `salesforce/agentscript` `main` at 2026-08-19. No Salesforce announcement, release note or doc page names `GoalBasedAgent` or AgentIQ as of 2026-08-20 03:42 UTC — this is a language surface published ahead of the product.
+
+**Sources:** [`salesforce/agentscript` commit `5e6404e`](https://github.com/salesforce/agentscript/commit/5e6404e9a662f049af236c2886f910d47e392905) · [`gba-only-blocks.ts`](https://github.com/salesforce/agentscript/blob/main/dialect/agentscript/src/lint/passes/gba-only-blocks.ts) · [`governed-additional-parameters.ts`](https://github.com/salesforce/agentscript/blob/main/dialect/agentforce/src/lint/passes/governed-additional-parameters.ts) · [`agentiq-complete-example.test.ts`](https://github.com/salesforce/agentscript/blob/main/dialect/agentscript/src/tests/agentiq-complete-example.test.ts)
+
+---
+
+## 2026-08-19 · Agent Script voice gets a v2 schema — inbound/outbound blocks, per-locale overrides, and a compile error if you mix versions
+
+**What changed.** Sync `5901dbe` (2026-08-19 00:57 UTC) added a second `modality voice:` schema to the `agentforce` dialect, with seven new compiler fixtures (`voice_v1_all`, `voice_v2_all`, `voice_v2_inbound`, `voice_v2_outbound`, `voice_v2_languages`, and two minimums). V1's flat keys survive alongside it.
+
+- **Direction becomes structure.** V1's flat `inbound_keywords` / `outbound_speed` / `outbound_filler_sentences` become nested `inbound:` and `outbound:` blocks.
+- **Per-locale overrides.** `language_settings:` maps a BCP 47 tag to its own `inbound:` / `outbound:` pair; the agent-level block is the default.
+- **`session_language_switching:`** takes `Monolingual` (default, one language per session) or `Multilingual` (any language on any turn).
+- **Speech models are addressable.** `inbound.model` and `outbound.model` each take an `id` plus free-form `parameters` — the schema says this exists so "version X and X+1 are simultaneously supported (GA, Beta)".
+- **Pronunciation dictionaries.** `outbound.pronunciations` entries carry `grapheme`, `phoneme` and `type`, with both **`IPA`** and **`CMU`** accepted.
+
+**Why it matters.** Voice has been the Agentforce channel with the fewest authoring knobs — this radar has carried "US/Canada only" and a 3× billing swing as its defining facts. A per-locale, per-direction schema with pinnable ASR/TTS model ids moves the design question from *can we do voice* to *which locale gets which model* — and it lands in the open-source dialect before any release note mentions it.
+
+**Gotchas:**
+- **Mixing v1 and v2 keys is a compile error, not a merge.** `compile-modality.ts` raises *"Invalid modality voice configuration. Both Voice schema versions were detected, use only one at a time."* and returns `null`. Adding one nested `outbound:` block to a working v1 script breaks the whole compile.
+- **V2 output lands under a different key.** When no v1 field is present the compiler writes `voiceConfig.voice2_config`, and moves the shared `additional_configs` into it. Anything reading the compiled `voice` config by its v1 shape sees an empty object.
+- **`outbound_stability` and `outbound_similarity` are marked Deprecated** in the v1 half of `voice-schema.ts`. The file's own comment says v1 deprecation is *"TBD"* — the linter only catches mixing, so v1 is not yet on a clock.
+- **`language_settings` accepts any string as a key** (`allowTypelessEntries: true`) — a mistyped locale tag parses cleanly and is caught later by the linter/compiler, not by the schema.
+
+**Relevant to:** **Architect** — per-locale voice settings change what a multi-language voice deployment costs to design, and pinnable ASR/TTS model ids mean a model choice is now a versioned decision; **Developer** — `modality voice:` has a second, incompatible schema, and mixing the two fails the compile outright.
+
+**Study action:** compile `packages/compiler/test/fixtures/scripts/voice_v2_all.agent` and diff the emitted `voice_v2_all.snake.json` against `voice_v1_all` — the `voice2_config` key and the per-language nesting are the whole migration in one diff. Then paste an `inbound_keywords:` line into the v2 fixture and confirm the version-mixing error.
+
+**Status:** Open source (Apache-2.0), `agentforce` dialect **2.38.1** at `5901dbe`, **2.53.0** on `main` at 2026-08-19. No release note or doc page located; v1 remains valid with no announced deprecation date.
+
+**Sources:** [`salesforce/agentscript` commit `5901dbe`](https://github.com/salesforce/agentscript/commit/5901dbe26de0bb59b18b4b251b648d79ebfef08b) · [`voice-schema.ts`](https://github.com/salesforce/agentscript/blob/main/dialect/agentforce/src/voice-schema.ts) · [`compile-modality.ts`](https://github.com/salesforce/agentscript/blob/main/packages/compiler/src/modality/compile-modality.ts)
+
+---
+
 ## 2026-08-14 · The prebuilt IT Service surface gets a real enablement path — and it is licence-gated at Layer 0 (cross-link)
 
 Agentforce **IT Service** is one of the five prebuilt agent families in the buy-vs-build framework, and its **CMDB** (Configuration Management Database) foundation now has a six-skill setup path in `sf-skills` 1.38.0. The architectural fact worth carrying into a buy-vs-build conversation: CMDB sits behind org perm **`ITSrvcsCnfgMgmnt`**, which comes from the edition or licence and which **no API can grant** — so "we'll turn it on later" is not available. Above it sit five more ordered layers (ITOM tenant → feature → four permission sets → content bundle → Asset Discovery), all failing with the single code `403 FUNCTIONALITY_NOT_ENABLED`. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-14--service-cloud-itsm-cmdb-gets-a-six-skill-setup-path--and-it-publishes-the-five-layer-gate-behind-one-error-code).

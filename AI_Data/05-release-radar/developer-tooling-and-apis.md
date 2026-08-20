@@ -4,6 +4,34 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-19 · Salesforce expands Headless 360 — and the Data 360 Skills it says go GA this month are the ones running on a 3-star personal repo
+
+**What changed.** Salesforce published *"Expanding Headless 360: Enterprise Capabilities"* on 2026-08-19 — the **first Salesforce product announcement this radar has caught in sixteen scans**. It names a hosted **Data 360 MCP Server** (~200 APIs), **prebuilt Data 360 Skills with GA targeted August 2026**, a **Slackbot MCP Client** across 20+ partner apps, and an **Agentforce Experience Layer**.
+
+- **The Data 360 MCP Server itself is not new here** — it is written up at [Data 360 MCP Server](#2026-07-29--data-360-mcp-server--200-rest-operations-behind-three-facade-tools). What is new is the **hosted** delivery and the Skills layer above it.
+- **Slackbot MCP Client** now reaches **20+ partner applications**, Docusign, Notion and Zoom named, "retaining existing permissions and data boundaries".
+- **Agentforce Experience Layer** separates what an agent does from how it renders — a component returned by an agent renders natively in Slack, Teams, ChatGPT, Claude, Gemini "or any MCP-compatible client". **Zero mentions study-base-wide** before today.
+
+**Why it matters.** Read against yesterday's finding, the announcement is a warning rather than a feature. The seven `data360-*` skills shipping in `forcedotcom/sf-skills` today bottom out in `Jaganpro/sf-cli-plugin-data360` — MIT, 3 stars, unsupported by its own README. *"Prebuilt Data 360 Skills, GA this month"* and *"the Data 360 skills you can install today"* are **not the same artifact**, and neither source names the other.
+
+**Gotchas:**
+- **The public preview server has not moved.** `forcedotcom/d360-mcp-server` newest `main` commit is **`c02edab`, 2026-07-02 05:51 UTC**, checked 2026-08-20 03:39 UTC. Its README still says *Developer Preview*, STDIO-only, "single user/org context per process", with the GA version *"slated to be provided as a hosted and managed Salesforce Platform MCP server"*. The announcement did not ship into this repo.
+- **The hosted `headless-360` server is still labelled Beta.** Its reference page is titled *"Headless 360 (Beta)"* as of 2026-08-20 — so the 08-16 finding that consumers declare `semver: ">=1.0.0"` still does not mean GA.
+- **The README's numbers beat the press release's.** `d360-mcp-server` documents **201 operations in 22 tool families** behind the three facade tools — SDM 38, Query 16, Connection 11, Calculated Insights 10, Retriever 10, Activation 10 — against the announcement's round "~200 APIs". Size a design against the family table, not the headline.
+- **"Targeted for August 2026" is a target.** No SKU, no permission-set name, no enablement step and no first-party doc page for the Skills layer was reachable; treat the date as unverified.
+
+**Relevant to:** **Architect** — it decides whether "agents can reach Data 360" is a design you can commit to this quarter, and the answer is still Developer Preview plus an unsupported community plugin; **Developer** — the 22-family / 201-operation table is the real capability list behind the three facade tools; **Admin** — the Slackbot MCP Client's 20+ partner apps run under existing permissions, so the org's sharing model becomes the control surface for all of them.
+
+**Study action:** clone `forcedotcom/d360-mcp-server`, read the 22-family table in its README, and mark which families the seven `sf-skills` `data360-*` skills actually cover. The gap is the honest answer to "can I hand Data 360 to an agent today?" — and it is a different answer from the announcement's.
+
+**Status:** Announced 2026-08-19. Data 360 MCP Server: **Developer Preview** in the public repo, hosted GA claimed but unverified. Data 360 Skills: **GA targeted August 2026**, unshipped as of 2026-08-20 03:42 UTC. Headless 360 MCP Server: **Beta**. Agentforce Experience Layer: announced, no surface located.
+
+**Sources:** [Expanding Headless 360: Enterprise Capabilities](https://www.salesforce.com/news/stories/expanding-headless-360-enterprise-capabilities/) · [`forcedotcom/d360-mcp-server`](https://github.com/forcedotcom/d360-mcp-server) · [Headless 360 (Beta) — Hosted MCP Servers reference](https://developer.salesforce.com/docs/platform/hosted-mcp-servers/guide/headless-360-mcp.html) · [Salesforce expands Headless Data 360 for MCP — SiliconANGLE](https://siliconangle.com/2026/08/19/salesforce-expands-headless-data-360-mcp-developers-can-bring-insights-agents/) · [Salesforce Latest Headless 360 Expansion — CX Today](https://www.cxtoday.com/crm/salesforce-headless-360-expansion-agentic-cx/)
+
+_All first-party pages (`salesforce.com`, `developer.salesforce.com`) and `siliconangle.com` returned **EGRESS_BLOCKED** at 03:38–03:40 UTC. Everything above is from search-result snippets except the `d360-mcp-server` facts, which are from a clone._
+
+---
+
 ## 2026-08-18 · Two more `--api-name` preview defects in `@salesforce/agents` — the published-agent path is a second client, and it keeps arriving incomplete
 
 **What changed.** `@salesforce/agents` **2.0.3** and **2.0.4** published 2026-08-18, six minutes apart (01:24:00 and 01:30:47 UTC). Both fix `sf agent preview --api-name`. That is **four defects in nine days** in one code path, plus one unrelated validation change.
@@ -44,6 +72,8 @@ flowchart TD
 **Study action:** in a dev org with one published agent, run `sf agent preview --api-name <ApiName>` on a freshly installed `sf`, confirm a reasoning trace is emitted, then run `npm ls @salesforce/agents` inside the CLI install and check the resolved version is ≥ 2.0.4. Repeat the same prompt through `--authoring-bundle` and diff the two transcripts for markdown.
 
 **Status:** Shipped — npm `@salesforce/agents` **2.0.3** and **2.0.4**, both 2026-08-18; `@salesforce/plugin-agent` **2.0.3** (2026-08-18 17:24:25 UTC) ranges `^2.0.4`. No `sf` stable or release-candidate build pins that plugin version as of 2026-08-19 03:37 UTC.
+
+> **Correction (2026-08-20):** the two Gotchas above are re-baselined by the dist-tag move. `latest` is now **2.148.3**, which pins `plugin-agent` **2.0.1** ranging `@salesforce/agents` **`^2.0.1`** — so a fresh stable install resolves **2.0.5** (2026-08-19 21:58 UTC) and still gets all four fixes by range, not by pin. `plugin-agent` **2.0.4** (2026-08-19 20:25 UTC) ranges `^2.0.4` and rides `latest-rc` **2.149.9** / `nightly` **2.150.0**, so the *compelling* floor reaches stable no earlier than **2026-08-26**. **2.0.5 is not a fifth defect** — it fixes the library's own NUTs (`getAllTraces` "history never created" and create-user, PR [#345](https://github.com/forcedotcom/agents/pull/345)); the count of user-facing `--api-name` defects stays at four.
 
 **Sources:** [`forcedotcom/agents` CHANGELOG](https://github.com/forcedotcom/agents/blob/main/CHANGELOG.md) · [commit `0f1babb` — plans endpoint](https://github.com/forcedotcom/agents/commit/0f1babb5166e16e55f32cf90fd049af35b35fcda) · [commit `3701ca9` — `x-attributed-client`](https://github.com/forcedotcom/agents/commit/3701ca9b185aff4f534e527130379d338e6ba1c5) · [commit `bcea0e6` — `createSpec` validation](https://github.com/forcedotcom/agents/commit/bcea0e61e93c9d01895e16d43f3664d9316bce2d) · [npm `@salesforce/plugin-agent`](https://www.npmjs.com/package/@salesforce/plugin-agent)
 
@@ -295,7 +325,9 @@ Keyed by **MCP server name**, each with a `tools` array and an optional `semver`
 
 ## 2026-08-12 · `sf org generate password` starts rejecting what it used to silently fix — and two smaller changes ride the same release
 
-**What changed.** `sf` **2.148.3** — `latest-rc` since 2026-08-12, scheduled for `latest` on **2026-08-19** — carries three practitioner-facing changes that the 08-13 read of this same release-notes file did not enumerate. The lead is a **breaking change**: `sf org generate password` now **errors** on `--length` below 20 or `--complexity` below 3.
+> **Correction (2026-08-20):** this entry said the break was *scheduled* for `latest` on 2026-08-19, and the 08-19 scan reported it had missed that date. **It landed.** `@salesforce/cli` `latest` is **2.148.3** as of 2026-08-20 03:36 UTC, pinning `@salesforce/plugin-user` **5.0.0** — so the `--length` ≥ 20 and `--complexity` ≥ 3 floors are now on the channel most teams install from, and the Gotcha below that names 2.147.7 as "today's `latest`" is spent. The Wednesday cadence held; the 08-19 scan checked at **03:47 UTC**, which is 20:47 PT on Tuesday the 18th — **before the promotion window on its own stated date had opened**. Dist-tags move on Pacific business hours, so a pre-dawn UTC check reads the previous day. `latest-rc` is now **2.149.9**, `nightly` **2.150.0** (published 2026-08-20 02:47 UTC).
+
+**What changed.** `sf` **2.148.3** — `latest-rc` since 2026-08-12, promoted to `latest` on **2026-08-19** — carries three practitioner-facing changes that the 08-13 read of this same release-notes file did not enumerate. The lead is a **breaking change**: `sf org generate password` now **errors** on `--length` below 20 or `--complexity` below 3.
 
 - **The old behaviour was silent correction, not rejection.** `@salesforce/plugin-user` **5.0.0** (npm **2026-08-10 22:34 UTC**) records both as `feat!` — commits [`17162b3`](https://github.com/salesforcecli/plugin-user/commit/17162b35ec2748b04f0bd70fab0a9a2d9e622ba7) (complexity) and [`30a97ff`](https://github.com/salesforcecli/plugin-user/commit/30a97ff3d5ff84fcce6aea3cfe7325858592ebd3) (length). Its `BREAKING CHANGES` block: values below the floor "now error instead of being silently raised".
 - **Only half of it was ever deprecated.** The 2026-04-01 notice (`sf` **2.129.8**) warned about `--complexity` alone — *"Starting in Summer '26, the command will fail if you specify a complexity value less than 3"* — and never mentioned `--length`.

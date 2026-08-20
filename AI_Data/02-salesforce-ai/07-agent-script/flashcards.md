@@ -39,3 +39,18 @@ A: The week of July 13, 2026, the *New Agent* button stopped opening the legacy 
 
 Q: Is Agent Script on the Agentforce Specialist exam?
 A: It isn't named in the exam guide despite being the default authoring model since July 2026. Given the guide's emphasis on deterministic behaviour, filters and variables, assume implicit scope and re-check before booking.
+
+Q: What does `config.agent_type: "GoalBasedAgent"` change about an Agent Script script?
+A: It switches the script to a second, mutually exclusive topology. Entry becomes an `orchestrator` block instead of `start_agent`, and `trigger:` fires a `workflows:` entry on a cron schedule with no user turn. Added in the `@agentscript/agentscript` 3.x dialect, synced to open source 2026-08-19.
+
+Q: Which top-level blocks are GoalBasedAgent-only, and which are forbidden inside a GoalBasedAgent?
+A: GBA-only — `bundles`, `workflows`, `trigger`, `actions`, `orchestrator`; using them elsewhere raises `gba-only-<block>`. Forbidden inside a GBA — `subagent` and `start_agent`, raising `gba-forbidden-<block>`.
+
+Q: Why is the run-as identity the first design question for a GoalBasedAgent?
+A: A cron-triggered run has no inbound user turn to authorise against, so nothing in the conversation determines sharing, FLS or record ownership — and nothing in the script states it either. It has to be designed explicitly.
+
+Q: What happens to `additional_parameter__disable_graph_runtime` in the 2026-08-19 Agent Script sync?
+A: It becomes a hard Error (`disabled-additional-parameter`) with no runtime replacement — "Disabling the graph runtime is not permitted." Six other `additional_parameter__` fields are only deprecated, mapping to `config.runtime.*` equivalents.
+
+Q: A GoalBasedAgent-only block lints clean in a plugin dialect. Is that proof it's allowed?
+A: No. `gba-only-blocks` returns early when the schema context has no `config` namespace, so plugin dialects are exempt by design. Test the rule in an agent script, not a plugin one.

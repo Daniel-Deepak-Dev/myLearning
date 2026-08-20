@@ -4,6 +4,40 @@ Newest entries at the top. Data 360 ships **monthly**, not per-seasonal-release 
 
 ---
 
+## 2026-08-19 · The official Code Extension plugin finishes moving off the Python binary — and `run` quietly changes how it authenticates
+
+**What changed.** `@salesforce/plugin-data-code-extension` **1.4.0** (2026-08-18 15:43 UTC) and **1.4.1** (2026-08-19 15:11 UTC) port `deploy` and `run` off the `datacustomcode` Python console-script, completing the SDK CLI migration. `DatacodeBinaryExecutor` is deleted.
+
+- **`deploy` is now native TypeScript** — Data Cloud REST plus a native zip and a **presigned-URL upload**, polling `deploymentStatus` with a terminal-failure fast-fail instead of shelling out.
+- **`run` still needs Python**, but reaches it as `python -c` into `datacustomcode.run.run_entrypoint`, streaming output live.
+- **`--dependencies` is comma-split**, overriding the package's `requirements.txt` for that run.
+- **1.4.1 is a permissions fix, twice.** Zip dependency staging lost the executable bit; the fix switches to `fs.copyFile`.
+
+**Why it matters.** This is the surface a Data 360 developer actually touches, and both halves changed underneath in two days. The consequential half is not the language port but the **auth model**: `run` now takes `--target-org`, and the commit states that **credential profiles and the `configure` / `auth` commands are intentionally not ported**. A pipeline built on a `datacustomcode` credential profile has no successor command here.
+
+**Gotchas:**
+- **`--target-org` replaces the credential profile, and nothing migrates it.** The commit message says the omission is deliberate (`@W-21769933@` / `@W-21770245@`), not pending.
+- **1.4.0 shipped a packaging regression that only bites at runtime.** Anything relying on an executable file inside a staged dependency — a shell shim, a compiled helper — silently lost `+x` between 1.4.0 and 1.4.1. Pin **1.4.1**.
+- **Python 3.11 remains a hard prerequisite for `run`.** The new `error.runProcessStartFailed` action text names it exactly: *"Verify Python 3.11 is installed and on your PATH"* and *"Reinstall the SDK with `pip install salesforce-data-customcode`"*.
+- **A 403-shaped failure is not auth.** `error.runAuthenticationFailed` is a distinct message from `runExecutionFailed`; its remedy list ends with *"Verify the org has Data Cloud enabled and your user has the required permissions"*.
+- **The package name has one hyphen more than the skills say.** `@salesforce/plugin-data-code-extension` — `@salesforce/plugin-data-codeextension`, printed four times in the `data360-code-extension-generate` references, does not exist. See the [2026-08-17 entry](#2026-08-17--the-seven-data360--skills-run-on-an-unofficial-community-cli-plugin--and-1390-deleted-the-line-that-said-so).
+
+**Relevant to:** **Developer** — `deploy` and `run` both changed implementation in two days, `--target-org` replaces credential profiles, and 1.4.0 loses the executable bit on staged dependencies; **Architect** — a Data 360 Code Extension pipeline built on `datacustomcode` credential profiles has no ported successor, so the auth design has to move to org-based auth.
+
+**Study action:** `sf plugins install @salesforce/plugin-data-code-extension@1.4.1`, then `sf data-code-extension script init` and `sf data-code-extension script run --entrypoint ./payload/entrypoint.py --target-org <alias>`. Confirm it never asks for a credential profile — that absence is the change.
+
+**Status:** Shipped. **1.4.0** 2026-08-18, **1.4.1** 2026-08-19, npm `latest` **1.4.1** verified 2026-08-20 03:37 UTC. Not bundled in `sf` — install it explicitly.
+
+**Sources:** [`plugin-data-code-extension` CHANGELOG](https://github.com/salesforcecli/plugin-data-code-extension/blob/main/CHANGELOG.md) · [commit `30184e6` — native TS port](https://github.com/salesforcecli/plugin-data-code-extension/commit/30184e69dca5f887cb8c68729553265198885f0e) · [PR #51 — preserve permissions](https://github.com/salesforcecli/plugin-data-code-extension/pull/51) · [npm `@salesforce/plugin-data-code-extension`](https://www.npmjs.com/package/@salesforce/plugin-data-code-extension)
+
+---
+
+## 2026-08-19 · Headless 360 expansion names Data 360 Skills for August GA (cross-link)
+
+Salesforce's 2026-08-19 announcement puts a hosted **Data 360 MCP Server** (~200 APIs) and **prebuilt Data 360 Skills** at **GA targeted August 2026** — while `forcedotcom/d360-mcp-server` is untouched since 2026-07-02 and still says Developer Preview, and the `data360-*` skills you can install today run on the unofficial plugin described in the entry below. Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-19--salesforce-expands-headless-360--and-the-data-360-skills-it-says-go-ga-this-month-are-the-ones-running-on-a-3-star-personal-repo).
+
+---
+
 ## 2026-08-17 · The seven `data360-*` skills run on an unofficial community CLI plugin — and 1.39.0 deleted the line that said so
 
 **What changed.** At `sf-skills` **1.38.0**, all seven `data360-*` skills carried a top-level `compatibility:` string naming their prerequisite. **1.39.0** (2026-08-17) removed it from all seven; `compatibility` now appears **zero** times repo-wide. The dependency did not go away — `data360-query` alone still issues `sf data360 …` twelve times.
