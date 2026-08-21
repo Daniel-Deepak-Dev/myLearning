@@ -89,6 +89,12 @@ Agentforce **IT Service** is one of the five prebuilt agent families in the buy-
 
 ## 2026-08-13 · The React Native Agentforce bridge's npm `latest` is a release candidate — 0.5.0 is `262.1.3-RC4`
 
+> **Correction (2026-08-21):** this said the bridge's default install is a release candidate with no stable dist-tag to fall back to. **Resolved.** `@salesforce/react-native-agentforce` **0.6.0** published to npm **2026-08-20 20:23 UTC**; GitHub release [`v0.6.0`](https://github.com/salesforce/AgentforceMobileSDK-ReactNative/releases/tag/v0.6.0) — titled **262.1.3**, no RC suffix — carries **Latest**, not **Pre-release**. The RC-on-`latest` window ran **seven days**.
+>
+> - **Native pins came off RC with it** (`4cb1bd7`): iOS **AgentforceSDK 18.26.9-rc4 → 18.26.17**, **AgentforceService 6.11.3-rc1 → 6.11.4**; Android **`agentforce-sdk` / `agentforce-sdk-voice` 15.130.3-rc1 → 15.130.4**.
+> - **AgentforceVoice stays pinned at 2.8.2**, so the Voice conflict noted below survives the upgrade.
+> - **The exposure is unchanged.** Still exactly one dist-tag — no `rc`, no `next`, no way to opt out of whatever `latest` happens to be.
+
 **What changed.** `@salesforce/react-native-agentforce` **0.5.0** published to npm on **2026-08-13 13:27 UTC** and holds the package's **only** dist-tag, `latest`. The matching GitHub release [`v0.5.0`](https://github.com/salesforce/AgentforceMobileSDK-ReactNative/releases/tag/v0.5.0) is titled **262.1.3-RC4** and is **marked Pre-release**; GitHub's "Latest" badge still sits on **v0.4.0**.
 
 - **New JS surface.** Direct launch into **Voice mode**, a **per-agent splash screen**, appearance customization, exposed voice **caption defaults and close behavior**, user silence timeout flags, and a fix to initial Agentforce context timing.
@@ -105,13 +111,15 @@ This is the mobile-SDK naming trap running one layer up. On 07-31 the lesson was
 - Three names, one artifact: npm `@salesforce/react-native-agentforce`, repo `salesforce/AgentforceMobileSDK-ReactNative`, package directory `AgentforceSDK-ReactNative-Bridge`.
 - The package is **pre-1.0**, so `^0.5.0` behaves exactly like `~0.5.0` — both resolve only `0.5.x`. A caret gives you no protection here because it grants no latitude either.
 - Marketing version and npm version have fully diverged: npm `0.5.0` = release title `262.1.3-RC4`. Neither number predicts the other, and the RC suffix appears in **neither** the npm version nor the dist-tag.
-- Voice arrives with a hard native pin — **iOS Agentforce Voice 2.8.2** — so a host app already resolving a different Voice version has a conflict to settle before it can take 0.5.0.
+- Voice arrives with a hard native pin — **iOS Agentforce Voice 2.8.2** — so a host app already resolving a different Voice version has a conflict to settle before it can take 0.5.0 or 0.6.0.
+- **A version bump in the repo is not a publish.** `da04dcc` set the package to `0.6.0` on **2026-08-14 18:59 UTC**; npm got it **six days later**, on 08-20. The publish tracks the GitHub *release*, not `main` — so reading the repo tells you what is coming, never what `npm install` resolves.
+- At 0.5.0's publish time the bridge's own `docs/voice-and-feature-flags-config.md` claimed **AgentforceVoice 2.9.3-rc3** while the Podfile pinned **2.8.2**. `4cb1bd7` corrected the doc. The pin file is the authority, not the doc.
 
-**Study action:** in any React Native app depending on the bridge, run `npm view @salesforce/react-native-agentforce dist-tags` and `npm ls @salesforce/react-native-agentforce`, then open the [releases page](https://github.com/salesforce/AgentforceMobileSDK-ReactNative/releases) and check whether the version you actually resolved carries the **Pre-release** badge. Pin to `0.4.0` explicitly if you need the last non-RC build.
+**Study action:** in any React Native app depending on the bridge, run `npm view @salesforce/react-native-agentforce dist-tags` and `npm ls @salesforce/react-native-agentforce`, then open the [releases page](https://github.com/salesforce/AgentforceMobileSDK-ReactNative/releases) and check whether the version you actually resolved carries the **Pre-release** badge. Then diff `ios/Podfile.common.rb` and `AgentforceSDK-ReactNative-Bridge/android/build.gradle` between the two tags to see the native pins you are really taking.
 
-**Status:** **Pre-release** on GitHub (`v0.5.0` / *262.1.3-RC4*, 2026-08-13), and simultaneously **`latest` on npm** (`0.5.0`, 2026-08-13 13:27 UTC). Apache-2.0, still pre-1.0. Covers Service Agent and Employee Agent.
+**Status:** **Superseded 2026-08-20** by **0.6.0** (*262.1.3*), which is **Latest** on GitHub and `latest` on npm (published 2026-08-20 20:23 UTC). The RC state described here was true for `v0.5.0` / *262.1.3-RC4* between 2026-08-13 and 2026-08-20. Apache-2.0, still pre-1.0, one dist-tag. Covers Service Agent and Employee Agent.
 
-**Sources:** [`v0.5.0` release](https://github.com/salesforce/AgentforceMobileSDK-ReactNative/releases/tag/v0.5.0) · [AgentforceMobileSDK-ReactNative releases](https://github.com/salesforce/AgentforceMobileSDK-ReactNative/releases) · [`@salesforce/react-native-agentforce` on npm](https://www.npmjs.com/package/@salesforce/react-native-agentforce)
+**Sources:** [`v0.5.0` release](https://github.com/salesforce/AgentforceMobileSDK-ReactNative/releases/tag/v0.5.0) · [`v0.6.0` release](https://github.com/salesforce/AgentforceMobileSDK-ReactNative/releases/tag/v0.6.0) · [AgentforceMobileSDK-ReactNative releases](https://github.com/salesforce/AgentforceMobileSDK-ReactNative/releases) · [`@salesforce/react-native-agentforce` on npm](https://www.npmjs.com/package/@salesforce/react-native-agentforce)
 
 ---
 

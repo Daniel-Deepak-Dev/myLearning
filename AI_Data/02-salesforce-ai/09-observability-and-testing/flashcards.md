@@ -144,3 +144,27 @@ A: Which setting. Zero-shot and demonstration-augmented are separate data files 
 
 Q: GIFT-Eval #184–#186 merged within two days; #188 has been open four. What does that teach about leaderboard submissions?
 A: "Submitted" is an indefinite state, not a queue position. Merge latency is not predictable from a previous batch, so a submission is not a result until you see the merged commit.
+
+Q: SCUBA has now shipped three authentication fixes. What is the arc across them, and what does the third one add?
+A: MFA bypass (2025-10), a login fix (2026-04), then a concurrency race merged 2026-08-18. The first two say auth is where a computer-use agent *starts* badly; the third says it is also where the harness **stops scaling** — running four browsers against one org broke, and the remedy was to abandon parallelism on login entirely.
+
+Q: Why can't you log four browser sessions into one Salesforce org at the same time via frontdoor URLs?
+A: `/services/oauth2/singleaccess` mints a **single-use** URL, and minting plus redeeming several concurrently for one user collides. SCUBA's fix serialises refresh + mint + navigate behind an `asyncio.Lock` with a one-second `LOGIN_STAGGER_DELAY`. Serialising only the token refresh leaves the race in place.
+
+Q: A harness stores its Salesforce credential in `data/oauth_refresh_token.json`. Why is that a stop sign?
+A: It is a plaintext file holding a **`full`-scope refresh token**, keyed by org alias. It is fine for a throwaway dev org and unacceptable anywhere else — the scope means the file is equivalent to the user's whole org.
+
+Q: Salesforce's own `self-improve-fragility` provisions 12 developer orgs for its SCUBA experiments. What is it telling you about evaluating agent memory?
+A: Four methods × three runs, one fresh org per run. A single run cannot separate genuine improvement from run-to-run variance, sensitivity to task order, or task underspecification — the three failure axes in the paper's title. If your own agent evaluation does one run per configuration, it measures a sample and reports it as a system.
+
+Q: What is the difference between Agent Workflow Memory and ReasoningBank?
+A: Both are online memory-based self-improvement. AWM banks reusable **workflows** induced from successful trajectories — the procedure. ReasoningBank banks distilled **reasoning** from past attempts, including failures. In `self-improve-fragility` they are `METHOD=awm` and `METHOD=reasoningbank`, evaluated against a baseline.
+
+Q: ClaimProbe reports high `UNC` but low `HALL` and `MIS` on your agent's report. What have you actually got?
+A: A well-grounded report that under-cites. `UNC` counts uncited claims that *are* supported by the retrieved facts — a citation-hygiene signal, not a hallucination rate. Collapsing both into "accuracy" hides which problem you have, and they need different fixes.
+
+Q: You want to reproduce the numbers in Salesforce's ClaimWriter/ClaimProbe paper. What stops you?
+A: Three things. The release omits the DeepResearchBench corpora, host reports, judge traces and aggregate tables — `claimprobe/testdata/id_999` is a synthetic smoke test. The paper is **under review** with no arXiv id or author list. And the licence is **CC BY-NC 4.0**, so the code cannot go into billable work regardless.
+
+Q: Two Salesforce AI Research repos released in the same fortnight; one is Apache-2.0 and one is CC BY-NC 4.0. What is the rule?
+A: `self-improve-fragility` is Apache-2.0, `claimwriter-deep-research` is CC BY-NC 4.0. Licence attaches to the **artifact and its channel**, never to the publishing organisation. Check `LICENSE`, `LICENSE.txt` *and* the package manifest on every repo separately, every time.

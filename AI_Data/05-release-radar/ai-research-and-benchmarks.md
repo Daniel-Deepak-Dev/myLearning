@@ -14,6 +14,94 @@ That matters to a practitioner for a reason beyond taste. The benchmarks are a *
 
 ---
 
+## 2026-08-18 · SCUBA's third authentication fix — single-use frontdoor URLs collide when browsers log in at once
+
+**What changed.** [`SalesforceAIResearch/SCUBA`](https://github.com/SalesforceAIResearch/SCUBA) merged **PR #7** on **2026-08-18 23:41 UTC** (`9f34338`) — parallel browser instances now serialise their Salesforce login behind an `asyncio.Lock` and a one-second stagger. It is the repo's first functional change to reach `main` since 2026-05-07.
+
+- **The branch sat for 103 days.** The code was authored on **2026-05-07** (`b62c9e1`, *"add stagger delay to fix frontdoor login"*; `a633440`) on branch `frontdoor-access-fix` and only merged on 08-18. The repo looked quiet; the fix already existed.
+- **The mechanism.** `scuba/helpers/sf_oauth.py` exchanges a cached refresh token for an access token, then converts it to a **single-use frontdoor URL** via `/services/oauth2/singleaccess`. Minting and redeeming several of those concurrently for one user is what broke.
+- **Three files changed, one constant.** `main_bu.py` wraps refresh + mint + `page.goto` in `_frontdoor_login_lock`; `main_cua.py` sleeps between process-pool submissions; `scripts/test_frontdoor_login.py` splits into parallel browser launch (`prepare_browser`) then serialised login (`login_and_navigate`).
+- **Connected App requirements, named exactly.** OAuth scopes **`full`** and **`refresh_token`**, callback **`http://localhost:9876/callback`**, Authorization Code + **PKCE**.
+
+**Relevant to:** **Developer** — any parallel browser automation against one org through `singleaccess` needs the same serialisation, and the pattern to copy is in three named files; **Architect** — it prices concurrency on the session-bootstrap path, which is the one auth surface a UI-driving agent cannot route around.
+
+**Why it matters.** This is the **third** authentication fix in SCUBA's history — MFA bypass in 2025-10, a login fix in 2026-04, and now a concurrency race. The radar's existing reading holds: a computer-use agent meets your auth before it meets any business logic.
+
+The new part is where it breaks. Auth was already known to be where these projects *start* badly; this says it is also where they **stop scaling**. The single-user serial case worked fine. Running four browsers against one org did not, and the remedy is to give up parallelism on the login step entirely.
+
+**Gotchas:**
+- The failing artifact is the **single-use** frontdoor URL from `/services/oauth2/singleaccess`, not the token refresh. Serialising only the refresh call leaves the race in place.
+- `LOGIN_STAGGER_DELAY = 1` is declared **separately in three files** — `main_bu.py`, `main_cua.py`, `scripts/test_frontdoor_login.py`. Changing one does not change a run.
+- `main_cua.py` staggers with a **blocking** `time.sleep` inside the submission loop, while `main_bu.py` uses `await asyncio.sleep` under a lock. Two different concurrency models, same constant.
+- The refresh token lands in a plaintext JSON file, `data/oauth_refresh_token.json`, keyed by org alias — and it is a **`full`-scope** token. Do not point this harness at anything but a throwaway dev org.
+
+**Study action:** clone SCUBA at `9f34338`, create one dev org per the Connected App requirements above, and run `PYTHONPATH="." python scripts/test_frontdoor_login.py --num_instances 4`. Then set `LOGIN_STAGGER_DELAY = 0`, run it again, and watch which instances fail to reach a logged-in page.
+
+**Status:** Open source, Apache-2.0. Merged to `main` **2026-08-18 23:41 UTC** (`9f34338`, PR #7); code authored 2026-05-07.
+
+**Sources:** [SCUBA commits](https://github.com/SalesforceAIResearch/SCUBA/commits/main) · [PR #7 — frontdoor-access-fix](https://github.com/SalesforceAIResearch/SCUBA/pull/7) · [`scuba/helpers/sf_oauth.py`](https://github.com/SalesforceAIResearch/SCUBA/blob/main/scuba/helpers/sf_oauth.py)
+
+---
+
+## 2026-08-11 · `self-improve-fragility` — Salesforce measured whether self-improving agents improve, and the answer needed 12 orgs
+
+**What changed.** [`SalesforceAIResearch/self-improve-fragility`](https://github.com/SalesforceAIResearch/self-improve-fragility) carries the code for the paper *"On the Fragility of Self-Improving Agents: Variance, Task Order, and Underspecification."* Initial code release **2026-07-16**; governance refresh **2026-08-11**. **Apache-2.0.** This radar had never recorded it.
+
+- **What it evaluates.** Memory-based, *online* self-improving agents across three benchmarks — **WebArena**, **VisualWebArena** and **SCUBA** — comparing **Agent Workflow Memory** ([arXiv 2409.07429](https://arxiv.org/abs/2409.07429)) and **ReasoningBank** ([arXiv 2509.25140](https://arxiv.org/abs/2509.25140)).
+- **Built on two Salesforce harnesses.** `scuba/` adapts [SCUBA](https://github.com/SalesforceAIResearch/SCUBA); `webarena/` adapts **`SalesforceAIResearch/WALT`** — a repository this radar has also never recorded.
+- **The protocol is the finding.** `scuba/README.md` provisions **12 developer orgs**, aliased `scuba_{baseline,synapse,awm,rbank}{1,2,3}` — four methods × three runs — and recommends **a fresh org for every run**.
+- **Trajectories are published**, as a Hugging Face dataset at `Salesforce/self-improve-fragility`.
+
+**Relevant to:** **Architect** — "the agent gets better from its own runs" is a design commitment, and this is Salesforce's own measurement of how stable that is before you commit to it; **Developer** — Apache-2.0 code you can actually run, with the method selected by a `METHOD` value of `baseline`, `awm` or `reasoningbank`.
+
+**Why it matters.** Agent memory is the standard answer to "how does this improve over time", and it is almost always demonstrated once. This repository's own setup says one run does not measure it: three seeds per method, on a clean org each time.
+
+The title names the three axes before any result is quoted — **variance** between identical runs, sensitivity to **task order**, and **underspecified** tasks. Each is a way a self-improving agent can look better in a demo than it is, and each is invisible to a single run.
+
+**Gotchas:**
+- **The paper's numbers are not in the repository.** The README links trajectories on Hugging Face and stops. No arXiv id was locatable as of **2026-08-21 03:50 UTC** — so there is no figure here to quote, and none should be invented from the title.
+- Licence is **Apache-2.0**, unlike AnchorBench and ClaimWriter below. The standing rule holds: check the licence per repository, never per organisation.
+- `synapse` is a fourth method in the org-alias scheme and the run scripts (`synapse_3fold.sh`), but the top-level README names only AWM and ReasoningBank, and the WebArena side exposes only `baseline`, `awm`, `reasoningbank` via `METHOD`.
+- The SCUBA track **cannot share one org across runs** without contaminating exactly the variance the paper measures. Reproduction cost is 12 orgs plus an OpenAI API key, not a laptop afternoon.
+
+**Study action:** clone the repo, open `scuba/README.md`, and count the orgs it asks you to create. Then look at your own agent-evaluation plan and count the runs per configuration. If the answer is one, you are measuring a sample and reporting it as a system.
+
+**Status:** Open source, **Apache-2.0**. Initial code release **2026-07-16** (`c27148d`); newest `main` commit `f79fbb1`, **2026-08-11 22:12 UTC**. Paper not located as of 2026-08-21.
+
+**Sources:** [self-improve-fragility](https://github.com/SalesforceAIResearch/self-improve-fragility) · [`scuba/README.md`](https://github.com/SalesforceAIResearch/self-improve-fragility/blob/main/scuba/README.md) · [Agent Workflow Memory](https://arxiv.org/abs/2409.07429) · [ReasoningBank](https://arxiv.org/abs/2509.25140)
+
+---
+
+## 2026-08-05 · ClaimWriter / ClaimProbe — a claim-level faithfulness audit, released NonCommercial before its paper exists
+
+**What changed.** [`SalesforceAIResearch/claimwriter-deep-research`](https://github.com/SalesforceAIResearch/claimwriter-deep-research) went public on **2026-08-05** with the code for *"Redesigning and Auditing Deep Research Writing for Faithful Reports"* — **ClaimWriter**, a report writer built from source-linked atomic facts, and **ClaimProbe**, a claim-level auditor. **CC BY-NC 4.0.** Never recorded here.
+
+- **Six metrics, named.** `HALL` (Metric I) claims unsupported by any retrieved fact; `HALLstr` (`I_strict`) claims not *fully* supported; `MIS` (II) claims cited to the wrong source; `UNC` (III) uncited-but-supported claims; `REC` (IV) and `RECstr` — HIGH-relevance source facts covered, loosely and fully.
+- **Two matching directions, deliberately different.** Report→source is strict and drives HALL/HALLstr/MIS/UNC; source→report is permissive — paraphrase counts — and drives REC/RECstr. An LLM judge returns `SUPPORTED` / `PARTIALLY SUPPORTED` / `NOT SUPPORTED` over a top-K **20** retrieval shortlist.
+- **It grades Salesforce's own system.** The paper evaluates three host deep-research systems: **Enterprise Deep Research** ([entry below](#2025-10-24--enterprise-deep-research--the-plannerspecialistsynthesiser-reference-architecture)), **NVIDIA AI-Q** and **Open Deep Research**.
+- **Two writer strategies.** `claimwriter/topdown/` is the paper's CLAIMWRITER — outline first, route facts to sections; `claimwriter/bottomup/` is CLAIMWRITER-BU — extract claims from every source, cluster, then derive the outline.
+
+**Relevant to:** **Architect** — a grounded-agent programme needs a faithfulness measure, and this publishes definitions rather than a vibe check; **Developer** — runnable code with a smoke fixture, under a licence that keeps it out of client deliverables.
+
+**Why it matters.** "Grounded in your data" is the whole Agentforce pitch, and hardly anyone measures whether the sentence in the report is the sentence the source supports. ClaimProbe splits that into four failures you would fix differently.
+
+`UNC` is the one worth internalising. **High `UNC` alongside low `HALL` and `MIS` is a well-grounded report that under-cites** — a citation-hygiene problem, not a hallucination problem. Collapsing both into "accuracy" hides which one you have.
+
+**Gotchas:**
+- **`CC BY-NC 4.0`, and it covers the code**, exactly as with AnchorBench. That is now two research artifacts in this file that block use in billable work.
+- **The paper does not exist yet.** `CITATION.cff` reads *"Authors to be added after publication"* and *"Under review at the time of this source release"* — no arXiv id, venue, DOI or author list to cite.
+- **You cannot reproduce the paper's numbers.** `results/README.md` states the release omits the DeepResearchBench corpora, host reports, raw judge traces, generated reports and aggregate tables. `claimprobe/testdata/id_999` is **synthetic**, a smoke test only.
+- **Do not average per-task percentages.** The paper microaverages over pooled numerators and denominators; averaging per-task rates gives a different number from the same runs.
+- Inconsistency detection is present in the code but the **standard ClaimProbe runner does not execute it by default**.
+
+**Study action:** run the bundled fixture — `./claimprobe/evaluate.sh --id 999 --report testdata/id_999_report.md --sources testdata/id_999.json` — then point ClaimProbe at one report your own grounded agent produced, and read `HALL` against `UNC` before you read either alone.
+
+**Status:** Open source, **CC BY-NC 4.0**. Version **0.1.0**, `date-released` **2026-08-04**; repo public **2026-08-05**, newest commit `61f506b` **2026-08-05 18:19 UTC**. Paper **under review**, unpublished as of 2026-08-21.
+
+**Sources:** [claimwriter-deep-research](https://github.com/SalesforceAIResearch/claimwriter-deep-research) · [`docs/metrics.md`](https://github.com/SalesforceAIResearch/claimwriter-deep-research/blob/main/docs/metrics.md) · [`results/README.md`](https://github.com/SalesforceAIResearch/claimwriter-deep-research/blob/main/results/README.md) · [`CITATION.cff`](https://github.com/SalesforceAIResearch/claimwriter-deep-research/blob/main/CITATION.cff)
+
+---
+
 ## 2026-08-07 · Someone reimplemented Salesforce's own model and put it on Salesforce's own leaderboard
 
 **What changed.** [`SalesforceAIResearch/gift-eval`](https://github.com/SalesforceAIResearch/gift-eval) merged **three submissions inside eleven minutes** on 2026-08-07 (03:11–03:22 UTC), taking the leaderboard past 120 result sets.

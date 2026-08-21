@@ -4,6 +4,17 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-18 · `/services/oauth2/singleaccess` mints single-use URLs — and they collide under concurrency (cross-link)
+
+Found in a benchmark harness, but the fact is about the auth surface. SCUBA's login trades a refresh token for an access token, then converts it to a **single-use** URL via `/services/oauth2/singleaccess`. Minting and redeeming several concurrently **for one user** fails; the fix gives up parallelism on the login step entirely.
+
+- **Session bootstrap is a serialisation point.** Any fleet of UI-driving agents sharing one identity queues at the door, however well it parallelises afterwards. The remedy is an `asyncio.Lock` plus a one-second stagger — not a retry.
+- **A `full`-scope refresh token sits in a plaintext file.** `data/oauth_refresh_token.json`, keyed by org alias. This harness class belongs nowhere but a throwaway dev org.
+
+Full entry: [ai-research-and-benchmarks.md](ai-research-and-benchmarks.md#2026-08-18--scubas-third-authentication-fix--single-use-frontdoor-urls-collide-when-browsers-log-in-at-once).
+
+---
+
 ## 2026-08-17 · A first-party skill catalogue whose Data 360 path runs on a 3-star personal repo (cross-link)
 
 Two supply-chain points from `sf-skills` 1.39.0/1.40.0.
