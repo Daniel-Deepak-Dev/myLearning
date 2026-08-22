@@ -3,6 +3,8 @@
 Agents on the platform — where Apex/Flow experience becomes a superpower. Roadmap tag: **Salesforce AI** (amber).
 Cert target: **[Agentforce Specialist](_cert-agentforce-specialist/exam-guide.md)** (end of Phase 03).
 
+> ▶ **Hands-on:** [the Agentforce Lab Ladder](_labs/README.md) — ten time-boxed runbooks, none over 45 minutes. Enter through [PRACTICE.md](../PRACTICE.md); the reading below is for when a lab raises a question.
+
 > ⚠️ **The authoring model changed in 2026.** Since the week of **July 13, 2026**, the *New Agent* button no longer opens the legacy topic-and-instruction builder — agents are authored in **[Agent Script](07-agent-script/notes.md)**. Existing legacy agents can still be edited and managed, but most tutorials you'll find online teach a model you can no longer create new agents in. Start with [Agentforce Anatomy](02-agentforce-anatomy/notes.md) for the comparison.
 
 | Topic | What it covers | Quick recall |

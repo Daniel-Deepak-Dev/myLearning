@@ -6,6 +6,7 @@ Companion folder to [ai-salesforce-architect-roadmap.html](ai-salesforce-archite
 
 | Folder | Track |
 |---|---|
+| **[PRACTICE.md](PRACTICE.md)** | **Start here when the goal is to *do* something.** The single queue: one next action, max 3 in flight, every unit time-boxed |
 | [00-core-skills/](00-core-skills/INDEX.md) | SQL, Python, AI theory, data engineering |
 | [01-data-cloud/](01-data-cloud/INDEX.md) | **Data 360** (ex-Data Cloud) → **Data 360 Consultant** cert |
 | [02-salesforce-ai/](02-salesforce-ai/INDEX.md) | Agentforce, Agent Script, Trust Layer, orchestration → **Agentforce Specialist** cert |
@@ -13,6 +14,7 @@ Companion folder to [ai-salesforce-architect-roadmap.html](ai-salesforce-archite
 | [04-capstone/](04-capstone/INDEX.md) | The shipped proof: MCP server, RAG assistant, Agentforce build |
 | [05-release-radar/](05-release-radar/README.md) | Running log of Salesforce AI updates, in three areas: `01-agentforce/`, `02-data-cloud/`, `03-salesforce-ai-research/` |
 | [../SF/](../SF/README.md) | **Core Salesforce platform** — Apex, LWC, Flow, Admin, Experience Cloud, Integration, Security, Data, DevOps. The platform underneath this path |
+| [../Interview/](../Interview/README.md) | **Scenario-based interview prep** — 42 medium-to-complex situations across Agentforce, Data 360, core platform and cross-domain, each with a model answer and an interviewer rubric |
 | [99-inbox/](99-inbox/INBOX.md) | Capture anything new before it has a home |
 | [journal/](journal/) | Weekly learning log |
 | [QUICKSTART-LINKS.md](QUICKSTART-LINKS.md) | **Start here for Agentforce + Data 360** — curated links, first-week plan, outdated-source traps |
@@ -38,9 +40,16 @@ Every topic folder has the same four files (templates in [_templates/](_template
 | `cheatsheet.md` | **Recall.** Half a page future-you reads in 5 minutes to reload the topic | Distill after notes.md feels solid |
 | `flashcards.md` | **Self-test.** Strict `Q:`/`A:` pairs (Anki-scriptable). Pre-seeded from the glossary | Review weekly; add cards as you learn |
 | `resources.md` | **Sources.** Docs, courses, repos, plus your own labs/gists | Whenever you find something good |
-| `labs/` | Hands-on scripts, screenshots, org configs | Create on demand — not pre-made |
+| `_labs/` | **Do.** Time-boxed runbooks — the only place a claim becomes verified | Every topic. **Mandatory, not on demand** |
 
-**The recall loop that makes this work:** study → write notes → distill the cheatsheet → quiz yourself from flashcards → log the week in `journal/`. Months later, re-entry = cheatsheet first, flashcards second, notes only if something's still fuzzy.
+The two ladders: [Agentforce](02-salesforce-ai/_labs/README.md) · [Data 360](01-data-cloud/10-lab-environment/labs/README.md). Enter both through [PRACTICE.md](PRACTICE.md), never by browsing.
+
+> **The line caps do not apply to lab files.** `notes.md` stays deep-but-bounded and `cheatsheet.md` stays half a page — those caps are what make them re-readable. But a runbook has to hold a whole procedure: verbatim commands, real payloads, exact error strings. Capping it is what left 26 notes pointing at a `labs/` folder that didn't exist.
+
+**Two loops, and only one of them was running.**
+
+- **Recall:** study → write notes → distill the cheatsheet → quiz from flashcards → log the week in `journal/`. Re-entry months later = cheatsheet first, flashcards second, notes only if still fuzzy.
+- **Run:** pick the next lab from `PRACTICE.md` → run it in a real org → fill in *Notes from my run* and *Failure signature* → move it to `## Done`. A topic you have only read is marked `not yet run` in its own `## Do it` section, and that is not a criticism — it is the difference between "I've read the constraints" and "I've hit them", which is exactly the distinction worth being able to make out loud.
 
 ## Conventions
 
