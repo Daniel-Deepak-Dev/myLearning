@@ -4,6 +4,116 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-21 · Salesforce ITSM becomes a four-track setup program — and its Microsoft Teams toggle is a preference no API can write
+
+**What changed.** `forcedotcom/sf-skills` **1.41.0** (2026-08-21 14:48:27 UTC, commit `a9b698b`, *"Release 26 new + 11 updated skills"*) grows the six-skill CMDB set recorded on 08-14 into a full ITSM program — a top-level orchestrator over four tracks, and **18 new `service-itsm-*` skills**.
+
+- **The tracks**, declared in `service-itsm-agentic-setup-configure`:
+  1. **Incident Management** → `service-itsm-agentic-setup-incident-management` (SLA & Milestones)
+  2. **Agentforce for ITSM** → `service-itsm-agentic-setup-agentforce-coordinate` (Studio enablement, Fulfiller Agent, Employee Agent)
+  3. **CMDB** → `service-itsm-agentic-setup-cmdb-coordinate`
+  4. **Microsoft Teams** → `service-itsm-teams-coordinate` (IT Desk, IT Service, Swarming)
+- **Prerequisites sit in the sub-orchestrator, never at the top level** — deliberately, so the track menu still runs on a bare org where none of the gates exist yet.
+- **A new identity chain arrives with it: the Unified Employee License (UEL).** `service-itsm-agentic-setup-uel-user-create` provisions four linked records — a `User` on the Unified Employee profile, a Person `Account`, its auto-generated `PersonContact`, and an `Employee2`.
+- **Every ITSM track dispatches through the hosted `headless-360` MCP server**, not the CLI — see the [companion entry](#2026-08-21--sf-skills-1410--the-hosted-headless-360-dispatcher-goes-from-4-skills-to-14-and-one-skill-now-forbids-the-cli).
+
+```mermaid
+flowchart TD
+    GO["<b>Salesforce Go feature</b><br/><code>service-cloud-itsm-teams-integration</code><br/>POST /connect/setup/discovery/feature/…/enable"]
+    PREF["<code>ITSMTeamsEnabled</code> org preference<br/><i>read-only — flips as a side effect</i>"]
+    NC["Named Credential <code>MSTeamsSetupClientCredentialsEC</code><br/>+ Auth Provider <code>microsoft_auth_provider</code>"]
+    USER["Portal user<br/><code>User.Username</code> == Microsoft UPN<br/>+ unmanaged perm set granting <code>ApiEnabled</code>"]
+    EXT["Teams extension registration<br/><code>/connect/ms-teams-app/tenant-config</code>"]
+    GO --> PREF --> NC --> USER
+    NC --> EXT
+    EXT -.->|"<b>403 FUNCTIONALITY_NOT_ENABLED</b><br/>[MsTeamsAppApiFamily]<br/><i>no self-service unlock found</i>"| DEAD["dead end in this org"]
+    PATCHX["PATCH /setup/org/preferences/ITSMTeamsEnabled"] -.->|"<b>401 INSUFFICIENT_ACCESS</b><br/>always"| PREF
+```
+
+**Why it matters.** The CMDB entry established that a Go toggle flips as a side effect of a feature enable. Teams gives that pattern its mechanism and its failure mode: `ITSMTeamsEnabled` is unwritable by definition, and the API answers `401` — which reads like a credentials problem and is not one. Any runbook that PATCHes a Go page preference is wrong by construction.
+
+**Gotchas:**
+- **`PATCH /services/data/vXX.0/setup/org/preferences/ITSMTeamsEnabled` always returns `401 INSUFFICIENT_ACCESS`** (`"Cannot update preference value!"`; the GET says `"Cannot read data!"`). Its UDD definition `ServiceItsmTeams.settings.xml` declares `orgAccess="always"` with **no `editAccess` attribute** — unlike `Notifications` / `TeamsNotifications`, which set `editAccess="always"`. Do not retry with other API versions or bodies.
+- **The working path is the feature, not the preference:** `POST /services/data/v67.0/connect/setup/discovery/feature/service-cloud-itsm-teams-integration/enable`, then re-read status via `POST /connect/setup/discovery/features/status`.
+- **`/enable` can return `500 INTERNAL_ERROR` and still have succeeded.** Re-check `features/status` and the preference read before reporting failure.
+- **`/connect/ms-teams-app/tenant-config` returns `403 FUNCTIONALITY_NOT_ENABLED [MsTeamsAppApiFamily]` with no self-service unlock.** Seven candidate Go feature names all answer `400 NOT_FOUND`, and none of the org's 112 `PermissionSetLicense`s grant it — `TeamsForEmployeePsl` and `TeamsForITSrvcsPsl` do not. This is the same blocker as the *"Unable to fetch tenant ID"* error.
+- **Portal SSO matches `User.Username`, not `User.Email` and not `FederationIdentifier`.** The Apex handler **`MsTeamsItsmSSOHandler`** runs `SELECT Id FROM User WHERE Username = :data.email`, `canCreateUser` is false (no JIT), and both 0 and >1 matches deny login. **One handler serves both** the IT Desk (Fulfiller) and IT Service (Employee) apps.
+- **Register the Azure redirect URI under the *Web* platform, not SPA.** `microsoft_auth_provider` is a confidential client; an SPA registration fails at `/services/authcallback/microsoft_auth_provider` with `OAUTH_APPROVAL_ERROR_GENERIC` *after* Salesforce has already written a successful `LoginHistory` row.
+- **`AuthProvider.ConsumerSecret` is not `updateable`** — no Connect PATCH and no headless-360 route writes it. Deploy it as source-format metadata (`sf project deploy start --source-dir`), where `<consumerSecret>` round-trips.
+- **`TeamsForEmployeeUser` and `EmployeeHubEmployeeUser` are managed, uneditable, and do not grant `ApiEnabled`** — without it the embedded portal's Connect calls return `API_DISABLED_FOR_ORG`. Add an unmanaged permission set with `ApiEnabled` only, and **do not add `ChatterInternalUser`**: the Unified Employee license rejects the assignment.
+- **A UEL user carries exactly one permission set** — `Employee Hub Unified Employee User` (`EmployeeHubEmployeeUser`). Fulfiller and case-agent sets belong to Service Cloud fulfillers, not Employee Hub requesters.
+- **Swarming is a separate Go feature**, `service-cloud-swarming`; `service-itsm-swarming-configure` enables it *and* writes `SWARM_COLLABORATION_TOOL = "Teams"`.
+- **The Azure app registration and admin consent have no Salesforce API.** The Go page's consent link is Salesforce's own static multi-tenant app (`client_id=cd6bd63f-41ef-47cc-9465-86e986179a29`, scope `Organization.ReadWrite.All`) — not the app the customer registers, and not per-org.
+
+**Relevant to:** **Admin** — Teams for Employee Service is enabled through a feature call, never the toggle, and the portal user needs a hand-built `ApiEnabled` permission set; **Architect** — `MsTeamsAppApiFamily` is an edition/licence gate with no found unlock, so Teams extension registration is a go/no-go question about the org before it is a design question; **Developer** — every endpoint, error code and handler class above is named exactly.
+
+**Study action:** in a dev org, `PATCH /services/data/v67.0/setup/org/preferences/ITSMTeamsEnabled` with `{"desiredState": true}` and confirm the `401`; then `POST /connect/setup/discovery/features/status` for `service-cloud-itsm-teams-integration` and compare the two responses. That is the whole lesson in two calls.
+
+**Status:** Shipped — `forcedotcom/sf-skills` **1.41.0** (2026-08-21), Apache-2.0 on GitHub. No Salesforce announcement accompanied it. The Teams gotchas are the skill authors' own verified session notes, not documentation — treat them as field reports.
+
+**Sources:** [`service-itsm-teams-configure/references/gotchas.md`](https://github.com/forcedotcom/sf-skills/blob/1.41.0/skills/service-itsm-teams-configure/references/gotchas.md) · [`service-itsm-agentic-setup-configure/SKILL.md`](https://github.com/forcedotcom/sf-skills/blob/1.41.0/skills/service-itsm-agentic-setup-configure/SKILL.md) · [`service-itsm-agentic-setup-uel-user-create/SKILL.md`](https://github.com/forcedotcom/sf-skills/blob/1.41.0/skills/service-itsm-agentic-setup-uel-user-create/SKILL.md) · [commit `a9b698b`](https://github.com/forcedotcom/sf-skills/commit/a9b698b)
+
+---
+
+## 2026-08-21 · `sf-skills` 1.41.0 — the hosted `headless-360` dispatcher goes from 4 skills to 14, and one skill now forbids the CLI
+
+**What changed.** The same release takes the catalogue **138 → 164 skills** (+26, none removed) — the largest single release this radar has read. Skills declaring `mcpTools` go **13 → 24**, and **14 of those 24 name `headless-360`**, up from 4 at 1.40.0.
+
+- **`experience-portal-create` is the first non-ITSM `headless-360` skill** — and the first skill in the catalogue to rule the CLI out in writing: *"Do not use the Salesforce CLI (its `api request`, `data query`, or `org open` subcommands)… `dispatch`/`dispatch_readonly` is the only way this skill talks to the org."*
+- **It creates Experience Cloud sites end to end** through the Connect API dispatcher — Aura or LWR, Network activation to `status: Live`, member profiles, page publish — and refuses to build a legacy Tabs+Visualforce site.
+- **The stale catalogue is fixed, one release late.** 1.40.0 still shipped `publicRelease.releaseRef: "1.38.0"` / `counts.public: 138`; 1.41.0 ships **`1.41.0` / 164**, with `visibleUnion` 148 → 174 and the bundled plugin `salesforce-development` at **1.12.0** (was 1.11.0).
+- **Three notable non-ITSM additions:** `platform-datamask-run`, `platform-trial-org-create`, `service-concierge-portal-generate`.
+
+**Why it matters.** The 08-11 entry read the plugin's **Skills → CLI → MCP** precedence as Salesforce ranking its own CLI above its own hosted MCP. 1.41.0 says that ordering governs *instruction* sources, not execution. Where `headless-360` covers the surface, the newest skills dispatch through it and one forbids the CLI outright — the hosted server is becoming the default execution path for setup work.
+
+**Gotchas:**
+- **`platform-datamask-run` is sandbox-only** — the Data Mask run/abort REST endpoints return **`403` on production** via a runtime sandbox guard. Perms `PermissionsManageDataMaskPolicies` and `PermissionsAccessDataMaskAndSeed`; objects `DataMaskPolicy` and `DataMaskPolicyJobRun`.
+- **There is no trial-org signup endpoint.** `platform-trial-org-create` inserts a **`SignupRequest`** sObject (key prefix `0SR`) against an authenticated, entitled host org; creation is asynchronous, so the org id appears on a second read. An unentitled org fails with `NOT_FOUND` or `INVALID_TYPE` — *"sObject type 'SignupRequest' is not supported"* — not a permission error, so do not diagnose it as one.
+- **`dispatch` still resolves no API version** — pass the full `/services/data/vXX.0/…` prefix every time.
+- **Still no `data360-*` MCP server anywhere.** Checked across all 164 `SKILL.md` files at 2026-08-22 03:00 UTC: zero `mcpTools` entries name a Data 360 server, and `forcedotcom/d360-mcp-server` has not moved since **2026-07-02**. The 08-19 announcement's *"prebuilt Data 360 Skills, GA targeted August 2026"* has no artifact here with nine days of August left.
+- **The misnamed package survives a third release.** `data360-code-extension-generate` still emits `sf plugins install @salesforce/plugin-data-codeextension` **four times**; the real package is `@salesforce/plugin-data-code-extension` (**1.4.1**).
+- **`compatibility:` has not returned** — zero occurrences repo-wide at 1.41.0, three releases after 1.39.0 deleted it.
+- **The npm licence contradiction is unchanged** — `@salesforce/afv-skills` 1.41.0 declares `"license": "CC-BY-NC-4.0"` with an Apache-2.0 `LICENSE.txt` in the same tarball. **28 consecutive versions.** Take the skills from GitHub for anything billable.
+
+**Relevant to:** **Architect** — the execution path for first-party setup automation is shifting from the CLI to a hosted MCP dispatcher, which changes what an agent needs (an OAuth session, not a CLI install) and where the org binding lives; **Developer** — the catalogue ref that pins `npx skills add` is current for the first time since 1.32.0, so a guarded install finally matches the tree.
+
+**Study action:** clone `forcedotcom/sf-skills` at 1.41.0 and run `grep -l 'headless-360:' skills/*/SKILL.md | wc -l` against the same command at tag 1.40.0 — then open `experience-portal-create/references/mcp-invocation.md` and compare its call shapes with the `sf` commands the older `experience-lwr-site-generate` emits for the same job.
+
+**Status:** Shipped — `forcedotcom/sf-skills` **1.41.0**, npm `@salesforce/afv-skills` 1.41.0 (2026-08-21 14:49:05 UTC). Repo Apache-2.0; npm manifest CC-BY-NC-4.0. One further commit, `2476476` (21:14 UTC), is unreleased.
+
+**Sources:** [npm `@salesforce/afv-skills`](https://www.npmjs.com/package/@salesforce/afv-skills) · [`experience-portal-create/SKILL.md`](https://github.com/forcedotcom/sf-skills/blob/1.41.0/skills/experience-portal-create/SKILL.md) · [`platform-datamask-run/SKILL.md`](https://github.com/forcedotcom/sf-skills/blob/1.41.0/skills/platform-datamask-run/SKILL.md) · [`discovery.json` at 1.41.0](https://github.com/forcedotcom/sf-skills/blob/1.41.0/plugins/builder/salesforce-development/catalog/discovery.json)
+
+---
+
+## 2026-08-20 · Winter '27's v68 metadata roster keeps growing — 59 to 71 types, and five of them are a `TenantSecurity*` playbook family
+
+**What changed.** `@salesforce/source-deploy-retrieve` regenerates `METADATA_SUPPORT.md` on a nightly bot schedule. Its **`## Next Release (v68)`** section — the source that confirmed Winter '27 is API 68.0 on 08-13 — has grown from **59 types to 71** since 13.1.1, in two auto-update commits after the release notes went live.
+
+- **12 types added**, only one of them DX-supported:
+  - **`TenantSecurityPlaybookDef`, `TenantSecurityPlaybookDefStep`, `TenantSecurityPlaybookDefVer`, `TenantSecurityStepDef`, `TenantSecurityStepDefVer`** — a five-type security-playbook family, added together in commit `eb6a715` (2026-08-20 22:09 UTC)
+  - `MessagingMobileAppChannel`, `MessagingMobileAppChannelButton`, `MessagingMobileAppChannelButtonSet`, `MobileAppNewsflashTopic`, `ReplyEmailConfig`, `EngmtChannelTypeConfig` — all marked *"not for tracking"*
+  - `DiscoSettings` — the only ✅
+- **The support ratio got worse:** 21 supported of 59 on 08-13, **22 of 71** now.
+- **`TenantSecurityPlaybook` has zero mentions** anywhere in this study base, in the Winter '27 release notes this radar has read, or in any located Salesforce source.
+
+**Why it matters.** The v68 type list is not a release-time snapshot that stopped moving when the notes published — it is a generated file that changes overnight. A five-type playbook family appearing three weeks before the first production upgrade weekend is a governance surface arriving with no announcement, and the radar found it because the file is on the weekly list, not because anyone said anything.
+
+**Gotchas:**
+- **Timestamp every count you quote from this file.** It is rewritten by `chore: auto-update metadata coverage in METADATA_SUPPORT.md [no ci]` on a nightly schedule; "59 v68 types" was true on 08-13 and wrong by 08-20.
+- **`git log` on the file overstates change.** Commit `ac2a8fe` (2026-08-21 22:07 UTC) is **915 insertions / 913 deletions and alters no type** — a Prettier table reflow of all 1,828 lines. Diff type names, not line counts.
+- **❌ means no source-format support**, so `sf project retrieve start` / `deploy start` cannot handle those types at all — 11 of the 12 arrivals are in that state, including the whole `TenantSecurity*` family.
+- **`13.2.0` (npm 2026-08-19 16:56:15 UTC) carries one feature**, unrelated to the roster: `stdValueSetRegistry.json` is now exported from the package's main `index.ts` so callers outside the repo can read the standard value sets.
+
+**Relevant to:** **Architect** — a new security-playbook metadata family in the next release, with no documentation, is worth knowing about before someone designs around its absence; **Developer** — 11 of the 12 new types cannot be moved through source format, so any Winter '27 work touching them is Metadata API or Setup UI, not `sf project deploy`.
+
+**Study action:** clone `forcedotcom/source-deploy-retrieve`, then `git diff 52a47b4 HEAD -- METADATA_SUPPORT.md` to see exactly which v68 types arrived and when; re-run it each week rather than trusting the count recorded here.
+
+**Status:** Generated repository artifact, not an announcement — `METADATA_SUPPORT.md` on `main`, newest content change **2026-08-20 22:09 UTC** (`eb6a715`), checked 2026-08-22 03:10 UTC. Package `@salesforce/source-deploy-retrieve` `latest` **13.2.0**.
+
+**Sources:** [`METADATA_SUPPORT.md`](https://github.com/forcedotcom/source-deploy-retrieve/blob/main/METADATA_SUPPORT.md) · [commit `eb6a715`](https://github.com/forcedotcom/source-deploy-retrieve/commit/eb6a715) · [npm `@salesforce/source-deploy-retrieve`](https://www.npmjs.com/package/@salesforce/source-deploy-retrieve)
+
+---
+
 ## 2026-08-19 · Salesforce expands Headless 360 — and the Data 360 Skills it says go GA this month are the ones running on a 3-star personal repo
 
 **What changed.** Salesforce published *"Expanding Headless 360: Enterprise Capabilities"* on 2026-08-19 — the **first Salesforce product announcement this radar has caught in sixteen scans**. It names a hosted **Data 360 MCP Server** (~200 APIs), **prebuilt Data 360 Skills with GA targeted August 2026**, a **Slackbot MCP Client** across 20+ partner apps, and an **Agentforce Experience Layer**.
@@ -80,6 +190,8 @@ flowchart TD
 ---
 
 ## 2026-08-17 · `sf-skills` regenerates a capability catalogue frozen six releases back — and the install command it emits was pinned to the stale snapshot
+
+> **Correction (2026-08-22):** this entry said 1.39.0 and 1.40.0 both declare `releaseRef: "1.38.0"` / 138 skills, which was accurate — but it read the 1.39.0 regeneration as a fix. It was not: at 1.40.0 the catalogue was **already one release stale again**. **1.41.0 is the first release to ship a catalogue describing itself** — `releaseRef: "1.41.0"`, `counts.public: 164`, `visibleUnion: 174`. The lag is a property of the generator's schedule, not a one-off, so the Gotcha below — *read `publicRelease.releaseRef` before trusting a count* — stands, and today it happens to read true. `metadata.domains` still appears **zero** times in `discovery.json`.
 
 **What changed.** `sf-skills` **1.39.0** (2026-08-17 09:37:27 UTC) regenerated the plugin's discovery catalogue at `plugins/builder/salesforce-development/catalog/discovery.json`. `publicRelease.releaseRef` moved **1.32.0 → 1.38.0** and `counts.public` **102 → 138**. **1.40.0** (2026-08-18 17:18:08 UTC) then added a fifth frontmatter field, `metadata.domains`.
 

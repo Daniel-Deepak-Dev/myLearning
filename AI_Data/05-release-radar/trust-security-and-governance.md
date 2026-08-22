@@ -4,6 +4,17 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-21 · A Salesforce Go toggle is a read model, not a writable preference — and v68 grows a `TenantSecurity*` family (cross-link)
+
+Two governance facts from repositories, both written up in full elsewhere.
+
+- **A Salesforce Go page toggle is a read model, not a preference.** `ITSMTeamsEnabled` returns **`401 INSUFFICIENT_ACCESS`** on both GET and PATCH because its UDD definition declares `orgAccess="always"` with **no `editAccess`**. Such a toggle is set through the feature-enablement Connect API and never written directly — so a `401` there means *wrong route*, not *wrong credentials*.
+- **Winter '27's v68 metadata roster grew a security-playbook family on 2026-08-20** — `TenantSecurityPlaybookDef`, `TenantSecurityPlaybookDefStep`, `TenantSecurityPlaybookDefVer`, `TenantSecurityStepDef`, `TenantSecurityStepDefVer` — undocumented, and unsupported by source-format DX.
+
+Full entries: [the ITSM program](developer-tooling-and-apis.md#2026-08-21--salesforce-itsm-becomes-a-four-track-setup-program--and-its-microsoft-teams-toggle-is-a-preference-no-api-can-write) · [the v68 roster](developer-tooling-and-apis.md#2026-08-20--winter-27s-v68-metadata-roster-keeps-growing--59-to-71-types-and-five-of-them-are-a-tenantsecurity-playbook-family).
+
+---
+
 ## 2026-08-18 · `/services/oauth2/singleaccess` mints single-use URLs — and they collide under concurrency (cross-link)
 
 Found in a benchmark harness, but the fact is about the auth surface. SCUBA's login trades a refresh token for an access token, then converts it to a **single-use** URL via `/services/oauth2/singleaccess`. Minting and redeeming several concurrently **for one user** fails; the fix gives up parallelism on the login step entirely.

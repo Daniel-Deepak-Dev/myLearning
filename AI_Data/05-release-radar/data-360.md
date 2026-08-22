@@ -4,6 +4,18 @@ Newest entries at the top. Data 360 ships **monthly**, not per-seasonal-release 
 
 ---
 
+## 2026-08-21 · The promised "prebuilt Data 360 Skills" still have no artifact — a verified negative (cross-link)
+
+The 08-19 announcement put **prebuilt Data 360 Skills at GA "targeted August 2026"**. Checked at **2026-08-22 03:00 UTC** against `sf-skills` **1.41.0** — the release that added 26 skills the previous afternoon:
+
+- The `data360-*` family is unchanged at **nine skills**, seven of which still shell out to the community `sf data360` plugin.
+- **No `mcpTools` block in any of the 164 skills names a Data 360 MCP server.**
+- `forcedotcom/d360-mcp-server` has not moved since **2026-07-02** — 51 days.
+
+Nine days of August remain. Context: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-21--sf-skills-1410--the-hosted-headless-360-dispatcher-goes-from-4-skills-to-14-and-one-skill-now-forbids-the-cli).
+
+---
+
 ## 2026-08-19 · The official Code Extension plugin finishes moving off the Python binary — and `run` quietly changes how it authenticates
 
 **What changed.** `@salesforce/plugin-data-code-extension` **1.4.0** (2026-08-18 15:43 UTC) and **1.4.1** (2026-08-19 15:11 UTC) port `deploy` and `run` off the `datacustomcode` Python console-script, completing the SDK CLI migration. `DatacodeBinaryExecutor` is deleted.

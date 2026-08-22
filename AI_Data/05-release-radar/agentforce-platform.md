@@ -4,6 +4,18 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 ---
 
+## 2026-08-21 · The prebuilt IT Service family gets three more tracks — Teams, Swarming and a Unified Employee License user (cross-link)
+
+Agentforce **IT Service** now has a four-track setup program in `sf-skills` 1.41.0 — Incident Management, Agentforce for ITSM (Studio, Fulfiller Agent, Employee Agent), CMDB, and Microsoft Teams. Three facts for a buy-vs-build conversation:
+
+- The Teams tracks turn on an org preference **no API can write** — `ITSMTeamsEnabled`; enable the Go feature `service-cloud-itsm-teams-integration` instead.
+- Teams extension registration hits `403 FUNCTIONALITY_NOT_ENABLED [MsTeamsAppApiFamily]` with **no self-service unlock found**.
+- Employee-side users are provisioned under the **Unified Employee License** as a four-record chain (`User` + Person `Account` + `PersonContact` + `Employee2`) carrying exactly one permission set.
+
+Full entry: [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-21--salesforce-itsm-becomes-a-four-track-setup-program--and-its-microsoft-teams-toggle-is-a-preference-no-api-can-write).
+
+---
+
 ## 2026-08-19 · Agent Script 3.x adds a second agent topology — `GoalBasedAgent` agents run on a schedule, not on a conversation
 
 **What changed.** Two internal→open-source syncs landed in `salesforce/agentscript` on 2026-08-19 (commits `5901dbe` 00:57 UTC and `5e6404e` 02:14 UTC, 358 files, +36,856 / −11,734). The second cut three majors at once and introduces `config.agent_type: "GoalBasedAgent"`, which switches the grammar to a different agent shape.

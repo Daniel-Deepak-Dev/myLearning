@@ -96,3 +96,18 @@ A: Query for the permission-set licence `ItSrvcCnfgItmReadPsl`. It is provisione
 
 Q: Why does `CMDBEnabled` not appear as a toggle you can set?
 A: It is not directly settable. It flips as a side effect of enabling the feature `service-cloud-itsm-cmdb-integration` (Layer 2). Looking for a preference to flip is the wrong search.
+
+Q: `PATCH /services/data/v67.0/setup/org/preferences/ITSMTeamsEnabled` returns `401 INSUFFICIENT_ACCESS`. What is wrong?
+A: The route, not the credentials. `ITSMTeamsEnabled` is a **Salesforce Go page toggle**: its UDD definition (`ServiceItsmTeams.settings.xml`) declares `orgAccess="always"` with **no `editAccess` attribute**, so it is readable by design and writable by nothing. Enable the feature instead — `POST /connect/setup/discovery/feature/service-cloud-itsm-teams-integration/enable` — and the preference flips as a side effect. Same pattern as `CMDBEnabled`.
+
+Q: Name the four tracks of the ITSM setup program and what owns each track's prerequisites.
+A: Incident Management (SLA & Milestones), Agentforce for ITSM (Studio, Fulfiller Agent, Employee Agent), CMDB, and Microsoft Teams (IT Desk, IT Service, Swarming). **Prerequisites are enforced inside each sub-orchestrator, never at the top level** — deliberately, so the track menu still runs on a bare org where no gate is satisfied yet.
+
+Q: Teams extension registration fails with `403 FUNCTIONALITY_NOT_ENABLED [MsTeamsAppApiFamily]`. What unlocks it?
+A: Nothing self-service that has been found. It is not a Go feature — seven candidate API names all return `400 NOT_FOUND` — and none of the org's 112 permission-set licences grant it, including `TeamsForEmployeePsl` and `TeamsForITSrvcsPsl`. Treat it as an org/edition-level gate and stop retrying enablement guesses; it is also the true cause of the "Unable to fetch tenant ID" error.
+
+Q: A Teams portal user logs in and sees "you don't have access to the Microsoft account in Salesforce." Why?
+A: The Apex registration handler `MsTeamsItsmSSOHandler` resolves the Microsoft user with `SELECT Id FROM User WHERE Username = :data.email` — the Microsoft UPN must equal **`User.Username`**, not `User.Email` and not `FederationIdentifier`. `canCreateUser` is false, so there is no JIT provisioning, and both 0 and >1 matches deny login. One handler serves both the IT Desk and IT Service apps.
+
+Q: What does provisioning a Unified Employee License (UEL) user actually involve, and which permission sets go on it?
+A: Four linked records — `User` on the Unified Employee profile, a Person `Account` (auto-generating its `Contact`, read back as `PersonContactId`), and an `Employee2` linked by `UserId`/`ContactId`. **Exactly one permission set**: `EmployeeHubEmployeeUser`. It is managed, uneditable and does not grant `ApiEnabled`, so add an unmanaged set for that — and never `ChatterInternalUser`, which the licence rejects. Fulfiller and case-agent sets belong to Service Cloud fulfillers, not Employee Hub requesters.
