@@ -4,6 +4,76 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-23 · Winter '27 adds an Apex Symbol API — a Tooling REST resource whose stated job is grounding agents in your own Apex
+
+**What changed.** Winter '27 (**API 68.0**) introduces the **Apex Symbol API**, a Tooling API REST resource returning detailed metadata for built-in, custom and dynamic Apex types — classes, interfaces, methods, triggers.
+
+- **Three named consumers**, in the release note's own order: code completion in IDEs, context for AI agents generating Apex, and grounding for setup agents answering admin questions about code.
+- **It sits in a gap between two existing surfaces** — the Tooling `/completions` endpoint and the `SymbolTable` Tooling API object. Neither was an authoritative source for type detail at this depth.
+- **No first-party source was reachable.** Recorded from secondary coverage only, and the surface is unverified.
+
+**Why it matters.** An Apex-generating agent reconstructs type knowledge from whatever source it retrieved, which is why it invents signatures on managed packages and runtime-only types. A first-party symbol resource turns retrieval into lookup. If you are designing Apex-writing agents, build against this rather than another index you have to keep fresh.
+
+**Gotchas:**
+- **The endpoint path, parameters and request shape were not obtainable** as of **2026-08-23 03:36 UTC** — `developer.salesforce.com`, `help.salesforce.com`, `www.salesforce.com` and `salesforceben.com` all returned `EGRESS_BLOCKED` this run. Treat the *name* as confirmed and the *surface* as unknown.
+- **It is API 68.0**, so no org has it yet: preview instances upgrade **Aug 28–29**, production **Aug 29 / Oct 3 / Oct 10**.
+- **Do not conflate it with `SymbolTable`**, which is a *field on* `ApexClass` / `ApexTrigger` in the Tooling API, not a resource of its own. The whole point of the new API is that the field was not enough.
+
+**Relevant to:** **Developer** — a new Tooling REST resource to call instead of parsing source or reading `SymbolTable`; **Architect** — it changes how an Apex-generating agent is grounded, replacing a self-maintained retrieval index with a platform lookup.
+
+**Study action:** On a v67 org, run `sf data query --use-tooling-api -q "SELECT Id, SymbolTable FROM ApexClass LIMIT 1" --json` and note what `SymbolTable` omits for a method's parameter and return types — that gap is the new API's reason to exist. After Aug 29, diff `GET /services/data/v68.0/tooling/` against `v67.0` on a preview org.
+
+**Status:** Announced for Winter '27 (API 68.0). No first-party documentation reachable as of 2026-08-23 03:36 UTC.
+
+**Sources:** [Top 10 Salesforce Winter '27 Features for Developers — Salesforce Ben](https://www.salesforceben.com/top-10-salesforce-winter-27-features-for-developers/) · [SymbolTable — Tooling API](https://developer.salesforce.com/docs/atlas.en-us.api_tooling.meta/api_tooling/tooling_api_objects_symboltable.htm)
+
+---
+
+## 2026-08-22 · `sf-pi` hides the Salesforce skill library from the model by default — and stamps the flag on a copy so the clone stays pullable
+
+**What changed.** `sf-pi` **v0.272.0** (release commit `5e06c7a`, 2026-08-22 17:21 UTC; feature `fae2adb`, 17:14 UTC) adds `/sf-skills toggle` and flips a default: managed `forcedotcom/sf-skills` library skills are now **`manual-only`** — reachable by `/skill:<name>`, invisible to the model. **ADR 0108** gives the reason plainly: injecting every skill description into `<available_skills>` *"dominated first-turn context in measured sessions."*
+
+- **Two trees, one pristine.** The git clone at `~/.pi/agent/sf-skills/forcedotcom/` is never written to. Pi is wired instead to a stamped sibling at **`~/.pi/agent/sf-skills/effective/skills`**.
+- **The stamp is `disable-model-invocation: true`** in `SKILL.md` frontmatter. Pi already honoured that key; what is new is who writes it and where.
+- **Intent lives in settings, not in files.** `sfPi.skillInvocation` (global) holds `{ default, packs, skills }`, and the effective tree is rebuilt from it after every `git pull --ff-only`.
+- **Fifteen packs, matched by name prefix** — `experience-ui-bundle`, `experience-`, `design-systems-`, `agentforce-`, `data360-`, `omnistudio-`, `automation-`, `integration-`, `commerce-`, `mobile-`, `service-`, `sales-`, `dx-`, `platform-`, and `other`.
+
+```mermaid
+flowchart LR
+    CLONE["<b>pristine clone</b><br/><code>~/.pi/agent/sf-skills/forcedotcom/skills</code><br/><i>git pull --ff-only stays valid</i>"]
+    POLICY["<b>sfPi.skillInvocation</b><br/>global settings.json<br/><code>{ default, packs, skills }</code>"]
+    EFF["<b>effective tree</b><br/><code>~/.pi/agent/sf-skills/effective/skills</code><br/><i>rmSync + cpSync on every sync</i>"]
+    WIRE["<code>settings.skills[]</code><br/>points here, not at the clone"]
+    PROMPT["<code>&lt;available_skills&gt;</code><br/>system prompt"]
+    SLASH["<code>/skill:name</code><br/><i>still works when hidden</i>"]
+    CLONE -->|copy| EFF
+    POLICY -->|"stamp <code>disable-model-invocation: true</code>"| EFF
+    EFF --> WIRE --> PROMPT
+    WIRE --> SLASH
+```
+
+**Why it matters.** This is the first Salesforce-published tool to price its own skill catalogue as context rather than capability — the library grew 138 → 164 skills in a week, all of it in the system prompt on turn one. The flip also changes behaviour silently: a skill that fired on its own now has to be named.
+
+**Gotchas:**
+- **Precedence is fixed, and the first rule is absolute** (`lib/invocation/policy.ts`, `resolveInvocationMode`): an author's own `disable-model-invocation: true` in the clone → always `manual-only`; then a per-skill override; then **`origin === "community"` → always `agent-invocable`**; then a pack override; then the global default (`manual-only`). `stampToggleSkills` **skips** author-disabled skills, so the UI cannot turn one back on.
+- **Community skills are toggled by editing your own `SKILL.md` in place.** `inventory.ts`'s `stampToggleSkills` writes `skill.filePath` directly — only the managed Salesforce library gets the pristine-clone treatment.
+- **Origin is decided by path substring.** `classifySkillOrigin` returns `salesforce` only when the path contains `/sf-skills/forcedotcom/` or `/sf-skills/effective/`. Your own clone of `forcedotcom/sf-skills` anywhere else is classified **community** and therefore stays agent-invocable.
+- **Pack matching is array order, not longest prefix**, despite the code comment saying *"Longest-prefix match"*. `assignSkillPack` returns the first `SKILL_PACKS` entry matching `startsWith`; it works only because `experience-ui-bundle` is listed before `experience-`.
+- **A project-scope install is not migrated.** `cloneSkillsSettingsValue()` hard-codes the *global* form `~/.pi/agent/sf-skills/forcedotcom/skills`, but old project wiring was `./.pi/sf-skills/forcedotcom/skills` — a different directory the `remove:` can never match. You end up with the unstamped project clone **and** the global effective tree both wired, which restores the very context cost the feature removes.
+- **The effective tree is global regardless of scope.** `installDefaults` calls `inspectManagedClone("global")`; `updateDefaults` copies whatever `clone.skillsPath` it was handed into the one global tree. Two projects with different clones overwrite each other.
+- **The tree is `rmSync`'d and re-copied on every sync**, so hand edits under `effective/` do not survive `/sf-skills toggle` or `/sf-skills defaults update`.
+- **Wave 1 is global-only** — ADR 0108: *"Per-project effective trees are future work."*
+
+**Relevant to:** **Developer** — a new command, a new settings key and a new wired path, and skills that used to fire autonomously now need `/skill:<name>`; **Architect** — which skills an agent may invoke on its own becomes a declared, portable policy instead of a side effect of what happens to be installed.
+
+**Study action:** Run `/sf-skills defaults update` on an existing sf-pi install, then `diff -r ~/.pi/agent/sf-skills/forcedotcom/skills ~/.pi/agent/sf-skills/effective/skills | head -20` — every difference should be a single `disable-model-invocation: true` line — and grep your settings file for a leftover `./.pi/sf-skills/forcedotcom/skills` entry.
+
+**Status:** Shipped — `sf-pi` **v0.272.0**, 2026-08-22 17:21 UTC. Apache-2.0.
+
+**Sources:** [ADR 0108 — Managed skill invocation stamps use an effective tree](https://github.com/salesforce/sf-pi/blob/main/docs/adr/0108-managed-skill-invocation-stamps.md) · [`lib/invocation/policy.ts`](https://github.com/salesforce/sf-pi/blob/main/extensions/sf-skills/lib/invocation/policy.ts) · [`lib/invocation/effective-tree.ts`](https://github.com/salesforce/sf-pi/blob/main/extensions/sf-skills/lib/invocation/effective-tree.ts) · [`lib/defaults.ts`](https://github.com/salesforce/sf-pi/blob/main/extensions/sf-skills/lib/defaults.ts)
+
+---
+
 ## 2026-08-21 · Salesforce ITSM becomes a four-track setup program — and its Microsoft Teams toggle is a preference no API can write
 
 **What changed.** `forcedotcom/sf-skills` **1.41.0** (2026-08-21 14:48:27 UTC, commit `a9b698b`, *"Release 26 new + 11 updated skills"*) grows the six-skill CMDB set recorded on 08-14 into a full ITSM program — a top-level orchestrator over four tracks, and **18 new `service-itsm-*` skills**.
@@ -139,6 +209,32 @@ flowchart TD
 **Sources:** [Expanding Headless 360: Enterprise Capabilities](https://www.salesforce.com/news/stories/expanding-headless-360-enterprise-capabilities/) · [`forcedotcom/d360-mcp-server`](https://github.com/forcedotcom/d360-mcp-server) · [Headless 360 (Beta) — Hosted MCP Servers reference](https://developer.salesforce.com/docs/platform/hosted-mcp-servers/guide/headless-360-mcp.html) · [Salesforce expands Headless Data 360 for MCP — SiliconANGLE](https://siliconangle.com/2026/08/19/salesforce-expands-headless-data-360-mcp-developers-can-bring-insights-agents/) · [Salesforce Latest Headless 360 Expansion — CX Today](https://www.cxtoday.com/crm/salesforce-headless-360-expansion-agentic-cx/)
 
 _All first-party pages (`salesforce.com`, `developer.salesforce.com`) and `siliconangle.com` returned **EGRESS_BLOCKED** at 03:38–03:40 UTC. Everything above is from search-result snippets except the `d360-mcp-server` facts, which are from a clone._
+
+---
+
+## 2026-08-19 · `sf` 2.149.9 adds an env var that skips the source-tracking scan — 60+ minutes saved, and nothing checks whether the premise is true
+
+**What changed.** The CLI release notes for **2.149.9** (`stable-rc`, planned stable **2026-08-26**; documented in commit `f9a869e`, 2026-08-19 17:52 UTC) introduce **`SF_SOURCE_TRACKING_ASSUME_SYNCED=true`**, which skips the local filesystem scan when you deploy to or retrieve from a source-tracking-enabled org.
+
+- **The claim is 60+ minutes** saved on very large projects.
+- **The intended case is a pre-seeded org** — a scratch org or sandbox already loaded with the project's metadata.
+- **The warning is Salesforce's own:** *"If you use it when your org and DX project aren't actually synchronized, they can get further out of sync."*
+- **Two smaller changes ride the same release.** `AiAgentDefinition` and `AiAgentDefinitionVersion` become DX-supported types, and scratch-org definitions stop mis-warning `features.N: Invalid input` on `ServiceCloudVoicePartnerTelephony`, now correctly treated as a **pattern** feature.
+
+**Why it matters.** Source tracking is what makes `sf project deploy start` safe against a shared org, and this variable removes it while leaving the command identical, with no verification step. It is an *assertion* the CLI takes on trust. Right for a CI job that creates the org it deploys to; wrong anywhere a local tree might have drifted.
+
+**Gotchas:**
+- **It is an environment variable, so it is inheritable and invisible.** Exported in a shell profile or baked into a CI base image, every `sf project deploy start` / `retrieve start` in that process tree silently skips the scan, with nothing in the command line to show for it.
+- **`ServiceCloudVoicePartnerTelephony` takes a count** — write it as `ServiceCloudVoicePartnerTelephony:3` in a scratch-org definition. The spurious warning was the CLI's bug, but the pattern form is the correct spelling either way.
+- **The release notes were readable this run only as a file.** The rendered GitHub page failed for the 08-20, 08-21 and 08-22 scans; `git clone --filter=blob:none --sparse` followed by `git sparse-checkout set releasenotes` reads the identical content.
+
+**Relevant to:** **Architect** — a CI/CD design choice with a stated correctness precondition the tool cannot verify; **Developer** — a new env var that changes what a deploy does with no change to the command you typed.
+
+**Study action:** On a scratch org, deploy once normally; then edit one Apex class locally, deploy again with `SF_SOURCE_TRACKING_ASSUME_SYNCED=true`, and run `sf project retrieve start` to see exactly which change the second path failed to notice.
+
+**Status:** In `sf` **2.149.9** on `latest-rc` since 2026-08-19 02:45 UTC; planned promotion to `latest` **2026-08-26**.
+
+**Sources:** [`releasenotes/README.md`](https://github.com/forcedotcom/cli/blob/main/releasenotes/README.md) · [plugin-deploy-retrieve PR #1628](https://github.com/salesforcecli/plugin-deploy-retrieve/pull/1628)
 
 ---
 
@@ -468,6 +564,8 @@ Reachability runs the *safe* way here, by the pinning rule recorded on 08-14: **
 ---
 
 ## 2026-08-12 · `sf project retrieve start --root-type-with-dependencies` — the CLI half of the v68 agent metadata story, and it takes exactly two values
+
+> **Correction (2026-08-23):** this entry presented the flag as *how* you retrieve a `Bot` with its dependency graph. **For `Bot` you mostly do not need it.** `retrieve/start.ts` merges an **automatic** `rootTypesWithDependencies: ['Bot']` into the request whenever `--metadata` names a **pseudotype** and the API version is **> 63.0** (`hasRootTypesWithDependencies`, `src/commands/project/retrieve/start.ts`), then unions that with the explicit flag. The flag's genuinely new capability is **`AiAgentDefinitionVersion`**, which is *never* auto-injected. The single-dash typo below is also worse than "it fails": **`-r` is already `--output-dir`**, so `-root-type-with-dependencies Bot` parses as an output directory named `oot-type-with-dependencies` rather than erroring. Reachability has moved too — the flag is on `latest-rc` in `sf` **2.149.9**, planned stable **2026-08-26**, so the "`nightly` only" Gotcha below is spent.
 
 **What changed.** `@salesforce/plugin-deploy-retrieve` **4.1.0** (npm **2026-08-12 22:15:34 UTC**, PR [#1626](https://github.com/salesforcecli/plugin-deploy-retrieve/pull/1626)) adds a flag that retrieves a root metadata type **together with its whole dependency graph**. Its work item, **`W-23818734`**, is the *same one* that added `AiAgentDefinition` / `AiAgentDefinitionVersion` in SDR 13.1.0 — this is that feature's command-line surface.
 
