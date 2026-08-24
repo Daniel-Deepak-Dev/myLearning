@@ -4,6 +4,15 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-21 · Salesforce's own Claude Code plugin collects telemetry by default, and its opt-out was unverifiable until 1.12.0 (cross-link)
+
+Written up in full at [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-21--the-salesforce-development-plugin-is-at-1120-on-main-and-in-no-release--and-its-telemetry-is-on-by-default).
+
+- **The fact:** the first-party `salesforce-development` plugin ships telemetry **on by default**, buffers it in a **project-local `.sf/`** directory, and — before plugin 1.12.0 (`2476476`, 2026-08-21 21:14 UTC) — `sf-context telemetry off` could return success without taking effect. `SF_DISABLE_TELEMETRY` and `DO_NOT_TRACK` are honoured.
+- **The generalised point:** a control that cannot report its own failure is not a control. The same release also clamps error labels to a fixed enum so free-form text cannot leak through an error field, and tightens state files `0o644` → `0o600` without following symlinks — the same no-follow discipline as the SDR zip-slip and TOCTOU fixes, one layer up in the tool chain.
+
+---
+
 ## 2026-08-21 · A Salesforce Go toggle is a read model, not a writable preference — and v68 grows a `TenantSecurity*` family (cross-link)
 
 Two governance facts from repositories, both written up in full elsewhere.

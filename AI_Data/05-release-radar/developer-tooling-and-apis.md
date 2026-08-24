@@ -4,6 +4,82 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-22 · `sf-pi` 0.272.0 stops the managed `sf-skills` library from auto-invoking — 164 skills default to `manual-only`
+
+**What changed.** `salesforce/sf-pi` **v0.272.0** (2026-08-22 17:21 UTC; feature commit `fae2adb`, 27 files, +1,725) adds `/sf-skills toggle` and accepts **ADR 0108**. Pi is rewired off the managed git clone onto a stamped `effective/` copy, and the default invocation mode for managed-library skills becomes **`manual-only`**.
+
+- **The problem it names.** Pi injects every wired skill's description into `<available_skills>`; 164 of them *"dominated first-turn context in measured sessions"* (ADR 0108).
+- **Three locations, one preference store.** The clone stays pristine; `~/.pi/agent/sf-skills/effective/skills` is the stamped copy that `settings.skills[]` points at; user intent lives in `sfPi.skillInvocation` in global settings.
+- **Resolution order** (`resolveInvocationMode`, `lib/invocation/policy.ts`): author `disable-model-invocation` → per-skill override → **`origin: "community"` ⇒ `agent-invocable`** → pack override → policy default (`manual-only`).
+- **Fifteen packs, matched by name prefix** — `experience-ui-bundle`, `experience-`, `design-systems-`, `agentforce-`, `data360-`, `omnistudio-`, `automation-`, `integration-`, `commerce-`, `mobile-`, `service-`, `sales-`, `dx-`, `platform-`, and the fallback `other`.
+
+```mermaid
+flowchart TD
+    C["Managed clone<br/>~/.pi/agent/sf-skills/sf-skills/skills<br/><i>pristine — git pull --ff-only</i>"]
+    P["sfPi.skillInvocation<br/><i>global settings sidecar</i>"]
+    E["effective/skills<br/><i>stamped disable-model-invocation</i>"]
+    S["settings.skills[]<br/><i>what Pi loads</i>"]
+    C -->|"syncEffectiveSkills()"| E
+    P -->|"restamped on toggle + defaults update"| E
+    E --> S
+    S --> V{"Mode?"}
+    V -->|agent-invocable| A["In &lt;available_skills&gt;<br/>model may call it"]
+    V -->|manual-only| M["Hidden from the prompt<br/>/skill:name still works"]
+```
+
+**Why it matters.** A skill that is installed and wired is no longer a skill the model will reach for. Every "add the skill and ask for it" workflow this radar has recorded now needs an explicit enablement step on Pi, and the **pack** — not the individual skill — becomes the practical unit of that decision. The inversion is worth noticing: third-party skills stay auto-invocable while Salesforce's own default to manual.
+
+**Gotchas:**
+- **Pi is wired to the effective tree, not the clone.** `managedSettingsValue()` now returns `managedEffectiveSettingsValue()`, and `installDefaults` actively **removes** the old clone-path entry from `settings.skills[]`. A hand-written `settings.skills[]` entry pointing at the clone is no longer what runs.
+- **The clone is never the preference store.** `/sf-skills defaults update` runs `git pull --ff-only` and then **restamps** the effective tree from `sfPi.skillInvocation`. Edits made directly to a clone `SKILL.md` are discarded on the next update; missing flags mean checking that settings key, not the files.
+- **`/skill:<name>` still works for a `manual-only` skill** — only prompt visibility changes, not loading.
+- **Wave 1 stamps are global**, applying to every cwd; per-project effective trees are explicitly future work in the ADR.
+- **`origin: "community"` short-circuits to `agent-invocable`** before the pack override and the default are consulted, so a community skill is auto-invocable even under a `manual-only` default.
+
+**Relevant to:** **Developer** — installed-and-wired no longer implies the agent will use it, so any Pi workflow built on a managed `sf-skills` install needs `/sf-skills toggle` added to its setup; **Architect** — first-turn context is now a governed budget with a named policy object, and the enablement unit is the 15-pack taxonomy rather than the 164-skill catalogue.
+
+**Study action:** run `/sf-skills defaults update` then `/sf-skills toggle`, and compare `grep -l 'disable-model-invocation: true' ~/.pi/agent/sf-skills/effective/skills/*/SKILL.md | wc -l` against the same grep over the clone — the clone should return zero.
+
+**Status:** Shipped — `salesforce/sf-pi` **v0.272.0**, 2026-08-22 17:21 UTC. ADR 0108 accepted 2026-08-21. Apache-2.0 (`SPDX-License-Identifier` in the extension sources).
+
+**Sources:** [ADR 0108 — Managed skill invocation stamps use an effective tree](https://github.com/salesforce/sf-pi/blob/main/docs/adr/0108-managed-skill-invocation-stamps.md) · [`extensions/sf-skills/lib/invocation/policy.ts`](https://github.com/salesforce/sf-pi/blob/main/extensions/sf-skills/lib/invocation/policy.ts) · [`extensions/sf-skills/README.md`](https://github.com/salesforce/sf-pi/blob/main/extensions/sf-skills/README.md)
+
+---
+
+## 2026-08-21 · The `salesforce-development` plugin is at 1.12.0 on `main` and in no release — and its telemetry is on by default
+
+**What changed.** `forcedotcom/sf-skills` commit **`2476476`** (2026-08-21 21:14 UTC, *"Integrate PRs #1394, #1298"*) takes the bundled Claude Code plugin **1.11.0 → 1.12.0**, refreshes its capability catalogue and hardens `scripts/sf_telemetry.py`. **No git tag and no npm version contains it** — npm `@salesforce/afv-skills` 1.41.0 declares `gitHead: 32bf784…`, one commit earlier.
+
+- **The two channels carry different things.** The npm tarball ships **`skills/` only** — 164 `SKILL.md` files, `LICENSE.txt`, `README.md`, `package.json`, and **no `plugins/` directory at all**. The plugin, its `discovery.json` and the marketplace manifest exist on the git default branch alone, which is what `/plugin marketplace add forcedotcom/sf-skills` serves.
+- **So the stale catalogue was never fixed in a release.** At `32bf784` (= npm 1.41.0) `discovery.json` still reads `releaseRef: "1.38.0"`, `counts.public: 138`, `visibleUnion: 148`. On `main` it reads **`1.41.0` / 164 / 174** and now also pins `commit: "32bf7846…"` and a `manifestSha256`.
+- **Telemetry is ON by default.** `/telemetry` shells `${CLAUDE_PLUGIN_ROOT}/scripts/sf-context telemetry {on|off|status}`; the command doc states *"Default is ON"* and honours `SF_DISABLE_TELEMETRY` and `DO_NOT_TRACK`.
+- **Four telemetry fixes, all filed under `### Security`:**
+  1. Error classes clamp to `"unknown"` outside a fixed enum (`_clamp_error_class`), so a free-form message, file path or secret cannot ride out as an error label.
+  2. State files move `0o644` → `0o600`, and `_tighten_existing()` repairs older files **on read** using a no-follow descriptor plus `fstat` — a plain `os.chmod` would follow a planted symlink and flip an arbitrary user-owned target.
+  3. Turning telemetry off now **purges** buffered events and the transmit log instead of leaving them on disk.
+  4. `telemetry on|off|status` **reports failure** instead of silently succeeding when it cannot read or change state.
+- **The next release removes dynamic *skill* loading.** The new `## Unreleased` section says the plugin will instead discover, suggest and install **other Salesforce plugins** with permission — and adds support for the **Codex** agent alongside Claude Code.
+
+**Why it matters.** This radar has cited "sf-skills 1.41.0" for plugin behaviour three scans running, and that citation cannot resolve: the version number and the plugin content travel on different channels. The telemetry half is the durable finding. A first-party Salesforce developer tool collects usage by default, buffers it **inside your project directory**, and until 1.12.0 would report a successful opt-out that had not happened — which makes any pre-08-21 assertion that telemetry was off unverifiable rather than false.
+
+**Gotchas:**
+- **Never cite a tag for plugin content.** `git show 32bf784:plugins/builder/salesforce-development/catalog/discovery.json` is the check; the npm tarball cannot answer the question because it has no `plugins/`.
+- **Telemetry buffers are project-local, in your repo.** `_STATE_DIR` is `.sf` relative to cwd: `.sf/telemetry-buffer-*.jsonl`, `.sf/telemetry-org.json`, `.sf/telemetry-transmit.log`, `.sf/telemetry-session-*.json`. Check `.gitignore` before the first run, not after.
+- **Machine-wide state lives at `~/.sf/telemetry/`** — `telemetry-config.json` (the `{"enabled"}` flag), `telemetry-machine-id`, `telemetry-notified`, `telemetry-first-session`, `telemetry-consent.lock`. Override with the documented state-dir env var, not by deleting files.
+- **`.sf/telemetry-org.json` caches `org_bucket` and `username`.** The source comment says the raw org id is *never* cached, but a transmit-only username is.
+- **A `SessionEnd` hook flush is blocking**, which is why `_open_private_append` now opens `O_NONBLOCK` and rejects a non-regular file: a FIFO planted at the predictable buffer path could otherwise hang the hook indefinitely.
+- **The marketplace description still says "41 skills."** That is `counts.foundation` — the plugin's bundled set — not the 164-skill public catalogue (`counts.overlap` is 31, `publicStandaloneAddable` 133).
+
+**Relevant to:** **Architect** — a default-on telemetry channel in a first-party dev tool, with buffers written into the repo working tree, is a data-governance decision to settle before a team rollout rather than after; **Developer** — the plugin you install from the marketplace and the package you install from npm are different artifacts at the same nominal version, and the announced removal of dynamic skill loading will break `discovery add` flows; **Admin** — a hard-off has to be verified per machine with `telemetry status`, because before 1.12.0 the `off` command could return success without taking effect.
+
+**Study action:** run `${CLAUDE_PLUGIN_ROOT}/scripts/sf-context telemetry status` on a machine where you have used the plugin, then `ls -la ~/.sf/telemetry/ .sf/telemetry-*` — and diff `discovery.json` between `git show 32bf784:…` and `main` to see the catalogue refresh that no release carries.
+
+**Status:** Unreleased — on `forcedotcom/sf-skills` `main` at `2476476` (2026-08-21 21:14 UTC), plugin version **1.12.0**. Reachable today through `/plugin marketplace add forcedotcom/sf-skills`; absent from npm `@salesforce/afv-skills` **1.41.0** and from every git tag. Repo Apache-2.0.
+
+**Sources:** [`plugins/builder/salesforce-development/CHANGELOG.md`](https://github.com/forcedotcom/sf-skills/blob/main/plugins/builder/salesforce-development/CHANGELOG.md) · [`scripts/sf_telemetry.py`](https://github.com/forcedotcom/sf-skills/blob/main/plugins/builder/salesforce-development/scripts/sf_telemetry.py) · [`commands/telemetry.md`](https://github.com/forcedotcom/sf-skills/blob/main/plugins/builder/salesforce-development/commands/telemetry.md) · [npm `@salesforce/afv-skills` 1.41.0](https://www.npmjs.com/package/@salesforce/afv-skills/v/1.41.0)
+
+---
+
 ## 2026-08-21 · Salesforce ITSM becomes a four-track setup program — and its Microsoft Teams toggle is a preference no API can write
 
 **What changed.** `forcedotcom/sf-skills` **1.41.0** (2026-08-21 14:48:27 UTC, commit `a9b698b`, *"Release 26 new + 11 updated skills"*) grows the six-skill CMDB set recorded on 08-14 into a full ITSM program — a top-level orchestrator over four tracks, and **18 new `service-itsm-*` skills**.
@@ -56,6 +132,8 @@ flowchart TD
 ---
 
 ## 2026-08-21 · `sf-skills` 1.41.0 — the hosted `headless-360` dispatcher goes from 4 skills to 14, and one skill now forbids the CLI
+
+> **Correction (2026-08-24):** this said *"the stale catalogue is fixed, one release late… 1.41.0 ships `1.41.0` / 164, with `visibleUnion` 148 → 174 and the bundled plugin `salesforce-development` at **1.12.0**."* **1.41.0 ships none of that.** At `32bf784` — the commit npm 1.41.0 declares as its `gitHead` — `discovery.json` still reads `releaseRef: "1.38.0"` / `counts.public: 138` / `visibleUnion: 148`, and `plugin.json` reads **1.11.0**. The refresh and the plugin bump landed in the *unreleased* commit `2476476` (21:14 UTC), which is on `main` and in no tag. **The skill counts below are correct** — 164 `SKILL.md` files at the tag, on `main` and in the npm tarball alike. The error came from reading `main` and citing the tag; see [the 08-21 plugin entry](#2026-08-21--the-salesforce-development-plugin-is-at-1120-on-main-and-in-no-release--and-its-telemetry-is-on-by-default).
 
 **What changed.** The same release takes the catalogue **138 → 164 skills** (+26, none removed) — the largest single release this radar has read. Skills declaring `mcpTools` go **13 → 24**, and **14 of those 24 name `headless-360`**, up from 4 at 1.40.0.
 
