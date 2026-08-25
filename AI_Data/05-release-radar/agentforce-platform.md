@@ -4,6 +4,12 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 ---
 
+## 2026-08-24 · Multi-agent Agent Script bundles could not be published — `connected_subagent` crashed the publisher (cross-link)
+
+`connected_subagent` compiles to a `related_agent` node with **no `tools` array**, and `ScriptAgentPublisher` mapped over it unconditionally — so `sf agent publish authoring-bundle` threw `TypeError: … reading 'map'` for any agent that delegates to another. Fixed in `@salesforce/agents` **2.0.6** (2026-08-24). It is **not** `GoalBasedAgent`-only: the conversational `delegate_escalation` fixture uses the same block. Full entry, including why stable `sf` cannot get the fix before **2026-09-02** → [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-24--sf-agent-publish-authoring-bundle-crashes-on-any-agent-script-agent-with-a-connected_subagent-block).
+
+---
+
 ## 2026-08-21 · The prebuilt IT Service family gets three more tracks — Teams, Swarming and a Unified Employee License user (cross-link)
 
 Agentforce **IT Service** now has a four-track setup program in `sf-skills` 1.41.0 — Incident Management, Agentforce for ITSM (Studio, Fulfiller Agent, Employee Agent), CMDB, and Microsoft Teams. Three facts for a buy-vs-build conversation:

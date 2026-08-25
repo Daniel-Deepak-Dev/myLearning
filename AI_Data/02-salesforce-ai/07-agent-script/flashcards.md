@@ -54,3 +54,9 @@ A: It becomes a hard Error (`disabled-additional-parameter`) with no runtime rep
 
 Q: A GoalBasedAgent-only block lints clean in a plugin dialect. Is that proof it's allowed?
 A: No. `gba-only-blocks` returns early when the schema context has no `config` namespace, so plugin dialects are exempt by design. Test the rule in an agent script, not a plugin one.
+
+Q: Your agent uses `connected_subagent` to delegate. `sf agent publish authoring-bundle` fails with `TypeError: Cannot read properties of undefined (reading 'map')`. Why?
+A: `connected_subagent` compiles to a **`related_agent`** node — a delegation stub with **no `tools` key at all** — and `ScriptAgentPublisher.retrieveAgentMetadata` mapped `n.tools` unconditionally. Fixed in `@salesforce/agents` **2.0.6** (2026-08-24). Note the existing test covered `tools: []`; the crash needs the property *absent*, not empty.
+
+Q: Is `connected_subagent` a `GoalBasedAgent`-only block?
+A: No. The compiler fixture `delegate_escalation.agent` uses it under `config.agent_type: "AgentforceServiceAgent"` alongside `start_agent`, so conversational multi-agent scripts use it too. The blocks the linter restricts to GBAs are `bundles`, `workflows`, `trigger`, `actions` and `orchestrator`.

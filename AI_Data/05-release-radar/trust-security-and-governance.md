@@ -4,6 +4,12 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-25 · "Which CLI am I running?" does not answer "am I patched?" — `sf` pins its security fixes in a shrinkwrap (cross-link)
+
+`@salesforce/cli` publishes an `npm-shrinkwrap.json` that pins every dependency exactly, so caret ranges in plugin manifests never resolve forward at install time. **The governance point:** a patch level in a Salesforce CLI is a property of the CLI version alone, fixed by Salesforce's lockfile — not of when your image was built. `sf` `latest` **2.148.3** carries the SDR zip-slip fix (13.0.1) and **not** the TOCTOU symlink fix (13.1.1), which is `latest-rc` only as of 2026-08-25. Treat the CLI version as an auditable control and record it; do not infer patch state from an install date. Full entry → [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-25--sf-publishes-an-npm-shrinkwrapjson--the-clis-dependency-tree-is-pinned-exactly-and-three-of-this-radars-reachability-calls-were-wrong).
+
+---
+
 ## 2026-08-21 · A Salesforce Go toggle is a read model, not a writable preference — and v68 grows a `TenantSecurity*` family (cross-link)
 
 Two governance facts from repositories, both written up in full elsewhere.

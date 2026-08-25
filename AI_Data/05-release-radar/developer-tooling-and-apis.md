@@ -4,6 +4,139 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-25 · `sf` publishes an `npm-shrinkwrap.json` — the CLI's dependency tree is pinned exactly, and three of this radar's reachability calls were wrong
+
+**What changed.** Nothing shipped. `@salesforce/cli` publishes an **`npm-shrinkwrap.json`** — 1,759 packages, `lockfileVersion` 3, exactly one version each — and npm honours a published shrinkwrap when installing that package. Every caret range this radar reasoned about is overridden at install time.
+
+**What each channel actually carries** (read from the published tarballs, 2026-08-25 03:45 UTC):
+
+| `sf` channel | version | SDR | `@salesforce/agents` |
+|---|---|---|---|
+| `latest` | 2.148.3 | **13.0.1** | **2.0.1** |
+| `latest-rc` | 2.149.9 | 13.1.1 | 2.0.4 |
+| `nightly` | 2.150.5 | 13.1.1 | 2.0.6 |
+| (superseded) | 2.147.7 | **13.0.0** | **2.0.0** |
+
+**Why it matters.** Since 08-12 this radar has said *"library fixes flow to stable by range resolution"*, and that a stale lockfile is what holds you back. For the CLI the opposite holds: the pin is upstream, in Salesforce's lockfile, and **no install is fresh enough to escape it**. Only the shrinkwrap answers *am I patched?*
+
+Three consequences follow, and all three correct entries below.
+
+- **`sf` 2.147.7 never carried the SDR zip-slip fix.** It pins SDR **13.0.0**; the fix is 13.0.1. Stable got it only when **2.148.3** was promoted on **2026-08-19** — seven days later than this radar reported.
+- **The TOCTOU symlink fix (13.1.1) is still not on stable.** `latest` pins 13.0.1. It reaches stable no earlier than the **2026-08-26** Wednesday promotion.
+- **Stable has one of the four `--api-name` preview fixes, not four.** `latest` pins `@salesforce/agents` **2.0.1**, so context variables (2.0.2), the `x-attributed-client` header (2.0.3) and reasoning traces (2.0.4) are all absent from `sf` `latest` today.
+
+```mermaid
+graph LR
+  A["npm i -g @salesforce/cli"] -->|npm-shrinkwrap.json<br/>exact, 1759 pkgs| B["28 core plugins<br/>+ their libraries<br/>ranges IGNORED"]
+  A --> C["10 JIT plugins<br/>pinned by version,<br/>installed on first use"]
+  C -->|their own deps resolve<br/>at that moment| D["ranges APPLY here only"]
+```
+
+**Gotchas:**
+- **`npm view … dependencies` is the wrong check** — it prints the caret ranges the shrinkwrap overrides. Use `npm ls @salesforce/source-deploy-retrieve` inside the installed CLI, or read `npm-shrinkwrap.json` in the tarball.
+- **The pinning asymmetry recorded on 08-14 is retired for the CLI.** `sf` pins plugins *and* libraries. Plugin authors' caret ranges are advisory once Salesforce builds the lockfile.
+- **JIT plugins are the one exception.** `oclif.jitPlugins` names 10 packages (`@salesforce/plugin-code-analyzer` 5.15.0, `plugin-lightning-dev` 6.2.18, `plugin-dev` 2.5.2 and seven more) at exact versions, installed on first use into the user plugins directory — their transitive dependencies resolve then, not at CLI install.
+- **`sf plugins install` is also outside the shrinkwrap**, so a user-installed plugin can pull a newer library than the CLI core is running.
+- The 12.x SDR line is still unpatched for both path escapes, and `plugin-deploy-retrieve` 3.x can never reach 13.x.
+
+**Relevant to:** **Developer** — the version of SDR or `@salesforce/agents` you are running is decided by Salesforce's lockfile, not by your install date, so "I upgraded" answers nothing; **Architect** — CI images tracking `sf` `latest` inherit a security posture set by a lockfile, which makes "is this environment patched?" a per-CLI-version question with a fixed, readable answer; **Admin** — none.
+
+**Study action:** run `npm pack @salesforce/cli@latest`, untar it, and `python3 -c "import json;d=json.load(open('package/npm-shrinkwrap.json'));print([ (k,v['version']) for k,v in d['packages'].items() if k.endswith('source-deploy-retrieve') ])"`. Repeat for `@latest-rc` and diff the two — that diff is your patch gap.
+
+**Status:** Standing property of the published package, verified across `sf` 2.147.7 / 2.148.3 / 2.149.9 / 2.150.5, checked **2026-08-25 03:45 UTC**. Not an announcement; no Salesforce documentation of it located.
+
+**Sources:** [npm registry metadata](https://registry.npmjs.org/@salesforce/cli) · [npm docs — npm-shrinkwrap.json](https://docs.npmjs.com/cli/v10/configuring-npm/npm-shrinkwrap-json) · [SDR CHANGELOG](https://github.com/forcedotcom/source-deploy-retrieve/blob/main/CHANGELOG.md)
+
+---
+
+## 2026-08-24 · `sf agent publish authoring-bundle` crashes on any Agent Script agent with a `connected_subagent` block
+
+**What changed.** `@salesforce/agents` **2.0.6** (npm **2026-08-24 20:58:38 UTC**, PR [#350](https://github.com/forcedotcom/agents/pull/350)) guards `ScriptAgentPublisher` against nodes with no `tools` array. Before it, publishing any bundle containing a `connected_subagent` block threw `TypeError: Cannot read properties of undefined (reading 'map')`.
+
+- **The mechanism.** `retrieveAgentMetadata` built its component list with `n.tools.map(...)` over every node. A `connected_subagent` block compiles to a **`related_agent`** node, which is a pure delegation stub and emits **no `tools` key at all**.
+- **`tools` is now optional** in the `AgentJson` type; the node still yields its `GenAiPlugin:<developerName>` entry and simply contributes no `GenAiFunction:` entries.
+- **The distinction that hid it.** The existing test covered `tools: []`. The crash needs the property *absent*, not empty.
+- **It is not a `GoalBasedAgent`-only block.** The compiler's `delegate_escalation.agent` fixture uses `connected_subagent` under `agent_type: "AgentforceServiceAgent"` with `start_agent` — so conversational multi-agent scripts hit it too.
+
+**Why it matters.** Agent Script 3.x (2026-08-19) made `connected_subagent` the way one agent dispatches to another, in both topologies. Five days later, the publish path for exactly that block did not work. The language surface and the deploy surface ship from different repositories on different cadences, and the gap is silent until you try to publish.
+
+This is the **fifth** defect in `@salesforce/agents` 2.0.x in fifteen days, and the first outside `sf agent preview --api-name` — the pattern has moved from preview into publish.
+
+**Gotchas:**
+- **The failure is a `TypeError` from library code**, not a validation error, so it reads as a CLI bug rather than a script problem. Nothing names the offending block.
+- **Reachability:** `@salesforce/plugin-agent` **2.0.5** (2026-08-24 21:52 UTC) ranges `@salesforce/agents` `^2.0.6`, and `sf` **`nightly` 2.150.5** pins 2.0.6 in its shrinkwrap. Because of the entry above, **stable `sf` cannot get this by range** — `latest` 2.148.3 pins 2.0.1.
+- **Earliest stable landing is not 2026-08-26.** That Wednesday promotes the 2.149.x line, whose shrinkwrap pins `@salesforce/agents` **2.0.4**. The fix needs the 2.150.x line, so **2026-09-02** at the earliest.
+- Workaround until then: publish from a `nightly` CLI, or from `sf agent publish` in a project whose `node_modules` you control.
+
+**Relevant to:** **Developer** — every multi-agent Agent Script bundle is unpublishable from stable `sf` today, and the error names nothing useful; **Architect** — confirms that authoring-language capability and deployment capability are separately versioned, so "the language supports it" is not a delivery date.
+
+**Study action:** write a two-block script — one `start_agent`, one `connected_subagent` with `target: "agent://Anything"` — and run `sf agent publish authoring-bundle` against a stable `sf` and against `npx @salesforce/cli@nightly`. Diff the two failures.
+
+**Status:** Shipped — `@salesforce/agents` **2.0.6** and `@salesforce/plugin-agent` **2.0.5**, both 2026-08-24. On `sf` `nightly` **2.150.5** only; not on `latest` or `latest-rc` as of 2026-08-25 03:45 UTC.
+
+**Sources:** [agents PR #350](https://github.com/forcedotcom/agents/pull/350) · [agents CHANGELOG](https://github.com/forcedotcom/agents/blob/main/CHANGELOG.md) · [agentscript `delegate_escalation.agent`](https://github.com/salesforce/agentscript/blob/main/packages/compiler/test/fixtures/scripts/delegate_escalation.agent)
+
+---
+
+## 2026-08-24 · SDR ships three releases in one day — 13.2.1 never reaches npm, and 13.2.2 carries a four-hour crash
+
+**What changed.** `@salesforce/source-deploy-retrieve` cut **13.2.1**, **13.2.2** and **13.2.3** on 2026-08-24. Only two reached npm: `registry.npmjs.org/@salesforce/source-deploy-retrieve/13.2.1` returns **`version not found`** (checked 2026-08-25 03:39 UTC) despite release commit `f100ead` at 17:34 UTC.
+
+- **13.2.1 — the real fix** ([#1817](https://github.com/forcedotcom/source-deploy-retrieve/pull/1817)): resolving a **decomposed Permission Set** directory returned a child file as the component. `BaseSourceAdapter` treated any `-meta.xml` whose folder name matched the `fullName` as the root; now the file's **suffix must match `type.suffix` or `type.legacySuffix`** first.
+- **13.2.2 — `fix: linting post-fork-merge`** ([#1824](https://github.com/forcedotcom/source-deploy-retrieve/pull/1824)), npm 19:07 UTC. A lint-only commit, and the build that actually delivered #1817.
+- **13.2.3 — the regression fix** ([#1823](https://github.com/forcedotcom/source-deploy-retrieve/pull/1823), `W-23924917`), npm 23:32 UTC. #1817 added a `readDirectory()` call on a computed component root; when that root is a *file*, `readdirSync` throws **`ENOTDIR`**.
+
+**Why it matters.** For **4 hours 25 minutes**, `latest` on npm was a build where `sf project deploy` / `retrieve` crashed with `ENOTDIR` if a non-component file sat directly inside a bundle type directory — `force-app/main/default/lwc/README.md`, or a macOS `.DS_Store`. That is not an exotic project state.
+
+Three guards went in, which is the useful part: `BundleSourceAdapter.populate` skips files whose `trimPathToContent` is not a directory, `MixedContentSourceAdapter.getRootMetadataXmlPath` returns `undefined` for a non-directory root, and `NodeFSTreeContainer.readDirectory` returns `[]` instead of throwing.
+
+**Gotchas:**
+- **No CLI was ever exposed.** Per the entry above, `sf` pins SDR in its shrinkwrap — `latest` 13.0.1, `latest-rc`/`nightly` 13.1.1. The bad window only reached direct consumers of the library and `@salesforce/plugin-deploy-retrieve` **4.1.2** (`^13.1.1`) installed standalone.
+- **A version in the CHANGELOG is not a version on npm.** 13.2.1 has a `chore(release)` commit, a compare link and changelog prose, and no artifact. Check the registry, not the repo.
+- **The Permission Set bug needs decomposition on.** It shows with the `decomposePermissionSetBeta2` preset, where `permissionsets/myPS/` holds both `myPS.permissionset-meta.xml` and children like `myPS.applicationVisibility-meta.xml`.
+- Neither 13.2.x fix is in any `sf` channel yet.
+
+**Relevant to:** **Developer** — resolving a decomposed Permission Set by directory now returns the parent, and a stray `README.md` in `lwc/` no longer kills the command; **Architect** — decomposed Permission Sets are safer to adopt as a source-format standard now that directory resolution is suffix-anchored.
+
+**Study action:** in a project with `decomposePermissionSetBeta2` enabled, run `sf project deploy start -d force-app/main/default/permissionsets/<name>` on SDR 13.2.0 and 13.2.3 and compare which component each resolves. Then drop a `README.md` into `force-app/main/default/lwc/` and re-run on 13.2.2 to see the `ENOTDIR`.
+
+**Status:** Shipped — `@salesforce/source-deploy-retrieve` **13.2.3** is npm `latest` (2026-08-24 23:32:24 UTC). **13.2.1 is unpublished.**
+
+**Sources:** [SDR CHANGELOG](https://github.com/forcedotcom/source-deploy-retrieve/blob/main/CHANGELOG.md) · [PR #1817](https://github.com/forcedotcom/source-deploy-retrieve/pull/1817) · [PR #1823](https://github.com/forcedotcom/source-deploy-retrieve/pull/1823) · [npm registry metadata](https://registry.npmjs.org/@salesforce/source-deploy-retrieve)
+
+---
+
+## 2026-08-22 · `sf-pi` hides the managed Salesforce skill library from the model by default — 164 skills go `manual-only`
+
+**What changed.** `sf-pi` **v0.272.0** (2026-08-22 17:21 UTC, [ADR 0108](https://github.com/salesforce/sf-pi/blob/main/docs/adr/0108-managed-skill-invocation-stamps.md), accepted 2026-08-21) stops wiring Pi to the `forcedotcom/sf-skills` git clone. Pi now loads a stamped copy at **`~/.pi/agent/sf-skills/effective/skills`**, and the default invocation mode for managed skills is **`manual-only`**.
+
+- **The problem it names.** Every skill description is injected into `<available_skills>`, and at 164 skills that *"dominated first-turn context in measured sessions."*
+- **The mechanism.** `disable-model-invocation: true` is stamped into the *effective* copy's `SKILL.md` frontmatter. A hidden skill still runs via `/skill:<name>`; it just leaves the system prompt.
+- **Why a copy.** Stamping the clone would break `/sf-skills defaults update`, which is a `git pull --ff-only`. The clone stays pristine; the sidecar is restamped after every pull.
+- **Where intent lives.** `sfPi.skillInvocation` in **global** settings, with three keys: `default`, `packs`, `skills`.
+
+**Why it matters.** This is the first Salesforce tooling decision that treats its own skill catalogue as a **context cost** rather than a capability list. The catalogue grew 138 → 164 on 2026-08-21; the next release stopped showing it to the model. Growth in a skill library is not free, and Salesforce now says so in an ADR.
+
+The precedence recorded on 08-11 — Skills → CLI → MCP — is untouched. What changed is **visibility**, not rank: a `manual-only` skill is not a demoted skill, it is an invisible one.
+
+**Gotchas:**
+- **Resolution order is fixed and short-circuits.** Author `disable-model-invocation: true` in the clone → always `manual-only`; then a per-skill override in `policy.skills`; then `origin === "community"` → **`agent-invocable`**; then a pack override; then `policy.default`.
+- **Community skills stay visible, Salesforce's own do not.** The origin check sits *above* the pack and default checks, so third-party skills are agent-invocable while the managed library is hidden.
+- **Fifteen packs, matched by name prefix** — `agentforce-`, `data360-`, `experience-`, `experience-ui-bundle` (checked first), `design-systems-`, `omnistudio-`, `automation-`, `integration-`, `commerce-`, `mobile-`, `service-`, `sales-`, `dx-`, `platform-`, and `other` as the empty-prefix fallback.
+- **Wave 1 is global-only.** Stamps apply to every working directory; per-project effective trees are explicitly deferred.
+- **The effective tree is deleted and re-copied** on each restamp (`rmSync` then `cpSync`) — do not edit anything under `effective/`.
+- Only `agent-invocable` and `manual-only` are accepted; any other value in the settings map is silently dropped.
+
+**Relevant to:** **Developer** — after upgrading, `agentforce-*` and `data360-*` skills stop being offered automatically and need `/skill:<name>` or a settings change; **Architect** — establishes context budget as a first-class constraint on skill-library design, which applies to any agent platform shipping a catalogue.
+
+**Study action:** upgrade `sf-pi` past v0.272.0, run `/sf-skills toggle`, set `sfPi.skillInvocation.packs.agentforce` to `agent-invocable`, then `grep -c "disable-model-invocation" ~/.pi/agent/sf-skills/effective/skills/*/SKILL.md` and confirm the `agentforce-*` entries lost the stamp while the clone still has none.
+
+**Status:** Shipped — `sf-pi` **v0.272.0**, 2026-08-22. ADR 0108 status `accepted`. Newest `main` commit `5e06c7a`, checked 2026-08-25 03:40 UTC.
+
+**Sources:** [ADR 0108](https://github.com/salesforce/sf-pi/blob/main/docs/adr/0108-managed-skill-invocation-stamps.md) · [commit `fae2adb`](https://github.com/salesforce/sf-pi/commit/fae2adb36cd32688eda63968ea23a604ca681031) · [sf-pi CHANGELOG](https://github.com/salesforce/sf-pi/blob/main/CHANGELOG.md)
+
+---
+
 ## 2026-08-21 · Salesforce ITSM becomes a four-track setup program — and its Microsoft Teams toggle is a preference no API can write
 
 **What changed.** `forcedotcom/sf-skills` **1.41.0** (2026-08-21 14:48:27 UTC, commit `a9b698b`, *"Release 26 new + 11 updated skills"*) grows the six-skill CMDB set recorded on 08-14 into a full ITSM program — a top-level orchestrator over four tracks, and **18 new `service-itsm-*` skills**.
@@ -143,6 +276,8 @@ _All first-party pages (`salesforce.com`, `developer.salesforce.com`) and `silic
 ---
 
 ## 2026-08-18 · Two more `--api-name` preview defects in `@salesforce/agents` — the published-agent path is a second client, and it keeps arriving incomplete
+
+> **Correction (2026-08-25):** the 08-20 correction below said "a fresh stable install resolves **2.0.5** and still gets all four fixes by range, not by pin." **It does not.** `@salesforce/cli` publishes an `npm-shrinkwrap.json`, and `sf` `latest` **2.148.3** pins `@salesforce/agents` **2.0.1** exactly — so stable carries the `bypassUser` fix and **none of the other three**. `latest-rc` 2.149.9 pins 2.0.4 (all four) and lands on `latest` at the **2026-08-26** promotion. The count of user-facing `--api-name` defects stays at four; a **fifth**, in the *publish* path, is recorded at [2026-08-24](#2026-08-24--sf-agent-publish-authoring-bundle-crashes-on-any-agent-script-agent-with-a-connected_subagent-block).
 
 **What changed.** `@salesforce/agents` **2.0.3** and **2.0.4** published 2026-08-18, six minutes apart (01:24:00 and 01:30:47 UTC). Both fix `sf agent preview --api-name`. That is **four defects in nine days** in one code path, plus one unrelated validation change.
 
@@ -350,6 +485,8 @@ flowchart TD
 
 ## 2026-08-13 · SDR 13.1.1 patches a *second* path escape in the same transformer — a TOCTOU symlink write
 
+> **Correction (2026-08-25):** this entry said the TOCTOU fix "is on `latest` today", reaching `sf` 2.147.7 by the `^13.0.0` range. **It is not, and it still is not.** `@salesforce/cli` ships an `npm-shrinkwrap.json` that pins SDR exactly: `latest` **2.148.3** → **13.0.1**, `latest-rc` 2.149.9 and `nightly` 2.150.5 → 13.1.1. So `sf` `latest` is patched for the zip-slip and **unpatched for the TOCTOU symlink escape** as of 2026-08-25 03:45 UTC; the earliest it lands is the **2026-08-26** promotion. The mermaid diagram below and the "range resolution" reading under it are wrong for the CLI — they hold only for a standalone `npm i @salesforce/plugin-deploy-retrieve`. Detail at [the 08-25 entry](#2026-08-25--sf-publishes-an-npm-shrinkwrapjson--the-clis-dependency-tree-is-pinned-exactly-and-three-of-this-radars-reachability-calls-were-wrong).
+
 **What changed.** `@salesforce/source-deploy-retrieve` **13.1.1** (npm **2026-08-13 16:01:37 UTC**, PR [#1820](https://github.com/forcedotcom/source-deploy-retrieve/pull/1820), `W-23808206`) fixes a **TOCTOU** symlink escape in `staticResourceMetadataTransformer.ts` — the same file, same class and same code path as the zip-slip patched 13 days earlier in 13.0.1.
 
 - **TOCTOU** — *time-of-check-to-time-of-use*: a path is validated, then something changes underneath it before the write happens.
@@ -494,6 +631,8 @@ Reachability runs the *safe* way here, by the pinning rule recorded on 08-14: **
 ---
 
 ## 2026-08-12 · `sf` 2.147.7 is promoted to `latest` — Node 22 becomes the stable floor, and two waiting fixes ride in with it
+
+> **Correction (2026-08-25):** this entry said 2.147.7 delivered the SDR zip-slip fix and employee-agent preview by range resolution. **Neither arrived.** `@salesforce/cli` publishes an `npm-shrinkwrap.json`, and 2.147.7's pins **SDR 13.0.0** (the fix is 13.0.1) and **`@salesforce/agents` 2.0.0** (the fix is 2.0.1) — so no install of 2.147.7, however fresh, resolved forward. The zip-slip fix reached stable on **2026-08-19** with 2.148.3, seven days later than reported here. The Node 22 floor, the cadence finding and the release-notes dating trap all stand. See [the 08-25 entry](#2026-08-25--sf-publishes-an-npm-shrinkwrapjson--the-clis-dependency-tree-is-pinned-exactly-and-three-of-this-radars-reachability-calls-were-wrong).
 
 **What changed.** `@salesforce/cli` **`latest` moved 2.146.3 → 2.147.7** on 2026-08-12. Every dist-tag advanced one slot: `latest-rc` → **2.148.3**, `nightly` → **2.149.0**. Observed at 2.146.3 on 2026-08-12 03:37 UTC and at 2.147.7 on 2026-08-13 03:37 UTC.
 
