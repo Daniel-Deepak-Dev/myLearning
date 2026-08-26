@@ -345,3 +345,21 @@ A: No — `registry.npmjs.org/@salesforce/source-deploy-retrieve/13.2.1` returns
 
 Q: After upgrading `sf-pi` past v0.272.0, the `agentforce-*` skills stop being offered automatically. What happened and how do you undo it?
 A: ADR 0108 made managed-library skills **`manual-only`** — Pi now loads a stamped `effective/` copy and `disable-model-invocation: true` keeps them out of `<available_skills>`. They still run via `/skill:<name>`. Undo by setting `sfPi.skillInvocation.packs.agentforce` (or `.default`) to `agent-invocable` in global settings, then re-stamping with `/sf-skills toggle`.
+
+Q: `sf-skills` 1.42.0 is the first release in which the skill catalogue shrank. What was removed, and what does the removed set have in common?
+A: The **seven `data360-*` skills** — `activate`, `connect`, `harmonize`, `orchestrate`, `prepare`, `query`, `segment` — taking the catalogue **164 → 157**. They are exactly the skills that shelled out to the unofficial community plugin (`Jaganpro/sf-cli-plugin-data360`, oclif name `@gthoppae/…`): between them they carried all **164** `sf data360` invocations, and the string now appears zero times repo-wide. `data360-schema-get` and `data360-code-extension-generate` survive because they call first-party tooling instead.
+
+Q: After the 1.42.0 removal, `catalog/discovery.json` reads `"public": 157`. Why is the plugin's guarded add flow still not safe?
+A: Because the same commit left `publicRelease.releaseRef` at **`"1.41.0"`** and `commit` at `32bf7846…`. The pinned install still resolves a tree that contains all seven withdrawn skills, and at that tag `platform-dataspace-access-configure` and `dx-app-analytics-query` still delegate to `data360-prepare` / `data360-query` — targets the catalogue will no longer add. `manifestSha256` was updated while the ref it names was not.
+
+Q: The `salesforce-development` plugin's telemetry is on by default. Which three things turn it off, and what was untrustworthy about "off" before 1.12.0?
+A: `/salesforce-development:telemetry off`, `SF_DISABLE_TELEMETRY`, or `DO_NOT_TRACK`. Before **1.12.0** (2026-08-21) `off` **did not purge data already buffered or logged**, and the `on|off|status` command **reported success even when it could not read or change state** — so a requested hard-off was neither complete nor verifiable. The same release restricted the on-disk state to owner-only and clamped error categories to a fixed set.
+
+Q: The plugin's changelog says telemetry never collects "source code, org contents, file paths, credentials, or org names." Does an org ID leave the machine?
+A: Yes, on one event shape. Buffered records carry only a coarse **`org_bucket`** (`production` / `sandbox` / `scratch` / `none`), but the **UIP flexible format (O11y `sf_a4dInstrumentation`) shape alone carries the raw org ID**, live-resolved at transmit. The promise is about org *names*, not org *IDs*. Separately, `machine_id` **reuses the `sf` CLI's `CLIID`** read straight off oclif's cache dir, so plugin and CLI telemetry correlate on one machine.
+
+Q: `@salesforce/plugin-deploy-retrieve` 4.1.2 declares SDR `^13.1.1` and 13.3.0 is published. Which SDR does `sf` `nightly` resolve?
+A: **13.1.1** — and so did 2.150.1, .3 and .5, every one built after 13.2.0 landed on 2026-08-19. The range permits the upgrade; the published `npm-shrinkwrap.json` is **carried forward rather than re-resolved per build**, so no `sf` channel has moved past 13.1.1 in seven days across four SDR releases. **A satisfied range is not a reachable version.**
+
+Q: SDR 13.3.0 adds `notifications` to the deploy status. Where does it sit, and what is the parsing trap?
+A: On **`MetadataApiDeployStatus`**, a **sibling of `details`** — so it is deploy-level, not per-component (`DeployDetails` still holds `componentFailures` / `componentSuccesses`). The type is `DeployNotification = { messageCode: string; messageText: string }` and the field is **singular-or-array**, like `componentFailures`: one notification arrives as a bare object, so `.length` is `undefined`. Normalise with `[].concat(status.notifications ?? [])`.

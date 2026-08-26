@@ -4,6 +4,84 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-26 · Gap check — Salesforce's Claude Code plugin turned usage telemetry on by default, then shipped four fixes to it a week later
+
+**What changed.** Nothing today — this is a miss. The `salesforce-development` plugin bundled in `forcedotcom/sf-skills` added **usage telemetry, on by default**, in **1.11.0** (2026-08-14) and shipped **four `### Security` fixes to it** in **1.12.0** (2026-08-21). This radar recorded 1.11.0 and 1.12.0 as version numbers only; the word *telemetry* appeared nowhere in it before this entry.
+
+- **What 1.11.0 added.** Telemetry disclosed on first use, `on` by default, managed by `/salesforce-development:telemetry on|off|status`, `SF_DISABLE_TELEMETRY` or `DO_NOT_TRACK`.
+- **What it captures.** A positive allowlist per event type, wired to **eight hook events** — `SessionStart`, `UserPromptSubmit`, `PreToolUse` (`Skill`, `Task|Agent`), `PostToolUse` (`mcp__.*`), `PostToolUseFailure`, `StopFailure`, `SessionEnd`.
+- **The four 1.12.0 fixes.** Error categories clamped to a fixed set (anything else becomes `"unknown"`); on-disk state restricted to owner-only; `off` now **purges** already-buffered data; `telemetry on|off|status` now **reports failure** instead of silently succeeding when it cannot read or change state.
+
+**Why it matters.** For a week, "I turned it off" was not verifiable: the command could report success without having changed anything, and data already buffered stayed on disk.
+
+- **The identity is shared with the CLI on purpose.** `machine_id` reads `CLIID.txt` straight off oclif's cache dir — no `sf` invocation — *"so plugin usage can be correlated with CLI usage on the same machine."*
+- **The changelog says org *names*, not org *IDs*.** 1.11.0 promises telemetry *"never collects source code, org contents, file paths, credentials, or org names."* The module's own docstring is narrower.
+
+**Gotchas:**
+- **The raw org ID does leave the machine, on one event shape.** Buffered records carry only a coarse `org_bucket` (`production` / `sandbox` / `scratch` / `none`), but the **UIP flexible format (O11y `sf_a4dInstrumentation` schema)** shape *"ALONE carries the raw org id (when live-resolved at transmit)"*. It is never persisted to the local cache — that stores the bucket plus a transmit-only username.
+- **Consent is machine-wide; the buffer is project-local.** Consent, the first-run marker and the machine id live in **`~/.sf/telemetry/`** (`telemetry-config.json`, `telemetry-notified`, `telemetry-machine-id`, `telemetry-first-session`, `telemetry-consent.lock`, per `@W-23481895@`). The **event buffer, per-session org cache and debug log are cwd-relative under `.sf/`** — so `git status` in a project you ran a session in is where you find them, and an opt-out does not retroactively clean every project by itself.
+- **`CLIID.txt` is read from a platform-specific path:** `~/Library/Caches/sf` (macOS), `%LOCALAPPDATA%\sf` (Windows), `$XDG_CACHE_HOME/sf` or `~/.cache/sf` (Linux). Deleting `~/.sf/telemetry/telemetry-machine-id` does **not** reset the identity while that file exists.
+- **The hardening it was hardening against is local symlink redirection.** State files are opened `O_NOFOLLOW` and `fchmod`-ed on the fd, because *"a plain `os.chmod` follows a link, so a pre-planted symlink at a state path … could redirect the chmod and flip an arbitrary user-owned target to `0o600`."*
+- **`SF_DEV_TELEMETRY_HOME` relocates machine-wide state**, and a relative value is anchored under `$HOME` deliberately — resolving it against the cwd would silently make the hard-off per-directory.
+- **Telemetry is fail-silent by design.** *"Any error is swallowed — telemetry never blocks or breaks a hook."* Absence of an error is not evidence it is off.
+
+**The `## Unreleased` section is the bigger architectural signal.** Two lines, no date:
+
+- **Dynamic skill loading will be removed**, replaced by discovering, suggesting and installing *Salesforce plugins* with the user's permission.
+- **The Codex agent** will be supported alongside Claude Code.
+
+That retires the pinned-`releaseRef` install mechanism recorded on [2026-08-17](#2026-08-17--sf-skills-regenerates-a-capability-catalogue-frozen-six-releases-back--and-the-install-command-it-emits-was-pinned-to-the-stale-snapshot) — and today's [Data 360 withdrawal](data-360.md#2026-08-25--salesforce-deletes-all-seven-sf-data360-skills--the-catalogue-shrinks-for-the-first-time-and-the-pinned-install-ref-still-serves-them) is that mechanism failing a third time.
+
+**Relevant to:** **Admin / Architect** — an on-by-default outbound telemetry channel in developer tooling, keyed to an identifier shared with the `sf` CLI and carrying a raw org ID on one event shape, is a data-flow to approve before rollout rather than after; **Developer** — the exact opt-out surface, the two state scopes and the `.sf/` buffer that lands inside project directories.
+
+**Study action:** Install the plugin, run one session, then `ls -la ~/.sf/telemetry/ .sf/` and confirm `0600` on the state files. Run `/salesforce-development:telemetry status`, then `off`, and check the buffer is gone. Finally `diff <(cat ~/.sf/telemetry/telemetry-machine-id) <(cat ~/.cache/sf/CLIID.txt)` — if they match, plugin and CLI telemetry are correlatable.
+
+**Status:** Shipped — plugin `salesforce-development` **1.11.0** (2026-08-14) and **1.12.0** (2026-08-21), Apache-2.0, bundled in `forcedotcom/sf-skills` (current release 1.42.0). `## Unreleased` is stated intent with no date. Read from a shallow clone at **2026-08-26 03:41 UTC**. Recorded as a gap check: the artifact dates are 08-14 and 08-21, outside this run's window.
+
+**Sources:** [plugin CHANGELOG](https://github.com/forcedotcom/sf-skills/blob/main/plugins/builder/salesforce-development/CHANGELOG.md) · [`scripts/sf_telemetry.py`](https://github.com/forcedotcom/sf-skills/blob/main/plugins/builder/salesforce-development/scripts/sf_telemetry.py) · [`commands/telemetry.md`](https://github.com/forcedotcom/sf-skills/blob/main/plugins/builder/salesforce-development/commands/telemetry.md) · [`plugin.json`](https://github.com/forcedotcom/sf-skills/blob/main/plugins/builder/salesforce-development/.claude-plugin/plugin.json)
+
+---
+
+## 2026-08-25 · SDR 13.3.0 adds a deploy-level notification channel — and no `sf` channel has carried an SDR release for seven days
+
+**What changed.** `@salesforce/source-deploy-retrieve` **13.3.0** (npm 2026-08-25 22:51:33 UTC, PR #1825, `@W-23939851@`) adds a **`notifications`** field to the Metadata API deploy status, plus a nightly coverage regeneration that grew the Winter '27 type roster.
+
+- **The new shape**, in `src/client/types.ts`:
+  ```ts
+  export type DeployNotification = { messageCode: string; messageText: string };
+  // on MetadataApiDeployStatus:
+  notifications?: DeployNotification | DeployNotification[];
+  ```
+- **It sits beside `details`, not inside it.** `DeployDetails` still holds `componentFailures` / `componentSuccesses` / `runTestResult`. A notification is therefore about the **deploy**, not about a component.
+- **The v68 roster grew 71 → 73** at 2026-08-25 22:08:37 UTC (commit `67121fe`, `METADATA_SUPPORT.md`): **`ApptBookingConfig`** and **`DsarPolicy`**, both marked ❌ *"Not supported, but support could be added."*
+
+**Why it matters.** A deploy-level message channel is new information that no existing tooling reads. Anything parsing `checkDeployStatus` today drops it silently.
+
+- **`DsarPolicy` is the one to notice.** DSAR — **Data Subject Access Request** — is the GDPR/CCPA right to see, transfer or delete personal data; `DsarPolicy` is the Privacy Center object behind it. Winter '27 gives it a Metadata API type that **source-format DX cannot move**, so privacy policy stays per-org clickops with no source of truth.
+
+**Gotchas:**
+- **`notifications` is singular-or-array**, exactly like `componentFailures`. A Salesforce XML→JSON response emits a bare object for one entry and an array for several — `result.notifications.length` is `undefined` in the one-notification case. Normalise with `[].concat(status.notifications ?? [])`.
+- **No `sf` channel carries it, and none carries anything since 13.1.1.** Read from each build's published `npm-shrinkwrap.json` at **2026-08-26 03:38 UTC**: `latest` **2.148.3** → SDR **13.0.1**; `latest-rc` **2.149.9** → **13.1.1**; `nightly` **2.150.6** (built 02:48 UTC the same morning) → **13.1.1**.
+- **The caret range permits the upgrade and the lockfile overrides it.** `@salesforce/plugin-deploy-retrieve` **4.1.2** declares `^13.1.1`, which 13.3.0 satisfies. Five consecutive nightlies — 2.150.1, .3, .5, .6 — all pin 13.1.1, every one of them built after 13.2.0 published on 08-19. **The shrinkwrap is carried forward, not re-resolved**, so a library release inside a permitted range still reaches no channel until a lock refresh forces it.
+- **The roster file is regenerated nightly and its `git log` is misleading.** Cite a type name and a UTC timestamp, never a count.
+- **`DsarPolicy` is a long-standing object, new only as metadata.** The object exists in the Object Reference from **API 50.0**; what is new is the v68 *metadata type*. Do not read its appearance as a new capability.
+
+**Relevant to:** **Developer** — a new optional field on the `checkDeployStatus` response with a singular-or-array trap, and confirmation that SDR fixes are not reaching any CLI channel; **Architect** — `DsarPolicy` arrives without DX support, so a Winter '27 privacy configuration cannot be version-controlled or promoted between orgs.
+
+**Study action:** `npm i @salesforce/source-deploy-retrieve@13.3.0`, then `grep -n "notifications" node_modules/@salesforce/source-deploy-retrieve/lib/client/types.d.ts`. Then run `sf project deploy start --json` on your current CLI and confirm the field is absent — that gap between the library and every `sf` channel is the finding.
+
+**Status:** Shipped (library only) — SDR **13.3.0**, npm `latest`, 2026-08-25 22:51:33 UTC; commit `b7a2887`, release `ad8b33b`. Not present in any `sf` channel as of 2026-08-26 03:38 UTC. `DsarPolicy` / `ApptBookingConfig` are ❌ for source-format DX.
+
+**Sources:** [PR #1825 — add DeployNotification type](https://github.com/forcedotcom/source-deploy-retrieve/pull/1825) · [commit `67121fe` — metadata coverage regen](https://github.com/forcedotcom/source-deploy-retrieve/commit/67121fec8ac3f5bb87d691a1eaa577f0e7d22bcd) · [`METADATA_SUPPORT.md`](https://github.com/forcedotcom/source-deploy-retrieve/blob/main/METADATA_SUPPORT.md) · [`DsarPolicy` object reference](https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/sforce_api_objects_dsarpolicy.htm) · [npm `@salesforce/source-deploy-retrieve`](https://www.npmjs.com/package/@salesforce/source-deploy-retrieve)
+
+---
+
+## 2026-08-25 · Salesforce deletes all seven `sf data360` skills (cross-link)
+
+`sf-skills` **1.42.0** removes the seven `data360-*` skills that ran on the unofficial community `sf data360` plugin — the first time the catalogue has shrunk (164 → 157). The tooling point: `catalog/discovery.json` was edited to 157 skills **but its `publicRelease.releaseRef` was left at `"1.41.0"`**, so the guarded add flow still installs from a tree containing all seven, and two surviving skills at that tag delegate to targets the catalogue will no longer add. Full entry → [data-360.md](data-360.md#2026-08-25--salesforce-deletes-all-seven-sf-data360-skills--the-catalogue-shrinks-for-the-first-time-and-the-pinned-install-ref-still-serves-them).
+
+---
+
 ## 2026-08-25 · `sf` publishes an `npm-shrinkwrap.json` — the CLI's dependency tree is pinned exactly, and three of this radar's reachability calls were wrong
 
 **What changed.** Nothing shipped. `@salesforce/cli` publishes an **`npm-shrinkwrap.json`** — 1,759 packages, `lockfileVersion` 3, exactly one version each — and npm honours a published shrinkwrap when installing that package. Every caret range this radar reasoned about is overridden at install time.

@@ -4,6 +4,18 @@ The Summer '26 theme in one line: **security defaults flipped from permissive to
 
 ---
 
+## 2026-08-26 · An on-by-default telemetry channel in Salesforce's own developer tooling — and a week where "off" could not be trusted (cross-link)
+
+The `salesforce-development` Claude Code plugin enabled **usage telemetry by default** in 1.11.0 (2026-08-14) and fixed four things about it in 1.12.0 (2026-08-21) — including that `telemetry off` **left already-buffered data on disk** and that the command **reported success even when it could not change state**. **The governance point:** an opt-out is a control only if it is verifiable, and this one was neither purging nor reporting failure for seven days. Two further facts belong in a data-flow review: the plugin's `machine_id` **reuses the `sf` CLI's `CLIID`** so the two telemetry streams correlate, and while buffered records carry only a coarse `org_bucket`, one event shape (**UIP / O11y `sf_a4dInstrumentation`**) carries the **raw org ID** at transmit. Hard-off is `SF_DISABLE_TELEMETRY` or `DO_NOT_TRACK`. Full entry → [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-26--gap-check--salesforces-claude-code-plugin-turned-usage-telemetry-on-by-default-then-shipped-four-fixes-to-it-a-week-later).
+
+---
+
+## 2026-08-25 · Winter '27 gives DSAR policy a metadata type that DX cannot deploy (cross-link)
+
+SDR's nightly coverage regeneration added **`DsarPolicy`** to the v68 roster on **2026-08-25 22:08 UTC**, marked ❌ *"Not supported, but support could be added."* DSAR — **Data Subject Access Request** — is the GDPR/CCPA right to access, transfer or erase personal data; the `DsarPolicy` object has existed since API 50.0 in Privacy Center, and what is new is the Winter '27 **metadata type**. **The governance point:** a privacy control that has a metadata type but no source-format DX support cannot be version-controlled, reviewed in a pull request, or promoted sandbox → production — so the org's privacy configuration has no auditable source of truth and drifts per-org. `ApptBookingConfig` arrived in the same regeneration, also ❌. Full entry → [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-25--sdr-1330-adds-a-deploy-level-notification-channel--and-no-sf-channel-has-carried-an-sdr-release-for-seven-days).
+
+---
+
 ## 2026-08-25 · "Which CLI am I running?" does not answer "am I patched?" — `sf` pins its security fixes in a shrinkwrap (cross-link)
 
 `@salesforce/cli` publishes an `npm-shrinkwrap.json` that pins every dependency exactly, so caret ranges in plugin manifests never resolve forward at install time. **The governance point:** a patch level in a Salesforce CLI is a property of the CLI version alone, fixed by Salesforce's lockfile — not of when your image was built. `sf` `latest` **2.148.3** carries the SDR zip-slip fix (13.0.1) and **not** the TOCTOU symlink fix (13.1.1), which is `latest-rc` only as of 2026-08-25. Treat the CLI version as an auditable control and record it; do not infer patch state from an install date. Full entry → [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-25--sf-publishes-an-npm-shrinkwrapjson--the-clis-dependency-tree-is-pinned-exactly-and-three-of-this-radars-reachability-calls-were-wrong).

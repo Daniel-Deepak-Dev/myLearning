@@ -4,6 +4,52 @@ Newest entries at the top. Data 360 ships **monthly**, not per-seasonal-release 
 
 ---
 
+## 2026-08-25 · Salesforce deletes all seven `sf data360` skills — the catalogue shrinks for the first time, and the pinned install ref still serves them
+
+**What changed.** `forcedotcom/sf-skills` **1.42.0** removes the seven `data360-*` skills that shelled out to the unofficial community `sf data360` CLI plugin. Commit `0851d45`, *"feat: Removing 7 data360-\* skills @W-23980880@"* — 53 files, **+16 / −3,287**. Nothing was added in its place.
+
+- **The catalogue shrinks: 164 → 157 public skills.** Every release in this radar's record until now only grew.
+- **Deleted:** `data360-activate`, `data360-connect`, `data360-harmonize`, `data360-orchestrate`, `data360-prepare`, `data360-query`, `data360-segment`.
+- **Survived:** `data360-schema-get` and `data360-code-extension-generate` — the only two that never issued `sf data360`.
+- **The mapping is exact.** Those seven carried all **164** `sf data360` invocations; the string now appears **zero** times repo-wide.
+- **The removal cleaned up after itself.** `dx-app-analytics-query` and `platform-dataspace-access-configure` lost the `relatedSkills` entries and delegation lines that pointed at the deleted family.
+
+```mermaid
+flowchart LR
+  subgraph B["1.41.0 — 9 data360-* skills"]
+    B1["7 skills:<br/>activate · connect · harmonize<br/>orchestrate · prepare · query · segment"] --> BP["<b>sf data360</b><br/>Jaganpro/sf-cli-plugin-data360<br/>MIT · 3 stars · not on npm"]
+    B2["data360-schema-get<br/>data360-code-extension-generate"] --> BF["first-party:<br/>plugin-data-code-extension<br/>datacustomcode (Python)"]
+  end
+  subgraph A["1.42.0 — 2 data360-* skills"]
+    A2["data360-schema-get<br/>data360-code-extension-generate"] --> AF["first-party (unchanged)"]
+  end
+  B1 -. "deleted 2026-08-25" .-> X["∅ no skill for ingestion,<br/>harmonization, segmentation,<br/>activation, orchestration"]
+  B -.-> A
+```
+
+**Why it matters.** The 08-17 entry recorded that Salesforce's first-party Data 360 skill path bottomed out in a 3-star personal repository. The resolution was withdrawal, not adoption.
+
+- **The surface was cleared, not filled.** The 08-19 announcement put prebuilt Data 360 Skills at *"GA targeted August 2026"* and ships them **with the hosted Data 360 MCP Server** — which has not moved since 2026-07-02, 55 days.
+- **As of today an org has no Salesforce-published skill** for Data 360 ingestion, harmonization, segmentation, activation or orchestration. Six days of August remain.
+
+**Gotchas:**
+- **The catalogue was edited and its install ref was not.** `plugins/builder/salesforce-development/catalog/discovery.json` now reads `counts.public: 157` and lists only the two survivors, while `publicRelease.releaseRef` stays **`"1.41.0"`** and `commit` stays `32bf7846b96d4fcb1b2f5c7c06c09a1d9b3cea03`. The guarded add flow installs from a tag whose tree still contains all seven.
+- **`manifestSha256` moved and `commit` did not** — `4406b577…` → `46326cf9…` in that same commit. The integrity hash now describes a manifest that disagrees with the ref it names.
+- **A 1.41.0-era install carries dangling delegations.** At that tag `platform-dataspace-access-configure` still routes *"the request is about data ingestion/streams"* → `data360-prepare`, and `dx-app-analytics-query` still routes Data Cloud SQL → `data360-query`. Neither target is addable any more.
+- **The surviving Code Extension skill still prints a package name that does not exist.** `sf plugins install @salesforce/plugin-data-codeextension` appears **4 times** in `data360-code-extension-generate/references/` — unchanged since 08-17. The real package is `@salesforce/plugin-data-code-extension`.
+- **One unrelated skill still parses stderr from the withdrawn plugin.** `agentforce-architecture-analyze/scripts/sf_cli.py:115` suppresses `Warning: @gthoppae/sf-cli-plugin-data360 is a linked ESM module`, so the community plugin is still assumed installable on a developer's machine.
+- **The licence split is unchanged.** `@salesforce/afv-skills` 1.42.0 still declares `CC-BY-NC-4.0` — a 29th consecutive version — against the Apache-2.0 `LICENSE.txt` in its own tarball.
+
+**Relevant to:** **Admin** — any enablement runbook that told a user to add a `data360-*` skill now has a step that resolves to nothing, and the plugin's `overview` / `domain` listings drop seven entries; **Developer** — seven skills' worth of `sf data360` guidance is gone, and the one surviving install command still names a non-existent npm package; **Architect** — the first-party Data 360 agent-skill surface is two skills, and the announced replacement is a hosted server still marked Developer Preview.
+
+**Study action:** `npm pack @salesforce/afv-skills@1.41.0` and `@1.42.0`, unpack both, then run `grep -rl "sf data360" package/skills | wc -l` in each — 7 against 0. Then open `catalog/discovery.json` on `main` and confirm `"public": 157` sits directly above `"releaseRef": "1.41.0"`.
+
+**Status:** Shipped — `forcedotcom/sf-skills` **1.42.0**; commit `0851d45` **2026-08-25 10:14:55 UTC**, release commit `49064f7` at 10:15:25, npm `@salesforce/afv-skills` 1.42.0 at **10:15:39 UTC**. Verified against both npm tarballs and a shallow clone at **2026-08-26 03:40 UTC**. No Salesforce announcement, release note or doc page accompanies it.
+
+**Sources:** [commit `0851d45` — Removing 7 data360-* skills](https://github.com/forcedotcom/sf-skills/commit/0851d45f78fdfa511bda12446c8cbe7c83c0d352) · [`forcedotcom/sf-skills`](https://github.com/forcedotcom/sf-skills) · [npm `@salesforce/afv-skills`](https://www.npmjs.com/package/@salesforce/afv-skills) · [Expanding Headless 360: Enterprise Capabilities](https://www.salesforce.com/news/stories/expanding-headless-360-enterprise-capabilities/)
+
+---
+
 ## 2026-08-21 · The promised "prebuilt Data 360 Skills" still have no artifact — a verified negative (cross-link)
 
 The 08-19 announcement put **prebuilt Data 360 Skills at GA "targeted August 2026"**. Checked at **2026-08-22 03:00 UTC** against `sf-skills` **1.41.0** — the release that added 26 skills the previous afternoon:
@@ -51,6 +97,8 @@ Salesforce's 2026-08-19 announcement puts a hosted **Data 360 MCP Server** (~200
 ---
 
 ## 2026-08-17 · The seven `data360-*` skills run on an unofficial community CLI plugin — and 1.39.0 deleted the line that said so
+
+> **Correction (2026-08-26):** this entry described seven shipping skills and asked how Salesforce would resolve the provenance gap. It resolved it by **deleting all seven** in `sf-skills` **1.42.0** (2026-08-25 10:14:55 UTC). The dependency analysis below still holds and is what the removal confirms — but the skills it describes no longer exist. Full entry: [2026-08-25](#2026-08-25--salesforce-deletes-all-seven-sf-data360-skills--the-catalogue-shrinks-for-the-first-time-and-the-pinned-install-ref-still-serves-them).
 
 **What changed.** At `sf-skills` **1.38.0**, all seven `data360-*` skills carried a top-level `compatibility:` string naming their prerequisite. **1.39.0** (2026-08-17) removed it from all seven; `compatibility` now appears **zero** times repo-wide. The dependency did not go away — `data360-query` alone still issues `sf data360 …` twelve times.
 

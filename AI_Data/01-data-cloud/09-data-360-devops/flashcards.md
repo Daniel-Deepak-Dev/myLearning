@@ -51,3 +51,9 @@ A: A Developer Preview open-source server for connecting a coding agent to Data 
 
 Q: Which languages does Code Extension support?
 A: Python only so far. Salesforce says other capabilities and languages will follow.
+
+Q: A runbook tells you to add the `data360-prepare` Agent Skill to configure ingestion. What happens today?
+A: Nothing — it no longer exists. `forcedotcom/sf-skills` **1.42.0** (2026-08-25) deleted all seven `data360-*` skills that drove the unofficial `sf data360` CLI plugin. Only `data360-schema-get` and `data360-code-extension-generate` remain, so **there is no Salesforce-published skill for Data 360 ingestion, harmonization, segmentation, activation or orchestration.** The announced replacement — prebuilt Skills shipping with the hosted Data 360 MCP Server — has no artifact: `forcedotcom/d360-mcp-server` has not moved since 2026-07-02.
+
+Q: `data360-code-extension-generate` tells you to run `sf plugins install @salesforce/plugin-data-codeextension`. Why does it fail?
+A: That package does not exist. The real one is **`@salesforce/plugin-data-code-extension`** — one more hyphen — currently 1.4.1. The wrong name appears **four times** in the skill's `references/`, including in both "Plugin not found" troubleshooting tables, and it survived the 1.42.0 cleanup unchanged.
