@@ -31,7 +31,7 @@ The second decision is **as whom**. A token names a user, and everything the tok
 
 ## 2026 currency
 
-Two password-only mechanisms are ending on separate clocks: the **OAuth username-password flow in Winter '27** (a Summer '26 Release Update, scoped to connected apps, with a test run available now) and **SOAP `login()` for API 31.0–64.0 in Summer '27**. Both mint a session from a password alone, which is what MFA enforcement made untenable → [07-security · 17](../07-security-and-sharing/17-authentication-and-mfa.md). The migration Salesforce names for both is the same: **an external client app with JWT** → [16](16-external-client-apps.md). Dated detail: [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
+Two password-only mechanisms are ending on separate clocks: the **OAuth username-password flow in Winter '27** (a Summer '26 Release Update, scoped to connected apps, with a test run available now) and **SOAP `login()` for API 31.0–64.0 in Summer '27**. Both mint a session from a password alone, which is what MFA enforcement made untenable → [07-security · 17](../07-security-and-sharing/17-authentication-and-mfa.md). The migration Salesforce names for both is the same: **an external client app with JWT** → [16](16-external-client-apps.md). Dated detail: [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
 
 ## Gotchas
 

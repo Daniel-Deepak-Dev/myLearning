@@ -44,7 +44,7 @@ public class ArchiveOrders implements Database.Batchable<sObject>, Database.Stat
 
 ## 2026 currency
 
-Batch is not exempt from the 67.0 security flip. The `QueryLocator` built in `start()` runs in **user mode** by default like everything else, which for a nightly job running as a low-privilege automation user means the scope quietly shrinks rather than erroring — the job succeeds, having processed a subset. Decide the mode explicitly in `start()` (`WITH SYSTEM_MODE`, or the `AccessLevel` argument on `Database.getQueryLocatorWithBinds`) and treat an unqualified locator in a scheduled job as a review finding. Background: [10](10-apex-security-user-mode-and-fls.md) and [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
+Batch is not exempt from the 67.0 security flip. The `QueryLocator` built in `start()` runs in **user mode** by default like everything else, which for a nightly job running as a low-privilege automation user means the scope quietly shrinks rather than erroring — the job succeeds, having processed a subset. Decide the mode explicitly in `start()` (`WITH SYSTEM_MODE`, or the `AccessLevel` argument on `Database.getQueryLocatorWithBinds`) and treat an unqualified locator in a scheduled job as a review finding. Background: [10](10-apex-security-user-mode-and-fls.md) and [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
 
 ## Gotchas
 

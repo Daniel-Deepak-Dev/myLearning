@@ -44,7 +44,7 @@ if (Limits.getQueries() < Limits.getLimitQueries() - 5
 
 ## 2026 currency
 
-The limit map itself is stable — nothing in it moved at 67.0. What moved is the **execution context** it applies to: SOQL now runs in user mode by default, so a query returns only rows the running user can see and consumes only those against your 50,000. The same code can therefore draw a different amount of budget in two orgs with different sharing models, which makes limit testing as an admin genuinely misleading. Detail in [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
+The limit map itself is stable — nothing in it moved at 67.0. What moved is the **execution context** it applies to: SOQL now runs in user mode by default, so a query returns only rows the running user can see and consumes only those against your 50,000. The same code can therefore draw a different amount of budget in two orgs with different sharing models, which makes limit testing as an admin genuinely misleading. Detail in [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
 
 ## Gotchas
 

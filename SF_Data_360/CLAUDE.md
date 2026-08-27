@@ -21,17 +21,21 @@ Template: [../_note-template.md](../_note-template.md).
 
 - **50 lines max.** No paragraph longer than two sentences.
 - **One table max. One code block max, 12 lines.**
-- **Metadata is a blockquote on line 3.** Never YAML frontmatter.
+- **Metadata is a blockquote on lines 3–4.** Never YAML frontmatter.
 - **Filenames carry no number.** Order lives in [INDEX.md](INDEX.md).
 
 ## Rules
 
+- **Status is derived, never typed.** Count unchecked `- [ ]` boxes in `## Gaps to close`: some → `🌱 N gaps open`, none → `✅ complete`.
+- **`Created` never changes. `Updated` changes on every edit.** Past 3 months without a touch, add `> ⏳ N months old — recheck against release notes`. Remove it when the note is updated.
+- **Every researched fact gets a `## Sources` line** with the date read. Salesforce domains trusted; anything else carries 🚩.
+- **`## History`** takes one dated line per feed.
 - **`Level` sets the gap ceiling.** Gaps may go one level up, never two. A `basic` note never gets a `deep` gap.
 - **Gaps stay on this topic.** Never a syllabus. Never another subject.
 - **Keep the user's own wording** in a `> **From my notes.**` callout. Correct it inline if it is wrong.
 - **Every link out gets a link back**, added in the same edit. That includes links into `SF_core/` and `SF_Agentforce/`.
-- **Unsure of a fact? Mark it 🚩.** For release-dependent facts, check [../AI_Data/05-release-radar/data-360.md](../AI_Data/05-release-radar/data-360.md) first. Never draft release facts from recall.
+- **Unsure of a fact? Mark it 🚩.** For release-dependent facts, check [../RELEASE-RADAR/data-360.md](../RELEASE-RADAR/data-360.md) first. Never draft release facts from recall.
 - **Naming:** the product is **Data 360**. Write Data 360, not Data Cloud. Mention the old name once where a note would otherwise be unsearchable.
 - **New topic** → new file, plus a row in [INDEX.md](INDEX.md) at the right point in the path.
-- **New jargon** goes in [../AI_Data/GLOSSARY.md](../AI_Data/GLOSSARY.md). One glossary for all vaults.
+- **New jargon** goes in [../GLOSSARY.md](../GLOSSARY.md). One glossary for all vaults.
 - **Does not route cleanly?** One dated bullet in [_inbox.md](_inbox.md). Never let filing friction stop capture.

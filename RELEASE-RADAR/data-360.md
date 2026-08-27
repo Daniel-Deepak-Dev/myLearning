@@ -208,7 +208,7 @@ The consequence for agents is the interesting one. An Apex-backed agent action c
 
 **Status:** Announced in the **Winter '27** release notes (live as of **2026-08-09**); documented in the Data 360 Query Guide as the recommended Apex query path. Verify availability against your org's release before building on it.
 
-**Sources:** [Query Data 360 Data with Apex](https://developer.salesforce.com/docs/data/data-cloud-query-guide/guide/dc-apex-query.html) · [Data 360 In Apex — Apex Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/DataCloudInApex.htm) · [Data 360 SQL Reference](https://developer.salesforce.com/docs/data/data-cloud-query-guide/references/dc-sql-reference/syntax.html) · [Salesforce Winter '27 Release Notes](https://help.salesforce.com/s/articleView?id=release-notes.salesforce_release_notes.htm&language=en_US) · study-base cross-ref: [SQL from Apex](../01-data-cloud/03-data-modeling-dso-dlo-dmo/notes.md)
+**Sources:** [Query Data 360 Data with Apex](https://developer.salesforce.com/docs/data/data-cloud-query-guide/guide/dc-apex-query.html) · [Data 360 In Apex — Apex Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/DataCloudInApex.htm) · [Data 360 SQL Reference](https://developer.salesforce.com/docs/data/data-cloud-query-guide/references/dc-sql-reference/syntax.html) · [Salesforce Winter '27 Release Notes](https://help.salesforce.com/s/articleView?id=release-notes.salesforce_release_notes.htm&language=en_US) · study-base cross-ref: [SQL from Apex](../SF_Data_360/INDEX.md)
 
 ---
 

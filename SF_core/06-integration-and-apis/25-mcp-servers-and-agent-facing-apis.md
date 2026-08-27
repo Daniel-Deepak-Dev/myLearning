@@ -2,7 +2,7 @@
 
 > Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 13
 
-**Scope:** Exposing org capability to an AI client over the Model Context Protocol, and the security properties that make it defensible. The agent side — Agentforce, A2A, cross-vendor governance — is [AI_Data](../../AI_Data/02-salesforce-ai/11-agent-fabric-and-interop/notes.md).
+**Scope:** Exposing org capability to an AI client over the Model Context Protocol, and the security properties that make it defensible. The agent side — Agentforce, A2A, cross-vendor governance — is [SF_Agentforce](../../SF_Agentforce/INDEX.md).
 
 ## Core idea
 
@@ -27,7 +27,7 @@ What makes this different from wrapping the REST API yourself is the sentence th
 
 ## 2026 currency
 
-Standard and custom hosted servers are **GA**; the developer-facing servers around them are not — Salesforce DX MCP and Metadata API Context MCP are **Beta**, Data 360 MCP is **Developer Preview** → [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md). The framing to carry into a design conversation is **Headless 360**: every capability reachable as an API, an MCP tool or a CLI command, by a human, an app or an autonomous agent. The honest limitation to state alongside it is the missing M2M flow — an unattended agent needs a user identity, so "the agent runs as a service account" is not currently an available answer.
+Standard and custom hosted servers are **GA**; the developer-facing servers around them are not — Salesforce DX MCP and Metadata API Context MCP are **Beta**, Data 360 MCP is **Developer Preview** → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md). The framing to carry into a design conversation is **Headless 360**: every capability reachable as an API, an MCP tool or a CLI command, by a human, an app or an autonomous agent. The honest limitation to state alongside it is the missing M2M flow — an unattended agent needs a user identity, so "the agent runs as a service account" is not currently an available answer.
 
 ## Gotchas
 
@@ -61,4 +61,4 @@ A: Event Monitoring, filtering `API_CLIENT_CATEGORY` on `SALESFORCE_HOSTED_MCP`.
 - [16 · External Client Apps](16-external-client-apps.md) — the prerequisite, not an alternative
 - [18 · Apex REST & custom endpoints](18-apex-rest-and-custom-endpoints.md) — the endpoint a tool is often made of
 - [19 · External Services, OpenAPI & the API Catalog](19-external-services-openapi-and-the-api-catalog.md) — the registration path from Apex to agent action
-- [AI_Data · Agent Fabric & cross-vendor interop](../../AI_Data/02-salesforce-ai/11-agent-fabric-and-interop/notes.md) — governing MCP traffic across vendors
+- [SF_Agentforce · Agent Fabric & cross-vendor interop](../../SF_Agentforce/INDEX.md) — governing MCP traffic across vendors

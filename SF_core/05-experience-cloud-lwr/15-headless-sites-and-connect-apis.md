@@ -17,7 +17,7 @@
 
 ## 2026 currency
 
-Under the **Headless 360** theme every capability is reachable as an API, which is what makes a fully decoupled customer site practical → [AI_Data · Headless 360](../../AI_Data/05-release-radar/developer-tooling-and-apis.md). The trade sharpened in Summer '26: LWR's own rendering advantage shrank when **Experience Delivery was slated for discontinuation**, so "we lose SSR by going headless" is no longer the argument against it — an LWR site has no server-side rendering to lose → [16](16-site-performance-caching-and-seo.md). What you still take on is caching and sitemaps.
+Under the **Headless 360** theme every capability is reachable as an API, which is what makes a fully decoupled customer site practical → [SF_Agentforce · Headless 360](../../RELEASE-RADAR/developer-tooling-and-apis.md). The trade sharpened in Summer '26: LWR's own rendering advantage shrank when **Experience Delivery was slated for discontinuation**, so "we lose SSR by going headless" is no longer the argument against it — an LWR site has no server-side rendering to lose → [16](16-site-performance-caching-and-seo.md). What you still take on is caching and sitemaps.
 
 ## Gotchas
 

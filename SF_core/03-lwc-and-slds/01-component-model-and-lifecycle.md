@@ -41,7 +41,7 @@ export default class OrderPanel extends LightningElement {
 
 ## 2026 currency
 
-**LWC Component Preview is GA at 67.0** — a single component renders in the browser or in VS Code without a full page reload, which changes the lifecycle debugging loop from *deploy, navigate, refresh* to something closer to a normal front-end workflow. 67.0 also makes hot module reloading faster and more memory-efficient, and the VS Code extension has been renamed from *Local Dev* to *Live Preview*. The install and CLI side of that belongs to [21 · Local dev & Lightning Dev Server](21-local-dev-and-lightning-dev-server.md); this note only cares that previewing a component in isolation is now a supported way to watch its hooks fire. Release context: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
+**LWC Component Preview is GA at 67.0** — a single component renders in the browser or in VS Code without a full page reload, which changes the lifecycle debugging loop from *deploy, navigate, refresh* to something closer to a normal front-end workflow. 67.0 also makes hot module reloading faster and more memory-efficient, and the VS Code extension has been renamed from *Local Dev* to *Live Preview*. The install and CLI side of that belongs to [21 · Local dev & Lightning Dev Server](21-local-dev-and-lightning-dev-server.md); this note only cares that previewing a component in isolation is now a supported way to watch its hooks fire. Release context: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 ## Gotchas
 

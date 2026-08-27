@@ -8,7 +8,7 @@
 
 ### Q1 · Federated everything
 
-**Level:** Complex · **Probes:** [Zero Copy & BYOL](../../AI_Data/01-data-cloud/06-zero-copy-byol/notes.md) · [Identity Resolution](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md) · [Ingestion](../../AI_Data/01-data-cloud/02-ingestion/notes.md)
+**Level:** Complex · **Probes:** [Zero Copy & BYOL](../../SF_Data_360/INDEX.md) · [Identity Resolution](../../SF_Data_360/INDEX.md) · [Ingestion](../../SF_Data_360/INDEX.md)
 
 **Scenario.** A retail group's data team spent four months federating their Snowflake estate into Data 360 via AWS Glue rather than ingesting any of it — the reasoning was sound at the time: 40TB of customer and transaction data, a hard "no duplication" position from their data governance board, and no appetite for an ETL programme. It works. Now phase two begins: identity resolution across Snowflake customer records plus the CRM plus a loyalty platform, segments for activation, and a service agent grounding on unified profiles. Nothing in phase two is behaving as designed, and the data team's position is that Data 360 was mis-sold.
 
@@ -51,7 +51,7 @@
 
 ### Q2 · The word in brackets
 
-**Level:** Medium · **Probes:** [Zero Copy & BYOL](../../AI_Data/01-data-cloud/06-zero-copy-byol/notes.md)
+**Level:** Medium · **Probes:** [Zero Copy & BYOL](../../SF_Data_360/INDEX.md)
 
 **Scenario.** You are reviewing a colleague's proposal the day before it goes to a client. The architecture diagram shows Data 360 federating the client's **Microsoft Fabric OneLake** estate as the primary grounding source for a customer-service agent. It is drawn as a solid line, described as "zero-copy federation to OneLake", and the delivery plan has a go-live date twelve weeks out with a payment milestone attached to it. Your colleague has a working demo.
 
@@ -92,7 +92,7 @@
 
 ### Q3 · The agent is slow on Monday mornings
 
-**Level:** Medium · **Probes:** [Zero Copy & BYOL](../../AI_Data/01-data-cloud/06-zero-copy-byol/notes.md) · [Ingestion](../../AI_Data/01-data-cloud/02-ingestion/notes.md)
+**Level:** Medium · **Probes:** [Zero Copy & BYOL](../../SF_Data_360/INDEX.md) · [Ingestion](../../SF_Data_360/INDEX.md)
 
 **Scenario.** A B2B client's service agent grounds partly on order history federated from BigQuery. Response times are fine most of the week — under two seconds — but between 8am and 10am on Mondays the agent takes eight to twelve seconds and occasionally times out. The Agentforce side shows nothing unusual. The client has opened a case with Salesforce and copied you in, asking you to escalate it.
 
@@ -134,7 +134,7 @@
 
 ### Q4 · Zero copy, zero cost
 
-**Level:** Complex · **Probes:** [Zero Copy & BYOL](../../AI_Data/01-data-cloud/06-zero-copy-byol/notes.md) · [Insights & segmentation](../../AI_Data/01-data-cloud/05-insights-segmentation/notes.md) · [Identity Resolution](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md)
+**Level:** Complex · **Probes:** [Zero Copy & BYOL](../../SF_Data_360/INDEX.md) · [Insights & segmentation](../../SF_Data_360/INDEX.md) · [Identity Resolution](../../SF_Data_360/INDEX.md)
 
 **Scenario.** Four months into a Data 360 programme, the client's finance director calls a review. Three costs have overshot: their Snowflake bill is up 60%, the Data 360 profile count is 1.9× the estimate, and Marketing Cloud activation volumes are triple what was forecast. The original business case said "zero-copy architecture — no data duplication cost." The finance director's opening line is that they were told this would be cheaper.
 

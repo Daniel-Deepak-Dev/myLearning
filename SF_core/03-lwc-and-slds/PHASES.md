@@ -2,7 +2,7 @@
 
 24 topics across 3 runs — **all complete ✅**, 24 of 24 written. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
 
-> Currency anchor for this area: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md); for **09** specifically, [trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
+> Currency anchor for this area: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md); for **09** specifically, [trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
 
 > **Area constraint.** Aura and Visualforce are **out of scope**. They may be named only in a migration or coexistence sentence — never as an approach. The old notes contain several Aura-flavoured pages ([../_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md) marks them ⛔); skip those outright.
 
@@ -128,7 +128,7 @@ Shares a run with the Apex closeout — see [02-apex-and-triggers/PHASES.md](../
 **A 25 · *LWC host surfaces & the `js-meta.xml` targets contract* was considered and declined** — 11 already owns `.js-meta.xml` as "the contract". The one genuinely new surface, LWC in Lightning dashboards, went into 22.
 
 **🆕 — research before writing**
-- **19** Custom Lightning Types — how typed agent action results render on desktop vs mobile. Cross-link [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md); don't duplicate the agent side.
+- **19** Custom Lightning Types — how typed agent action results render on desktop vs mobile. Cross-link [SF_Agentforce/](../../SF_Agentforce/INDEX.md); don't duplicate the agent side.
 - **20** Offline LWC — offline GraphQL, draft records, and the real constraint list.
 - **21** `sf lightning dev app|site` — the hot-reload workflow. Overlaps [09-devops · 24](../09-devops-sfdx-and-release-management/INDEX.md); this note owns the component-authoring angle, that one owns the tooling install.
 

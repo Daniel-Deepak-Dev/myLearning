@@ -25,7 +25,7 @@
 
 ## 2026 currency
 
-This surface arrived quickly and is still moving: generation matured through Winter '26 and Spring '26, and **Summer '26 extended natural-language editing to screen flows**, which had been the gap — you could generate a screen flow but not iterate on one conversationally. Salesforce's own engineering write-up on building the feature is worth reading for the framing rather than the numbers: the win it claims is authoring *time*, and nothing in it claims correctness. That is the right way to hold the whole category. The practical case where it genuinely changes a project's economics is post-migration consolidation — a pile of one-to-one converted Workflow Rules is exactly the tedious, well-specified, low-ambiguity editing this is good at. → [18](18-migrate-to-flow-and-legacy-retirement.md), [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md)
+This surface arrived quickly and is still moving: generation matured through Winter '26 and Spring '26, and **Summer '26 extended natural-language editing to screen flows**, which had been the gap — you could generate a screen flow but not iterate on one conversationally. Salesforce's own engineering write-up on building the feature is worth reading for the framing rather than the numbers: the win it claims is authoring *time*, and nothing in it claims correctness. That is the right way to hold the whole category. The practical case where it genuinely changes a project's economics is post-migration consolidation — a pile of one-to-one converted Workflow Rules is exactly the tedious, well-specified, low-ambiguity editing this is good at. → [18](18-migrate-to-flow-and-legacy-retirement.md), [SF_Agentforce/](../../SF_Agentforce/INDEX.md)
 
 ## Gotchas
 
@@ -59,4 +59,4 @@ A: Because there the description is the interface the reasoning engine reads to 
 
 - [23 · Flows as Agentforce actions](23-flows-as-agentforce-actions.md) — where a generated description stops being documentation
 - [15 · Flow testing & debugging](15-flow-testing-and-debugging.md) — Troubleshoot Flow Errors with Agentforce, the Beta half of this story
-- [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md) — the agent platform these features are built on
+- [SF_Agentforce/](../../SF_Agentforce/INDEX.md) — the agent platform these features are built on

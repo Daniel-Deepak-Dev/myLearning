@@ -42,5 +42,5 @@ Public, partner and customer sites built **LWR-first**. **20 topics** · phases 
 - **10** depends on [06-integration · 15 OAuth flows](../06-integration-and-apis/15-oauth-flows-and-authorization.md) and [07-security · 19 SSO](../07-security-and-sharing/19-sso-saml-oidc-and-identity.md).
 - **15** depends on [06-integration · 08 UI API](../06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md).
 - **18** depends on [09-devops · 05 Metadata API](../09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md) — and on **02**, which owns the two bundle types.
-- **19** is a seam into [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md).
+- **19** is a seam into [SF_Agentforce/](../../SF_Agentforce/INDEX.md).
 - **11 is the note the other eleven exist to make possible.** A site is a data surface before it is a user experience, and the March 2026 campaign is the reason that sentence is in an INDEX rather than a footnote.

@@ -8,7 +8,7 @@
 
 ### Q1 · <Short title naming the tension, not the topic>
 
-**Level:** Medium · **Probes:** [<Note>](../../AI_Data/<path>/notes.md) · [<Note>](../../SF_core/<path>.md)
+**Level:** Medium · **Probes:** [<Note>](../../SF_Agentforce/<note>.md) · [<Note>](../../SF_core/<path>.md)
 
 **Scenario.** <4–8 lines. Named objects, real volumes, a stated SLA or budget. End on the
 constraint that makes the obvious fix illegal — that constraint is the question.>
@@ -48,7 +48,7 @@ constraint that makes the obvious fix illegal — that constraint is the questio
 RULES — do not remove
 1. Ground every answer in the linked notes. Never draft from recall — SF_core/_template.md rule 2.
    If the note does not support a claim, flag it 🚩 rather than invent it.
-2. Link out, never restate. This vault holds questions; AI_Data/ and SF_core/ hold the knowledge.
+2. Link out, never restate. This vault holds questions; SF_core/, SF_Agentforce/ and SF_Data_360/ hold the knowledge.
 3. `**The trap.**` is mandatory and is the point of the item. If there is no plausible wrong
    answer, the scenario is too easy — add a constraint or delete it.
 4. No easy questions. "What is X?" is a flashcard and already exists in the other vaults.

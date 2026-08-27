@@ -41,7 +41,7 @@ for (Opportunity o : Trigger.new) {
 
 ## 2026 currency
 
-The patterns are unchanged, but user-mode SOQL gives one of them a new failure mode. A bulk query now returns only the rows the running user can see, so `accounts.get(o.AccountId)` can come back null because of **sharing**, not because of missing data — for the same code, the same records, and a different user. Null-handling in a bulk lookup has therefore stopped being defensive coding and become a genuine branch you need a decision for: skip the record, `addError()` it, or elevate that one query with `AccessLevel.SYSTEM_MODE` and document why. Context in [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
+The patterns are unchanged, but user-mode SOQL gives one of them a new failure mode. A bulk query now returns only the rows the running user can see, so `accounts.get(o.AccountId)` can come back null because of **sharing**, not because of missing data — for the same code, the same records, and a different user. Null-handling in a bulk lookup has therefore stopped being defensive coding and become a genuine branch you need a decision for: skip the record, `addError()` it, or elevate that one query with `AccessLevel.SYSTEM_MODE` and document why. Context in [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
 
 ## Gotchas
 

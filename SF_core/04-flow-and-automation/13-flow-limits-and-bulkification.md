@@ -32,7 +32,7 @@ Flow spends the same per-transaction budget as Apex, out of the same pot, in the
 
 ## 2026 currency
 
-The removal of the element cap is three years old and still not in general circulation, which makes it the most useful thing to know here. Summer '26 adds two levers that reduce element count directly: **Formula Mode and Transform Mode inside the action property panel** collapse a resource plus an element into one configuration, and **a configurable batch size of 1–200 on schedule-triggered flows** finally lets you trade throughput for headroom the way `Database.executeBatch(job, scopeSize)` does in Apex → [06](06-scheduled-and-autolaunched-flows.md). The **Element Error Rate column** on the Flows list view is the first native way to find which element is actually failing in production rather than guessing. → [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md)
+The removal of the element cap is three years old and still not in general circulation, which makes it the most useful thing to know here. Summer '26 adds two levers that reduce element count directly: **Formula Mode and Transform Mode inside the action property panel** collapse a resource plus an element into one configuration, and **a configurable batch size of 1–200 on schedule-triggered flows** finally lets you trade throughput for headroom the way `Database.executeBatch(job, scopeSize)` does in Apex → [06](06-scheduled-and-autolaunched-flows.md). The **Element Error Rate column** on the Flows list view is the first native way to find which element is actually failing in production rather than guessing. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 
 ## Gotchas
 

@@ -8,7 +8,7 @@
 
 ### Q1 · The agent knows the customer, badly
 
-**Level:** Medium · **Probes:** [RAG on Platform](../../AI_Data/01-data-cloud/08-rag-on-platform/notes.md) · [Identity Resolution](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md)
+**Level:** Medium · **Probes:** [RAG on Platform](../../SF_Data_360/INDEX.md) · [Identity Resolution](../../SF_Data_360/INDEX.md)
 
 **Scenario.** A retail client runs a Service agent that answers "what do we know about this customer?" for tier-1 reps. It is grounded on a search index built over ingested profile data — contact details, order history, support history, loyalty tier. Reps complain it is slow (3–5 seconds), and roughly one answer in six is missing recent orders that are visibly present in the CRM record open on the next tab. The client's proposed fix, already scoped and costed, is to increase Top-N on the retriever and add a re-ranking step.
 
@@ -21,7 +21,7 @@
 **Then work through.**
 - **The wrong primitive.** Vector search is for unstructured content where you do not know which document holds the answer. "What do we know about this customer" is a known-shape lookup against a known key. A **data graph** serves it precomputed and denormalized in **milliseconds**, exactly and without ranking. Semantic search over structured data is slower, fuzzier and costlier — swapping the source fixes the latency complaint outright, not incrementally.
 - **Top-N cannot retrieve what is not indexed.** One-in-six missing recent orders is a freshness or completeness failure upstream. Re-ranking reorders candidates; it does not create them. Spending here buys nothing on the accuracy complaint.
-- **Where the missing orders actually come from.** Two candidates, and they are distinguishable. If the order data arrives on a **scheduled** stream, the agent is reading a stale copy — the fix is [Accelerated Data Ingest](../../AI_Data/01-data-cloud/02-ingestion/notes.md), GA and the default for CRM. If ingestion is current, suspect a **fragmented profile**: under-matching split one person across several unified profiles, so the agent sees a fraction of the history and reports it confidently.
+- **Where the missing orders actually come from.** Two candidates, and they are distinguishable. If the order data arrives on a **scheduled** stream, the agent is reading a stale copy — the fix is [Accelerated Data Ingest](../../SF_Data_360/INDEX.md), GA and the default for CRM. If ingestion is current, suspect a **fragmented profile**: under-matching split one person across several unified profiles, so the agent sees a fraction of the history and reports it confidently.
 - **How to tell them apart before spending anything.** Check the profile-count-to-source-row ratio for a customer that failed. Far above expectation means fragmentation. Then change one order in the source and time how long until the agent sees it — that isolates freshness.
 
 **The trap.** Accepting the framing that this is a retrieval-quality problem because the symptoms are retrieval-shaped. It is a source-choice problem plus a data-pipeline problem, and the proposed fix addresses neither. Worse, Top-N raises tokens and cost per action, so it makes the bill worse while the accuracy complaint survives.
@@ -49,7 +49,7 @@
 
 ### Q2 · The library says it is ready 🆕
 
-**Level:** Medium · **Probes:** [RAG on Platform](../../AI_Data/01-data-cloud/08-rag-on-platform/notes.md) · [Agent Script](../../AI_Data/02-salesforce-ai/07-agent-script/notes.md)
+**Level:** Medium · **Probes:** [RAG on Platform](../../SF_Data_360/INDEX.md) · [Agent Script](../../SF_Agentforce/INDEX.md)
 
 **Scenario.** You have scripted Data Library provisioning through the ADL Connect API so it runs in CI — create, upload, index, wire into the agent's `knowledge:` block. The pipeline polls the library's top-level `status` field and proceeds when it reports ready. It passes in CI. Roughly a third of deployments then produce an agent that answers every knowledge question with "I don't have information about that", and re-running the identical pipeline an hour later fixes it with no code change.
 
@@ -90,7 +90,7 @@
 
 ### Q3 · The question RAG cannot answer
 
-**Level:** Complex · **Probes:** [RAG on Platform](../../AI_Data/01-data-cloud/08-rag-on-platform/notes.md) · [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) · [Agent Script](../../AI_Data/02-salesforce-ai/07-agent-script/notes.md)
+**Level:** Complex · **Probes:** [RAG on Platform](../../SF_Data_360/INDEX.md) · [Custom Agent Actions](../../SF_Agentforce/INDEX.md) · [Agent Script](../../SF_Agentforce/INDEX.md)
 
 **Scenario.** An insurance client wants an agent to answer "am I covered for this?" from policy documents. You build it properly: ADL over the policy corpus, tuned chunking, citations back to source clauses. Testing looks good — answers are fluent, cite real clauses, and the SME panel approves the sample. In UAT, a customer asks about a claim scenario where coverage depends on a policy clause **and** their premium being current **and** the incident date falling inside the cover period. The agent cites the correct clause and states the customer is covered. They are not — the policy lapsed in March. Legal now wants the agent switched off.
 
@@ -104,7 +104,7 @@
 - **Split the question.** Two different problems wearing one sentence. *"What does my policy say about water damage"* is genuinely retrieval — unstructured, semantic, RAG is right. *"Is my policy in force and does this incident fall in the cover period"* is a lookup and a date comparison against live records. Retrieval cannot answer the second and cannot know it is missing it.
 - **What to build.** The eligibility decision goes in a **deterministic action** — invocable Apex or an autolaunched Flow reading live policy status, premium state and cover dates. Then use Agent Script's **Hybrid Reasoning** to make the control flow explicit: run the eligibility action first, branch on its result, and only let the model reason over retrieved clauses *within* a coverage outcome the code has already established. This is precisely the dial Agent Script exists to set — deciding which parts the LLM should be deciding at all.
 - **Why the model could not save itself here.** With only the clause in context, nothing signals absent information. An LLM will not spontaneously ask "is this policy current?" — that constraint was never in the prompt. The fix has to be structural.
-- **What the testing missed, and this is the transferable lesson.** The SME panel reviewed sample answers, which tests *fluency and citation*. It cannot catch a scenario class that was never in the sample. Multi-constraint eligibility cases needed to be an explicit test category — that is what [agent evaluations and Custom Scorers](../../AI_Data/02-salesforce-ai/09-observability-and-testing/notes.md) are for. A scorer asserting "did it verify policy status before answering coverage" would have failed this on day one.
+- **What the testing missed, and this is the transferable lesson.** The SME panel reviewed sample answers, which tests *fluency and citation*. It cannot catch a scenario class that was never in the sample. Multi-constraint eligibility cases needed to be an explicit test category — that is what [agent evaluations and Custom Scorers](../../SF_Agentforce/INDEX.md) are for. A scorer asserting "did it verify policy status before answering coverage" would have failed this on day one.
 - **What to tell Legal.** They are right to escalate, and the honest framing is that the agent is currently scoped to answer *what the policy says* and was allowed to answer *whether you are covered*. Narrow the scope now — including the action's description, so the agent stops selecting it for eligibility questions — and re-open with the deterministic path in place.
 
 **The trap.** Reaching for prompt engineering: add "always check policy status" to the instructions, or add status to the retrieved context. That leaves a **legal determination depending on a model choosing to comply**. It will hold in testing and fail on the phrasing nobody tried. When an answer has legal consequence, the constraint belongs in code, not in prose.
@@ -132,7 +132,7 @@
 
 ### Q4 · Triage in ninety seconds
 
-**Level:** Complex · **Probes:** [Landscape](../../AI_Data/02-salesforce-ai/01-landscape/notes.md) · [Ingestion](../../AI_Data/01-data-cloud/02-ingestion/notes.md) · [Observability & Testing](../../AI_Data/02-salesforce-ai/09-observability-and-testing/notes.md) · [Multi-Agent Orchestration](../../AI_Data/02-salesforce-ai/08-multi-agent-orchestration/notes.md)
+**Level:** Complex · **Probes:** [Landscape](../../SF_Agentforce/INDEX.md) · [Ingestion](../../SF_Data_360/INDEX.md) · [Observability & Testing](../../SF_Agentforce/INDEX.md) · [Multi-Agent Orchestration](../../SF_Agentforce/INDEX.md)
 
 **Scenario.** You are on a call with a client whose Service agent has been live for three weeks. Their complaint: "it hallucinates." That is the whole brief. Escalation rate is up, one rep has screenshotted an answer quoting a discount policy that was withdrawn last quarter, and the client's exec sponsor is asking whether they should move to a different model vendor. You have the call, not the org.
 

@@ -25,7 +25,7 @@ A permission set cannot grant what the licence does not include. Salesforce's ow
 
 ## 2026 currency
 
-Two 2026 shifts change licence reasoning rather than licence lists. **Salesforce Foundations is a $0 add-on** on the qualifying editions — free commercially, but it auto-provisions Data 360 and starts an Agentforce credit meter, so it changes the org's data and consumption posture without changing anyone's user licence → [01-admin · 18](../01-admin-and-declarative-platform/18-salesforce-foundations-and-org-strategy.md). And **Agentforce is metered in Flex Credits, not licensed per user** — an agent's *reach* is still governed by the licence and permissions of the user it runs as, which is the point [14](14-code-execution-context-and-security.md) develops. Credit mechanics live in [AI_Data/](../../AI_Data/README.md); do not duplicate them here.
+Two 2026 shifts change licence reasoning rather than licence lists. **Salesforce Foundations is a $0 add-on** on the qualifying editions — free commercially, but it auto-provisions Data 360 and starts an Agentforce credit meter, so it changes the org's data and consumption posture without changing anyone's user licence → [01-admin · 18](../01-admin-and-declarative-platform/18-salesforce-foundations-and-org-strategy.md). And **Agentforce is metered in Flex Credits, not licensed per user** — an agent's *reach* is still governed by the licence and permissions of the user it runs as, which is the point [14](14-code-execution-context-and-security.md) develops. Credit mechanics live in [SF_Agentforce/](../../SF_Agentforce/INDEX.md); do not duplicate them here.
 
 ## Gotchas
 

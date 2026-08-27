@@ -2,7 +2,7 @@
 
 > Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 17
 
-**Scope:** What changes about a pipeline when agents are the artefact and a model writes some of the code. **This note owns the review and governance discipline** — the tool surface and its blast radius are [13](13-dx-mcp-server-and-agent-driven-development.md), and the lifecycle with the `sf agent` command chain is [AI_Data · ADLC](../../AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md). Neither of those covers what happens at the pull request.
+**Scope:** What changes about a pipeline when agents are the artefact and a model writes some of the code. **This note owns the review and governance discipline** — the tool surface and its blast radius are [13](13-dx-mcp-server-and-agent-driven-development.md), and the lifecycle with the `sf agent` command chain is [SF_Agentforce · ADLC](../../SF_Agentforce/INDEX.md). Neither of those covers what happens at the pull request.
 
 ## Core idea
 
@@ -12,7 +12,7 @@ The governing fact is that generated code arrives at a volume no human produced 
 
 ## How it works
 
-- **The agent is source.** Agent Script (Apache 2.0) is committed like any other file; the bundle is generated, validated locally, then deployed, and publishing and activation are separate commands → [AI_Data · ADLC](../../AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md).
+- **The agent is source.** Agent Script (Apache 2.0) is committed like any other file; the bundle is generated, validated locally, then deployed, and publishing and activation are separate commands → [SF_Agentforce · ADLC](../../SF_Agentforce/INDEX.md).
 - **Evaluations are metadata too.** Scorer definitions deploy as `aiAgentScorerDefinitions`, so agent quality lives in the pipeline rather than in a spreadsheet.
 - **Never build in production.** Salesforce's own guidance is scratch orgs or sandboxes only — the same rule as any other metadata, stated explicitly because the agent builders are so reachable from Setup.
 - **Require the plan in the pull request.** For generated code, the prompt and the plan are the design document; without them a reviewer is reverse-engineering intent from output.
@@ -54,7 +54,7 @@ A: In source, as `aiAgentScorerDefinitions` metadata deployed like any other com
 ## Related
 
 - [13 · The DX MCP server & agent-driven development](13-dx-mcp-server-and-agent-driven-development.md) — the tool surface this note governs the output of
-- [AI_Data · ADLC & Agentforce DX](../../AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md) — the lifecycle, the `sf agent` commands and the five phases
+- [SF_Agentforce · ADLC & Agentforce DX](../../SF_Agentforce/INDEX.md) — the lifecycle, the `sf agent` commands and the five phases
 - [19 · Code review conventions for metadata](19-code-review-conventions-for-metadata.md) — the review protocol this note raises the stakes on
 - [06-integration · 25 MCP servers & agent-facing APIs](../06-integration-and-apis/25-mcp-servers-and-agent-facing-apis.md) — the auth model behind every editor-side tool
 - [24 · VS Code, Code Builder & tooling](24-vscode-code-builder-and-tooling.md) — where these assistants actually run

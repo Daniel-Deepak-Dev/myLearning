@@ -4,6 +4,8 @@ Each phase is **one AI run** producing 8–12 topic files plus that area's `INDE
 
 Mark a phase ✅ when its files exist and its INDEX rows are live links.
 
+> **Reading the older retrospectives.** Phases 01–24 ran when the repo had two vaults, `SF/` and `AI_Data/`. On **2026-08-27** `SF/` became `SF_core/`, Agentforce and Data 360 moved to `SF_Agentforce/` and `SF_Data_360/`, and `AI_Data/` was retired to [_archive/](../_archive/AI_Data/) — keeping only its glossary and release radar, now [GLOSSARY.md](../GLOSSARY.md) and [RELEASE-RADAR/](../RELEASE-RADAR/README.md). The retrospectives below still say `AI_Data/` because that is what happened at the time. The **standing rules** further down are current.
+
 | # | Status | Title | Area | Files | Notable |
 |---|---|---|---|---|---|
 | 00 | ✅ | Skeleton | — | 23 | tree, README, CURRENCY, template, inventory, 9 INDEX + 9 PHASES |
@@ -55,9 +57,9 @@ Mark a phase ✅ when its files exist and its INDEX rows are live links.
 2. **Hard cap ~80 lines per file.** If a topic won't fit, split the taxonomy rather than writing long.
 3. Every 🆕 topic is researched against Summer '26 release notes **before** writing.
 4. Every ⚠️ topic **opens with a one-line "What changed"** correction, before `## Core idea`.
-5. Cross-link into `AI_Data/` rather than duplicating Agentforce/Data 360 content; link to `AI_Data/05-release-radar/` for currency detail.
+5. Cross-link into `SF_Agentforce/` or `SF_Data_360/` rather than duplicating their content; link to `RELEASE-RADAR/` for currency detail.
 6. Where [_notion-seed/INVENTORY.md](_notion-seed/INVENTORY.md) maps an old note to the topic, harvest the genuine gotcha into a `> **From my notes.**` callout — **and correct it if stale.** Never copy verbatim.
-7. New platform jargon → [AI_Data/GLOSSARY.md](../AI_Data/GLOSSARY.md).
+7. New platform jargon → [GLOSSARY.md](../GLOSSARY.md).
 8. One commit per phase: `SF: phase NN — <title>`. Flip the ⬜ to ✅ in this table in the same commit.
 
 ## Post-phase check
@@ -116,7 +118,7 @@ Since phase 15, six more. Note that **three of these guard product *names***, wh
 - **`Data Recovery Service` near `retired`, `gone` or `discontinued`** without the 2021 reinstatement. It **exists**: **$10,000**, **6–8 weeks**, **data only, no metadata**, CSV delivery, no guarantee. Retired in 2020 and brought back — quoting only the first half is the common error.
 - **`Backup and Restore` used as a current product name.** Renamed **Salesforce Backup**, and the current native offering is **Salesforce Backup & Recover** (formerly Own Recover / OwnBackup), with *Backup & Recover Next* announced. Two renames deep.
 - **`Hyperforce` near `optional`, `opt in`, `when you're ready`**, or any future-tense migration plan. **Delays ended 1 July 2026** — 30 days' notice, 15-day reminder, no deferral.
-- **`Data Cloud` used as the live product name.** It is **Data 360** since **14 Oct 2025**. Three legitimate exceptions: the Flow feature literally named *Data Cloud-triggered flow*, **Data Cloud One**, and `AI_Data`'s deliberately unchanged folder paths.
+- **`Data Cloud` used as the live product name.** It is **Data 360** since **14 Oct 2025**. Three legitimate exceptions: the Flow feature literally named *Data Cloud-triggered flow*, **Data Cloud One**, and the archived `_archive/AI_Data/` folder paths.
 - **`Data Mask` where the product is `Data Mask & Seed`**, or seeding described as something Data Mask does not do. Seeding templates, synthetic data and preserved field-value distributions are the current feature set — and **Own Seed** is a second, overlapping product.
 - **`Salesforce to Salesforce` or `S2S` presented as available.** No new enablement from Spring '26, **support ended Summer '26**, **non-functional in Spring '27**. Only the **second** "old *and* dead" finding in this build, after Async SOQL — and unlike that one, the vault had simply never mentioned it.
 
@@ -173,7 +175,7 @@ Since phase 23, six more. Phases 21–22 added findings but no rule block; this 
 - **`aiplatform.ModelsAPI` called statically, or treated as a free call.** The methods are **instance methods** on `new aiplatform.ModelsAPI()`, and because the class is generated from **External Services**, every call is an **Apex callout** against the 100-per-transaction budget *and* a billed **Einstein Request**. Flag any per-record model call in a trigger or a loop on both counts → [02-apex · 33](02-apex-and-triggers/33-models-api-in-apex.md).
 - **An AI Apex test that mocks with `HttpCalloutMock`, a `setTest*` method, or the Stub API.** All three fail on `ConnectApi.EinsteinLLM`, for three different reasons — not an HTTP callout; publishes no `setTest*`; static and out-of-namespace. Any recipe claiming otherwise is untested. The only seam is a wrapper interface injected at a `@TestVisible` point → [02-apex · 34](02-apex-and-triggers/34-testing-ai-apex-and-mocking-llms.md).
 - **An LLM assertion on generated text.** Non-deterministic by construction, so the test is flaky by construction. Assert on the *call* — template name, inputs, response handling — or use `isPreview = true` to assert the resolved prompt without spending a request. Equally flag an AI test with no `System.runAs`: grounding runs in **user mode** at 67.0, so the identity decides the answer.
-- **A Salesforce AI capability written up in `SF_core/` without checking `AI_Data/`, or vice versa.** The two-vault split creates subjects each side assumes the other owns — this phase's eight tokens had **zero hits in either**. **Run the coverage grep across both vaults**, and keep the division the notes actually use: `SF_core/` owns class names, signatures, exceptions, limits and entitlement; `AI_Data/` owns prompt authoring, agent reasoning and Trust Layer policy. The test while writing: *if the sentence would still be true with no Apex in it, it belongs in the other vault.*
+- **A Salesforce AI capability written up in `SF_core/` without checking `SF_Agentforce/` and `SF_Data_360/`, or vice versa.** A multi-vault split creates subjects each side assumes the other owns — this phase's eight tokens had **zero hits in either** of the two vaults that existed then. **Run the coverage grep across every vault**, and keep the division the notes actually use: `SF_core/` owns class names, signatures, exceptions, limits and entitlement; the AI vaults own prompt authoring, agent reasoning and Trust Layer policy. The test while writing: *if the sentence would still be true with no Apex in it, it belongs in the other vault.*
 
 Since phase 24, five more. The phase adds a **sixth failure class**: *mentioned everywhere, owned nowhere* — a subject so frequently cited that a coverage grep on its **name** returns hits from every direction and proves nothing. Note also that four of these guard the **cutover**, not the tools: the vault's WF/PB writing was strategically right and operationally silent.
 

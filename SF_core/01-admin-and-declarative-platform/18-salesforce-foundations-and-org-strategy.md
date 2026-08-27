@@ -2,7 +2,7 @@
 
 > Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 02
 
-**Scope:** What the Foundations add-on actually puts in an org, and how that lands on the single-org vs multi-org decision. Editions and limits are [01 · Org anatomy](01-org-anatomy-and-editions.md); Data 360 depth lives in [AI_Data/01-data-cloud](../../AI_Data/01-data-cloud/INDEX.md).
+**Scope:** What the Foundations add-on actually puts in an org, and how that lands on the single-org vs multi-org decision. Editions and limits are [01 · Org anatomy](01-org-anatomy-and-editions.md); Data 360 depth lives in [SF_Data_360](../../SF_Data_360/INDEX.md).
 
 ## Core idea
 
@@ -29,7 +29,7 @@
 
 ## 2026 currency
 
-Foundations is current product, not a promotion to wait out, and Agentforce is part of it — which means the AI conversation now starts inside standard Enterprise-edition orgs rather than as a separate purchase. Anything written before Foundations describes AI and Data 360 as add-on projects; that framing is stale. Credit mechanics and pricing move fastest here — check [AI_Data/05-release-radar/pricing-and-certification.md](../../AI_Data/05-release-radar/pricing-and-certification.md) rather than trusting a number in a note.
+Foundations is current product, not a promotion to wait out, and Agentforce is part of it — which means the AI conversation now starts inside standard Enterprise-edition orgs rather than as a separate purchase. Anything written before Foundations describes AI and Data 360 as add-on projects; that framing is stale. Credit mechanics and pricing move fastest here — check [RELEASE-RADAR/pricing-and-certification.md](../../RELEASE-RADAR/pricing-and-certification.md) rather than trusting a number in a note.
 
 ## Gotchas
 
@@ -62,4 +62,4 @@ A: One data model and sharing model, native cross-cloud reporting, and one relea
 
 - [01 · Org anatomy & editions](01-org-anatomy-and-editions.md) — the edition and limit context Foundations sits inside
 - [19 · Agentforce in Setup & AI-assisted admin](19-agentforce-in-setup-and-ai-assisted-admin.md) — the AI that arrives with it, from the admin's seat
-- [AI_Data/01-data-cloud · INDEX](../../AI_Data/01-data-cloud/INDEX.md) — what Data 360 actually does once provisioned
+- [SF_Data_360 · INDEX](../../SF_Data_360/INDEX.md) — what Data 360 actually does once provisioned

@@ -41,7 +41,7 @@ trigger AccountTrigger on Account (before insert, before update, after insert, a
 
 ## 2026 currency
 
-**Triggers always run in system mode at 67.0 and can no longer declare sharing or access modes at all.** The ambiguity is gone — no more wondering what a keyword-less trigger inherits — but the consequence is sharper than it looks: a trigger is now definitively the wrong place for security-sensitive logic, because it has no way to express an access decision. Push that work into the handler class, which *does* default to `with sharing` at 67.0 and can opt into `AccessLevel.SYSTEM_MODE` per operation where it genuinely needs to. This is the position taken in [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md); notes here must not contradict it.
+**Triggers always run in system mode at 67.0 and can no longer declare sharing or access modes at all.** The ambiguity is gone — no more wondering what a keyword-less trigger inherits — but the consequence is sharper than it looks: a trigger is now definitively the wrong place for security-sensitive logic, because it has no way to express an access decision. Push that work into the handler class, which *does* default to `with sharing` at 67.0 and can opt into `AccessLevel.SYSTEM_MODE` per operation where it genuinely needs to. This is the position taken in [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md); notes here must not contradict it.
 
 ## Gotchas
 

@@ -40,7 +40,7 @@ System.abortJob(jobId);        // a schedule cannot be edited — abort and re-c
 
 ## 2026 currency
 
-Nothing in the scheduling mechanism itself changed at 67.0, but what runs *under* it did. A scheduled class runs as the user who scheduled it, and at 67.0 its SOQL and DML default to that user's access — so a job scheduled years ago by an admin who has since been deactivated or had permissions reduced does less than it used to, silently, the first time its class is recompiled at 67.0. Auditing `CronTrigger.OwnerId` against still-active, still-privileged users is a genuinely new piece of housekeeping. The access-mode mechanics are [10](10-apex-security-user-mode-and-fls.md); the release detail is [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
+Nothing in the scheduling mechanism itself changed at 67.0, but what runs *under* it did. A scheduled class runs as the user who scheduled it, and at 67.0 its SOQL and DML default to that user's access — so a job scheduled years ago by an admin who has since been deactivated or had permissions reduced does less than it used to, silently, the first time its class is recompiled at 67.0. Auditing `CronTrigger.OwnerId` against still-active, still-privileged users is a genuinely new piece of housekeeping. The access-mode mechanics are [10](10-apex-security-user-mode-and-fls.md); the release detail is [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
 
 ## Gotchas
 

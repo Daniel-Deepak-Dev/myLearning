@@ -43,11 +43,11 @@ Source-driven delivery on `sf` v2 and 2GP. **25 topics** · phases [16](PHASES.m
 - **[14](14-ci-cd-with-github-actions.md)** inherits both halves of that collision — the connected-app gate *and* the credential redaction from [03](03-org-auth-and-environment-management.md). Pre-2026 CI recipes fail on one of the two.
 - **[15](15-apex-test-strategy-in-ci.md)** depends on [02-apex · 20–21 testing](../02-apex-and-triggers/INDEX.md).
 - **[20](20-release-management-and-org-upgrades.md)** pairs with [01-admin · 02 Release cadence & Release Updates](../01-admin-and-declarative-platform/02-release-cadence-and-release-updates.md).
-- **[13](13-dx-mcp-server-and-agent-driven-development.md)** and **[22](22-agentforce-dx-and-ai-assisted-development.md)** are the seam into [AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md](../../AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md) — that note carries the `sf agent` command chain. **13 owns the tool surface, 22 owns the review discipline.**
+- **[13](13-dx-mcp-server-and-agent-driven-development.md)** and **[22](22-agentforce-dx-and-ai-assisted-development.md)** are the seam into [SF_Agentforce · adlc-and-agentforce-dx](../../SF_Agentforce/INDEX.md) — that note carries the `sf agent` command chain. **13 owns the tool surface, 22 owns the review discipline.**
 - **[23](23-hyperforce-and-instance-operations.md)** pairs with [08-data · 23 Hyperforce, residency & data locality](../08-data-modeling-and-large-data-volumes/23-hyperforce-residency-and-data-locality.md) — same platform shift, ops side vs data side. **Migration delays ended 1 July 2026.**
 - **[24](24-vscode-code-builder-and-tooling.md)** overlaps [03-lwc · 21 Local dev](../03-lwc-and-slds/21-local-dev-and-lightning-dev-server.md).
 - **[25](25-deployment-rollback-hotfix-and-destructive-changes.md)** is phase 17's one addition — the strategy layer over [05](05-metadata-api-and-deployment-mechanics.md)'s destructive-manifest mechanics. Phase 17 planned a second, on metadata coverage; **phase 16 had already written it as [12](12-metadata-coverage-and-manual-steps.md)**, so it was dropped rather than duplicated.
-- Currency anchor: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
+- Currency anchor: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 ## Seed notes
 

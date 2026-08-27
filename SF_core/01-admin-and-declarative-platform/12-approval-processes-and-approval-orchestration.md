@@ -29,7 +29,7 @@ A classic approval process is a fixed ladder bolted to one object: entry criteri
 
 ## 2026 currency
 
-The 2026-02-18 licensing change is the decision-relevant fact: cost was the standard reason to stay on classic, and it is gone. Orchestration runs are included in the editions listed above with no usage-based limitation. Treat any guide that describes Orchestrator as a paid add-on, or that quotes a per-run price, as out of date. Migration is still a rewrite, not a wizard — plan it as one. Detail and dates: [AI_Data/05-release-radar/](../../AI_Data/05-release-radar/README.md).
+The 2026-02-18 licensing change is the decision-relevant fact: cost was the standard reason to stay on classic, and it is gone. Orchestration runs are included in the editions listed above with no usage-based limitation. Treat any guide that describes Orchestrator as a paid add-on, or that quotes a per-run price, as out of date. Migration is still a rewrite, not a wizard — plan it as one. Detail and dates: [RELEASE-RADAR/](../../RELEASE-RADAR/README.md).
 
 ## Gotchas
 

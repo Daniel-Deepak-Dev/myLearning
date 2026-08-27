@@ -43,7 +43,7 @@ insert failures;
 
 ## 2026 currency
 
-DML runs in **user mode by default** at 67.0, so `insert` now enforces the running user's object permissions and field-level security — code that wrote a field the user cannot edit used to succeed silently and now throws. Elevation is explicit: `Database.insert(records, false, AccessLevel.SYSTEM_MODE)`. The asymmetry to watch is that this applies to classes *compiled* at 67.0, so an untouched old class keeps the old behaviour until someone bumps its API version, at which point its write semantics change without its code changing. Detail and the team-convention argument in [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
+DML runs in **user mode by default** at 67.0, so `insert` now enforces the running user's object permissions and field-level security — code that wrote a field the user cannot edit used to succeed silently and now throws. Elevation is explicit: `Database.insert(records, false, AccessLevel.SYSTEM_MODE)`. The asymmetry to watch is that this applies to classes *compiled* at 67.0, so an untouched old class keeps the old behaviour until someone bumps its API version, at which point its write semantics change without its code changing. Detail and the team-convention argument in [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
 
 ## Gotchas
 

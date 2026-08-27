@@ -24,7 +24,7 @@ Reactivity is the capability that changed screen-flow design most, and it arrive
 
 ## 2026 currency
 
-Reactivity is mature rather than new — the interesting fact is what it retired. Screen Actions completed the arc in Summer '25, and Salesforce's own framing is that it was the last missing piece: reactive components could recalculate but never fetch. Four constraints are still live at 67.0 and none of them is signposted in the builder: **cross-object formulas are not reactive**, **formulas are capped at 3,900 characters**, **a reactive change does not fire validation** on the components it updates, and reactivity is a property of *specific* components rather than all of them, so the supported list has to be checked per component rather than assumed. → [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md)
+Reactivity is mature rather than new — the interesting fact is what it retired. Screen Actions completed the arc in Summer '25, and Salesforce's own framing is that it was the last missing piece: reactive components could recalculate but never fetch. Four constraints are still live at 67.0 and none of them is signposted in the builder: **cross-object formulas are not reactive**, **formulas are capped at 3,900 characters**, **a reactive change does not fire validation** on the components it updates, and reactivity is a property of *specific* components rather than all of them, so the supported list has to be checked per component rather than assumed. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 
 ## Gotchas
 

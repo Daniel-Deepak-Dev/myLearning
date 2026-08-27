@@ -2,7 +2,7 @@
 
 > Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 05
 
-**Scope:** The `@InvocableMethod` contract as Apex — signature rules, bulk semantics, and the constructor requirement that breaks existing actions. The *agent* side (writing descriptions, action selection, MCP exposure) lives in [AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) and is not repeated here.
+**Scope:** The `@InvocableMethod` contract as Apex — signature rules, bulk semantics, and the constructor requirement that breaks existing actions. The *agent* side (writing descriptions, action selection, MCP exposure) lives in [SF_Agentforce · custom-agent-actions](../../SF_Agentforce/INDEX.md) and is not repeated here.
 
 ## Core idea
 
@@ -22,7 +22,7 @@
 - **Supported payload types** are narrower than Apex generally: a list of a primitive, of an sObject, of the generic `List<sObject>`, or of a **user-defined type whose fields carry `@InvocableVariable`** — plus lists of lists of those. → [23](23-userdefinedtype-and-typed-interop.md)
 - **Bulk is the contract, not an optimisation.** Flow may hand you many rows in one call. The returned list must align with the input list by size and order, so a method that returns a single-element list for a 200-element input silently mismaps results.
 - **`@InvocableVariable(label='' description='' required=true)`** exposes a field. Only `public` and `global` fields can carry it.
-- **The descriptions are the API.** For an agent, `description` is what the reasoning engine reads to decide whether to call the action at all — treat it as prompt text, not documentation. → [AI_Data · custom agent actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md)
+- **The descriptions are the API.** For an agent, `description` is what the reasoning engine reads to decide whether to call the action at all — treat it as prompt text, not documentation. → [SF_Agentforce · custom agent actions](../../SF_Agentforce/INDEX.md)
 
 ```apex
 public with sharing class IssueRefund {                  // outer class, one invocable
@@ -43,7 +43,7 @@ public with sharing class IssueRefund {                  // outer class, one inv
 
 ## 2026 currency
 
-**The no-argument constructor requirement starts at API 66.0, and the Release Update auto-enforces it in Summer '26** — worth stating precisely, because it is widely written up as a 67.0 change. Any custom Apex type used as an invocable action parameter must expose a visible no-arg constructor: `public` outside a managed package, **`global`** when the class is invoked from outside its own package. The trap is plain object-oriented behaviour meeting a platform assumption — *declaring any constructor with arguments removes the compiler-generated default one*, so a class that has worked for years starts failing to instantiate the moment the platform stops guessing what to pass it. Symptom: a runtime failure in Flow or an agent action, not a compile error. Also GA at 67.0: invocable actions gained **custom property editors, definable picklists and custom headers** in the Flow action configuration UI. → [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md)
+**The no-argument constructor requirement starts at API 66.0, and the Release Update auto-enforces it in Summer '26** — worth stating precisely, because it is widely written up as a 67.0 change. Any custom Apex type used as an invocable action parameter must expose a visible no-arg constructor: `public` outside a managed package, **`global`** when the class is invoked from outside its own package. The trap is plain object-oriented behaviour meeting a platform assumption — *declaring any constructor with arguments removes the compiler-generated default one*, so a class that has worked for years starts failing to instantiate the moment the platform stops guessing what to pass it. Symptom: a runtime failure in Flow or an agent action, not a compile error. Also GA at 67.0: invocable actions gained **custom property editors, definable picklists and custom headers** in the Flow action configuration UI. → [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md)
 
 > **From my notes.** The old `Apex Invocable method in Flow` page has four correct bullets and puts everything else in an embedded video that no longer resolves — so it is structure only. The one thing it never said is the thing that matters now: **the input class is instantiated by the platform, not by you.**
 
@@ -78,4 +78,4 @@ A: The `label` and `description` on the method and its `@InvocableVariable` fiel
 
 - [23 · `UserDefinedType` & typed interop](23-userdefinedtype-and-typed-interop.md) — what a typed payload can legally contain
 - [10 · Apex security: user mode & FLS](10-apex-security-user-mode-and-fls.md) — the running-user semantics an action inherits at 67.0
-- [AI_Data · custom agent actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) — description writing, action selection and exposure as an MCP tool
+- [SF_Agentforce · custom agent actions](../../SF_Agentforce/INDEX.md) — description writing, action selection and exposure as an MCP tool

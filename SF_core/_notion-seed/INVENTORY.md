@@ -139,7 +139,7 @@ Grouped by destination. Dates are creation dates — anything 2019–2021 needs 
 **→ 09 DevOps & SFDX**
 `Package.XML` (2019) · `Important commands` (**2025**) — ⚠️ check for `sfdx force:` syntax, retired · `Salesforce force VSC and Chrome extensions` (2019) · `Local Dev` (2024)
 
-**→ ../AI_Data/ (not this vault)**
+**→ ../SF_Agentforce/ (not this vault)**
 `Agentforce` (2024) · `Einstein GPT` (2023) · `Data Cloud` (2024) · `Data Cloud Prep` (2024) · `SF AI Org details` (2025)
 
 **→ out of scope for this build**

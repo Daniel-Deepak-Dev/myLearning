@@ -1,7 +1,7 @@
 ---
 name: study-notes
 description: Turn rough, out-of-order Salesforce learning notes into ordered wiki notes across SF_core, SF_Agentforce and SF_Data_360. Use whenever the user pastes study notes, says "I learned X today", dumps rough bullets about a Salesforce, Agentforce or Data 360 topic, or asks to file notes into the vault.
-allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, AskUserQuestion
+allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch, AskUserQuestion
 ---
 
 The user pastes rough notes. You file them.
@@ -36,7 +36,8 @@ Cannot route it? One dated bullet in that folder's `_inbox.md`. Move on. Never s
 Always search first. Duplicates are the main failure mode here.
 
 - `Glob` the target folder for a matching filename.
-- `Grep` all four vaults for the topic's key terms: `SF_core/`, `SF_Agentforce/`, `SF_Data_360/`, `AI_Data/`.
+- `Grep` all three vaults for the topic's key terms: `SF_core/`, `SF_Agentforce/`, `SF_Data_360/`.
+- Also grep `_archive/AI_Data/` — it is a **quarry** for verified facts, never a link target.
 
 Then decide:
 
@@ -44,7 +45,7 @@ Then decide:
 |---|---|
 | A note in the target folder | **Update it.** Merge the new facts in. Raise `Level` if the notes went deeper. |
 | A note in `SF_core/` in the old dense format | **Enrich it in place.** Add the cross-link and a `## Gaps to close` section. Do not create a second light file beside it. |
-| Only an `AI_Data/` note | **Migrate.** Fold the useful parts into the new note. Leave a one-line pointer in the `AI_Data` file. |
+| Only an `_archive/AI_Data/` note | **Quarry it.** Pull verified facts into the new note, **cut to the user's level**. Never link back to the archive. |
 | Nothing | **Create it.** |
 
 ## 4 · Write
@@ -54,7 +55,7 @@ Use [_note-template.md](../../../_note-template.md).
 - Filenames carry **no number**. `flex-prompt-templates.md`, not `05-flex-prompt-templates.md`.
 - **50 lines max.** No paragraph longer than two sentences.
 - One table max. One code block max, 12 lines.
-- Metadata is a blockquote on line 3. Never YAML frontmatter.
+- Metadata is a blockquote on lines 3–4. Never YAML frontmatter.
 
 Keep the user's own wording where it captures a real gotcha:
 
@@ -94,7 +95,28 @@ Also:
 - Put the checklist under `## Gaps to close`.
 - Put a `> **Gap.**` callout inline instead when the hole sits mid-topic and would confuse the bullets around it.
 
-## 6 · Link both ways
+## 6 · Dates, status and sources
+
+**Status is derived, never typed.** Count the unchecked `- [ ]` boxes in `## Gaps to close`:
+
+- at least one → `Status: 🌱 N gaps open`
+- zero → `Status: ✅ complete`
+
+**Dates.** `Created` never changes. `Updated` changes on every edit.
+
+**Staleness.** Whenever you touch a note, check `Updated`. More than 3 months old, add a third metadata line:
+
+```markdown
+> ⏳ N months old — recheck against release notes
+```
+
+Remove that line as soon as the note is updated.
+
+**Sources.** Every fact you researched gets a `## Sources` entry with the date you read it. Salesforce domains are trusted; anything else carries 🚩.
+
+**History.** One dated line per feed, under `## History`. What was added, how many gaps opened or closed.
+
+## 7 · Link both ways
 
 Every link out gets a link back. In the same edit.
 
@@ -104,21 +126,23 @@ Skipping the return link is the one mistake that quietly breaks the whole system
 
 Relative markdown links only. No `[[wiki links]]` — nothing in this repo uses them.
 
-## 7 · Update the indexes
+## 8 · Update the indexes
 
 For each note you created or moved:
 
 - Insert or move its row in the folder's `INDEX.md`, at the right point in the learning path.
-- Fill `#`, `Topic`, `One line`, `Level`, `Prereq`, `Fed`.
+- Columns: `#`, `Topic`, `One line`, `Level`, `Status`, `Pre`, `Created`, `Updated`.
+- `Status` must match the note's own metadata line exactly.
 - Renumber the `#` column only. **Never rename a file to reorder.**
-- Update the topic count line.
+- Update the summary line above the table: topic count, gaps open, complete, newest, oldest.
 
 Then add a dated entry to `LEARNING-LOG.md`, newest first.
 
-## 8 · Facts you are not sure of
+## 9 · Facts you are not sure of
 
-- Release-dependent or version-dependent → check `AI_Data/05-release-radar/` first. It is the repo's source of truth for what changed and when.
+- Release-dependent or version-dependent → check `RELEASE-RADAR/` first. It is the repo's source of truth for what changed and when.
 - Still unsure → `WebFetch` `help.salesforce.com` or `developer.salesforce.com`.
+- **Salesforce Help pages are JS-rendered and often return only a nav shell.** When that happens, try Trailhead or the developer blog, which serve static HTML. If nothing confirms it, do not guess.
 - Cannot confirm → write it with 🚩, or with the suffix `*(unverified — confirm in org)*`.
 - **Never invent a Salesforce feature, limit or object name.** A wrong fact learned confidently is worse than a gap.
 - Never use 🆕 or ⚠️ as confidence markers. Those mean something specific in the `SF_core/README.md` flag legend.
@@ -130,12 +154,13 @@ Two live currency traps to watch for in the user's notes:
 
 If their note contradicts one of these, correct it inline in the `> **From my notes.**` callout. Do not silently drop what they wrote.
 
-## 9 · Report back
+## 10 · Report back
 
 Short. Bullets. No paragraphs.
 
 - Files created, with paths.
 - Files updated, and what changed in each.
+- Corrections made to what they wrote, and why.
 - Gaps added, and the level you scoped them to.
 - Reciprocal links added.
 - Anything sent to `_inbox.md`, and why.

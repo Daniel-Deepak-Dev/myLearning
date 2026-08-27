@@ -24,7 +24,7 @@ The metadata type behind a site is decided by its **template + runtime**, and th
 
 ## 2026 currency
 
-Enhanced sites being the default means `DigitalExperienceBundle` is the type you'll meet most, and the one stale tutorials get wrong by reaching for `ExperienceBundle` or `SiteDotCom`. Pipeline tooling (DevOps Center, Gearset-style tools) supports it — only if the manifest is right. CLI and deployment currency: [AI_Data · developer tooling](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
+Enhanced sites being the default means `DigitalExperienceBundle` is the type you'll meet most, and the one stale tutorials get wrong by reaching for `ExperienceBundle` or `SiteDotCom`. Pipeline tooling (DevOps Center, Gearset-style tools) supports it — only if the manifest is right. CLI and deployment currency: [SF_Agentforce · developer tooling](../../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 ## Gotchas
 

@@ -45,7 +45,7 @@ public class AcmeClient {
 
 ## 2026 currency
 
-Legacy named credentials still function but are deprecated and no longer receive enhancements, so the migration is a *when*, not an *if* — and it is not a rename, because the legacy object has no principals to map to permission sets and therefore no way to express who may call out. The wider direction is the same one Connected Apps are on: **External Client Apps** are the supported model for new external integrations, and outbound auth from Apex sits inside that story. Anything here that touches OAuth setup, JWT, or the client-app model is owned by [06-integration](../06-integration-and-apis/INDEX.md); the retirement list is [../CURRENCY.md](../CURRENCY.md) and dated detail is in [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
+Legacy named credentials still function but are deprecated and no longer receive enhancements, so the migration is a *when*, not an *if* — and it is not a rename, because the legacy object has no principals to map to permission sets and therefore no way to express who may call out. The wider direction is the same one Connected Apps are on: **External Client Apps** are the supported model for new external integrations, and outbound auth from Apex sits inside that story. Anything here that touches OAuth setup, JWT, or the client-app model is owned by [06-integration](../06-integration-and-apis/INDEX.md); the retirement list is [../CURRENCY.md](../CURRENCY.md) and dated detail is in [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
 
 ## Gotchas
 

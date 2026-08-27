@@ -3,7 +3,7 @@
 27 topics across 3 runs. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
 
 > **Runs after security (phases 10–11).** OAuth, named credentials and API access control all rest on the access model.
-> Currency anchor for this area: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
+> Currency anchor for this area: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 > **The area grew from 23 to 25 at phase-12 plan time, and was renumbered in learning order.** Two topics were inserted — **03** (endpoints and hostnames) and **09** (Metadata/Tooling/Connect) — pushing the old 03–07 to 04–08, the old 08–12 to 10–14, and the whole phase-13 block from 13–23 to **15–25**. **The renumber was nearly free and will never be this cheap again:** not one file in the area existed, and the grep found **13 inbound lines** in the vault naming an area-06 topic by number — every one of them a link whose *href* was `INDEX.md`, so nothing broke, only the visible number went stale. All 13 were fixed in the same commit. **Phase 13 must append only. Do not renumber 01–14 now that they exist**, and repeat that grep before touching numbering again.
 
@@ -64,7 +64,7 @@
 - **12** — `Platform Event / Salesforce Events`. → *thin. Treats an event as fire-and-forget notification; the omission worth naming is that **an event is a published contract**. Harvested as one line.*
 - **04** — `IN`, flagged *"unclear — inspect"*. → **inspected: it is SOQL, not REST.** *It belongs with the area-02 `IN`/semi-join cluster already covered in phase 03. Removed from this area's mapping.*
 
-**Rule 1 exceeded deliberately, with approval** — two files added, and the correction sweep reached [../CURRENCY.md](../CURRENCY.md), [../PHASES.md](../PHASES.md), [../README.md](../README.md), [AI_Data/GLOSSARY.md](../../AI_Data/GLOSSARY.md), [../_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md) and 13 stale numeric references across areas 02, 05, 07 and 08. **Fifth phase running to make the same call**, and the second where a published sentence was wrong rather than merely a planned one.
+**Rule 1 exceeded deliberately, with approval** — two files added, and the correction sweep reached [../CURRENCY.md](../CURRENCY.md), [../PHASES.md](../PHASES.md), [../README.md](../README.md), [GLOSSARY.md](../../GLOSSARY.md), [../_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md) and 13 stale numeric references across areas 02, 05, 07 and 08. **Fifth phase running to make the same call**, and the second where a published sentence was wrong rather than merely a planned one.
 
 ---
 
@@ -91,7 +91,7 @@
 
 **⚠️ — the planned corrections survived verification for the first time in four phases. A *date* did not.**
 
-- **The failure mode changed.** Phases 10, 11 and 12 each had a headline ⚠️ that was itself stale, always the same way: something described as retired that was not. Phase 13's three ⚠️ items all verified as written. What broke instead was arithmetic on a date — **SOAP `login()` retires in Summer '27, not Spring '27** — and it was live in **seven lines across five files**, two of them published notes ([05](05-soap-api-and-where-it-persists.md), [07-security · 17](../07-security-and-sharing/17-authentication-and-mfa.md)). Help article **005132110** is unambiguous. `AI_Data/05-release-radar/` had it right the whole time, and [../CURRENCY.md](../CURRENCY.md) contradicted itself — line 37 said Summer '27 while its own table said Spring '27. **A date is a citable fact and gets cited; verify it against the Help article, not against another note in the vault.**
+- **The failure mode changed.** Phases 10, 11 and 12 each had a headline ⚠️ that was itself stale, always the same way: something described as retired that was not. Phase 13's three ⚠️ items all verified as written. What broke instead was arithmetic on a date — **SOAP `login()` retires in Summer '27, not Spring '27** — and it was live in **seven lines across five files**, two of them published notes ([05](05-soap-api-and-where-it-persists.md), [07-security · 17](../07-security-and-sharing/17-authentication-and-mfa.md)). Help article **005132110** is unambiguous. `RELEASE-RADAR/` had it right the whole time, and [../CURRENCY.md](../CURRENCY.md) contradicted itself — line 37 said Summer '27 while its own table said Spring '27. **A date is a citable fact and gets cited; verify it against the Help article, not against another note in the vault.**
 - **17 was right to flag deprecation and would have been wrong to add a date.** Legacy named credentials are *"deprecated and will be discontinued in a future release"* with **no published date**. That is the ninth "old ≠ dead" in this build and the first the plan got right unprompted.
 
 **🆕 the plan did not flag**
@@ -110,7 +110,7 @@ The only genuinely homeless topic in the area, and dated: **dual-use public-CA r
 
 - **18** — `Apex REST Callouts` + `Apex Rest Web Services` (2021). → *structure only, exactly as the inventory predicted — annotations and a worked example, no prose. Two things they predate: the **user-mode default at 67.0** inverts their implicit system-mode assumption, and a published endpoint is now a candidate agent action. Harvested as one callout.*
 
-**Rule 1 exceeded deliberately, with approval** — one file added, and the `login()` date sweep reached [../CURRENCY.md](../CURRENCY.md), [../PHASES.md](../PHASES.md), [../README.md](../README.md), [07-security · 17](../07-security-and-sharing/17-authentication-and-mfa.md), [07-security · 26](../07-security-and-sharing/26-secure-coding-checklist.md), [AI_Data/GLOSSARY.md](../../AI_Data/GLOSSARY.md) and [../_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md). **Sixth phase running to make the same call** — and the third where a published sentence was wrong rather than merely a planned one.
+**Rule 1 exceeded deliberately, with approval** — one file added, and the `login()` date sweep reached [../CURRENCY.md](../CURRENCY.md), [../PHASES.md](../PHASES.md), [../README.md](../README.md), [07-security · 17](../07-security-and-sharing/17-authentication-and-mfa.md), [07-security · 26](../07-security-and-sharing/26-secure-coding-checklist.md), [GLOSSARY.md](../../GLOSSARY.md) and [../_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md). **Sixth phase running to make the same call** — and the third where a published sentence was wrong rather than merely a planned one.
 
 ---
 

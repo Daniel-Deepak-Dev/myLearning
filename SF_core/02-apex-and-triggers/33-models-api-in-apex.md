@@ -2,7 +2,7 @@
 
 > Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 23
 
-**Scope:** The `aiplatform.ModelsAPI` class — calling a model directly from Apex with no prompt template in the way. Going *through* a template is [32](32-invoking-prompt-templates-from-apex.md); choosing or registering the model itself is [AI_Data/02-salesforce-ai/06-model-builder-byom/notes.md](../../AI_Data/02-salesforce-ai/06-model-builder-byom/notes.md).
+**Scope:** The `aiplatform.ModelsAPI` class — calling a model directly from Apex with no prompt template in the way. Going *through* a template is [32](32-invoking-prompt-templates-from-apex.md); choosing or registering the model itself is [SF_Agentforce · model-builder-byom](../../SF_Agentforce/INDEX.md).
 
 ## Core idea
 
@@ -42,7 +42,7 @@ try {
 
 ## 2026 currency
 
-**Every Models API request is billed.** The documentation is explicit that requests "are subject to Salesforce's usage and billing rates for **Einstein Requests**", which makes this the rare Apex class where a `for` loop has a line-item cost — a design consideration, not just a governor one. Rate-card and credit detail deliberately stays out of this vault; the entitlement story lives with the licence notes → [07-security · 02](../07-security-and-sharing/02-licences-and-what-they-gate.md) and [AI_Data · Model Builder & BYOM](../../AI_Data/02-salesforce-ai/06-model-builder-byom/notes.md). The second thing to know is architectural rather than new: because the class is generated from **External Services**, its calls are **Apex callouts** and consume the same per-transaction budget as every `HttpRequest` you make → [19](19-callouts-named-credentials-and-http-in-apex.md).
+**Every Models API request is billed.** The documentation is explicit that requests "are subject to Salesforce's usage and billing rates for **Einstein Requests**", which makes this the rare Apex class where a `for` loop has a line-item cost — a design consideration, not just a governor one. Rate-card and credit detail deliberately stays out of this vault; the entitlement story lives with the licence notes → [07-security · 02](../07-security-and-sharing/02-licences-and-what-they-gate.md) and [SF_Agentforce · Model Builder & BYOM](../../SF_Agentforce/INDEX.md). The second thing to know is architectural rather than new: because the class is generated from **External Services**, its calls are **Apex callouts** and consume the same per-transaction budget as every `HttpRequest` you make → [19](19-callouts-named-credentials-and-http-in-apex.md).
 
 ## Gotchas
 
@@ -76,4 +76,4 @@ A: When the wording should be editable by an admin, or when you need grounding a
 - [32 · Invoking prompt templates from Apex](32-invoking-prompt-templates-from-apex.md) — the same destination with metadata and grounding in front of it
 - [19 · Callouts, Named Credentials & HTTP](19-callouts-named-credentials-and-http-in-apex.md) — the callout budget these calls draw down
 - [34 · Testing AI Apex & mocking LLMs](34-testing-ai-apex-and-mocking-llms.md) — how to test a class that bills per call
-- [AI_Data · Model Builder & BYOM](../../AI_Data/02-salesforce-ai/06-model-builder-byom/notes.md) — where model API names come from and when a custom model is justified
+- [SF_Agentforce · Model Builder & BYOM](../../SF_Agentforce/INDEX.md) — where model API names come from and when a custom model is justified

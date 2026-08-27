@@ -431,7 +431,7 @@ Context for anything built on the current platform:
 
 **Sources:** [Agentforce Coworker developer guide (Beta)](https://developer.salesforce.com/docs/data/agentforce-coworker/guide/agentforce-coworker-a-home.html) · [Turn On Agentforce Coworker](https://developer.salesforce.com/docs/data/agentforce-coworker/guide/agentforce-coworker-turn-on-infrastructure.html) · [Limits and Guidelines](https://developer.salesforce.com/docs/data/agentforce-coworker/guide/agentforce-coworker-limits-and-guidelines.html) · [Billing Considerations](https://developer.salesforce.com/docs/data/agentforce-coworker/guide/agentforce-coworker-billing-considerations.html) · [Salesforce Announces Agentforce Coworker: AI 'In Every Search Bar' (Salesforce Ben)](https://www.salesforceben.com/salesforce-announces-agentforce-coworker-ai-in-every-search-bar/) · [Meet Your Users' New AI Teammate (Salesforce Admins)](https://admin.salesforce.com/blog/2026/meet-your-users-new-ai-teammate-introducing-agentforce-coworker)
 
-**Study folder:** [02-salesforce-ai/10-agentforce-coworker](../02-salesforce-ai/10-agentforce-coworker/notes.md)
+**Study folder:** [02-salesforce-ai/10-agentforce-coworker](../SF_Agentforce/INDEX.md)
 
 ---
 
@@ -461,13 +461,13 @@ It also inverts the authoring story the rest of 2026 has been telling. Agent Scr
 - **Pricing and licensing are unknown.** No Flex Credits mapping, SKU or entitlement was located — so the buy-vs-build comparison cannot be completed on cost yet.
 - **The name collides with the "operations" of AgentOps/observability.** In a design review, say *Agentforce Operations, the back-office product* the first time.
 
-**Study action:** add Agentforce Operations as a fifth row to the prebuilt-agent comparison in [02-salesforce-ai/14-prebuilt-agents-and-buy-vs-build](../02-salesforce-ai/14-prebuilt-agents-and-buy-vs-build/notes.md), leaving the pricing cell explicitly **unknown**. Then, in a dev org, open **Setup → Agentforce** and write down which prebuilt families your edition actually exposes — the gap between the marketing list and that list is the real buy-vs-build shortlist.
+**Study action:** add Agentforce Operations as a fifth row to the prebuilt-agent comparison in [02-salesforce-ai/14-prebuilt-agents-and-buy-vs-build](../SF_Agentforce/INDEX.md), leaving the pricing cell explicitly **unknown**. Then, in a dev org, open **Setup → Agentforce** and write down which prebuilt families your edition actually exposes — the gap between the marketing list and that list is the real buy-vs-build shortlist.
 
 **Status:** **GA 2026-04-29.** Flow ecosystem integration **Beta from May 2026**; Slack and Microsoft Teams surfaces **from June 2026**. Pricing not established.
 
 **Sources:** [Salesforce Launches Agentforce Operations to End Back-Office Bottlenecks](https://www.salesforce.com/news/stories/agentforce-operations-announcement/) · [Agentforce Operations product page](https://www.salesforce.com/agentforce/operations/) · [Salesforce launches Agentforce Operations to automate back-office work (MarTech)](https://martech.org/salesforce-launches-agentforce-operations-to-automate-back-office-work/) · [Demand Gen Report](https://www.demandgenreport.com/industry-news/news-brief/salesforce-launches-agentforce-operations-to-eliminate-back-office-bottlenecks/52762/)
 
-**Study folder:** [02-salesforce-ai/14-prebuilt-agents-and-buy-vs-build](../02-salesforce-ai/14-prebuilt-agents-and-buy-vs-build/notes.md)
+**Study folder:** [02-salesforce-ai/14-prebuilt-agents-and-buy-vs-build](../SF_Agentforce/INDEX.md)
 
 ---
 
@@ -494,7 +494,7 @@ Separate the two things it's built on:
 
 **Why it matters beyond the feature list.** Voice fails in ways text doesn't: latency is a design constraint because every grounding hop is dead air, barge-in means long planned answers rarely land, and handoff is a protocol problem rather than a prompt problem. None of it is fixed by Agent Script tuning. Also worth holding in mind commercially — Salesforce **partners** with Genesys, Five9 and NiCE at the Voice layer and **competes** with them at the Contact Center layer.
 
-**Status:** Contact Center **GA 2026-02-23**. Voice **GA** (date disputed — see above). SIP routing and Mobile SDK **GA** Summer '26. Voice for Digital Channels **GA** Q2 2026. Global languages **Beta**. Region-limited to US/Canada as of early 2026. Now written up at [02-salesforce-ai/12-voice-and-contact-center](../02-salesforce-ai/12-voice-and-contact-center/notes.md).
+**Status:** Contact Center **GA 2026-02-23**. Voice **GA** (date disputed — see above). SIP routing and Mobile SDK **GA** Summer '26. Voice for Digital Channels **GA** Q2 2026. Global languages **Beta**. Region-limited to US/Canada as of early 2026. Now written up at [02-salesforce-ai/12-voice-and-contact-center](../SF_Agentforce/INDEX.md).
 
 **Sources:** [Agentforce Voice overview (developer guide)](https://developer.salesforce.com/docs/ai/agentforce-partner/guide/agentforce-voice-overview.html) · [Enterprise Connect 2026: Salesforce Launches Agentforce Contact Center (UC Today)](https://www.uctoday.com/unified-communications/salesforce-agentforce-contact-center/) · [Agentforce Contact Center brings native CCaaS to Salesforce (TechTarget)](https://www.techtarget.com/searchCustomerExperience/news/366639947/Agentforce-Contact-Center-brings-native-CCaaS-to-Salesforce) · [Agentforce Voice Agent Setup: From Prerequisites to Talking with the Agent (ABSYZ)](https://www.absyz.com/agentforce-voice-agent-setup-in-salesforce-from-prerequisites-to-talking-with-the-agent/) · [Meet Agentforce Voice (Trailhead)](https://trailhead.salesforce.com/content/learn/modules/agentforce-voice-quick-look/meet-agentforce-voice)
 

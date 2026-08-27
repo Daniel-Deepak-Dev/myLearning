@@ -27,7 +27,7 @@ sf project deploy quick --job-id 0Af... -o prod
 
 ## 2026 currency
 
-Two things to carry into 2026. First, **`RunRelevantTests` changes the economics of validation** — combined with quick deploy it attacks the same problem from both ends, and it is steered by `@IsTest(testFor=…)` annotations you have to actually write. Second, **retrieve is not a read-only operation**. A zip-slip in static-resource conversion (fixed in `@salesforce/source-deploy-retrieve` 13.0.1, 31 July 2026) let a crafted static resource write outside the project during `project retrieve start` or `project convert mdapi`, and the fix is gated behind a major version bump plus Node 22 — so "I updated the CLI" is not the same sentence as "I have the fix". Detail and the dependency graph: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
+Two things to carry into 2026. First, **`RunRelevantTests` changes the economics of validation** — combined with quick deploy it attacks the same problem from both ends, and it is steered by `@IsTest(testFor=…)` annotations you have to actually write. Second, **retrieve is not a read-only operation**. A zip-slip in static-resource conversion (fixed in `@salesforce/source-deploy-retrieve` 13.0.1, 31 July 2026) let a crafted static resource write outside the project during `project retrieve start` or `project convert mdapi`, and the fix is gated behind a major version bump plus Node 22 — so "I updated the CLI" is not the same sentence as "I have the fix". Detail and the dependency graph: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 ## Gotchas
 

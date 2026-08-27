@@ -2,7 +2,7 @@
 
 > Area: 05-experience-cloud-lwr · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
-**Scope:** Putting a chat channel — human-routed messaging or an **Agentforce agent** — on a site, and why an agent on a *public* site is the highest-risk surface on the platform. The agent itself is built in [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md); an agent is also **a new line item on the exposure audit**, [11](11-public-site-exposure-audit.md).
+**Scope:** Putting a chat channel — human-routed messaging or an **Agentforce agent** — on a site, and why an agent on a *public* site is the highest-risk surface on the platform. The agent itself is built in [SF_Agentforce/](../../SF_Agentforce/INDEX.md); an agent is also **a new line item on the exposure audit**, [11](11-public-site-exposure-audit.md).
 
 > **What changed — a retirement and a rename, and most writing gets one of the two wrong.** Legacy **Chat / Live Agent** (LiveAgent, Salesforce Chat, Embedded Chat, Service Chat) **was retired on 14 February 2026** — a real retirement with a real date, unusual in this vault. Its replacement is **not** called *Messaging for In-App and Web* any more: that product was **renamed Enhanced Chat in June 2025**, and **Enhanced Chat v2** shipped in Winter '26 (24 October 2025) as the Agentforce-first UI. Salesforce's own docs still carry the old name in places, so both names in one search result is expected — **Enhanced Chat is the current one**.
 
@@ -15,11 +15,11 @@ The delivery mechanism is **Enhanced Chat** (formerly Messaging for In-App and W
 - **Setup chain:** Messaging Settings → **New Channel** (In-App and Web) → **Embedded Service Deployment** → add the **Embedded Messaging** component in Experience Builder → publish. **v2 deployments attach to an existing channel**, so moving to Enhanced Chat v2 is a new deployment, not a new channel.
 - **Routing:** the channel links to Omni-Channel; route to a queue (human) or an **Agentforce Service Agent**. Escalation agent→human is routing configuration, not a rebuild.
 - **Guest context:** on a public site the conversation runs as the **guest user** — the agent's data reach is exactly the guest's sharing, [07](07-guest-user-security-model.md).
-- **Trust Layer** governs every turn — masking, toxicity, grounding, audit. Cross-link, don't restate: [AI_Data · Einstein Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md).
+- **Trust Layer** governs every turn — masking, toxicity, grounding, audit. Cross-link, don't restate: [SF_Agentforce · Einstein Trust Layer](../../SF_Agentforce/INDEX.md).
 
 ## 2026 currency
 
-Deploying an Agentforce Service Agent to a site is now a channel-configuration exercise rather than custom code — the native Embedded Messaging component handles the widget. That lowers the effort and *raises* the stakes: a public agent is trivial to ship and non-trivial to secure. Agent platform detail: [AI_Data/05-release-radar/agentforce-platform.md](../../AI_Data/05-release-radar/agentforce-platform.md).
+Deploying an Agentforce Service Agent to a site is now a channel-configuration exercise rather than custom code — the native Embedded Messaging component handles the widget. That lowers the effort and *raises* the stakes: a public agent is trivial to ship and non-trivial to secure. Agent platform detail: [RELEASE-RADAR/agentforce-platform.md](../../RELEASE-RADAR/agentforce-platform.md).
 
 ## Gotchas
 
@@ -54,5 +54,5 @@ A: It's a new line item on the public-site exposure audit ([11](11-public-site-e
 ## Related
 
 - [11 · Public site exposure audit](11-public-site-exposure-audit.md) — an embedded agent is a new item on that audit
-- [AI_Data · Einstein Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md) — the guardrails a public agent depends on
-- [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md) — where the agent, its actions and topics are built
+- [SF_Agentforce · Einstein Trust Layer](../../SF_Agentforce/INDEX.md) — the guardrails a public agent depends on
+- [SF_Agentforce/](../../SF_Agentforce/INDEX.md) — where the agent, its actions and topics are built

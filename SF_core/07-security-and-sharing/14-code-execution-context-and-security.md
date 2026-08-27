@@ -32,7 +32,7 @@ Everything in this area describes what a *user* may do. Almost nothing on the pl
 
 ## 2026 currency
 
-The 67.0 flip is documented in [../CURRENCY.md](../CURRENCY.md) and sourced in [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md). Its stated reasoning is what makes this note a security-area concern rather than an Apex one: the platform stopped assuming the surface in front of it had already filtered the data, because that caller may now be an **autonomous agent**. An Agentforce agent inherits the access of the user it runs as and can reach anything that user can, but it composes and aggregates far faster than a person browsing — so the access model, not the prompt, is the control that has to hold. The Trust Layer's own guardrails are described in [AI_Data/](../../AI_Data/05-release-radar/trust-security-and-governance.md); do not restate them here.
+The 67.0 flip is documented in [../CURRENCY.md](../CURRENCY.md) and sourced in [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md). Its stated reasoning is what makes this note a security-area concern rather than an Apex one: the platform stopped assuming the surface in front of it had already filtered the data, because that caller may now be an **autonomous agent**. An Agentforce agent inherits the access of the user it runs as and can reach anything that user can, but it composes and aggregates far faster than a person browsing — so the access model, not the prompt, is the control that has to hold. The Trust Layer's own guardrails are described in [RELEASE-RADAR](../../RELEASE-RADAR/trust-security-and-governance.md); do not restate them here.
 
 ## Gotchas
 
@@ -66,4 +66,4 @@ A: Nothing breaks on upgrade day, but bumping an old class's API version silentl
 - [02-apex · 10 Apex security: user mode & FLS](../02-apex-and-triggers/10-apex-security-user-mode-and-fls.md) — the keywords and mechanics this note maps
 - [04-flow · 19 Flow run context & sharing](../04-flow-and-automation/19-flow-run-context-and-sharing.md) — the Flow half in full, including why the default is not a context
 - [11 · Restriction rules](11-restriction-rules.md) — the subtraction user-mode code inherits and system-mode code does not
-- [AI_Data · trust, security & governance](../../AI_Data/05-release-radar/trust-security-and-governance.md) — the sourced record of the 67.0 flip and the agentic reasoning behind it
+- [SF_Agentforce · trust, security & governance](../../RELEASE-RADAR/trust-security-and-governance.md) — the sourced record of the 67.0 flip and the agentic reasoning behind it

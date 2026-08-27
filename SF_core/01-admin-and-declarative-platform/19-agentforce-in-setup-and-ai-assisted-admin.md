@@ -2,7 +2,7 @@
 
 > Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 02
 
-**Scope:** The AI surface inside Setup and the discipline for using it. What Agentforce *is*, how agents are built and grounded, lives in [AI_Data/02-salesforce-ai](../../AI_Data/02-salesforce-ai/INDEX.md) — this note stays on the admin's side of the line.
+**Scope:** The AI surface inside Setup and the discipline for using it. What Agentforce *is*, how agents are built and grounded, lives in [SF_Agentforce](../../SF_Agentforce/INDEX.md) — this note stays on the admin's side of the line.
 
 ## Core idea
 
@@ -31,7 +31,7 @@
 
 ## 2026 currency
 
-This surface moves fast and the note reflects what is GA now: Setup with Agentforce itself, with capability breadth explicitly described as growing. Two things to unlearn: it is no longer a pilot or beta, and Setup usage is not metered. Track changes in [AI_Data/05-release-radar/agentforce-platform.md](../../AI_Data/05-release-radar/agentforce-platform.md) rather than re-deriving them here; anything in this note that contradicts the radar loses.
+This surface moves fast and the note reflects what is GA now: Setup with Agentforce itself, with capability breadth explicitly described as growing. Two things to unlearn: it is no longer a pilot or beta, and Setup usage is not metered. Track changes in [RELEASE-RADAR/agentforce-platform.md](../../RELEASE-RADAR/agentforce-platform.md) rather than re-deriving them here; anything in this note that contradicts the radar loses.
 
 ## Gotchas
 
@@ -65,4 +65,4 @@ A: Any three of: users and access troubleshooting, permission sets and sharing r
 
 - [17 · Setup Audit Trail, monitoring & usage](17-setup-audit-trail-monitoring-and-usage.md) — the control that makes agent-made config reviewable
 - [18 · Salesforce Foundations & org strategy](18-salesforce-foundations-and-org-strategy.md) — how Agentforce arrives in an ordinary Enterprise org
-- [AI_Data/02-salesforce-ai · INDEX](../../AI_Data/02-salesforce-ai/INDEX.md) — the agent platform itself: topics, actions, grounding, Trust Layer
+- [SF_Agentforce · INDEX](../../SF_Agentforce/INDEX.md) — the agent platform itself: topics, actions, grounding, Trust Layer

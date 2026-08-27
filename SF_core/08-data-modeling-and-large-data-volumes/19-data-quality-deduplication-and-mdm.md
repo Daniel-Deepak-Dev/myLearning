@@ -18,7 +18,7 @@ Above that sits the question the org cannot answer for itself: **which system is
 - **Duplicate rules only guard the save path.** Existing duplicates need a scan — Duplicate Jobs, which are edition-gated, or your own report/batch → [01-admin · 08](../01-admin-and-declarative-platform/08-validation-rules-and-duplicate-management.md).
 - **Prevention beats detection.** A unique **External ID** on the record's true business key stops the duplicate ever being created, and makes every load an upsert → [03](03-record-ids-external-ids-and-upsert.md).
 - **The four MDM styles still apply**: registry (index only), consolidation (a reporting golden copy), coexistence (each system masters some fields), centralized (one system masters everything). Coexistence is what most Salesforce estates actually run, usually without admitting it.
-- **Data 360 solves a different problem with similar words.** Identity resolution builds a **unified profile** across sources with match and reconciliation rules — it does not merge or delete the CRM rows → [AI_Data](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md).
+- **Data 360 solves a different problem with similar words.** Identity resolution builds a **unified profile** across sources with match and reconciliation rules — it does not merge or delete the CRM rows → [SF_Data_360](../../SF_Data_360/INDEX.md).
 
 ## 2026 currency
 
@@ -56,4 +56,4 @@ A: Duplicates that already exist, and paths that bypass the rules such as lead c
 - [01-admin · 08 Validation rules & duplicate management](../01-admin-and-declarative-platform/08-validation-rules-and-duplicate-management.md) — matching and duplicate rule mechanics
 - [03 · Record IDs, external IDs & upsert](03-record-ids-external-ids-and-upsert.md) — the prevention story
 - [25 · Data migration & cutover](25-data-migration-and-cutover.md) — where quality is decided once and for all
-- [AI_Data · Identity resolution](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md) — unification without merging
+- [SF_Agentforce · Identity resolution](../../SF_Data_360/INDEX.md) — unification without merging

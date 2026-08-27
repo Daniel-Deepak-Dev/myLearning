@@ -36,7 +36,7 @@ List<AsyncApexJob> broken = [
 
 ## 2026 currency
 
-**Elastic limits for async jobs are in Beta at 67.0**: `Queueable` and `@future` jobs can be enqueued up to *twice* the licensed daily limit, with the overflow throttled rather than rejected. That changes the failure mode from a hard `LimitException` at the enqueue site to slower execution, which is better for the user and worse for anyone who was relying on the exception as a signal that something had gone into a loop. Track it with `DailyAsyncApexElasticExecutions` and `DailyAsyncApexProcessed` in `System.OrgLimits.getMap()` rather than assuming headroom. Beta status and sources: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
+**Elastic limits for async jobs are in Beta at 67.0**: `Queueable` and `@future` jobs can be enqueued up to *twice* the licensed daily limit, with the overflow throttled rather than rejected. That changes the failure mode from a hard `LimitException` at the enqueue site to slower execution, which is better for the user and worse for anyone who was relying on the exception as a signal that something had gone into a loop. Track it with `DailyAsyncApexElasticExecutions` and `DailyAsyncApexProcessed` in `System.OrgLimits.getMap()` rather than assuming headroom. Beta status and sources: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 ## Gotchas
 

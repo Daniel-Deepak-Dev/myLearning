@@ -1,6 +1,6 @@
 ---
 description: Analyse how a Salesforce feature behaves for a human UI user vs an agent or external API caller, then offer to add a "Human vs Agent" section to the note.
-argument-hint: [path to an SF_core/, SF_Agentforce/, SF_Data_360/ or AI_Data/ note — omit to use the open file]
+argument-hint: [path to an SF_core/, SF_Agentforce/ or SF_Data_360/ note — omit to use the open file]
 allowed-tools: Read, Grep, Glob, Edit, WebFetch, AskUserQuestion
 ---
 
@@ -13,7 +13,7 @@ Read the target note, work out how its feature behaves for a **human in the UI**
 ## 1 · Resolve the target
 
 - Use the path above. If empty, use the file currently open in the IDE. If there is none, ask for one — do not guess.
-- Accept only `.md` files under `SF_core/`, `SF_Agentforce/`, `SF_Data_360/` or `AI_Data/`. Refuse anything else in one line and stop.
+- Accept only `.md` files under `SF_core/`, `SF_Agentforce/` or `SF_Data_360/`. Refuse anything else in one line and stop.
 - Read the whole file before analysing. Read `SF_core/README.md` or the sibling `INDEX.md` only if the feature is unclear from the note.
 
 ## 2 · Analyse against these six axes
@@ -71,7 +71,7 @@ Section shape — keep it to about 12 lines:
 
 Placement:
 
-- After `## How it works`. The `SF_core` and `AI_Data` templates use that heading.
+- After `## How it works`. The `SF_core` template uses that heading.
 - Light-format notes (`SF_Agentforce/`, `SF_Data_360/`, new `SF_core/` notes) have no `## How it works`. There, insert after `## Key points`.
 - Fallback order: before `## Gotchas` → before `## Gotchas & sharp edges` → before `## Gaps to close` → before `## Recall` → append at the end.
 - If `## Human vs Agent` already exists, rewrite it in place. Never create a second one.
@@ -87,6 +87,6 @@ Placement:
 
 - **Headless 360** is the established term for this whole subject — see `SF_core/06-integration-and-apis/25-mcp-servers-and-agent-facing-apis.md`.
 - Cross-link instead of restating: `06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md` for record-type-aware and layout-aware reads, `25-mcp-servers-and-agent-facing-apis.md` for agent-facing APIs.
-- Currency detail links to `AI_Data/05-release-radar/` rather than being duplicated.
+- Currency detail links to `RELEASE-RADAR/` rather than being duplicated.
 - Relative markdown links only.
 - Name the exact endpoint, object, permission or setting. A bullet that could apply to any feature is not worth a line.

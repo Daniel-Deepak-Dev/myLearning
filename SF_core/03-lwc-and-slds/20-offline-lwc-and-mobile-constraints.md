@@ -28,7 +28,7 @@ LWC Offline is not "the same component, slower." It is a **different runtime wit
 
 ## 2026 currency
 
-The two GraphQL stories have **diverged and are easy to conflate**. Online, the wire adapter is the modern one and gains features release by release ([07](07-graphql-wire-adapter.md)); offline, you are on `lightning/uiGraphQLApi`, which is explicitly documented as not carrying the newer capabilities. A query that works in a desktop component may not be expressible offline, and the failure is at prime time rather than at run time. The framing that survives is the one the docs use: *LWC Offline is not the full Salesforce service.* Treat an offline component as a deliberately narrower build against the local store, not as a normal component with a flaky connection. → [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md)
+The two GraphQL stories have **diverged and are easy to conflate**. Online, the wire adapter is the modern one and gains features release by release ([07](07-graphql-wire-adapter.md)); offline, you are on `lightning/uiGraphQLApi`, which is explicitly documented as not carrying the newer capabilities. A query that works in a desktop component may not be expressible offline, and the failure is at prime time rather than at run time. The framing that survives is the one the docs use: *LWC Offline is not the full Salesforce service.* Treat an offline component as a deliberately narrower build against the local store, not as a normal component with a flaky connection. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 
 ## Gotchas
 

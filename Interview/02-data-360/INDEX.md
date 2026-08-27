@@ -1,6 +1,6 @@
 # 02 · Data 360
 
-Scenario questions on the data layer that decides whether an agent is any good. Source knowledge: [AI_Data/01-data-cloud/](../../AI_Data/01-data-cloud/INDEX.md).
+Scenario questions on the data layer that decides whether an agent is any good. Source knowledge: [SF_Data_360/](../../SF_Data_360/INDEX.md).
 
 > **Data Cloud is Data 360.** A real rename — SKUs, release notes and the certification all use it. Folder paths in the source vault keep the old name so links don't break; the content doesn't, and neither should you in an interview.
 
@@ -34,7 +34,7 @@ The distinction that decides whether a capability goes in a delivery plan or sta
 
 ## Related
 
-- [AI_Data/01-data-cloud/](../../AI_Data/01-data-cloud/INDEX.md) — the source notes every answer links into
-- [AI_Data/01-data-cloud/10-lab-environment/labs/](../../AI_Data/01-data-cloud/10-lab-environment/labs/README.md) — the Data 360 lab ladder, including the deliberately-over-match lab that makes the privacy failure concrete
-- [_cert-data-cloud-consultant/](../../AI_Data/01-data-cloud/_cert-data-cloud-consultant/exam-guide.md) — exam prep. The mapping discipline in set 01 is the heart of that exam
+- [SF_Data_360/](../../SF_Data_360/INDEX.md) — the source notes every answer links into
+- [SF_Data_360/](../../SF_Data_360/INDEX.md) — the Data 360 lab ladder, including the deliberately-over-match lab that makes the privacy failure concrete
+- [_cert-data-cloud-consultant/](../../SF_Data_360/INDEX.md) — exam prep. The mapping discipline in set 01 is the heart of that exam
 - [04-cross-domain/](../04-cross-domain/INDEX.md) — where this collides with Agentforce and platform limits

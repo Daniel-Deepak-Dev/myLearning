@@ -18,7 +18,7 @@
 
 ## 2026 currency
 
-<What changed, what's retired, what to unlearn. Link to ../../AI_Data/05-release-radar/ for detail rather than restating it. DELETE this section if nothing has changed — an empty heading is noise.>
+<What changed, what's retired, what to unlearn. Link to ../../RELEASE-RADAR/ for detail rather than restating it. DELETE this section if nothing has changed — an empty heading is noise.>
 
 ## Gotchas
 
@@ -33,12 +33,12 @@ A: <answer>
 Q: <question>
 A: <answer>
 
-<!-- 5 pairs. Same format as AI_Data flashcards so the same Anki script works. -->
+<!-- 5 pairs. Keep the format strict so the Anki script works. -->
 
 ## Related
 
 - [<Topic>](NN-other-topic.md) — <em-dash gloss of why you'd jump there>
-- [<AI_Data topic>](../../AI_Data/02-salesforce-ai/NN-x/notes.md) — <where the agent story continues>
+- [<Agentforce topic>](../../SF_Agentforce/INDEX.md) — <where the agent story continues>
 
 <!--
 RULES — do not remove
@@ -47,5 +47,5 @@ RULES — do not remove
 3. ⚠️ topic → the "What changed" correction comes FIRST.
 4. Personal note harvested from _notion-seed/ → quote it as:
    > **From my notes.** <the gotcha> — and correct it inline if it is now stale.
-5. Cross-link into AI_Data/ instead of duplicating Agentforce or Data 360 content.
+5. Cross-link into SF_Agentforce/ or SF_Data_360/ instead of duplicating their content.
 -->

@@ -1,6 +1,6 @@
 # Interview — Scenario-Based Question Bank
 
-Third vault, alongside [AI_Data/](../AI_Data/README.md) (Agentforce, Data 360, Claude) and [SF_core/](../SF_core/README.md) (core platform). Those two hold knowledge. This one holds **being asked about it under pressure**.
+Fourth vault, alongside [SF_core/](../SF_core/README.md) (core platform), [SF_Agentforce/](../SF_Agentforce/INDEX.md) and [SF_Data_360/](../SF_Data_360/INDEX.md). Those three hold knowledge. This one holds **being asked about it under pressure**.
 
 ## Why this exists
 
@@ -27,7 +27,7 @@ Nothing in the repo rehearsed that. The three `_cert-*/practice-questions.md` fi
 | **Medium** | One domain, one or two constraints. A strong senior dev answers it. Tests whether you know the mechanism. |
 | **Complex** | Constraints that genuinely conflict, so there is no clean answer — only a defensible trade-off with its cost named. Tests whether you can architect. |
 
-There are no easy questions here by design. "What is a DMO?" is a flashcard, and it already exists in [AI_Data](../AI_Data/01-data-cloud/03-data-modeling-dso-dlo-dmo/flashcards.md).
+There are no easy questions here by design. "What is a DMO?" is a flashcard, and it already exists in [SF_Data_360](../SF_Data_360/INDEX.md).
 
 ## How to use it
 
@@ -57,10 +57,10 @@ Skeleton in [_template.md](_template.md). Every scenario:
 
 **1. Answers are grounded in the notes, never drafted from recall.** Same rule as [SF_core/_template.md](../SF_core/_template.md) rule 2, and it bites harder here: a wrong answer rehearsed forty times becomes something you say confidently in a real interview. Every `**Probes:**` link is a link the author actually read. Two specific traps, because most material online is on the wrong side of both:
 
-- **Agents are authored in [Agent Script](../AI_Data/02-salesforce-ai/07-agent-script/notes.md).** The *New Agent* button stopped opening the topic-and-instruction builder the week of **July 13, 2026**. An answer that walks through topics and instructions as the current model is describing a retired product.
+- **Agents are authored in [Agent Script](../SF_Agentforce/INDEX.md).** The *New Agent* button stopped opening the topic-and-instruction builder the week of **July 13, 2026**. An answer that walks through topics and instructions as the current model is describing a retired product.
 - **Data Cloud is Data 360.** The rename is real — SKUs, release notes, the certification. Folder paths here keep the old name only where links would break.
 
-**2. If the note does not support it, flag it 🚩 rather than invent it.** Already the repo's marker for exactly this — see the unverified domain weights at [02-salesforce-ai/INDEX.md](../AI_Data/02-salesforce-ai/INDEX.md). An answer carrying 🚩 is one to verify in an org before saying it to an interviewer.
+**2. If the note does not support it, flag it 🚩 rather than invent it.** Already the repo's marker for exactly this — see the unverified domain weights at [02-salesforce-ai/INDEX.md](../SF_Agentforce/INDEX.md). An answer carrying 🚩 is one to verify in an org before saying it to an interviewer.
 
 ## Flag legend
 
@@ -79,4 +79,4 @@ Same meanings as the other two vaults:
 - **Links:** relative markdown only. Every answer links out to the note instead of restating it — [SF_core/_template.md](../SF_core/_template.md) rule 5. This vault holds *questions*, not a third copy of the knowledge.
 - **New scenario:** append to the set file it belongs to, renumber nothing, bump the `Scenarios:` count in the line-3 blockquote and the area `INDEX.md`.
 - **New set:** next `NN` in the area, copy [_template.md](_template.md), add a row to the area's `INDEX.md`.
-- **Currency:** content is current to **Summer '26 (API 67.0)**. [AI_Data/05-release-radar/](../AI_Data/05-release-radar/README.md) is the source of truth for what changed — when a scenario goes stale, fix it there first and here second.
+- **Currency:** content is current to **Summer '26 (API 67.0)**. [RELEASE-RADAR/](../RELEASE-RADAR/README.md) is the source of truth for what changed — when a scenario goes stale, fix it there first and here second.

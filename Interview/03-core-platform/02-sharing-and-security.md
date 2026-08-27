@@ -138,7 +138,7 @@
 
 ### Q4 · The agent's running user
 
-**Level:** Medium · **Probes:** [Code execution context & security](../../SF_core/07-security-and-sharing/14-code-execution-context-and-security.md) · [Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md) · [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md)
+**Level:** Medium · **Probes:** [Code execution context & security](../../SF_core/07-security-and-sharing/14-code-execution-context-and-security.md) · [Trust Layer](../../SF_Agentforce/INDEX.md) · [Custom Agent Actions](../../SF_Agentforce/INDEX.md)
 
 **Scenario.** A security review of an Agentforce build. The agent has six actions; two are Apex classes declared `without sharing` because "the agent needs to see everything to give a complete answer." The agent's running user has a permission set with `View All Data`. The Trust Layer is on, masking is configured, and the project lead's position is that the Trust Layer is the security boundary, so the running user's permissions are an implementation detail. The agent is customer-facing through an Experience Cloud site.
 

@@ -26,7 +26,7 @@ Flow gives you three tools that all look like error handling and do different th
 
 ## 2026 currency
 
-The Custom Error element is the substantive change and it is now several releases old, which makes "use a fault path" a dated answer rather than a wrong one — fault paths still have a job, it is just narrower than the advice implies. Summer '26's contribution is presentational but genuinely useful at scale: **fault paths collapse on the canvas**, joining the collapsible Decisions and Loops that arrived in Spring '26. A well-instrumented flow has a fault path on every Data and Action element, and before this the canvas became unreadable as a result — which is precisely why so many flows have none. → [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md)
+The Custom Error element is the substantive change and it is now several releases old, which makes "use a fault path" a dated answer rather than a wrong one — fault paths still have a job, it is just narrower than the advice implies. Summer '26's contribution is presentational but genuinely useful at scale: **fault paths collapse on the canvas**, joining the collapsible Decisions and Loops that arrived in Spring '26. A well-instrumented flow has a fault path on every Data and Action element, and before this the canvas became unreadable as a result — which is precisely why so many flows have none. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 
 ## Gotchas
 

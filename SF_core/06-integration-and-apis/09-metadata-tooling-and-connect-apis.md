@@ -27,12 +27,12 @@ The distinction that matters day to day is **granularity**. Metadata API is file
 
 ## 2026 currency
 
-**Connect REST API's limits changed at 67.0 and it is a relief, not a restriction.** Orgs migrated off the old restrictive **per-user, per-app, per-hour** limit onto the org's **per-24-hour Platform API limit**; only requests that genuinely require Chatter keep an hourly throttle. **The same change applies to Connect in Apex.** Integrations previously architected around that hourly ceiling can be simplified. Separately, tooling built on these APIs is now the fastest-moving part of the platform — the **Metadata API Context MCP server** exposes metadata to agents as five granular tools, and the `sf` CLI's underlying libraries ship weekly. Both, with the Node-version and supply-chain caveats that come with them, are tracked in [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
+**Connect REST API's limits changed at 67.0 and it is a relief, not a restriction.** Orgs migrated off the old restrictive **per-user, per-app, per-hour** limit onto the org's **per-24-hour Platform API limit**; only requests that genuinely require Chatter keep an hourly throttle. **The same change applies to Connect in Apex.** Integrations previously architected around that hourly ceiling can be simplified. Separately, tooling built on these APIs is now the fastest-moving part of the platform — the **Metadata API Context MCP server** exposes metadata to agents as five granular tools, and the `sf` CLI's underlying libraries ship weekly. Both, with the Node-version and supply-chain caveats that come with them, are tracked in [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 ## Gotchas
 
 - **`SELECT Body FROM ApexClass` fails on the normal query endpoint** and succeeds on `/tooling/query`. The error does not say so.
-- **Metadata API retrieve writes attacker-influenceable bytes to disk.** A zip-slip in static-resource conversion was patched in July 2026 and the fix is gated behind a major version — retrieve is not a read-only operation. → [AI_Data radar](../../AI_Data/05-release-radar/developer-tooling-and-apis.md)
+- **Metadata API retrieve writes attacker-influenceable bytes to disk.** A zip-slip in static-resource conversion was patched in July 2026 and the fix is gated behind a major version — retrieve is not a read-only operation. → [RELEASE-RADAR](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 - **Tooling API can edit production Apex directly.** It is how "someone changed a class in production" happens without a deployment record.
 - **`TraceFlag` records expire and accumulate.** Debug logging that silently stops is usually an expired trace flag, not a broken log level.
 - **Metadata coverage is not total.** Some configuration has no metadata type at all, which is what turns a "fully automated" pipeline into a documented manual step. → [09-devops](../09-devops-sfdx-and-release-management/INDEX.md)
@@ -60,4 +60,4 @@ A: `ApexLog`, `TraceFlag` and `ApexTestResult` — debug logs, log configuration
 - [05 · SOAP API & where it persists](05-soap-api-and-where-it-persists.md) — the protocol these keep alive
 - [02 · API versions & the retirement treadmill](02-api-versions-and-the-retirement-treadmill.md) — per-class API versions live in metadata
 - [09-devops · INDEX](../09-devops-sfdx-and-release-management/INDEX.md) — the pipelines built on Metadata API
-- [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md) — the weekly-moving tooling layer
+- [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md) — the weekly-moving tooling layer

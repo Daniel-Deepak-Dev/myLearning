@@ -2,7 +2,7 @@
 
 > Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 23
 
-**Scope:** `@InvocableMethod(capabilityType=…)` — Apex invoked *while a prompt is being resolved*, to supply grounding data. The invocable signature rules are [22](22-invocable-apex-and-agentforce-actions.md) and are not repeated here; template authoring and grounding strategy are [AI_Data/02-salesforce-ai/03-prompt-builder/notes.md](../../AI_Data/02-salesforce-ai/03-prompt-builder/notes.md).
+**Scope:** `@InvocableMethod(capabilityType=…)` — Apex invoked *while a prompt is being resolved*, to supply grounding data. The invocable signature rules are [22](22-invocable-apex-and-agentforce-actions.md) and are not repeated here; template authoring and grounding strategy are [SF_Agentforce · Prompt Builder & Templates](../../SF_Agentforce/prompt-builder-and-prompt-templates.md).
 
 ## Core idea
 
@@ -15,6 +15,7 @@
 | Sales Email | `PromptTemplateType://einstein_gpt__salesEmail` |
 | Field Generation | `PromptTemplateType://einstein_gpt__fieldCompletion` |
 | Record Summary | `PromptTemplateType://einstein_gpt__recordSummary` |
+| Record Prioritization | `PromptTemplateType://einstein_gpt__recordPrioritization` |
 | Flex | `FlexTemplate://<template_API_Name>` — **the template's API name, not a type name** |
 
 - **The parameter must be `List<Request>`**, and the `Request` inner class declares one `@InvocableVariable` per input the template type offers — `sender`, `recipient`, `relatedObject` for a sales email. You do not name these freely; the template type dictates them.
@@ -45,7 +46,7 @@ public with sharing class PropertyInterestGrounding {
 
 ## Gotchas
 
-- **`Response.Prompt` is a naked `String`, which makes this an injection surface.** Any record data you concatenate — a Contact description, a case comment — is untrusted text becoming model instructions. The Trust Layer scans it, but layout and framing are yours. → [AI_Data · Einstein Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md)
+- **`Response.Prompt` is a naked `String`, which makes this an injection surface.** Any record data you concatenate — a Contact description, a case comment — is untrusted text becoming model instructions. The Trust Layer scans it, but layout and framing are yours. → [SF_Agentforce · Einstein Trust Layer](../../SF_Agentforce/einstein-trust-layer.md)
 - **`FlexTemplate://` takes the template API name**, so renaming the template in Prompt Builder breaks the Apex at runtime — a string dependency with no compiler protection, exactly like `Type.forName()` → [28](28-dependency-injection-and-pluggable-apex.md).
 - **One `@InvocableMethod` per class still applies**, so grounding three templates means three outer classes — the rule from 22 does not relax because the capability changed.
 - **Resolution is not bulk.** Unlike an action, prompt resolution hands you one request; writing a loop over `requests` is harmless but the bulk-alignment discipline from 22 has nothing to align.
@@ -62,7 +63,7 @@ Q: What must the `Response` inner class expose, and why is the exact name load-b
 A: `@InvocableVariable public String Prompt`. The platform reads that field by name to get the text it splices into the template.
 
 Q: How does a Flex template's `capabilityType` differ from the other three?
-A: It is `FlexTemplate://<template_API_Name>` — bound to one specific template, where the others (`einstein_gpt__salesEmail`, `__fieldCompletion`, `__recordSummary`) name a template *type*.
+A: It is `FlexTemplate://<template_API_Name>` — bound to one specific template, where every other value (`einstein_gpt__salesEmail`, `__fieldCompletion`, `__recordSummary`, `__recordPrioritization`) names a template *type*.
 
 Q: Why can the same grounding class produce a good answer for an admin and a wrong one for an agent at 67.0?
 A: Grounding SOQL runs in user mode, so it silently returns fewer rows; the model answers confidently from the smaller set.
@@ -75,4 +76,4 @@ A: Prompt resolution fails at runtime — the compiler-generated no-arg construc
 - [22 · Invocable Apex & Agentforce actions](22-invocable-apex-and-agentforce-actions.md) — the same annotation as an action, and the signature rules this note assumes
 - [32 · Invoking prompt templates from Apex](32-invoking-prompt-templates-from-apex.md) — the inverse direction: Apex as the caller rather than the data provider
 - [10 · Apex security: user mode & FLS](10-apex-security-user-mode-and-fls.md) — why grounding queries can under-return at 67.0
-- [AI_Data · Prompt Builder](../../AI_Data/02-salesforce-ai/03-prompt-builder/notes.md) — template types, merge fields and grounding strategy
+- [SF_Agentforce · Prompt Template Types](../../SF_Agentforce/prompt-template-types.md) — the six types these `capabilityType` URIs name, and what each grounds on

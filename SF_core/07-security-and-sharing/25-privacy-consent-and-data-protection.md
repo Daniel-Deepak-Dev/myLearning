@@ -2,7 +2,7 @@
 
 > Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 11
 
-**Scope:** The obligations that come from outside the org — consent, subject rights, retention and non-production data — and the platform objects that record them. Encryption as a control is [21](21-shield-platform-encryption.md); the AI-side governance story is [AI_Data](../../AI_Data/05-release-radar/trust-security-and-governance.md).
+**Scope:** The obligations that come from outside the org — consent, subject rights, retention and non-production data — and the platform objects that record them. Encryption as a control is [21](21-shield-platform-encryption.md); the AI-side governance story is [RELEASE-RADAR](../../RELEASE-RADAR/trust-security-and-governance.md).
 
 ## Core idea
 
@@ -32,7 +32,7 @@ Everything else in this area answers *may this user see this record*. Privacy as
 - **"Forget this Individual" is a flag, not an erasure.** It records the request; carrying it out is a process you build or buy.
 - **Consent captured in Experience Cloud lands as a guest-user write**, which needs the sharing and object permissions to exist first. → [05-experience-cloud · INDEX](../05-experience-cloud-lwr/INDEX.md)
 - **Retention obligations point both ways.** Privacy law says delete it; financial regulation says keep it ten years. `HistoryRetentionPolicy` and the archive are how you hold both at once. → [22](22-field-audit-trail-and-data-retention.md)
-- **Agents widen the processing surface.** An agent that summarises a customer's history is processing personal data at speed — the grounding and retention rules live in [AI_Data](../../AI_Data/05-release-radar/trust-security-and-governance.md), not here.
+- **Agents widen the processing surface.** An agent that summarises a customer's history is processing personal data at speed — the grounding and retention rules live in [RELEASE-RADAR](../../RELEASE-RADAR/trust-security-and-governance.md), not here.
 
 ## Recall
 
@@ -56,4 +56,4 @@ A: The data also sits in field history, event logs, big objects, backups and rep
 - [22 · Field Audit Trail & data retention](22-field-audit-trail-and-data-retention.md) — retention as a policy object, and the archive erasure has to reach
 - [21 · Shield Platform Encryption](21-shield-platform-encryption.md) — the control most often mistaken for a privacy answer
 - [13 · Field-level security & visibility layers](13-field-level-security-and-visibility-layers.md) — visibility, which is not the same as processing
-- [AI_Data · trust, security & governance](../../AI_Data/05-release-radar/trust-security-and-governance.md) — where the agent-era version of this conversation continues
+- [SF_Agentforce · trust, security & governance](../../RELEASE-RADAR/trust-security-and-governance.md) — where the agent-era version of this conversation continues

@@ -92,7 +92,7 @@
 
 ### Q3 · Null for some users 🆕
 
-**Level:** Complex · **Probes:** [Bulkification patterns](../../SF_core/02-apex-and-triggers/08-bulkification-patterns.md) · [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) · [Apex security, user mode & FLS](../../SF_core/02-apex-and-triggers/10-apex-security-user-mode-and-fls.md)
+**Level:** Complex · **Probes:** [Bulkification patterns](../../SF_core/02-apex-and-triggers/08-bulkification-patterns.md) · [Custom Agent Actions](../../SF_Agentforce/INDEX.md) · [Apex security, user mode & FLS](../../SF_core/02-apex-and-triggers/10-apex-security-user-mode-and-fls.md)
 
 **Scenario.** A textbook-correct bulkified handler: collect `AccountId` into a `Set<Id>`, one query into a `Map<Id, Account>`, look up inside the loop with `accounts.get(o.AccountId)`. It has run in production for three years. The class was recompiled at 67.0 last month as part of a wider upgrade. Since then, a support tier gets intermittent `NullPointerException`s from this handler, and sales users never do. The data is fine — every opportunity has a valid `AccountId`, and the accounts exist.
 

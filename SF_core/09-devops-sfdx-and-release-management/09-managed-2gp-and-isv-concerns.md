@@ -20,7 +20,7 @@ Second-generation managed packaging replaces the 1GP model of *one packaging org
 
 ## 2026 currency
 
-**Package Migrations went GA in Summer '25**, and it changes the 1GP conversation from "should we" to "when". The tooling automates the conversion: it extracts the 1GP package's metadata into source, **keeps the namespace**, continues the version sequence where 1GP left off, and — the part that used to make migration impossible — **migrates existing subscribers with the package already installed**. The packaging-org dependency disappears. The commercial pressure behind it is metadata coverage: **2GP covers most of the GenAI and Agentforce metadata types and 1GP's support is partial**, so an ISV shipping agent features in 2026 is choosing between migrating and not shipping → [AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md](../../AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md).
+**Package Migrations went GA in Summer '25**, and it changes the 1GP conversation from "should we" to "when". The tooling automates the conversion: it extracts the 1GP package's metadata into source, **keeps the namespace**, continues the version sequence where 1GP left off, and — the part that used to make migration impossible — **migrates existing subscribers with the package already installed**. The packaging-org dependency disappears. The commercial pressure behind it is metadata coverage: **2GP covers most of the GenAI and Agentforce metadata types and 1GP's support is partial**, so an ISV shipping agent features in 2026 is choosing between migrating and not shipping → [SF_Agentforce · adlc-and-agentforce-dx](../../SF_Agentforce/INDEX.md).
 
 ## Gotchas
 
@@ -54,4 +54,4 @@ A: `global` Apex, `@AuraEnabled` signatures and packaged field API names cannot 
 - [08 · Unlocked packages (2GP)](08-unlocked-packages-2gp.md) — the same versioning machinery without the namespace or the lock
 - [10 · Modularization & dependency strategy](10-modularization-and-dependency-strategy.md) — how packages depend on each other
 - [02-apex · 22 Invocable Apex & Agentforce actions](../02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md) — the `global` no-arg constructor rule for cross-package invocation
-- [AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md](../../AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md) — agent metadata in source
+- [SF_Agentforce · adlc-and-agentforce-dx](../../SF_Agentforce/INDEX.md) — agent metadata in source

@@ -8,7 +8,6 @@ This folder is the **platform underneath** the AI vaults. It cross-links to them
 |---|---|
 | [SF_Agentforce/](../SF_Agentforce/INDEX.md) | Prompt templates, agents, actions, Agent Script, Atlas, Trust Layer |
 | [SF_Data_360/](../SF_Data_360/INDEX.md) | Ingestion, DMOs, identity resolution, segments, zero-copy, RAG |
-| [AI_Data/](../AI_Data/README.md) | The AI-Architect roadmap, Claude, capstone, release radar |
 | [Interview/](../Interview/README.md) | Scenario question bank |
 
 > **Currency: Summer '26 · API 67.0** · see [CURRENCY.md](CURRENCY.md) for the version map and the six defaults that invalidate older tutorials.
@@ -36,7 +35,7 @@ This folder is the **platform underneath** the AI vaults. It cross-links to them
 
 - **Aura components** and **Visualforce.** Both are legacy; LWC is the only UI framework here. They appear only where a note must explain a migration or a coexistence rule. **Legacy in direction, not dead** — phase 18 found five of the seven Experience Cloud templates are still Aura and still receiving features → [05-experience · 01](05-experience-cloud-lwr/01-template-choice-and-site-landscape.md).
 - **OmniStudio**, **Reporting & Analytics**, **Sales/Service Cloud functional depth.** Not excluded on merit — just not in this build. Add as areas 11–13 later if wanted. *(The reserved area-10 slot was taken by [SOQL & SOSL](10-soql-and-sosl/INDEX.md) in phase 22 — the query language had no owner and SOSL was the vault's largest single gap.)*
-- **Agentforce / Data 360 / Claude.** Agentforce lives in [SF_Agentforce/](../SF_Agentforce/INDEX.md), Data 360 in [SF_Data_360/](../SF_Data_360/INDEX.md), Claude and the roadmap in [AI_Data/](../AI_Data/README.md). Notes here link across instead of repeating.
+- **Agentforce / Data 360 / Claude.** Agentforce lives in [SF_Agentforce/](../SF_Agentforce/INDEX.md), Data 360 in [SF_Data_360/](../SF_Data_360/INDEX.md). Notes here link across instead of repeating.
 
   **The line is drawn by artefact, not by subject.** `SF_core/` owns class names, signatures, exceptions, limits and entitlement → [02-apex · 31–34](02-apex-and-triggers/INDEX.md). The AI vaults own prompt authoring, agent reasoning and Trust Layer policy. **Ask: is this sentence still true with no Agentforce in it?** Yes → here. No → there.
 
@@ -48,9 +47,9 @@ One flat `.md` per topic, **hard cap ~80 lines**. Skeleton in [_template.md](_te
 
 `## Core idea` → `## How it works` → `## 2026 currency` → `## Gotchas` → `## Recall` → `## Related`
 
-The recall layer is folded in as `## Recall` — 5 `Q:`/`A:` pairs in the same Anki-scriptable format as `AI_Data` flashcards, so tooling works across both vaults.
+The recall layer is folded in as `## Recall` — 5 `Q:`/`A:` pairs in a strict Anki-scriptable format, so one script works across the vault.
 
-**Why this diverges from `AI_Data/`:** that vault uses folder-per-topic with four files. At 190 topics that is ~760 files and contradicts the whole point — short notes you can reload a topic from in five minutes.
+**Why one flat file per topic:** the alternative — a folder per topic with four separate files — is what the archived `AI_Data/` did. At 190 topics that is ~760 files and contradicts the whole point — short notes you can reload a topic from in five minutes.
 
 ## Flag legend
 
@@ -59,7 +58,7 @@ The recall layer is folded in as `## Recall` — 5 `Q:`/`A:` pairs in the same A
 | 🆕 | GA'd 2024–2026. **Research against release notes before writing — never draft from recall.** |
 | ⚠️ | The 2019–2021 answer is now **wrong**. The note opens with a one-line *What changed* correction. |
 | *(GA Winter '22)* | Post-dates most tutorials, pre-dates the 🆕 window. |
-| 🌱 | Status: written and being learnt. In the [REVIEW.md](../AI_Data/REVIEW.md) rotation. |
+| 🌱 | Status: written and being learnt. In the review rotation. |
 | ⬜ | Status: **scaffolded, not written** — headings exist, content does not. Excluded from the rotation until written. Never let a `⬜` note read `🌱`. |
 
 ## Conventions
@@ -67,6 +66,6 @@ The recall layer is folded in as `## Recall` — 5 `Q:`/`A:` pairs in the same A
 - **Naming:** `NN-kebab-case.md`, numbered in learning order within an area.
 - **Links:** relative markdown. Browse in VS Code (`Ctrl+Shift+V`).
 - **New topic:** next number in the area + a row in that area's `INDEX.md` + the phase it belongs to.
-- **Currency detail** is never duplicated — link to [AI_Data/05-release-radar/](../AI_Data/05-release-radar/README.md), which is the source of truth for what changed and when.
-- **New platform jargon** goes in [AI_Data/GLOSSARY.md](../AI_Data/GLOSSARY.md). One glossary for both vaults.
+- **Currency detail** is never duplicated — link to [RELEASE-RADAR/](../RELEASE-RADAR/README.md), which is the source of truth for what changed and when.
+- **New platform jargon** goes in [GLOSSARY.md](../GLOSSARY.md). One glossary for both vaults.
 - **One commit per phase:** `SF: phase NN — <title>`.

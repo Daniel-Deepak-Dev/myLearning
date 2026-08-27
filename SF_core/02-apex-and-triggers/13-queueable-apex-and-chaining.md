@@ -44,7 +44,7 @@ public class ReconcileJob implements Queueable, Database.AllowsCallouts {
 
 ## 2026 currency
 
-**Elastic limits for async jobs are Beta at 67.0** — Queueable and `@future` enqueues are accepted up to twice the licensed daily limit and the overflow is throttled rather than rejected. For chaining code this is a meaningful change of failure mode: a runaway chain used to stop with a `LimitException` at some point in the day, and now it slows down instead, which is harder to notice. Read `DailyAsyncApexElasticExecutions` and `DailyAsyncApexProcessed` from `System.OrgLimits.getMap()` if a job needs to back off on its own. Detail and Beta caveats: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
+**Elastic limits for async jobs are Beta at 67.0** — Queueable and `@future` enqueues are accepted up to twice the licensed daily limit and the overflow is throttled rather than rejected. For chaining code this is a meaningful change of failure mode: a runaway chain used to stop with a `LimitException` at some point in the day, and now it slows down instead, which is harder to notice. Read `DailyAsyncApexElasticExecutions` and `DailyAsyncApexProcessed` from `System.OrgLimits.getMap()` if a job needs to back off on its own. Detail and Beta caveats: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 ## Gotchas
 

@@ -37,7 +37,7 @@ public class RefundLine {
 
 ## 2026 currency
 
-Two changes worth knowing, neither of them a new type system. **The no-arg constructor rule (API 66.0, Release Update enforced Summer '26) applies to the invocable half of this note** and is the most likely reason a typed payload that worked last year fails now — the platform instantiates your class, so it needs a constructor to call. → [22](22-invocable-apex-and-agentforce-actions.md). Separately, **Flow Data Tables render Apex-Defined Types as of Winter '26**, not just sObjects, which removes the standard workaround of mapping an ADT onto a throwaway custom object purely to display it. Nothing here is a Summer '26 addition: ADTs, `@InvocableVariable` and the `equals`/`hashCode` contract are all long-standing, and their currency risk is the constructor rule rather than the mechanisms themselves. → [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md)
+Two changes worth knowing, neither of them a new type system. **The no-arg constructor rule (API 66.0, Release Update enforced Summer '26) applies to the invocable half of this note** and is the most likely reason a typed payload that worked last year fails now — the platform instantiates your class, so it needs a constructor to call. → [22](22-invocable-apex-and-agentforce-actions.md). Separately, **Flow Data Tables render Apex-Defined Types as of Winter '26**, not just sObjects, which removes the standard workaround of mapping an ADT onto a throwaway custom object purely to display it. Nothing here is a Summer '26 addition: ADTs, `@InvocableVariable` and the `equals`/`hashCode` contract are all long-standing, and their currency risk is the constructor rule rather than the mechanisms themselves. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 
 ## Gotchas
 
@@ -71,4 +71,4 @@ A: Flow Data Tables can render them, not only sObjects — removing the throwawa
 - [22 · Invocable Apex & Agentforce actions](22-invocable-apex-and-agentforce-actions.md) — the signature the typed payload plugs into, and the constructor rule
 - [01 · Apex language core & governor limits](01-apex-language-core-and-governor-limits.md) — collection semantics these types have to satisfy
 - [29 · JSON, serialization & untyped data](29-json-serialization-and-untyped-data.md) — the wire format underneath these annotations, and what serialization silently drops
-- [AI_Data · custom agent actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) — why a typed return beats prose for an agent, and Custom Lightning Types
+- [SF_Agentforce · custom agent actions](../../SF_Agentforce/INDEX.md) — why a typed return beats prose for an agent, and Custom Lightning Types

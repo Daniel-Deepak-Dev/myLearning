@@ -21,7 +21,7 @@ Salesforce ships three major releases a year — Spring, Summer, Winter — and 
 
 ## 2026 currency
 
-The Summer '26 wave is where the security defaults flipped — user-mode Apex, `with sharing` by default, `WITH SECURITY_ENFORCED` no longer compiling. Those arrived as enforced platform defaults, not as opt-in toggles, which is exactly the pattern this note describes. The six of them are tabulated in [CURRENCY.md](../CURRENCY.md); running detail and dates live in [AI_Data/05-release-radar/](../../AI_Data/05-release-radar/README.md).
+The Summer '26 wave is where the security defaults flipped — user-mode Apex, `with sharing` by default, `WITH SECURITY_ENFORCED` no longer compiling. Those arrived as enforced platform defaults, not as opt-in toggles, which is exactly the pattern this note describes. The six of them are tabulated in [CURRENCY.md](../CURRENCY.md); running detail and dates live in [RELEASE-RADAR/](../../RELEASE-RADAR/README.md).
 
 ## Gotchas
 
@@ -53,4 +53,4 @@ A: Only sandboxes on preview instances, roughly four to five weeks ahead of gene
 
 - [01 · Org anatomy & editions](01-org-anatomy-and-editions.md) — the environments a release lands on
 - [CURRENCY.md](../CURRENCY.md) — the release→API map and the six flipped defaults
-- [AI_Data/05-release-radar/](../../AI_Data/05-release-radar/README.md) — the running record of what changed and when
+- [RELEASE-RADAR/](../../RELEASE-RADAR/README.md) — the running record of what changed and when

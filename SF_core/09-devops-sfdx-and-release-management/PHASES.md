@@ -3,7 +3,7 @@
 25 topics across 2 runs. Master plan: [../PHASES.md](../PHASES.md) · standing rules there apply to every phase.
 
 > **Runs before Experience Cloud (phases 18–19)**, which assumes 2GP and pipeline vocabulary.
-> Currency anchor: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
+> Currency anchor: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 > ⚠️ **Every command in this area must use `sf` v2 grammar.** Not one `sfdx force:` invocation may appear except inside an explicit "this is retired" correction. Grep the phase output before committing.
 
@@ -83,7 +83,7 @@
 - **14** carries the redaction fallout and the connected-app gate as its ⚠️, plus `SF_CI_UPDATE_FREQUENCY_MS` / `SF_CI_HEARTBEAT_FREQUENCY_MS` and the npm dist-tag ordering trap. Validate/quick-deploy *mechanics* stayed in [05](05-metadata-api-and-deployment-mechanics.md); 14 links rather than restates.
 - **15** carries **`RunRelevantTests` (Beta)** and names its real adoption cost — it is steered by `@IsTest(testFor=…)` annotations nobody backfills onto a legacy suite. The underdocumented failure it leads with is still **parallel test contention**.
 - **21** leads with the caps, quoted whole: **20 MB** per log, **24 h** system / **7 days** monitoring retention, **1,000 MB in 15 minutes disables every trace flag in the org**.
-- **22** links to [13](13-dx-mcp-server-and-agent-driven-development.md) and to [AI_Data · ADLC](../../AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md) and duplicates neither: **13 owns the tool surface, 22 owns the review discipline.**
+- **22** links to [13](13-dx-mcp-server-and-agent-driven-development.md) and to [SF_Agentforce · ADLC](../../SF_Agentforce/INDEX.md) and duplicates neither: **13 owns the tool surface, 22 owns the review discipline.**
 - **23** is not future-tense — **Hyperforce migration delays ended 1 July 2026.**
 
 **Seed harvest — under phase 16's finding that `_notion-seed/` holds INVENTORY.md and no note bodies.** Two harvests were still possible because the inventory *quotes* what it flags, and both callouts now say so on their face. `Lead Broker Field Migration` (2023) → **19**: renaming a relationship commits you to a report-type deployment, because report types are built on relationship paths. `Salesforce force VSC and Chrome extensions` (2019) → **24**: the list has turned over entirely, and the one durable line is that a browser extension reading your org has your session.

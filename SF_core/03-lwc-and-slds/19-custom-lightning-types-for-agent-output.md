@@ -2,7 +2,7 @@
 
 > Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 07
 
-**Scope:** Replacing an Agentforce action's default input form and output text with your own LWC. The agent, the topic and the action's Apex live in [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md); this is the rendering contract only.
+**Scope:** Replacing an Agentforce action's default input form and output text with your own LWC. The agent, the topic and the action's Apex live in [SF_Agentforce/](../../SF_Agentforce/INDEX.md); this is the rendering contract only.
 
 ## Core idea
 
@@ -31,7 +31,7 @@ force-app/main/default/
 
 ## 2026 currency
 
-Custom Lightning Types are the supported seam between LWC and Agentforce, and the **per-channel folder structure is the part most write-ups omit** — a renderer registered only under `lightningDesktopGenAi` does nothing in Enhanced Chat v2 or on mobile, which reads as "it works on my machine" and is really "it works on my channel." Summer '26 adds traffic in the other direction: the **`lightning/accApi`** module lets an ordinary LWC drive the Agentforce side panel with `open(botId)`, `close()` and `execute(utterance, botId)` — so a record-page component can hand the agent a question rather than waiting to be asked. Custom Lightning Types decide how agent output *looks*; `accApi` decides when the agent *appears*. → [AI_Data/05-release-radar/](../../AI_Data/05-release-radar/README.md)
+Custom Lightning Types are the supported seam between LWC and Agentforce, and the **per-channel folder structure is the part most write-ups omit** — a renderer registered only under `lightningDesktopGenAi` does nothing in Enhanced Chat v2 or on mobile, which reads as "it works on my machine" and is really "it works on my channel." Summer '26 adds traffic in the other direction: the **`lightning/accApi`** module lets an ordinary LWC drive the Agentforce side panel with `open(botId)`, `close()` and `execute(utterance, botId)` — so a record-page component can hand the agent a question rather than waiting to be asked. Custom Lightning Types decide how agent output *looks*; `accApi` decides when the agent *appears*. → [RELEASE-RADAR/](../../RELEASE-RADAR/README.md)
 
 ## Gotchas
 
@@ -65,5 +65,5 @@ A: It lets an LWC control the Agentforce side panel — `open()`, `close()`, `ex
 - [11 · LWC in Flow screens & quick actions](11-lwc-in-flow-screens-and-quick-actions.md) — the same "the `js-meta.xml` target is the contract" pattern on a different host
 - [14 · SLDS 2 & styling hooks](14-slds-2-and-styling-hooks.md) — theme-aware styling, which a chat-panel renderer needs more than a record page does
 - [22 · LWC OSS & off-platform reuse](22-lwc-open-source-and-off-platform-reuse.md) — how far a component like this travels
-- [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md) — agent actions, topics and the invocable side of the contract
+- [SF_Agentforce/](../../SF_Agentforce/INDEX.md) — agent actions, topics and the invocable side of the contract
 - [04-flow · Flows as agent actions](../04-flow-and-automation/INDEX.md) — the other way an action gets built

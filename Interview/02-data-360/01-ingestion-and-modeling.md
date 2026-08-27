@@ -8,7 +8,7 @@
 
 ### Q1 · Zero rows, no error 🆕
 
-**Level:** Medium · **Probes:** [Data modeling DSO → DLO → DMO](../../AI_Data/01-data-cloud/03-data-modeling-dso-dlo-dmo/notes.md) · [Query anatomy & the SOQL model](../../SF_core/10-soql-and-sosl/01-query-anatomy-and-the-soql-model.md)
+**Level:** Medium · **Probes:** [Data modeling DSO → DLO → DMO](../../SF_Data_360/INDEX.md) · [Query anatomy & the SOQL model](../../SF_core/10-soql-and-sosl/01-query-anatomy-and-the-soql-model.md)
 
 **Scenario.** A developer has written an Apex-backed agent action that queries a DLO with SOQL. It returns zero records. No exception, no error in the debug log, no FLS violation. They have spent the afternoon on it: checked the `WHERE` clause against the data, confirmed the records exist in the Data 360 UI, verified the running user's permissions, rewritten the filter three ways, and added `LIMIT 1` with no filter at all — still zero. They are now convinced it is a platform bug and want to raise a case.
 
@@ -50,7 +50,7 @@
 
 ### Q2 · Fresh enough for the dashboard
 
-**Level:** Medium · **Probes:** [Ingestion](../../AI_Data/01-data-cloud/02-ingestion/notes.md) · [RAG on Platform](../../AI_Data/01-data-cloud/08-rag-on-platform/notes.md)
+**Level:** Medium · **Probes:** [Ingestion](../../SF_Data_360/INDEX.md) · [RAG on Platform](../../SF_Data_360/INDEX.md)
 
 **Scenario.** A utilities client has 23 data streams into Data 360, all on a nightly batch refresh — a configuration inherited from an analytics project two years ago and never revisited. They are now adding a service agent that answers "what is the status of my outage report?" A junior consultant has proposed moving all 23 streams to streaming ingestion "so everything is real-time." The client's data team has pushed back on cost. The agent goes live in three weeks.
 
@@ -92,7 +92,7 @@
 
 ### Q3 · Fourteen custom DMOs
 
-**Level:** Complex · **Probes:** [Data modeling DSO → DLO → DMO](../../AI_Data/01-data-cloud/03-data-modeling-dso-dlo-dmo/notes.md) · [Identity Resolution](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md) · [Insights & segmentation](../../AI_Data/01-data-cloud/05-insights-segmentation/notes.md)
+**Level:** Complex · **Probes:** [Data modeling DSO → DLO → DMO](../../SF_Data_360/INDEX.md) · [Identity Resolution](../../SF_Data_360/INDEX.md) · [Insights & segmentation](../../SF_Data_360/INDEX.md)
 
 **Scenario.** You are reviewing a Data 360 implementation six months in. Seven source systems have been ingested. The team created **fourteen custom DMOs** — roughly one per source, plus a few variants — because "the standard DMOs didn't quite fit our fields." Identity resolution currently produces a profile count 2.8× the estimated customer base. Four calculated insights and eleven segments are built on top. The client is now asking why their agent gives inconsistent answers about the same customer depending on how the question is phrased.
 
@@ -143,7 +143,7 @@
 
 ### Q4 · One field, renamed
 
-**Level:** Complex · **Probes:** [Data modeling DSO → DLO → DMO](../../AI_Data/01-data-cloud/03-data-modeling-dso-dlo-dmo/notes.md) · [Data 360 DevOps](../../AI_Data/01-data-cloud/09-data-360-devops/notes.md) · [Insights & segmentation](../../AI_Data/01-data-cloud/05-insights-segmentation/notes.md)
+**Level:** Complex · **Probes:** [Data modeling DSO → DLO → DMO](../../SF_Data_360/INDEX.md) · [Data 360 DevOps](../../SF_Data_360/INDEX.md) · [Insights & segmentation](../../SF_Data_360/INDEX.md)
 
 **Scenario.** An upstream team is migrating their billing platform. In four weeks, the field currently arriving as `cust_email_primary` becomes `primary_email`, and a second field changes from a nullable string to an empty-string-defaulted one. That DLO maps to the Individual DMO, feeds the email-based match rule in the live ruleset, and three activated segments and a churn insight sit downstream. They have told you as a courtesy, not a request, and the date is fixed. Your agent grounds on the resulting profiles.
 
@@ -158,7 +158,7 @@
 - **Why the empty-string change is the real problem.** Data 360 collapses `NULL` and `''` by default — the way Platform objects behave. Once the upstream sends `''` instead of `NULL`, the semantics of "no email" change, and **`honorEmptyStrings` decides whether the platform agrees with the upstream's intent**. Get it wrong and you do not get an error. You get an email match rule matching records on a shared empty value, which is **over-matching** — the cheaper direction and a privacy incident, because two people merged into one profile means one customer's data is visible in the other's. Decide this deliberately rather than inheriting the default.
 - **Sequence the work.**
   - **Now:** go back to the upstream team, because "courtesy" understates it. Ask whether `''` means "no email" or "unknown", since that determines your setting, and confirm whether the two changes ship together or separately — separate cutovers are two smaller problems and worth asking for.
-  - **Before the date:** replicate both changes in a lower environment with the real ruleset, and measure the **profile-count-to-source-row ratio** before and after. That ratio is the detector for both under- and over-matching, and it is also the bill under profile pricing, so it is the number to put in front of the client either way. Promote the model change through the normal [Data 360 DevOps](../../AI_Data/01-data-cloud/09-data-360-devops/notes.md) path rather than hand-editing production.
+  - **Before the date:** replicate both changes in a lower environment with the real ruleset, and measure the **profile-count-to-source-row ratio** before and after. That ratio is the detector for both under- and over-matching, and it is also the bill under profile pricing, so it is the number to put in front of the client either way. Promote the model change through the normal [Data 360 DevOps](../../SF_Data_360/INDEX.md) path rather than hand-editing production.
   - **On the date:** cut over the mapping in step with the upstream, then re-run the ruleset and check the ratio against the baseline you took.
   - **After:** validate the churn insight against hand-written SQL rather than trusting a row count, and verify the three activated segments still resolve to sane sizes. An activated segment that silently halves has already published to a target.
 - **The blast radius is the thing to state explicitly**, because it is what justifies treating a courtesy note as a project: mapping → match rule → unified profiles → churn insight → three activated segments → agent grounding. **Everything downstream inherits the mapping.** One field, six consumers.

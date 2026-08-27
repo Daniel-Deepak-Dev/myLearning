@@ -83,7 +83,7 @@ The durable point survives — *"Salesforce backs it up" is not a plan* — but 
 
 **4. Topic 23 needed a ⚠️, because the date had already passed.** Salesforce Help: *"Starting July 1, 2026, it is no longer possible to delay upgrades to Hyperforce."* Five weeks before the phase ran. Concrete developer-visible consequence: **file previews are generated as JPG, not SVG**, regardless of preference — pre-migration SVGs survive, new uploads do not.
 
-**5. Topic 18 is two features at different maturities, under a renamed product.** *Query federation* and **File Federation** (Apache Iceberg, read at the storage layer with Data 360's own compute — **no external compute bill**) are separate; AWS Glue is GA while Fabric OneLake is Beta, and [AI_Data](../../AI_Data/01-data-cloud/06-zero-copy-byol/notes.md) owns that table. **Data Cloud was renamed Data 360 on 14 Oct 2025**, so every older source uses the old name.
+**5. Topic 18 is two features at different maturities, under a renamed product.** *Query federation* and **File Federation** (Apache Iceberg, read at the storage layer with Data 360's own compute — **no external compute bill**) are separate; AWS Glue is GA while Fabric OneLake is Beta, and [SF_Data_360](../../SF_Data_360/INDEX.md) owns that table. **Data Cloud was renamed Data 360 on 14 Oct 2025**, so every older source uses the old name.
 
 ### The retirement nobody had recorded
 
@@ -106,7 +106,7 @@ This is the **second** "old *and* dead" finding in the build, after phase 14's A
 
 - **15** owns retention *policy*; [14](14-big-objects-and-the-archive-tier.md) keeps the big-object *mechanism*.
 - **17** owns the copy-or-federate *decision*; [06-integration · 20](../06-integration-and-apis/20-salesforce-connect-and-external-objects.md) keeps adapters and relationships.
-- **18** links to [AI_Data](../../AI_Data/01-data-cloud/06-zero-copy-byol/notes.md) for connector status rather than restating it.
+- **18** links to [SF_Data_360](../../SF_Data_360/INDEX.md) for connector status rather than restating it.
 - **19** links to [01-admin · 08](../01-admin-and-declarative-platform/08-validation-rules-and-duplicate-management.md) for matching/duplicate rule mechanics.
 - **20** owns sandbox *data*; [09-devops](../09-devops-sfdx-and-release-management/INDEX.md) keeps source tracking.
 - **24** links every threshold to the note that owns it — no number is restated, because half-quoting is how this area's facts go wrong.

@@ -40,7 +40,7 @@ List<Audit__c> log = Database.query(                      // deliberate elevatio
 
 ## 2026 currency
 
-The reasoning matters more than the mechanics: the platform stopped assuming the surface in front of Apex had already filtered the data. That was a safe assumption when the caller was a Lightning page and is not when the caller may be an autonomous agent over MCP. The migration is deliberately asymmetric — the new defaults apply to classes **compiled at 67.0**, so nothing breaks on upgrade day, and the risk arrives later when someone bumps an old class's API version and its data-access semantics change underneath unchanged code. That is an argument for a written team convention, not a code comment. Sources and dates: [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
+The reasoning matters more than the mechanics: the platform stopped assuming the surface in front of Apex had already filtered the data. That was a safe assumption when the caller was a Lightning page and is not when the caller may be an autonomous agent over MCP. The migration is deliberately asymmetric — the new defaults apply to classes **compiled at 67.0**, so nothing breaks on upgrade day, and the risk arrives later when someone bumps an old class's API version and its data-access semantics change underneath unchanged code. That is an argument for a written team convention, not a code comment. Sources and dates: [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
 
 ## Gotchas
 

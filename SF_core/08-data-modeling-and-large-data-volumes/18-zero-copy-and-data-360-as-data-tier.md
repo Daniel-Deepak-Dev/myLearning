@@ -2,7 +2,7 @@
 
 > Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 15
 
-**Scope:** Data 360 seen from the *core platform* — when it is the right tier for CRM data and when federation is a latency trap. Its architecture, connectors and GA status table live in [AI_Data · Zero Copy & BYOL](../../AI_Data/01-data-cloud/06-zero-copy-byol/notes.md); this note does not restate them.
+**Scope:** Data 360 seen from the *core platform* — when it is the right tier for CRM data and when federation is a latency trap. Its architecture, connectors and GA status table live in [SF_Agentforce · Zero Copy & BYOL](../../SF_Data_360/INDEX.md); this note does not restate them.
 
 ## Core idea
 
@@ -13,7 +13,7 @@ For a data architect the interesting consequence is that "the org is too big" no
 ## How it works
 
 - **Two federation modes, not one.** *Query federation* pushes a query into Snowflake, BigQuery, Redshift or Databricks; **File Federation** reads **Apache Iceberg** tables directly at the storage layer via an Iceberg REST catalog, using Data 360's own compute — so there is **no warehouse cluster to run and no external compute bill**.
-- **The status of each connector is the design decision.** AWS Glue Data Catalog is GA; Microsoft Fabric OneLake is Beta. Read the labels literally and check the current table before committing → [AI_Data](../../AI_Data/01-data-cloud/06-zero-copy-byol/notes.md).
+- **The status of each connector is the design decision.** AWS Glue Data Catalog is GA; Microsoft Fabric OneLake is Beta. Read the labels literally and check the current table before committing → [SF_Data_360](../../SF_Data_360/INDEX.md).
 - **It goes both ways.** External lakes can query unified Data 360 tables, so "federate into Salesforce" and "expose Salesforce to the lake" are the same connection.
 - **Data 360 ships monthly**, not on the three-release cadence — a currency assumption that holds everywhere else in this vault fails here.
 - **Ingestion is still a thing**, and sometimes the right one; the copy-based alternative is Accelerated Data Ingest.
@@ -54,5 +54,5 @@ A: Data Cloud. Sources older than that use the old name throughout.
 
 - [17 · External objects vs replicated copies](17-external-objects-vs-replicated-copies.md) — the same decision before this tier existed
 - [15 · Archiving & retention strategy](15-archiving-and-retention-strategy.md) — Data 360 as an archive destination
-- [AI_Data · Zero Copy & BYOL](../../AI_Data/01-data-cloud/06-zero-copy-byol/notes.md) — connectors, GA status and the grounding story
+- [SF_Agentforce · Zero Copy & BYOL](../../SF_Data_360/INDEX.md) — connectors, GA status and the grounding story
 - [04-flow · 22 Data Cloud-triggered flows](../04-flow-and-automation/22-data-cloud-triggered-flows-and-data-actions.md) — reacting to the tier from the core platform

@@ -8,7 +8,7 @@
 
 ### Q1 · The churn alert that fires on nobody
 
-**Level:** Medium · **Probes:** [Insights & segmentation](../../AI_Data/01-data-cloud/05-insights-segmentation/notes.md) · [Identity Resolution](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md)
+**Level:** Medium · **Probes:** [Insights & segmentation](../../SF_Data_360/INDEX.md) · [Identity Resolution](../../SF_Data_360/INDEX.md)
 
 **Scenario.** A subscription client has an RFM insight producing tier labels — champion, loyal, at risk, lapsed. Marketing has built an automation on the *transition*: when a profile moves from champion to loyal, trigger a retention campaign. It ran beautifully for two months. Last week it fired on 34,000 profiles overnight, including customers who had bought that same week. Nobody deployed anything. The insight definition has not changed.
 
@@ -50,7 +50,7 @@
 
 ### Q2 · The cheaper direction
 
-**Level:** Complex · **Probes:** [Identity Resolution](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md) · [Insights & segmentation](../../AI_Data/01-data-cloud/05-insights-segmentation/notes.md) · [Privacy, consent & data protection](../../SF_core/07-security-and-sharing/25-privacy-consent-and-data-protection.md)
+**Level:** Complex · **Probes:** [Identity Resolution](../../SF_Data_360/INDEX.md) · [Insights & segmentation](../../SF_Data_360/INDEX.md) · [Privacy, consent & data protection](../../SF_core/07-security-and-sharing/25-privacy-consent-and-data-protection.md)
 
 **Scenario.** A financial-services client's Data 360 bill is over budget. Their profile count is 4.1M against an estimated 2.6M customers, and someone has calculated that closing the gap saves roughly $360k a year at ~$240 per 1,000 profiles. The data team has proposed a looser ruleset: add fuzzy name plus address matching alongside the existing exact-email rule. Modelling says it brings the count to about 2.7M. The CFO likes it. Their agent grounds on these profiles, and their customers include joint account holders and multi-generational households.
 
@@ -92,7 +92,7 @@
 
 ### Q3 · Re-running the ruleset on 4 million profiles
 
-**Level:** Complex · **Probes:** [Identity Resolution](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md) · [Data 360 DevOps](../../AI_Data/01-data-cloud/09-data-360-devops/notes.md) · [Insights & segmentation](../../AI_Data/01-data-cloud/05-insights-segmentation/notes.md)
+**Level:** Complex · **Probes:** [Identity Resolution](../../SF_Data_360/INDEX.md) · [Data 360 DevOps](../../SF_Data_360/INDEX.md) · [Insights & segmentation](../../SF_Data_360/INDEX.md)
 
 **Scenario.** The precision fixes from the previous engagement are agreed: add exact-match on a newly-available shared customer ID, tighten the email rule, and change reconciliation on `Email` from most-recent to source-priority. The client has 4.1M profiles, six activated segments publishing to Marketing Cloud and two ad platforms, a live service agent grounding on these profiles, and a nightly insight refresh. Change board wants a plan. There is no full-volume lower environment.
 
@@ -112,7 +112,7 @@
 - **Baseline first, and take it deliberately** — profile count, source-row count and the ratio; the six segment sizes; the two insight values. Without a full-volume lower environment this baseline is the only control you have, so it is a step, not an assumption.
 - **Split the change.** Three modifications with different risk profiles landing together is one unattributable outcome. Sequence them: the customer-ID exact match first, since it is the highest-precision and most predictable; the email tightening second; reconciliation last, because its effects are invisible to count checks and you want a clean population when you validate it.
 - **Pause activations across each cutover.** This is the one non-negotiable — segment publishing is the irreversible consumer, and pausing costs a cycle while not pausing costs an audience.
-- **Use what the lack of a full-volume sandbox still allows.** A representative subset in a lower environment will not predict the profile count, but it *will* validate rule correctness and reconciliation behaviour, which is what you actually need it for. Promote the change through the normal [Data 360 DevOps](../../AI_Data/01-data-cloud/09-data-360-devops/notes.md) path rather than hand-editing production. Do not let "no full-scale sandbox" become "no sandbox."
+- **Use what the lack of a full-volume sandbox still allows.** A representative subset in a lower environment will not predict the profile count, but it *will* validate rule correctness and reconciliation behaviour, which is what you actually need it for. Promote the change through the normal [Data 360 DevOps](../../SF_Data_360/INDEX.md) path rather than hand-editing production. Do not let "no full-scale sandbox" become "no sandbox."
 - **After each step:** check the ratio against baseline, then validate insights against hand-written SQL rather than trusting a UI count, then resume activations once segment sizes are sane.
 - **Expect the direction and state it upfront.** Tightening plus a new high-precision key should *reduce* the count. If it rises, matching got stricter than intended and you are now paying for fragmentation — which is the failure mode this whole engagement was reversing.
 
@@ -141,7 +141,7 @@
 
 ### Q4 · Whose churn number is it 🆕
 
-**Level:** Medium · **Probes:** [Insights & segmentation](../../AI_Data/01-data-cloud/05-insights-segmentation/notes.md) · [RAG on Platform](../../AI_Data/01-data-cloud/08-rag-on-platform/notes.md)
+**Level:** Medium · **Probes:** [Insights & segmentation](../../SF_Data_360/INDEX.md) · [RAG on Platform](../../SF_Data_360/INDEX.md)
 
 **Scenario.** An exec asks the agent "what was churn last quarter?" and gets 11.2%. The finance team's board pack says 7.8%. Both numbers are defensible: finance excludes customers who downgraded rather than cancelled, and counts on contract end date; the Data 360 calculated insight counts any subscription lapse on the lapse date. The exec's question to you is short: "which one is right, and why is the agent making up numbers?"
 

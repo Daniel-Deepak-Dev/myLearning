@@ -30,5 +30,4 @@ Three facts that reach across all three areas, and every scenario here turns on 
 ## Related
 
 - [01-agentforce/](../01-agentforce/INDEX.md) · [02-data-360/](../02-data-360/INDEX.md) · [03-core-platform/](../03-core-platform/INDEX.md) — the three areas these compose
-- [AI_Data/04-capstone/](../../AI_Data/04-capstone/INDEX.md) — the shipped proof. A capstone you have built is the strongest possible answer to any of these, because it converts an argument into an artifact
 - [WEAK-ANSWERS.md](../WEAK-ANSWERS.md) — expect to log misses from this set. That is the set working, not you failing

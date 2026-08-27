@@ -2,7 +2,7 @@
 
 > Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 13
 
-**Scope:** The judgment call — what belongs on the platform and what belongs off it. Product depth is deliberately out of scope; this is the boundary argument you have to make in a design review. Agent-layer governance is [AI_Data · Agent Fabric](../../AI_Data/02-salesforce-ai/11-agent-fabric-and-interop/notes.md).
+**Scope:** The judgment call — what belongs on the platform and what belongs off it. Product depth is deliberately out of scope; this is the boundary argument you have to make in a design review. Agent-layer governance is [SF_Agentforce · Agent Fabric](../../SF_Agentforce/INDEX.md).
 
 ## Core idea
 
@@ -14,7 +14,7 @@ Salesforce is very good at being a system of record and quite bad at being a sys
 
 - **The three layers are about change, not about tiers.** A system API changes when the source system does; a process API changes when the business does; an experience API changes when a UI does. Putting them in one place couples all three clocks.
 - **MuleSoft is the product; the boundary is the idea.** The same reasoning applies with any gateway, iPaaS or hand-built service — and applies equally to *not* buying one.
-- **Anypoint Exchange is a catalog**, and the reason MuleSoft became the home of Salesforce's agent-governance story: it already knew how to register, govern and observe APIs → [AI_Data · Agent Fabric](../../AI_Data/02-salesforce-ai/11-agent-fabric-and-interop/notes.md).
+- **Anypoint Exchange is a catalog**, and the reason MuleSoft became the home of Salesforce's agent-governance story: it already knew how to register, govern and observe APIs → [SF_Agentforce · Agent Fabric](../../SF_Agentforce/INDEX.md).
 - **On-platform is right when** the logic is Salesforce-only, the volume fits in limits, and the data already lives here.
 - **Off-platform is right when** the work fans out to several systems, must survive Salesforce being down, exceeds callout or CPU budgets, or needs orchestration with retries and a dead-letter queue → [23](23-idempotency-retries-and-error-handling.md).
 
@@ -52,5 +52,5 @@ A: The numeric trigger for revisiting the decision, not a permanent verdict.
 
 - [01 · Integration patterns & selection](01-integration-patterns-and-selection.md) — the pattern taxonomy this boundary sits on top of
 - [23 · Idempotency, retries & error handling](23-idempotency-retries-and-error-handling.md) — the properties middleware is bought for
-- [AI_Data · MuleSoft Agent Fabric](../../AI_Data/02-salesforce-ai/11-agent-fabric-and-interop/notes.md) — the same playbook applied to agents
+- [SF_Agentforce · MuleSoft Agent Fabric](../../SF_Agentforce/INDEX.md) — the same playbook applied to agents
 - [22 · Event Relay & cloud eventing](22-event-relay-and-cloud-eventing.md) — moving events off-platform without middleware at all

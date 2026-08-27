@@ -69,7 +69,7 @@
 
 **Scope notes the plan left, and what happened to them**
 - **15** carries the judgment call as its content, depends on [06-integration · 08 UI API](../06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md), and does **not** restate Headless Identity — [10](10-authentication-self-registration-and-sso.md) owns it. Its sharpest line is that **headless still requires a site**.
-- **19** seams into [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md), cross-links the Trust Layer rather than restating it, and treats an embedded agent as **a new line item on [11](11-public-site-exposure-audit.md)**, not a separate subject.
+- **19** seams into [SF_Agentforce/](../../SF_Agentforce/INDEX.md), cross-links the Trust Layer rather than restating it, and treats an embedded agent as **a new line item on [11](11-public-site-exposure-audit.md)**, not a separate subject.
 - **20** kept phase 18's **100 sites per org** (counting inactive, preview and Visualforce) and replaced the hedged allowance with the sourced one.
 
 **Seed harvest — none, and that was correct.** [../\_notion-seed/INVENTORY.md](../_notion-seed/INVENTORY.md) line 121 maps only `Exp Cloud Certification Prep` (2022) and a ⛔-skip Visualforce row to this area, both already spent by phase 18. Recording zero here so a later reader does not mistake it for an omission.

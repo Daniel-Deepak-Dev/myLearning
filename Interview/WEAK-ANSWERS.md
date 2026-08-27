@@ -4,7 +4,7 @@
 
 **The only file here that gets more valuable over time.** Every other file in this vault was written once. This one is written by you, and after a month of use it is the most accurate map of what you cannot yet say out loud under pressure.
 
-Same habit as [_cert-*/weak-areas.md](../AI_Data/02-salesforce-ai/_cert-agentforce-specialist/weak-areas.md), applied to reasoning rather than recall.
+Same habit as [_cert-*/weak-areas.md](../SF_Agentforce/INDEX.md), applied to reasoning rather than recall.
 
 ## The rule
 
@@ -19,7 +19,7 @@ Log the miss, not the topic. "Data 360 pricing" is useless six weeks later. "Cou
 |  |  |  |  |
 
 <!-- Format:
-2026-08-24 | [AF 01·Q3](01-agentforce/01-grounding-and-retrieval.md) | Reached for prompt engineering; never split the question into a retrieval half and a deterministic half | [Agent Script](../AI_Data/02-salesforce-ai/07-agent-script/notes.md)
+2026-08-24 | [AF 01·Q3](01-agentforce/01-grounding-and-retrieval.md) | Reached for prompt engineering; never split the question into a retrieval half and a deterministic half | [Agent Script](../SF_Agentforce/INDEX.md)
 
 "What actually went wrong" is the load-bearing column. Not "didn't know RAG limits" —
 *what you said instead*, and what it revealed. Be specific enough to be embarrassing;
@@ -55,4 +55,4 @@ One line per session, so you can see whether the misses are thinning. Three scen
 
 - [README.md](README.md) — how to use the vault; the out-loud rule lives there too
 - [04-cross-domain/](04-cross-domain/INDEX.md) — expect the most rows from here. That is the set working, not you failing
-- [AI_Data/journal/](../AI_Data/journal/) — the weekly log. A pattern that survives three weeks here belongs in a journal entry
+- [LEARNING-LOG.md](../LEARNING-LOG.md) — the dated feed log. A pattern that survives three weeks here belongs in a journal entry

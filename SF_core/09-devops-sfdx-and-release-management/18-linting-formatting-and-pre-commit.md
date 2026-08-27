@@ -21,7 +21,7 @@ Salesforce projects have an unusual amount of this to manage because a single re
 
 ## 2026 currency
 
-The one item here that is a correctness issue rather than a taste issue is **LWS distortions**. Summer '26 added several — `data:` URIs blocked on anchor `href`, plus changes around `getAttribute`, `innerHTML`/`outerHTML` getters, `MutationObserver.observe`, the IndexedDB factory and `Promise` methods. The **updated LWS ESLint package** is how you find these before a component breaks in an org, and the **LWS Distortion Viewer** is how you check one you are unsure about → [AI_Data/05-release-radar](../../AI_Data/05-release-radar/developer-tooling-and-apis.md). Note the standing correction: **LWS is the default and Locker was not retired** — an org can still be on the older architecture, so "it works in my org" is not portable evidence → [03-lwc · 09](../03-lwc-and-slds/09-lightning-web-security.md).
+The one item here that is a correctness issue rather than a taste issue is **LWS distortions**. Summer '26 added several — `data:` URIs blocked on anchor `href`, plus changes around `getAttribute`, `innerHTML`/`outerHTML` getters, `MutationObserver.observe`, the IndexedDB factory and `Promise` methods. The **updated LWS ESLint package** is how you find these before a component breaks in an org, and the **LWS Distortion Viewer** is how you check one you are unsure about → [RELEASE-RADAR](../../RELEASE-RADAR/developer-tooling-and-apis.md). Note the standing correction: **LWS is the default and Locker was not retired** — an org can still be on the older architecture, so "it works in my org" is not portable evidence → [03-lwc · 09](../03-lwc-and-slds/09-lightning-web-security.md).
 
 ## Gotchas
 

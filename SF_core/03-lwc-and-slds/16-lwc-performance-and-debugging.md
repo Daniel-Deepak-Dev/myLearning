@@ -25,7 +25,7 @@ Almost every slow LWC is slow for one of three reasons, and they need different 
 
 ## 2026 currency
 
-Two Summer '26 additions matter here. **Dynamic list components** — `lightning-dynamic-list-container` and `lightning-dynamic-list-item` — bring **virtualization** to base components: only the rows in the viewport are rendered, with focus preserved across recycling, which removes the usual "paginate because the DOM died" workaround for lists in the thousands. They are **Developer Preview**, so they belong in a spike, not in a release. **Lazy-loading wire adapters** defer the fetch until the component is actually visible, which attacks the round-trip problem rather than the render one — the right lever for a tab or accordion whose contents most users never open. Neither replaces measuring first. → [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md)
+Two Summer '26 additions matter here. **Dynamic list components** — `lightning-dynamic-list-container` and `lightning-dynamic-list-item` — bring **virtualization** to base components: only the rows in the viewport are rendered, with focus preserved across recycling, which removes the usual "paginate because the DOM died" workaround for lists in the thousands. They are **Developer Preview**, so they belong in a spike, not in a release. **Lazy-loading wire adapters** defer the fetch until the component is actually visible, which attacks the round-trip problem rather than the render one — the right lever for a tab or accordion whose contents most users never open. Neither replaces measuring first. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 
 ## Gotchas
 

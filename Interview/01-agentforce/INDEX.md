@@ -1,6 +1,6 @@
 # 01 · Agentforce
 
-Scenario questions on agents in production — where they fail, why the failure looks like something else, and what a client's security team and CFO actually ask. Source knowledge: [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md).
+Scenario questions on agents in production — where they fail, why the failure looks like something else, and what a client's security team and CFO actually ask. Source knowledge: [SF_Agentforce/](../../SF_Agentforce/INDEX.md).
 
 > ⚠️ **Every answer here assumes Agent Script.** The *New Agent* button stopped opening the topic-and-instruction builder the week of **July 13, 2026**. An answer that walks an interviewer through topics and instructions as the current authoring model is describing a retired product — and most online prep material still does.
 
@@ -21,7 +21,7 @@ Scenario questions on agents in production — where they fail, why the failure 
 
 ## Related
 
-- [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md) — the source notes every answer links into
-- [AI_Data/02-salesforce-ai/_labs/](../../AI_Data/02-salesforce-ai/_labs/README.md) — the lab ladder. A scenario you have *run* answers differently from one you have read
-- [_cert-agentforce-specialist/](../../AI_Data/02-salesforce-ai/_cert-agentforce-specialist/exam-guide.md) — exam prep, a different exercise: certification tests recall, these test reasoning
+- [SF_Agentforce/](../../SF_Agentforce/INDEX.md) — the source notes every answer links into
+- [SF_Agentforce/](../../SF_Agentforce/INDEX.md) — the lab ladder. A scenario you have *run* answers differently from one you have read
+- [_cert-agentforce-specialist/](../../SF_Agentforce/INDEX.md) — exam prep, a different exercise: certification tests recall, these test reasoning
 - [04-cross-domain/](../04-cross-domain/INDEX.md) — where these collide with Data 360 and the core platform

@@ -34,7 +34,7 @@ The default LWC loop is deploy-and-refresh, and it is slow enough to change how 
 
 ## 2026 currency
 
-**LWC Component Preview is GA at API 67.0**, and Summer '26's contribution is performance — HMR is faster and uses less memory, which is what makes single-component preview usable as a continuous loop rather than something you start when stuck. The naming history is worth holding precisely, because search results are a minefield: *local dev server* (retired, off-org, mock-based) → *Lightning Preview* / *Local Dev* (2024, org-backed) → **Live Preview** (the VS Code extension) with **LWC Component Preview** as the single-component capability. → [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md)
+**LWC Component Preview is GA at API 67.0**, and Summer '26's contribution is performance — HMR is faster and uses less memory, which is what makes single-component preview usable as a continuous loop rather than something you start when stuck. The naming history is worth holding precisely, because search results are a minefield: *local dev server* (retired, off-org, mock-based) → *Lightning Preview* / *Local Dev* (2024, org-backed) → **Live Preview** (the VS Code extension) with **LWC Component Preview** as the single-component capability. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 
 ## Gotchas
 

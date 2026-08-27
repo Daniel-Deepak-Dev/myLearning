@@ -2,7 +2,7 @@
 
 > Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 23
 
-**Scope:** `ConnectApi.EinsteinLLM` — Apex as the *caller* of a prompt template, the inverse of [31](31-apex-grounded-prompt-templates.md). Calling a model with no template at all is [33](33-models-api-in-apex.md); what makes a template good is [AI_Data/02-salesforce-ai/03-prompt-builder/notes.md](../../AI_Data/02-salesforce-ai/03-prompt-builder/notes.md).
+**Scope:** `ConnectApi.EinsteinLLM` — Apex as the *caller* of a prompt template, the inverse of [31](31-apex-grounded-prompt-templates.md). Calling a model with no template at all is [33](33-models-api-in-apex.md); what makes a template good is [SF_Agentforce · prompt-builder](../../SF_Agentforce/INDEX.md).
 
 ## Core idea
 
@@ -74,4 +74,4 @@ A: The 67.0 class reference lists only `generateMessagesForPromptTemplate` and `
 - [31 · Apex-grounded prompt templates](31-apex-grounded-prompt-templates.md) — the inverse direction, where Apex feeds the template instead of calling it
 - [33 · Models API in Apex](33-models-api-in-apex.md) — when you want a model and no template at all
 - [34 · Testing AI Apex & mocking LLMs](34-testing-ai-apex-and-mocking-llms.md) — why this class cannot be mocked and what to do instead
-- [AI_Data · Einstein Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md) — the masking, grounding and audit this path buys you over a raw callout
+- [SF_Agentforce · Einstein Trust Layer](../../SF_Agentforce/INDEX.md) — the masking, grounding and audit this path buys you over a raw callout

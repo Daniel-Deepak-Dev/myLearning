@@ -2,7 +2,7 @@
 
 > Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 09
 
-**Scope:** The Flow builder's side of an agent action — what shape a flow must be, and what the agent actually reads. Agent design, reasoning and the wider action catalogue live in [AI_Data/02-salesforce-ai/05](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md).
+**Scope:** The Flow builder's side of an agent action — what shape a flow must be, and what the agent actually reads. Agent design, reasoning and the wider action catalogue live in [SF_Agentforce/](../../SF_Agentforce/INDEX.md).
 
 ## Core idea
 
@@ -12,7 +12,7 @@ An agent action built in Flow is an ordinary autolaunched flow with one unusual 
 
 | Requirement | Detail |
 |---|---|
-| Flow type | **Autolaunched (no trigger) only** — no screen flows, no record-triggered |
+| Flow type | **Autolaunched (no trigger) only** — no screen flows, no record-triggered. This rule governs *agent actions*; a [template-triggered prompt flow](../../SF_Agentforce/template-triggered-prompt-flows.md) is a separate flow type with its own rules |
 | Inputs | variables with **Available for input** ticked, each with a description |
 | Outputs | variables with **Available for output** ticked, each with a description |
 | Contract | **locked once the action is published** — logic can change, the interface cannot |
@@ -26,7 +26,7 @@ An agent action built in Flow is an ordinary autolaunched flow with one unusual 
 
 ## 2026 currency
 
-Summer '26 puts the agent *inside* Flow Builder rather than only alongside it. The **Create Agent element (GA)** builds or deploys an agent straight from the canvas, including small purpose-built agents with their own instructions — so a flow can now create the thing that calls flows. The **Add Prompt Instructions element** gained breadcrumb navigation for nested resource selection, which matters more than it sounds when the prompt is assembled from Apex-defined structures. The wider context is the authoring shift recorded in the AI vault: since **July 2026** new agents are authored in **Agent Script**, not the legacy topic-and-instruction builder, and most tutorials still teach the old model. What has not changed is the part this note owns — the flow is still an autolaunched flow and the description is still the interface. → [AI_Data/02-salesforce-ai/](../../AI_Data/02-salesforce-ai/INDEX.md)
+Summer '26 puts the agent *inside* Flow Builder rather than only alongside it. The **Create Agent element (GA)** builds or deploys an agent straight from the canvas, including small purpose-built agents with their own instructions — so a flow can now create the thing that calls flows. The **Add Prompt Instructions element** gained breadcrumb navigation for nested resource selection, which matters more than it sounds when the prompt is assembled from Apex-defined structures. The wider context is the authoring shift recorded in the AI vault: since **July 2026** new agents are authored in **Agent Script**, not the legacy topic-and-instruction builder, and most tutorials still teach the old model. What has not changed is the part this note owns — the flow is still an autolaunched flow and the description is still the interface. → [SF_Agentforce/](../../SF_Agentforce/INDEX.md)
 
 ## Gotchas
 
@@ -37,7 +37,7 @@ Summer '26 puts the agent *inside* Flow Builder rather than only alongside it. T
 - **An unhandled fault reaches a customer as a non-answer.** Catch it and return an output the agent can say out loud. → [10](10-fault-paths-and-custom-errors.md)
 - **Flow has no Map type**, so anything map-shaped has to be modelled as a collection of records or an Apex-defined type. → [11](11-flow-and-apex-interop.md)
 - **An over-general action is a routing hazard**, not a convenience — it competes with every other action for the same request.
-- **Agent invocation is not free.** Each action consumes Flex Credits, so a chatty design is a billing design. → [AI_Data/GLOSSARY.md](../../AI_Data/GLOSSARY.md)
+- **Agent invocation is not free.** Each action consumes Flex Credits, so a chatty design is a billing design. → [GLOSSARY.md](../../GLOSSARY.md)
 
 ## Recall
 
@@ -58,6 +58,7 @@ A: The ability to build or deploy an agent — including a small purpose-built o
 
 ## Related
 
-- [AI_Data/02-salesforce-ai/05 Custom agent actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) — the full action catalogue and the description-as-specification argument
+- [SF_Agentforce · Template-Triggered Prompt Flows](../../SF_Agentforce/template-triggered-prompt-flows.md) — **a different flow type.** That one feeds a prompt template; this one is an action an agent calls
+- [SF_Agentforce · Atlas Reasoning Engine](../../SF_Agentforce/atlas-reasoning-engine.md) — the caller that reads your descriptions and decides whether to invoke this flow
 - [02-apex · 22 Invocable Apex & Agentforce actions](../02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md) — the coded action, and the API 66.0 constructor rule
 - [11 · Flow & Apex interop](11-flow-and-apex-interop.md) — the typed-payload boundary an agent action inherits

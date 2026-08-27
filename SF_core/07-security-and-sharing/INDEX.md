@@ -39,7 +39,7 @@ Sharing & Visibility architect depth, updated for the access model as it stands 
 
 ## Related
 
-- **14, 26** are the security half of [02-apex · 10–11](../02-apex-and-triggers/INDEX.md). The currency anchor for both is [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md) — notes here must not contradict it.
+- **14, 26** are the security half of [02-apex · 10–11](../02-apex-and-triggers/INDEX.md). The currency anchor for both is [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md) — notes here must not contradict it.
 - **14** is also the security-side twin of [04-flow · 19 Flow run context](../04-flow-and-automation/19-flow-run-context-and-sharing.md). The two agree deliberately: **Apex flipped to user mode at 67.0 and Flow did not**, so the same logic is more permissive built in Flow.
 - **[16](16-sharing-recalculation-and-performance.md)** pairs with [08-data · 10 Data skew](../08-data-modeling-and-large-data-volumes/10-data-skew.md) — ownership skew is a sharing-recalc problem before it is a query problem, and this note landed first so it owns the mechanics.
 - **02, 06** hand off to [05-experience-cloud · 08 Licences](../05-experience-cloud-lwr/08-licences-and-external-user-types.md) and [**· 09 Sharing for external users**](../05-experience-cloud-lwr/09-sharing-for-external-users.md) — external licence types, sharing sets and share groups are owned there, not here.

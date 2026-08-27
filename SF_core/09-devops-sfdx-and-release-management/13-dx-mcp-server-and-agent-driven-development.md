@@ -2,7 +2,7 @@
 
 > Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 16
 
-**Scope:** Letting a coding agent drive your org and your project — the Salesforce DX MCP server, its toolsets and its blast radius. Agents *built on* the platform are [06-integration · 25](../06-integration-and-apis/25-mcp-servers-and-agent-facing-apis.md) and `AI_Data/`.
+**Scope:** Letting a coding agent drive your org and your project — the Salesforce DX MCP server, its toolsets and its blast radius. Agents *built on* the platform are [06-integration · 25](../06-integration-and-apis/25-mcp-servers-and-agent-facing-apis.md) and [SF_Agentforce/](../../SF_Agentforce/INDEX.md).
 
 ## Core idea
 
@@ -22,7 +22,7 @@ Two things make it different from the hosted, org-side MCP servers. It runs **lo
 - **`--orgs`** is the allowlist. `DEFAULT_TARGET_ORG` scopes the agent to the org the project is pointed at; naming aliases explicitly is stricter still.
 - **`--toolsets`** enables groups rather than everything; **`--tools`** adds a single tool by name.
 - **`--allow-non-ga-tools`** is required for anything below GA — and it exists because **status is per toolset, not per server**. The DevOps toolset reached GA in April 2026; the server as a whole is Beta, and several toolsets are Developer Preview.
-- **Sibling servers** cover the rest of the surface: **Metadata API Context MCP** (Beta) for accurate metadata generation, **ApexGuru** and **SLDS guideline** tools inside the DX server, **Data 360 MCP** (Developer Preview), **Omnistudio MCP** (Beta). Current status for all of them: [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md).
+- **Sibling servers** cover the rest of the surface: **Metadata API Context MCP** (Beta) for accurate metadata generation, **ApexGuru** and **SLDS guideline** tools inside the DX server, **Data 360 MCP** (Developer Preview), **Omnistudio MCP** (Beta). Current status for all of them: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
 - **`sf-skills`** — Salesforce's open-source skills for coding agents (`npx skills add forcedotcom/sf-skills`) — is the knowledge half of the same setup.
 
 ## 2026 currency

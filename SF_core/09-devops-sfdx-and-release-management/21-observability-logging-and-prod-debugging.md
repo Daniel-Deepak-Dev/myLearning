@@ -22,7 +22,7 @@ So production observability on this platform is a **design decision made in adva
 
 ## 2026 currency
 
-Two things worth folding in. **Elastic async limits (Beta)** change the shape of async failure: a runaway `Queueable` chain that used to stop with a `LimitException` can now be throttled instead, so the symptom moves from an error email to a queue draining late — which is invisible unless you are already logging enqueue and execution times → [02-apex · 24](../02-apex-and-triggers/24-apex-performance-and-profiling.md). And **agent workloads need their own observability story**: local traces land in `.sfdx/agents/…/traces/`, production goes through the Session Trace Data Model, and neither appears in a debug log → [AI_Data · observability](../../AI_Data/02-salesforce-ai/09-observability-and-testing/notes.md).
+Two things worth folding in. **Elastic async limits (Beta)** change the shape of async failure: a runaway `Queueable` chain that used to stop with a `LimitException` can now be throttled instead, so the symptom moves from an error email to a queue draining late — which is invisible unless you are already logging enqueue and execution times → [02-apex · 24](../02-apex-and-triggers/24-apex-performance-and-profiling.md). And **agent workloads need their own observability story**: local traces land in `.sfdx/agents/…/traces/`, production goes through the Session Trace Data Model, and neither appears in a debug log → [SF_Agentforce · observability](../../SF_Agentforce/INDEX.md).
 
 ## Gotchas
 

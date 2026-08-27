@@ -33,7 +33,7 @@ The reason this matters architecturally is **maintenance**. A mobile app built o
 
 ## 2026 currency
 
-**Summer '26 added `GET /ui-api/session/csrf`**, giving external clients a supported way to obtain a CSRF token instead of scraping one — a small addition that removes a genuinely fragile workaround. The larger context is **Headless 360**: Salesforce's stated direction is that every capability is reachable as an API, an MCP tool or a CLI command, and UI API is the piece that lets a non-Salesforce front end stay faithful to org configuration while doing it → [AI_Data/05-release-radar/developer-tooling-and-apis.md](../../AI_Data/05-release-radar/developer-tooling-and-apis.md). Note the boundary with [10](10-graphql-api.md): GraphQL is the efficient way to *query* across objects; UI API remains the way to *render* like Salesforce.
+**Summer '26 added `GET /ui-api/session/csrf`**, giving external clients a supported way to obtain a CSRF token instead of scraping one — a small addition that removes a genuinely fragile workaround. The larger context is **Headless 360**: Salesforce's stated direction is that every capability is reachable as an API, an MCP tool or a CLI command, and UI API is the piece that lets a non-Salesforce front end stay faithful to org configuration while doing it → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md). Note the boundary with [10](10-graphql-api.md): GraphQL is the efficient way to *query* across objects; UI API remains the way to *render* like Salesforce.
 
 ## Gotchas
 

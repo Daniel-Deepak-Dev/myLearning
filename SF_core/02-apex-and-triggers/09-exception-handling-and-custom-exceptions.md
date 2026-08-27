@@ -43,7 +43,7 @@ if (res.getStatusCode() != 200) {
 
 ## 2026 currency
 
-User mode makes `QueryException` an ordinary runtime outcome rather than a sign of a bug. A field the running user cannot read now throws instead of returning null, and the same applies to writes — so exception handling has quietly become part of the access model, not just the error path. One detail is a genuine improvement worth exploiting: `WITH USER_MODE` reports **every** FLS violation on the query, not only the first, so the exception message is a complete list of what the user is missing rather than a one-at-a-time guessing game. Read them off the `QueryException` and log the lot. See [AI_Data/05-release-radar/trust-security-and-governance.md](../../AI_Data/05-release-radar/trust-security-and-governance.md).
+User mode makes `QueryException` an ordinary runtime outcome rather than a sign of a bug. A field the running user cannot read now throws instead of returning null, and the same applies to writes — so exception handling has quietly become part of the access model, not just the error path. One detail is a genuine improvement worth exploiting: `WITH USER_MODE` reports **every** FLS violation on the query, not only the first, so the exception message is a complete list of what the user is missing rather than a one-at-a-time guessing game. Read them off the `QueryException` and log the lot. See [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
 
 ## Gotchas
 
