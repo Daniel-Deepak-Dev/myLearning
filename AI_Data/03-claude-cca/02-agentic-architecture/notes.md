@@ -1,6 +1,6 @@
 # Agentic Architecture & Orchestration
 
-> Track: Claude / CCA · Roadmap: Phase 04 · Weeks 15–20 · CCA-F weight: 27% · Status: 🌱 learning
+> Track: Claude / CCA · Roadmap: Phase 04 · Weeks 15–20 · CCA-F weight: 27% · Status: ⬜ not started
 
 **Roadmap scope:** Agentic loops, orchestrator-worker patterns, subagents in separate context windows, parallel vs sequential execution, when NOT to delegate.
 

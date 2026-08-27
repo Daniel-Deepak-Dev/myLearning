@@ -2,7 +2,10 @@
 
 <!-- Strict format: one "Q:" line, then "A:" line(s), blank line between cards.
      Keep it strict — this file is scriptable into Anki (Q/A = front/back).
-     Cover the A, answer out loud, then check. Add cards as you learn. -->
+     Cover the A, answer out loud, then check. Add cards as you learn.
+     Tiered 2026-08-27: weekly REVIEW.md sessions quiz ## Core only. -->
+
+## Core
 
 Q: What changed in 2026 that makes "buy vs build" an architect's question for agents?
 A: Salesforce started shipping finished agents rather than only the tooling to build them — Help Agent, Commerce, IT Service Domain Pack, Contact Center, industry packs. When a support agent deploys in six clicks, "we can build you one" stops being a proposition and grounding quality becomes the differentiator.
@@ -48,6 +51,12 @@ A: A pack of 50+ prebuilt agents delivered into Slack, Microsoft Teams and the I
 
 Q: Do prebuilt agents escape platform limits?
 A: No. Flex Credits, voice credit rates and Einstein Trust Layer behaviour apply identically whether or not you authored the agent.
+
+## Deep
+
+<!-- Pre-exam / pre-interview pass. Missionforce and Army HRC, Agentforce Operations,
+     then ITSM/CMDB/Teams provisioning detail — the last 11 cards are implementation
+     specifics that arguably belong in their own topic rather than buy-vs-build. -->
 
 Q: What is Missionforce?
 A: The public-sector and health vertical agent estate — Agentforce Public Sector and Agentforce Health — behind the VA's $1.6B Agentic Enterprise License Agreement, providing 24/7 virtual contact centre support for patient triage, intake and care coordination.

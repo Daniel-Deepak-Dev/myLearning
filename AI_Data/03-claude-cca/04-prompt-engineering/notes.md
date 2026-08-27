@@ -1,6 +1,6 @@
 # Prompt Engineering & Structured Output
 
-> Track: Claude / CCA · Roadmap: Phase 04 · Weeks 15–20 · CCA-F weight: 20% · Status: 🌱 learning
+> Track: Claude / CCA · Roadmap: Phase 04 · Weeks 15–20 · CCA-F weight: 20% · Status: ⬜ not started
 
 **Roadmap scope:** Explicit criteria over vague instructions, validation loops, extraction pipelines, eval-driven iteration.
 

@@ -2,7 +2,10 @@
 
 <!-- Strict format: one "Q:" line, then "A:" line(s), blank line between cards.
      Keep it strict — this file is scriptable into Anki (Q/A = front/back).
-     Cover the A, answer out loud, then check. Add cards as you learn. -->
+     Cover the A, answer out loud, then check. Add cards as you learn.
+     Tiered 2026-08-27: weekly REVIEW.md sessions quiz ## Core only. -->
+
+## Core
 
 Q: What is the Einstein Trust Layer?
 A: The mandatory security layer between Salesforce and LLM providers: secure data retrieval, masking, prompt-injection defence, zero retention, toxicity scoring and an audit trail.
@@ -39,6 +42,13 @@ A: Which protections still apply end-to-end on your own model endpoint — the g
 
 Q: Which governance question does GA hosted MCP raise for a security review?
 A: Who is allowed to create custom hosted MCP servers — they expose org data to external AI clients, so it belongs on a review checklist rather than in a developer's discretion.
+
+## Deep
+
+<!-- Pre-exam / pre-interview pass. Radar-fed detail: accreditation boundaries and
+     Winter '27 release readiness. Note the last 9 cards (OAuth username-password,
+     instanced URLs) are integration-readiness, not Trust Layer — they may belong in
+     SF/06-integration-and-apis or a radar topic instead. -->
 
 Q: What is IL5, and what did Salesforce have to give up to obtain it for Agentforce 360?
 A: DoD Impact Level 5 — the highest authorization for Controlled Unclassified Information and National Security System data (not classified networks). Authorized 2026-08-05 via Missionforce National Security on AWS GovCloud. Salesforce had to attest to the Pentagon that Anthropic-supplied generative AI models were disabled in that environment.

@@ -1,6 +1,6 @@
 # Capstone: Write-up & Internal Pitch
 
-> Track: Capstone · Roadmap: Phase 05 · Weeks 21–26 · Status: 🌱 learning
+> Track: Capstone · Roadmap: Phase 05 · Weeks 21–26 · Status: ⬜ not started
 
 **Roadmap scope:** Architecture diagram, tradeoffs, demo video. Position it as a Geeksoft 'AI + Data solutions' offering — your architect-track calling card.
 

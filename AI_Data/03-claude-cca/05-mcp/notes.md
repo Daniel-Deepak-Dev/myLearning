@@ -1,6 +1,6 @@
 # MCP — Model Context Protocol
 
-> Track: Claude / CCA · Roadmap: Phase 04 · Weeks 15–20 · CCA-F weight: 18% · Status: 🌱 learning
+> Track: Claude / CCA · Roadmap: Phase 04 · Weeks 15–20 · CCA-F weight: 18% · Status: ⬜ not started
 
 **Roadmap scope:** Host/client/server architecture, the three primitives (tools, resources, prompts), building a server with the Python SDK, transports and security boundaries.
 

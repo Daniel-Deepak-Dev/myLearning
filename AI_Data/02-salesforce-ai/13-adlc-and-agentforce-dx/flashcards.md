@@ -2,7 +2,10 @@
 
 <!-- Strict format: one "Q:" line, then "A:" line(s), blank line between cards.
      Keep it strict — this file is scriptable into Anki (Q/A = front/back).
-     Cover the A, answer out loud, then check. Add cards as you learn. -->
+     Cover the A, answer out loud, then check. Add cards as you learn.
+     Tiered 2026-08-27: weekly REVIEW.md sessions quiz ## Core only. -->
+
+## Core
 
 Q: Name the five phases of the Agent Development Lifecycle.
 A: Ideation and Design; Development (the inner loop); Testing and Validation; Deployment; Monitoring and Tuning (the outer loop).
@@ -48,6 +51,14 @@ A: `/agentforce-generate`, `/agentforce-test`, `/agentforce-observe`, and `/agen
 
 Q: What is the status of Agentforce Vibes 2.0, and what does a Developer Edition org get?
 A: Developer Preview. Since April 2026 every Developer Edition org includes the Agentforce Vibes IDE, Claude Sonnet 4.5 as the default coding model, and Salesforce hosted MCP servers, at no cost.
+
+## Deep
+
+<!-- Pre-exam / pre-interview pass, 109 cards. The first five are concept-level and
+     worth promoting into Core if something above proves ephemeral. Everything after
+     is radar-fed tooling detail: sf CLI dist-tags, the SDR zip-slip, sf-pi releases,
+     guardrail config, API-version provenance. Version facts date fast — check the
+     radar before repeating one out loud. -->
 
 Q: Which is GA and which is Beta — `agent preview` or agent evaluations?
 A: `sf agent preview` is GA. YAML/JSON agent evaluations are Beta.

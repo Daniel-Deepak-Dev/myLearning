@@ -1,6 +1,6 @@
 # Context Management & Reliability
 
-> Track: Claude / CCA · Roadmap: Phase 04 · Weeks 15–20 · CCA-F weight: 15% · Status: 🌱 learning
+> Track: Claude / CCA · Roadmap: Phase 04 · Weeks 15–20 · CCA-F weight: 15% · Status: ⬜ not started
 
 **Roadmap scope:** Context window budgeting, caching strategy, compaction, failure handling, evals — what separates production agents from demos.
 

@@ -1,6 +1,6 @@
 # Claude Code Configuration & Workflows
 
-> Track: Claude / CCA · Roadmap: Phase 04 · Weeks 15–20 · CCA-F weight: 20% · Status: 🌱 learning
+> Track: Claude / CCA · Roadmap: Phase 04 · Weeks 15–20 · CCA-F weight: 20% · Status: ⬜ not started
 
 **Roadmap scope:** CLAUDE.md, custom commands, subagents, headless mode in CI, automated code review with structured JSON output. Turn your daily tool into a discipline.
 

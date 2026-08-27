@@ -7,6 +7,7 @@ Companion folder to [ai-salesforce-architect-roadmap.html](ai-salesforce-archite
 | Folder | Track |
 |---|---|
 | **[PRACTICE.md](PRACTICE.md)** | **Start here when the goal is to *do* something.** The single queue: one next action, max 3 in flight, every unit time-boxed |
+| **[REVIEW.md](REVIEW.md)** | **Start here when the goal is to *recall* something.** The rotation, the 20-minute session, and the miss log. Drives all three vaults |
 | [00-core-skills/](00-core-skills/INDEX.md) | SQL, Python, AI theory, data engineering |
 | [01-data-cloud/](01-data-cloud/INDEX.md) | **Data 360** (ex-Data Cloud) → **Data 360 Consultant** cert |
 | [02-salesforce-ai/](02-salesforce-ai/INDEX.md) | Agentforce, Agent Script, Trust Layer, orchestration → **Agentforce Specialist** cert |

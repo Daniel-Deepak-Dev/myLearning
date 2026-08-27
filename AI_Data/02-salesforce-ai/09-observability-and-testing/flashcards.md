@@ -2,7 +2,10 @@
 
 <!-- Strict format: one "Q:" line, then "A:" line(s), blank line between cards.
      Keep it strict — this file is scriptable into Anki (Q/A = front/back).
-     Cover the A, answer out loud, then check. Add cards as you learn. -->
+     Cover the A, answer out loud, then check. Add cards as you learn.
+     Tiered 2026-08-27: weekly REVIEW.md sessions quiz ## Core only. -->
+
+## Core
 
 Q: What are Custom Scorers?
 A: User-defined quality metrics that grade live agent sessions against your own KPIs, alongside Salesforce's standard quality metrics. Beta, requiring the Agentforce Scorer Beta permission set.
@@ -48,6 +51,13 @@ A: Salesforce's Standard Data Model — the prebuilt Data 360 schema, so data fr
 
 Q: Which tool do you reach for when someone reports an agent "did something weird yesterday"?
 A: `agentforce-observe` against Data 360 traces. The split is by environment, not activity: `agentforce-generate` for authoring/debugging `.agent` files, `agentforce-test` for pre-deployment specs, `agentforce-observe` for production behaviour.
+
+## Deep
+
+<!-- Pre-exam / pre-interview pass. Tooling specifics, then the AI-research benchmark
+     block fed by the radar: GIFT-Eval, AnchorBench, MFCL, CRMArena-Pro, LoCoBench,
+     sf-pi policies, SCUBA, ClaimProbe. Read before an interview where you might cite
+     a number — the citation caveats are the point of these, not the scores. -->
 
 Q: What is `findSessions`, and what is its CLI prerequisite?
 A: The documented entry point for locating a specific production conversation in Data 360 trace records before analysing it. The `agentforce-observe` skill declares `sf >= 2.136.8`.

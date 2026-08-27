@@ -1,6 +1,6 @@
 # Claude API
 
-> Track: Claude / CCA · Roadmap: Phase 01 (first calls) + Phase 04 (depth) · Status: 🌱 learning
+> Track: Claude / CCA · Roadmap: Phase 01 (first calls) + Phase 04 (depth) · Status: ⬜ not started
 
 **Roadmap scope:** Messages endpoint, roles, system prompts, tokens. Then depth: tool use, structured output with JSON schemas, streaming, prompt caching, vision/PDF inputs.
 

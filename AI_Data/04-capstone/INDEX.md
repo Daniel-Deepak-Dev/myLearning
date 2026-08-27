@@ -9,7 +9,7 @@ Convert learning into architect-track proof. One shipped project beats five cert
 | [MCP Server for Salesforce](01-mcp-server-salesforce/notes.md) | Standard vs custom vs self-hosted — and that **custom hosted servers enforce the org's sharing model** while a self-built one enforces only what you wrote | [cheatsheet](01-mcp-server-salesforce/cheatsheet.md) · [flashcards](01-mcp-server-salesforce/flashcards.md) · [resources](01-mcp-server-salesforce/resources.md) |
 | [RAG Assistant over CRM Data](02-rag-assistant-crm/notes.md) | Data Libraries + ADL Connect API + **custom chunking**, with a measured before/after against a fixed question set | [cheatsheet](02-rag-assistant-crm/cheatsheet.md) · [flashcards](02-rag-assistant-crm/flashcards.md) · [resources](02-rag-assistant-crm/resources.md) |
 | [End-to-End Agentforce Use Case](03-agentforce-use-case/notes.md) | One measurable outcome, authored in **Agent Script**, with **unit economics** and an honest failure analysis | [cheatsheet](03-agentforce-use-case/cheatsheet.md) · [flashcards](03-agentforce-use-case/flashcards.md) · [resources](03-agentforce-use-case/resources.md) |
-| [Write-up & Internal Pitch](04-writeup/notes.md) | Architecture diagram, tradeoffs, demo video — the Geeksoft "AI + Data solutions" calling card | [resources](04-writeup/resources.md) |
+| [Write-up & Internal Pitch](04-writeup/notes.md) ⬜ | Architecture diagram, tradeoffs, demo video — the Geeksoft "AI + Data solutions" calling card | ⬜ scaffolded — not yet written · [resources](04-writeup/resources.md) |
 
 Milestone: one demoable AI + Data project shipped, plus the dual credential (Salesforce certs + CCA-F).
 

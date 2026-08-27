@@ -48,6 +48,8 @@ The recall layer is folded in as `## Recall` — 5 `Q:`/`A:` pairs in the same A
 | 🆕 | GA'd 2024–2026. **Research against release notes before writing — never draft from recall.** |
 | ⚠️ | The 2019–2021 answer is now **wrong**. The note opens with a one-line *What changed* correction. |
 | *(GA Winter '22)* | Post-dates most tutorials, pre-dates the 🆕 window. |
+| 🌱 | Status: written and being learnt. In the [REVIEW.md](../AI_Data/REVIEW.md) rotation. |
+| ⬜ | Status: **scaffolded, not written** — headings exist, content does not. Excluded from the rotation until written. Never let a `⬜` note read `🌱`. |
 
 ## Conventions
 
