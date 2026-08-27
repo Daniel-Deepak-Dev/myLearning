@@ -168,3 +168,9 @@ A: Three things. The release omits the DeepResearchBench corpora, host reports, 
 
 Q: Two Salesforce AI Research repos released in the same fortnight; one is Apache-2.0 and one is CC BY-NC 4.0. What is the rule?
 A: `self-improve-fragility` is Apache-2.0, `claimwriter-deep-research` is CC BY-NC 4.0. Licence attaches to the **artifact and its channel**, never to the publishing organisation. Check `LICENSE`, `LICENSE.txt` *and* the package manifest on every repo separately, every time.
+
+Q: SCUBA PR #9 fixed the assignment-rule evaluator. What was it doing wrong, and which direction did the error run?
+A: It read only **`assignment_rules[0]['ruleEntry'][0]`** — the first rule entry — and compared that one entry's criteria and assignee. An agent that created the correct rule as a *second* entry scored **zero**, so the error **understated** agents. The fix flattens all entries via `_as_list()` and matches against their union. Same direction for the second defect: dozens of tasks had `"metadata_types": []` and never reset the **`ValidationRule`** the agent created, leaving state for the next task to trip over.
+
+Q: Why can a SCUBA score not be cited by benchmark name alone?
+A: Because a benchmark's number is a property of its **evaluator**, not its task list, and SCUBA publishes **no release tags** to pin. Scores before and after `b893e22` (2026-08-26) are not comparable — that commit rewrote both 300-task fixture files and fixed five scoring and cleanup defects, and **no results were re-published**. Cite SCUBA by commit and by setting (`test_zero_shot.json` vs `test_demo_aug.json`).

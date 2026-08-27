@@ -14,6 +14,39 @@ That matters to a practitioner for a reason beyond taste. The benchmarks are a *
 
 ---
 
+## 2026-08-26 · SCUBA's evaluators were scoring and cleaning up wrong — and the fix rewrites all 300 task fixtures
+
+**What changed.** [`SalesforceAIResearch/SCUBA`](https://github.com/SalesforceAIResearch/SCUBA) merged **PR #9** (`b893e22`, **2026-08-26 18:26 UTC**), described as *"Fix evaluator matching, reset leftovers, and parallel query CSV collisions."* Thirteen files, including **247-line diffs to both published task sets** — `data/test_zero_shot.json` and `data/test_demo_aug.json`. The task count is unchanged at **300**.
+
+- **The assignment-rule evaluator only ever read the first rule entry.** It took `assignment_rules[0]['ruleEntry'][0]` and compared that one entry's criteria and assignee. An agent that created the correct rule as a *second* entry scored zero. The fix flattens every entry through `_as_list()` and matches against the union.
+- **Validation rules were never cleaned up.** Dozens of tasks carried `"metadata_types": []` and now carry `"metadata_types": ["ValidationRule"]`, so the reset phase removes what the agent created. Until this commit those rules survived into subsequent tasks in the same org.
+- **Fixture data was simply wrong in places.** `Amount` → `AMOUNT`, `ActiveAccountsRPT` → `MyAccountsRPT`, `greaterThan` → `greaterOrEqual`, and `LEN(AccountNumber) <> 8` → `LEN(AccountNumber) != 8`. One task's expected metadata went from `["ApprovalProcess"]` to `["ApprovalProcess", "Workflow"]`.
+- **Dates get a tolerance.** A new `_dates_match(actual, expected, tolerance_days=1)` exists because *"the LLM's system date may differ from the evaluator's date by up to 1 day."*
+- **Parallel lanes were overwriting each other's query output.** Transient CSVs (`Account.csv`, `Report.csv`, `dashboard.csv`) were written to the shared working directory; a new `scratch_dir()` / `scratch_csv_path()` pair isolates them, overridable per lane via **`SCUBA_SCRATCH_DIR`**.
+
+**Relevant to:** **Architect** — SCUBA's headline result is the evidence this radar has been citing against *"agents can just drive the UI"*, and the harness that produced it has now been corrected in ways that could move scores in either direction, with no restated numbers published; **Developer** — anyone running SCUBA needs the new fixtures, a new `gensim==4.4.0` requirement, and `SCUBA_SCRATCH_DIR` set per lane before running in parallel.
+
+**Why it matters.** Two of the defects **understate** an agent: reading only the first rule entry penalises a correct answer in the wrong slot, and unreset validation rules let one task's leftovers fail the next. The wrong casing and operators could cut either way.
+
+So the published SCUBA numbers came from a scorer since fixed in at least five places, and **no re-run has been published**.
+
+The narrower lesson is about benchmark provenance generally. A benchmark's number is a property of its evaluator, not of its task list — and the evaluator is the part that gets quietly patched.
+
+**Gotchas:**
+- **Cite SCUBA by commit, not by name.** Scores from before `b893e22` and after it are not comparable, and the repository publishes no versioned releases or tags to pin against.
+- **`SCUBA_SCRATCH_DIR` defaults to the current working directory** *"for back-compat"*. Running two lanes from the same cwd without setting it reproduces the collision the fix was for.
+- **`master_evaluator.py` lost its `__main__` block** — the single-task debug harness (`instance = 'admin_008_003'`, hard-coded org alias `YDCRMGUI`) is gone. A script that ran `python scuba/phases/evaluation/master_evaluator.py` directly now does nothing.
+- **`gensim==4.4.0` is new in both `requirements_bu.txt` and `requirements_cu.txt`** — an existing environment will not have it.
+- The commit also folds in the two 2026-05-07 login commits already recorded on [2026-08-18](#2026-08-18--scubas-third-authentication-fix--single-use-frontdoor-urls-collide-when-browsers-log-in-at-once), so its message overstates what is new.
+
+**Study action:** clone SCUBA at `b893e22`, `git show b893e22 -- data/test_zero_shot.json`, and count how many tasks moved from `"metadata_types": []` to `["ValidationRule"]`. That number is how many tasks previously left state in the org for the next task to trip over.
+
+**Status:** Open source, Apache-2.0. Merged to `main` **2026-08-26 18:26 UTC** (`b893e22`, PR #9). No re-published results, no release tag. Read from a shallow clone at **2026-08-27 03:40 UTC**.
+
+**Sources:** [SCUBA commits](https://github.com/SalesforceAIResearch/SCUBA/commits/main) · [PR #9 — Evaluators Fix](https://github.com/SalesforceAIResearch/SCUBA/pull/9) · [`milestone_evaluator_service.py`](https://github.com/SalesforceAIResearch/SCUBA/blob/main/scuba/phases/evaluation/milestone_evaluator_service.py) · [`scuba/helpers/utils.py`](https://github.com/SalesforceAIResearch/SCUBA/blob/main/scuba/helpers/utils.py)
+
+---
+
 ## 2026-08-18 · SCUBA's third authentication fix — single-use frontdoor URLs collide when browsers log in at once
 
 **What changed.** [`SalesforceAIResearch/SCUBA`](https://github.com/SalesforceAIResearch/SCUBA) merged **PR #7** on **2026-08-18 23:41 UTC** (`9f34338`) — parallel browser instances now serialise their Salesforce login behind an `asyncio.Lock` and a one-second stagger. It is the repo's first functional change to reach `main` since 2026-05-07.

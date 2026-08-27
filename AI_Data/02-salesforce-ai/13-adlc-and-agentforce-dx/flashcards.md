@@ -363,3 +363,15 @@ A: **13.1.1** — and so did 2.150.1, .3 and .5, every one built after 13.2.0 la
 
 Q: SDR 13.3.0 adds `notifications` to the deploy status. Where does it sit, and what is the parsing trap?
 A: On **`MetadataApiDeployStatus`**, a **sibling of `details`** — so it is deploy-level, not per-component (`DeployDetails` still holds `componentFailures` / `componentSuccesses`). The type is `DeployNotification = { messageCode: string; messageText: string }` and the field is **singular-or-array**, like `componentFailures`: one notification arrives as a bare object, so `.length` is `undefined`. Normalise with `[].concat(status.notifications ?? [])`.
+
+Q: On an API v68 org, `@salesforce/agents` 2.1.0 retrieves a published agent as which metadata entries — and how does that differ from the legacy manifest?
+A: Two entries: **`AiAgentDefinition:<name>`** and **`AiAgentDefinitionVersion:<name>#<versionNumber>`**, with `rootTypesWithDependencies: ['AiAgentDefinitionVersion']` spidering Flow / ApexClass / PromptTemplate. The legacy manifest enumerated **`Bot:<name>`, one `GenAiPlugin:` per Agent Script node, one `GenAiFunction:` per tool, and `Agent:<name>_<botVersionDeveloperName>`**. Note the separator change: `#` and a **numeric** `VersionNumber`, not `_` and a developerName.
+
+Q: `sf agent publish authoring-bundle` succeeds against a v68 org but no agent files appear in `force-app`. What happened?
+A: The org has the server-side **`AiAgentDefinition` feature flag off**. `supportsAiAgentDefinition()` gates purely on `connection.getApiVersion() >= 68` (`AI_AGENT_DEFINITION_MIN_API_VERSION = 68`), so the client requests the new types, the server resolves them to nothing, and the retrieve returns **`success: true` with zero file responses**. The library only calls `getLogger().warn()` — it does not throw and the exit code is 0. Check `getFileResponses().length`, not `$?`.
+
+Q: You set `SF_SOURCE_TRACKING_ASSUME_SYNCED=true` to speed up a large deploy. What does it actually do?
+A: It makes `getStatus()` return **an empty status array** and ignore its own `noCache` argument (`@salesforce/source-tracking` 8.1.0, `localShadowRepo.ts`). Source tracking then believes nothing changed locally: a tracking-based `sf project deploy start` deploys **nothing**, and `sf project retrieve start` overwrites local edits without warning. It is safe only when the org is genuinely pre-seeded from the same tree.
+
+Q: The `sf` 2.150.6 release notes list the `ENOTDIR` and decomposed-Permission-Set fixes. Are they in the build?
+A: **No.** Both are SDR fixes — PR #1817 shipped in **13.2.1**, PR #1823 in **13.2.3** — and 2.150.6's published `npm-shrinkwrap.json` pins SDR **13.1.1**. The release notes are written against the source repositories, not the tree that gets published. The only reliable check is the shrinkwrap inside the tarball; note that the **OS installers and TAR files have shipped without any lockfile since 2.40.7 (May 2024)**, so there you must read `node_modules/@salesforce/source-deploy-retrieve/package.json` instead.

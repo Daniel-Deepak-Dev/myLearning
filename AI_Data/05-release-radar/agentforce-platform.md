@@ -4,6 +4,18 @@ Builder, Agent Script, orchestration, channels, observability. Newest entries at
 
 ---
 
+## 2026-08-27 · Publishing an agent to a v68 org now writes the runtime metadata pair, not the `Bot` trio (cross-link)
+
+`@salesforce/agents` **2.1.0** retrieves an agent as `AiAgentDefinition:<name>` + `AiAgentDefinitionVersion:<name>#<versionNumber>` on any org at API **v68 or higher**, replacing the `Bot` + per-node `GenAiPlugin` + per-tool `GenAiFunction` + `Agent:<name>_<version>` manifest. Action dependencies are spidered rather than enumerated. The library's TODO declares the legacy path temporary: *"once the old metadata types are retired (v68/264)"*. **The trap is silent** — a v68 org with the server-side `AiAgentDefinition` flag still off produces a `success: true` retrieve that writes zero agent files, with only a logger warning. Full entry → [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-27--salesforceagents-210-retrieves-agents-as-the-v68-pair--and-a-v68-org-with-the-flag-off-writes-zero-files-without-failing).
+
+---
+
+## 2026-08-26 · `sf` stable reaches 2.149.9 — the `connected_subagent` publish fix is still a week away (cross-link)
+
+The Wednesday promotion took `latest` to **2.149.9**, which pins `@salesforce/agents` **2.0.4**. The publish crash below needs **2.0.6**, which sits in `latest-rc` 2.150.6 and reaches stable on **2026-09-02** — the conservative of the two lines this radar was tracking. Full entry → [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-26--sf-latest-moves-to-21499--the-promotion-question-closes-the-toctou-fix-reaches-stable-and-the-publish-fix-does-not).
+
+---
+
 ## 2026-08-24 · Multi-agent Agent Script bundles could not be published — `connected_subagent` crashed the publisher (cross-link)
 
 `connected_subagent` compiles to a `related_agent` node with **no `tools` array**, and `ScriptAgentPublisher` mapped over it unconditionally — so `sf agent publish authoring-bundle` threw `TypeError: … reading 'map'` for any agent that delegates to another. Fixed in `@salesforce/agents` **2.0.6** (2026-08-24). It is **not** `GoalBasedAgent`-only: the conversational `delegate_escalation` fixture uses the same block. Full entry, including why stable `sf` cannot get the fix before **2026-09-02** → [developer-tooling-and-apis.md](developer-tooling-and-apis.md#2026-08-24--sf-agent-publish-authoring-bundle-crashes-on-any-agent-script-agent-with-a-connected_subagent-block).

@@ -4,6 +4,111 @@ MCP, Headless 360, Apex, LWC, CLI, IDEs. Newest entries at the top.
 
 ---
 
+## 2026-08-27 · `@salesforce/agents` 2.1.0 retrieves agents as the v68 pair — and a v68 org with the flag off writes zero files without failing
+
+**What changed.** `@salesforce/agents` **2.1.0** (npm **2026-08-27 03:28:55 UTC**, commit `049ed3f`, PR [#341](https://github.com/forcedotcom/agents/pull/341), `@W-23897701@`, subject *"Support new simplified metadata type for 264 orgs"*) switches the retrieve that follows `Agent.create` and `ScriptAgentPublisher.publish` to `AiAgentDefinition` / `AiAgentDefinitionVersion` on orgs at API **v68 or higher**.
+
+- **The manifest collapses from N+3 entries to 2.**
+
+  | | Metadata entries requested |
+  |---|---|
+  | Legacy (< v68) | `Bot:<name>`, one `GenAiPlugin:<node>` per Agent Script node, one `GenAiFunction:<tool>` per tool, `Agent:<name>_<botVersionDeveloperName>` |
+  | **New (≥ v68)** | `AiAgentDefinition:<name>`, `AiAgentDefinitionVersion:<name>#<versionNumber>` |
+
+- **Dependencies are spidered, not enumerated.** The new path passes `rootTypesWithDependencies: ['AiAgentDefinitionVersion']`, which brings Flow, ApexClass and PromptTemplate along *"so they do not need to be enumerated in the manifest"*.
+- **The version suffix costs a SOQL round-trip.** `singleRecordQuery('SELECT VersionNumber FROM BotVersion WHERE Id=\'<botVersionId>\'')`, run before the retrieve is built.
+- **The gate is one exported constant.** `AI_AGENT_DEFINITION_MIN_API_VERSION = 68` and `supportsAiAgentDefinition(connection)` in `src/utils.ts`, keyed off `connection.getApiVersion()`.
+
+**Why it matters.** This changes what lands in your repo after you create or publish an agent. The same agent now retrieves into a different shape depending on which org you pointed at.
+
+The library's own TODO makes the legacy fallback temporary: *"remove this version gate and the legacy retrieval fallback once the old metadata types are retired (v68/264)"* (`TD-0333078`). The `Bot` / `GenAiPlanner` / `GenAiPlugin` retrieval path has an expiry date.
+
+**Gotchas:**
+- **A v68 org with the server flag off produces a `success: true` retrieve that writes nothing.** The gate reads the **API version only**; the code comment is explicit that *"the server also gates the feature behind a flag; an org at/above the min API version with the flag still off would resolve the new types to nothing."* The library's response is `getLogger().warn(...)` — it does **not** throw and does not fail the command. Check `getFileResponses().length`, not the exit code.
+- **The separator changed.** `AiAgentDefinitionVersion:MyAgent#1` uses `#` and the **numeric** `VersionNumber`. The legacy entry was `Agent:MyAgent_v1` — underscore, and the version's **developerName**. A script that builds manifests by string-concatenation breaks on exactly one character.
+- **`BotVersion` must be queryable by the running user**, or create/publish now fails before the retrieve.
+- **A create response without `agentId.botVersionId` now throws `agentRetrievalError`** rather than dereferencing a non-null assertion — a deliberate change of failure mode, not a silent fix.
+- **It is in no `sf` channel yet.** `latest` 2.149.9 pins `@salesforce/agents` **2.0.4**; `latest-rc` and `nightly` 2.150.6 pin **2.0.6**. `plugin-agent` 2.0.5 ranges `^2.0.6`, so 2.1.0 satisfies it — but per the [frozen-shrinkwrap finding](#2026-08-26--the-latest-rc-release-notes-promise-two-sdr-fixes-that-its-own-shrinkwrap-cannot-deliver) a satisfied range is not a reachable version. Consume 2.1.0 directly from npm until a shrinkwrap says otherwise.
+
+**Relevant to:** **Developer** — metadata entries, on-disk layout and the failure modes of `sf agent create` / `sf agent publish` all change on a v68 org, and the empty retrieve is invisible to `$?`; **Architect** — the legacy retrieval path is declared temporary in the source, which dates tooling built on it; **Admin** — the `AiAgentDefinition` feature flag is a per-org gate someone must enable first.
+
+**Study action:** `npm i @salesforce/agents@2.1.0`, publish one Agent Script agent against a v68 org, and `git status` the `force-app` tree — then repeat against a pre-v68 org and diff the two file sets. If the v68 run produces no agent files, you have found the feature flag rather than a bug.
+
+**Status:** Open source, Apache-2.0. npm `latest` **2.1.0**, published **2026-08-27 03:28:55 UTC** — nine minutes before this scan read it. Not carried by any `sf` channel as of 03:38 UTC.
+
+**Sources:** [npm `@salesforce/agents`](https://www.npmjs.com/package/@salesforce/agents) · [PR #341](https://github.com/forcedotcom/agents/pull/341) · [`src/utils.ts`](https://github.com/forcedotcom/agents/blob/main/src/utils.ts) · [`src/agents/scriptAgentPublisher.ts`](https://github.com/forcedotcom/agents/blob/main/src/agents/scriptAgentPublisher.ts)
+
+---
+
+## 2026-08-26 · `sf` `latest` moves to 2.149.9 — the promotion question closes, the TOCTOU fix reaches stable, and the publish fix does not
+
+**What changed.** `@salesforce/cli` promoted **2.149.9** to `latest` on **2026-08-26**, with **2.150.6** taking `latest-rc` (dated *"Sept 2, 2026"* in its own notes). Of the two candidate lines this radar had been tracking since 08-25, it took the **2.149.x** one.
+
+- **What the stable tree now pins**, read from `2.149.9`'s `npm-shrinkwrap.json` at 2026-08-27 03:37 UTC:
+
+  | Component | 2.148.3 (previous stable) | **2.149.9 (stable)** | 2.150.6 (`latest-rc`) |
+  |---|---|---|---|
+  | `@salesforce/source-deploy-retrieve` | 13.0.1 | **13.1.1** | 13.1.1 |
+  | `@salesforce/agents` | 2.0.1 | **2.0.4** | 2.0.6 |
+  | `@salesforce/plugin-agent` | 2.0.1 | **2.0.3** | 2.0.5 |
+  | `@salesforce/plugin-deploy-retrieve` | 4.0.2 | **4.1.2** | 4.1.2 |
+  | `@salesforce/source-tracking` | — | **8.1.0** | 8.1.0 |
+
+- **The SDR TOCTOU symlink fix lands on stable**, 14 days after SDR 13.1.1 published — the wait recorded on [2026-08-25](#2026-08-25--sf-publishes-an-npm-shrinkwrapjson--the-clis-dependency-tree-is-pinned-exactly-and-three-of-this-radars-reachability-calls-were-wrong) ends here.
+- **`--root-type-with-dependencies` leaves `nightly`.** `plugin-deploy-retrieve` 4.0.2 → 4.1.2 is what carries it; see the correction on the [2026-08-12 entry](#2026-08-12--sf-project-retrieve-start---root-type-with-dependencies--the-cli-half-of-the-v68-agent-metadata-story-and-it-takes-exactly-two-values).
+- **`AiAgentDefinition` and `AiAgentDefinitionVersion` become DX-supported on stable**, via SDR 13.1.0's registry addition riding in on 13.1.1.
+- **One genuinely new feature: `SF_SOURCE_TRACKING_ASSUME_SYNCED`.** Set it to `true` and source tracking skips the local filesystem scan, which the notes say saves *"60+ minutes for very large projects"*.
+
+**Why it matters.** The three-week promotion question is settled, and the answer is the conservative line. Stable gains the symlink-escape patch and all four `--api-name` preview fixes.
+
+It does **not** gain the `connected_subagent` publish crash fix — that needs `@salesforce/agents` 2.0.6, in `latest-rc`, stable on **2026-09-02**. Teams publishing multi-agent bundles stay on `latest-rc` another week.
+
+**Gotchas:**
+- **`SF_SOURCE_TRACKING_ASSUME_SYNCED` does not skip a scan — it asserts an empty diff.** In `@salesforce/source-tracking` 8.1.0, `localShadowRepo.js:147` makes `getStatus()` return `[]` and **ignores its own `noCache` argument**. Every local change becomes invisible to tracking: a tracking-based `sf project deploy start` deploys nothing, and `sf project retrieve start` overwrites local edits silently. It also emits a `sourceTrackingAssumeSynced` telemetry event.
+- **The env var lives in `@salesforce/source-tracking`, not where the notes say.** The 2.149.9 note credits `plugin-deploy-retrieve` PR 1628; `plugin-deploy-retrieve` **4.1.2 contains no reference to the variable at all**. It shipped in `@salesforce/source-tracking` **8.1.0** on 2026-08-13 — so it has been live on `nightly` and `latest-rc` for 13 days undocumented.
+- **The release note misnames the flag it introduces.** The prose calls it **`--root-with-dependencies`**; the flag in `plugin-deploy-retrieve` 4.1.2's `oclif.manifest.json` is **`--root-type-with-dependencies`**.
+- **The documented example cannot run.** Both the release note and the plugin's own `messages/retrieve.start.md:44` write it with a **single dash** — `sf project retrieve start --source-dir force-app -root-type-with-dependencies Bot`. `-r` is already `--output-dir`, which is declared `exclusive: ['package-name', 'source-dir']`, so that line conflicts with the `--source-dir` in the same command.
+- **`AiAgentDefinitionVersion` is never spidered automatically.** `hasRootTypesWithDependencies()` auto-injects only **`'Bot'`**, and only when a pseudotype is detected and API version > 63.0. For the v68 pair you must pass the flag explicitly.
+
+**Relevant to:** **Developer** — a new flag, a new env var and two new DX-supported metadata types arrive on the channel most teams install from, and two of the four are documented under the wrong name or the wrong package; **Architect** — `SF_SOURCE_TRACKING_ASSUME_SYNCED` is a CI design decision with a silent-data-loss failure mode, and the `connected_subagent` fix slipping to 2026-09-02 is a delivery date.
+
+**Study action:** `npm install @salesforce/cli@latest -g`, then run `sf project retrieve start --source-dir force-app --root-type-with-dependencies AiAgentDefinitionVersion` against a v68 org and confirm the flag is accepted off `nightly`. Then, in a scratch project with a tracked org, edit one Apex class, run `SF_SOURCE_TRACKING_ASSUME_SYNCED=true sf project deploy start` and confirm it deploys nothing.
+
+**Status:** GA — `@salesforce/cli` **2.149.9** on `latest` from 2026-08-26; **2.150.6** on `latest-rc`, scheduled stable **2026-09-02**. Dist-tags and shrinkwraps read 2026-08-27 03:37 UTC.
+
+**Sources:** [CLI release notes — 2.149.9](https://github.com/forcedotcom/cli/blob/main/releasenotes/README.md) · [npm `@salesforce/cli`](https://www.npmjs.com/package/@salesforce/cli) · [plugin-deploy-retrieve PR #1626](https://github.com/salesforcecli/plugin-deploy-retrieve/pull/1626) · [`localShadowRepo.ts`](https://github.com/forcedotcom/source-tracking/blob/main/src/shared/local/localShadowRepo.ts)
+
+---
+
+## 2026-08-26 · The `latest-rc` release notes promise two SDR fixes that its own shrinkwrap cannot deliver
+
+**What changed.** Nothing shipped — this is a contradiction between two artifacts of the same build. The **2.150.6** release notes list the `ENOTDIR` bundle-directory crash fix (SDR PR [#1823](https://github.com/forcedotcom/source-deploy-retrieve/pull/1823)) and the decomposed-Permission-Set resolution fix (SDR PR [#1817](https://github.com/forcedotcom/source-deploy-retrieve/pull/1817)). **2.150.6's `npm-shrinkwrap.json` pins SDR 13.1.1**, which predates both.
+
+- **Where each fix actually landed**, from `forcedotcom/source-deploy-retrieve` `main` at 2026-08-27 03:41 UTC:
+  - PR #1817 → **13.2.1** (`e1efcbc`) — the release with a changelog entry and [no npm artifact](#2026-08-24--sdr-ships-three-releases-in-one-day--1321-never-reaches-npm-and-1322-carries-a-four-hour-crash).
+  - PR #1823 → **13.2.3** (`e5b6a28`).
+- **One SDR in the tree, not two.** Every `source-deploy-retrieve` key in both the 2.149.9 and 2.150.6 shrinkwraps resolves to **13.1.1**; the nested entries under it are `got`, `minimatch` and friends, not a second copy.
+- **Eight days stuck.** `^13.1.1` has permitted 13.2.0, 13.2.2, 13.2.3 and 13.3.0 since 2026-08-19, and no `sf` build has re-resolved past 13.1.1.
+
+**Why it matters.** The radar already knew the shrinkwrap overrides the ranges, and that a satisfied range is not a reachable version. This is the next layer down: **the release notes are written against the source repositories, not against the tree that ships.**
+
+Someone reading the RC notes today would install `latest-rc` for the `ENOTDIR` fix — the crash recorded on 08-24 — and would not get it.
+
+**Gotchas:**
+- **The only reliable answer to *"is this fix in my CLI?"* is `npm-shrinkwrap.json` inside the published tarball.** `npm view @salesforce/cli dependencies` shows ranges, the release notes show intent, and neither is the tree.
+- **Installer and TAR downloads do not carry the file.** CLI **2.40.7** (May 8, 2024) removed `npm-shrinkwrap`, `package-lock`, `oclif.lock` and `yarn.lock` from the OS installers and TAR files to shrink them. The pinned tree is still what those artifacts were built from — but there is **no lockfile inside them to audit**, so for an installer-based CLI you must read `node_modules/@salesforce/source-deploy-retrieve/package.json` directly.
+- This is the closest thing to a first-party statement that the CLI pins its tree that this radar has located, and it is a **2024 note about deleting the file**, not documentation of the pinning.
+
+**Relevant to:** **Developer** — the fix you are updating for may not be in the build you update to, and the check is a two-command tarball unpack; **Architect** — a supply-chain and patch-verification problem: release notes cannot be used as evidence of what a CLI version contains, on either install channel.
+
+**Study action:** run `npm pack @salesforce/cli@latest-rc && tar -xzOf salesforce-cli-2.150.6.tgz package/npm-shrinkwrap.json | python3 -c "import json,sys; print(json.load(sys.stdin)['packages']['node_modules/@salesforce/source-deploy-retrieve']['version'])"` and compare the answer to what the 2.150.6 notes claim.
+
+**Status:** Open discrepancy, unreported upstream as of 2026-08-27 03:42 UTC. `@salesforce/cli` 2.150.6 (`latest-rc`, stable 2026-09-02); SDR `latest` 13.3.0.
+
+**Sources:** [CLI release notes — 2.150.6](https://github.com/forcedotcom/cli/blob/main/releasenotes/README.md) · [SDR commit history](https://github.com/forcedotcom/source-deploy-retrieve/commits/main) · [CLI release notes — 2.40.7](https://github.com/forcedotcom/cli/blob/main/releasenotes/README.md) · [npm `@salesforce/cli` 2.150.6](https://www.npmjs.com/package/@salesforce/cli/v/2.150.6)
+
+---
+
 ## 2026-08-26 · Gap check — Salesforce's Claude Code plugin turned usage telemetry on by default, then shipped four fixes to it a week later
 
 **What changed.** Nothing today — this is a miss. The `salesforce-development` plugin bundled in `forcedotcom/sf-skills` added **usage telemetry, on by default**, in **1.11.0** (2026-08-14) and shipped **four `### Security` fixes to it** in **1.12.0** (2026-08-21). This radar recorded 1.11.0 and 1.12.0 as version numbers only; the word *telemetry* appeared nowhere in it before this entry.
@@ -683,6 +788,8 @@ Reachability runs the *safe* way here, by the pinning rule recorded on 08-14: **
 ---
 
 ## 2026-08-12 · `sf project retrieve start --root-type-with-dependencies` — the CLI half of the v68 agent metadata story, and it takes exactly two values
+
+> **Correction (2026-08-27):** this entry said the flag was `nightly`-only as of 2026-08-14. It **reached `latest` on 2026-08-26** with `sf` 2.149.9, which pins `plugin-deploy-retrieve` **4.1.2** (2.148.3 pinned 4.0.2). Two documentation defects surfaced with it and are recorded on the [promotion entry](#2026-08-26--sf-latest-moves-to-21499--the-promotion-question-closes-the-toctou-fix-reaches-stable-and-the-publish-fix-does-not): the release-note prose calls the flag **`--root-with-dependencies`**, and the example in both the release notes and `messages/retrieve.start.md:44` writes it with a **single dash**, where `-r` is already `--output-dir`.
 
 **What changed.** `@salesforce/plugin-deploy-retrieve` **4.1.0** (npm **2026-08-12 22:15:34 UTC**, PR [#1626](https://github.com/salesforcecli/plugin-deploy-retrieve/pull/1626)) adds a flag that retrieves a root metadata type **together with its whole dependency graph**. Its work item, **`W-23818734`**, is the *same one* that added `AiAgentDefinition` / `AiAgentDefinitionVersion` in SDR 13.1.0 — this is that feature's command-line surface.
 
