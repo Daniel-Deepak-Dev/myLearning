@@ -9,12 +9,14 @@ Companion folder to [ai-salesforce-architect-roadmap.html](ai-salesforce-archite
 | **[PRACTICE.md](PRACTICE.md)** | **Start here when the goal is to *do* something.** The single queue: one next action, max 3 in flight, every unit time-boxed |
 | **[REVIEW.md](REVIEW.md)** | **Start here when the goal is to *recall* something.** The rotation, the 20-minute session, and the miss log. Drives all three vaults |
 | [00-core-skills/](00-core-skills/INDEX.md) | SQL, Python, AI theory, data engineering |
-| [01-data-cloud/](01-data-cloud/INDEX.md) | **Data 360** (ex-Data Cloud) → **Data 360 Consultant** cert |
-| [02-salesforce-ai/](02-salesforce-ai/INDEX.md) | Agentforce, Agent Script, Trust Layer, orchestration → **Agentforce Specialist** cert |
+| [01-data-cloud/](01-data-cloud/INDEX.md) | **Data 360** (ex-Data Cloud) → **Data 360 Consultant** cert. 🔀 **Migrating to [../SF_Data_360/](../SF_Data_360/INDEX.md)** topic by topic |
+| [02-salesforce-ai/](02-salesforce-ai/INDEX.md) | Agentforce, Agent Script, Trust Layer, orchestration → **Agentforce Specialist** cert. 🔀 **Migrating to [../SF_Agentforce/](../SF_Agentforce/INDEX.md)** topic by topic |
 | [03-claude-cca/](03-claude-cca/INDEX.md) | Claude API, agents, MCP, Claude Code → **CCA-F** cert |
 | [04-capstone/](04-capstone/INDEX.md) | The shipped proof: MCP server, RAG assistant, Agentforce build |
 | [05-release-radar/](05-release-radar/README.md) | Running log of Salesforce AI updates, in three areas: `01-agentforce/`, `02-data-cloud/`, `03-salesforce-ai-research/` |
-| [../SF/](../SF/README.md) | **Core Salesforce platform** — Apex, LWC, Flow, Admin, Experience Cloud, Integration, Security, Data, DevOps. The platform underneath this path |
+| [../SF_core/](../SF_core/README.md) | **Core Salesforce platform** — Apex, LWC, Flow, Admin, Experience Cloud, Integration, Security, Data, DevOps. The platform underneath this path |
+| [../SF_Agentforce/](../SF_Agentforce/INDEX.md) | **Agentforce, from your own notes.** Light format, ordered for recall. Takes over from `02-salesforce-ai/` as topics get fed |
+| [../SF_Data_360/](../SF_Data_360/INDEX.md) | **Data 360, from your own notes.** Light format, ordered for recall. Takes over from `01-data-cloud/` as topics get fed |
 | [../Interview/](../Interview/README.md) | **Scenario-based interview prep** — 42 medium-to-complex situations across Agentforce, Data 360, core platform and cross-domain, each with a model answer and an interviewer rubric |
 | [99-inbox/](99-inbox/INBOX.md) | Capture anything new before it has a home |
 | [journal/](journal/) | Weekly learning log |

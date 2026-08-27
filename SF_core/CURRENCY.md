@@ -1,6 +1,6 @@
 # Currency — what "current" means here
 
-Everything in `SF/` targets **Summer '26 · API 67.0**. Last reviewed **2026-08-05**.
+Everything in `SF_core/` targets **Summer '26 · API 67.0**. Last reviewed **2026-08-05**.
 
 ## Version map
 
@@ -360,7 +360,7 @@ The numbers below are the reason each topic exists, and all four are routinely q
 
 ## New in AI-facing Apex — checked in phase 23
 
-**The coverage audit crossed the vault boundary for the first time, and found a subject both vaults had assumed the other owned.** `ConnectApi`, `aiplatform`, `ModelsAPI`, `EinsteinLLM`, `createEmbeddings` and `capabilityType` returned **zero hits in `SF/` and zero in `AI_Data/`** — while [02-apex · 22](02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md) had covered `@InvocableMethod` since phase 05. The annotation that lets something else call Apex was documented; the Apex that calls a model was not.
+**The coverage audit crossed the vault boundary for the first time, and found a subject both vaults had assumed the other owned.** `ConnectApi`, `aiplatform`, `ModelsAPI`, `EinsteinLLM`, `createEmbeddings` and `capabilityType` returned **zero hits in `SF_core/` and zero in `AI_Data/`** — while [02-apex · 22](02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md) had covered `@InvocableMethod` since phase 05. The annotation that lets something else call Apex was documented; the Apex that calls a model was not.
 
 - **`@InvocableMethod` takes a `capabilityType` parameter that changes what the annotation *is*.** With it, the platform calls the method during **prompt resolution** rather than as an action, and the return value is not a result — it is a `String` spliced into the prompt via a `Response` class exposing `@InvocableVariable public String Prompt`, that exact field name. Four values: `PromptTemplateType://einstein_gpt__salesEmail`, `__fieldCompletion`, `__recordSummary`, and `FlexTemplate://<template_API_Name>` — the Flex form binding to a template's **API name**, not a type. → [02-apex · 31](02-apex-and-triggers/31-apex-grounded-prompt-templates.md)
 - **The API 66.0 no-arg-constructor rule reaches prompt-grounding classes, and is documented only for agent actions.** A grounding `Request` is an invocable parameter class, so a parameterised constructor breaks **prompt resolution** at runtime with no compile error — the same failure already recorded above for actions, on a surface nobody writes it up for. → [02-apex · 31](02-apex-and-triggers/31-apex-grounded-prompt-templates.md), [· 22](02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md)

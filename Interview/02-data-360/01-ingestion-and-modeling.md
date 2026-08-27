@@ -8,7 +8,7 @@
 
 ### Q1 · Zero rows, no error 🆕
 
-**Level:** Medium · **Probes:** [Data modeling DSO → DLO → DMO](../../AI_Data/01-data-cloud/03-data-modeling-dso-dlo-dmo/notes.md) · [Query anatomy & the SOQL model](../../SF/10-soql-and-sosl/01-query-anatomy-and-the-soql-model.md)
+**Level:** Medium · **Probes:** [Data modeling DSO → DLO → DMO](../../AI_Data/01-data-cloud/03-data-modeling-dso-dlo-dmo/notes.md) · [Query anatomy & the SOQL model](../../SF_core/10-soql-and-sosl/01-query-anatomy-and-the-soql-model.md)
 
 **Scenario.** A developer has written an Apex-backed agent action that queries a DLO with SOQL. It returns zero records. No exception, no error in the debug log, no FLS violation. They have spent the afternoon on it: checked the `WHERE` clause against the data, confirmed the records exist in the Data 360 UI, verified the running user's permissions, rewritten the filter three ways, and added `LIMIT 1` with no filter at all — still zero. They are now convinced it is a platform bug and want to raise a case.
 

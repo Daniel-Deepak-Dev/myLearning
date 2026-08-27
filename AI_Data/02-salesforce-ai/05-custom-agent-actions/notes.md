@@ -57,7 +57,7 @@ If an action returns a structured type rather than a string, a **Custom Lightnin
 
 Four changes, in rough order of how likely they are to bite:
 
-**1. Invocable input classes need a visible no-arg constructor.** Any custom Apex type used as an invocable action input must expose a no-argument constructor — `public`, or `global` for packaged classes. **The requirement starts at API 66.0**; Summer '26 is when the Release Update auto-activates, which is why it is so often dated to 67.0. **This breaks existing Agentforce Apex actions**, and the mechanism is ordinary OO behaviour: declaring any constructor with arguments removes the compiler-generated default one. It's the first thing to check when an action stops working after an API bump. Apex-side detail: [SF/02-apex · 22](../../../SF/02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md).
+**1. Invocable input classes need a visible no-arg constructor.** Any custom Apex type used as an invocable action input must expose a no-argument constructor — `public`, or `global` for packaged classes. **The requirement starts at API 66.0**; Summer '26 is when the Release Update auto-activates, which is why it is so often dated to 67.0. **This breaks existing Agentforce Apex actions**, and the mechanism is ordinary OO behaviour: declaring any constructor with arguments removes the compiler-generated default one. It's the first thing to check when an action stops working after an API bump. Apex-side detail: [SF_core/02-apex · 22](../../../SF_core/02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md).
 
 **2. Database operations default to user mode.** SOQL, SOSL, DML and `Database` methods now enforce the running user's object permissions, FLS and sharing rules. Elevated access is opt-in:
 

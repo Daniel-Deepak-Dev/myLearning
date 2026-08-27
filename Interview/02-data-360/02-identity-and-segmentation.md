@@ -50,7 +50,7 @@
 
 ### Q2 · The cheaper direction
 
-**Level:** Complex · **Probes:** [Identity Resolution](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md) · [Insights & segmentation](../../AI_Data/01-data-cloud/05-insights-segmentation/notes.md) · [Privacy, consent & data protection](../../SF/07-security-and-sharing/25-privacy-consent-and-data-protection.md)
+**Level:** Complex · **Probes:** [Identity Resolution](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md) · [Insights & segmentation](../../AI_Data/01-data-cloud/05-insights-segmentation/notes.md) · [Privacy, consent & data protection](../../SF_core/07-security-and-sharing/25-privacy-consent-and-data-protection.md)
 
 **Scenario.** A financial-services client's Data 360 bill is over budget. Their profile count is 4.1M against an estimated 2.6M customers, and someone has calculated that closing the gap saves roughly $360k a year at ~$240 per 1,000 profiles. The data team has proposed a looser ruleset: add fuzzy name plus address matching alongside the existing exact-email rule. Modelling says it brings the count to about 2.7M. The CFO likes it. Their agent grounds on these profiles, and their customers include joint account holders and multi-generational households.
 

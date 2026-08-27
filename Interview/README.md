@@ -1,6 +1,6 @@
 # Interview — Scenario-Based Question Bank
 
-Third vault, alongside [AI_Data/](../AI_Data/README.md) (Agentforce, Data 360, Claude) and [SF/](../SF/README.md) (core platform). Those two hold knowledge. This one holds **being asked about it under pressure**.
+Third vault, alongside [AI_Data/](../AI_Data/README.md) (Agentforce, Data 360, Claude) and [SF_core/](../SF_core/README.md) (core platform). Those two hold knowledge. This one holds **being asked about it under pressure**.
 
 ## Why this exists
 
@@ -55,7 +55,7 @@ Skeleton in [_template.md](_template.md). Every scenario:
 
 ## Two rules that decide whether this is worth anything
 
-**1. Answers are grounded in the notes, never drafted from recall.** Same rule as [SF/_template.md](../SF/_template.md) rule 2, and it bites harder here: a wrong answer rehearsed forty times becomes something you say confidently in a real interview. Every `**Probes:**` link is a link the author actually read. Two specific traps, because most material online is on the wrong side of both:
+**1. Answers are grounded in the notes, never drafted from recall.** Same rule as [SF_core/_template.md](../SF_core/_template.md) rule 2, and it bites harder here: a wrong answer rehearsed forty times becomes something you say confidently in a real interview. Every `**Probes:**` link is a link the author actually read. Two specific traps, because most material online is on the wrong side of both:
 
 - **Agents are authored in [Agent Script](../AI_Data/02-salesforce-ai/07-agent-script/notes.md).** The *New Agent* button stopped opening the topic-and-instruction builder the week of **July 13, 2026**. An answer that walks through topics and instructions as the current model is describing a retired product.
 - **Data Cloud is Data 360.** The rename is real — SKUs, release notes, the certification. Folder paths here keep the old name only where links would break.
@@ -74,9 +74,9 @@ Same meanings as the other two vaults:
 
 ## Conventions
 
-- **Naming:** `NN-kebab-case.md` inside `NN-kebab-case/` areas — the flat [SF/](../SF/README.md) shape, since a question set needs one file, not four.
+- **Naming:** `NN-kebab-case.md` inside `NN-kebab-case/` areas — the flat [SF_core/](../SF_core/README.md) shape, since a question set needs one file, not four.
 - **Metadata:** blockquote on line 3, never YAML frontmatter.
-- **Links:** relative markdown only. Every answer links out to the note instead of restating it — [SF/_template.md](../SF/_template.md) rule 5. This vault holds *questions*, not a third copy of the knowledge.
+- **Links:** relative markdown only. Every answer links out to the note instead of restating it — [SF_core/_template.md](../SF_core/_template.md) rule 5. This vault holds *questions*, not a third copy of the knowledge.
 - **New scenario:** append to the set file it belongs to, renumber nothing, bump the `Scenarios:` count in the line-3 blockquote and the area `INDEX.md`.
 - **New set:** next `NN` in the area, copy [_template.md](_template.md), add a row to the area's `INDEX.md`.
 - **Currency:** content is current to **Summer '26 (API 67.0)**. [AI_Data/05-release-radar/](../AI_Data/05-release-radar/README.md) is the source of truth for what changed — when a scenario goes stale, fix it there first and here second.

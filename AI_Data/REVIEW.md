@@ -22,7 +22,7 @@ Three units. Do them in any order, one per sitting.
    studied externally in August and never tested. Start here.
 2. **[02-salesforce-ai/02-agentforce-anatomy](02-salesforce-ai/02-agentforce-anatomy/cheatsheet.md)** —
    Atlas 3.0 and the legacy-vs-Agent-Script split. The thing most tutorials still get wrong.
-3. **SF · `02-apex-and-triggers` notes 22, 31, 32, 33, 34** — the Apex-side prompt trio plus
+3. **SF_core · `02-apex-and-triggers` notes 22, 31, 32, 33, 34** — the Apex-side prompt trio plus
    Models API and LLM mocking. Same subject as unit 1, opposite artefact.
 
 ---
@@ -34,7 +34,7 @@ Twenty minutes, four steps, no variations.
 1. **Read the `cheatsheet.md` cold.** 5 minutes. Do not open `notes.md` — if the cheatsheet
    cannot reload the topic on its own, that is a finding about the cheatsheet, and it goes in
    the miss log like anything else.
-2. **Cover the `A:` column** in `flashcards.md` (or the `## Recall` block in an `SF/` note) and
+2. **Cover the `A:` column** in `flashcards.md` (or the `## Recall` block in an `SF_core/` note) and
    answer **out loud**. Out loud is not a flourish — silent recognition feels like knowing and
    is not, and an interview is spoken.
 3. **Log every miss** in `## Misses` below. One line. Not "I'll remember that one".
@@ -64,7 +64,7 @@ Three intervals, moved by hand: **weekly** (new or shaky) → **monthly** (solid
 `04-capstone/04-writeup` are `⬜ not started` — scaffolding with empty headings. They enter the
 rotation the week they are written, not before. CCA-F is roadmap weeks 15–20.
 
-### SF — five notes per session, by cursor
+### SF_core — five notes per session, by cursor
 
 238 notes × 5 cards. An area is too big for one sitting, so the unit is **five consecutive
 notes** (25 cards) and each area carries a cursor. At one session per area per week, a full
@@ -73,16 +73,16 @@ argument for the cursor rather than against the notes.
 
 | Area | Notes | Cursor | Interval | Last reviewed |
 |---|---|---|---|---|
-| [01-admin-and-declarative-platform](../SF/01-admin-and-declarative-platform/INDEX.md) | 19 | 01 | monthly | — |
-| [02-apex-and-triggers](../SF/02-apex-and-triggers/INDEX.md) | 34 | 22 | weekly | — |
-| [03-lwc-and-slds](../SF/03-lwc-and-slds/INDEX.md) | 24 | 01 | monthly | — |
-| [04-flow-and-automation](../SF/04-flow-and-automation/INDEX.md) | 27 | 01 | monthly | — |
-| [05-experience-cloud-lwr](../SF/05-experience-cloud-lwr/INDEX.md) | 20 | 01 | quarterly | — |
-| [06-integration-and-apis](../SF/06-integration-and-apis/INDEX.md) | 27 | 01 | monthly | — |
-| [07-security-and-sharing](../SF/07-security-and-sharing/INDEX.md) | 26 | 01 | monthly | — |
-| [08-data-modeling-and-large-data-volumes](../SF/08-data-modeling-and-large-data-volumes/INDEX.md) | 26 | 01 | monthly | — |
-| [09-devops-sfdx-and-release-management](../SF/09-devops-sfdx-and-release-management/INDEX.md) | 25 | 01 | quarterly | — |
-| [10-soql-and-sosl](../SF/10-soql-and-sosl/INDEX.md) | 10 | 01 | monthly | — |
+| [01-admin-and-declarative-platform](../SF_core/01-admin-and-declarative-platform/INDEX.md) | 19 | 01 | monthly | — |
+| [02-apex-and-triggers](../SF_core/02-apex-and-triggers/INDEX.md) | 34 | 22 | weekly | — |
+| [03-lwc-and-slds](../SF_core/03-lwc-and-slds/INDEX.md) | 24 | 01 | monthly | — |
+| [04-flow-and-automation](../SF_core/04-flow-and-automation/INDEX.md) | 27 | 01 | monthly | — |
+| [05-experience-cloud-lwr](../SF_core/05-experience-cloud-lwr/INDEX.md) | 20 | 01 | quarterly | — |
+| [06-integration-and-apis](../SF_core/06-integration-and-apis/INDEX.md) | 27 | 01 | monthly | — |
+| [07-security-and-sharing](../SF_core/07-security-and-sharing/INDEX.md) | 26 | 01 | monthly | — |
+| [08-data-modeling-and-large-data-volumes](../SF_core/08-data-modeling-and-large-data-volumes/INDEX.md) | 26 | 01 | monthly | — |
+| [09-devops-sfdx-and-release-management](../SF_core/09-devops-sfdx-and-release-management/INDEX.md) | 25 | 01 | quarterly | — |
+| [10-soql-and-sosl](../SF_core/10-soql-and-sosl/INDEX.md) | 10 | 01 | monthly | — |
 
 The `02-apex-and-triggers` cursor starts at **22**, not 01, because notes 22 and 31–34 are the
 Agentforce Apex surface and that is what is live right now. Move it to 01 once those are solid.
@@ -123,7 +123,7 @@ What is genuinely recallable today, measured 2026-08-27.
 |---|---|
 | Q/A cards, all vaults | **1,848** |
 | — in `AI_Data` flashcards | 654 |
-| — in `SF` `## Recall` blocks | 1,194 |
+| — in `SF_core` `## Recall` blocks | 1,194 |
 | Malformed cards | **0** |
 | `AI_Data` topics in rotation | 31 of 38 |
 | Topics `⬜ not started` | 7 (six CCA, one capstone writeup) |

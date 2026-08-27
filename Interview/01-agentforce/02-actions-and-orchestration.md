@@ -8,7 +8,7 @@
 
 ### Q1 · The agent issues two refunds
 
-**Level:** Medium · **Probes:** [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) · [Idempotency & retries](../../SF/06-integration-and-apis/23-idempotency-retries-and-error-handling.md)
+**Level:** Medium · **Probes:** [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) · [Idempotency & retries](../../SF_core/06-integration-and-apis/23-idempotency-retries-and-error-handling.md)
 
 **Scenario.** A commerce client's agent has an `IssueRefund` action — invocable Apex, well-tested, 100% coverage, works perfectly when called from Flow. Since going live with the agent, finance has found eleven customers who received two identical refunds within seconds of each other. The Apex has no loop, and the agent's trace shows a single user request. The action's own logs show two invocations. The developer's position is that the Apex is correct and the agent is "calling it twice for no reason."
 
@@ -50,7 +50,7 @@
 
 ### Q2 · Nothing changed except the version number ⚠️
 
-**Level:** Medium · **Probes:** [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) · [Invocable Apex & Agentforce actions](../../SF/02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md) · [Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md)
+**Level:** Medium · **Probes:** [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) · [Invocable Apex & Agentforce actions](../../SF_core/02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md) · [Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md)
 
 **Scenario.** A developer bumps one Apex class from API 64.0 to 67.0 to use an unrelated new method. The class is an `@InvocableMethod` wired into a live agent, and it takes a custom Apex type as its input. They deploy to a full sandbox. The deployment succeeds. The agent action now fails at runtime, and a second action in the same class returns fewer records than it did yesterday for some users but not others. Nobody touched the agent, the Flow, or the data.
 
@@ -134,7 +134,7 @@
 
 ### Q4 · Six weeks to build what already exists 🆕
 
-**Level:** Complex · **Probes:** [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) · [Flows as Agentforce actions](../../SF/04-flow-and-automation/23-flows-as-agentforce-actions.md) · [Custom Lightning types for agent output](../../SF/03-lwc-and-slds/19-custom-lightning-types-for-agent-output.md) · [Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md)
+**Level:** Complex · **Probes:** [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) · [Flows as Agentforce actions](../../SF_core/04-flow-and-automation/23-flows-as-agentforce-actions.md) · [Custom Lightning types for agent output](../../SF_core/03-lwc-and-slds/19-custom-lightning-types-for-agent-output.md) · [Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md)
 
 **Scenario.** You inherit an Agentforce project mid-flight. The team has scoped six weeks to build fourteen new `@InvocableMethod` actions. Reading the org, you find that eleven of the fourteen capabilities already exist — four as Apex REST endpoints serving a partner integration, five as `@AuraEnabled` controller methods behind existing LWCs, two as autolaunched Flows the admin team maintains. The team's reasoning: "those aren't agent actions, they're APIs and controllers." Delivery is fixed and the client is watching the burn rate.
 

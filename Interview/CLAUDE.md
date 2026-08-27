@@ -17,7 +17,7 @@ Skeleton in [_template.md](_template.md). Every scenario, in this order:
 
 - **Ground every answer in the linked notes. Never draft from recall.** A wrong answer rehearsed forty times becomes something said confidently in a real interview. Every `**Probes:**` link is a note actually read.
 - **If the note does not support a claim, flag it 🚩** rather than invent it.
-- **Link out, never restate.** This vault holds questions; [../AI_Data/](../AI_Data/README.md) and [../SF/](../SF/README.md) hold the knowledge.
+- **Link out, never restate.** This vault holds questions. The knowledge lives in [../SF_core/](../SF_core/README.md), [../SF_Agentforce/](../SF_Agentforce/INDEX.md), [../SF_Data_360/](../SF_Data_360/INDEX.md) and [../AI_Data/](../AI_Data/README.md).
 - **No easy questions.** "What is a DMO?" is a flashcard and already exists in the other vaults.
 - **Two currency traps:** agents are authored in Agent Script — the legacy builder stopped creating new agents the week of 2026-07-13 — and Data Cloud is Data 360.
 - **New scenario** → append to the set file it belongs to, renumber nothing, bump the `Scenarios:` count in the line-3 blockquote **and** in the area `INDEX.md`.

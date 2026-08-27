@@ -8,7 +8,7 @@
 
 ### Q1 · The agent that must see everything and must see nothing
 
-**Level:** Complex · **Probes:** [Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md) · [Code execution context & security](../../SF/07-security-and-sharing/14-code-execution-context-and-security.md) · [Restriction rules](../../SF/07-security-and-sharing/11-restriction-rules.md) · [Identity Resolution](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md)
+**Level:** Complex · **Probes:** [Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md) · [Code execution context & security](../../SF_core/07-security-and-sharing/14-code-execution-context-and-security.md) · [Restriction rules](../../SF_core/07-security-and-sharing/11-restriction-rules.md) · [Identity Resolution](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md)
 
 **Scenario.** A private bank wants a relationship-manager agent that answers "give me the full picture on this client before my 3pm meeting." The picture spans a Data 360 unified profile over CRM, custody, a Snowflake transaction warehouse and a document corpus. Two constraints arrived from different rooms in the same week, both signed off. Compliance: an RM must never see holdings for a client outside their own book, and there are hard information barriers between two divisions. The business: "a partial answer is useless — the whole point is that it sees everything."
 
@@ -99,7 +99,7 @@
 
 ### Q3 · Which layer is lying
 
-**Level:** Complex · **Probes:** [Ingestion](../../AI_Data/01-data-cloud/02-ingestion/notes.md) · [Identity Resolution](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md) · [Bulkification patterns](../../SF/02-apex-and-triggers/08-bulkification-patterns.md) · [Code execution context & security](../../SF/07-security-and-sharing/14-code-execution-context-and-security.md) · [Observability & Testing](../../AI_Data/02-salesforce-ai/09-observability-and-testing/notes.md)
+**Level:** Complex · **Probes:** [Ingestion](../../AI_Data/01-data-cloud/02-ingestion/notes.md) · [Identity Resolution](../../AI_Data/01-data-cloud/04-identity-resolution/notes.md) · [Bulkification patterns](../../SF_core/02-apex-and-triggers/08-bulkification-patterns.md) · [Code execution context & security](../../SF_core/07-security-and-sharing/14-code-execution-context-and-security.md) · [Observability & Testing](../../AI_Data/02-salesforce-ai/09-observability-and-testing/notes.md)
 
 **Scenario.** A live agent answers "what is this customer's current balance and open case count?" It is right for most users. For one team — recently onboarded, in a new role under a new branch of the hierarchy — it returns a balance that is correct, a case count that is too low, and occasionally "I don't have information about that." An Apex action supplies the case count; a Data 360 data graph supplies the balance. Nothing was deployed this week. The team's manager has escalated it as an AI accuracy problem.
 
@@ -142,7 +142,7 @@
 
 ### Q4 · The MCP server nobody reviewed
 
-**Level:** Complex · **Probes:** [MCP servers & agent-facing APIs](../../SF/06-integration-and-apis/25-mcp-servers-and-agent-facing-apis.md) · [Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md) · [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) · [Idempotency, retries & error handling](../../SF/06-integration-and-apis/23-idempotency-retries-and-error-handling.md) · [MCP (Claude track)](../../AI_Data/03-claude-cca/05-mcp/notes.md)
+**Level:** Complex · **Probes:** [MCP servers & agent-facing APIs](../../SF_core/06-integration-and-apis/25-mcp-servers-and-agent-facing-apis.md) · [Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md) · [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) · [Idempotency, retries & error handling](../../SF_core/06-integration-and-apis/23-idempotency-retries-and-error-handling.md) · [MCP (Claude track)](../../AI_Data/03-claude-cca/05-mcp/notes.md)
 
 **Scenario.** A developer at your client has stood up a custom hosted MCP server exposing eleven `@InvocableMethod` tools, so the engineering team can query and update org data from Claude Code during development. It is genuinely useful and has spread — about thirty people now use it, including two in support who use it against production. It was never security-reviewed; the developer's view is that it inherits the org's security model, so there is nothing to review. The CISO has just found out.
 
@@ -186,7 +186,7 @@
 
 ### Q5 · Real-time, at limits
 
-**Level:** Complex · **Probes:** [Ingestion](../../AI_Data/01-data-cloud/02-ingestion/notes.md) · [Data Cloud-triggered flows & data actions](../../SF/04-flow-and-automation/22-data-cloud-triggered-flows-and-data-actions.md) · [Async Apex overview & choosing](../../SF/02-apex-and-triggers/12-async-apex-overview-and-choosing.md) · [Zero copy & Data 360 as data tier](../../SF/08-data-modeling-and-large-data-volumes/18-zero-copy-and-data-360-as-data-tier.md) · [Platform Event design](../../SF/06-integration-and-apis/12-platform-event-design.md)
+**Level:** Complex · **Probes:** [Ingestion](../../AI_Data/01-data-cloud/02-ingestion/notes.md) · [Data Cloud-triggered flows & data actions](../../SF_core/04-flow-and-automation/22-data-cloud-triggered-flows-and-data-actions.md) · [Async Apex overview & choosing](../../SF_core/02-apex-and-triggers/12-async-apex-overview-and-choosing.md) · [Zero copy & Data 360 as data tier](../../SF_core/08-data-modeling-and-large-data-volumes/18-zero-copy-and-data-360-as-data-tier.md) · [Platform Event design](../../SF_core/06-integration-and-apis/12-platform-event-design.md)
 
 **Scenario.** A telco wants an agent to intervene during a service outage: when Data 360 detects a customer's connection has been degraded for over ten minutes, the agent should proactively contact them with a status and a credit offer. Volume during a major incident is 60,000–200,000 affected customers within a few minutes. The client's design has a Data Cloud-triggered flow per affected profile, invoking an Apex action that calls the agent and issues the credit. Their architect wants to know if it will scale.
 
@@ -233,7 +233,7 @@
 
 ### Q6 · The thing you would tell them not to build
 
-**Level:** Complex · **Probes:** [Prebuilt agents & buy vs build](../../AI_Data/02-salesforce-ai/14-prebuilt-agents-and-buy-vs-build/notes.md) · [ADLC & Agentforce DX](../../AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md) · [RAG on Platform](../../AI_Data/01-data-cloud/08-rag-on-platform/notes.md) · [Agent Script](../../AI_Data/02-salesforce-ai/07-agent-script/notes.md) · [Automation landscape & tool selection](../../SF/04-flow-and-automation/01-automation-landscape-and-tool-selection.md)
+**Level:** Complex · **Probes:** [Prebuilt agents & buy vs build](../../AI_Data/02-salesforce-ai/14-prebuilt-agents-and-buy-vs-build/notes.md) · [ADLC & Agentforce DX](../../AI_Data/02-salesforce-ai/13-adlc-and-agentforce-dx/notes.md) · [RAG on Platform](../../AI_Data/01-data-cloud/08-rag-on-platform/notes.md) · [Agent Script](../../AI_Data/02-salesforce-ai/07-agent-script/notes.md) · [Automation landscape & tool selection](../../SF_core/04-flow-and-automation/01-automation-landscape-and-tool-selection.md)
 
 **Scenario.** A manufacturing client's CTO has a twelve-month agentic roadmap: seven custom agents across service, sales, field operations, procurement, HR onboarding, IT helpdesk and an internal "ask anything" knowledge agent. Budget is approved and the board has seen the roadmap. Their platform reality: an unmigrated org with surviving Workflow Rules and Process Builder, no Data 360, Knowledge last audited in 2021, and one Salesforce developer. They want you to sequence delivery. Nobody has asked whether the roadmap is right.
 

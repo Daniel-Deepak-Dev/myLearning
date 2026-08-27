@@ -8,7 +8,7 @@
 
 ### Q1 · Same logic, two builders ⚠️🆕
 
-**Level:** Complex · **Probes:** [Code execution context & security](../../SF/07-security-and-sharing/14-code-execution-context-and-security.md) · [Flow run context & sharing](../../SF/04-flow-and-automation/19-flow-run-context-and-sharing.md) · [Apex security, user mode & FLS](../../SF/02-apex-and-triggers/10-apex-security-user-mode-and-fls.md)
+**Level:** Complex · **Probes:** [Code execution context & security](../../SF_core/07-security-and-sharing/14-code-execution-context-and-security.md) · [Flow run context & sharing](../../SF_core/04-flow-and-automation/19-flow-run-context-and-sharing.md) · [Apex security, user mode & FLS](../../SF_core/02-apex-and-triggers/10-apex-security-user-mode-and-fls.md)
 
 **Scenario.** A compliance review asks a question your team cannot answer. The same requirement — "when a case closes, look up the account's credit record and stamp a risk field" — exists twice in the org: once as Apex in a trigger handler compiled at 67.0, once as a record-triggered flow built last month by the admin team for a different record type. Security's question: "are these two equivalent from an access-control standpoint?" A senior developer has answered yes, on the basis that both are automation and automation runs as an administrator.
 
@@ -51,7 +51,7 @@
 
 ### Q2 · The audit says they can see it
 
-**Level:** Medium · **Probes:** [Restriction rules](../../SF/07-security-and-sharing/11-restriction-rules.md) · [Auditing & troubleshooting access](../../SF/07-security-and-sharing/15-auditing-and-troubleshooting-access.md)
+**Level:** Medium · **Probes:** [Restriction rules](../../SF_core/07-security-and-sharing/11-restriction-rules.md) · [Auditing & troubleshooting access](../../SF_core/07-security-and-sharing/15-auditing-and-troubleshooting-access.md)
 
 **Scenario.** A user raises a ticket: a custom object's list view shows 40 records, they expect around 300, and a report they built returns the same 40. An admin has checked everything on the grant side — profile, permission sets, OWD, sharing rules, role hierarchy — and a sharing audit confirms the user *does* have access to the missing records. Share rows exist. The admin has `View All Data` and can see all 300, and has concluded the list view is broken and wants to raise a case.
 
@@ -95,7 +95,7 @@
 
 ### Q3 · The test that will fail next year 🆕
 
-**Level:** Complex · **Probes:** [Sharing recalculation & performance](../../SF/07-security-and-sharing/16-sharing-recalculation-and-performance.md) · [Groups, queues & the grantee model](../../SF/07-security-and-sharing/08-groups-queues-and-the-grantee-model.md)
+**Level:** Complex · **Probes:** [Sharing recalculation & performance](../../SF_core/07-security-and-sharing/16-sharing-recalculation-and-performance.md) · [Groups, queues & the grantee model](../../SF_core/07-security-and-sharing/08-groups-queues-and-the-grantee-model.md)
 
 **Scenario.** An onboarding process runs in Apex: create the user, insert a `GroupMember` row to add them to a public group, then query the records now shared with them to seed a personalised dashboard. There is a test that inserts the `GroupMember` and asserts on `RowCause = 'Rule'` share rows immediately afterwards. It passes. It has passed for three years. A colleague read a release note and thinks this code is a time bomb, but cannot say why, and the team is inclined to ignore it because the test is green.
 
@@ -138,7 +138,7 @@
 
 ### Q4 · The agent's running user
 
-**Level:** Medium · **Probes:** [Code execution context & security](../../SF/07-security-and-sharing/14-code-execution-context-and-security.md) · [Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md) · [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md)
+**Level:** Medium · **Probes:** [Code execution context & security](../../SF_core/07-security-and-sharing/14-code-execution-context-and-security.md) · [Trust Layer](../../AI_Data/02-salesforce-ai/04-einstein-trust-layer/notes.md) · [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md)
 
 **Scenario.** A security review of an Agentforce build. The agent has six actions; two are Apex classes declared `without sharing` because "the agent needs to see everything to give a complete answer." The agent's running user has a permission set with `View All Data`. The Trust Layer is on, masking is configured, and the project lead's position is that the Trust Layer is the security boundary, so the running user's permissions are an implementation detail. The agent is customer-facing through an Experience Cloud site.
 

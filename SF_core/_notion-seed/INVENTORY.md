@@ -1,6 +1,6 @@
 # Notion seed inventory
 
-The old notes, mapped to where they land in `SF/`. Captured **2026-08-01**.
+The old notes, mapped to where they land in `SF_core/`. Captured **2026-08-01**.
 
 ## What this is for
 

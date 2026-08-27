@@ -48,7 +48,7 @@ A: Who is allowed to create custom hosted MCP servers — they expose org data t
 <!-- Pre-exam / pre-interview pass. Radar-fed detail: accreditation boundaries and
      Winter '27 release readiness. Note the last 9 cards (OAuth username-password,
      instanced URLs) are integration-readiness, not Trust Layer — they may belong in
-     SF/06-integration-and-apis or a radar topic instead. -->
+     SF_core/06-integration-and-apis or a radar topic instead. -->
 
 Q: What is IL5, and what did Salesforce have to give up to obtain it for Agentforce 360?
 A: DoD Impact Level 5 — the highest authorization for Controlled Unclassified Information and National Security System data (not classified networks). Authorized 2026-08-05 via Missionforce National Security on AWS GovCloud. Salesforce had to attest to the Pentagon that Anthropic-supplied generative AI models were disabled in that environment.

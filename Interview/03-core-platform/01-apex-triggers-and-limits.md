@@ -8,7 +8,7 @@
 
 ### Q1 · Nineteen thousand records, twelve updated
 
-**Level:** Medium · **Probes:** [Order of execution & recursion](../../SF/02-apex-and-triggers/07-order-of-execution-and-recursion.md) · [Bulkification patterns](../../SF/02-apex-and-triggers/08-bulkification-patterns.md)
+**Level:** Medium · **Probes:** [Order of execution & recursion](../../SF_core/02-apex-and-triggers/07-order-of-execution-and-recursion.md) · [Bulkification patterns](../../SF_core/02-apex-and-triggers/08-bulkification-patterns.md)
 
 **Scenario.** An `Opportunity` after-update trigger rolls a value up to the parent `Account`. It has a recursion guard — `private static Boolean hasRun = false;` set on entry — added two years ago to stop an infinite loop, and it worked. A data migration updates 19,000 opportunities via Data Loader. Afterwards, 12 accounts have correct rollup values and several thousand do not. No errors, no failed rows, the job reports complete success. Apex test coverage on the handler is 94%.
 
@@ -50,7 +50,7 @@
 
 ### Q2 · The trigger reads the wrong number ⚠️
 
-**Level:** Medium · **Probes:** [Order of execution & recursion](../../SF/02-apex-and-triggers/07-order-of-execution-and-recursion.md) · [Order of execution — declarative view](../../SF/01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md)
+**Level:** Medium · **Probes:** [Order of execution & recursion](../../SF_core/02-apex-and-triggers/07-order-of-execution-and-recursion.md) · [Order of execution — declarative view](../../SF_core/01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md)
 
 **Scenario.** An `after update` trigger on `Account` reads a roll-up summary field, `Total_Open_Opportunity_Amount__c`, and writes a tier onto the account. It is consistently one save behind — the tier reflects the previous state, not the current one. Separately, a developer reports that a field their `before update` trigger sets is sometimes already populated with a different value when the trigger runs, and they suspect another trigger. There is one trigger on the object. The org migrated off Process Builder last year but has some legacy automation nobody has audited.
 
@@ -92,7 +92,7 @@
 
 ### Q3 · Null for some users 🆕
 
-**Level:** Complex · **Probes:** [Bulkification patterns](../../SF/02-apex-and-triggers/08-bulkification-patterns.md) · [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) · [Apex security, user mode & FLS](../../SF/02-apex-and-triggers/10-apex-security-user-mode-and-fls.md)
+**Level:** Complex · **Probes:** [Bulkification patterns](../../SF_core/02-apex-and-triggers/08-bulkification-patterns.md) · [Custom Agent Actions](../../AI_Data/02-salesforce-ai/05-custom-agent-actions/notes.md) · [Apex security, user mode & FLS](../../SF_core/02-apex-and-triggers/10-apex-security-user-mode-and-fls.md)
 
 **Scenario.** A textbook-correct bulkified handler: collect `AccountId` into a `Set<Id>`, one query into a `Map<Id, Account>`, look up inside the loop with `accounts.get(o.AccountId)`. It has run in production for three years. The class was recompiled at 67.0 last month as part of a wider upgrade. Since then, a support tier gets intermittent `NullPointerException`s from this handler, and sales users never do. The data is fine — every opportunity has a valid `AccountId`, and the accounts exist.
 
@@ -134,7 +134,7 @@
 
 ### Q4 · The query plan looks fine
 
-**Level:** Complex · **Probes:** [Data skew](../../SF/08-data-modeling-and-large-data-volumes/10-data-skew.md) · [Record locking & concurrency](../../SF/08-data-modeling-and-large-data-volumes/12-record-locking-and-concurrency.md) · [Sharing recalculation & performance](../../SF/07-security-and-sharing/16-sharing-recalculation-and-performance.md)
+**Level:** Complex · **Probes:** [Data skew](../../SF_core/08-data-modeling-and-large-data-volumes/10-data-skew.md) · [Record locking & concurrency](../../SF_core/08-data-modeling-and-large-data-volumes/12-record-locking-and-concurrency.md) · [Sharing recalculation & performance](../../SF_core/07-security-and-sharing/16-sharing-recalculation-and-performance.md)
 
 **Scenario.** A logistics client's nightly integration has started failing intermittently with `UNABLE_TO_LOCK_ROW` on maybe 2% of rows. It has run for eighteen months without incident. Separately, an admin reports that reassigning a single account's owner "hangs" for several minutes. Storage looks normal. The Query Plan for the integration's main query shows an index being used with good selectivity. Nobody has deployed anything in six weeks, and record volume has grown about 15% over the year.
 

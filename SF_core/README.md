@@ -1,8 +1,15 @@
-# SF — Core Salesforce Platform
+# SF_core — Core Salesforce Platform
 
 The platform knowledge base: Apex, LWC, Flow, Admin, Experience Cloud, Integration, Security, Data, DevOps.
 
-Sibling to [AI_Data/](../AI_Data/README.md), which covers the AI-Architect path (Agentforce, Data 360, Claude). This folder is the **platform underneath** that path — the two cross-link rather than duplicate.
+This folder is the **platform underneath** the AI vaults. It cross-links to them rather than duplicating them.
+
+| Sibling | Covers |
+|---|---|
+| [SF_Agentforce/](../SF_Agentforce/INDEX.md) | Prompt templates, agents, actions, Agent Script, Atlas, Trust Layer |
+| [SF_Data_360/](../SF_Data_360/INDEX.md) | Ingestion, DMOs, identity resolution, segments, zero-copy, RAG |
+| [AI_Data/](../AI_Data/README.md) | The AI-Architect roadmap, Claude, capstone, release radar |
+| [Interview/](../Interview/README.md) | Scenario question bank |
 
 > **Currency: Summer '26 · API 67.0** · see [CURRENCY.md](CURRENCY.md) for the version map and the six defaults that invalidate older tutorials.
 
@@ -29,7 +36,11 @@ Sibling to [AI_Data/](../AI_Data/README.md), which covers the AI-Architect path 
 
 - **Aura components** and **Visualforce.** Both are legacy; LWC is the only UI framework here. They appear only where a note must explain a migration or a coexistence rule. **Legacy in direction, not dead** — phase 18 found five of the seven Experience Cloud templates are still Aura and still receiving features → [05-experience · 01](05-experience-cloud-lwr/01-template-choice-and-site-landscape.md).
 - **OmniStudio**, **Reporting & Analytics**, **Sales/Service Cloud functional depth.** Not excluded on merit — just not in this build. Add as areas 11–13 later if wanted. *(The reserved area-10 slot was taken by [SOQL & SOSL](10-soql-and-sosl/INDEX.md) in phase 22 — the query language had no owner and SOSL was the vault's largest single gap.)*
-- **Agentforce / Data 360 / Claude.** Those live in [AI_Data/](../AI_Data/README.md). Notes here link across instead of repeating. *(Sharpened in phase 23, which found the split had left a hole: the **Apex API surface** for AI — `@InvocableMethod(capabilityType=…)`, `ConnectApi.EinsteinLLM`, `aiplatform.ModelsAPI` — had zero coverage in **either** vault, because each assumed the other owned it. The line is drawn by *artefact*, not by subject: `SF/` owns class names, signatures, exceptions, limits and entitlement → [02-apex · 31–34](02-apex-and-triggers/INDEX.md); `AI_Data/` owns prompt authoring, agent reasoning and Trust Layer policy. If a sentence is still true with no Apex in it, it belongs there.)*
+- **Agentforce / Data 360 / Claude.** Agentforce lives in [SF_Agentforce/](../SF_Agentforce/INDEX.md), Data 360 in [SF_Data_360/](../SF_Data_360/INDEX.md), Claude and the roadmap in [AI_Data/](../AI_Data/README.md). Notes here link across instead of repeating.
+
+  **The line is drawn by artefact, not by subject.** `SF_core/` owns class names, signatures, exceptions, limits and entitlement → [02-apex · 31–34](02-apex-and-triggers/INDEX.md). The AI vaults own prompt authoring, agent reasoning and Trust Layer policy. **Ask: is this sentence still true with no Agentforce in it?** Yes → here. No → there.
+
+  *(This rule was sharpened in phase 23. The old split had left a hole: the **Apex API surface** for AI — `@InvocableMethod(capabilityType=…)`, `ConnectApi.EinsteinLLM`, `aiplatform.ModelsAPI` — had zero coverage in **either** vault, because each side assumed the other owned it. Drawing the line by artefact is what closed it. Keep it drawn that way.)*
 
 ## The note format
 

@@ -1,6 +1,6 @@
 # 03 · Core Platform
 
-Scenario questions on Apex, sharing and integration — the platform underneath the AI work, and the area where a Salesforce developer's existing depth is the differentiator. Source knowledge: [SF/](../../SF/README.md).
+Scenario questions on Apex, sharing and integration — the platform underneath the AI work, and the area where a Salesforce developer's existing depth is the differentiator. Source knowledge: [SF_core/](../../SF_core/README.md).
 
 > ⚠️ **Two decade-old answers became wrong, and both are load-bearing here.** *"A user's record access is the union of everything that grants it"* became incomplete at **Winter '22** — restriction rules subtract. And *"automation runs as an administrator, so the access model is a UI concern"* is wrong in both directions at **67.0**: Apex now defaults to user mode and `with sharing`, while Flow's triggered types did not move. The same logic is now **more permissive built in Flow than in Apex**.
 
@@ -33,6 +33,6 @@ Worth knowing as a set, because each one produces a confident all-clear on a rea
 
 ## Related
 
-- [SF/](../../SF/README.md) — the source notes every answer links into, and [SF/CURRENCY.md](../../SF/CURRENCY.md) for what invalidates older tutorials
-- [SF/07-security-and-sharing/](../../SF/07-security-and-sharing/INDEX.md) · [SF/02-apex-and-triggers/](../../SF/02-apex-and-triggers/INDEX.md) · [SF/06-integration-and-apis/](../../SF/06-integration-and-apis/INDEX.md) — the three areas these sets draw on most
+- [SF_core/](../../SF_core/README.md) — the source notes every answer links into, and [SF_core/CURRENCY.md](../../SF_core/CURRENCY.md) for what invalidates older tutorials
+- [SF_core/07-security-and-sharing/](../../SF_core/07-security-and-sharing/INDEX.md) · [SF_core/02-apex-and-triggers/](../../SF_core/02-apex-and-triggers/INDEX.md) · [SF_core/06-integration-and-apis/](../../SF_core/06-integration-and-apis/INDEX.md) — the three areas these sets draw on most
 - [04-cross-domain/](../04-cross-domain/INDEX.md) — where platform limits collide with Agentforce and Data 360

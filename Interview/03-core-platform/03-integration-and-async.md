@@ -8,7 +8,7 @@
 
 ### Q1 · "Can we use Pub/Sub?"
 
-**Level:** Medium · **Probes:** [Integration patterns & selection](../../SF/06-integration-and-apis/01-integration-patterns-and-selection.md) · [Callouts, named credentials & HTTP in Apex](../../SF/02-apex-and-triggers/19-callouts-named-credentials-and-http-in-apex.md) · [Async Apex overview & choosing](../../SF/02-apex-and-triggers/12-async-apex-overview-and-choosing.md)
+**Level:** Medium · **Probes:** [Integration patterns & selection](../../SF_core/06-integration-and-apis/01-integration-patterns-and-selection.md) · [Callouts, named credentials & HTTP in Apex](../../SF_core/02-apex-and-triggers/19-callouts-named-credentials-and-http-in-apex.md) · [Async Apex overview & choosing](../../SF_core/02-apex-and-triggers/12-async-apex-overview-and-choosing.md)
 
 **Scenario.** A client's requirement: "when an opportunity closes, tell the ERP." Their architect has asked whether you can use Pub/Sub API, because that is what their last integrator recommended. Their current implementation is an HTTP callout from a `@future(callout=true)` method invoked by an after-update trigger. It works. Volume is around 400 closures a day. The ERP team says their endpoint is sometimes down for maintenance windows of up to two hours, and closures are currently lost when that happens.
 
@@ -50,7 +50,7 @@
 
 ### Q2 · An event for a record that never existed
 
-**Level:** Complex · **Probes:** [Platform Event design](../../SF/06-integration-and-apis/12-platform-event-design.md) · [Idempotency, retries & error handling](../../SF/06-integration-and-apis/23-idempotency-retries-and-error-handling.md) · [Order of execution & recursion](../../SF/02-apex-and-triggers/07-order-of-execution-and-recursion.md)
+**Level:** Complex · **Probes:** [Platform Event design](../../SF_core/06-integration-and-apis/12-platform-event-design.md) · [Idempotency, retries & error handling](../../SF_core/06-integration-and-apis/23-idempotency-retries-and-error-handling.md) · [Order of execution & recursion](../../SF_core/02-apex-and-triggers/07-order-of-execution-and-recursion.md)
 
 **Scenario.** A fulfilment integration consumes `OrderPlaced__e` and creates a shipment in a warehouse system. Twice this month the warehouse has shipped against an order that does not exist in Salesforce. The event is published from an Apex service using *Publish Immediately*, chosen deliberately two years ago "so we never lose an event." The publishing transaction also does DML on `Order` and a related `Payment__c`, and a validation rule on `Payment__c` occasionally fires. The consumer is a Pub/Sub client that persists its replay ID on receipt.
 
@@ -93,7 +93,7 @@
 
 ### Q3 · The partner retries
 
-**Level:** Medium · **Probes:** [Idempotency, retries & error handling](../../SF/06-integration-and-apis/23-idempotency-retries-and-error-handling.md) · [REST API fundamentals](../../SF/06-integration-and-apis/04-rest-api-fundamentals.md) · [Bulk API 2.0](../../SF/06-integration-and-apis/07-bulk-api-2.md)
+**Level:** Medium · **Probes:** [Idempotency, retries & error handling](../../SF_core/06-integration-and-apis/23-idempotency-retries-and-error-handling.md) · [REST API fundamentals](../../SF_core/06-integration-and-apis/04-rest-api-fundamentals.md) · [Bulk API 2.0](../../SF_core/06-integration-and-apis/07-bulk-api-2.md)
 
 **Scenario.** A partner posts orders into a custom Apex REST endpoint. During a peak week, 240 duplicate orders appeared. The partner's logs show they received timeouts and 503s and retried on a fixed 5-second interval, sometimes several times. Salesforce logs show every request succeeded. The partner's position is that Salesforce was too slow. Your client's position is that the partner double-posted. Both are adamant, and the client wants you to confirm the partner is at fault.
 
@@ -137,7 +137,7 @@
 
 ### Q4 · More async 🆕
 
-**Level:** Complex · **Probes:** [Async Apex overview & choosing](../../SF/02-apex-and-triggers/12-async-apex-overview-and-choosing.md) · [Queueable Apex & chaining](../../SF/02-apex-and-triggers/13-queueable-apex-and-chaining.md) · [Batch Apex & stateful processing](../../SF/02-apex-and-triggers/14-batch-apex-and-stateful-processing.md)
+**Level:** Complex · **Probes:** [Async Apex overview & choosing](../../SF_core/02-apex-and-triggers/12-async-apex-overview-and-choosing.md) · [Queueable Apex & chaining](../../SF_core/02-apex-and-triggers/13-queueable-apex-and-chaining.md) · [Batch Apex & stateful processing](../../SF_core/02-apex-and-triggers/14-batch-apex-and-stateful-processing.md)
 
 **Scenario.** A nightly enrichment process hits `Too many SOQL queries: 101`. A developer's fix, already in a pull request, moves the work into a Queueable enqueued per record from the trigger — "async gets fresh limits." In review you note: the org processes around 80,000 records nightly, has three other scheduled jobs, and the same trigger fires during a daytime bulk load. The developer's test passes and shows the Queueable running correctly. Someone else on the team says elastic limits make the whole concern obsolete now.
 
