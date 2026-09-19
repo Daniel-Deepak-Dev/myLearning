@@ -29,7 +29,7 @@ So OWD, sharing rules and the grantee model are `SF_core/07-security-and-sharing
 - **At most one table and one code block (≤15 lines)** in `## How it works`.
 - **`## Recall` is 5 `Q:`/`A:` pairs**, kept strict so one Anki script works across the vault.
 - **Delete `## 2026 currency`** when nothing has changed. An empty heading is noise.
-- **Metadata is a blockquote on line 3.** Never YAML frontmatter.
+- **Metadata is YAML frontmatter**, read by Obsidian as Properties. `status`, `gaps`, `org_checks` and `labs` are recomputed by `scripts/vault.py fix`; every other key is yours. See [NOTES-SYSTEM.md](../NOTES-SYSTEM.md).
 
 ## Rules
 
@@ -40,7 +40,7 @@ So OWD, sharing rules and the grantee model are `SF_core/07-security-and-sharing
 - **Closed gaps are deleted, not ticked.** Last one gone, remove the `## Gaps to close` heading too.
 - **A question no public doc answers goes in `## Confirm in org`**, as a `- 🚩 ` bullet naming what to open. A sandbox to-do, not a gap.
 - **`## Hands-on` holds 3–4 labs** on new notes, IDs `EC-<TOPIC>-NN`, each with a `Proves:` and a time box. **Ticked, never deleted.** Bias to labs that break something on purpose — mine `## Gotchas` for them. New lab → add its row to `PRACTICE.md` in the same edit, creating that file when the first lab lands.
-- **Every link out gets a link back**, added in the same edit. That includes links into `SF_core/`.
+- **A link that crosses vaults gets a link back**, added in the same edit — that means links into `SF_core/`. Same-vault links rely on Obsidian's Backlinks panel.
 - **Unsure of a fact? Mark it 🚩.**
 
 ## Four live currency traps

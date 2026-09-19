@@ -75,7 +75,7 @@ Same meanings as the other two vaults:
 ## Conventions
 
 - **Naming:** `NN-kebab-case.md` inside `NN-kebab-case/` areas — the flat [SF_core/](../SF_core/README.md) shape, since a question set needs one file, not four.
-- **Metadata:** blockquote on line 3, never YAML frontmatter.
+- **Metadata:** YAML frontmatter, read by Obsidian as Properties.
 - **Links:** relative markdown only. Every answer links out to the note instead of restating it — [SF_core/_template.md](../SF_core/_template.md) rule 5. This vault holds *questions*, not a third copy of the knowledge.
 - **New scenario:** append to the set file it belongs to, renumber nothing, bump the `Scenarios:` count in the line-3 blockquote and the area `INDEX.md`.
 - **New set:** next `NN` in the area, copy [_template.md](_template.md), add a row to the area's `INDEX.md`.

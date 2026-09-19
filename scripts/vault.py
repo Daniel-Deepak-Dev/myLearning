@@ -492,6 +492,12 @@ def r_backlink(notes, findings):
         for tgt in sorted(targets):
             if notes[tgt].vault in ONE_WAY_VAULTS:
                 continue
+            # Same-vault links rely on Obsidian's Backlinks panel, which shows
+            # every inbound link for free. Only a crossing between vaults earns
+            # a hand-written return bullet: that is the jump a reader cannot
+            # guess, and the one a GitHub reader has no panel for.
+            if notes[src].vault == notes[tgt].vault:
+                continue
             if src not in related.get(tgt, set()):
                 findings.append(Finding(
                     "backlink-missing", notes[tgt].rel,
@@ -1598,6 +1604,26 @@ def cmd_home() -> int:
     if stale:
         out += [f"**{len(stale)} notes** not updated in {STALE_MONTHS}+ months:", ""]
         out += [f"- {d} · [{n.rel}]({n.rel})" for d, n in stale[:10]] + [""]
+
+    missing_backlinks: list[Finding] = []
+    RULES["backlink-missing"](notes, missing_backlinks)
+    if missing_backlinks:
+        out += [
+            "## Cross-vault seams missing a return link", "",
+            f"**{len(missing_backlinks)}** notes are linked to from another vault "
+            f"but do not link back. Each needs one `## Related` bullet with a real "
+            f"reason clause — never a generated one.", "",
+        ]
+        by_target: dict[str, list[str]] = defaultdict(list)
+        for f in missing_backlinks:
+            by_target[f.path].append(f.message.split("to ")[1].split(" (")[0])
+        for target in sorted(by_target)[:10]:
+            srcs = ", ".join(f"`{s}`" for s in sorted(by_target[target]))
+            out.append(f"- [{target}]({target}) ← {srcs}")
+        if len(by_target) > 10:
+            out.append(f"- … {len(by_target) - 10} more — "
+                       f"`python scripts/vault.py check --rule backlink`")
+        out.append("")
 
     out += [
         "## The vault", "",

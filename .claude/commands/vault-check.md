@@ -10,30 +10,49 @@ Run the vault checker and report what it found.
 !python scripts/vault.py check $ARGUMENTS
 ```
 
-## How to read it
+## The commands
 
-`scripts/vault.py` only checks rules from [NOTES-SYSTEM.md](../../NOTES-SYSTEM.md) that a
-machine can decide without judgement. It is read-only — it never edits a note.
+| Command | What it does |
+|---|---|
+| `check` | read-only; reports `file:line` for every mechanical rule |
+| `fix` | rewrites derived values only — never prose |
+| `home` | regenerates `HOME.md`, the what-to-study-next page |
+| `cards` | exports the `## Recall` pairs to Anki TSV + Obsidian decks |
+| `migrate` | one-shot, already run: blockquote metadata → frontmatter |
 
-Group the findings for me by what they cost to fix:
+After any note changes, the loop is `fix` → `home` → `check`.
 
-1. **Derived values that are simply stale** — `status-derived`, `stale-flag`,
-   `index-row`, `index-summary`, `readme-counts`. These have exactly one correct
-   answer. `python scripts/vault.py fix` rewrites all five; offer that rather
-   than editing the files one at a time. `lab-practice-sync` has no fixer — the
-   queue order is a judgement call, so add the row by hand.
-2. **Integrity breaks** — `link-broken`, `link-label`, `link-archive`,
-   `link-wikilink`, `index-coverage`. Usually a move that left something behind.
-   Say what moved before changing anything.
-3. **`backlink-missing`** — the standing backlog, currently in the hundreds.
+## How to read the findings
+
+`scripts/vault.py` only covers rules from [NOTES-SYSTEM.md](../../NOTES-SYSTEM.md)
+that a machine can decide without judgement.
+
+1. **Derived values** — `status-derived`, `index-row`, `index-summary`,
+   `readme-counts`, `tags`, `frontmatter`. One correct answer each.
+   `python scripts/vault.py fix` rewrites them all; offer that rather than
+   editing files one at a time. `lab-practice-sync` has no fixer — the queue
+   order is unblocked-first, which is a judgement call.
+2. **Integrity** — `link-broken`, `link-label`, `link-archive`,
+   `link-wikilink`, `index-coverage`. Usually a move that left something
+   behind. Say what moved before changing anything.
+3. **`backlink-missing`** — cross-vault seams only, currently ~31.
    **Never auto-write these.** A `## Related` bullet needs a real "— why you
-   would jump there" clause, and a generated one is filler. Surface a handful at
-   a time, grouped by area, and write the clause by hand.
-   A hub with 20+ inbound links does not want 20 return bullets — it would blow
-   the line budget. Say so rather than adding them.
-4. **Format** — `format-length`, `format-blocks`, `format-sections`,
+   would jump there" clause; a generated one is filler that looks finished.
+   Surface a few at a time and write the clause by hand after reading both
+   notes. Same-vault links are no longer checked — Obsidian's Backlinks panel
+   covers those.
+4. **`stale`** — notes 3+ months old. A study signal, not a defect; it sits
+   deliberately outside the pre-commit gate.
+5. **Format** — `format-length`, `format-blocks`, `format-sections`,
    `sources`, `history-tally`, `lab-format`, `naming`. These need a judgement
-   call about the prose. Show the line, suggest a fix, do not apply it silently.
+   call about the prose. Show the line, suggest a fix, do not apply silently.
 
-If a finding is wrong, the rule is wrong — fix `scripts/vault.py`, do not edit the
-note to satisfy a bad check.
+## Two standing rules
+
+**Four frontmatter keys belong to the tool** — `status`, `gaps`, `org_checks`,
+`labs`. Everything else (`vault`, `area`, `format`, `level`, `created`,
+`currency`, `phase`, `tags`) is the user's. Never hand-edit the first four,
+and never let `fix` touch the rest.
+
+**If a finding is wrong, the rule is wrong.** Fix `scripts/vault.py`, do not
+edit a note to satisfy a bad check.

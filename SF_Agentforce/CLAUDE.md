@@ -23,7 +23,7 @@ Template: [../_note-template.md](../_note-template.md).
 
 - **50 lines max, counted to `## Related`.** The `## Related` / `## Sources` / `## History` footer does not count. No paragraph longer than two sentences.
 - **One table max. One code block max, 12 lines.**
-- **Metadata is a blockquote on lines 3–4.** Never YAML frontmatter.
+- **Metadata is YAML frontmatter**, read by Obsidian as Properties. `status`, `gaps`, `org_checks` and `labs` are recomputed by `scripts/vault.py fix`; every other key is yours. See [NOTES-SYSTEM.md](../NOTES-SYSTEM.md).
 - **Filenames carry no number.** Order lives in [INDEX.md](INDEX.md).
 
 ## Rules
@@ -39,7 +39,7 @@ Template: [../_note-template.md](../_note-template.md).
 - **`Level` sets the gap ceiling.** Gaps may go one level up, never two. A `basic` note never gets a `deep` gap.
 - **Gaps stay on this topic.** Never a syllabus. Never another subject.
 - **Keep the user's own wording** in a `> **From my notes.**` callout. Correct it inline if it is wrong.
-- **Every link out gets a link back**, added in the same edit. That includes links into `SF_core/` and `SF_Experience_Cloud/`.
+- **A link that crosses vaults gets a link back**, added in the same edit — that means links into `SF_core/` and `SF_Experience_Cloud/`. Same-vault links rely on Obsidian's Backlinks panel.
 - **Unsure of a fact? Mark it 🚩.** For release-dependent facts, check [../RELEASE-RADAR/agentforce-platform.md](../RELEASE-RADAR/agentforce-platform.md) first. Never draft release facts from recall.
 - **Two live currency traps:** agents are authored in **Agent Script** — the legacy topics-and-instructions builder stopped creating new agents the week of 2026-07-13. And **Data Cloud is Data 360**.
 - **New topic** → new file, plus a row in [INDEX.md](INDEX.md) at the right point in the path.
