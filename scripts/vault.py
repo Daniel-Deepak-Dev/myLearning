@@ -45,11 +45,11 @@ SKIP_DIRS = {".git", "_archive", "node_modules", ".obsidian", ".vscode", ".claud
 # Live files that are scaffolding, not notes.
 NON_NOTE_NAMES = {
     "INDEX.md", "README.md", "PRACTICE.md", "PHASES.md",
-    "CURRENCY.md", "CLAUDE.md", "REVIEW.md",
+    "CURRENCY.md", "AGENTS.md", "REVIEW.md",
 }
 
 # Interview/ links out deliberately and never expects a return link.
-# Interview/CLAUDE.md: "Link out, never restate."
+# Interview/AGENTS.md: "Link out, never restate."
 ONE_WAY_VAULTS = ("Interview",)
 
 LINK_RE = re.compile(r"\[([^\]]*)\]\(([^)\s]+?)(?:#[^)]*)?\)")
@@ -434,7 +434,7 @@ def r_wikilink(notes, findings):
 
 @rule("link-archive")
 def r_link_archive(notes, findings):
-    """CLAUDE.md: _archive/ is a quarry for facts, never a link target."""
+    """AGENTS.md: _archive/ is a quarry for facts, never a link target."""
     for path in walk_md(NOTE_VAULTS + OTHER_LIVE):
         if os.path.basename(path).startswith("_"):
             continue
@@ -1071,7 +1071,7 @@ RENAME_TALK = re.compile(r"old name|renamed|formerly|used to be|was called", re.
 
 @rule("naming")
 def r_naming(notes, findings):
-    """SF_Data_360/CLAUDE.md: the product is Data 360. Write Data 360, not Data Cloud."""
+    """SF_Data_360/AGENTS.md: the product is Data 360. Write Data 360, not Data Cloud."""
     for path, note in notes.items():
         sources = note.sections.get("Sources")
         for i, line in enumerate(note.lines, 1):

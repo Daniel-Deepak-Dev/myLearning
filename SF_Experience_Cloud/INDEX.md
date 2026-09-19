@@ -4,7 +4,7 @@
 
 Public, partner and customer sites built **LWR-first**. **20 topics** · phases [18](PHASES.md), [19](PHASES.md).
 
-> Currency: **Summer '26 (API 67.0)** · [flag legend](../SF_core/README.md#flag-legend) · [what changed](../SF_core/CURRENCY.md) · [how to write here](CLAUDE.md)
+> Currency: **Summer '26 (API 67.0)** · [flag legend](../SF_core/README.md#flag-legend) · [what changed](../SF_core/CURRENCY.md) · [how to write here](AGENTS.md)
 
 > **This vault was `SF_core/05-experience-cloud-lwr/` until 2026-09-19.** It is now a root-level vault beside [SF_core/](../SF_core/README.md), [SF_Agentforce/](../SF_Agentforce/INDEX.md) and [SF_Data_360/](../SF_Data_360/INDEX.md). Filenames and numbering are unchanged. The build record stays in [../SF_core/PHASES.md](../SF_core/PHASES.md) and the currency rows stay in [../SF_core/CURRENCY.md](../SF_core/CURRENCY.md) — one ledger for the whole platform.
 

@@ -1,6 +1,6 @@
 # Interview — how to write in this vault
 
-Style rules: [../CLAUDE.md](../CLAUDE.md). Full conventions: [README.md](README.md).
+Style rules: [../AGENTS.md](../AGENTS.md). Full conventions: [README.md](README.md).
 
 ## The item format
 

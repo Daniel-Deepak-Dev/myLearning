@@ -2,7 +2,7 @@
 
 > **Start at [HOME.md](HOME.md)** — what to study next, rebuilt from the notes.
 
-These apply to every file in this repo. Each vault adds its own format rules in its own `CLAUDE.md`.
+These apply to every file in this repo. Each vault adds its own format rules in its own `AGENTS.md`.
 
 ## Style
 

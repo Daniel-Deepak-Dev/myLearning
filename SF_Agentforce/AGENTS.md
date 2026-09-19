@@ -1,6 +1,6 @@
 # SF_Agentforce — how to write in this vault
 
-Style rules: [../CLAUDE.md](../CLAUDE.md). Full contract: [../NOTES-SYSTEM.md](../NOTES-SYSTEM.md).
+Style rules: [../AGENTS.md](../AGENTS.md). Full contract: [../NOTES-SYSTEM.md](../NOTES-SYSTEM.md).
 
 ## Scope
 
