@@ -18,9 +18,10 @@ machine can decide without judgement. It is read-only — it never edits a note.
 Group the findings for me by what they cost to fix:
 
 1. **Derived values that are simply stale** — `status-derived`, `stale-flag`,
-   `index-row`, `index-summary`, `readme-counts`, `lab-practice-sync`. These have
-   exactly one correct answer. `python scripts/vault.py fix` rewrites all of
-   them; offer that rather than editing the files one at a time.
+   `index-row`, `index-summary`, `readme-counts`. These have exactly one correct
+   answer. `python scripts/vault.py fix` rewrites all five; offer that rather
+   than editing the files one at a time. `lab-practice-sync` has no fixer — the
+   queue order is a judgement call, so add the row by hand.
 2. **Integrity breaks** — `link-broken`, `link-label`, `link-archive`,
    `link-wikilink`, `index-coverage`. Usually a move that left something behind.
    Say what moved before changing anything.
