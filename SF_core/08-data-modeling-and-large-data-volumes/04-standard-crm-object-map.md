@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 14
+---
 # Standard CRM Object Map
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 14
 
 **Scope:** The standard object graph you inherit before writing anything — what connects to what, where the polymorphic joints are, and which chains surprise people. The B2C variant is [05](05-person-accounts-and-one-way-modeling-decisions.md).
 

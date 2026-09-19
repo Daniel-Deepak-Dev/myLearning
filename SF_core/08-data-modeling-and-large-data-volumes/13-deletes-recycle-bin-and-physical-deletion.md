@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 14
+---
 # Deletes, the Recycle Bin & Physical Deletion
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 14
 
 **Scope:** What "deleted" means at volume, and why removing rows does not immediately remove their cost. DML semantics are [02-apex · 05](../02-apex-and-triggers/05-dml-database-methods-and-savepoints.md); archiving strategy is phase 15.
 

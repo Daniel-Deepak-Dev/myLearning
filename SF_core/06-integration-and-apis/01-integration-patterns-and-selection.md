@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 12
+---
 # Integration patterns & selection
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 12
 
 **Scope:** The decision framework the other 24 topics hang off — which pattern a requirement is, and which API implements it. Every mechanism named here gets its own note; none is explained twice.
 

@@ -1,6 +1,14 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 19
+tags: [currency-new, currency-warning]
+---
 # Embedded Messaging & Agents in Sites
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
 **Scope:** Putting a chat channel — human-routed messaging or an **Agentforce agent** — on a site, and why an agent on a *public* site is the highest-risk surface on the platform. The agent itself is built in [SF_Agentforce/](../SF_Agentforce/INDEX.md); an agent is also **a new line item on the exposure audit**, [11](11-public-site-exposure-audit.md).
 

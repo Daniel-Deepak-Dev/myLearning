@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 5
+tags: [currency-new]
+---
 # Invocable Apex & Agentforce Actions
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 05
 
 **Scope:** The `@InvocableMethod` contract as Apex — signature rules, bulk semantics, and the constructor requirement that breaks existing actions. The *agent* side (writing descriptions, action selection, MCP exposure) lives in [SF_Agentforce · custom-agent-actions](../../SF_Agentforce/INDEX.md) and is not repeated here.
 

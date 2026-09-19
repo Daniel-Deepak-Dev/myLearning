@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 10
+tags: [currency-new]
+---
 # User Access Policies & Lifecycle
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 10
 
 **Scope:** Automating grant and revoke across the joiner–mover–leaver lifecycle, declaratively. What can be assigned is [02](02-licences-and-what-they-gate.md)–[04](04-permission-set-groups-and-muting.md); who a grant reaches once assigned is [08](08-groups-queues-and-the-grantee-model.md).
 

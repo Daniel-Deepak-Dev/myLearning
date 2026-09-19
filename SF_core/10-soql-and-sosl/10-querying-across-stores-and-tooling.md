@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 10-soql-and-sosl
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 22
+tags: [currency-new]
+---
 # Querying Across Stores & the Tooling Surface
-
-> Area: 10-soql-and-sosl · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 22
 
 **Scope:** Where SOQL behaves differently — big objects, external objects, custom metadata, Tooling API, Data 360 — and every place you can issue a query from. Bulk query mechanics are [06-integration · 07](../06-integration-and-apis/07-bulk-api-2.md).
 

@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 10
+tags: [currency-new, currency-warning]
+---
 # Groups, Queues & the Grantee Model
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 10
 
 **Scope:** *Who* a record grant is made to. Every sharing mechanism in this area grants to one of these, so this note is the vocabulary for [09](09-sharing-rules-and-manual-sharing.md) and [10](10-teams-territories-and-account-sharing.md). Queue routing and assignment rules are [01-admin · 11](../01-admin-and-declarative-platform/11-queues-assignment-and-escalation-rules.md).
 

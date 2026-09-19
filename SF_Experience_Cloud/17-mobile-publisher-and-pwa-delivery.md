@@ -1,6 +1,13 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 19
+---
 # Mobile Publisher & PWA Delivery
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
 **Scope:** Turning an Experience Cloud site into a branded mobile experience — a native app via Mobile Publisher, or a progressive web app — and the review/publishing pipeline each implies. Licences underneath the app are [08](08-licences-and-external-user-types.md).
 

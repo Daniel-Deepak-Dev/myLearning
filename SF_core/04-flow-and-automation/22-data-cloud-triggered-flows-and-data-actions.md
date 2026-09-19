@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 9
+tags: [currency-new]
+---
 # Data 360-Triggered Flows & Data Actions
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 09
 
 **Scope:** The seam between Data 360 and core Flow — what can start a flow from the data layer, and the three ways data leaves Data 360. The data platform itself lives in [SF_Data_360/](../../SF_Data_360/INDEX.md); this note owns only the Flow side.
 

@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 01-admin-and-declarative-platform
+format: dense
+status: learning
+created: 2026-08-01
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 1
+---
 # Custom Labels & Translation Workbench
-
-> Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 01
 
 **Scope:** Externalising user-facing strings into custom labels, referencing them from every runtime, and translating them. Stops at Experience Cloud site localisation — that is [SF_Experience_Cloud](../../SF_Experience_Cloud/INDEX.md).
 

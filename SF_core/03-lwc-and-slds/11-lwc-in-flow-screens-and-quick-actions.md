@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 6
+---
 # LWC in Flow Screens & Quick Actions
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 06
 
 **Scope:** The **component-authoring** contract for the two places a component is launched by something other than a Lightning page — a Flow screen and a record action. The Flow-designer side (building the flow, reactive screens, when to use a component at all) is [04-flow](../04-flow-and-automation/INDEX.md).
 

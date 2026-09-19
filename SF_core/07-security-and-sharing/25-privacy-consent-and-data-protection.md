@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 11
+---
 # Privacy, Consent & Data Protection
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 11
 
 **Scope:** The obligations that come from outside the org — consent, subject rights, retention and non-production data — and the platform objects that record them. Encryption as a control is [21](21-shield-platform-encryption.md); the AI-side governance story is [RELEASE-RADAR](../../RELEASE-RADAR/trust-security-and-governance.md).
 

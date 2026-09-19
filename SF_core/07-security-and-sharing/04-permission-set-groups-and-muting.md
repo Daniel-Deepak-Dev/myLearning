@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 10
+---
 # Permission Set Groups & Muting
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 10
 
 **Scope:** Composing permission sets into role-shaped bundles, and the one mechanism in the permission layer that subtracts. What you may grant at all is [02](02-licences-and-what-they-gate.md); automating the assignment is [05](05-user-access-policies-and-lifecycle.md).
 

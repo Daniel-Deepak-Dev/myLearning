@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 17
+tags: [currency-warning]
+---
 # Deployment Rollback, Hotfix & Destructive Changes
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 17
 
 **Scope:** Getting *out* of a deployment — the reversal *strategy*, the emergency path, and what deletion costs you. The destructive-manifest mechanics are [05](05-metadata-api-and-deployment-mechanics.md); the forward pipeline is [14](14-ci-cd-with-github-actions.md); recovering **data** is [08-data · 21](../08-data-modeling-and-large-data-volumes/21-backup-restore-and-recovery.md).
 

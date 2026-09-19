@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 7
+---
 # LWC Open Source & Off-Platform Reuse
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 07
 
 **Scope:** How far a component travels — to another surface inside the org, and to a stack with no org at all. LWR *sites* are [SF_Experience_Cloud](../../SF_Experience_Cloud/INDEX.md); this is the framework and the reuse boundary.
 

@@ -9,7 +9,9 @@
 #
 # To commit past this once: git commit --no-verify
 
-RULES="--rule status --rule stale --rule index --rule readme \
+# `stale` is deliberately absent: a note going 3 months without an update is a
+# study signal for HOME.md, not a reason to block a commit.
+RULES="--rule status --rule frontmatter --rule tags --rule index --rule readme \
 --rule link --rule lab --rule sources --rule history --rule format --rule naming"
 
 # shellcheck disable=SC2086

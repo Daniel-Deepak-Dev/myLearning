@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 7
+tags: [currency-new]
+---
 # LWC State Managers
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 07
 
 **Scope:** `defineState` from `@lwc/state` — shared reactive state as a module instead of as events. Component-local reactivity is [05](05-decorators-and-the-reactivity-model.md); the page-wide message bus is [12](12-lightning-message-service.md).
 

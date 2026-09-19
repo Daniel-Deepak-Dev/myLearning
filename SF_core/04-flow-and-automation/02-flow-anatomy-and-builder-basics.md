@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 8
+---
 # Flow Anatomy & Builder Basics
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 08
 
 **Scope:** The vocabulary every other note in this area assumes — elements, resources, the canvas, versioning. Type-specific behaviour lives in [03](03-record-triggered-flows.md)–[07](07-platform-event-and-async-path-flows.md).
 

@@ -1,6 +1,14 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 18
+tags: [currency-new, currency-warning]
+---
 # Aura to LWR: Migration & Coexistence
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** What "move our site to LWR" actually costs, and how to decide whether to. The runtime comparison is [01](01-template-choice-and-site-landscape.md); the build model that makes the two incompatible is [02](02-lwr-architecture-and-build-model.md). Added in phase 18, beyond the original plan.
 

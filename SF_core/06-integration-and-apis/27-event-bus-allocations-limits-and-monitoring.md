@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 20
+tags: [currency-new, currency-warning]
+---
 # Event bus allocations, limits & monitoring
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 20
 
 **Scope:** What the event bus costs and how to see what it is doing — publish and delivery allocations, the CDC entity cap, and the two monitoring surfaces. Event *design* is [12](12-platform-event-design.md), CDC semantics are [13](13-change-data-capture.md), the transport is [11](11-pub-sub-api.md).
 

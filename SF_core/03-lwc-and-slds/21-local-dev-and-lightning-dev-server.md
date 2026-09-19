@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 7
+tags: [currency-new, currency-warning]
+---
 # Local Dev & the Lightning Dev Server
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 07
 
 **Scope:** Seeing a component change in a browser without deploying — the `sf lightning dev` commands and the VS Code preview. Installing and configuring the CLI itself is [09-devops · 24](../09-devops-sfdx-and-release-management/INDEX.md); this owns the authoring loop.
 

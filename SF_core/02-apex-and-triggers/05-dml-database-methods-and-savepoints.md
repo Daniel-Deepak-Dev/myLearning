@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 3
+---
 # DML, Database Methods & Savepoints
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 03
 
 **Scope:** Writing data — the two DML syntaxes, per-row result handling, transaction control and Mixed DML. What the save itself then triggers is [07](07-order-of-execution-and-recursion.md); batching the writes is [08](08-bulkification-patterns.md).
 

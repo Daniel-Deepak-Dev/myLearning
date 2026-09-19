@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 6
+tags: [currency-new]
+---
 # GraphQL Wire Adapter
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 06
 
 **Scope:** Querying Salesforce data from a component with filters, sorting, pagination and aggregates, without an Apex class. Reading a record you already have the ID for is [06](06-lightning-data-service-and-ui-api-wires.md); the standalone GraphQL API used by external clients belongs to [06-integration](../06-integration-and-apis/INDEX.md).
 

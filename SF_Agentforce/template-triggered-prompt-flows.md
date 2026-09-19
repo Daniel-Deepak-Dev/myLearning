@@ -1,7 +1,14 @@
+---
+vault: SF_Agentforce
+format: light
+level: working
+status: complete
+org_checks: 3
+labs: 4
+created: 2026-08-27
+updated: 2026-08-30
+---
 # Template-Triggered Prompt Flows
-
-> Folder: SF_Agentforce · Level: working · Status: ✅ complete
-> Created: 2026-08-27 · Updated: 2026-08-30
 
 **One line:** A flow type whose only job is to gather data and hand it to a prompt template as text.
 

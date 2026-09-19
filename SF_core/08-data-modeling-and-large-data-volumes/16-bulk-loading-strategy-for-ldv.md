@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 15
+tags: [currency-warning]
+---
 # Bulk Loading Strategy for LDV
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 15
 
 **Scope:** Making a large load finish — the levers, in the order you reach for them. The API surface is [06-integration · 07](../06-integration-and-apis/07-bulk-api-2.md); lock contention is [12](12-record-locking-and-concurrency.md); a one-off migration is [25](25-data-migration-and-cutover.md).
 

@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 16
+tags: [currency-warning]
+---
 # Org Auth & Environment Management
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 16
 
 **Scope:** Getting the CLI authorized against an org and keeping several orgs straight. The OAuth flows themselves are [06-integration · 15](../06-integration-and-apis/15-oauth-flows-and-authorization.md); this is the developer-and-CI end.
 

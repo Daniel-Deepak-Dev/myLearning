@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 10
+tags: [currency-new, currency-warning]
+---
 # Field-Level Security & Visibility Layers
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 10
 
 **Scope:** The last gate — which columns of an accessible record a user may read or edit — and the two lookalike mechanisms that hide a field without securing it. Where FLS is enforced in code is [14](14-code-execution-context-and-security.md).
 

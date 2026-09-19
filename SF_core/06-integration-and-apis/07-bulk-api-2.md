@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 12
+tags: [currency-warning]
+---
 # Bulk API 2.0
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 12
 
 **Scope:** Moving large record volumes asynchronously — ingest and query jobs, and what changed from v1. Declarative and desktop loading tools are [01-admin · 13](../01-admin-and-declarative-platform/13-data-import-export-and-loading-tools.md); LDV design is [08-data](../08-data-modeling-and-large-data-volumes/INDEX.md).
 

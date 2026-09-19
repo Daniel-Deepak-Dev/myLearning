@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 10-soql-and-sosl
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 22
+---
 # Query Anatomy & the SOQL Model
-
-> Area: 10-soql-and-sosl · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 22
 
 **Scope:** What a SOQL statement is made of, the order the platform evaluates it in, and the budgets every query spends from. Why a *valid* query is slow is [08-data · 08](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md); calling SOQL from Apex is [02-apex · 03](../02-apex-and-triggers/03-soql-fundamentals-and-relationship-queries.md).
 

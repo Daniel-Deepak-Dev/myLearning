@@ -1,6 +1,14 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 18
+tags: [currency-new]
+---
 # Custom LWC in LWR Sites
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** Writing a Lightning web component that survives an LWR site — the target vocabulary, the imports that fail off Lightning Experience, and the SSR rules. Layout components are [04](04-experience-builder-layouts-and-theme-layouts.md); the LWC framework itself is [03-lwc](../SF_core/03-lwc-and-slds/INDEX.md).
 

@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 4
+---
 # Batch Apex & Stateful Processing
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 04
 
 **Scope:** Processing a record set larger than one transaction can hold — the three-method contract, scope sizing, carrying state across chunks and surviving partial failure. Paging a large result set *inside* one transaction is [17](17-database-cursor-and-large-result-sets.md) instead.
 

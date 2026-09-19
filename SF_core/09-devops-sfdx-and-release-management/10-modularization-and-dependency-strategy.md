@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 16
+---
 # Modularization & Dependency Strategy
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 16
 
 **Scope:** An argued opinion about when to break an org's source into packages and when not to. The packaging mechanics are [08](08-unlocked-packages-2gp.md) and [09](09-managed-2gp-and-isv-concerns.md).
 

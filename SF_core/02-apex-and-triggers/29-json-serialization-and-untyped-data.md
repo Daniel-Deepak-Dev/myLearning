@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 21
+---
 # JSON, Serialization & Untyped Data
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 21
 
 **Scope:** Turning Apex objects into JSON and back — the four `JSON` entry points, streaming with `JSONParser`/`JSONGenerator`, and traversing a response whose shape you do not control. The HTTP that carries it is [19](19-callouts-named-credentials-and-http-in-apex.md); the annotations that make a class a typed payload are [23](23-userdefinedtype-and-typed-interop.md).
 

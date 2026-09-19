@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 12
+---
 # Change Data Capture
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 12
 
 **Scope:** The platform-generated stream of record changes — channels, what a change message contains, and using it to keep an external store in sync. The transport is [11](11-pub-sub-api.md); the Apex side is [02-apex · 18](../02-apex-and-triggers/18-platform-events-and-cdc-in-apex.md).
 

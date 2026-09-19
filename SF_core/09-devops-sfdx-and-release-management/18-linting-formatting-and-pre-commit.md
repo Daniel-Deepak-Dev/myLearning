@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 17
+---
 # Linting, Formatting & Pre-commit
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 17
 
 **Scope:** The gate that runs in under ten seconds on a developer's own machine. The deep analysis is [16](16-code-analyzer-v5.md); the conventions a human enforces are [19](19-code-review-conventions-for-metadata.md).
 

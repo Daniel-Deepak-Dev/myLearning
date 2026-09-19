@@ -11,7 +11,7 @@ Skeleton in [_template.md](_template.md). Every scenario, in this order:
 - **Both lenses on every item.** A model answer without a rubric makes the file single-purpose.
 - **`**The trap.**` is mandatory** and is the point of the item — the plausible answer a well-read candidate gives that is wrong. If there is no plausible wrong answer, the scenario is too easy: add a constraint or drop it.
 - **Keep the `<details>` blocks.** They are the one deliberate deviation from the other vaults' pure markdown, and they are what makes one file serve both candidate and interviewer.
-- **Metadata is a blockquote on line 3.** Never YAML frontmatter.
+- **Metadata is YAML frontmatter**, read by Obsidian as Properties. `status`, `gaps`, `org_checks` and `labs` are recomputed by `scripts/vault.py fix`; every other key is yours. See [NOTES-SYSTEM.md](../NOTES-SYSTEM.md).
 
 ## Rules
 

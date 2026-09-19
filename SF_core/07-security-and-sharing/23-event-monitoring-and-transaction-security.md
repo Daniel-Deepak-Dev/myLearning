@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 11
+tags: [currency-new, currency-warning]
+---
 # Event Monitoring & Transaction Security
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 11
 
 **Scope:** Shield's third pillar — seeing what users and integrations actually did, and acting on it while it happens. Configuration-change history is Setup Audit Trail ([01-admin · 17](../01-admin-and-declarative-platform/17-setup-audit-trail-monitoring-and-usage.md)); field-value history is [22](22-field-audit-trail-and-data-retention.md).
 

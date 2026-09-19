@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 01-admin-and-declarative-platform
+format: dense
+status: learning
+created: 2026-08-01
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 1
+---
 # Formula Fields & Roll-Up Summaries
-
-> Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 01
 
 **Scope:** The two declarative calculation mechanisms — read-time formulas and save-time roll-ups — their size limits, and where each stops being the right tool.
 

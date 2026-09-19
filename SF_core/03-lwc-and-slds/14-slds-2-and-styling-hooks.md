@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 6
+tags: [currency-new, currency-warning]
+---
 # SLDS 2 & Styling Hooks
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 06
 
 **Scope:** Customising the look of base components and your own — which knobs are supported, and which SLDS version answers. How CSS reaches across a component boundary at all is [13](13-shadow-dom-styling-and-scoped-css.md).
 

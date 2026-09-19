@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 16
+---
 # Source Tracking & Sandbox Workflow
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 16
 
 **Scope:** Letting the tooling work out what changed, and the discipline that keeps a sandbox and a repo in agreement. Sandbox *data* is [08-data · 20](../08-data-modeling-and-large-data-volumes/20-sandboxes-seeding-and-data-mask.md).
 

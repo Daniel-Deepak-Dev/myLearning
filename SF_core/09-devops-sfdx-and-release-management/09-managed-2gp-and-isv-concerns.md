@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 16
+tags: [currency-new]
+---
 # Managed 2GP & ISV Concerns
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 16
 
 **Scope:** Packaging for orgs you do not control — namespaces, ancestry, upgrades, and the 1GP migration. The internal case is [08](08-unlocked-packages-2gp.md).
 

@@ -144,24 +144,53 @@ IDs are `<VAULT>-<TOPIC>-NN` — `AF-TRUST-01`, `AF-ATLAS-02`. Stable, never reu
 
 Two things `PRACTICE.md` deliberately does **not** have: progress counters, and a copy of the lab text. `Done` is append-only, which is far harder to desync than a tally, and the note stays the single source of truth for what a lab actually is.
 
-### 4. Links go both ways
+### 4. Cross-vault links go both ways
 
-When an Agentforce note links to an Apex note, the Apex note gets a link back. In the same edit.
+**When a link crosses vaults, the far side gets a link back — in the same edit.**
+When an Agentforce note links to an Apex note, the Apex note links back.
 
-One-way links are a folder of files. Two-way links are a wiki. You asked for a wiki.
+**Same-vault links do not need one.** Obsidian's Backlinks panel already shows
+every inbound link for free, so a hand-written return bullet inside one vault is
+duplicated effort. The rule used to apply to every link and sat at 50% compliance
+— including in notes written the same week the rule was restated. A rule kept half
+the time is not a rule.
+
+A cross-vault link is different: it is the jump a reader cannot guess, and on
+GitHub there is no panel to fall back on. Those are worth writing by hand.
+
+**The reason clause is the point, not the link.** `— the *other* kind of action,
+and the description-as-specification rule both share` is knowledge. A generated
+`— see also` is filler that looks finished. `vault.py` reports a missing return
+link and never writes one.
 
 ### 5. Dates, status and sources
 
+**Metadata is YAML frontmatter.** Obsidian reads it as Properties — that is what
+makes the Bases views, property search and sorting in [HOME.md](HOME.md) possible.
+It replaced a `>` blockquote, which no tool could read.
+
+**Four keys are the machine's; the rest are yours.** `python scripts/vault.py fix`
+recounts `status`, `gaps`, `org_checks` and `labs` from the note body and will
+overwrite whatever you type there. `vault`, `area`, `format`, `level`, `created`,
+`currency`, `phase` and `tags` are yours — edit them in Obsidian's Properties
+panel and the tool leaves them alone.
+
 **Status is derived, never typed.** Count the `- [ ]` lines in `## Gaps to close` — and only those. `## Confirm in org` bullets and `## Hands-on` labs never count:
 
-- at least one → `Status: 🌱 N gaps open`
-- none, or no section at all → `Status: ✅ complete`
+- at least one → `status: open` with `gaps: N`
+- none, or no section at all → `status: complete`
 
 A note can be `✅ complete` and still carry org checks. Complete means *the research is done*, not *there is nothing left to verify*.
 
 Delete a gap and the status moves on its own. A typed status goes stale the first time you forget to update it.
 
-**Dates.** `Created` never changes. `Updated` changes on every edit.
+**Dates.** `created` never changes. `updated` changes on every edit. Notes written
+before the frontmatter migration had their dates backfilled from git history, but
+an authored date always won — nothing hand-written was overwritten.
+
+**Staleness is derived, not stamped.** There is no `⏳` line to add or remove any
+more; `vault.py` computes age from `updated` and [HOME.md](HOME.md) lists what has
+gone 3+ months. One fewer thing in the file that can be wrong.
 
 **Staleness.** Past 3 months without an update, a third metadata line appears:
 

@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 01-admin-and-declarative-platform
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 2
+tags: [currency-new]
+---
 # Agentforce in Setup & AI-assisted admin
-
-> Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 02
 
 **Scope:** The AI surface inside Setup and the discipline for using it. What Agentforce *is*, how agents are built and grounded, lives in [SF_Agentforce](../../SF_Agentforce/INDEX.md) — this note stays on the admin's side of the line.
 

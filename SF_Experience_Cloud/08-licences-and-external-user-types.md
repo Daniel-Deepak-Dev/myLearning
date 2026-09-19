@@ -1,6 +1,13 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 18
+---
 # Licences & External User Types
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** The external half of the licence model — which licence an external person holds, what it gates, and how it is billed. **Internal licences are [07-security · 02](../SF_core/07-security-and-sharing/02-licences-and-what-they-gate.md)**; the two notes deliberately meet at this boundary and do not overlap.
 

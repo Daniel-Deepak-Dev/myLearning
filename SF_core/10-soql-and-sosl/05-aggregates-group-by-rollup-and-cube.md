@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 10-soql-and-sosl
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 22
+---
 # Aggregates, GROUP BY, ROLLUP & CUBE
-
-> Area: 10-soql-and-sosl · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 22
 
 **Scope:** Aggregate functions, grouping, and the subtotal clauses that let one query do what usually takes a report. Reading the results from Apex is [02-apex · 03](../02-apex-and-triggers/03-soql-fundamentals-and-relationship-queries.md).
 

@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 01-admin-and-declarative-platform
+format: dense
+status: learning
+created: 2026-08-01
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 1
+---
 # Validation Rules & Duplicate Management
-
-> Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 01
 
 **Scope:** Declarative data-integrity enforcement at save time — validation rules, matching rules and duplicate rules. Their exact save-order positions are owned by [14 · Order of execution](14-order-of-execution-declarative-view.md).
 

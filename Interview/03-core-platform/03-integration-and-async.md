@@ -1,6 +1,17 @@
+---
+vault: Interview
+area: Core Platform
+format: dense
+level: "medium→complex"
+status: learning
+created: 2026-08-23
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+set: 3
+set_total: 3
+scenarios: 4
+---
 # Core Platform — Integration & Async
-
-> Area: Core Platform · Set 03 of 03 · Scenarios: 4 · Level: medium→complex · Currency: **Summer '26 (API 67.0)**
 
 **Drills:** the distributed-systems layer integration reviews actually fail on. **Most integration defects are pattern errors, not API errors** — and the two facts underneath the whole set are that a timeout is not a failure, and that every event bus here is at-least-once.
 

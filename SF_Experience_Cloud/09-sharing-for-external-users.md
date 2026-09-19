@@ -1,6 +1,13 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 18
+---
 # Sharing for External Users
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** Granting record access to authenticated external users — sharing sets, share groups, super user access, and why the internal mechanisms don't reach them. Guests are [07](07-guest-user-security-model.md); the licence that decides which of these you get is [08](08-licences-and-external-user-types.md).
 

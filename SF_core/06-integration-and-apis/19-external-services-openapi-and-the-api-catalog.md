@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 13
+---
 # External Services, OpenAPI & the API Catalog
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 13
 
 **Scope:** Turning an API specification into something Salesforce can call or expose — outbound via External Services, inbound via the API Catalog. Flow's HTTP Callout is [04-flow · 12](../04-flow-and-automation/12-http-callout-and-external-services-in-flow.md); the endpoints being described are [18](18-apex-rest-and-custom-endpoints.md).
 

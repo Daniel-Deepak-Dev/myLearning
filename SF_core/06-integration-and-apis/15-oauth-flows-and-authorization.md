@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 13
+tags: [currency-warning]
+---
 # OAuth flows & authorization
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 13
 
 **Scope:** How an external caller gets an access token, which flow to pick, and what the token is allowed to do. The *app object* the flow runs through is [16](16-external-client-apps.md); outbound auth from Apex is [17](17-named-credentials-and-external-credentials.md); human login and MFA are [07-security · 17](../07-security-and-sharing/17-authentication-and-mfa.md).
 

@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 16
+tags: [currency-new, currency-warning]
+---
 # Unlocked Packages (2GP)
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 16
 
 **Scope:** Packaging your *own org's* metadata as versioned, installable units. ISV and namespace concerns are [09](09-managed-2gp-and-isv-concerns.md); whether to modularize at all is [10](10-modularization-and-dependency-strategy.md).
 

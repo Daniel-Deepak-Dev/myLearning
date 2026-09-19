@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 13
+---
 # Salesforce Connect & external objects
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 13
 
 **Scope:** Reading and writing data that lives in another system as if it were an object, without copying it in. When to copy instead is [08-data](../08-data-modeling-and-large-data-volumes/INDEX.md); the credentials are [17](17-named-credentials-and-external-credentials.md).
 

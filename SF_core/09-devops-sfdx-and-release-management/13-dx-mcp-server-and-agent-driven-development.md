@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 16
+tags: [currency-new]
+---
 # The DX MCP Server & Agent-Driven Development
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 16
 
 **Scope:** Letting a coding agent drive your org and your project — the Salesforce DX MCP server, its toolsets and its blast radius. Agents *built on* the platform are [06-integration · 25](../06-integration-and-apis/25-mcp-servers-and-agent-facing-apis.md) and [SF_Agentforce/](../../SF_Agentforce/INDEX.md).
 

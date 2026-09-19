@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 9
+tags: [currency-new, currency-warning]
+---
 # Approval Orchestration
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 09
 
 **Scope:** Building approvals in Flow — approval steps, work items, recall, and how an approval is launched. The engine underneath is [16](16-flow-orchestrator.md); the choose-your-engine comparison is [01-admin · 12](../01-admin-and-declarative-platform/12-approval-processes-and-approval-orchestration.md).
 

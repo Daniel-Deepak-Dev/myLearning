@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 5
+tags: [currency-new]
+---
 # `UserDefinedType` & Typed Interop
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 05
 
 **Scope:** Carrying a structured payload across a boundary — Apex ↔ Flow, Apex ↔ agent action, Apex ↔ LWC — and the equality contract a custom type owes its collections. The invocable signature rules are [22](22-invocable-apex-and-agentforce-actions.md).
 

@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 14
+---
 # Storage Model & Schema Limits
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 14
 
 **Scope:** What a record, a field and an object actually cost against the org's allocations. Storage as a *performance* problem starts at [07](07-large-data-volume-fundamentals.md); reclaiming it is [13](13-deletes-recycle-bin-and-physical-deletion.md).
 

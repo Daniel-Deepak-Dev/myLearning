@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 11
+tags: [currency-new]
+---
 # SSO, SAML, OIDC & Identity
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 11
 
 **Scope:** Delegating the authentication decision of [17](17-authentication-and-mfa.md) to an external identity provider, and the licences that pay for it. OAuth as an *API authorization* protocol is [06-integration · 15](../06-integration-and-apis/15-oauth-flows-and-authorization.md); Experience Cloud login pages, self-registration and headless identity are [SF_Experience_Cloud · 10](../../SF_Experience_Cloud/10-authentication-self-registration-and-sso.md).
 

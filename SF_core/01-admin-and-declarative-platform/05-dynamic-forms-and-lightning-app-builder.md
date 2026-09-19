@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 01-admin-and-declarative-platform
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 2
+tags: [currency-new, currency-warning]
+---
 # Dynamic Forms & Lightning App Builder
-
-> Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 02
 
 **Scope:** How record detail is composed on a Lightning record page, and what the page layout still owns. Action visibility is [06 · Dynamic Actions](06-dynamic-actions-and-list-views.md); record-type-driven UI is [04](04-record-types-and-picklist-architecture.md).
 

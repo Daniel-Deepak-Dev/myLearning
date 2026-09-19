@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 21
+---
 # Apex Enterprise Patterns & Layered Design
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 21
 
 **Scope:** The architecture *above* the handler class — Selector, Domain, Service and Unit of Work, and when the ceremony is worth it. The trigger-to-handler binding itself is [06](06-triggers-and-the-handler-framework.md); making the layers mockable is [28](28-dependency-injection-and-pluggable-apex.md).
 

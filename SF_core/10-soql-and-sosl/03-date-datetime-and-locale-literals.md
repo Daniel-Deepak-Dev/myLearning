@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 10-soql-and-sosl
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 22
+---
 # Date, Datetime & Locale Literals
-
-> Area: 10-soql-and-sosl · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 22
 
 **Scope:** SOQL's built-in date literals, date functions, and the timezone and fiscal-calendar behaviour that makes them different from computing a date in code. General operators are [02](02-filtering-operators-and-literals.md).
 

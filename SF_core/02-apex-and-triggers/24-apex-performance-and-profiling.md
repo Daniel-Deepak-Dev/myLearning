@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 5
+---
 # Apex Performance & Profiling
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 05
 
 **Scope:** Finding out *where* a transaction spends itself, and what to do about it. The limit table itself is [01](01-apex-language-core-and-governor-limits.md); making the underlying query selective is an [08-data · 09](../08-data-modeling-and-large-data-volumes/09-query-plan-and-performance-tuning.md) problem.
 

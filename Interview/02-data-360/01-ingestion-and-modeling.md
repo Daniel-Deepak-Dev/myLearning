@@ -1,6 +1,18 @@
+---
+vault: Interview
+area: Data 360
+format: dense
+level: "medium→complex"
+status: learning
+created: 2026-08-23
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+set: 1
+set_total: 3
+scenarios: 4
+tags: [currency-new]
+---
 # Data 360 — Ingestion & Modeling
-
-> Area: Data 360 · Set 01 of 03 · Scenarios: 4 · Level: medium→complex · Currency: **Summer '26 (API 67.0)**
 
 **Drills:** the layer everything downstream inherits. A mapping mistake does not stay local — it propagates into identity resolution, insights, segments and every answer an agent gives, and it is expensive to unwind once things are built on top.
 

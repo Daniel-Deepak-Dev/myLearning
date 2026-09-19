@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 01-admin-and-declarative-platform
+format: dense
+status: learning
+created: 2026-08-01
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 1
+tags: [currency-warning]
+---
 # Release Cadence & Release Updates
-
-> Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 01
 
 **Scope:** The three-releases-a-year rhythm, how a release reaches your org, and the Release Updates mechanism. The release→API version map is not repeated here — it lives in [CURRENCY.md](../CURRENCY.md).
 

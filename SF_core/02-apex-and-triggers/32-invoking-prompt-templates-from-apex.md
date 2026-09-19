@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 23
+tags: [currency-new]
+---
 # Invoking Prompt Templates from Apex
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 23
 
 **Scope:** `ConnectApi.EinsteinLLM` — Apex as the *caller* of a prompt template, the inverse of [31](31-apex-grounded-prompt-templates.md). Calling a model with no template at all is [33](33-models-api-in-apex.md); what makes a template good is [SF_Agentforce · prompt-builder](../../SF_Agentforce/INDEX.md).
 

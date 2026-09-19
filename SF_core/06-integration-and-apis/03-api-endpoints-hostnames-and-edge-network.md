@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 12
+tags: [currency-new, currency-warning]
+---
 # API endpoints, hostnames & Edge Network
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 12
 
 **Scope:** The half of the URL before `/services/` — which hostname a client may call, how it resolves, and the browser-side allowlists that decide whether a request is even attempted. The version path segment is [02](02-api-versions-and-the-retirement-treadmill.md); My Domain as an org-configuration topic is [07-security · 20](../07-security-and-sharing/20-my-domain-enhanced-domains-and-trusted-urls.md).
 

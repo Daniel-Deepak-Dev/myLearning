@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 8
+tags: [currency-warning]
+---
 # Automation Landscape & Tool Selection
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 08
 
 **Scope:** Which automation tool to reach for, and the honest boundary between Flow and Apex. Not a Flow Builder tutorial — that is [02](02-flow-anatomy-and-builder-basics.md).
 

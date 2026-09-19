@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 21
+---
 # Dependency Injection & Pluggable Apex
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 21
 
 **Scope:** Getting collaborators *into* a class rather than letting it build its own — interfaces, factories, `Type.forName()` and custom metadata binding. What you do with the seam in tests is [21](21-apex-testing-advanced-and-mocking.md); the layered architecture it serves is [27](27-apex-enterprise-patterns-and-layered-design.md).
 

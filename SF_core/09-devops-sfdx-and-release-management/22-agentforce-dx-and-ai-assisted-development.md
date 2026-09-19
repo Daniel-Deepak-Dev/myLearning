@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 17
+tags: [currency-new]
+---
 # Agentforce DX & AI-Assisted Development
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 17
 
 **Scope:** What changes about a pipeline when agents are the artefact and a model writes some of the code. **This note owns the review and governance discipline** — the tool surface and its blast radius are [13](13-dx-mcp-server-and-agent-driven-development.md), and the lifecycle with the `sf agent` command chain is [SF_Agentforce · ADLC](../../SF_Agentforce/INDEX.md). Neither of those covers what happens at the pull request.
 

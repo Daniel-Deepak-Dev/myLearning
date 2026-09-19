@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 10-soql-and-sosl
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 22
+---
 # SOSL Mechanics & the Search Index
-
-> Area: 10-soql-and-sosl · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 22
 
 **Scope:** What SOSL is, how the search index differs from the database, and the `FIND` / `IN` / `RETURNING` statement. Relevance tuning and the `WITH` modifiers are [09](09-sosl-search-modifiers-and-relevance.md).
 

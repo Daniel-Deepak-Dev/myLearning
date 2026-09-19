@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 20
+---
 # Testing Platform Events & CDC
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 20
 
 **Scope:** Proving an event subscriber works — forcing delivery in a test, testing retries, and enabling CDC for a test run. Building the subscriber is [18](18-platform-events-and-cdc-in-apex.md); general test mechanics are [20](20-apex-testing-fundamentals.md) and [21](21-apex-testing-advanced-and-mocking.md).
 

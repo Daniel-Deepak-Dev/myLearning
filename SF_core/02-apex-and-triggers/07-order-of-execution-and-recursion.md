@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 3
+tags: [currency-warning]
+---
 # Order of Execution & Recursion
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 03
 
 **Scope:** Where Apex sits in the save order, and how to stop a trigger re-entering itself. The canonical full 20-step order is [01-admin · 14](../01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md) — **this note conforms to it and does not restate it.**
 

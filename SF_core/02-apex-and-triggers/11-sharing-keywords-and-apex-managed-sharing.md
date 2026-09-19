@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 4
+tags: [currency-new, currency-warning]
+---
 # Sharing Keywords & Apex Managed Sharing
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 04
 
 **Scope:** Record-level visibility in Apex — which keyword a class runs under, and how to grant access in code that the declarative model cannot express. Object and field permissions are [10](10-apex-security-user-mode-and-fls.md); the sharing model itself belongs to [07-security](../07-security-and-sharing/INDEX.md).
 

@@ -1,6 +1,14 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 18
+tags: [currency-new, currency-warning]
+---
 # Public Site Exposure Audit
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** The standing audit for any site a stranger can reach — what to check, in what order, and what "safe" means when you inherit one. The *model* is [07](07-guest-user-security-model.md); this is the runbook. Added in phase 18, beyond the original plan.
 

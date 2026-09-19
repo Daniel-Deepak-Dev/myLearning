@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 12
+---
 # Composite, Batch & Graph APIs
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 12
 
 **Scope:** Sending several REST calls in one round trip, and — the part that actually matters — **what rolls back together**. Single calls are [04](04-rest-api-fundamentals.md); volumes past a few thousand records are [07](07-bulk-api-2.md).
 

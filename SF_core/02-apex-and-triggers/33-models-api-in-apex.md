@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 23
+tags: [currency-new]
+---
 # Models API in Apex
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 23
 
 **Scope:** The `aiplatform.ModelsAPI` class — calling a model directly from Apex with no prompt template in the way. Going *through* a template is [32](32-invoking-prompt-templates-from-apex.md); choosing or registering the model itself is [SF_Agentforce · model-builder-byom](../../SF_Agentforce/INDEX.md).
 

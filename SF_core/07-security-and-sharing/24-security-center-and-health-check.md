@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 11
+tags: [currency-new, currency-warning]
+---
 # Security Center & Health Check
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 11
 
 **Scope:** Posture — measuring how an org is configured against a standard, and watching it drift. Owns **Who Sees What Explorer as a product**; its five lenses as an access tool are already [15](15-auditing-and-troubleshooting-access.md).
 

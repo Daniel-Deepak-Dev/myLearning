@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 14
+---
 # Record IDs, External IDs & Upsert
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 14
 
 **Scope:** How records are identified — inside Salesforce and from outside it — and the one DML operation that depends on the difference. The API mechanics of upsert are [06-integration · 04](../06-integration-and-apis/04-rest-api-fundamentals.md) and [07](../06-integration-and-apis/07-bulk-api-2.md); the key *design* is here.
 

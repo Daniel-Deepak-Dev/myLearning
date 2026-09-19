@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 10
+tags: [currency-new]
+---
 # Licences & What They Gate
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 10
 
 **Scope:** The outermost gate — what a user may be *granted* before any permission is assigned. Internal licences only; **external and community user types are [SF_Experience_Cloud · 08](../../SF_Experience_Cloud/08-licences-and-external-user-types.md)**. Editions and org shape are [01-admin · 01](../01-admin-and-declarative-platform/01-org-anatomy-and-editions.md).
 

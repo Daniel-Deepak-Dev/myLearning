@@ -58,7 +58,7 @@ Use [_note-template.md](../../../_note-template.md).
 - **50 lines max, counted to `## Related`.** The footer — `## Related`, `## Sources`, `## History` — does not count. Never drop a citation to hit a line budget.
 - No paragraph longer than two sentences.
 - One table max. One code block max, 12 lines.
-- Metadata is a blockquote on lines 3–4. Never YAML frontmatter.
+- Metadata is YAML frontmatter. Run `python scripts/vault.py fix` after writing; it sets `status`, `gaps`, `org_checks` and `labs` from the body. Never type those four.
 
 Keep the user's own wording where it captures a real gotcha:
 
@@ -131,56 +131,47 @@ Two rules keep this honest:
 - **A research pass that spawns a deeper note must say so in the report.** That is what keeps the total flat, and the user should hear it from you rather than work it out from the index.
 - **Never close a gap by asserting.** If you cannot source the answer, either leave the gap or move it to `## Confirm in org`.
 
-## 6 · Dates, status and sources
+## 6 · What you write, and what the tool writes
 
 **Closed gaps are deleted, not ticked.** When you answer a gap, remove its line. When the last one goes, remove the `## Gaps to close` heading with it. The answer belongs in the note body; a checklist of settled questions is clutter.
 
-**Status is derived, never typed.** Count the `- [ ]` lines in `## Gaps to close` — and only those. `## Confirm in org` bullets never count:
-
-- at least one → `Status: 🌱 N gaps open`
-- none, or no section at all → `Status: ✅ complete`
-
-A `✅ complete` note may still carry org checks. Complete means the research is done, not that nothing is left to verify.
-
-**Dates.** `Created` never changes. `Updated` changes on every edit.
-
-**Staleness.** Whenever you touch a note, check `Updated`. More than 3 months old, add a third metadata line:
-
-```markdown
-> ⏳ N months old — recheck against release notes
-```
-
-Remove that line as soon as the note is updated.
+**Never close a gap by asserting.** If you cannot source the answer, either leave the gap or move it to `## Confirm in org`. A `✅ complete` note may still carry org checks — complete means the research is done, not that nothing is left to verify.
 
 **Sources.** Every fact you researched gets a `## Sources` entry with the date you read it. Salesforce domains are trusted; anything else carries 🚩.
 
-**History.** One dated line per feed, under `## History`, saying what was **added or changed**. Never a gap tally — no "4 gaps opened", no "1 gap closed".
+**History.** One dated line per feed, under `## History`, saying what was **added or changed**. Never a gap tally.
 
-## 7 · Link both ways
+### Then run the tool — do not do this by hand
 
-Every link out gets a link back. In the same edit.
+```
+python scripts/vault.py fix      # recounts status, gaps, org_checks, labs
+                                 # rebuilds INDEX rows, summary lines, README
+                                 # counts and the PRACTICE Done table
+python scripts/vault.py home     # rebuilds HOME.md
+python scripts/vault.py check    # reports whatever is left
+```
+
+`fix` owns exactly four frontmatter keys — `status`, `gaps`, `org_checks`, `labs` — and recomputes them from the note body. **Never type those four.** `vault`, `area`, `format`, `level`, `created`, `currency`, `phase` and `tags` are the user's, and the tool leaves them alone.
+
+Staleness is derived from `updated`, not stamped into the file. There is no `⏳` line any more.
+
+## 7 · Link both ways, across vaults only
+
+A link that **crosses vaults** gets a link back, in the same edit. Same-vault links do not — Obsidian's Backlinks panel shows those for free.
 
 Write the Agentforce note's `## Related` bullet pointing at the Apex note. Then open the Apex note and add its bullet pointing back.
 
-Skipping the return link is the one mistake that quietly breaks the whole system.
+**The reason clause is the content.** `— the *other* kind of action, and the description-as-specification rule both share` is knowledge. `— see also` is filler. Never generate one.
 
 Relative markdown links only. No `[[wiki links]]` — nothing in this repo uses them.
 
-## 8 · Update the indexes
+## 8 · What is still yours to place
 
-For each note you created or moved:
+`vault.py fix` rebuilds the index rows, counts and queues. Three things it cannot decide, because they are judgement:
 
-- Insert or move its row in the folder's `INDEX.md`, at the right point in the learning path.
-- Columns: `#`, `Topic`, `One line`, `Level`, `Status`, `Org ✓`, `Pre`, `Created`, `Updated`.
-- `Status` must match the note's own metadata line exactly. `Org ✓` is the note's `## Confirm in org` bullet count, or `—`.
-- Renumber the `#` column only. **Never rename a file to reorder.**
-- Update the summary line above the table: topic count, gaps open, complete, newest, oldest — plus the total org checks on the line below it.
-
-Every new lab also gets a **Queue row in that vault's `PRACTICE.md`**, in the same edit. The queue is **unblocked-first**, not INDEX order — labs needing Data 360, an extra licence or a second org go later, so the user is never blocked twenty minutes in. `Proves` there is a 3–6 word phrase, never a copy of the note's sentence.
-
-Never add progress counters to `PRACTICE.md`. `Done` is append-only; the note's `- [x]` is the record.
-
-Then add a dated entry to `LEARNING-LOG.md`, newest first.
+- **Where a note's `#` row sits** in the `INDEX.md` learning path, and its `Pre` prerequisite. That is pedagogical order, not data.
+- **Where a lab sits in the `PRACTICE.md` queue.** The queue is **unblocked-first**, not INDEX order — labs needing Data 360, an extra licence or a second org go later, so the user is never blocked twenty minutes in. The `Proves` phrase there is 3–6 words, never a copy of the note's sentence.
+- **The `LEARNING-LOG.md` entry**, newest first — what you fed and why.
 
 ## 9 · Facts you are not sure of
 

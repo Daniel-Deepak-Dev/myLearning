@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 9
+tags: [currency-warning]
+---
 # Flow Limits & Bulkification
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 09
 
 **Scope:** The budget a flow spends, and the shape of a flow that stays inside it. The *patterns* — Transform, collection filters, loop hygiene — belong to [09](09-collections-loops-and-the-transform-element.md); this note owns the numbers.
 

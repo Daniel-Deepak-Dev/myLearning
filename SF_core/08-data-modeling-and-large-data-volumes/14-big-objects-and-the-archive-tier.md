@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 14
+tags: [currency-warning]
+---
 # Big Objects & the Archive Tier
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 14
 
 **Scope:** The storage tier beneath standard and custom objects — what it is for, and the one design decision you cannot take back. Retention *policy* and the offload to Data 360 are phase 15.
 

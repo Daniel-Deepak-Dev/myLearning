@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 3
+---
 # Exception Handling & Custom Exceptions
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 03
 
 **Scope:** What Apex throws, what you are allowed to catch, and how to fail in a way someone can act on. Per-row DML errors are [05](05-dml-database-methods-and-savepoints.md); async retry and finalizers are phase 04.
 

@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 11
+tags: [currency-warning]
+---
 # My Domain, Enhanced Domains & Trusted URLs
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 11
 
 **Scope:** The org's own hostnames — how they are shaped, what stopped redirecting, and what the browser is allowed to load once a page is served from them. The LWS half of front-end security is [03-lwc · 09](../03-lwc-and-slds/09-lightning-web-security.md); this note owns the domain and CSP configuration behind it.
 

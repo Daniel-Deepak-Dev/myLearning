@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 15
+tags: [currency-new]
+---
 # Zero-Copy & Data 360 as a Data Tier
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 15
 
 **Scope:** Data 360 seen from the *core platform* — when it is the right tier for CRM data and when federation is a latency trap. Its architecture, connectors and GA status table live in [SF_Agentforce · Zero Copy & BYOL](../../SF_Data_360/INDEX.md); this note does not restate them.
 

@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 9
+tags: [currency-new]
+---
 # Flows as Agentforce Actions
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 09
 
 **Scope:** The Flow builder's side of an agent action — what shape a flow must be, and what the agent actually reads. Agent design, reasoning and the wider action catalogue live in [SF_Agentforce/](../../SF_Agentforce/INDEX.md).
 

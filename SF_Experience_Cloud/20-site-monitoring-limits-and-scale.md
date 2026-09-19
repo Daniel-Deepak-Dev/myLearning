@@ -1,6 +1,14 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 19
+tags: [currency-warning]
+---
 # Site Monitoring, Limits & Scale
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
 **Scope:** The capacity constraints that surprise teams at launch — page-view allowances, site counts, guest throttling, API limits — and how to watch a live site. Closes the Experience Cloud area.
 

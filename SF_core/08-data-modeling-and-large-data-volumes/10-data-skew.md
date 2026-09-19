@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 14
+---
 # Data Skew
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 14
 
 **Scope:** Lopsided distribution — the pathology that no index fixes. It is the hinge of this area: a **read** problem in [08](08-indexes-and-query-selectivity.md)–[09](09-query-plan-and-performance-tuning.md) and a **write** problem in [12](12-record-locking-and-concurrency.md). Sharing recalculation mechanics belong to [07-security · 16](../07-security-and-sharing/16-sharing-recalculation-and-performance.md).
 

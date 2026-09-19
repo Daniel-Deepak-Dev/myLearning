@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 15
+---
 # Data Migration & Cutover
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 15
 
 **Scope:** The shape of a one-off migration project, from profiling the source to the weekend it goes live. The loading *levers* are [16](16-bulk-loading-strategy-for-ldv.md); the tools are [01-admin · 13](../01-admin-and-declarative-platform/13-data-import-export-and-loading-tools.md).
 

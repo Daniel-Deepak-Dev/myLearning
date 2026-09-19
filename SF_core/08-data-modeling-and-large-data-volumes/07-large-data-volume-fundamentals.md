@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 14
+---
 # Large Data Volume Fundamentals
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 14
 
 **Scope:** Where the platform starts to degrade, and *why* — the opening of an argument continued in [08](08-indexes-and-query-selectivity.md)–[11](11-skinny-tables-and-support-levers.md) for reads and [12](12-record-locking-and-concurrency.md)–[13](13-deletes-recycle-bin-and-physical-deletion.md) for writes.
 

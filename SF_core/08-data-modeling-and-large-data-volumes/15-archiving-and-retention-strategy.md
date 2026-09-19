@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 15
+tags: [currency-new]
+---
 # Archiving & Retention Strategy
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 15
 
 **Scope:** The policy layer — what to keep, for how long, and on which tier. The big-object *mechanism* is [14](14-big-objects-and-the-archive-tier.md); the legal drivers are [07-security · 25](../07-security-and-sharing/25-privacy-consent-and-data-protection.md).
 

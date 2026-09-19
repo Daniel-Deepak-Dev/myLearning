@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 15
+tags: [currency-new, currency-warning]
+---
 # Cross-Org Data Sharing & Consolidation
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 15
 
 **Scope:** Data across more than one Salesforce org — sharing it, unifying it, or collapsing the orgs. The org-strategy view is [01-admin · 18](../01-admin-and-declarative-platform/18-salesforce-foundations-and-org-strategy.md); the migration mechanics are [25](25-data-migration-and-cutover.md).
 

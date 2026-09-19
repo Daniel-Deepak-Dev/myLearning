@@ -8,7 +8,7 @@
 
 **38 labs · ~13 h total.** Nothing here runs over 45 minutes. If one overruns it was too big — split it into `NNa` / `NNb` rather than letting it become the lab you never start.
 
-Each lab's full wording lives in its own note, as a `- [ ]` line under `## Hands-on`. **Tick it there when it is done** — labs are ticked, not deleted, because work you actually did is a record. Then add a row to [Done](#done).
+Each lab's full wording lives in its own note, as a `- [ ]` line under `## Hands-on`. **Tick it there when it is done** — labs are ticked, not deleted, because work you actually did is a record. That tick is the whole record: [Done](#done) is rebuilt from it.
 
 ## A lab is not finished until you have written down what broke
 
@@ -92,7 +92,9 @@ Build a record-grounded template on Account, then run it against a fully populat
 
 ## Done
 
-Append a row when you tick a lab in its note. Newest last.
+**Generated from the ticked labs — do not add rows by hand.** Tick `- [x]` in the
+note and run `python scripts/vault.py fix`; the row appears here. The `What broke`
+cell is yours: fill it in and it is preserved on every rebuild.
 
 | Lab | Date | What broke — verbatim |
 |---|---|---|

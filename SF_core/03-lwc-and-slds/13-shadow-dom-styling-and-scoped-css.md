@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 6
+tags: [currency-warning]
+---
 # Shadow DOM, Styling & Scoped CSS
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 06
 
 **Scope:** The boundary around a component's DOM and CSS — what it blocks, what crosses it, and how the on-platform version differs from the browser's. Which design tokens to set once you know what can reach in is [14](14-slds-2-and-styling-hooks.md).
 

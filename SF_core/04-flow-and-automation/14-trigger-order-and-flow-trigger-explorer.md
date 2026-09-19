@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 9
+---
 # Trigger Order & Flow Trigger Explorer
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 09
 
 **Scope:** What happens when several record-triggered flows sit on one object — the run order you can control, the run order you cannot, and the tool that shows you both. Configuring a single flow is [03](03-record-triggered-flows.md).
 

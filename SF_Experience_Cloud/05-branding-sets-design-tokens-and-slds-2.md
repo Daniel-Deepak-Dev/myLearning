@@ -1,6 +1,14 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 18
+tags: [currency-new]
+---
 # Branding Sets, Design Tokens & SLDS 2
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** Making a site look like the brand rather than like Salesforce — the LWR styling hook system, branding sets, and where SLDS 2 lands. The org-wide SLDS 2 story is [03-lwc · 14](../SF_core/03-lwc-and-slds/14-slds-2-and-styling-hooks.md); this note owns the site-specific layer.
 

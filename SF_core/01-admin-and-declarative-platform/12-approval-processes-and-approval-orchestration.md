@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 01-admin-and-declarative-platform
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 2
+tags: [currency-new, currency-warning]
+---
 # Approval processes & Approval Orchestration
-
-> Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 02
 
 **Scope:** The admin-surface view — which approval engine to choose, what each one can route, and how submissions are tracked. Flow mechanics (stages, interactive steps, work guide) belong to [04-flow · 16](../04-flow-and-automation/16-flow-orchestrator.md) and [17](../04-flow-and-automation/17-approval-orchestration.md).
 

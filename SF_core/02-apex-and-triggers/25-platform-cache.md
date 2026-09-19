@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 20
+---
 # Platform Cache
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 20
 
 **Scope:** The org and session caches an Apex transaction can read and write — capacity, TTL, `CacheBuilder`, and why a cache miss is the normal path. The limits cache exists to relieve are [01](01-apex-language-core-and-governor-limits.md) and [24](24-apex-performance-and-profiling.md).
 

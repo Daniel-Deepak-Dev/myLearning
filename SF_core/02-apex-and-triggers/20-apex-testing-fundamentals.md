@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 5
+tags: [currency-warning]
+---
 # Apex Testing Fundamentals
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 05
 
 **Scope:** Isolation, setup, assertions and limit resets — the mechanics of a test that proves something. Faking the boundaries is [21](21-apex-testing-advanced-and-mocking.md); reading what a test measured is [24](24-apex-performance-and-profiling.md).
 

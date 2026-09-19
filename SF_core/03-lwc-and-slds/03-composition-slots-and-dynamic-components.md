@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 5
+---
 # Composition, Slots & Dynamic Components
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 05
 
 **Scope:** Putting components inside components — public API, content projection, references, and instantiating a component whose type you don't know until runtime. Talking *between* them is [04](04-events-and-component-communication.md).
 

@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 16
+tags: [currency-warning]
+---
 # Metadata Coverage & the Manual-Steps Problem
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 16
 
 **Scope:** What a pipeline cannot carry, how to find out before release night, and the runbook that covers the gap. The deployment mechanics themselves are [05](05-metadata-api-and-deployment-mechanics.md).
 

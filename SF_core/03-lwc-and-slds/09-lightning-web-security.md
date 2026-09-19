@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 6
+tags: [currency-new, currency-warning]
+---
 # Lightning Web Security
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 06
 
 **Scope:** The sandbox your component's JavaScript actually runs in, and the behaviour changes it causes. Org-level security — profiles, permission sets, sharing — is [07-security](../07-security-and-sharing/INDEX.md); CSP trusted sites belong to [06-integration](../06-integration-and-apis/INDEX.md).
 

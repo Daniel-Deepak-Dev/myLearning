@@ -1,6 +1,13 @@
+---
+vault: Interview
+area: all
+format: dense
+status: learning
+created: 2026-08-23
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+---
 # WEAK ANSWERS — the fumble log
-
-> Area: all · Currency: **Summer '26 (API 67.0)**
 
 **The only file here that gets more valuable over time.** Every other file in this vault was written once. This one is written by you, and after a month of use it is the most accurate map of what you cannot yet say out loud under pressure.
 

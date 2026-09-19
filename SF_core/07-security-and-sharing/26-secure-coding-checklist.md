@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 11
+tags: [currency-warning]
+---
 # Secure Coding Checklist
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 11
 
 **Scope:** The area's capstone — a review checklist, not an essay. Every line names the exact thing to search for. Mechanics live in [02-apex · 10](../02-apex-and-triggers/10-apex-security-user-mode-and-fls.md)–[11](../02-apex-and-triggers/11-sharing-keywords-and-apex-managed-sharing.md), [03-lwc · 09](../03-lwc-and-slds/09-lightning-web-security.md) and [14](14-code-execution-context-and-security.md); this is what you run against a diff.
 

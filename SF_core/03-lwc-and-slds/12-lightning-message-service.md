@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 6
+---
 # Lightning Message Service
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 06
 
 **Scope:** Talking between components that share no ancestor you control — the message channel, scope, and the subscription lifecycle. Parent/child communication and why pubsub libraries are wrong is [04](04-events-and-component-communication.md); shared *state* rather than messages is [05](05-decorators-and-the-reactivity-model.md).
 

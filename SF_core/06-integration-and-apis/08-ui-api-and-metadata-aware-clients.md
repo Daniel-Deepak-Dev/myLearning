@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 12
+---
 # UI API & metadata-aware clients
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 12
 
 **Scope:** The API that returns data *and* the metadata needed to render it — for custom clients that must look and behave like Salesforce. The in-org consumer of the same endpoints is LDS ([03-lwc · 06](../03-lwc-and-slds/06-lightning-data-service-and-ui-api-wires.md)).
 

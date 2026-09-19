@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 4
+---
 # Scheduled Apex & CRON
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 04
 
 **Scope:** Running Apex on a clock — the `Schedulable` interface, CRON expressions, and managing the jobs once they exist. What the scheduled job then starts is usually [14](14-batch-apex-and-stateful-processing.md) or [13](13-queueable-apex-and-chaining.md).
 

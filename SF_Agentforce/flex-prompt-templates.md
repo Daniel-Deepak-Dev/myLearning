@@ -1,7 +1,15 @@
+---
+vault: SF_Agentforce
+format: light
+level: working
+status: open
+gaps: 3
+org_checks: 2
+labs: 3
+created: 2026-08-30
+updated: 2026-08-30
+---
 # Flex Prompt Templates
-
-> Folder: SF_Agentforce · Level: working · Status: 🌱 3 gaps open
-> Created: 2026-08-30 · Updated: 2026-08-30
 
 **One line:** The prompt template type with no entry point of its own — you declare the inputs, and you supply the caller.
 

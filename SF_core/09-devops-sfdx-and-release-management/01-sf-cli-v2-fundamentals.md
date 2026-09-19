@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 16
+tags: [currency-new, currency-warning]
+---
 # `sf` CLI v2 Fundamentals
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 16
 
 **Scope:** The command surface itself — grammar, configuration, plugins, release train. What the commands *do* to a project is [02](02-sfdx-project-structure-and-source-format.md) onward.
 

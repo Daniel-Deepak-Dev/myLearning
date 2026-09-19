@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 5
+tags: [currency-warning]
+---
 # Templates, Directives & Rendering
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 05
 
 **Scope:** What the HTML file can express — conditionals, iteration, expressions — and what it deliberately cannot. Composition directives are [03](03-composition-slots-and-dynamic-components.md); the hooks around a render are [01](01-component-model-and-lifecycle.md).
 

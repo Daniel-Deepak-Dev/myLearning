@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 14
+---
 # Relationships Deep Dive
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 14
 
 **Scope:** The **consequences** of a relationship choice — deletion, ownership, sharing, roll-ups, reparenting and depth. The definitions and the lookup-vs-master-detail comparison table are [01-admin · 03](../01-admin-and-declarative-platform/03-objects-fields-and-relationships.md); this note assumes them.
 
