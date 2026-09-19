@@ -1485,6 +1485,143 @@ def cmd_cards(out_dir: str) -> int:
     return 0
 
 
+# ──────────────────────────────────────────────────────────────── home ──
+#
+# HOME.md answers one question: what do I study next? It is generated, so it
+# cannot go stale the way the hand-maintained REVIEW.md did -- that file sat at
+# "Sessions logged: 0" with 18 empty rows, in the one folder the rules forbid
+# linking to.
+
+
+def queue_rows(vault: str) -> list[tuple[str, str, str, str]]:
+    """(lab id, topic cell, time box, needs) from a vault's PRACTICE queue."""
+    pfile = os.path.join(ROOT, vault, "PRACTICE.md")
+    if not os.path.exists(pfile):
+        return []
+    practice = load_note(pfile)
+    rows = []
+    for line in practice.lines:
+        cells = split_row(line) if line.strip().startswith("|") else []
+        if len(cells) >= 6 and re.fullmatch(r"\d+", cells[0]):
+            rows.append((cells[1], cells[2], cells[3], cells[5]))
+    return rows
+
+
+def cmd_home() -> int:
+    notes = load_all_notes()
+    ticked = {
+        m.group("id")
+        for note in notes.values() if "Hands-on" in note.sections
+        for i in range(*note.sections["Hands-on"])
+        if (m := LAB_RE.match(note.lines[i])) and m.group(1) == "x"
+    }
+    total_labs = len(collect_labs(notes))
+    cards = collect_cards(notes)
+
+    out = [
+        "---", "vault: root", "format: dashboard", "---",
+        "# What to study next", "",
+        "**Generated — `python scripts/vault.py home`. Do not edit by hand.**",
+        "Everything below is counted from the notes, so it cannot drift.", "",
+    ]
+
+    # --- one lab, not a list -------------------------------------------
+    out += ["## ▶ Do this next", ""]
+    picked = None
+    for vault in NOTE_VAULTS:
+        for lab, topic, box, needs in queue_rows(vault):
+            if lab not in ticked and needs.strip() in ("—", "-", ""):
+                picked = (vault, lab, topic, box)
+                break
+        if picked:
+            break
+    if picked:
+        vault, lab, topic, box = picked
+        # The PRACTICE row's link is relative to its own vault; HOME.md is at
+        # the root, so it has to be re-anchored.
+        topic = MD_LINK_RE.sub(
+            lambda m: f"[{m.group(1)}]({vault}/{m.group(2)})", topic, count=1,
+        )
+        out += [
+            f"**{lab}** · {box} · {topic}", "",
+            f"First unblocked lab in [{vault}/PRACTICE.md]({vault}/PRACTICE.md). "
+            f"Tick it in its note when done — that is the whole record.", "",
+        ]
+    else:
+        out += ["Every queued lab is ticked or blocked. ", ""]
+    out += [f"*{len(ticked)} of {total_labs} labs done.*", ""]
+
+    # --- review ---------------------------------------------------------
+    decks = ", ".join(
+        f"[{v}/_cards.md]({v}/_cards.md)" for v in sorted(
+            {n.vault for n in notes.values() if "Recall" in n.sections})
+    )
+    out += [
+        "## Review", "",
+        f"**{len(cards)} cards** across {len({n.rel for n, _, _ in cards})} notes: {decks}", "",
+    ]
+
+    # --- open questions --------------------------------------------------
+    gapped = sorted(
+        ((count_open_gaps(n), n) for n in notes.values() if count_open_gaps(n)),
+        key=lambda t: -t[0],
+    )
+    if gapped:
+        out += ["## Open gaps — research can close these", ""]
+        out += [f"- **{c}** · [{n.rel}]({n.rel})" for c, n in gapped] + [""]
+
+    orgs = sorted(
+        ((count_org_checks(n), n) for n in notes.values() if count_org_checks(n)),
+        key=lambda t: -t[0],
+    )
+    if orgs:
+        out += ["## Confirm in an org — only a sandbox can close these", ""]
+        out += [f"- **{c}** · [{n.rel}]({n.rel})" for c, n in orgs[:12]] + [""]
+
+    # --- currency --------------------------------------------------------
+    warn = sorted(n.rel for n in notes.values()
+                  if "currency-warning" in n.meta.get("tags", []))
+    new = sorted(n.rel for n in notes.values()
+                 if "currency-new" in n.meta.get("tags", []))
+    out += [
+        "## Currency", "",
+        f"**{len(warn)} notes** carry ⚠️ — the 2019–2021 answer is now wrong. "
+        f"Search the vault for `tag:currency-warning`.",
+        f"**{len(new)} notes** carry 🆕 — GA'd 2024–2026. `tag:currency-new`.", "",
+    ]
+
+    stale = sorted(
+        (parse_date(str(n.meta.get("updated", ""))), n) for n in notes.values()
+        if (d := parse_date(str(n.meta.get("updated", ""))))
+        and months_between(d, TODAY) >= STALE_MONTHS
+    )
+    if stale:
+        out += [f"**{len(stale)} notes** not updated in {STALE_MONTHS}+ months:", ""]
+        out += [f"- {d} · [{n.rel}]({n.rel})" for d, n in stale[:10]] + [""]
+
+    out += [
+        "## The vault", "",
+        f"| Vault | Notes | Cards | Labs |", "|---|---|---|---|",
+    ]
+    for vault in NOTE_VAULTS:
+        vn = [n for n in notes.values() if n.vault == vault]
+        vc = [c for c in cards if c[0].vault == vault]
+        vl = [l for l, places in collect_labs(notes).items()
+              if any(n.vault == vault for n, _, _ in places)]
+        # SF_core indexes per area, so its front door is README.md.
+        door = "README.md" if vault == "SF_core" else "INDEX.md"
+        out.append(f"| [{vault}/]({vault}/{door}) | {len(vn)} | {len(vc)} | {len(vl)} |")
+    out += ["", f"*Rebuilt {TODAY}.*", ""]
+
+    path = os.path.join(ROOT, "HOME.md")
+    nl = "\r\n" if os.path.exists(path) and b"\r\n" in open(path, "rb").read() else "\n"
+    with open(path, "w", encoding="utf-8", newline="") as fh:
+        fh.write(nl.join(out) + nl)
+    print(f"wrote HOME.md — {len(ticked)}/{total_labs} labs, {len(cards)} cards, "
+          f"{sum(c for c, _ in gapped)} open gaps, {sum(c for c, _ in orgs)} org checks")
+    return 0
+
+
 # ───────────────────────────────────────────────────────────── migrate ──
 
 LEGACY_FIELD_RE = re.compile(
@@ -1676,6 +1813,8 @@ def main() -> int:
                     help="only fixers whose name starts with this (repeatable)")
     fx.add_argument("--list-rules", action="store_true")
 
+    sub.add_parser("home", help="regenerate HOME.md, the what-to-study-next page")
+
     cd = sub.add_parser("cards", help="export Q:/A: pairs to Anki TSV + Obsidian decks")
     cd.add_argument("--out", default=os.path.join(ROOT, "cards"),
                     help="directory for the Anki .tsv files (default: ./cards)")
@@ -1690,6 +1829,9 @@ def main() -> int:
 
     if args.cmd == "cards":
         return cmd_cards(args.out)
+
+    if args.cmd == "home":
+        return cmd_home()
 
     if getattr(args, "list_rules", False):
         table = FIXERS if args.cmd == "fix" else RULES
