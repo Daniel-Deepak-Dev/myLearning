@@ -557,6 +557,31 @@ def r_stale(notes, findings):
             ))
 
 
+@rule("frontmatter-dupes")
+def r_frontmatter_dupes(notes, findings):
+    """No key appears twice in a frontmatter block.
+
+    YAML takes the last value silently, so a duplicate key quietly discards
+    whatever you wrote first — easy to create by hand, impossible to see.
+    """
+    for path, note in notes.items():
+        if not note.body_start:
+            continue
+        seen: dict[str, int] = {}
+        for i in range(1, note.body_start - 1):
+            m = FM_KEY_RE.match(note.lines[i])
+            if not m:
+                continue
+            key = m.group(1)
+            if key in seen:
+                findings.append(Finding(
+                    "frontmatter-dupes", note.rel, i + 1,
+                    f"`{key}` is set twice (also line {seen[key] + 1}) — "
+                    f"YAML keeps the last one and drops the first",
+                ))
+            seen[key] = i
+
+
 @rule("tags")
 def r_tags(notes, findings):
     """Tags come from the controlled vocabulary in ALLOWED_TAGS."""
@@ -1309,18 +1334,20 @@ def fix_index_row(notes, changes):
             if note is None:
                 continue
             before = list(cells)
-            if "Status" in col and (w := note.meta.get("Status")):
-                if parse_status(cells[col["Status"]]) != parse_status(w):
+            # The INDEX renders a status as "🌱 3 open" and the note stores it
+            # as status/gaps, so these are compared as values, never as strings.
+            if "Status" in col and note_status(note):
+                if parse_status(cells[col["Status"]]) != note_status(note):
                     gaps = count_open_gaps(note)
                     cells[col["Status"]] = f"🌱 {gaps} open" if gaps else "✅ complete"
             if "Org ✓" in col:
                 n = count_org_checks(note)
                 cells[col["Org ✓"]] = str(n) if n else "—"
-            for f in ("Created", "Updated"):
-                if f in col and f in note.meta:
-                    cells[col[f]] = note.meta[f]
-            if "Level" in col and "Level" in note.meta:
-                cells[col["Level"]] = note.meta["Level"]
+            for column, key in (("Created", "created"), ("Updated", "updated")):
+                if column in col and key in note.meta:
+                    cells[col[column]] = str(note.meta[key])
+            if "Level" in col and "level" in note.meta:
+                cells[col["Level"]] = str(note.meta["level"])
             if cells != before:
                 ed.set(lineno - 1, _row_text(cells))
                 changes.append((note_idx.rel, f"row {cells[0]} synced to {note.rel}"))
