@@ -1,8 +1,8 @@
 filters:
   and:
-    - 'file.hasProperty("format")'
-    - 'format != "cards"'
-    - 'format != "dashboard"'
+    - file.hasProperty("format")
+    - format != "cards"
+    - format != "dashboard"
 views:
   - type: table
     name: All topics
@@ -19,11 +19,13 @@ views:
         direction: ASC
       - property: file.name
         direction: ASC
+    columnSize:
+      note.status: 99
   - type: table
     name: Open gaps
     filters:
       and:
-        - 'gaps > 0'
+        - gaps > 0
     order:
       - file.name
       - vault
@@ -36,7 +38,7 @@ views:
     name: Confirm in org
     filters:
       and:
-        - 'org_checks > 0'
+        - org_checks > 0
     order:
       - file.name
       - vault
@@ -48,7 +50,7 @@ views:
     name: Currency warnings
     filters:
       and:
-        - 'tags.contains("currency-warning")'
+        - tags.contains("currency-warning")
     order:
       - file.name
       - vault
@@ -61,7 +63,7 @@ views:
     name: New since 2024
     filters:
       and:
-        - 'tags.contains("currency-new")'
+        - tags.contains("currency-new")
     order:
       - file.name
       - vault
@@ -71,7 +73,7 @@ views:
     name: Oldest first
     filters:
       and:
-        - 'file.hasProperty("updated")'
+        - file.hasProperty("updated")
     order:
       - file.name
       - vault
