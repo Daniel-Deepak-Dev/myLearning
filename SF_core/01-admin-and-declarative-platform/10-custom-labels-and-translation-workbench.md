@@ -2,7 +2,7 @@
 
 > Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 01
 
-**Scope:** Externalising user-facing strings into custom labels, referencing them from every runtime, and translating them. Stops at Experience Cloud site localisation — that is [05-experience-cloud](../05-experience-cloud-lwr/INDEX.md).
+**Scope:** Externalising user-facing strings into custom labels, referencing them from every runtime, and translating them. Stops at Experience Cloud site localisation — that is [SF_Experience_Cloud](../../SF_Experience_Cloud/INDEX.md).
 
 ## Core idea
 
@@ -58,4 +58,4 @@ A: It falls back to the master language for that label, so a partly translated o
 
 - [09 · Custom Metadata vs Custom Settings](09-custom-metadata-vs-custom-settings.md) — the other place configuration lives as metadata
 - [03-lwc · INDEX](../03-lwc-and-slds/INDEX.md) — the `@salesforce/label` module and component-side i18n
-- [05-experience-cloud · INDEX](../05-experience-cloud-lwr/INDEX.md) — site-level localisation built on top of labels
+- [SF_Experience_Cloud · INDEX](../../SF_Experience_Cloud/INDEX.md) — site-level localisation built on top of labels

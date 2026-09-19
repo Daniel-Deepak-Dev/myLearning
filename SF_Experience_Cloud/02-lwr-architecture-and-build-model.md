@@ -1,6 +1,6 @@
 # LWR Architecture & Build Model
 
-> Area: 05-experience-cloud-lwr · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
+> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** The one fact that makes the rest of this area make sense — an LWR site is **built and served**, not rendered per request. Templates are [01](01-template-choice-and-site-landscape.md); the operational side of publishing is [03](03-site-setup-domains-and-publishing.md).
 
@@ -26,7 +26,7 @@ It also explains the constraints. A build step cannot run your browser code, so 
 - **Upgrade path is one-way**, from Experience Builder → *Settings* → *Updates* → **Upgrade**. Treat it as a migration with a regression test, not a checkbox.
 - **Experience Delivery was the SSR + CDN tier, and it is being discontinued in Winter '27.** It never left Beta. **If you did not already enable it, it is no longer available to turn on**; orgs that did may run it until **October 2026**, and Salesforce recommends disabling it first. It applied to **Build Your Own (LWR)** in Enterprise, Performance and Unlimited — never Developer Edition — served through **Cloudflare** rather than the default **Akamai** → [03](03-site-setup-domains-and-publishing.md).
 - **SSR is opt-in per page, not per site**, and uses **islands architecture**: the page renders to HTML on the server and only components marked for hydration (`lwr:hydrate`) become interactive. The rest stays static HTML.
-- **Synthetic shadow DOM is not supported under SSR.** SSR components use native shadow or light DOM → [03-lwc · 13](../03-lwc-and-slds/13-shadow-dom-styling-and-scoped-css.md).
+- **Synthetic shadow DOM is not supported under SSR.** SSR components use native shadow or light DOM → [03-lwc · 13](../SF_core/03-lwc-and-slds/13-shadow-dom-styling-and-scoped-css.md).
 - **500 routes per site** is the hard structural ceiling on how many unique URLs the build can produce.
 
 ## 2026 currency
@@ -40,7 +40,7 @@ Two things worth carrying, and both are the same lesson from opposite ends. **Ex
 - **Do not design around Experience Delivery.** It is closed to new enablement and gone in Winter '27 — any SSR performance story that depends on it needs another answer. It also never ran on Developer Edition, so no scratch-org demo ever proved it.
 - **`import.meta.env.SSR` guards code, it does not make it portable.** Module-scope browser access still breaks the build → [06](06-custom-lwc-in-lwr-sites.md).
 - **A hydration mismatch is a UI defect, not a warning to ignore** — the framework recovers by re-rendering, which is the flicker your stakeholder screenshots.
-- **Upgrading to enhanced LWR changes what the pipeline retrieves.** Plan the DevOps change with the upgrade, not after it → [09-devops · 05](../09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md).
+- **Upgrading to enhanced LWR changes what the pipeline retrieves.** Plan the DevOps change with the upgrade, not after it → [09-devops · 05](../SF_core/09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md).
 
 ## Recall
 
@@ -63,5 +63,5 @@ A: The page is server-rendered to HTML and only components marked with `lwr:hydr
 
 - [06 · Custom LWC in LWR sites](06-custom-lwc-in-lwr-sites.md) — the SSR-safe authoring rules this model imposes
 - [03 · Site setup, domains & publishing](03-site-setup-domains-and-publishing.md) — the CDN and publish mechanics in operational terms
-- [03-lwc · 13 Shadow DOM, styling & scoped CSS](../03-lwc-and-slds/13-shadow-dom-styling-and-scoped-css.md) — why SSR forces native shadow or light DOM
-- [09-devops · 05 Metadata API & deployment mechanics](../09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md) — the two bundle types in a pipeline
+- [03-lwc · 13 Shadow DOM, styling & scoped CSS](../SF_core/03-lwc-and-slds/13-shadow-dom-styling-and-scoped-css.md) — why SSR forces native shadow or light DOM
+- [09-devops · 05 Metadata API & deployment mechanics](../SF_core/09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md) — the two bundle types in a pipeline

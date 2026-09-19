@@ -1,6 +1,6 @@
 ---
 name: study-notes
-description: Turn rough, out-of-order Salesforce learning notes into ordered wiki notes across SF_core, SF_Agentforce and SF_Data_360. Use whenever the user pastes study notes, says "I learned X today", dumps rough bullets about a Salesforce, Agentforce or Data 360 topic, or asks to file notes into the vault.
+description: Turn rough, out-of-order Salesforce learning notes into ordered wiki notes across SF_core, SF_Agentforce, SF_Data_360 and SF_Experience_Cloud. Use whenever the user pastes study notes, says "I learned X today", dumps rough bullets about a Salesforce, Agentforce or Data 360 topic, or asks to file notes into the vault.
 allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch, AskUserQuestion
 ---
 
@@ -22,12 +22,14 @@ Do not merge unrelated things into one file just because they arrived together.
 
 One question per piece:
 
-> **Is this sentence still true with no Agentforce in it?**
+> **Strip the product out of the sentence. Is it still true?**
 
-- **Yes** → `SF_core/`, in the numbered area it fits.
-- **No** → `SF_Agentforce/` or `SF_Data_360/`.
+Ask it once per product: *with no Agentforce in it?* *With no Experience Cloud site in it?*
 
-If a topic has both sides — say "a prompt template can call Apex" — write **both** notes. The Agentforce note says why. The `SF_core` note says how. They link to each other.
+- **Still true** → `SF_core/`, in the numbered area it fits.
+- **Falls apart** → the vault that owns that product: `SF_Agentforce/`, `SF_Data_360/` or `SF_Experience_Cloud/`.
+
+If a topic has both sides — say "a prompt template can call Apex", or "an agent embedded on a public site" — write **both** notes. The product vault says why. The `SF_core` note says how. They link to each other.
 
 Cannot route it? One dated bullet in that folder's `_inbox.md`. Move on. Never stall.
 
@@ -36,7 +38,7 @@ Cannot route it? One dated bullet in that folder's `_inbox.md`. Move on. Never s
 Always search first. Duplicates are the main failure mode here.
 
 - `Glob` the target folder for a matching filename.
-- `Grep` all three vaults for the topic's key terms: `SF_core/`, `SF_Agentforce/`, `SF_Data_360/`.
+- `Grep` all four vaults for the topic's key terms: `SF_core/`, `SF_Agentforce/`, `SF_Data_360/`, `SF_Experience_Cloud/`.
 - Also grep `_archive/AI_Data/` — it is a **quarry** for verified facts, never a link target.
 
 Then decide:
@@ -44,7 +46,7 @@ Then decide:
 | Found | Do |
 |---|---|
 | A note in the target folder | **Update it.** Merge the new facts in. Raise `Level` if the notes went deeper. |
-| A note in `SF_core/` in the old dense format | **Enrich it in place.** Add the cross-link and a `## Gaps to close` section. Do not create a second light file beside it. |
+| A note in `SF_core/` or `SF_Experience_Cloud/` in the old dense format | **Enrich it in place.** Add the cross-link and a `## Gaps to close` section. Do not create a second light file beside it. |
 | Only an `_archive/AI_Data/` note | **Quarry it.** Pull verified facts into the new note, **cut to the user's level**. Never link back to the archive. |
 | Nothing | **Create it.** |
 
@@ -53,7 +55,8 @@ Then decide:
 Use [_note-template.md](../../../_note-template.md).
 
 - Filenames carry **no number**. `flex-prompt-templates.md`, not `05-flex-prompt-templates.md`.
-- **50 lines max.** No paragraph longer than two sentences.
+- **50 lines max, counted to `## Related`.** The footer — `## Related`, `## Sources`, `## History` — does not count. Never drop a citation to hit a line budget.
+- No paragraph longer than two sentences.
 - One table max. One code block max, 12 lines.
 - Metadata is a blockquote on lines 3–4. Never YAML frontmatter.
 
@@ -94,15 +97,50 @@ Also:
 - **Documentation considerations count.** Supported objects, limits, licence requirements, known restrictions — these are good gaps when the user's note skipped them.
 - Put the checklist under `## Gaps to close`.
 - Put a `> **Gap.**` callout inline instead when the hole sits mid-topic and would confuse the bullets around it.
+- **If no public doc can answer it, it is not a gap.** Put it under `## Confirm in org` as a `- 🚩 ` bullet and say what to open. Those bullets never count towards `Status`.
+- **Check the other notes before you write a gap.** The same question sitting in two files is counted twice and answered never. One note owns it; the others link to that note.
+
+## 5a · Lab pass
+
+Gaps and org checks are questions. **Labs are skills** — what the user builds to find out whether they can actually do this.
+
+Every note gets **3–4** under `## Hands-on`, one line each:
+
+```markdown
+- [ ] **AF-VER-02** · 10 min · Deactivate the active version without activating another, then call the template. **Proves:** nothing is active and the template stops working — nothing prompts you to choose.
+```
+
+Grammar, in order: **ID · time box · what you do · `Proves:` · `Needs:`** (licence, Data 360, 2nd org — omit if none) **· `Settles:`** (the 🚩 it answers — omit if none).
+
+- **Every lab needs a `Proves:`.** A lab without one is a chore. "Build a Flex template" is a chore; "prove an unactivated template is invisible to an agent" is a lab.
+- **Roughly a third should break something on purpose.** `## Gotchas` is already a list of things that break — mine it. A failure caused deliberately once is one the user will recognise at a client.
+- **Scope to the note's `Level`**, same ceiling as gaps. Nothing over 45 minutes; if a lab needs more, split it `NNa` / `NNb`.
+- **IDs are `<VAULT>-<TOPIC>-NN`**, stable and never reused. `AF-` for SF_Agentforce, `EC-` for SF_Experience_Cloud.
+- **Ticked, never deleted** — the opposite of the gap rule. Labs never count towards `Status`.
+
+## 5b · Close pass
+
+Opening gaps without ever closing them makes the count climb forever. Before you write to a note that already exists:
+
+1. **Read its `## Gaps to close` first.**
+2. **Answer every one the new feed resolves.** Put the answer in the note body, then delete the gap line.
+3. **Say so in `## History`** — what was answered, not how many.
+
+Two rules keep this honest:
+
+- **A research pass that spawns a deeper note must say so in the report.** That is what keeps the total flat, and the user should hear it from you rather than work it out from the index.
+- **Never close a gap by asserting.** If you cannot source the answer, either leave the gap or move it to `## Confirm in org`.
 
 ## 6 · Dates, status and sources
 
 **Closed gaps are deleted, not ticked.** When you answer a gap, remove its line. When the last one goes, remove the `## Gaps to close` heading with it. The answer belongs in the note body; a checklist of settled questions is clutter.
 
-**Status is derived, never typed.** Count the `- [ ]` lines in `## Gaps to close`:
+**Status is derived, never typed.** Count the `- [ ]` lines in `## Gaps to close` — and only those. `## Confirm in org` bullets never count:
 
 - at least one → `Status: 🌱 N gaps open`
 - none, or no section at all → `Status: ✅ complete`
+
+A `✅ complete` note may still carry org checks. Complete means the research is done, not that nothing is left to verify.
 
 **Dates.** `Created` never changes. `Updated` changes on every edit.
 
@@ -133,10 +171,14 @@ Relative markdown links only. No `[[wiki links]]` — nothing in this repo uses 
 For each note you created or moved:
 
 - Insert or move its row in the folder's `INDEX.md`, at the right point in the learning path.
-- Columns: `#`, `Topic`, `One line`, `Level`, `Status`, `Pre`, `Created`, `Updated`.
-- `Status` must match the note's own metadata line exactly.
+- Columns: `#`, `Topic`, `One line`, `Level`, `Status`, `Org ✓`, `Pre`, `Created`, `Updated`.
+- `Status` must match the note's own metadata line exactly. `Org ✓` is the note's `## Confirm in org` bullet count, or `—`.
 - Renumber the `#` column only. **Never rename a file to reorder.**
-- Update the summary line above the table: topic count, gaps open, complete, newest, oldest.
+- Update the summary line above the table: topic count, gaps open, complete, newest, oldest — plus the total org checks on the line below it.
+
+Every new lab also gets a **Queue row in that vault's `PRACTICE.md`**, in the same edit. The queue is **unblocked-first**, not INDEX order — labs needing Data 360, an extra licence or a second org go later, so the user is never blocked twenty minutes in. `Proves` there is a 3–6 word phrase, never a copy of the note's sentence.
+
+Never add progress counters to `PRACTICE.md`. `Done` is append-only; the note's `- [x]` is the record.
 
 Then add a dated entry to `LEARNING-LOG.md`, newest first.
 
@@ -163,7 +205,10 @@ Short. Bullets. No paragraphs.
 - Files created, with paths.
 - Files updated, and what changed in each.
 - Corrections made to what they wrote, and why.
-- Gaps added, and the level you scoped them to.
+- Gaps **closed**, and gaps added with the level you scoped them to.
+- Whether a research pass spawned a new deeper note — say it plainly, it is why the total may not fall.
+- Anything moved to `## Confirm in org`, and what to open in the org to settle it.
+- Labs added, their IDs, and where they landed in the `PRACTICE.md` queue.
 - Reciprocal links added.
 - Anything sent to `_inbox.md`, and why.
 - Anything you marked 🚩 and want them to confirm in an org.

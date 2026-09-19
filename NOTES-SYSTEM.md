@@ -14,10 +14,12 @@ Your notes arrive rough and out of order. You want them to land in the right fil
 
 ### 1. Routing — one question decides the folder
 
-> **Is this sentence still true with no Agentforce in it?**
+> **Strip the product out of the sentence. Is it still true?**
 
-- **Yes** → `SF_core/`. Apex, Flow, security, data model, integration.
-- **No** → `SF_Agentforce/` or `SF_Data_360/`.
+Ask it once per product: *with no Agentforce in it?* *With no Experience Cloud site in it?*
+
+- **Still true** → `SF_core/`. Apex, Flow, security, data model, integration.
+- **Falls apart** → the vault that owns that product: `SF_Agentforce/`, `SF_Data_360/` or `SF_Experience_Cloud/`.
 
 Examples:
 
@@ -28,15 +30,18 @@ Examples:
 | That a prompt template can call Apex | **Both.** The Agentforce note explains why. The Apex note explains how. They link to each other. |
 | Einstein Trust Layer masking | `SF_Agentforce/` |
 | Identity resolution rulesets | `SF_Data_360/` |
+| What a guest user sharing rule may grant | `SF_Experience_Cloud/` |
+| OWD and the grantee model underneath it | `SF_core/07-security-and-sharing/` |
+| An Agentforce agent embedded on a public site | **Both.** `SF_Agentforce/` builds the agent; `SF_Experience_Cloud/` owns its site-side exposure. |
 
 ### 2. Format — light, not dense
 
 Template: [_note-template.md](_note-template.md).
 
-- 50 lines max.
+- **50 lines max — counted to `## Related`.** The ceiling is on the part you read. `## Related`, `## Sources` and `## History` are a footer: reference material you scan, not prose you re-read. They do not count.
 - No paragraph longer than two sentences.
 - Bullets and one table. Not prose.
-- `## Key points` → `## Gotchas` → `## Gaps to close` → `## Related` → `## Sources` → `## History`.
+- `## Key points` → `## Gotchas` → `## Gaps to close` → `## Confirm in org` → `## Hands-on` → `## Related` → `## Sources` → `## History`.
 
 Your own wording is kept in a `> **From my notes.**` callout. That way you can always tell what you wrote from what the AI added.
 
@@ -74,6 +79,43 @@ Two places a gap can appear:
 
 **A closed gap is deleted, not ticked.** Answer it, remove the line. When the last one goes, the `## Gaps to close` heading goes with it. What you learnt belongs in the note body — a list of settled questions is just clutter you have to read past.
 
+**A gap research cannot close is not a gap.** Some questions have no public answer either way. Those move to a separate section and stop counting:
+
+```markdown
+## Gaps to close
+
+- [ ] What does a retriever actually index, and who configures it?
+
+## Confirm in org
+
+- 🚩 Does Prompt Template Manager also confer Prompt Template User's run rights?
+```
+
+`## Gaps to close` is a reading list — someone can go and answer it. `## Confirm in org` is a sandbox to-do. Mixing them made the gap count read as unfinished research when half of it was waiting on an org login.
+
+**And a third thing: `## Hands-on`.** Gaps and org checks are both *questions*. Labs are *skills* — the things you build to find out whether you can actually do any of this.
+
+```markdown
+## Hands-on
+
+- [ ] **AF-VER-02** · 10 min · Deactivate the active version without activating another, then call the template. **Proves:** nothing is active and the template stops working — nothing prompts you to choose.
+```
+
+Four rules, and each one is doing work:
+
+- **A lab needs a `Proves:`, not a verb.** "Build a Flex template" is a chore. "Prove an unactivated template is invisible to an agent" is a lab. This is the difference between a to-do list and a curriculum.
+- **Break it on purpose.** The best labs cause a failure deliberately. Your `## Gotchas` section is already a list of things that break — mine it. A failure signature you have caused once is one you will recognise at a client.
+- **Ticked, not deleted.** The opposite of the gap rule, and deliberately so. A settled question is clutter; work you actually did is a record.
+- **3–4 per note, one line each, scoped to the note's `Level`** — the same ceiling gaps get. Labs never count towards `Status`.
+
+IDs are `<VAULT>-<TOPIC>-NN` — `AF-TRUST-01`, `AF-ATLAS-02`. Stable, never reused, so you can say "close AF-ATLAS-02" and so the practice queue can point at a lab without copying its text.
+
+**The doing view is a separate file.** Each vault gets a `PRACTICE.md`: `▶ Next` (exactly one), `In flight` (max 3), a dependency-ordered `Queue` with a time box and a `Proves` phrase, and a `Done` table. The note is where a lab is captured; `PRACTICE.md` is what you open when the goal is to *run* something. See [SF_Agentforce/PRACTICE.md](SF_Agentforce/PRACTICE.md).
+
+**A lab is not finished until you have written down what broke, verbatim.** That is the `Done` table's last column. Notes get rewritten and releases move on, but an exact error string is still what you type into a search box in six months. `no failure; worked first time` is a real result too — it tells you the lab was too gentle.
+
+Two things `PRACTICE.md` deliberately does **not** have: progress counters, and a copy of the lab text. `Done` is append-only, which is far harder to desync than a tally, and the note stays the single source of truth for what a lab actually is.
+
 ### 4. Links go both ways
 
 When an Agentforce note links to an Apex note, the Apex note gets a link back. In the same edit.
@@ -82,10 +124,12 @@ One-way links are a folder of files. Two-way links are a wiki. You asked for a w
 
 ### 5. Dates, status and sources
 
-**Status is derived, never typed.** Count the `- [ ]` lines in `## Gaps to close`:
+**Status is derived, never typed.** Count the `- [ ]` lines in `## Gaps to close` — and only those. `## Confirm in org` bullets and `## Hands-on` labs never count:
 
 - at least one → `Status: 🌱 N gaps open`
 - none, or no section at all → `Status: ✅ complete`
+
+A note can be `✅ complete` and still carry org checks. Complete means *the research is done*, not *there is nothing left to verify*.
 
 Delete a gap and the status moves on its own. A typed status goes stale the first time you forget to update it.
 
@@ -125,16 +169,17 @@ Filenames carry **no number**. `prompt-templates.md`, not `02-prompt-templates.m
 
 The learning order lives in each folder's `INDEX.md`:
 
-| # | Topic | One line | Level | Status | Pre | Created | Updated |
-|---|---|---|---|---|---|---|---|
-| 1 | `einstein-trust-layer.md` | The masking and audit gate | basic | 🌱 3 open | — | 2026-08-27 | 2026-08-27 |
-| 2 | `prompt-template-types.md` | The six types | basic | 🌱 4 open | 1 | 2026-08-27 | 2026-08-27 |
+| # | Topic | One line | Level | Status | Org ✓ | Pre | Created | Updated |
+|---|---|---|---|---|---|---|---|---|
+| 1 | `einstein-trust-layer.md` | The masking and audit gate | basic | 🌱 3 open | 1 | — | 2026-08-27 | 2026-08-27 |
+| 2 | `prompt-template-types.md` | The six types | basic | 🌱 4 open | — | 1 | 2026-08-27 | 2026-08-27 |
 
 - `#` is the recommended read order.
 - `Pre` is the hard prerequisite.
+- `Org ✓` counts the note's `## Confirm in org` bullets. `—` when it has none.
 - `Status`, `Created` and `Updated` mirror the note's own metadata.
 
-Above the table, a summary line: **topic count · gaps open · complete · newest · oldest**. That answers "how old is all this?" without opening a note.
+Above the table, a summary line: **topic count · gaps open · complete · newest · oldest**, then a line naming the total org checks. That answers "how old is all this?" and "what is waiting on a sandbox?" without opening a note.
 
 Why no numbers in filenames: you will feed a Day-5 topic that belongs at position 3. With numbered filenames that means renaming files and fixing every link. Here it means moving one table row.
 
@@ -170,4 +215,12 @@ Filing friction must never stop capture. Triage it later.
 | 2026-08-27 | Dates, derived status, staleness flag, sources and history on every note | You asked to know how old a note is and whether it is finished. Deriving status from the gap checklist stops it going stale. |
 | 2026-08-28 | Closed gaps are deleted, not ticked; empty section removed | A checklist of settled questions is clutter. What you learnt goes in the note body. |
 | 2026-08-28 | `## History` never records gap counts | It logs what changed, not bookkeeping. |
+| 2026-08-28 | Org-only questions split into `## Confirm in org` and excluded from the status count | A third of the open gaps had no public answer. Counting them made research look unfinished when it was done. |
+| 2026-08-28 | The `study-notes` skill closes gaps as well as opening them | The skill only ever opened gaps, so the count could rise but never fall without you asking. |
+| 2026-08-28 | Every note carries 3–4 `## Hands-on` labs, ticked rather than deleted | Nine complete notes still could not tell you whether you can *do* any of it. Ticking keeps the record of work done; deleting would throw it away. |
+| 2026-08-28 | Labs are captured in the note but queued in a per-vault `PRACTICE.md` | The note is where you meet a lab; the queue is what you open to run one. One source of truth, no counters, `Done` append-only. |
+| 2026-08-28 | The 50-line ceiling counts to `## Related`, not to end of file | A fully-sourced note cannot fit sources, links, history *and* a body in 50 lines. Capping the body is what the rule was for; capping the footer only pushed out citations. |
+| 2026-09-19 | `SF_core/05-experience-cloud-lwr/` promoted to the root vault `SF_Experience_Cloud/` | Experience Cloud is a product with its own runtime, licences, security model and deployment story — the same case that made `SF_Agentforce/` and `SF_Data_360/` peers rather than areas. 65 inbound links across 27 files and ~100 outbound links repointed in the same pass. |
+| 2026-09-19 | Experience Cloud filenames keep their `NN-` numbers | The numbering is the learning path and `PHASES.md` depends on it. Eight notes in other vaults cite **05 · 07–12** by number in link text; renumbering would break all of them for no gain. |
+| 2026-09-19 | Currency and the phase record stay in `SF_core/` | `CURRENCY.md` is one ledger for the whole platform and its Experience Cloud rows cross-reference LWC, security and DevOps rows. Splitting it would break the running *"the plan's own correction was stale"* thread that phases 10–19 built. |
 | 2026-08-27 | Level beats migration depth | A one-line note of yours does not get replaced by 119 lines from the archive. Write at your level; the depth arrives when your notes do. |

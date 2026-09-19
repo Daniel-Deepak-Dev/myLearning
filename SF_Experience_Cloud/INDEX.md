@@ -1,16 +1,18 @@
-# 05 · Experience Cloud (LWR-first)
+# SF_Experience_Cloud — Experience Cloud (LWR-first)
 
 Public, partner and customer sites built **LWR-first**. **20 topics** · phases [18](PHASES.md), [19](PHASES.md).
 
-> Currency: **Summer '26 (API 67.0)** · [flag legend](../README.md#flag-legend) · [what changed](../CURRENCY.md)
+> Currency: **Summer '26 (API 67.0)** · [flag legend](../SF_core/README.md#flag-legend) · [what changed](../SF_core/CURRENCY.md) · [how to write here](CLAUDE.md)
 
-> ⚠️ **The area's own headline was half wrong, and phase 18 corrected it.** LWR is the strategic runtime and where every new capability lands — but **only two templates are LWR**, *Build Your Own (LWR)* and *Microsite (LWR)*. **Customer Service, Partner Central, Customer Account Portal, Help Center and Build Your Own are Aura templates, still creatable at 67.0, still receiving Summer '26 features, with no announced retirement date.** This area teaches LWR because that is where the platform is going; it does **not** claim Aura is dead, and a migration business case built on that claim is built on sand → [01](01-template-choice-and-site-landscape.md), [12](12-aura-to-lwr-migration-and-coexistence.md).
+> **This vault was `SF_core/05-experience-cloud-lwr/` until 2026-09-19.** It is now a root-level vault beside [SF_core/](../SF_core/README.md), [SF_Agentforce/](../SF_Agentforce/INDEX.md) and [SF_Data_360/](../SF_Data_360/INDEX.md). Filenames and numbering are unchanged. The build record stays in [../SF_core/PHASES.md](../SF_core/PHASES.md) and the currency rows stay in [../SF_core/CURRENCY.md](../SF_core/CURRENCY.md) — one ledger for the whole platform.
+
+> ⚠️ **The area's own headline was half wrong, and phase 18 corrected it.** LWR is the strategic runtime and where every new capability lands — but **only two templates are LWR**, *Build Your Own (LWR)* and *Microsite (LWR)*. **Customer Service, Partner Central, Customer Account Portal, Help Center and Build Your Own are Aura templates, still creatable at 67.0, still receiving Summer '26 features, with no announced retirement date.** This vault teaches LWR because that is where the platform is going; it does **not** claim Aura is dead, and a migration business case built on that claim is built on sand → [01](01-template-choice-and-site-landscape.md), [12](12-aura-to-lwr-migration-and-coexistence.md).
 
 > ⚠️ **"LWR" is two products.** LWR and **enhanced LWR** use different metadata types, and the *Upgrade to Enhanced LWR Sites* Release Update — scheduled for enforcement in Spring '26 — **has not been enforced since Summer '25** → [02](02-lwr-architecture-and-build-model.md).
 
 > ⚠️ **There is no server-side rendering to plan for.** **Experience Delivery is being discontinued in Winter '27 and is already closed to new enablement** — if the org never turned it on, no toggle exists; those that did have until **October 2026**. It was Beta from Summer '24 and never flipped. Phase 18 recorded it as "still Beta", which was true and is now beside the point: **an LWR site's performance story is static build + CDN, full stop** → [02](02-lwr-architecture-and-build-model.md), [16](16-site-performance-caching-and-seo.md).
 
-> ⚠️ Runs **late** (phases 18–19) on purpose: guest-user hardening depends on [07-security-and-sharing](../07-security-and-sharing/INDEX.md), and site deployment depends on [09-devops](../09-devops-sfdx-and-release-management/INDEX.md).
+> ⚠️ Runs **late** (phases 18–19) on purpose: guest-user hardening depends on [07-security-and-sharing](../SF_core/07-security-and-sharing/INDEX.md), and site deployment depends on [09-devops](../SF_core/09-devops-sfdx-and-release-management/INDEX.md).
 
 | # | Topic | Scope | Phase |
 |---|---|---|---|
@@ -37,10 +39,10 @@ Public, partner and customer sites built **LWR-first**. **20 topics** · phases 
 
 ## Related
 
-- **06** depends on all of [03-lwc-and-slds](../03-lwc-and-slds/INDEX.md), especially **· 14 SLDS 2**, **· 18 toasts** and **· 13 shadow DOM**.
-- **07, 09, 11** are the site-facing projection of [07-security · 06 OWD](../07-security-and-sharing/06-org-wide-defaults-and-record-access.md) and **· 14 execution context**.
-- **10** depends on [06-integration · 15 OAuth flows](../06-integration-and-apis/15-oauth-flows-and-authorization.md) and [07-security · 19 SSO](../07-security-and-sharing/19-sso-saml-oidc-and-identity.md).
-- **15** depends on [06-integration · 08 UI API](../06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md).
-- **18** depends on [09-devops · 05 Metadata API](../09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md) — and on **02**, which owns the two bundle types.
-- **19** is a seam into [SF_Agentforce/](../../SF_Agentforce/INDEX.md).
+- **06** depends on all of [03-lwc-and-slds](../SF_core/03-lwc-and-slds/INDEX.md), especially **· 14 SLDS 2**, **· 18 toasts** and **· 13 shadow DOM**.
+- **07, 09, 11** are the site-facing projection of [07-security · 06 OWD](../SF_core/07-security-and-sharing/06-org-wide-defaults-and-record-access.md) and **· 14 execution context**.
+- **10** depends on [06-integration · 15 OAuth flows](../SF_core/06-integration-and-apis/15-oauth-flows-and-authorization.md) and [07-security · 19 SSO](../SF_core/07-security-and-sharing/19-sso-saml-oidc-and-identity.md).
+- **15** depends on [06-integration · 08 UI API](../SF_core/06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md).
+- **18** depends on [09-devops · 05 Metadata API](../SF_core/09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md) — and on **02**, which owns the two bundle types.
+- **19** is a seam into [SF_Agentforce/](../SF_Agentforce/INDEX.md).
 - **11 is the note the other eleven exist to make possible.** A site is a data surface before it is a user experience, and the March 2026 campaign is the reason that sentence is in an INDEX rather than a footnote.

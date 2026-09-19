@@ -1,6 +1,6 @@
 # Navigation, Search & Audiences
 
-> Area: 05-experience-cloud-lwr · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
+> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
 **Scope:** How a visitor moves through an LWR site and what they see — navigation menus, site search, and audience-based personalization. The site scaffold this sits on is built in [02](02-lwr-architecture-and-build-model.md); the guest visibility rules underneath it are [07](07-guest-user-security-model.md).
 
@@ -49,4 +49,4 @@ A: Record-based and CMS-content-based criteria, enabling content-driven personal
 
 - [14 · Enhanced CMS & content delivery](14-enhanced-cms-and-content-delivery.md) — the content that CMS-driven audiences key off
 - [07 · Guest user security model](07-guest-user-security-model.md) — why menu hiding is never a security control
-- [07-security · 06 OWD](../07-security-and-sharing/06-org-wide-defaults-and-record-access.md) — the sharing model search visibility rests on
+- [07-security · 06 OWD](../SF_core/07-security-and-sharing/06-org-wide-defaults-and-record-access.md) — the sharing model search visibility rests on

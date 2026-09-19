@@ -27,7 +27,7 @@ The `FIND` clause decides *what* matches. Everything in this note decides **whic
 
 ## 2026 currency
 
-The modifier set has been stable through the 2024–2026 window; none of these clauses is new and none was withdrawn. The change worth recording is in how search *results* are governed rather than expressed: **restriction rules apply to SOSL, search, lookups and related lists**, and **`View All Data` does not exempt a user from them** — so a `WITH NETWORK` search in an Experience Cloud site is filtered by two independent mechanisms, the network scope and any restriction rule on the object, and only one of them is visible in the query. Guest-user search in particular is a place where "the record exists but nobody can find it" is the intended configuration rather than a defect. → [07-security · 11](../07-security-and-sharing/11-restriction-rules.md), [05-experience · 09](../05-experience-cloud-lwr/09-sharing-for-external-users.md)
+The modifier set has been stable through the 2024–2026 window; none of these clauses is new and none was withdrawn. The change worth recording is in how search *results* are governed rather than expressed: **restriction rules apply to SOSL, search, lookups and related lists**, and **`View All Data` does not exempt a user from them** — so a `WITH NETWORK` search in an Experience Cloud site is filtered by two independent mechanisms, the network scope and any restriction rule on the object, and only one of them is visible in the query. Guest-user search in particular is a place where "the record exists but nobody can find it" is the intended configuration rather than a defect. → [07-security · 11](../07-security-and-sharing/11-restriction-rules.md), [SF_Experience_Cloud · 09](../../SF_Experience_Cloud/09-sharing-for-external-users.md)
 
 ## Gotchas
 
@@ -60,5 +60,5 @@ A: No. Ranking is the platform's and is not exposed. `ORDER BY` in a `RETURNING`
 
 - [08 · SOSL mechanics & the search index](08-sosl-mechanics-and-the-search-index.md) — the statement these clauses attach to, and the index they read
 - [07-security · 11 Restriction rules](../07-security-and-sharing/11-restriction-rules.md) — the one access control that reaches search and ignores `View All Data`
-- [05-experience · 09 Sharing for external users](../05-experience-cloud-lwr/09-sharing-for-external-users.md) — why `WITH NETWORK` is not an access control
+- [SF_Experience_Cloud · 09 Sharing for external users](../../SF_Experience_Cloud/09-sharing-for-external-users.md) — why `WITH NETWORK` is not an access control
 - [10 · Querying across stores & the tooling surface](10-querying-across-stores-and-tooling.md) — where else a query can be issued from, including Knowledge and Data 360

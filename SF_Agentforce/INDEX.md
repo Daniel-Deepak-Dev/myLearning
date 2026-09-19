@@ -10,19 +10,24 @@ The code underneath lives in [SF_core/](../SF_core/README.md) and is linked from
 
 Read top to bottom. `#` is display order only — filenames carry no number, so reordering costs one row edit.
 
-**9 topics** · 30 gaps open · 1 complete · newest 2026-08-28 · oldest 2026-08-27
+**10 topics** · 3 gaps open · 9 complete · newest 2026-08-30 · oldest 2026-08-27
 
-| # | Topic | One line | Level | Status | Pre | Created | Updated |
-|---|---|---|---|---|---|---|---|
-| 1 | [Prompt Builder & Prompt Templates](prompt-builder-and-prompt-templates.md) | The tool, and the reusable prompt it produces | basic | ✅ complete | — | 2026-08-27 | 2026-08-28 |
-| 2 | [Prompt Template Types](prompt-template-types.md) | The six types and what each grounds on | basic | 🌱 3 open | 1 | 2026-08-27 | 2026-08-28 |
-| 3 | [Prompt Template Versions & Access](prompt-template-versions-and-access.md) | Who can build one, who can run one, and editing a live version | basic | 🌱 3 open | 1 | 2026-08-28 | 2026-08-28 |
-| 4 | [Prompt Template Metadata & Deployment](prompt-template-metadata-and-deployment.md) | The XML, and what breaks moving it between orgs | working | 🌱 4 open | 3 | 2026-08-28 | 2026-08-28 |
-| 5 | [Grounding a Prompt Template](grounding-a-prompt-template.md) | The six ways data reaches the prompt | working | 🌱 4 open | 2 | 2026-08-28 | 2026-08-28 |
-| 6 | [Prompt Templates as Agent Actions](prompt-templates-as-agent-actions.md) | How a template becomes something an agent calls | working | 🌱 4 open | 2 | 2026-08-28 | 2026-08-28 |
-| 7 | [Template-Triggered Prompt Flows](template-triggered-prompt-flows.md) | Feeding a template when merge fields cannot reach the data | working | 🌱 4 open | 5 | 2026-08-27 | 2026-08-27 |
-| 8 | [Einstein Trust Layer](einstein-trust-layer.md) | The guardrails every call passes through | basic | 🌱 4 open | 1 | 2026-08-27 | 2026-08-27 |
-| 9 | [Atlas Reasoning Engine](atlas-reasoning-engine.md) | The part that decides what to do | basic | 🌱 4 open | 1 | 2026-08-27 | 2026-08-27 |
+**16 org checks** sit under `## Confirm in org` across 9 notes. Those are sandbox to-dos, not research — they do not count as gaps and do not stop a note being complete.
+
+**38 hands-on labs · ~13 h.** This file is the reading order. When the goal is to *do* something, open [PRACTICE.md](PRACTICE.md) instead — it queues every lab unblocked-first, so nothing needs Data 360 until lab #25.
+
+| # | Topic | One line | Level | Status | Org ✓ | Pre | Created | Updated |
+|---|---|---|---|---|---|---|---|---|
+| 1 | [Prompt Builder & Prompt Templates](prompt-builder-and-prompt-templates.md) | The tool, and the reusable prompt it produces | basic | ✅ complete | — | — | 2026-08-27 | 2026-08-28 |
+| 2 | [Prompt Template Types](prompt-template-types.md) | The six types and what each grounds on | basic | ✅ complete | 2 | 1 | 2026-08-27 | 2026-08-30 |
+| 3 | [Prompt Template Versions & Access](prompt-template-versions-and-access.md) | Who can build one, who can run one, and editing a live version | basic | ✅ complete | 1 | 1 | 2026-08-28 | 2026-08-30 |
+| 4 | [Prompt Template Metadata & Deployment](prompt-template-metadata-and-deployment.md) | The XML, and what breaks moving it between orgs | working | ✅ complete | 2 | 3 | 2026-08-28 | 2026-08-28 |
+| 5 | [Grounding a Prompt Template](grounding-a-prompt-template.md) | The six ways data reaches the prompt | working | ✅ complete | 1 | 2 | 2026-08-28 | 2026-08-30 |
+| 6 | [Flex Prompt Templates](flex-prompt-templates.md) | The type with no entry point — and the four callers you give it | working | 🌱 3 open | 2 | 2 | 2026-08-30 | 2026-08-30 |
+| 7 | [Prompt Templates as Agent Actions](prompt-templates-as-agent-actions.md) | How a template becomes something an agent calls | working | ✅ complete | 3 | 6 | 2026-08-28 | 2026-08-30 |
+| 8 | [Template-Triggered Prompt Flows](template-triggered-prompt-flows.md) | Feeding a template when merge fields cannot reach the data | working | ✅ complete | 3 | 5 | 2026-08-27 | 2026-08-30 |
+| 9 | [Einstein Trust Layer](einstein-trust-layer.md) | The guardrails every call passes through | basic | ✅ complete | 1 | 1 | 2026-08-27 | 2026-08-28 |
+| 10 | [Atlas Reasoning Engine](atlas-reasoning-engine.md) | The part that decides what to do | basic | ✅ complete | 1 | 1 | 2026-08-27 | 2026-08-28 |
 
 ## Seams into SF_core
 
@@ -36,8 +41,9 @@ These `SF_core` notes own the code side. Link to them rather than restating.
 | Raw model calls | [02-apex · 33 Models API in Apex](../SF_core/02-apex-and-triggers/33-models-api-in-apex.md) |
 | Testing AI code | [02-apex · 34 Testing AI Apex & mocking LLMs](../SF_core/02-apex-and-triggers/34-testing-ai-apex-and-mocking-llms.md) |
 | Flow as an agent action | [04-flow · 23 Flows as Agentforce actions](../SF_core/04-flow-and-automation/23-flows-as-agentforce-actions.md) |
+| Calling a prompt template **from** Flow | [04-flow · 28 Calling a prompt template from Flow](../SF_core/04-flow-and-automation/28-calling-prompt-templates-from-flow.md) |
 | Agent-facing APIs | [06-integration · 25 MCP servers & agent-facing APIs](../SF_core/06-integration-and-apis/25-mcp-servers-and-agent-facing-apis.md) |
-| Agents in a site | [05-experience · 19 Embedded messaging & agents in sites](../SF_core/05-experience-cloud-lwr/19-embedded-messaging-and-agents-in-sites.md) |
+| Agents in a site | [SF_Experience_Cloud · 19 Embedded messaging & agents in sites](../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) |
 | Moving AI metadata between orgs | [09-devops · 05 Metadata API & deployment mechanics](../SF_core/09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md) |
 
 ## Backlog — referenced elsewhere, not yet fed

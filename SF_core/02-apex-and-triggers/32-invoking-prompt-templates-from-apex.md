@@ -74,4 +74,6 @@ A: The 67.0 class reference lists only `generateMessagesForPromptTemplate` and `
 - [31 · Apex-grounded prompt templates](31-apex-grounded-prompt-templates.md) — the inverse direction, where Apex feeds the template instead of calling it
 - [33 · Models API in Apex](33-models-api-in-apex.md) — when you want a model and no template at all
 - [34 · Testing AI Apex & mocking LLMs](34-testing-ai-apex-and-mocking-llms.md) — why this class cannot be mocked and what to do instead
+- [04-flow · 28 Calling a prompt template from Flow](../04-flow-and-automation/28-calling-prompt-templates-from-flow.md) — the declarative equivalent of this note: same call, no `WrappedValue`
+- [SF_Agentforce · Flex Prompt Templates](../../SF_Agentforce/flex-prompt-templates.md) — the type whose declared inputs become these `Input:` keys, and the other three callers
 - [SF_Agentforce · Einstein Trust Layer](../../SF_Agentforce/INDEX.md) — the masking, grounding and audit this path buys you over a raw callout

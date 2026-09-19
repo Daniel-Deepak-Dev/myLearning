@@ -1,6 +1,6 @@
 # SF_core — Core Salesforce Platform
 
-The platform knowledge base: Apex, LWC, Flow, Admin, Experience Cloud, Integration, Security, Data, DevOps.
+The platform knowledge base: Apex, LWC, Flow, Admin, Integration, Security, Data, DevOps.
 
 This folder is the **platform underneath** the AI vaults. It cross-links to them rather than duplicating them.
 
@@ -8,6 +8,7 @@ This folder is the **platform underneath** the AI vaults. It cross-links to them
 |---|---|
 | [SF_Agentforce/](../SF_Agentforce/INDEX.md) | Prompt templates, agents, actions, Agent Script, Atlas, Trust Layer |
 | [SF_Data_360/](../SF_Data_360/INDEX.md) | Ingestion, DMOs, identity resolution, segments, zero-copy, RAG |
+| [SF_Experience_Cloud/](../SF_Experience_Cloud/INDEX.md) | LWR sites, guest security & exposure audit, Aura→LWR, CMS, headless, SEO |
 | [Interview/](../Interview/README.md) | Scenario question bank |
 
 > **Currency: Summer '26 · API 67.0** · see [CURRENCY.md](CURRENCY.md) for the version map and the six defaults that invalidate older tutorials.
@@ -20,7 +21,6 @@ This folder is the **platform underneath** the AI vaults. It cross-links to them
 | [02-apex-and-triggers/](02-apex-and-triggers/INDEX.md) | Apex language, SOQL/SOSL, triggers, async, user-mode security, testing, Platform Cache, enterprise patterns & DI, serialization, **prompt templates & the Models API in Apex** | 34 |
 | [03-lwc-and-slds/](03-lwc-and-slds/INDEX.md) | LWC component model, LDS, GraphQL wire, LWS, SLDS 2, Jest, State Managers | 24 |
 | [04-flow-and-automation/](04-flow-and-automation/INDEX.md) | Flow Builder end-to-end, HTTP callout, Orchestrator, run context, testing, agent actions | 25 |
-| [05-experience-cloud-lwr/](05-experience-cloud-lwr/INDEX.md) | LWR sites, guest security & exposure audit, Aura→LWR, CMS, headless, SEO | 20 |
 | [06-integration-and-apis/](06-integration-and-apis/INDEX.md) | REST/Bulk/GraphQL/Pub-Sub, endpoints, Metadata & Tooling, OAuth, External Client Apps, MCP, certificates, event bus allocations | 27 |
 | [07-security-and-sharing/](07-security-and-sharing/INDEX.md) | Licences, permission-set-led access, sharing, restriction rules, access auditing, identity & MFA, Shield, posture | 26 |
 | [08-data-modeling-and-large-data-volumes/](08-data-modeling-and-large-data-volumes/INDEX.md) | Relationships, storage, selectivity, skew, locking, deletes, big objects, archiving, migration, backup, Hyperforce | 26 |
@@ -29,11 +29,12 @@ This folder is the **platform underneath** the AI vaults. It cross-links to them
 | [PHASES.md](PHASES.md) | The 23-run build plan — what each AI run produces | — |
 | [_notion-seed/INVENTORY.md](_notion-seed/INVENTORY.md) | The old Notion notes, mapped to target topics | — |
 
-**236 topics.** Rows in each `INDEX.md` are plain text until written, links once they exist.
+**219 topics across 9 areas.** Rows in each `INDEX.md` are plain text until written, links once they exist. *(Experience Cloud's 20 left with it on 2026-09-19 — see [SF_Experience_Cloud/](../SF_Experience_Cloud/INDEX.md). The per-area counts in the table above lag the newest additions.)*
 
 ## Out of scope — deliberately
 
-- **Aura components** and **Visualforce.** Both are legacy; LWC is the only UI framework here. They appear only where a note must explain a migration or a coexistence rule. **Legacy in direction, not dead** — phase 18 found five of the seven Experience Cloud templates are still Aura and still receiving features → [05-experience · 01](05-experience-cloud-lwr/01-template-choice-and-site-landscape.md).
+- **Aura components** and **Visualforce.** Both are legacy; LWC is the only UI framework here. They appear only where a note must explain a migration or a coexistence rule. **Legacy in direction, not dead** — phase 18 found five of the seven Experience Cloud templates are still Aura and still receiving features → [SF_Experience_Cloud · 01](../SF_Experience_Cloud/01-template-choice-and-site-landscape.md).
+- **Experience Cloud.** Moved out to its own root vault, [SF_Experience_Cloud/](../SF_Experience_Cloud/INDEX.md) — 20 topics, phases 18–19. It was area 05 here until then; the build record stays in [PHASES.md](PHASES.md) and its currency rows stay in [CURRENCY.md](CURRENCY.md).
 - **OmniStudio**, **Reporting & Analytics**, **Sales/Service Cloud functional depth.** Not excluded on merit — just not in this build. Add as areas 11–13 later if wanted. *(The reserved area-10 slot was taken by [SOQL & SOSL](10-soql-and-sosl/INDEX.md) in phase 22 — the query language had no owner and SOSL was the vault's largest single gap.)*
 - **Agentforce / Data 360 / Claude.** Agentforce lives in [SF_Agentforce/](../SF_Agentforce/INDEX.md), Data 360 in [SF_Data_360/](../SF_Data_360/INDEX.md). Notes here link across instead of repeating.
 

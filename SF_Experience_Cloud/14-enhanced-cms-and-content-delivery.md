@@ -1,6 +1,6 @@
 # Enhanced CMS & Content Delivery
 
-> Area: 05-experience-cloud-lwr · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
+> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
 **Scope:** Authoring and delivering structured content with Salesforce CMS — workspaces, content types, channels, collections and taxonomy — and how an **enhanced** LWR site consumes it. Headless delivery of the same content is [15](15-headless-sites-and-connect-apis.md).
 

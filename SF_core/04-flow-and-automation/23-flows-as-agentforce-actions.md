@@ -58,6 +58,7 @@ A: The ability to build or deploy an agent — including a small purpose-built o
 
 ## Related
 
+- [28 · Calling a prompt template from Flow](28-calling-prompt-templates-from-flow.md) — **the reverse relationship.** There the flow is the caller and the template is the action; here the flow *is* the action
 - [SF_Agentforce · Template-Triggered Prompt Flows](../../SF_Agentforce/template-triggered-prompt-flows.md) — **a different flow type.** That one feeds a prompt template; this one is an action an agent calls
 - [SF_Agentforce · Atlas Reasoning Engine](../../SF_Agentforce/atlas-reasoning-engine.md) — the caller that reads your descriptions and decides whether to invoke this flow
 - [SF_Agentforce · Prompt Templates as Agent Actions](../../SF_Agentforce/prompt-templates-as-agent-actions.md) — the third kind of agent action, wired the same way

@@ -54,7 +54,7 @@ LMS has not changed, but its job has narrowed twice. **State Managers went GA at
 - **Custom channel imports must match the file exactly, including `__c`.** A wrong name is a compile error; a wrong *namespace* is a runtime silence.
 - **Payloads must be serializable.** No functions, no DOM references, no class instances — and across namespaces, prefer primitives or JSON. → [09](09-lightning-web-security.md)
 - **`connectedCallback` running twice double-subscribes**, so every message is handled twice. Guard on the subscription field.
-- **LMS is not available in every container.** Lightning Out and standalone apps have no message service, and Experience Cloud has its own rules. → [05-experience](../05-experience-cloud-lwr/INDEX.md)
+- **LMS is not available in every container.** Lightning Out and standalone apps have no message service, and Experience Cloud has its own rules. → [SF_Experience_Cloud](../../SF_Experience_Cloud/INDEX.md)
 
 ## Recall
 

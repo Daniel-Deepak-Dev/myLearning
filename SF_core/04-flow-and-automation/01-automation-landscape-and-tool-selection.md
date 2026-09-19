@@ -20,6 +20,7 @@ The three-way declarative decision tree — workflow rule, process, flow — is 
 | **Schedule-triggered** | a clock | nightly batches → [06](06-scheduled-and-autolaunched-flows.md) |
 | **Platform event-triggered** | an event message arrives | integration fan-out → [07](07-platform-event-and-async-path-flows.md) |
 
+- **Two types this table leaves out on purpose.** A **template-triggered prompt flow** is a flow type whose only job is to feed a prompt template, so it is owned in [SF_Agentforce](../../SF_Agentforce/template-triggered-prompt-flows.md) rather than here. Calling a prompt template *from* an ordinary flow is a different thing again → [28](28-calling-prompt-templates-from-flow.md).
 - **The Flow-vs-Apex boundary that actually holds.** Flow when the logic is a sequence a competent admin will still recognise in a year; Apex when it needs real data structures (maps, sets, recursion), genuine unit tests, or precise bulk control over more than a few hundred records. → [02-apex · 06](../02-apex-and-triggers/06-triggers-and-the-handler-framework.md)
 - **"Clicks not code" is not a limits argument.** Flow spends the same per-transaction budget as Apex and offers less control over how. → [13 · Flow limits & bulkification](13-flow-limits-and-bulkification.md)
 - **Mixing both on one object is normal**, not a smell. A before-save flow for field defaulting plus a trigger for the complex path is a common, defensible design.
@@ -60,3 +61,4 @@ A: Flow shares the same per-transaction governor budget as Apex, with less contr
 - [03 · Record-triggered flows](03-record-triggered-flows.md) — the type you will build most, and the before/after-save decision
 - [01-admin · 14 Order of execution](../01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md) — where each automation type sits in the save pipeline
 - [02-apex · 06 Triggers & the handler framework](../02-apex-and-triggers/06-triggers-and-the-handler-framework.md) — the other side of the boundary this note draws
+- [28 · Calling a prompt template from Flow](28-calling-prompt-templates-from-flow.md) — the AI branch of the same tool-selection question, and the flow type this area does not own

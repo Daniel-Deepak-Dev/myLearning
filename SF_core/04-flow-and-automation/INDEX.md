@@ -1,6 +1,6 @@
 # 04 · Flow & Automation
 
-Flow as the **only** declarative automation tool you may build in, after Workflow Rules and Process Builder went out of support. **27 topics** · phases [08](PHASES.md), [09](PHASES.md), [24](PHASES.md).
+Flow as the **only** declarative automation tool you may build in, after Workflow Rules and Process Builder went out of support. **28 topics** · phases [08](PHASES.md), [09](PHASES.md), [24](PHASES.md).
 
 > Currency: **Summer '26 (API 67.0)** · [flag legend](../README.md#flag-legend) · [what changed](../CURRENCY.md)
 
@@ -35,6 +35,7 @@ Flow as the **only** declarative automation tool you may build in, after Workflo
 | 25 | [AI-assisted flow authoring](25-ai-assisted-flow-authoring.md) 🆕 | generate, edit and summarise in natural language — and how to review it | 09 |
 | 26 | [Reading inherited Workflow Rules & Process Builder](26-reading-inherited-workflow-and-process-builder.md) ⚠️ | the three evaluation criteria, the re-evaluate checkbox, PB recursion **×5** | 24 |
 | 27 | [Legacy automation migration runbook](27-legacy-automation-migration-runbook.md) 🆕 | 7 stages, **Switch Activations**, and the queue that outlives deactivation | 24 |
+| 28 | [Calling a prompt template from Flow](28-calling-prompt-templates-from-flow.md) 🆕 | the **Prompt Template** action category, and the two directions that share a name | 09 |
 
 ## Related
 
@@ -43,7 +44,7 @@ Flow as the **only** declarative automation tool you may build in, after Workflo
 - **12** pairs with [02-apex · 19 Callouts & named credentials](../02-apex-and-triggers/19-callouts-named-credentials-and-http-in-apex.md) — one credential model, two ways to reach it.
 - **17** pairs with [01-admin · 12 Approval processes](../01-admin-and-declarative-platform/12-approval-processes-and-approval-orchestration.md).
 - **19** is the security spine of the area — [02-apex · 10](../02-apex-and-triggers/10-apex-security-user-mode-and-fls.md) is its coded counterpart, and Flow did **not** follow Apex's 67.0 flip to user mode.
-- **21** pairs with [05-experience-cloud · 07 Guest user security model](../05-experience-cloud-lwr/07-guest-user-security-model.md), and every flow on *Enabled Flow Access* is an item on [**· 11** the public site exposure audit](../05-experience-cloud-lwr/11-public-site-exposure-audit.md).
+- **21** pairs with [SF_Experience_Cloud · 07 Guest user security model](../../SF_Experience_Cloud/07-guest-user-security-model.md), and every flow on *Enabled Flow Access* is an item on [**· 11** the public site exposure audit](../../SF_Experience_Cloud/11-public-site-exposure-audit.md).
 - **18, 26, 27** are one subject split three ways and the boundary is deliberate: **26** owns how the legacy automation fires, **18** owns the conversion tool, **27** owns the programme. **26** is the declarative twin of [01-admin · 14](../01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md) steps 11 and 13.
 - **22–23, 25** are seams into [SF_Agentforce/](../../SF_Agentforce/INDEX.md) and [SF_Data_360/](../../SF_Data_360/INDEX.md) — the agent and Data 360 story lives there.
-- **A flow type this area does not own:** the [template-triggered prompt flow](../../SF_Agentforce/template-triggered-prompt-flows.md) exists only to feed a prompt template, so it lives in `SF_Agentforce/`. Do not confuse its rules with **23**'s autolaunched-only agent-action rule.
+- **Prompt templates and Flow meet three ways, and only two live here.** **28** owns a flow *calling* an activated template as an invocable action. **23** owns a flow that *is* an action an agent calls. The third — the [template-triggered prompt flow](../../SF_Agentforce/template-triggered-prompt-flows.md), a flow type that exists only to *feed* a template — lives in `SF_Agentforce/`. Three different features; do not let the shared vocabulary blur them.

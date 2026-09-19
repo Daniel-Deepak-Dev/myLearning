@@ -19,6 +19,74 @@ Newest first.
 
 ---
 
+### 2026-09-19 · Experience Cloud promoted to its own vault
+
+**No notes fed — a structural change.**
+
+`SF_core/05-experience-cloud-lwr/` became the root-level vault **[SF_Experience_Cloud/](SF_Experience_Cloud/INDEX.md)**, a peer of `SF_core/`, `SF_Agentforce/` and `SF_Data_360/`. All 20 topic files moved unchanged, numbering intact.
+
+- **65 inbound links across 27 files** repointed, and **~100 outbound links** from the moved notes rewritten back into `SF_core/`.
+- **63 link labels** normalised from `05-experience ·` to `SF_Experience_Cloud ·`, matching the `SF_Agentforce ·` convention.
+- New in the vault: `CLAUDE.md` (scope, routing test, the four live currency traps) and `_inbox.md`.
+- **Currency and the build record stayed in `SF_core/`** — [CURRENCY.md](SF_core/CURRENCY.md) is one ledger for the whole platform.
+- Routing updated in [CLAUDE.md](CLAUDE.md), [NOTES-SYSTEM.md](NOTES-SYSTEM.md) and the `study-notes` skill: the test is now **strip the product out of the sentence — is it still true?**
+
+**Also this day:** reasoning recorded in [NOTES-SYSTEM.md](NOTES-SYSTEM.md#decisions-log).
+
+---
+
+
+### 2026-08-30
+
+Fed: Flex prompt template · template-triggered prompt flow · Add Prompt Instructions. The open question was **where a Flex template is actually used**.
+
+- **Flex Prompt Templates** → [SF_Agentforce/flex-prompt-templates.md](SF_Agentforce/flex-prompt-templates.md) · `new` · Level: working
+  - The answer: the other five types own a surface, Flex owns none. **If you can point at the button Salesforce already built for it, use that type — if not, it is Flex.** Four callers: agent action, Flow, Apex/LWC, REST.
+  - Also touched: [prompt-template-types.md](SF_Agentforce/prompt-template-types.md) — the Flex row said *"anywhere"*, which was a shrug; now it says *no entry point of its own*.
+- **Calling a prompt template from Flow** → [SF_core/04-flow-and-automation/28-calling-prompt-templates-from-flow.md](SF_core/04-flow-and-automation/28-calling-prompt-templates-from-flow.md) · `new` · Level: working
+  - The missing fact behind the confusion: an **activated** template is automatically an invocable action, under the **Prompt Template** category in the Actions element.
+  - **Flow and prompt templates point two ways.** A template-triggered prompt flow feeds the template while it resolves; an ordinary flow calls the template and reads the text back. Both get called "prompt flows".
+  - Also touched: [template-triggered-prompt-flows.md](SF_Agentforce/template-triggered-prompt-flows.md), [23-flows-as-agentforce-actions.md](SF_core/04-flow-and-automation/23-flows-as-agentforce-actions.md), [32-invoking-prompt-templates-from-apex.md](SF_core/02-apex-and-triggers/32-invoking-prompt-templates-from-apex.md), [01-automation-landscape-and-tool-selection.md](SF_core/04-flow-and-automation/01-automation-landscape-and-tool-selection.md).
+- **6 labs added** — `AF-FLEX-01..03` queued at [PRACTICE.md](SF_Agentforce/PRACTICE.md) #12–14, and `SF-PTFLOW-01..03` which sit in their note only, because `SF_core` has no `PRACTICE.md` yet.
+
+---
+
+### 2026-08-28 · hands-on labs for SF_Agentforce
+
+Not a feed either — the notes now say what to *do*, not just what is true.
+
+- **35 labs** added as `## Hands-on` sections across all 9 notes, 3–4 each, one line apiece. Every lab carries an ID (`AF-TRUST-01`), a time box and a **`Proves:`** — a lab without a *Proves* is a chore, not a lab.
+- **Roughly a third break something on purpose**, mined straight from each note's `## Gotchas`: deactivate the active version and watch the template stop working, leave a prompt flow as a draft and hunt for it, write a vague action instruction and watch the agent not call it, push a masked prompt past 65,536 tokens.
+- **Labs are ticked, not deleted** — the opposite of the gap rule. A settled question is clutter; work you did is a record. They never count towards `Status`.
+- **11 labs settle an open 🚩** in their note's `## Confirm in org`, and say which.
+- New **[SF_Agentforce/PRACTICE.md](SF_Agentforce/PRACTICE.md)** — ▶ Next, In flight (max 3), a Queue and a Done table. The queue is **unblocked-first**, not INDEX order: nothing needs Data 360 until #22, nothing needs a second org until #34.
+- **A lab is not finished until you have written down what broke, verbatim.** That is the Done table's last column, and the reason it exists — an exact error string is still what you search for in six months.
+
+Shape reused from the retired `_archive/AI_Data/` vault, which had solved this and took the solution with it. Quarried, not linked.
+
+**System changes.** `## Hands-on` added to [_note-template.md](_note-template.md), [NOTES-SYSTEM.md](NOTES-SYSTEM.md) (with the three-way split: gaps are a reading list, org checks are questions an org settles, labs are skills you build), the `study-notes` skill (new **§5a Lab pass**, plus a PRACTICE.md queue row in §8), and both `CLAUDE.md` files.
+
+---
+
+### 2026-08-28 · drained every open gap in SF_Agentforce
+
+Not a feed — a closing pass. All **30** open gaps were either answered or reclassified. **No new note was spawned**, which is why the count fell this time instead of moving sideways.
+
+- [Einstein Trust Layer](SF_Agentforce/einstein-trust-layer.md) · `updated` — default masked entities (**Name, Email, Phone, Credit Card, US SSN**), per-entity toggle, `PERSON_0` token shape, **masking caps the context window at 65,536 tokens**, checksum validation. **Toxicity is scored 0–1 and returned *with* the response — it does not block.** Audit trail lives in Data 360 DMOs.
+- [Atlas Reasoning Engine](SF_Agentforce/atlas-reasoning-engine.md) · `updated` — Atlas itself is not configurable; you author the agent around it. Loop bounded at **seven reasoning loops**, ~last six turns (🚩 from a search snippet). Reasoning is visible afterwards through **Agentforce Session Tracing**, over `ssot__TelemetryTraceSpan__dlm` and `ssot__AiAgentInteraction__dlm`.
+- [Template-Triggered Prompt Flows](SF_Agentforce/template-triggered-prompt-flows.md) · `updated` — the four **capability bindings**, the additive **Add Prompt Instructions** element, and the reuse rule: a type binding serves every template of that type, `FlexTemplate://` serves one.
+- [Grounding a Prompt Template](SF_Agentforce/grounding-a-prompt-template.md) · `updated` — index vs retriever, where each is built, what the retriever exposes, and the **20-result default**. Sources combine rather than compete.
+- [Prompt Templates as Agent Actions](SF_Agentforce/prompt-templates-as-agent-actions.md) · `updated` — `GenAiFunction` / `GenAiPlugin` shape. **`GenAiFunction` has no version field**, so an action always resolves to the active version. 20 credits (~$0.10) per standard action.
+- [Prompt Template Metadata & Deployment](SF_Agentforce/prompt-template-metadata-and-deployment.md) · `updated` — why the active-version pointer cannot arrive orphaned, and that retrieve never pulls a dependent Data 360 retriever.
+
+**Two duplicates removed** — the Flex-only-agent-action question was open in two notes, the version-cap question in two more. Each now has one owner and a cross-link.
+
+**System changes.** Org-only questions moved to a new `## Confirm in org` section and no longer count towards `Status`; **14** of them remain. The `study-notes` skill gained a **§5b Close pass** so feeding notes drains gaps instead of only adding them. The 50-line ceiling now counts to `## Related` — the footer of links, sources and history is exempt.
+
+**Also touched:** `GLOSSARY.md` gained Agentforce Session Tracing, `GenAiFunction`, `GenAiPlugin`; `SF_Agentforce/INDEX.md` gained an **Org ✓** column.
+
+---
+
 ### 2026-08-28 · answered the open questions on Versions & Access
 
 - **Prompt Template Metadata & Deployment** → [SF_Agentforce/prompt-template-metadata-and-deployment.md](SF_Agentforce/prompt-template-metadata-and-deployment.md) · `new` · Level: working

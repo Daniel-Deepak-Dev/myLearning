@@ -30,7 +30,7 @@ Everything else in this area answers *may this user see this record*. Privacy as
 - **Encryption is not anonymisation.** Encrypted personal data is still personal data — reversible by design, and therefore still in scope. → [21](21-shield-platform-encryption.md)
 - **Sandbox PII is the finding that turns up in every audit**, because refreshing a Full sandbox copies real data by default and nobody owns the follow-up. Automate masking as part of the refresh.
 - **"Forget this Individual" is a flag, not an erasure.** It records the request; carrying it out is a process you build or buy.
-- **Consent captured in Experience Cloud lands as a guest-user write**, which needs the sharing and object permissions to exist first. → [05-experience-cloud · INDEX](../05-experience-cloud-lwr/INDEX.md)
+- **Consent captured in Experience Cloud lands as a guest-user write**, which needs the sharing and object permissions to exist first. → [SF_Experience_Cloud · INDEX](../../SF_Experience_Cloud/INDEX.md)
 - **Retention obligations point both ways.** Privacy law says delete it; financial regulation says keep it ten years. `HistoryRetentionPolicy` and the archive are how you hold both at once. → [22](22-field-audit-trail-and-data-retention.md)
 - **Agents widen the processing surface.** An agent that summarises a customer's history is processing personal data at speed — the grounding and retention rules live in [RELEASE-RADAR](../../RELEASE-RADAR/trust-security-and-governance.md), not here.
 

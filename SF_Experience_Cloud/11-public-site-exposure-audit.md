@@ -1,6 +1,6 @@
 # Public Site Exposure Audit
 
-> Area: 05-experience-cloud-lwr · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
+> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** The standing audit for any site a stranger can reach — what to check, in what order, and what "safe" means when you inherit one. The *model* is [07](07-guest-user-security-model.md); this is the runbook. Added in phase 18, beyond the original plan.
 
@@ -18,11 +18,11 @@ Work the guest profile of **every** site — including inactive and preview ones
 
 1. **`API Enabled`.** Remove it. With it, the guest surface is a queryable API rather than a set of pages, and the record ceiling that limits page-based access no longer applies.
 2. **Object permissions.** Read and create are the only ones grantable; grant neither unless a page genuinely needs it. Enumerate what is on, not what you remember turning on.
-3. **Field-level security.** Objects are the coarse gate; a single exposed field carries the sensitive data. Use the **Field Access tab** in Object Manager to see what grants each field → [07-security · 13](../07-security-and-sharing/13-field-level-security-and-visibility-layers.md).
-4. **External OWD.** Must be Private for anything not deliberately public, and it cannot be more permissive than the internal OWD → [07-security · 06](../07-security-and-sharing/06-org-wide-defaults-and-record-access.md).
+3. **Field-level security.** Objects are the coarse gate; a single exposed field carries the sensitive data. Use the **Field Access tab** in Object Manager to see what grants each field → [07-security · 13](../SF_core/07-security-and-sharing/13-field-level-security-and-visibility-layers.md).
+4. **External OWD.** Must be Private for anything not deliberately public, and it cannot be more permissive than the internal OWD → [07-security · 06](../SF_core/07-security-and-sharing/06-org-wide-defaults-and-record-access.md).
 5. **Guest sharing rules.** Read the criteria, not the name. A rule written to expose three articles can match the object.
-6. **Apex classes and flows on the guest profile.** Every `@AuraEnabled` method is an endpoint; every entry on *Enabled Flow Access* is something a stranger can run → [06](06-custom-lwc-in-lwr-sites.md), [04-flow · 21](../04-flow-and-automation/21-flow-for-external-and-guest-users.md).
-7. **Apex API version.** A class below 67.0, or one using `AccessLevel.SYSTEM_MODE`, is not enforcing the access model for the guest that calls it → [07-security · 14](../07-security-and-sharing/14-code-execution-context-and-security.md).
+6. **Apex classes and flows on the guest profile.** Every `@AuraEnabled` method is an endpoint; every entry on *Enabled Flow Access* is something a stranger can run → [06](06-custom-lwc-in-lwr-sites.md), [04-flow · 21](../SF_core/04-flow-and-automation/21-flow-for-external-and-guest-users.md).
+7. **Apex API version.** A class below 67.0, or one using `AccessLevel.SYSTEM_MODE`, is not enforcing the access model for the guest that calls it → [07-security · 14](../SF_core/07-security-and-sharing/14-code-execution-context-and-security.md).
 8. **Self-registration profile**, if enabled — it is granted to everyone who asks → [10](10-authentication-self-registration-and-sso.md).
 
 ## Gotchas
@@ -32,7 +32,7 @@ Work the guest profile of **every** site — including inactive and preview ones
 - **Custom components do not enforce anything.** CRUD and FLS are the Apex controller's job; the component in front is decoration → [06](06-custom-lwc-in-lwr-sites.md).
 - **A field added later inherits the object's guest access.** Schema changes silently widen an audited surface — re-run this after every release.
 - **Verbose error messages are an exposure class of their own** — object names, field names and record counts all leak through them.
-- **Event Monitoring's free tier covers Experience Cloud traffic thinly.** Detection is not the control here; configuration is → [07-security · 23](../07-security-and-sharing/23-event-monitoring-and-transaction-security.md).
+- **Event Monitoring's free tier covers Experience Cloud traffic thinly.** Detection is not the control here; configuration is → [07-security · 23](../SF_core/07-security-and-sharing/23-event-monitoring-and-transaction-security.md).
 
 ## Recall
 
@@ -55,5 +55,5 @@ A: Only that class's own enforcement. A class below API 67.0, or one in system m
 
 - [07 · Guest user security model](07-guest-user-security-model.md) — the platform controls this audit checks
 - [06 · Custom LWC in LWR sites](06-custom-lwc-in-lwr-sites.md) — why the controller, not the component, is the boundary
-- [07-security · 26 Secure coding checklist](../07-security-and-sharing/26-secure-coding-checklist.md) — the code-side companion to this list
-- [07-security · 15 Auditing & troubleshooting access](../07-security-and-sharing/15-auditing-and-troubleshooting-access.md) — the tooling for answering "why can this user see this"
+- [07-security · 26 Secure coding checklist](../SF_core/07-security-and-sharing/26-secure-coding-checklist.md) — the code-side companion to this list
+- [07-security · 15 Auditing & troubleshooting access](../SF_core/07-security-and-sharing/15-auditing-and-troubleshooting-access.md) — the tooling for answering "why can this user see this"

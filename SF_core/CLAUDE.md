@@ -28,9 +28,10 @@ One flat `.md` per topic. Skeleton in [_template.md](_template.md):
 - **Status flags are load-bearing.** ⬜ means scaffolded, not written, and is excluded from the review rotation. 🌱 means written and being learnt. Never let a ⬜ note read 🌱.
 - **Currency: Summer '26 · API 67.0** — see [CURRENCY.md](CURRENCY.md). Winter '27 (68.0) is preview only; nothing here assumes it.
 - **Never duplicate currency detail.** Link to [../RELEASE-RADAR/](../RELEASE-RADAR/README.md).
-- **Out of scope:** Aura, Visualforce, OmniStudio, Analytics. Agentforce lives in [../SF_Agentforce/](../SF_Agentforce/INDEX.md), Data 360 in [../SF_Data_360/](../SF_Data_360/INDEX.md).
-- **The line is drawn by artefact.** `SF_core/` owns class names, signatures, exceptions, limits and entitlement. The AI vaults own prompt authoring, agent reasoning and Trust Layer policy. **Ask: is this sentence still true with no Agentforce in it?** Yes → it belongs here. No → it belongs there.
-- **Link both ways.** When a note here gains a link to `SF_Agentforce/` or `SF_Data_360/`, add the return link in that file in the same edit. One-way links break the wiki.
+- **Out of scope:** Aura, Visualforce, OmniStudio, Analytics. Agentforce lives in [../SF_Agentforce/](../SF_Agentforce/INDEX.md), Data 360 in [../SF_Data_360/](../SF_Data_360/INDEX.md), **Experience Cloud in [../SF_Experience_Cloud/](../SF_Experience_Cloud/INDEX.md)** — it was area 05 here until 2026-09-19.
+- **The line is drawn by artefact.** `SF_core/` owns class names, signatures, exceptions, limits and entitlement. The AI vaults own prompt authoring, agent reasoning and Trust Layer policy; `SF_Experience_Cloud/` owns what a site container does to them. **Ask: strip the product out — is the sentence still true?** *No Agentforce in it? No Experience Cloud site in it?* Still true → it belongs here. Falls apart → it belongs there.
+- **The Experience Cloud seam, concretely.** OWD, sharing rules and the grantee model are here, in [07-security-and-sharing/](07-security-and-sharing/INDEX.md); *what a guest user sharing rule may grant* is there. `NavigationMixin` and `ShowToastEvent` are here, in [03-lwc-and-slds/](03-lwc-and-slds/INDEX.md); *which of them work in an LWR container* is there.
+- **Link both ways.** When a note here gains a link to `SF_Agentforce/`, `SF_Data_360/` or `SF_Experience_Cloud/`, add the return link in that file in the same edit. One-way links break the wiki.
 - **New topic** → next number in the area, plus a row in that area's `INDEX.md`.
 - **New jargon** goes in [../GLOSSARY.md](../GLOSSARY.md).
 - **Commits:** one per phase — `SF: phase NN — <title>`.

@@ -44,7 +44,7 @@ export default class Saver extends LightningElement {
 
 ## 2026 currency
 
-The split is the thing to carry forward: **`ShowToastEvent` for Lightning Experience, `lightning/toast` + `lightning/toastContainer` for LWR sites** — and if a component is meant to run in both, the second is the one to write. This is the same portability question that decides `NavigationMixin` ([10](10-navigation-and-page-references.md)) and base-component availability off-platform ([22](22-lwc-open-source-and-off-platform-reuse.md)): a component is only as reusable as the container-dependent modules it imports. Guest-user contexts sharpen it further, because an error message is an information-disclosure surface there → [05-experience · guest hardening](../05-experience-cloud-lwr/INDEX.md).
+The split is the thing to carry forward: **`ShowToastEvent` for Lightning Experience, `lightning/toast` + `lightning/toastContainer` for LWR sites** — and if a component is meant to run in both, the second is the one to write. This is the same portability question that decides `NavigationMixin` ([10](10-navigation-and-page-references.md)) and base-component availability off-platform ([22](22-lwc-open-source-and-off-platform-reuse.md)): a component is only as reusable as the container-dependent modules it imports. Guest-user contexts sharpen it further, because an error message is an information-disclosure surface there → [SF_Experience_Cloud · guest hardening](../../SF_Experience_Cloud/INDEX.md).
 
 ## Gotchas
 

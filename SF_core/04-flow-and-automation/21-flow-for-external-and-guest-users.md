@@ -2,7 +2,7 @@
 
 > Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 09
 
-**Scope:** Running a flow for somebody who is not a licensed internal user — how access is granted, and what an unauthenticated visitor can reach. The general context model is [19](19-flow-run-context-and-sharing.md); site hardening is [05-experience-cloud · 07](../05-experience-cloud-lwr/07-guest-user-security-model.md).
+**Scope:** Running a flow for somebody who is not a licensed internal user — how access is granted, and what an unauthenticated visitor can reach. The general context model is [19](19-flow-run-context-and-sharing.md); site hardening is [SF_Experience_Cloud · 07](../../SF_Experience_Cloud/07-guest-user-security-model.md).
 
 > **What changed.** *"Give the guest user profile the `Run Flows` permission"* is the answer in almost every tutorial and **that permission no longer exists on the guest profile.** Salesforce discontinued it for new orgs in **Winter '22** and removed it from every org's Guest User profile in **Spring '23**. Access is now granted **one flow at a time** — *Enabled Flow Access* on the guest user profile, or *Edit Access* on the flow itself. There is no blanket switch, deliberately.
 
@@ -29,7 +29,7 @@ A guest user is an unauthenticated visitor executing your automation, and the th
 
 ## 2026 currency
 
-The subject's centre of gravity moved from *how do I make this work* to *how do I stop this leaking*, driven by a sustained 2025–26 campaign against over-permissive Experience Cloud guest configurations. Salesforce's position is worth repeating precisely because it is correct and unhelpful: the platform was not vulnerable, the configurations were. The practical checklist that came out of it is short — remove **API Enabled** from the guest profile, strip object access back to what the public site genuinely needs, keep *Secure guest user record access* on, and treat every flow on the *Enabled Flow Access* list as something a stranger can run today. Nothing in Summer '26 changes the mechanics; what changed is that this is now an audit item rather than a design note. → [05-experience-cloud](../05-experience-cloud-lwr/INDEX.md), [07-security](../07-security-and-sharing/INDEX.md)
+The subject's centre of gravity moved from *how do I make this work* to *how do I stop this leaking*, driven by a sustained 2025–26 campaign against over-permissive Experience Cloud guest configurations. Salesforce's position is worth repeating precisely because it is correct and unhelpful: the platform was not vulnerable, the configurations were. The practical checklist that came out of it is short — remove **API Enabled** from the guest profile, strip object access back to what the public site genuinely needs, keep *Secure guest user record access* on, and treat every flow on the *Enabled Flow Access* list as something a stranger can run today. Nothing in Summer '26 changes the mechanics; what changed is that this is now an audit item rather than a design note. → [SF_Experience_Cloud](../../SF_Experience_Cloud/INDEX.md), [07-security](../07-security-and-sharing/INDEX.md)
 
 ## Gotchas
 
@@ -62,6 +62,6 @@ A: **API Enabled**.
 ## Related
 
 - [19 · Flow run context & sharing](19-flow-run-context-and-sharing.md) — the setting that turns a guest-facing flow into an exposure
-- [05-experience-cloud · 07 Guest user security model](../05-experience-cloud-lwr/07-guest-user-security-model.md) — site-level guest hardening, written in phase 18
-- [05-experience-cloud · 11 Public site exposure audit](../05-experience-cloud-lwr/11-public-site-exposure-audit.md) — the runbook the checklist above became
+- [SF_Experience_Cloud · 07 Guest user security model](../../SF_Experience_Cloud/07-guest-user-security-model.md) — site-level guest hardening, written in phase 18
+- [SF_Experience_Cloud · 11 Public site exposure audit](../../SF_Experience_Cloud/11-public-site-exposure-audit.md) — the runbook the checklist above became
 - [12 · HTTP callout & External Services](12-http-callout-and-external-services-in-flow.md) — the callout surface guests gained in Winter '22

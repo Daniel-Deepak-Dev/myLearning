@@ -1,6 +1,6 @@
 # Headless Sites & Connect APIs
 
-> Area: 05-experience-cloud-lwr · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
+> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
 **Scope:** Building a front end in your own stack (React, Next.js, a native app) while Salesforce serves data and content over APIs — and the judgment call of when that's worth abandoning Experience Builder. Auth is **not** restated here: Headless Identity lives in [10](10-authentication-self-registration-and-sso.md).
 
@@ -10,14 +10,14 @@
 
 ## How it works
 
-- **Content & data:** Connect REST API delivers CMS (Enhanced CMS Workspaces resources); **UI API** delivers records with layout metadata; GraphQL/REST for bulk querying → [06-integration · 08 UI API](../06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md).
+- **Content & data:** Connect REST API delivers CMS (Enhanced CMS Workspaces resources); **UI API** delivers records with layout metadata; GraphQL/REST for bulk querying → [06-integration · 08 UI API](../SF_core/06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md).
 - **Auth is a cross-reference, not a topic here.** The front end is an OAuth client (PKCE for public, or a private client) and runs Headless Login/Registration/Passwordless from [10](10-authentication-self-registration-and-sso.md); tokens gate every data call.
 - **Hybrid is allowed.** A site can be mostly Experience Builder with a headless section, or fully headless — the license and guest model are identical.
 - **The judgment call is the content of this note:** headless trades platform-managed rendering, caching and SEO for total UX control. Only take that trade when UX control genuinely outweighs the loss.
 
 ## 2026 currency
 
-Under the **Headless 360** theme every capability is reachable as an API, which is what makes a fully decoupled customer site practical → [SF_Agentforce · Headless 360](../../RELEASE-RADAR/developer-tooling-and-apis.md). The trade sharpened in Summer '26: LWR's own rendering advantage shrank when **Experience Delivery was slated for discontinuation**, so "we lose SSR by going headless" is no longer the argument against it — an LWR site has no server-side rendering to lose → [16](16-site-performance-caching-and-seo.md). What you still take on is caching and sitemaps.
+Under the **Headless 360** theme every capability is reachable as an API, which is what makes a fully decoupled customer site practical → [SF_Agentforce · Headless 360](../RELEASE-RADAR/developer-tooling-and-apis.md). The trade sharpened in Summer '26: LWR's own rendering advantage shrank when **Experience Delivery was slated for discontinuation**, so "we lose SSR by going headless" is no longer the argument against it — an LWR site has no server-side rendering to lose → [16](16-site-performance-caching-and-seo.md). What you still take on is caching and sitemaps.
 
 ## Gotchas
 
@@ -49,4 +49,4 @@ A: The guest user — so the guest exposure audit and sharing rules govern every
 
 - [10 · Authentication, self-registration & SSO](10-authentication-self-registration-and-sso.md) — where Headless Identity is actually taught
 - [16 · Site performance, caching & SEO](16-site-performance-caching-and-seo.md) — what you inherit responsibility for when you leave Experience Builder, and why there is no SSR to lose
-- [06-integration · 08 UI API](../06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md) — the metadata-aware data API the front end calls
+- [06-integration · 08 UI API](../SF_core/06-integration-and-apis/08-ui-api-and-metadata-aware-clients.md) — the metadata-aware data API the front end calls

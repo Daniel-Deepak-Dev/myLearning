@@ -1,6 +1,6 @@
 # Site Performance, Caching & SEO
 
-> Area: 05-experience-cloud-lwr · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
+> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
 **Scope:** Why LWR sites are fast, how the caching layers stack, and what makes real SEO possible — the payoff of the build-and-serve architecture from [02](02-lwr-architecture-and-build-model.md). Where LWR genuinely differs from Aura is the whole point of this note.
 

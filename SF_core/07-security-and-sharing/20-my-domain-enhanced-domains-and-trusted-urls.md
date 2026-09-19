@@ -37,7 +37,7 @@ The redirect grace period is the story. Legacy hostname redirections **stopped i
 - **Sandbox My Domain names change on refresh**, so every allowlist, IdP entity ID and CORS entry pointing at a sandbox is refresh-fragile. → [09-devops · 06](../09-devops-sfdx-and-release-management/06-source-tracking-and-sandbox-workflow.md)
 - **CORS allowlist and Trusted URLs are different lists** solving different halves — CORS governs who may call Salesforce; Trusted URLs govern what a Salesforce page may load.
 - **A Trusted URL entry is an org-wide relaxation of CSP.** Adding a wildcard host to make one component work weakens every page, and it is a Health Check item. → [24](24-security-center-and-health-check.md)
-- **Guest-accessible Experience Cloud pages inherit all of it**, which is why the domain configuration is a guest-hardening concern too. → [05-experience-cloud · INDEX](../05-experience-cloud-lwr/INDEX.md)
+- **Guest-accessible Experience Cloud pages inherit all of it**, which is why the domain configuration is a guest-hardening concern too. → [SF_Experience_Cloud · INDEX](../../SF_Experience_Cloud/INDEX.md)
 - **Enabling enhanced domains is not reversible on a whim** — plan it as a release, with the allowlist inventory done first.
 
 ## Recall

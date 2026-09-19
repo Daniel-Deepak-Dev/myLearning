@@ -25,6 +25,12 @@
 - **Merge fields resolve at runtime, not at save.** A field the running user cannot see resolves empty rather than erroring.
 - **Renaming a template breaks callers that reference it by API name**, with no compile-time warning.
 
+## Hands-on
+
+- [ ] **AF-PB-01** · 20 min · Build a record-grounded template on Account, run it against a fully populated record, then an almost-empty one. **Proves:** an empty merge field resolves to nothing and the model invents around the hole — it reads as a hallucination.
+- [ ] **AF-PB-02** · 15 min · Rename a template's API name, then run whatever referenced it. **Proves:** renaming breaks callers with no compile-time warning.
+- [ ] **AF-PB-03** · 25 min · Grow a related-list grounding until the run fails on the 128,000-character ceiling. **Proves:** the ceiling counts the resolved prompt, not your template text — copy the error verbatim.
+
 ## Related
 
 - [Grounding a Prompt Template](grounding-a-prompt-template.md) — the six ways data reaches the prompt

@@ -1,8 +1,8 @@
 # Experience Cloud DevOps
 
-> Area: 05-experience-cloud-lwr · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
+> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
-**Scope:** Deploying and source-controlling a site in a pipeline — the metadata-type trap and the gotchas that break CI/CD. The bundle *distinction* is owned by [02](02-lwr-architecture-and-build-model.md); this note owns what it does to a pipeline. Rests on [09-devops · 05 Metadata API](../09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md).
+**Scope:** Deploying and source-controlling a site in a pipeline — the metadata-type trap and the gotchas that break CI/CD. The bundle *distinction* is owned by [02](02-lwr-architecture-and-build-model.md); this note owns what it does to a pipeline. Rests on [09-devops · 05 Metadata API](../SF_core/09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md).
 
 > **What changed.** The old "deploy a community via **`SiteDotCom`**" advice is a source-control dead end — it ships a binary blob that regenerates differently on every retrieve, so diffs are meaningless. And the newer fix is subtler than tutorials admit: **`ExperienceBundle` does not identify the runtime** — Aura *and* non-enhanced LWR sites both use it. **Enhanced LWR sites (the default) use `DigitalExperienceBundle` + `DigitalExperienceConfig`** and are **not** retrievable under `ExperienceBundle` at all.
 
@@ -24,7 +24,7 @@ The metadata type behind a site is decided by its **template + runtime**, and th
 
 ## 2026 currency
 
-Enhanced sites being the default means `DigitalExperienceBundle` is the type you'll meet most, and the one stale tutorials get wrong by reaching for `ExperienceBundle` or `SiteDotCom`. Pipeline tooling (DevOps Center, Gearset-style tools) supports it — only if the manifest is right. CLI and deployment currency: [SF_Agentforce · developer tooling](../../RELEASE-RADAR/developer-tooling-and-apis.md).
+Enhanced sites being the default means `DigitalExperienceBundle` is the type you'll meet most, and the one stale tutorials get wrong by reaching for `ExperienceBundle` or `SiteDotCom`. Pipeline tooling (DevOps Center, Gearset-style tools) supports it — only if the manifest is right. CLI and deployment currency: [SF_Agentforce · developer tooling](../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 ## Gotchas
 
@@ -55,5 +55,5 @@ A: No — the site must still be published; deploy updates the definition, publi
 ## Related
 
 - [02 · LWR architecture & build model](02-lwr-architecture-and-build-model.md) — owns the LWR / enhanced-LWR / bundle-type distinction
-- [09-devops · 05 Metadata API](../09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md) — the retrieve/deploy mechanics this rides on
+- [09-devops · 05 Metadata API](../SF_core/09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md) — the retrieve/deploy mechanics this rides on
 - [14 · Enhanced CMS & content delivery](14-enhanced-cms-and-content-delivery.md) — the content half of a site deploy

@@ -1,7 +1,7 @@
 # Atlas Reasoning Engine
 
-> Folder: SF_Agentforce · Level: basic · Status: 🌱 4 gaps open
-> Created: 2026-08-27 · Updated: 2026-08-27
+> Folder: SF_Agentforce · Level: basic · Status: ✅ complete
+> Created: 2026-08-27 · Updated: 2026-08-28
 
 **One line:** The reasoning and planning engine behind Agentforce — the part that decides what to do, not the part that says it.
 
@@ -10,12 +10,17 @@
 ## Key points
 
 - Salesforce calls it the **"brain" of Agentforce**. It sits between the user's request and the actions available.
-- The published loop is **plan → retrieve → reason → act → refine**.
-- It **refines the query first**, expanding it with context before retrieving anything.
+- The published loop is **plan → retrieve → reason → act → refine**. It **refines the query first**, expanding it with context before retrieving anything.
 - Retrieval is **RAG**, and it assesses the quality of its own response rather than answering blindly.
 - It runs a **ReAct loop** — reason, act, observe — repeating until the goal is met or it gives up.
-- Salesforce describes this as **System 2 inference-time reasoning**: deliberate rather than reflexive.
+- **The loop is bounded: up to seven reasoning loops per user message**, reading roughly the **last six turns**. 🚩 both figures come from a search snippet of a JS-rendered Help page.
 - **Version 3.0 routes to subagents by reading their descriptions**, not by following a fixed decision tree.
+- **Atlas itself is not configurable.** You author the agent around it — subagents, topics, actions, and **Agent Script** reasoning blocks: variables, action order, if/else, transitions, instruction text.
+- **The platform fixes the rest** — top-to-bottom processing of reasoning instructions, how the resolved prompt is assembled, and when the LLM sees it.
+
+## Seeing the reasoning afterwards
+
+**Agentforce Session Tracing**, keyed by session ID: turn-by-turn interactions, reasoning-engine executions, actions, prompt and gateway input/output, errors, final response. Underneath sit two Data 360 DMOs joined on trace ID — `ssot__TelemetryTraceSpan__dlm` (LLM calls, flow runs, Apex invocations, durations, `ERROR` status) and `ssot__AiAgentInteraction__dlm` (the conversation).
 
 > **From my notes.** *"Agentic Orchestration Framework"* — close, but it undersells it. Orchestration implies routing to a predefined path. Atlas **plans**: it decides what to retrieve, judges whether the answer is good enough, and loops. Routing is one thing it does, not the whole job.
 
@@ -23,13 +28,19 @@
 
 - **A vague subagent description is a bug, not a style problem.** From v3.0 the description *is* what routing reads. Vague ones cause intermittent mis-routing that looks like a model failure.
 - **"The agent ignored my instruction" is usually a retrieval or routing problem**, not a prompt-wording problem.
+- **A transition command discards the resolved prompt.** Reasoning ends there and the target subagent starts fresh — anything the block had built is thrown away.
+- **Session Tracing needs Data 360.** Without it you have no after-the-fact view of a reasoning run at all.
 
-## Gaps to close
+## Confirm in org
 
-- [ ] What is actually configurable about Atlas, and what is fixed platform behaviour?
-- [ ] Where do you see its reasoning after the fact — is there a trace or a log?
-- [ ] What makes it stop looping — a step limit, a confidence threshold, or something else?
-- [ ] How does it choose between two actions whose descriptions both fit?
+- 🚩 How it breaks a tie between two actions whose descriptions both fit. Docs give the cure — make descriptions distinct — but never state a tie-break rule.
+
+## Hands-on
+
+- [ ] **AF-ATLAS-01** · 30 min · Hold one agent conversation, then read its session trace end to end. **Proves:** the reasoning is visible after the fact, keyed by session ID. **Needs:** Data 360.
+- [ ] **AF-ATLAS-02** · 30 min · Give two subagents overlapping descriptions, force a mis-route, then fix it with explicit "does not handle" wording. **Settles:** how it breaks a tie 🚩. **Needs:** Data 360.
+- [ ] **AF-ATLAS-03** · 20 min · Query `ssot__TelemetryTraceSpan__dlm` for `ERROR` spans and their durations. **Proves:** where the chain broke, and what each step cost. **Needs:** Data 360.
+- [ ] **AF-ATLAS-04** · 25 min · Give the agent a task needing many actions, then count the loops in the trace. **Proves:** the loop is bounded — check the count against the seven-loop figure. **Needs:** Data 360.
 
 ## Related
 
@@ -39,10 +50,12 @@
 
 ## Sources
 
-- [How the Atlas Reasoning Engine Powers Agentforce](https://www.salesforce.com/agentforce/what-is-a-reasoning-engine/atlas/) — Salesforce · via search 2026-08-27 — page is JS-rendered, open it to verify
-- [Discover the Atlas Reasoning Engine](https://trailhead.salesforce.com/content/learn/modules/reasoning-in-artificial-intelligence/discover-the-atlas-reasoning-engine) — Trailhead · via search 2026-08-27 — page is JS-rendered, open it to verify
-- [Inside Agentforce: Revealing the Atlas Reasoning Engine](https://engineering.salesforce.com/inside-the-brain-of-agentforce-revealing-the-atlas-reasoning-engine/) — Salesforce Engineering · via search 2026-08-27 — page is JS-rendered, open it to verify
+- [How Agentforce Works](https://help.salesforce.com/s/articleView?language=en_US&id=ai.agent_reasoning_engine.htm&type=5) — Salesforce Help · via search 2026-08-28 — JS-rendered; the seven-loop and six-turn figures come from the search snippet, not the page
+- [Flow of Control — Agent Script](https://developer.salesforce.com/docs/ai/agentforce/guide/ascript-flow.html) — Salesforce Developers · read 2026-08-28 · what the author controls, and what ends reasoning
+- [About Agentforce Session Tracing](https://help.salesforce.com/s/articleView?id=ai.generative_ai_session_trace_about.htm&language=en_US&type=5) — Salesforce Help · via search 2026-08-28
+- [Agent Platform Tracing: Trace Trees, SOQL, and Slack](https://developer.salesforce.com/blogs/2026/05/agent-platform-tracing-debug-agentforce-with-trace-trees-soql-and-slack) — Salesforce Developers · read 2026-08-28 · the two trace DMOs
 
 ## History
 
 - 2026-08-27 · created from your Day-3 terms note · sharpened the "orchestration framework" definition
+- 2026-08-28 · added the configurable-vs-fixed split, the bounded loop, the transition-discards-prompt gotcha, and where the reasoning is visible afterwards

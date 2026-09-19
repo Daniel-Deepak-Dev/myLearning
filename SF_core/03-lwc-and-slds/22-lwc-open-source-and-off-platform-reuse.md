@@ -2,7 +2,7 @@
 
 > Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 07
 
-**Scope:** How far a component travels — to another surface inside the org, and to a stack with no org at all. LWR *sites* are [05-experience](../05-experience-cloud-lwr/INDEX.md); this is the framework and the reuse boundary.
+**Scope:** How far a component travels — to another surface inside the org, and to a stack with no org at all. LWR *sites* are [SF_Experience_Cloud](../../SF_Experience_Cloud/INDEX.md); this is the framework and the reuse boundary.
 
 ## Core idea
 
@@ -61,4 +61,4 @@ A: Lightning dashboards — a custom component can be added as a dashboard widge
 - [10 · Navigation & page references](10-navigation-and-page-references.md) — `NavigationMixin`, the most common portability blocker
 - [21 · Local dev & Live Preview](21-local-dev-and-lightning-dev-server.md) — the org-backed loop, and what replaces it when there is no org
 - [23 · Static resources & third-party JavaScript](23-static-resources-and-third-party-javascript.md) — how off-platform npm habits have to change on-platform
-- [05-experience · LWR sites](../05-experience-cloud-lwr/INDEX.md) — LWR as a Salesforce product rather than a runtime
+- [SF_Experience_Cloud · LWR sites](../../SF_Experience_Cloud/INDEX.md) — LWR as a Salesforce product rather than a runtime

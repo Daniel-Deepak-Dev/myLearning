@@ -23,8 +23,18 @@
 
 ## Gaps to close
 
-- [ ] <what your note did not cover>
+- [ ] <what your note did not cover, and a doc could answer>
 <!-- Answered one? DELETE the line. All gone? DELETE this whole section. -->
+
+## Confirm in org
+
+- 🚩 <no public doc answers this either way — check it in a sandbox>
+<!-- These are NOT gaps. They do not count towards Status. -->
+
+## Hands-on
+
+- [ ] **<XX-TOPIC-NN>** · <N> min · <what you do>. **Proves:** <what it demonstrates>. **Needs:** <licence or feature, omit if none>. **Settles:** <the 🚩 it answers, omit if none>
+<!-- TICKED when done, never deleted. One line each. Never counts towards Status. -->
 
 ## Related
 
@@ -43,7 +53,8 @@
 <!--
 RULES — do not remove
 
-1. 50 lines max. Short sentences. No paragraph longer than two sentences.
+1. 50 lines max, COUNTED TO "## Related". Related, Sources and History are a
+   footer and do not count. Short sentences. No paragraph over two sentences.
 2. One table max. One code block max, 12 lines.
 3. Level sets the gap ceiling. Gaps may go ONE level up, never two.
    basic   -> gaps may be basic or working. Never deep.
@@ -61,7 +72,17 @@ DATES AND STATUS
 10. Closed gaps are DELETED, not ticked. Answer one, remove the line.
     When the last one goes, remove the "## Gaps to close" heading too.
     What was learnt lives in the note body, not in a checklist of old questions.
-11. Status is DERIVED, never typed. Count "- [ ]" lines in Gaps to close:
+10b. A question NO public doc answers is not a gap. Move it to "## Confirm in org"
+    as a "- 🚩 " bullet. Research cannot close it; only an org can. Keep it
+    specific about what to open and compare.
+10c. "## Hands-on" is a third thing again: skills you build in an org, not
+    questions. 3-4 per note, one line each, scoped to the note's Level.
+    TICKED ("- [x]"), never deleted — work you did is a record.
+    Bias to labs that BREAK something on purpose; the Gotchas list is the
+    best source of them. Every lab needs a "Proves:", never just a verb.
+    IDs are <VAULT>-<TOPIC>-NN, stable, never reused.
+11. Status is DERIVED, never typed. Count "- [ ]" lines in Gaps to close ONLY —
+    "## Confirm in org" bullets and "## Hands-on" labs never count:
     at least one -> "🌱 N gaps open"     none, or no section at all -> "✅ complete"
 12. Created never changes. Updated changes on every edit.
 13. If Updated is more than 3 months old, add a third metadata line:

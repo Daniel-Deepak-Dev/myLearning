@@ -1,6 +1,6 @@
 # Site Monitoring, Limits & Scale
 
-> Area: 05-experience-cloud-lwr · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
+> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
 **Scope:** The capacity constraints that surprise teams at launch — page-view allowances, site counts, guest throttling, API limits — and how to watch a live site. Closes the Experience Cloud area.
 

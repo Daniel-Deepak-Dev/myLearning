@@ -12,7 +12,7 @@ The default LWC loop is deploy-and-refresh, and it is slow enough to change how 
 
 ## How it works
 
-- **Three entry points, three scopes.** `sf lightning dev component` previews a single component in isolation; `sf lightning dev app` previews inside a Lightning Experience shell; `sf lightning dev site` previews an Experience Cloud LWR site → [05-experience](../05-experience-cloud-lwr/INDEX.md).
+- **Three entry points, three scopes.** `sf lightning dev component` previews a single component in isolation; `sf lightning dev app` previews inside a Lightning Experience shell; `sf lightning dev site` previews an Experience Cloud LWR site → [SF_Experience_Cloud](../../SF_Experience_Cloud/INDEX.md).
 - **The plugin ships with the CLI.** `@salesforce/plugin-lightning-dev` is installed by recent `sf` versions; older installs need `sf plugins install @salesforce/plugin-lightning-dev`.
 - **The org has to opt in.** Setup → Quick Find → **Local Dev** → enable. For a scratch org, set it in the definition file so every new org has it.
 - **Single-component preview resolves real dependencies** — Lightning Data Service wire adapters, `@salesforce/*` scoped modules and Apex controllers all work against the target org.
@@ -69,4 +69,4 @@ A: It proves behaviour against one org's data in a browser, with a human watchin
 - [16 · Performance & debugging](16-lwc-performance-and-debugging.md) — profiling the component once you can see it
 - [22 · LWC OSS & off-platform reuse](22-lwc-open-source-and-off-platform-reuse.md) — developing LWC with no org at all
 - [09-devops · sf CLI & tooling](../09-devops-sfdx-and-release-management/INDEX.md) — installing the CLI, plugin management, scratch org definitions
-- [05-experience · LWR sites](../05-experience-cloud-lwr/INDEX.md) — what `sf lightning dev site` previews
+- [SF_Experience_Cloud · LWR sites](../../SF_Experience_Cloud/INDEX.md) — what `sf lightning dev site` previews

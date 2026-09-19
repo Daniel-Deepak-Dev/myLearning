@@ -49,7 +49,7 @@ Two constraints tightened. **At 67.0 LWS blocks the `data:` URI scheme** — a p
 - **`lwc:dom="manual"` content is outside reactivity and outside accessibility management.** Nothing re-renders it, and nothing manages its ARIA or focus → [17](17-accessibility-and-internationalization.md).
 - **`innerHTML` with server data is an XSS hole.** Template bindings are sanitized; manual DOM is not. Sanitize, or build nodes rather than strings.
 - **Static resources cap at 5 MB each and 250 MB per org** — a full charting suite with locales and fonts gets close faster than expected.
-- **Cache Control `Public` vs `Private` matters in Experience Cloud** — a `Private` resource is not cached for guest users, and guest access has its own rules → [05-experience](../05-experience-cloud-lwr/INDEX.md).
+- **Cache Control `Public` vs `Private` matters in Experience Cloud** — a `Private` resource is not cached for guest users, and guest access has its own rules → [SF_Experience_Cloud](../../SF_Experience_Cloud/INDEX.md).
 
 ## Recall
 

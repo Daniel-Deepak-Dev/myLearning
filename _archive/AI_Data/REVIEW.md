@@ -77,7 +77,7 @@ argument for the cursor rather than against the notes.
 | [02-apex-and-triggers](../SF_core/02-apex-and-triggers/INDEX.md) | 34 | 22 | weekly | — |
 | [03-lwc-and-slds](../SF_core/03-lwc-and-slds/INDEX.md) | 24 | 01 | monthly | — |
 | [04-flow-and-automation](../SF_core/04-flow-and-automation/INDEX.md) | 27 | 01 | monthly | — |
-| [05-experience-cloud-lwr](../SF_core/05-experience-cloud-lwr/INDEX.md) | 20 | 01 | quarterly | — |
+| [SF_Experience_Cloud](../../SF_Experience_Cloud/INDEX.md) | 20 | 01 | quarterly | — |
 | [06-integration-and-apis](../SF_core/06-integration-and-apis/INDEX.md) | 27 | 01 | monthly | — |
 | [07-security-and-sharing](../SF_core/07-security-and-sharing/INDEX.md) | 26 | 01 | monthly | — |
 | [08-data-modeling-and-large-data-volumes](../SF_core/08-data-modeling-and-large-data-volumes/INDEX.md) | 26 | 01 | monthly | — |

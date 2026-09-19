@@ -1,6 +1,6 @@
 # Template Choice & Site Landscape
 
-> Area: 05-experience-cloud-lwr · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
+> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** The first irreversible decision on an Experience Cloud project — which runtime and template. What LWR buys and what it costs. The build model itself is [02](02-lwr-architecture-and-build-model.md); moving an existing Aura site is [12](12-aura-to-lwr-migration-and-coexistence.md).
 
@@ -65,5 +65,5 @@ A: No generic record pages — record components only work on object-specific pa
 
 - [02 · LWR architecture & build model](02-lwr-architecture-and-build-model.md) — why the runtime choice decides caching, SEO and deployment
 - [12 · Aura to LWR: migration & coexistence](12-aura-to-lwr-migration-and-coexistence.md) — what "switch to LWR" actually costs
-- [03-lwc · 22 LWC OSS & off-platform reuse](../03-lwc-and-slds/22-lwc-open-source-and-off-platform-reuse.md) — LWR as a runtime rather than a product
-- [../CURRENCY.md](../CURRENCY.md) — the vault-wide record of what is retired and what only looks it
+- [03-lwc · 22 LWC OSS & off-platform reuse](../SF_core/03-lwc-and-slds/22-lwc-open-source-and-off-platform-reuse.md) — LWR as a runtime rather than a product
+- [../SF_core/CURRENCY.md](../SF_core/CURRENCY.md) — the vault-wide record of what is retired and what only looks it

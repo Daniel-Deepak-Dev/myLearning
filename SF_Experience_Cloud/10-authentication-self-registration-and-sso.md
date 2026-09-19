@@ -1,8 +1,8 @@
 # Authentication, Self-Registration & SSO
 
-> Area: 05-experience-cloud-lwr · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
+> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
-**Scope:** How an external person becomes an authenticated user of your site — login page, self-registration, federated sign-on, and the headless option. The identity protocols are [07-security · 19](../07-security-and-sharing/19-sso-saml-oidc-and-identity.md); OAuth as API authorization is [06-integration · 15](../06-integration-and-apis/15-oauth-flows-and-authorization.md).
+**Scope:** How an external person becomes an authenticated user of your site — login page, self-registration, federated sign-on, and the headless option. The identity protocols are [07-security · 19](../SF_core/07-security-and-sharing/19-sso-saml-oidc-and-identity.md); OAuth as API authorization is [06-integration · 15](../SF_core/06-integration-and-apis/15-oauth-flows-and-authorization.md).
 
 ## Core idea
 
@@ -22,7 +22,7 @@ The reason to hold them apart is that they compose in ways that surprise people.
 
 ## 2026 currency
 
-**MFA is enforced, not recommended**, and the privileged-user tier now requires **phishing-resistant** methods — but read the scope precisely before quoting it at a portal project: the July 2026 phishing-resistant requirement targets **administrative** access (System Administrator plus `Modify All Data`, `View All Data`, `Customize Application`, `Author Apex`), not ordinary external users → [07-security · 17](../07-security-and-sharing/17-authentication-and-mfa.md). The Experience Cloud consequence is indirect and worth stating anyway: **the internal staff who administer the site are in scope**, so the project needs hardware keys or platform passkeys for its own admins even if its end users authenticate with a magic link. Separately, **legacy My Domain redirections ended in Spring '26**, so a hardcoded old login URL in a welcome email now 404s → [03](03-site-setup-domains-and-publishing.md).
+**MFA is enforced, not recommended**, and the privileged-user tier now requires **phishing-resistant** methods — but read the scope precisely before quoting it at a portal project: the July 2026 phishing-resistant requirement targets **administrative** access (System Administrator plus `Modify All Data`, `View All Data`, `Customize Application`, `Author Apex`), not ordinary external users → [07-security · 17](../SF_core/07-security-and-sharing/17-authentication-and-mfa.md). The Experience Cloud consequence is indirect and worth stating anyway: **the internal staff who administer the site are in scope**, so the project needs hardware keys or platform passkeys for its own admins even if its end users authenticate with a magic link. Separately, **legacy My Domain redirections ended in Spring '26**, so a hardcoded old login URL in a welcome email now 404s → [03](03-site-setup-domains-and-publishing.md).
 
 ## Gotchas
 
@@ -54,5 +54,5 @@ A: No — it targets privileged internal access. It reaches an Experience Cloud 
 
 - [07 · Guest user security model](07-guest-user-security-model.md) — the login page is a guest page
 - [11 · Public site exposure audit](11-public-site-exposure-audit.md) — the self-registration profile as an exposure surface
-- [07-security · 19 SSO, SAML, OIDC & identity](../07-security-and-sharing/19-sso-saml-oidc-and-identity.md) — the federation protocols underneath
-- [06-integration · 15 OAuth flows & authorization](../06-integration-and-apis/15-oauth-flows-and-authorization.md) — OAuth as API authorization, which this is not
+- [07-security · 19 SSO, SAML, OIDC & identity](../SF_core/07-security-and-sharing/19-sso-saml-oidc-and-identity.md) — the federation protocols underneath
+- [06-integration · 15 OAuth flows & authorization](../SF_core/06-integration-and-apis/15-oauth-flows-and-authorization.md) — OAuth as API authorization, which this is not

@@ -1,8 +1,8 @@
 # Licences & External User Types
 
-> Area: 05-experience-cloud-lwr · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
+> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
-**Scope:** The external half of the licence model — which licence an external person holds, what it gates, and how it is billed. **Internal licences are [07-security · 02](../07-security-and-sharing/02-licences-and-what-they-gate.md)**; the two notes deliberately meet at this boundary and do not overlap.
+**Scope:** The external half of the licence model — which licence an external person holds, what it gates, and how it is billed. **Internal licences are [07-security · 02](../SF_core/07-security-and-sharing/02-licences-and-what-they-gate.md)**; the two notes deliberately meet at this boundary and do not overlap.
 
 ## Core idea
 
@@ -23,9 +23,9 @@ The single most consequential split is **high-volume versus role-based**. Custom
 
 - **Member-based vs login-based is a billing metric, not a feature difference.** Member-based is a provisioned seat; login-based draws from a monthly pool of logins. Sporadic users are the case for login-based; daily users are not.
 - **Guests consume no licence at all**, which is exactly why the guest surface needs its own controls → [07](07-guest-user-security-model.md).
-- **A permission set cannot exceed the licence.** The licence is the outer gate — the same rule as internal users, stated in [07-security · 02](../07-security-and-sharing/02-licences-and-what-they-gate.md).
+- **A permission set cannot exceed the licence.** The licence is the outer gate — the same rule as internal users, stated in [07-security · 02](../SF_core/07-security-and-sharing/02-licences-and-what-they-gate.md).
 - **Super user access is the escalation valve.** Partner and Customer Plus users can be granted it to see records created by others in their account at or below their role — Cases, Leads, Opportunities and custom objects.
-- **Creating the first external user on a partner account creates three roles** by default, which is how partner-heavy orgs approach the role limit from an unplanned direction → [07-security · 08](../07-security-and-sharing/08-groups-queues-and-the-grantee-model.md).
+- **Creating the first external user on a partner account creates three roles** by default, which is how partner-heavy orgs approach the role limit from an unplanned direction → [07-security · 08](../SF_core/07-security-and-sharing/08-groups-queues-and-the-grantee-model.md).
 
 ## Gotchas
 
@@ -33,7 +33,7 @@ The single most consequential split is **high-volume versus role-based**. Custom
 - **Upgrading Customer Community → Customer Community Plus is a re-provision, not a toggle**, and it changes the sharing model underneath live users.
 - **Login-based licences bill on logins, not sessions.** A user who logs in daily is more expensive than the member seat you avoided.
 - **External Identity is not a portal licence.** It authenticates; it does not grant CRM object access.
-- **Person Accounts carry their own Experience Cloud restrictions**, and the modelling decision is one-way → [08-data · 05](../08-data-modeling-and-large-data-volumes/05-person-accounts-and-one-way-modeling-decisions.md).
+- **Person Accounts carry their own Experience Cloud restrictions**, and the modelling decision is one-way → [08-data · 05](../SF_core/08-data-modeling-and-large-data-volumes/05-person-accounts-and-one-way-modeling-decisions.md).
 - **Role counts grow three at a time on partner accounts**, silently, until the org limit is the blocker.
 
 ## Recall
@@ -56,6 +56,6 @@ A: To Partner and Customer Community Plus users — visibility of records create
 ## Related
 
 - [09 · Sharing for external users](09-sharing-for-external-users.md) — the mechanisms each licence type actually uses
-- [07-security · 02 Licences & what they gate](../07-security-and-sharing/02-licences-and-what-they-gate.md) — the internal half; the boundary is stated in both
-- [07-security · 08 Groups, queues & the grantee model](../07-security-and-sharing/08-groups-queues-and-the-grantee-model.md) — portal roles inside "Roles and Subordinates"
-- [08-data · 05 Person Accounts & one-way modeling decisions](../08-data-modeling-and-large-data-volumes/05-person-accounts-and-one-way-modeling-decisions.md) — the B2C data model this licence choice meets
+- [07-security · 02 Licences & what they gate](../SF_core/07-security-and-sharing/02-licences-and-what-they-gate.md) — the internal half; the boundary is stated in both
+- [07-security · 08 Groups, queues & the grantee model](../SF_core/07-security-and-sharing/08-groups-queues-and-the-grantee-model.md) — portal roles inside "Roles and Subordinates"
+- [08-data · 05 Person Accounts & one-way modeling decisions](../SF_core/08-data-modeling-and-large-data-volumes/05-person-accounts-and-one-way-modeling-decisions.md) — the B2C data model this licence choice meets
