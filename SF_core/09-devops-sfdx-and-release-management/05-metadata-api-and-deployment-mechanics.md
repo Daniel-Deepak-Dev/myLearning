@@ -71,3 +71,5 @@ A: It takes org-controlled bytes and writes them to a laptop or CI runner — a 
 - [12 · Metadata coverage & manual steps](12-metadata-coverage-and-manual-steps.md) — the components no manifest can carry
 - [04-flow · 24 Flow deployment & versioning](../04-flow-and-automation/24-flow-deployment-versioning-and-governance.md) — deployed does not mean active
 - [SF_Agentforce · Prompt Template Metadata & Deployment](../../SF_Agentforce/prompt-template-metadata-and-deployment.md) — `GenAiPromptTemplate` carries every version plus a pointer to the active one
+- [SF_Experience_Cloud · 02 LWR architecture & build model](../../SF_Experience_Cloud/02-lwr-architecture-and-build-model.md) — the two site bundle types, and which one a pipeline can actually carry
+- [SF_Experience_Cloud · 18 Experience Cloud DevOps](../../SF_Experience_Cloud/18-experience-cloud-devops.md) — what deploying a site adds on top of these mechanics

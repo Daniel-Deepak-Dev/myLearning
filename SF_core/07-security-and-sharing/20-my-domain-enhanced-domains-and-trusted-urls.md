@@ -72,3 +72,4 @@ A: CORS controls which external origins may call Salesforce. Trusted URLs contro
 - [03-lwc · 09 Lightning Web Security](../03-lwc-and-slds/09-lightning-web-security.md) — what LWS does and does not block, and why CSP gets the blame
 - [24 · Security Center & Health Check](24-security-center-and-health-check.md) — where loose Trusted URL entries surface
 - [26 · Secure coding checklist](26-secure-coding-checklist.md) — the grep list, including hardcoded instance URLs
+- [SF_Experience_Cloud · 03 Site setup, domains & publishing](../../SF_Experience_Cloud/03-site-setup-domains-and-publishing.md) — the site domains that inherit these rules, and where they diverge

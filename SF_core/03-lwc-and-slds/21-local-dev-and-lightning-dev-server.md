@@ -79,3 +79,4 @@ A: It proves behaviour against one org's data in a browser, with a human watchin
 - [22 · LWC OSS & off-platform reuse](22-lwc-open-source-and-off-platform-reuse.md) — developing LWC with no org at all
 - [09-devops · sf CLI & tooling](../09-devops-sfdx-and-release-management/INDEX.md) — installing the CLI, plugin management, scratch org definitions
 - [SF_Experience_Cloud · LWR sites](../../SF_Experience_Cloud/INDEX.md) — what `sf lightning dev site` previews
+- [SF_Experience_Cloud · 06 Custom LWC in LWR sites](../../SF_Experience_Cloud/06-custom-lwc-in-lwr-sites.md) — `sf lightning dev site`, the site variant of this authoring loop

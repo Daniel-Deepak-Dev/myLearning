@@ -74,3 +74,4 @@ A: The OAuth username-password flow in **Winter '27**, and SOAP `login()` for AP
 - [17 · Named Credentials & External Credentials](17-named-credentials-and-external-credentials.md) — the same problem in the outbound direction
 - [24 · API limits, monitoring & access control](24-api-limits-monitoring-and-access-control.md) — restricting which apps may call at all
 - [07-security · 19 SSO, SAML, OIDC & identity](../07-security-and-sharing/19-sso-saml-oidc-and-identity.md) — authentication as federation rather than authorization
+- [SF_Experience_Cloud · 10 Authentication, self-registration & SSO](../../SF_Experience_Cloud/10-authentication-self-registration-and-sso.md) — site login, which is deliberately **not** OAuth, and the confusion that causes

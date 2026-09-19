@@ -54,6 +54,7 @@ updated: 2026-08-28
 - [Einstein Trust Layer](einstein-trust-layer.md) — the guardrails wrapped around everything Atlas sends and receives
 - [Prompt Templates as Agent Actions](prompt-templates-as-agent-actions.md) — how a template becomes something Atlas can choose to call
 - [SF_core · 22 Invocable Apex & Agentforce actions](../SF_core/02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md) — why an action's `description` is read as prompt text, not documentation
+- [SF_core · 04-flow · 23 Flows as Agentforce actions](../SF_core/04-flow-and-automation/23-flows-as-agentforce-actions.md) — the Flow action this engine chooses between, and the description it reads to decide
 
 ## Sources
 

@@ -11,11 +11,36 @@ Newest first.
 ## Format
 
 ```
-### YYYY-MM-DD
+### YYYY-MM-DD · <short title>
+
+<one line of framing, or **No notes fed — a structural change.**>
 
 - **<Topic>** → [path](path) · `new` or `updated` · Level: basic
-  - Also touched: <the reciprocal link that was added>
+  - <what was learnt, or what changed>
+
+**Also touched:** <reciprocal links, index fixes, glossary rows>
 ```
+
+---
+
+### 2026-09-20 · Metadata moved to frontmatter; the vault became usable for studying
+
+**No notes fed — a structural change, and the largest one so far.**
+
+The trigger was a maintenance question: every small change cost edits in many files. The last commit before this was 25 files for 9 notes' worth of knowledge — **64% bookkeeping**. Auditing that turned up something worse: **every study tracker in the vault read zero.** 0 ticked labs, 0 `Done` rows, 0 sessions logged, 0 weak answers, 0 `Last reviewed` dates. The vault had been comprehensively *written* and never *used*, while every authoring tracker was accurate. `_archive/AI_Data/REVIEW.md` had predicted exactly that and said the fix was to change the shape of the file, not the discipline.
+
+- **Metadata is now YAML frontmatter** — 260 files, eight legacy shapes, one schema. The `>` blockquote is retired, not duplicated. Obsidian reads frontmatter as Properties, which is what makes Bases, property search and sorting possible; it could never read a blockquote.
+  - Only **11 of 249 notes carried dates**, so anything time-based worked on 4% of the vault. `git log --follow` backfilled the rest — but an authored date always won, so nothing hand-written was lost. All 249 carry both now.
+  - **Staleness is derived, not stamped.** The `⏳ N months old` line is gone entirely — a whole class of drift deleted rather than automated.
+- **Recording a study action now costs one click.** Tick `- [x]` in the note; `PRACTICE.md`'s `Done` table is rebuilt from it. The "what broke" cell stays yours and survives every rebuild.
+- **1,194 `## Recall` pairs exported** two ways from one source — a tagged Anki TSV and a per-vault `_cards.md` for the Obsidian spaced-repetition plugin, with scheduling preserved across regenerations.
+- **[HOME.md](HOME.md) answers "what do I study next"** and is generated, so it cannot rot the way the archived `REVIEW.md` did. It surfaces *one* unblocked lab, not a list of 41 — a list of 41 is what produced 0 ticks.
+- **Reciprocity relaxed to cross-vault links only.** The universal rule sat at 50% compliance, broken even in notes written the same week it was restated. Obsidian's Backlinks panel covers same-vault links for free. **447 findings became 31**, all real seams.
+- **`scripts/vault.py`** grew to 23 check rules and 6 fixers, plus `migrate`, `cards` and `home`. Verified by corrupting four derived values across three files and requiring `fix` to restore a byte-identical tree.
+
+**Also touched:** the contract collapsed — "Never YAML frontmatter" was stated in **7 files** and every one had to be reversed, which is the clearest argument yet for one normative source. [NOTES-SYSTEM.md](NOTES-SYSTEM.md) is now it; `_note-template.md` is a pointer to [templates/note.md](templates/note.md) and its 43-line rule comment is deleted; the `study-notes` skill shed the 12 mechanical steps `fix` now performs. Two live bugs fixed in the same pass: `SF_core/_template.md` and `Interview/_template.md` would have recreated the retired format, and `/human-vs-agent` was refusing all 20 Experience Cloud notes.
+
+**Still open:** 31 cross-vault seams need a hand-written reason clause — listed in [HOME.md](HOME.md). The Obsidian spaced-repetition plugin is not installed yet, so in-Obsidian review does not work; the Anki half does.
 
 ---
 

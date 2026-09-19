@@ -87,3 +87,5 @@ A: Prompt resolution fails at runtime — the compiler-generated no-arg construc
 - [10 · Apex security: user mode & FLS](10-apex-security-user-mode-and-fls.md) — why grounding queries can under-return at 67.0
 - [SF_Agentforce · Prompt Template Types](../../SF_Agentforce/prompt-template-types.md) — the six types these `capabilityType` URIs name, and what each grounds on
 - [SF_Agentforce · Prompt Template Metadata & Deployment](../../SF_Agentforce/prompt-template-metadata-and-deployment.md) — the same strings appear as `type` in `GenAiPromptTemplate`
+- [SF_Agentforce · Einstein Trust Layer](../../SF_Agentforce/einstein-trust-layer.md) — the guardrails Apex-supplied text passes through, and why it is an injection surface
+- [SF_Agentforce · Grounding a Prompt Template](../../SF_Agentforce/grounding-a-prompt-template.md) — the other five grounding sources this one sits beside, and when Apex is the wrong choice

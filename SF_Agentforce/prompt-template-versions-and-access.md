@@ -52,6 +52,7 @@ updated: 2026-08-30
 - [Prompt Templates as Agent Actions](prompt-templates-as-agent-actions.md) — activation is what gates a template appearing there
 - [Prompt Template Metadata & Deployment](prompt-template-metadata-and-deployment.md) — the same versions as XML, and what breaks moving them between orgs
 - [SF_core · 32 Invoking prompt templates from Apex](../SF_core/02-apex-and-triggers/32-invoking-prompt-templates-from-apex.md) — `getPromptTemplates` filters on active state, which is how code avoids a hardcoded dev name
+- [SF_core · 01-admin · 19 Agentforce in Setup](../SF_core/01-admin-and-declarative-platform/19-agentforce-in-setup-and-ai-assisted-admin.md) — the Setup side: which permissions an admin actually grants, and where they live
 
 ## Sources
 

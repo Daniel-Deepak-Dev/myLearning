@@ -64,3 +64,4 @@ A: It includes portal and community roles. Use the *Internal* variant unless ext
 - [07 · Guest user security model](07-guest-user-security-model.md) — the unauthenticated case, which uses none of this
 - [07-security · 09 Sharing rules & manual sharing](../SF_core/07-security-and-sharing/09-sharing-rules-and-manual-sharing.md) — the internal mechanisms and why they stop at the portal boundary
 - [07-security · 15 Auditing & troubleshooting access](../SF_core/07-security-and-sharing/15-auditing-and-troubleshooting-access.md) — how to answer "why can this portal user see this record"
+- [SF_core · 10-soql · 09 SOSL search modifiers & relevance](../SF_core/10-soql-and-sosl/09-sosl-search-modifiers-and-relevance.md) — why `WITH NETWORK` scopes a search but grants no access of its own

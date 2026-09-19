@@ -77,3 +77,4 @@ A: Raising `<apiVersion>` in the `.cls-meta.xml` to 67.0 — the code is untouch
 - [02-apex · 10 Apex security: user mode & FLS](../02-apex-and-triggers/10-apex-security-user-mode-and-fls.md) — the keywords and their exact semantics
 - [03-lwc · 09 Lightning Web Security](../03-lwc-and-slds/09-lightning-web-security.md) — what LWS actually blocks, and the three things wrongly blamed on it
 - [24 · Security Center & Health Check](24-security-center-and-health-check.md) — the configuration half of posture, which no code review reaches
+- [SF_Experience_Cloud · 11 Public site exposure audit](../../SF_Experience_Cloud/11-public-site-exposure-audit.md) — the exposure audit this checklist feeds, run against a real guest user

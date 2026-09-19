@@ -65,3 +65,4 @@ A: Only that class's own enforcement. A class below API 67.0, or one in system m
 - [06 · Custom LWC in LWR sites](06-custom-lwc-in-lwr-sites.md) — why the controller, not the component, is the boundary
 - [07-security · 26 Secure coding checklist](../SF_core/07-security-and-sharing/26-secure-coding-checklist.md) — the code-side companion to this list
 - [07-security · 15 Auditing & troubleshooting access](../SF_core/07-security-and-sharing/15-auditing-and-troubleshooting-access.md) — the tooling for answering "why can this user see this"
+- [SF_core · 04-flow · 21 Flow for external & guest users](../SF_core/04-flow-and-automation/21-flow-for-external-and-guest-users.md) — the guest-flow checklist this runbook grew out of

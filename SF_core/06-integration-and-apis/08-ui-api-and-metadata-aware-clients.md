@@ -75,3 +75,4 @@ A: Valid picklist values depend on record type; a single cached global list will
 - [10 · GraphQL API](10-graphql-api.md) — the efficient cross-object read surface
 - [04 · REST API fundamentals](04-rest-api-fundamentals.md) — broader object coverage, no display metadata
 - [SF_Experience_Cloud · INDEX](../../SF_Experience_Cloud/INDEX.md) — headless front ends that consume this
+- [SF_Experience_Cloud · 15 Headless sites & Connect APIs](../../SF_Experience_Cloud/15-headless-sites-and-connect-apis.md) — the headless front end that calls this API, and what Connect adds beside it

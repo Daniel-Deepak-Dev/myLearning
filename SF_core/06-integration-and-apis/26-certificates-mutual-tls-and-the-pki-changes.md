@@ -65,3 +65,4 @@ A: When only your own org validates it — a JWT bearer flow, for example. A thi
 - [15 · OAuth flows & authorization](15-oauth-flows-and-authorization.md) — JWT bearer, the flow that depends on a key pair
 - [03 · API endpoints, hostnames & Edge Network](03-api-endpoints-hostnames-and-edge-network.md) — the other dated integration deadline
 - [07-security · 19 SSO, SAML, OIDC & identity](../07-security-and-sharing/19-sso-saml-oidc-and-identity.md) — the same expiry problem, on the login path
+- [SF_Experience_Cloud · 03 Site setup, domains & publishing](../../SF_Experience_Cloud/03-site-setup-domains-and-publishing.md) — the certificate clock a custom site domain runs on

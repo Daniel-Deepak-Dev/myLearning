@@ -74,3 +74,5 @@ A: It must filter on `RecordId`, takes at most 200 records per query, and answer
 - [13 · Field-level security & visibility layers](13-field-level-security-and-visibility-layers.md) — the field layer and its new tab
 - [11 · Restriction rules](11-restriction-rules.md) — the one thing none of these tools shows from the grant side
 - [01-admin · 17 Setup Audit Trail & monitoring](../01-admin-and-declarative-platform/17-setup-audit-trail-monitoring-and-usage.md) — the durable record of configuration change
+- [SF_Experience_Cloud · 09 Sharing for external users](../../SF_Experience_Cloud/09-sharing-for-external-users.md) — the same question asked of a portal user, where the answer comes out differently
+- [SF_Experience_Cloud · 11 Public site exposure audit](../../SF_Experience_Cloud/11-public-site-exposure-audit.md) — the guest-user runbook this tooling exists to answer

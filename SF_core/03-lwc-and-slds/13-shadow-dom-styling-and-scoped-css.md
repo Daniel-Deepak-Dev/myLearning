@@ -80,3 +80,5 @@ A: Native shadow only, and only on elements the child marked with a `part` attri
 - [14 · SLDS 2 & styling hooks](14-slds-2-and-styling-hooks.md) — the custom properties that are meant to cross this boundary
 - [03 · Composition, slots & dynamic components](03-composition-slots-and-dynamic-components.md) — slotted content stays in the parent's scope, which is why parent CSS reaches it
 - [01 · Component model & lifecycle](01-component-model-and-lifecycle.md) — when the shadow tree exists and `querySelector` becomes safe
+- [SF_Experience_Cloud · 02 LWR architecture & build model](../../SF_Experience_Cloud/02-lwr-architecture-and-build-model.md) — where SSR forces native shadow or light DOM and the choice is not yours
+- [SF_Experience_Cloud · 05 Branding sets, design tokens & SLDS 2](../../SF_Experience_Cloud/05-branding-sets-design-tokens-and-slds-2.md) — branding sets as the site-level consumer of these custom properties

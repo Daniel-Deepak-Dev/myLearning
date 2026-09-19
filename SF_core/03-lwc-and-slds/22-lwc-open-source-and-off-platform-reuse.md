@@ -70,3 +70,4 @@ A: Lightning dashboards — a custom component can be added as a dashboard widge
 - [21 · Local dev & Live Preview](21-local-dev-and-lightning-dev-server.md) — the org-backed loop, and what replaces it when there is no org
 - [23 · Static resources & third-party JavaScript](23-static-resources-and-third-party-javascript.md) — how off-platform npm habits have to change on-platform
 - [SF_Experience_Cloud · LWR sites](../../SF_Experience_Cloud/INDEX.md) — LWR as a Salesforce product rather than a runtime
+- [SF_Experience_Cloud · 01 Template choice & site landscape](../../SF_Experience_Cloud/01-template-choice-and-site-landscape.md) — LWR as a site runtime rather than a product, and the template choice that fixes it

@@ -71,3 +71,5 @@ A: Tightening — it forces a full sharing recalculation. Deferred sharing calcu
 - [09 · Sharing rules & manual sharing](09-sharing-rules-and-manual-sharing.md) — the explicit grants layered on top
 - [11 · Restriction rules](11-restriction-rules.md) — the only mechanism that reduces what this grants
 - [15 · Auditing & troubleshooting access](15-auditing-and-troubleshooting-access.md) — how to see which of these actually granted a given record
+- [SF_Experience_Cloud · 13 Navigation, search & audiences](../../SF_Experience_Cloud/13-navigation-search-and-audiences.md) — site search and audience visibility resting on this sharing model
+- [SF_Experience_Cloud · 07 Guest user security model](../../SF_Experience_Cloud/07-guest-user-security-model.md) — the guest user, where external OWD stops being theoretical

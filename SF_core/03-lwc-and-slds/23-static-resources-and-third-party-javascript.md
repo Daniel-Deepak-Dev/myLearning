@@ -83,3 +83,4 @@ A: LWS blocks the `data:` URI scheme. Create a blob and use a `blob:` object URL
 - [17 · Accessibility & internationalization](17-accessibility-and-internationalization.md) — the a11y cost of DOM the framework does not manage
 - [22 · LWC OSS & off-platform reuse](22-lwc-open-source-and-off-platform-reuse.md) — where `npm install` *is* the answer
 - [07-security · Secure coding](../07-security-and-sharing/INDEX.md) — XSS, sanitization and CSP as an org-level control
+- [SF_Experience_Cloud · 05 Branding sets, design tokens & SLDS 2](../../SF_Experience_Cloud/05-branding-sets-design-tokens-and-slds-2.md) — fonts and imagery in a site, and the guest caching rule that catches people out

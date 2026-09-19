@@ -69,3 +69,4 @@ A: They hang off opposite halves of the record — Account side and Contact side
 - [06 · Storage model & schema limits](06-storage-model-and-schema-limits.md) — why doubling the row count matters
 - [02 · Relationships deep dive](02-relationships-deep-dive.md) — the other conversions with preconditions
 - [07-security · 06 Org-wide defaults & record access](../07-security-and-sharing/06-org-wide-defaults-and-record-access.md) — the sharing prerequisite, in context
+- [SF_Experience_Cloud · 08 Licences & external user types](../../SF_Experience_Cloud/08-licences-and-external-user-types.md) — the B2C licences that assume this data model; the decision is one-way for them too

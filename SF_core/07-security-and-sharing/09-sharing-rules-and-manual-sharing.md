@@ -70,3 +70,4 @@ A: No. Sharing rules only grant. Only a restriction rule subtracts.
 - [08 · Groups, queues & the grantee model](08-groups-queues-and-the-grantee-model.md) — who the rules grant to
 - [11 · Restriction rules](11-restriction-rules.md) — why a sharing rule is now a proposal, not a guarantee
 - [02-apex · 11 Sharing keywords & Apex managed sharing](../02-apex-and-triggers/11-sharing-keywords-and-apex-managed-sharing.md) — writing share rows that outlive an owner change
+- [SF_Experience_Cloud · 09 Sharing for external users](../../SF_Experience_Cloud/09-sharing-for-external-users.md) — where these mechanisms stop at the portal boundary, and what replaces them

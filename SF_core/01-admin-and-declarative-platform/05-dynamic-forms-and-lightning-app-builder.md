@@ -78,3 +78,4 @@ A: No. It hides the component on that page only — reports, list views, search 
 - [06 · Dynamic Actions & list views](06-dynamic-actions-and-list-views.md) — the same shift applied to buttons instead of fields
 - [04 · Record types & picklist architecture](04-record-types-and-picklist-architecture.md) — what record types are still for once layouts stop carrying visibility
 - [03-lwc · INDEX](../03-lwc-and-slds/INDEX.md) — custom components placed on the same page, and why LWC enablement gates coverage
+- [SF_Experience_Cloud · 04 Experience Builder layouts & theme layouts](../../SF_Experience_Cloud/04-experience-builder-layouts-and-theme-layouts.md) — the external-facing cousin: the same composition idea, a different builder and different limits

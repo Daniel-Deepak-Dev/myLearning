@@ -90,3 +90,4 @@ A: Because there is no platform-provided one, and the same failure arrives as `b
 - [16 · Performance & debugging](16-lwc-performance-and-debugging.md) — when "nothing happens" is a swallowed error
 - [17 · Accessibility & internationalization](17-accessibility-and-internationalization.md) — announcing an error rather than only showing it
 - [02-apex · Exceptions](../02-apex-and-triggers/INDEX.md) — throwing `AuraHandledException` from the server side
+- [SF_Experience_Cloud · 06 Custom LWC in LWR sites](../../SF_Experience_Cloud/06-custom-lwc-in-lwr-sites.md) — where the toast portability rule actually bites: LWR has no toast to show

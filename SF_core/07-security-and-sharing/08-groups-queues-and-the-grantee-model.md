@@ -77,3 +77,4 @@ A: The `Group` and `GroupMember` objects, both queryable via SOQL.
 - [07 · Role hierarchy & ownership](07-role-hierarchy-and-ownership.md) — the upward inheritance queues can now opt out of
 - [01-admin · 11 Queues, assignment & escalation rules](../01-admin-and-declarative-platform/11-queues-assignment-and-escalation-rules.md) — the routing side of the same object
 - [15 · Auditing & troubleshooting access](15-auditing-and-troubleshooting-access.md) — resolving a group to its real membership
+- [SF_Experience_Cloud · 08 Licences & external user types](../../SF_Experience_Cloud/08-licences-and-external-user-types.md) — portal roles, and how they surface inside *Roles and Subordinates*

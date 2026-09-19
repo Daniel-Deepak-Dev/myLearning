@@ -71,3 +71,4 @@ A: An expired signing certificate, at either end of the SAML trust. Rotation cyc
 - [20 · My Domain, enhanced domains & Trusted URLs](20-my-domain-enhanced-domains-and-trusted-urls.md) — the prerequisite for SP-initiated SSO
 - [02 · Licences & what they gate](02-licences-and-what-they-gate.md) — Identity and External Identity in the licence hierarchy
 - [06-integration · 15 OAuth flows & authorization](../06-integration-and-apis/15-oauth-flows-and-authorization.md) — OAuth for API authorization, the other half of the identity story
+- [SF_Experience_Cloud · 10 Authentication, self-registration & SSO](../../SF_Experience_Cloud/10-authentication-self-registration-and-sso.md) — these protocols as a site uses them, plus self-registration, which has no internal equivalent
