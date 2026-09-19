@@ -869,6 +869,236 @@ def r_naming(notes, findings):
             ))
 
 
+# ───────────────────────────────────────────────────────────────── fix ──
+#
+# Only values with exactly one correct answer. Nothing here writes prose, a
+# ## Related bullet, or a reason clause — those stay with you.
+
+FIXERS: dict[str, callable] = {}
+
+
+def fixer(name: str):
+    def deco(fn):
+        FIXERS[name] = fn
+        return fn
+    return deco
+
+
+class Editor:
+    """Line edits that keep each line's original ending (this repo is CRLF)."""
+
+    def __init__(self, path: str):
+        self.path = path
+        with open(path, encoding="utf-8", newline="") as fh:
+            self.raw = fh.read().splitlines(keepends=True)
+        self.dirty = False
+
+    def get(self, i: int) -> str:
+        return self.raw[i].rstrip("\r\n")
+
+    def set(self, i: int, text: str) -> None:
+        body = self.get(i)
+        if body == text:
+            return
+        self.raw[i] = text + self.raw[i][len(body):]
+        self.dirty = True
+
+    def newline(self) -> str:
+        return "\r\n" if any(l.endswith("\r\n") for l in self.raw) else "\n"
+
+    def insert(self, i: int, text: str) -> None:
+        self.raw.insert(i, text + self.newline())
+        self.dirty = True
+
+    def drop(self, i: int) -> None:
+        del self.raw[i]
+        self.dirty = True
+
+    def save(self) -> bool:
+        if self.dirty:
+            with open(self.path, "w", encoding="utf-8", newline="") as fh:
+                fh.write("".join(self.raw))
+        return self.dirty
+
+
+def set_meta_field(ed: Editor, key: str, value: str) -> bool:
+    """Replace one `Key: …` field inside the metadata blockquote, in place."""
+    for i in range(min(6, len(ed.raw))):
+        line = ed.get(i)
+        if not line.startswith(">") or f"{key}:" not in line:
+            continue
+        new = re.sub(
+            rf"{key}:\s*[^·\n]*?(\s*)(?=·|$)",
+            lambda m: f"{key}: {value}{m.group(1)}",
+            line, count=1,
+        )
+        ed.set(i, new)
+        return True
+    return False
+
+
+@fixer("status-derived")
+def fix_status(notes, changes):
+    """Status is recomputed from the open-gap count."""
+    for path, note in notes.items():
+        if note.kind != "light":
+            continue
+        gaps = count_open_gaps(note)
+        want_pair = ("open", gaps) if gaps else ("complete", 0)
+        if parse_status(note.meta.get("Status", "")) == want_pair:
+            continue
+        shown = f"🌱 {gaps} gaps open" if gaps else "✅ complete"
+        ed = Editor(path)
+        if set_meta_field(ed, "Status", shown) and ed.save():
+            changes.append((note.rel, f"Status -> {shown}"))
+
+
+@fixer("stale-flag")
+def fix_stale(notes, changes):
+    """The '⏳ N months old' line is added, corrected or removed."""
+    for path, note in notes.items():
+        if note.kind != "light":
+            continue
+        updated = parse_date(note.meta.get("Updated", ""))
+        if not updated:
+            continue
+        age = months_between(updated, TODAY)
+        ed = Editor(path)
+        at = next(
+            (i for i in range(min(8, len(ed.raw)))
+             if ed.get(i).startswith(">") and "months old" in ed.get(i)),
+            None,
+        )
+        want = f"> ⏳ {age} months old — recheck against release notes"
+        if age >= STALE_MONTHS and at is None:
+            last = max(
+                (i for i in range(min(6, len(ed.raw))) if ed.get(i).startswith(">")),
+                default=1,
+            )
+            ed.insert(last + 1, want)
+            changes.append((note.rel, f"added staleness line ({age} months)"))
+        elif age < STALE_MONTHS and at is not None:
+            ed.drop(at)
+            changes.append((note.rel, "removed staleness line"))
+        elif at is not None and ed.get(at) != want:
+            ed.set(at, want)
+            changes.append((note.rel, f"staleness line -> {age} months"))
+        ed.save()
+
+
+def _row_text(cells: list[str]) -> str:
+    return "| " + " | ".join(cells) + " |"
+
+
+@fixer("index-row")
+def fix_index_row(notes, changes):
+    """INDEX Status / Org ✓ / Level / Created / Updated are copied from the note."""
+    for idx in index_files():
+        note_idx = load_note(idx)
+        base = os.path.dirname(idx)
+        headers, rows = parse_table(note_idx.lines)
+        if "Topic" not in headers:
+            continue
+        col = {h: n for n, h in enumerate(headers)}
+        ed = Editor(idx)
+        for lineno, cells in rows:
+            if len(cells) != len(headers):
+                continue
+            m = MD_LINK_RE.search(cells[col["Topic"]])
+            if not m:
+                continue
+            note = notes.get(os.path.normpath(os.path.join(base, m.group(2))))
+            if note is None:
+                continue
+            before = list(cells)
+            if "Status" in col and (w := note.meta.get("Status")):
+                if parse_status(cells[col["Status"]]) != parse_status(w):
+                    gaps = count_open_gaps(note)
+                    cells[col["Status"]] = f"🌱 {gaps} open" if gaps else "✅ complete"
+            if "Org ✓" in col:
+                n = count_org_checks(note)
+                cells[col["Org ✓"]] = str(n) if n else "—"
+            for f in ("Created", "Updated"):
+                if f in col and f in note.meta:
+                    cells[col[f]] = note.meta[f]
+            if "Level" in col and "Level" in note.meta:
+                cells[col["Level"]] = note.meta["Level"]
+            if cells != before:
+                ed.set(lineno - 1, _row_text(cells))
+                changes.append((note_idx.rel, f"row {cells[0]} synced to {note.rel}"))
+        ed.save()
+
+
+@fixer("index-summary")
+def fix_index_summary(notes, changes):
+    """The '**N topics** · N gaps open · …' aggregate line is recomputed."""
+    for idx in index_files():
+        note_idx = load_note(idx)
+        folder = os.path.dirname(idx)
+        here = [n for p, n in notes.items() if os.path.dirname(p) == folder]
+        if not here:
+            continue
+        gaps = sum(count_open_gaps(n) for n in here)
+        done = len([n for n in here if count_open_gaps(n) == 0])
+        upd = [d for n in here if (d := parse_date(n.meta.get("Updated", "")))]
+        crt = [d for n in here if (d := parse_date(n.meta.get("Created", "")))]
+        ed = Editor(idx)
+        for i in range(len(ed.raw)):
+            line = ed.get(i)
+            if not re.search(r"\*\*\d+ topics?\*\*", line):
+                continue
+            new = re.sub(r"\*\*\d+ topics?\*\*", f"**{len(here)} topics**", line)
+            new = re.sub(r"\d+ gaps? open", f"{gaps} gaps open", new)
+            new = re.sub(r"\d+ complete", f"{done} complete", new)
+            if upd:
+                new = re.sub(r"newest \d{4}-\d{2}-\d{2}", f"newest {max(upd)}", new)
+            if crt:
+                new = re.sub(r"oldest \d{4}-\d{2}-\d{2}", f"oldest {min(crt)}", new)
+            if new != line:
+                ed.set(i, new)
+                changes.append((note_idx.rel, "summary line recomputed"))
+        for i in range(len(ed.raw)):
+            line = ed.get(i)
+            if not re.match(r"\*\*\d+ org checks\*\*", line.strip()):
+                continue
+            total = sum(count_org_checks(n) for n in here)
+            across = len([n for n in here if count_org_checks(n) > 0])
+            new = re.sub(r"\*\*\d+ org checks\*\*", f"**{total} org checks**", line)
+            new = re.sub(r"across \d+ notes", f"across {across} notes", new)
+            if new != line:
+                ed.set(i, new)
+                changes.append((note_idx.rel, "org-check line recomputed"))
+        ed.save()
+
+
+@fixer("readme-counts")
+def fix_readme_counts(notes, changes):
+    """SF_core/README.md's Topics column and the total below it."""
+    p = os.path.join(ROOT, "SF_core", "README.md")
+    if not os.path.exists(p):
+        return
+    ed, total = Editor(p), 0
+    for i in range(len(ed.raw)):
+        line = ed.get(i)
+        m = re.match(r"(\|\s*\[(\d{2}-[a-z0-9-]+)/\]\([^)]*\)\s*\|.*\|\s*)(\d+)(\s*\|\s*)$", line)
+        if not m:
+            continue
+        folder = os.path.join(ROOT, "SF_core", m.group(2))
+        actual = len([q for q in notes if os.path.dirname(q) == folder])
+        total += actual
+        if int(m.group(3)) != actual:
+            ed.set(i, f"{m.group(1)}{actual}{m.group(4)}")
+            changes.append((rel_of(p), f"{m.group(2)} -> {actual} topics"))
+    for i in range(len(ed.raw)):
+        line = ed.get(i)
+        new = re.sub(r"\*\*\d+ topics across (\d+) areas\.\*\*",
+                     lambda m: f"**{total} topics across {m.group(1)} areas.**", line)
+        if new != line:
+            ed.set(i, new)
+            changes.append((rel_of(p), f"total -> {total} topics"))
+    ed.save()
+
+
 # ────────────────────────────────────────────────────────────── driver ──
 
 
@@ -897,12 +1127,47 @@ def main() -> int:
                      help="only findings in files changed against HEAD")
     chk.add_argument("--list-rules", action="store_true")
     chk.add_argument("--quiet", action="store_true", help="counts only")
+
+    fx = sub.add_parser("fix", help="rewrite derived values (never prose)")
+    fx.add_argument("--rule", action="append", default=[],
+                    help="only fixers whose name starts with this (repeatable)")
+    fx.add_argument("--list-rules", action="store_true")
     args = ap.parse_args()
 
     if getattr(args, "list_rules", False):
-        for name, fn in sorted(RULES.items()):
+        table = FIXERS if args.cmd == "fix" else RULES
+        for name, fn in sorted(table.items()):
             doc = (fn.__doc__ or "").strip().splitlines()[0]
             print(f"  {name:<22} {doc}")
+        return 0
+
+    if args.cmd == "fix":
+        chosen = sorted(
+            n for n in FIXERS
+            if not args.rule or any(n.startswith(r) for r in args.rule)
+        )
+        if not chosen:
+            print(f"no fixer matches {args.rule}", file=sys.stderr)
+            return 2
+        changes: list[tuple[str, str]] = []
+        # Notes first, then the indexes that mirror them, off freshly read notes.
+        for name in [c for c in chosen if not c.startswith(("index", "readme"))]:
+            FIXERS[name](load_all_notes(), changes)
+        for name in [c for c in chosen if c.startswith(("index", "readme"))]:
+            FIXERS[name](load_all_notes(), changes)
+
+        if not changes:
+            print("nothing to fix — every derived value already matches.")
+            return 0
+        by_file: dict[str, list[str]] = defaultdict(list)
+        for path, what in changes:
+            by_file[path].append(what)
+        for path in sorted(by_file):
+            print(f"  {path}")
+            for what in by_file[path]:
+                print(f"      {what}")
+        print(f"\n{len(changes)} change(s) in {len(by_file)} file(s). "
+              f"Review with `git diff` before committing.")
         return 0
 
     selected = sorted(

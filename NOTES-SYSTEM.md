@@ -10,12 +10,15 @@ Most of this contract is mechanical — a derived count, a mirrored column, a li
 that must resolve. Those are checked by a script, not by remembering:
 
 ```
-python scripts/vault.py check          every rule
+python scripts/vault.py check            every rule
 python scripts/vault.py check --changed  only what you touched
-python scripts/vault.py check --list-rules
+python scripts/vault.py fix              rewrite the derived values
 ```
 
-It is **read-only** and reports `file:line`. Install it as a commit gate with
+`check` is **read-only** and reports `file:line`. `fix` rewrites only values with
+one correct answer — `Status` from the open-gap count, the `⏳ N months old` line,
+the INDEX columns that mirror a note, the summary aggregates, and the `SF_core`
+topic counts. It prints every change; read `git diff` before committing. Install it as a commit gate with
 `cp scripts/pre-commit .git/hooks/pre-commit`, or run `/vault-check` in a session.
 
 Two things it deliberately does **not** do:

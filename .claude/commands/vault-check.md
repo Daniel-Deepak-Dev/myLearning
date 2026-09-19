@@ -19,7 +19,8 @@ Group the findings for me by what they cost to fix:
 
 1. **Derived values that are simply stale** — `status-derived`, `stale-flag`,
    `index-row`, `index-summary`, `readme-counts`, `lab-practice-sync`. These have
-   exactly one correct answer. Offer to fix them directly.
+   exactly one correct answer. `python scripts/vault.py fix` rewrites all of
+   them; offer that rather than editing the files one at a time.
 2. **Integrity breaks** — `link-broken`, `link-label`, `link-archive`,
    `link-wikilink`, `index-coverage`. Usually a move that left something behind.
    Say what moved before changing anything.
