@@ -13,3 +13,6 @@ __pycache__/
 
 # Generated Anki decks — rebuild with `python scripts/vault.py cards`
 cards/
+
+# Obsidian rewrites the graph zoom constantly; colour groups live in bases/graph-groups.json
+.obsidian/graph.json

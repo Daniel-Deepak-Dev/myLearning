@@ -1,5 +1,7 @@
 # SF_core — Core Salesforce Platform
 
+> **Start at [../HOME.md](../HOME.md)** — what to study next, rebuilt from the notes.
+
 The platform knowledge base: Apex, LWC, Flow, Admin, Integration, Security, Data, DevOps.
 
 This folder is the **platform underneath** the AI vaults. It cross-links to them rather than duplicating them.

@@ -11,7 +11,7 @@ Skeleton in [_template.md](_template.md). Every scenario, in this order:
 - **Both lenses on every item.** A model answer without a rubric makes the file single-purpose.
 - **`**The trap.**` is mandatory** and is the point of the item — the plausible answer a well-read candidate gives that is wrong. If there is no plausible wrong answer, the scenario is too easy: add a constraint or drop it.
 - **Keep the `<details>` blocks.** They are the one deliberate deviation from the other vaults' pure markdown, and they are what makes one file serve both candidate and interviewer.
-- **Metadata is YAML frontmatter**, read by Obsidian as Properties. `status`, `gaps`, `org_checks` and `labs` are recomputed by `scripts/vault.py fix`; every other key is yours. See [NOTES-SYSTEM.md](../NOTES-SYSTEM.md).
+- **Metadata is YAML frontmatter**, read by Obsidian as Properties: `vault`, `area`, `set`, `set_total`, `scenarios`, `level`, `currency`. **This vault is hand-maintained** — `scripts/vault.py` does not lint or fix it, because scenarios are not notes and the note vocabulary does not fit them.
 
 ## Rules
 
@@ -20,6 +20,6 @@ Skeleton in [_template.md](_template.md). Every scenario, in this order:
 - **Link out, never restate.** This vault holds questions. The knowledge lives in [../SF_core/](../SF_core/README.md), [../SF_Agentforce/](../SF_Agentforce/INDEX.md) and [../SF_Data_360/](../SF_Data_360/INDEX.md).
 - **No easy questions.** "What is a DMO?" is a flashcard and already exists in the other vaults.
 - **Two currency traps:** agents are authored in Agent Script — the legacy builder stopped creating new agents the week of 2026-07-13 — and Data Cloud is Data 360.
-- **New scenario** → append to the set file it belongs to, renumber nothing, bump the `Scenarios:` count in the line-3 blockquote **and** in the area `INDEX.md`.
+- **New scenario** → append to the set file it belongs to, renumber nothing, bump `scenarios:` in the frontmatter **and** the count in the area `INDEX.md`.
 - **New set** → next `NN` in the area, copy [_template.md](_template.md), add a row to the area's `INDEX.md`.
 - **Misses go in** [WEAK-ANSWERS.md](WEAK-ANSWERS.md), with a link back to the note to re-study.

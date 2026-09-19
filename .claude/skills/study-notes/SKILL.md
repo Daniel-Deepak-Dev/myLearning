@@ -52,7 +52,7 @@ Then decide:
 
 ## 4 · Write
 
-Use [_note-template.md](../../../_note-template.md).
+Use [templates/note.md](../../../templates/note.md).
 
 - Filenames carry **no number**. `flex-prompt-templates.md`, not `05-flex-prompt-templates.md`.
 - **50 lines max, counted to `## Related`.** The footer — `## Related`, `## Sources`, `## History` — does not count. Never drop a citation to hit a line budget.

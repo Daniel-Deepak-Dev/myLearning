@@ -1,6 +1,17 @@
+---
+vault: Interview
+area: <Agentforce | Data 360 | Core Platform | Cross-domain>
+format: dense
+level: "medium→complex"
+status: learning
+created: <YYYY-MM-DD>
+updated: <YYYY-MM-DD>
+currency: "Summer '26 (API 67.0)"
+set: <N>
+set_total: <N>
+scenarios: <N>
+---
 # <Area> — <Set title>
-
-> Area: <Agentforce | Data 360 | Core Platform | Cross-domain> · Set NN of NN · Scenarios: N · Level: medium→complex · Currency: **Summer '26 (API 67.0)**
 
 **Drills:** <one line — the failure family this set is about, not a topic list>
 

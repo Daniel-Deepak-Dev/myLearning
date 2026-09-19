@@ -1,10 +1,12 @@
 # Interview — Scenario-Based Question Bank
 
-Fourth vault, alongside [SF_core/](../SF_core/README.md) (core platform), [SF_Agentforce/](../SF_Agentforce/INDEX.md) and [SF_Data_360/](../SF_Data_360/INDEX.md). Those three hold knowledge. This one holds **being asked about it under pressure**.
+> **Start at [../HOME.md](../HOME.md)** — what to study next, rebuilt from the notes.
+
+Fifth vault, alongside [SF_core/](../SF_core/README.md) (core platform), [SF_Agentforce/](../SF_Agentforce/INDEX.md), [SF_Data_360/](../SF_Data_360/INDEX.md) and [SF_Experience_Cloud/](../SF_Experience_Cloud/INDEX.md). Those four hold knowledge. This one holds **being asked about it under pressure**.
 
 ## Why this exists
 
-The recall layer in the other two vaults is atomic — 633 `Q:`/`A:` flashcards and 1196 `## Recall` pairs, every one a single-fact prompt. That trains definitions, and definitions are not what an interview tests. An interview hands you a messy situation with three constraints in tension and watches you reason out loud.
+The recall layer in the knowledge vaults is atomic — 1,194 `## Recall` pairs, exported to Anki and an Obsidian deck by `python scripts/vault.py cards`, every one a single-fact prompt. That trains definitions, and definitions are not what an interview tests. An interview hands you a messy situation with three constraints in tension and watches you reason out loud.
 
 Nothing in the repo rehearsed that. The three `_cert-*/practice-questions.md` files are still empty stubs. This vault is the missing layer, and it runs in both directions: **candidate** (architect interviews) and **interviewer** (screening at Geeksoft).
 
@@ -64,7 +66,7 @@ Skeleton in [_template.md](_template.md). Every scenario:
 
 ## Flag legend
 
-Same meanings as the other two vaults:
+Same meanings as the knowledge vaults:
 
 | Flag | Meaning |
 |---|---|
@@ -75,8 +77,8 @@ Same meanings as the other two vaults:
 ## Conventions
 
 - **Naming:** `NN-kebab-case.md` inside `NN-kebab-case/` areas — the flat [SF_core/](../SF_core/README.md) shape, since a question set needs one file, not four.
-- **Metadata:** YAML frontmatter, read by Obsidian as Properties.
+- **Metadata:** YAML frontmatter, read by Obsidian as Properties. Hand-maintained — `scripts/vault.py` does not lint this vault.
 - **Links:** relative markdown only. Every answer links out to the note instead of restating it — [SF_core/_template.md](../SF_core/_template.md) rule 5. This vault holds *questions*, not a third copy of the knowledge.
-- **New scenario:** append to the set file it belongs to, renumber nothing, bump the `Scenarios:` count in the line-3 blockquote and the area `INDEX.md`.
+- **New scenario:** append to the set file it belongs to, renumber nothing, bump `scenarios:` in the frontmatter and the count in the area `INDEX.md`.
 - **New set:** next `NN` in the area, copy [_template.md](_template.md), add a row to the area's `INDEX.md`.
 - **Currency:** content is current to **Summer '26 (API 67.0)**. [RELEASE-RADAR/](../RELEASE-RADAR/README.md) is the source of truth for what changed — when a scenario goes stale, fix it there first and here second.

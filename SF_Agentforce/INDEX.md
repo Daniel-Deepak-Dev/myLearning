@@ -1,5 +1,7 @@
 # SF_Agentforce
 
+> **Start at [../HOME.md](../HOME.md)** — what to study next, rebuilt from the notes.
+
 Agentforce only. Prompt templates, agents, actions, Agent Script, Atlas Reasoning, Einstein Trust Layer.
 
 The code underneath lives in [SF_core/](../SF_core/README.md) and is linked from each note.

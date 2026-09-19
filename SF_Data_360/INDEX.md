@@ -1,5 +1,7 @@
 # SF_Data_360
 
+> **Start at [../HOME.md](../HOME.md)** — what to study next, rebuilt from the notes.
+
 Data 360 only. Ingestion, data model objects, identity resolution, segments, zero-copy, vector search, RAG.
 
 Data 360 is the current name. Data Cloud is the old one. The platform underneath lives in [SF_core/](../SF_core/README.md).

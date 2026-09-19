@@ -1,11 +1,5 @@
 {
-  "collapse-filter": true,
-  "search": "",
-  "showTags": true,
-  "showAttachments": false,
-  "hideUnresolved": false,
-  "showOrphans": true,
-  "collapse-color-groups": true,
+  "_comment": "Graph colour groups for this vault. .obsidian/graph.json is gitignored because Obsidian rewrites its zoom level on every view change. If the colours are lost, re-create these in Graph view -> Groups.",
   "colorGroups": [
     {
       "query": "path:SF_core/",
@@ -49,17 +43,5 @@
         "rgb": 16007990
       }
     }
-  ],
-  "collapse-display": true,
-  "showArrow": false,
-  "textFadeMultiplier": 0,
-  "nodeSizeMultiplier": 1,
-  "lineSizeMultiplier": 1,
-  "collapse-forces": true,
-  "centerStrength": 0.518713248970312,
-  "repelStrength": 10,
-  "linkStrength": 1,
-  "linkDistance": 250,
-  "scale": 0.19147729969536817,
-  "close": true
+  ]
 }

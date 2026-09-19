@@ -1,5 +1,7 @@
 # SF_Experience_Cloud — Experience Cloud (LWR-first)
 
+> **Start at [../HOME.md](../HOME.md)** — what to study next, rebuilt from the notes.
+
 Public, partner and customer sites built **LWR-first**. **20 topics** · phases [18](PHASES.md), [19](PHASES.md).
 
 > Currency: **Summer '26 (API 67.0)** · [flag legend](../SF_core/README.md#flag-legend) · [what changed](../SF_core/CURRENCY.md) · [how to write here](CLAUDE.md)

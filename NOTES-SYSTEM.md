@@ -16,9 +16,9 @@ python scripts/vault.py fix              rewrite the derived values
 ```
 
 `check` is **read-only** and reports `file:line`. `fix` rewrites only values with
-one correct answer — `Status` from the open-gap count, the `⏳ N months old` line,
-the INDEX columns that mirror a note, the summary aggregates, and the `SF_core`
-topic counts. It prints every change; read `git diff` before committing. Install it as a commit gate with
+one correct answer — `status`, `gaps`, `org_checks` and `labs` recounted from the
+note body, the INDEX columns that mirror a note, the summary aggregates, the
+`SF_core` topic counts, and the `PRACTICE.md` Done table. It prints every change; read `git diff` before committing. Install it as a commit gate with
 `cp scripts/pre-commit .git/hooks/pre-commit`, or run `/vault-check` in a session.
 
 Two things it deliberately does **not** do:
@@ -31,6 +31,21 @@ Two things it deliberately does **not** do:
 
 If a finding is wrong, the rule is wrong. Fix `scripts/vault.py` rather than
 editing a note to satisfy a bad check.
+
+## The furniture Obsidian uses
+
+Four things exist for Obsidian that are easy to miss because nothing else links them:
+
+| Path | What it is |
+|---|---|
+| [HOME.md](HOME.md) | **Open this first.** Generated — what to study next: one unblocked lab, cards, open gaps, org checks, stale notes, missing seams. Rebuild with `vault.py home`. |
+| `bases/topics.base` | Six Bases views over the frontmatter — all topics, open gaps, org checks, currency warnings, new-since-2024, oldest-first. They read the notes directly, so they cannot drift. |
+| `templates/note.md`, `templates/daily.md` | Inserted by the core **Templates** plugin. The daily one is the study log: what you studied, what broke verbatim, weak answers, next. |
+| `journal/` | Where **Daily Notes** writes. One file per day, `YYYY-MM-DD`. |
+
+`bases/graph-groups.json` holds the graph colour groups. `.obsidian/graph.json`
+is gitignored because Obsidian rewrites its zoom level constantly; if the colours
+are ever lost, re-apply them from that file in Graph view → Groups.
 
 ## The problem this solves
 
@@ -64,7 +79,7 @@ Examples:
 
 ### 2. Format — light, not dense
 
-Template: [_note-template.md](_note-template.md).
+Template: [templates/note.md](templates/note.md) — Obsidian's Templates plugin inserts it with *Insert template*.
 
 - **50 lines max — counted to `## Related`.** The ceiling is on the part you read. `## Related`, `## Sources` and `## History` are a footer: reference material you scan, not prose you re-read. They do not count.
 - No paragraph longer than two sentences.
@@ -79,9 +94,16 @@ Existing `SF_core` notes keep their older, longer format. Only **new** notes use
 
 Every note carries a level:
 
-```
-> Folder: SF_Agentforce · Level: basic · Status: 🌱 4 gaps open
-> Created: 2026-08-27 · Updated: 2026-08-27
+```yaml
+---
+vault: SF_Agentforce
+format: light
+level: basic
+status: open
+gaps: 4
+created: 2026-08-27
+updated: 2026-08-27
+---
 ```
 
 > **A note's gaps may go one level up. Never two.**
@@ -191,14 +213,6 @@ an authored date always won — nothing hand-written was overwritten.
 **Staleness is derived, not stamped.** There is no `⏳` line to add or remove any
 more; `vault.py` computes age from `updated` and [HOME.md](HOME.md) lists what has
 gone 3+ months. One fewer thing in the file that can be wrong.
-
-**Staleness.** Past 3 months without an update, a third metadata line appears:
-
-```
-> ⏳ 4 months old — recheck against release notes
-```
-
-It disappears the moment the note is touched. Salesforce AI moves fast enough that a note going quiet for a quarter is worth flagging.
 
 **Sources.** Every researched fact carries a link and the date it was read:
 

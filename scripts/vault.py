@@ -415,7 +415,11 @@ def r_link_broken(notes, findings):
 
 @rule("link-wikilink")
 def r_wikilink(notes, findings):
-    """_note-template.md rule 8: relative markdown links only, no [[wiki links]]."""
+    """NOTES-SYSTEM.md: relative markdown links only, no [[wiki links]].
+
+    GitHub and VS Code render [[x]] as literal text, and the vault holds ~5,300
+    markdown links already.
+    """
     for path in walk_md():
         if os.path.basename(path).startswith("_"):
             continue
@@ -471,7 +475,7 @@ def r_link_label(notes, findings):
 
 @rule("backlink-missing")
 def r_backlink(notes, findings):
-    """NOTES-SYSTEM.md: every link out gets a link back, in the same edit.
+    """NOTES-SYSTEM.md: a link that CROSSES VAULTS gets a link back, in the same edit.
 
     Reported, never written. The '— why you would jump there' clause is content;
     a generated one would be filler.
@@ -857,8 +861,8 @@ def r_length(notes, findings):
 def r_blocks(notes, findings):
     """One table max, one code block max of 12 lines — the light template only."""
     for path, note in notes.items():
-        # These caps come from _note-template.md, which governs the light format.
-        # The dense SF_core notes predate it and are not held to them.
+        # These caps govern the light format only (NOTES-SYSTEM.md). The dense
+        # SF_core notes predate them and are not held to them.
         if note.kind != "light":
             continue
         tables = len(re.findall(r"^\|[-: |]+\|\s*$", note.text, re.M))

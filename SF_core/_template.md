@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: <NN-area-name>
+format: dense
+status: learning
+created: <YYYY-MM-DD>
+updated: <YYYY-MM-DD>
+currency: "Summer '26 (API 67.0)"
+phase: <NN>
+---
 # <Topic>
-
-> Area: <NN-area-name> · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: NN
 
 **Scope:** <one line — what this covers and where it stops>
 
@@ -48,4 +56,6 @@ RULES — do not remove
 4. Personal note harvested from _notion-seed/ → quote it as:
    > **From my notes.** <the gotcha> — and correct it inline if it is now stale.
 5. Cross-link into SF_Agentforce/ or SF_Data_360/ instead of duplicating their content.
+6. `status` is the only frontmatter key the tool owns for a dense note. Everything
+   else above is yours. Run `python scripts/vault.py fix` after writing.
 -->

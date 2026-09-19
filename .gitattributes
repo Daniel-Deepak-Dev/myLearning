@@ -1,0 +1,9 @@
+# Obsidian writes LF; git was checking out CRLF, so every note edited in Obsidian
+# showed as modified with no content change. Store and check out LF everywhere so
+# nothing is converted and the warnings stop.
+* text=auto eol=lf
+
+# Never diff or convert these.
+*.png binary
+*.jpg binary
+*.pdf binary

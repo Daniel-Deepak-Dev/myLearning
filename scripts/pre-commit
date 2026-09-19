@@ -3,8 +3,8 @@
 #
 #     cp scripts/pre-commit .git/hooks/pre-commit
 #
-# The backlink backlog is hundreds of findings deep and is burnt down
-# deliberately, not per-commit, so it is excluded here. Run
+# The cross-vault backlink backlog is burnt down deliberately, not per-commit,
+# so it is excluded here. Run
 # `python scripts/vault.py check --rule backlink` when you want to work on it.
 #
 # To commit past this once: git commit --no-verify

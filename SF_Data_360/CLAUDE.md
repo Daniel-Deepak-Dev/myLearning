@@ -15,9 +15,9 @@ So SOQL syntax and Bulk API limits go to `SF_core/`. *How a DMO maps back to a S
 
 ## The note format
 
-Template: [../_note-template.md](../_note-template.md).
+Template: [../templates/note.md](../templates/note.md).
 
-`## Key points` → `## Gotchas` → `## Gaps to close` → `## Related`
+`## Key points` → `## Gotchas` → `## Gaps to close` → `## Confirm in org` → `## Hands-on` → `## Related` → `## Sources` → `## History`
 
 - **50 lines max.** No paragraph longer than two sentences.
 - **One table max. One code block max, 12 lines.**
@@ -27,9 +27,9 @@ Template: [../_note-template.md](../_note-template.md).
 ## Rules
 
 - **Closed gaps are deleted, not ticked.** Answer one, remove the line. Last one gone, remove the `## Gaps to close` heading too.
-- **Status is derived, never typed.** Count `- [ ]` lines: some → `🌱 N gaps open`; none, or no section at all → `✅ complete`.
+- **Status is derived, never typed.** `python scripts/vault.py fix` counts the `- [ ]` lines in `## Gaps to close` and writes `status: open` + `gaps: N`, or `status: complete`. `## Confirm in org` bullets and `## Hands-on` labs never count. The 🌱/✅ glyphs are how `INDEX.md` renders it, never what the note stores.
 - **`## History` records what was added or changed** — never a gap tally.
-- **`Created` never changes. `Updated` changes on every edit.** Past 3 months without a touch, add `> ⏳ N months old — recheck against release notes`. Remove it when the note is updated.
+- **`created` never changes. `updated` changes on every edit.** Staleness is derived from `updated`, not stamped into the note — `HOME.md` lists what has gone 3+ months.
 - **Every researched fact gets a `## Sources` line** with the date read. Salesforce domains trusted; anything else carries 🚩.
 - **`## History`** takes one dated line per feed.
 - **`Level` sets the gap ceiling.** Gaps may go one level up, never two. A `basic` note never gets a `deep` gap.
