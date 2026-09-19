@@ -4,6 +4,31 @@ This file exists so you never have to type the instructions again.
 
 Paste your rough notes. The `study-notes` skill reads this contract and does the rest.
 
+## What checks itself
+
+Most of this contract is mechanical — a derived count, a mirrored column, a link
+that must resolve. Those are checked by a script, not by remembering:
+
+```
+python scripts/vault.py check          every rule
+python scripts/vault.py check --changed  only what you touched
+python scripts/vault.py check --list-rules
+```
+
+It is **read-only** and reports `file:line`. Install it as a commit gate with
+`cp scripts/pre-commit .git/hooks/pre-commit`, or run `/vault-check` in a session.
+
+Two things it deliberately does **not** do:
+
+- It never writes a `## Related` bullet. The "— why you would jump there" clause
+  is content; a generated one would be filler. It reports the missing backlink
+  and leaves the sentence to you.
+- It never judges prose. Routing, `Level`, whether a gap is on-topic, whether a
+  lab is a lab — those stay with you and the `study-notes` skill.
+
+If a finding is wrong, the rule is wrong. Fix `scripts/vault.py` rather than
+editing a note to satisfy a bad check.
+
 ## The problem this solves
 
 You learn topics in whatever order work throws at you. Prompt templates on Monday. Trust Layer on Wednesday. Apex inside a prompt template on Thursday.

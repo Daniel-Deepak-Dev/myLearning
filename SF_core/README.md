@@ -20,7 +20,7 @@ This folder is the **platform underneath** the AI vaults. It cross-links to them
 | [01-admin-and-declarative-platform/](01-admin-and-declarative-platform/INDEX.md) | Org anatomy, data model config, Dynamic Forms, CMDT, order of execution | 19 |
 | [02-apex-and-triggers/](02-apex-and-triggers/INDEX.md) | Apex language, SOQL/SOSL, triggers, async, user-mode security, testing, Platform Cache, enterprise patterns & DI, serialization, **prompt templates & the Models API in Apex** | 34 |
 | [03-lwc-and-slds/](03-lwc-and-slds/INDEX.md) | LWC component model, LDS, GraphQL wire, LWS, SLDS 2, Jest, State Managers | 24 |
-| [04-flow-and-automation/](04-flow-and-automation/INDEX.md) | Flow Builder end-to-end, HTTP callout, Orchestrator, run context, testing, agent actions | 25 |
+| [04-flow-and-automation/](04-flow-and-automation/INDEX.md) | Flow Builder end-to-end, HTTP callout, Orchestrator, run context, testing, agent actions | 28 |
 | [06-integration-and-apis/](06-integration-and-apis/INDEX.md) | REST/Bulk/GraphQL/Pub-Sub, endpoints, Metadata & Tooling, OAuth, External Client Apps, MCP, certificates, event bus allocations | 27 |
 | [07-security-and-sharing/](07-security-and-sharing/INDEX.md) | Licences, permission-set-led access, sharing, restriction rules, access auditing, identity & MFA, Shield, posture | 26 |
 | [08-data-modeling-and-large-data-volumes/](08-data-modeling-and-large-data-volumes/INDEX.md) | Relationships, storage, selectivity, skew, locking, deletes, big objects, archiving, migration, backup, Hyperforce | 26 |

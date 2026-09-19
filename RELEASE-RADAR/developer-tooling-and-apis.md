@@ -963,7 +963,7 @@ The precedence order is the transferable idea. Salesforce ranks **deterministic 
 
 **Study action:** install the marketplace and plugin into a DX project, run `/salesforce-development:discovery journey inspect` to see the Connect → … → Observe state, then run `sf project deploy start` against a scratch org and note which hooks fire in order — `sf-context verify-org`, `sf-deploy-gate prod-check`, `bin/lsp-precheck`. Then point it at a production alias and confirm the gate blocks.
 
-**Status:** Open source, Apache-2.0. `salesforce-development` **1.10.0**, shipped in `forcedotcom/sf-skills` **1.36.0**, 2026-08-11 07:37 UTC. Requires **Claude Code ≥ 2.1.222**. Related study topic: [13-adlc-and-agentforce-dx](../SF_Agentforce/INDEX.md).
+**Status:** Open source, Apache-2.0. `salesforce-development` **1.10.0**, shipped in `forcedotcom/sf-skills` **1.36.0**, 2026-08-11 07:37 UTC. Requires **Claude Code ≥ 2.1.222**. Related study topic: [SF_Agentforce · ADLC & Agentforce DX](../SF_Agentforce/INDEX.md).
 
 **Sources:** [plugin README](https://github.com/forcedotcom/sf-skills/blob/main/plugins/builder/salesforce-development/README.md) · [`plugin.json`](https://github.com/forcedotcom/sf-skills/blob/main/plugins/builder/salesforce-development/.claude-plugin/plugin.json) · [plugin CHANGELOG](https://github.com/forcedotcom/sf-skills/blob/main/plugins/builder/salesforce-development/CHANGELOG.md) · [`marketplace.json`](https://github.com/forcedotcom/sf-skills/blob/main/.claude-plugin/marketplace.json) · [sf-skills 1.36.0](https://github.com/forcedotcom/sf-skills/releases/tag/1.36.0)
 
