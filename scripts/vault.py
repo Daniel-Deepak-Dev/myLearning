@@ -1215,6 +1215,69 @@ def fix_tags_currency(notes, changes):
             changes.append((note.rel, f"tags -> {merged or '(none)'}"))
 
 
+@fixer("practice-done")
+def fix_practice_done(notes, changes):
+    """The PRACTICE.md `## Done` table is rebuilt from ticked labs.
+
+    Ticking `- [x]` in the note is the whole record. This never writes a tick
+    and never removes one -- it only reflects them, so finishing a lab costs
+    one click instead of an edit in two files. Any "what broke" text you have
+    written is keyed by lab id and preserved.
+    """
+    ticked: dict[str, list[tuple[Note, re.Match]]] = defaultdict(list)
+    for path, note in notes.items():
+        if "Hands-on" not in note.sections:
+            continue
+        for i in range(*note.sections["Hands-on"]):
+            m = LAB_RE.match(note.lines[i])
+            if m and m.group(1) == "x":
+                ticked[note.vault].append((note, m))
+
+    for vault in NOTE_VAULTS:
+        pfile = os.path.join(ROOT, vault, "PRACTICE.md")
+        if not os.path.exists(pfile):
+            continue
+        practice = load_note(pfile)
+        if "Done" not in practice.sections:
+            continue
+        head, tail = practice.sections["Done"]
+
+        # Keep whatever you wrote, keyed by lab id.
+        authored: dict[str, tuple[str, str]] = {}
+        for i in range(head, tail):
+            cells = split_row(practice.lines[i]) if practice.lines[i].strip().startswith("|") else []
+            if len(cells) >= 3 and re.fullmatch(r"[A-Z0-9]+-[A-Z0-9]+-\d{2}", cells[0]):
+                authored[cells[0]] = (cells[1], cells[2])
+
+        rows = []
+        for note, m in sorted(ticked.get(vault, []), key=lambda t: t[1].group("id")):
+            lab = m.group("id")
+            when, broke = authored.get(lab, ("—", "—"))
+            rows.append(_row_text([lab, when, broke]))
+        if not rows:
+            rows = [_row_text(["—", "—", "—"])]
+
+        header = ["| Lab | Date | What broke — verbatim |", "|---|---|---|"]
+        start = next((i for i in range(head, tail)
+                      if practice.lines[i].strip().startswith("| Lab |")), None)
+        if start is None:
+            continue
+        end = start + 2
+        while end < tail and practice.lines[end].strip().startswith("|"):
+            end += 1
+
+        if [l.rstrip() for l in practice.lines[start:end]] == header + rows:
+            continue
+        ed = Editor(pfile)
+        for _ in range(end - start):
+            ed.drop(start)
+        for line in reversed(header + rows):
+            ed.insert(start, line)
+        if ed.save():
+            changes.append((practice.rel,
+                            f"Done table rebuilt from {len(ticked.get(vault, []))} ticked lab(s)"))
+
+
 def _row_text(cells: list[str]) -> str:
     return "| " + " | ".join(cells) + " |"
 
@@ -1326,6 +1389,100 @@ def fix_readme_counts(notes, changes):
             ed.set(i, new)
             changes.append((rel_of(p), f"total -> {total} topics"))
     ed.save()
+
+
+# ─────────────────────────────────────────────────────────────── cards ──
+#
+# The `## Recall` blocks are already a strict, single-line Q:/A: grammar, so
+# they export cleanly. Two targets, one source: a TSV for Anki, and a per-vault
+# markdown deck for the Obsidian spaced-repetition plugin. Neither changes a note.
+
+SR_SCHEDULE_RE = re.compile(r"<!--SR:.*?-->")
+
+
+def collect_cards(notes: dict) -> list[tuple[Note, str, str]]:
+    """Every Q:/A: pair in the vault, in reading order."""
+    cards = []
+    for path in sorted(notes):
+        note = notes[path]
+        if "Recall" not in note.sections:
+            continue
+        lo, hi = note.sections["Recall"]
+        for i in range(lo, hi - 1):
+            q, a = note.lines[i], note.lines[i + 1]
+            if q.startswith("Q: ") and a.startswith("A: "):
+                cards.append((note, q[3:].strip(), a[3:].strip()))
+    return cards
+
+
+TAB = chr(9)
+NL = chr(10)
+CONTROL_RE = re.compile('[' + chr(9) + chr(13) + chr(10) + ']+')
+
+
+def _tsv(field: str) -> str:
+    """Anki TSV has no quoting, so no separator may survive inside a field."""
+    return CONTROL_RE.sub(' ', field).strip()
+
+
+def cmd_cards(out_dir: str) -> int:
+    notes = load_all_notes()
+    cards = collect_cards(notes)
+    if not cards:
+        print("no Q:/A: pairs found.")
+        return 0
+    os.makedirs(out_dir, exist_ok=True)
+
+    by_vault: dict[str, list] = defaultdict(list)
+    for note, q, a in cards:
+        by_vault[note.vault].append((note, q, a))
+
+    for vault, items in sorted(by_vault.items()):
+        # --- Anki: a tab-separated deck, tagged and importable as-is ------
+        tsv_path = os.path.join(out_dir, f'{vault}.tsv')
+        header = ['#separator:tab', '#html:false', '#tags column:3']
+        with open(tsv_path, 'w', encoding='utf-8', newline='') as fh:
+            fh.write(NL.join(header) + NL)
+            for note, q, a in items:
+                tags = ' '.join([vault] + list(note.meta.get('tags', [])))
+                row = TAB.join([_tsv(q), _tsv(a), _tsv(tags)])
+                fh.write(row + NL)
+
+        # --- Obsidian spaced-repetition: multiline `?` separator ----------
+        # Scheduling comments the plugin writes are keyed by question and
+        # carried across regenerations, so a rebuild never loses your progress.
+        deck_path = os.path.join(ROOT, vault, "_cards.md")
+        keep: dict[str, str] = {}
+        if os.path.exists(deck_path):
+            prev = open(deck_path, encoding="utf-8").read().splitlines()
+            for n, line in enumerate(prev):
+                if (m := SR_SCHEDULE_RE.search(line)) and n >= 2:
+                    for back in range(n - 1, max(-1, n - 6), -1):
+                        if prev[back].strip() == "?" and back >= 1:
+                            keep[prev[back - 1].strip()] = m.group(0)
+                            break
+        out = [
+            "---", f"vault: {vault}", "format: cards", "tags: [flashcards]", "---",
+            f"# {vault} — review deck", "",
+            "**Generated by `python scripts/vault.py cards`. Do not edit the cards here —",
+            "edit the `## Recall` block in the note they came from.** Scheduling comments",
+            "written by the spaced-repetition plugin are preserved across regenerations.", "",
+        ]
+        for note, q, a in items:
+            out += [q, "?", a]
+            if q in keep:
+                out.append(keep[q])
+            out.append("")
+        with open(deck_path, 'w', encoding='utf-8', newline='') as fh:
+            fh.write(NL.join(out) + NL)
+
+        print(f"  {vault:<22} {len(items):>5} cards  ->  {rel_of(tsv_path)}, {vault}/_cards.md")
+
+    sources = len({n.rel for n, _, _ in cards})
+    print('')
+    print(f'{len(cards)} cards from {sources} notes.')
+    print('Anki: File > Import. The header sets the separator and tags column.')
+    return 0
 
 
 # ───────────────────────────────────────────────────────────── migrate ──
@@ -1519,6 +1676,10 @@ def main() -> int:
                     help="only fixers whose name starts with this (repeatable)")
     fx.add_argument("--list-rules", action="store_true")
 
+    cd = sub.add_parser("cards", help="export Q:/A: pairs to Anki TSV + Obsidian decks")
+    cd.add_argument("--out", default=os.path.join(ROOT, "cards"),
+                    help="directory for the Anki .tsv files (default: ./cards)")
+
     mg = sub.add_parser("migrate", help="one-shot: blockquote metadata -> frontmatter")
     mg.add_argument("--only", action="append", default=[],
                     help="limit to paths containing this substring (repeatable)")
@@ -1526,6 +1687,9 @@ def main() -> int:
 
     if args.cmd == "migrate":
         return cmd_migrate(args.only)
+
+    if args.cmd == "cards":
+        return cmd_cards(args.out)
 
     if getattr(args, "list_rules", False):
         table = FIXERS if args.cmd == "fix" else RULES

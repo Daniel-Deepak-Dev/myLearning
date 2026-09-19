@@ -10,3 +10,6 @@ __pycache__/
 # Obsidian (keep settings, drop per-machine UI state)
 .obsidian/workspace*.json
 .obsidian/cache
+
+# Generated Anki decks — rebuild with `python scripts/vault.py cards`
+cards/
