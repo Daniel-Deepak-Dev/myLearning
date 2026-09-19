@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 4
+tags: [currency-warning]
+---
 # Callouts, Named Credentials & HTTP in Apex
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 04
 
 **Scope:** Calling out of Salesforce from Apex — the HTTP classes, the limits, and where the credentials live. Integration patterns, inbound APIs and OAuth flows are [06-integration](../06-integration-and-apis/INDEX.md).
 

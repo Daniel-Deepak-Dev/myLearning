@@ -1,6 +1,17 @@
+---
+vault: Interview
+area: Agentforce
+format: dense
+level: "medium→complex"
+status: learning
+created: 2026-08-23
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+set: 3
+set_total: 3
+scenarios: 4
+---
 # Agentforce — Trust, Testing & Lifecycle
-
-> Area: Agentforce · Set 03 of 03 · Scenarios: 4 · Level: medium→complex · Currency: **Summer '26 (API 67.0)**
 
 **Drills:** the questions a client's security team and a client's CFO ask, which are the two rooms where Agentforce projects actually die. Trust Layer scope, proving behaviour before release, injection through a data field, and whether to build at all.
 

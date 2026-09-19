@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 9
+tags: [currency-warning]
+---
 # Flow Testing & Debugging
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 09
 
 **Scope:** Proving a flow works before users find out it doesn't — Flow Tests, debug runs, and the Summer '26 diagnostic surface. Deploying the result is [24](24-flow-deployment-versioning-and-governance.md).
 

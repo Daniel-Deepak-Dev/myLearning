@@ -1,7 +1,14 @@
+---
+vault: SF_Agentforce
+format: light
+level: working
+status: complete
+org_checks: 1
+labs: 4
+created: 2026-08-28
+updated: 2026-08-30
+---
 # Grounding a Prompt Template
-
-> Folder: SF_Agentforce · Level: working · Status: ✅ complete
-> Created: 2026-08-28 · Updated: 2026-08-30
 
 **One line:** The six ways real data gets into a prompt before the model sees it.
 

@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 8
+tags: [currency-new]
+---
 # HTTP Callout & External Services in Flow
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 08
 
 **Scope:** Calling a REST API from Flow with no Apex — the HTTP Callout action, what External Services generates underneath, and where the boundary with Apex actually falls. Auth object modelling is [02-apex · 19](../02-apex-and-triggers/19-callouts-named-credentials-and-http-in-apex.md) and [06-integration · 17](../06-integration-and-apis/17-named-credentials-and-external-credentials.md); the registration machinery underneath is [06-integration · 19](../06-integration-and-apis/19-external-services-openapi-and-the-api-catalog.md).
 

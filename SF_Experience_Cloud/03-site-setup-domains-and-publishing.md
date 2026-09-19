@@ -1,6 +1,13 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 18
+---
 # Site Setup, Domains & Publishing
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** Standing a site up and getting it onto a URL people will type — enablement, domains, CDN, statuses and the publish lifecycle. The build model behind publishing is [02](02-lwr-architecture-and-build-model.md); pipeline deployment is [09-devops · 05](../SF_core/09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md).
 

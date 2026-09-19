@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 17
+tags: [currency-new]
+---
 # Observability, Logging & Prod Debugging
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 17
 
 **Scope:** Knowing what production did, after it did it. Performance hotspots are [17](17-apexguru-and-performance-review.md); the security-audit view of the same event streams is [07-security · 23](../07-security-and-sharing/23-event-monitoring-and-transaction-security.md).
 

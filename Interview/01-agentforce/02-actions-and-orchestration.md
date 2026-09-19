@@ -1,6 +1,17 @@
+---
+vault: Interview
+area: Agentforce
+format: dense
+level: "medium→complex"
+status: learning
+created: 2026-08-23
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+set: 2
+set_total: 3
+scenarios: 4
+---
 # Agentforce — Actions & Orchestration
-
-> Area: Agentforce · Set 02 of 03 · Scenarios: 4 · Level: medium→complex · Currency: **Summer '26 (API 67.0)**
 
 **Drills:** the description field is executable configuration, and the reasoning engine never reads your Apex. Three of these four failures look like model failures and are specification failures. The fourth is an API upgrade that breaks working code.
 

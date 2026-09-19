@@ -1,7 +1,14 @@
+---
+vault: SF_Agentforce
+format: light
+level: working
+status: complete
+org_checks: 3
+labs: 4
+created: 2026-08-28
+updated: 2026-08-30
+---
 # Prompt Templates as Agent Actions
-
-> Folder: SF_Agentforce · Level: working · Status: ✅ complete
-> Created: 2026-08-28 · Updated: 2026-08-30
 
 **One line:** How a prompt template stops being something a user clicks and becomes something an agent decides to call.
 

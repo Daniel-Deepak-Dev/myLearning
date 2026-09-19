@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 7
+tags: [currency-warning]
+---
 # Accessibility & Internationalization
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 07
 
 **Scope:** Making a component usable by assistive technology and correct in another locale. Colour and contrast belong to [14](14-slds-2-and-styling-hooks.md); this covers semantics, focus, labels and formatting.
 

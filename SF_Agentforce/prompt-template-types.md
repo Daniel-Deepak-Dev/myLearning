@@ -1,7 +1,14 @@
+---
+vault: SF_Agentforce
+format: light
+level: basic
+status: complete
+org_checks: 2
+labs: 4
+created: 2026-08-27
+updated: 2026-08-30
+---
 # Prompt Template Types
-
-> Folder: SF_Agentforce · Level: basic · Status: ✅ complete
-> Created: 2026-08-27 · Updated: 2026-08-30
 
 **One line:** The type you pick when creating a template decides where it can be used and what context it receives.
 

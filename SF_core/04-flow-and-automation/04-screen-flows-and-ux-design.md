@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 8
+---
 # Screen Flows & UX Design
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 08
 
 **Scope:** The designer's side of a user-facing flow — screen composition, validation, navigation. Same-screen recalculation is [05](05-reactive-screen-flows.md); the *component-authoring* contract for a custom LWC is [03-lwc · 11](../03-lwc-and-slds/11-lwc-in-flow-screens-and-quick-actions.md).
 

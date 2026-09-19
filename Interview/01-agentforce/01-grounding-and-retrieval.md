@@ -1,6 +1,17 @@
+---
+vault: Interview
+area: Agentforce
+format: dense
+level: "medium→complex"
+status: learning
+created: 2026-08-23
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+set: 1
+set_total: 3
+scenarios: 4
+---
 # Agentforce — Grounding & Retrieval
-
-> Area: Agentforce · Set 01 of 03 · Scenarios: 4 · Level: medium→complex · Currency: **Summer '26 (API 67.0)**
 
 **Drills:** the agent is fluent, specific and wrong. Every scenario here is a retrieval or freshness failure that presents as a model failure — which is why they get misdiagnosed in production.
 

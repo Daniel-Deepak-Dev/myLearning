@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 8
+tags: [currency-new]
+---
 # Collections, Loops & the Transform Element
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 08
 
 **Scope:** Working with more than one record — collection resources, the loop patterns worth keeping, and the **Transform** element that replaces most of them. Limit numbers live in [13 · Flow limits & bulkification](13-flow-limits-and-bulkification.md).
 

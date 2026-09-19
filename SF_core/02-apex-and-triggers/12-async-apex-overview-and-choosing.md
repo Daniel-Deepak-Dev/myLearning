@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 4
+---
 # Async Apex Overview & Choosing
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 04
 
 **Scope:** The five asynchronous mechanisms, what each is actually for, and the limits they share. Each has its own note — [13](13-queueable-apex-and-chaining.md) to [16](16-transaction-finalizers.md) and [18](18-platform-events-and-cdc-in-apex.md); this one is the decision.
 

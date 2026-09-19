@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 13
+tags: [currency-new]
+---
 # MCP servers & agent-facing APIs
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 13
 
 **Scope:** Exposing org capability to an AI client over the Model Context Protocol, and the security properties that make it defensible. The agent side — Agentforce, A2A, cross-vendor governance — is [SF_Agentforce](../../SF_Agentforce/INDEX.md).
 

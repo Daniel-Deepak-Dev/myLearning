@@ -1,6 +1,14 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 19
+tags: [currency-new]
+---
 # Headless Sites & Connect APIs
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
 **Scope:** Building a front end in your own stack (React, Next.js, a native app) while Salesforce serves data and content over APIs — and the judgment call of when that's worth abandoning Experience Builder. Auth is **not** restated here: Headless Identity lives in [10](10-authentication-self-registration-and-sso.md).
 

@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 10-soql-and-sosl
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 22
+---
 # SOSL Search Modifiers & Relevance
-
-> Area: 10-soql-and-sosl · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 22
 
 **Scope:** The optional `WITH` clauses that scope, enrich and correct a search, plus the matching behaviour — stemming, synonyms and ranking — that decides what comes back first. The statement itself is [08](08-sosl-mechanics-and-the-search-index.md).
 

@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 13
+---
 # MuleSoft & API-led boundaries
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 13
 
 **Scope:** The judgment call — what belongs on the platform and what belongs off it. Product depth is deliberately out of scope; this is the boundary argument you have to make in a design review. Agent-layer governance is [SF_Agentforce · Agent Fabric](../../SF_Agentforce/INDEX.md).
 

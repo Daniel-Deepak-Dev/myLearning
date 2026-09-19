@@ -1,6 +1,14 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 18
+tags: [currency-warning]
+---
 # Guest User Security Model
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** What an unauthenticated visitor to a site *is*, and what the platform will and will not let them reach. The model only; the audit runbook is [11](11-public-site-exposure-audit.md). Flow access for guests is [04-flow · 21](../SF_core/04-flow-and-automation/21-flow-for-external-and-guest-users.md).
 

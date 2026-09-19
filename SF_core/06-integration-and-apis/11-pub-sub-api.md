@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 12
+tags: [currency-new, currency-warning]
+---
 # Pub/Sub API
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 12
 
 **Scope:** The gRPC event transport — publishing and subscribing from outside the org, with replay and flow control. What to put *in* an event is [12](12-platform-event-design.md); the older transport it supersedes is [14](14-legacy-streaming-and-outbound-messaging.md).
 

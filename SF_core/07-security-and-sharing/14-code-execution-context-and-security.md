@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 10
+tags: [currency-new, currency-warning]
+---
 # Code Execution Context & Security
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 10
 
 **Scope:** Which contexts enforce the access model of [01](01-security-model-layers-overview.md)–[13](13-field-level-security-and-visibility-layers.md) and which bypass it. The Apex keywords themselves are [02-apex · 10](../02-apex-and-triggers/10-apex-security-user-mode-and-fls.md)–[11](../02-apex-and-triggers/11-sharing-keywords-and-apex-managed-sharing.md); this note is the map of contexts.
 

@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 9
+tags: [currency-warning]
+---
 # Flow Run Context & Sharing
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 09
 
 **Scope:** What a flow is *allowed* to see and write, which is a different question from who it runs as. Guest and external specifics are [21](21-flow-for-external-and-guest-users.md); the org's access model is [07-security](../07-security-and-sharing/INDEX.md).
 

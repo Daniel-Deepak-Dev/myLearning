@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 11
+tags: [currency-new, currency-warning]
+---
 # Sharing Recalculation & Performance
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 11
 
 **Scope:** What it costs the platform to keep [06](06-org-wide-defaults-and-record-access.md)–[10](10-teams-territories-and-account-sharing.md) true, and why an access change that takes a second to configure takes hours to apply. Ownership skew as a *query and lock* problem is [08-data · 10](../08-data-modeling-and-large-data-volumes/10-data-skew.md); the recalculation mechanics are here.
 

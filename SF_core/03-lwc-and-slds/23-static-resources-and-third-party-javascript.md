@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 7
+---
 # Static Resources & Third-Party JavaScript
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 07
 
 **Scope:** Getting a chart library, a font or an image into a component, and handing part of the DOM to code the framework does not control. What LWS itself blocks is [09](09-lightning-web-security.md).
 

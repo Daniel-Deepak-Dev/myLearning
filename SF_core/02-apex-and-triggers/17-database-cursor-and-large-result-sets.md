@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 4
+tags: [currency-new]
+---
 # `Database.Cursor` & Large Result Sets
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 04
 
 **Scope:** Walking a result set too large to hold, without the ceremony of a batch class. The batch alternative is [14](14-batch-apex-and-stateful-processing.md); the chain that usually carries a cursor is [13](13-queueable-apex-and-chaining.md).
 

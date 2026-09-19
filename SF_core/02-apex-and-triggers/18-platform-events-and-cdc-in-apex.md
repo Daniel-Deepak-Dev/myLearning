@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 4
+---
 # Platform Events & CDC in Apex
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 04
 
 **Scope:** Publishing and subscribing from Apex — publish behaviours, event triggers, retries and Change Data Capture. The transport, external subscribers and event design belong to [06-integration](../06-integration-and-apis/INDEX.md); this is the in-org half.
 

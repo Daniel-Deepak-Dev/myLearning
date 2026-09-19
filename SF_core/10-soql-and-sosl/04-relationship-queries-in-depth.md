@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 10-soql-and-sosl
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 22
+---
 # Relationship Queries in Depth
-
-> Area: 10-soql-and-sosl · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 22
 
 **Scope:** Traversal in both directions, the naming rules that decide what you type, polymorphic lookups with `TYPEOF`, and junction objects. The data-model consequences of a relationship choice are [08-data · 02](../08-data-modeling-and-large-data-volumes/02-relationships-deep-dive.md).
 

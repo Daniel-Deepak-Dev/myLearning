@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 16
+---
 # Metadata API & Deployment Mechanics
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 16
 
 **Scope:** Moving metadata between orgs — manifests, deploy/retrieve, validation and quick deploy, destructive changes. What *cannot* be moved is [12](12-metadata-coverage-and-manual-steps.md).
 

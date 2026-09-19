@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 23
+tags: [currency-new]
+---
 # Apex-Grounded Prompt Templates
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 23
 
 **Scope:** `@InvocableMethod(capabilityType=…)` — Apex invoked *while a prompt is being resolved*, to supply grounding data. The invocable signature rules are [22](22-invocable-apex-and-agentforce-actions.md) and are not repeated here; template authoring is [SF_Agentforce · Prompt Builder & Templates](../../SF_Agentforce/prompt-builder-and-prompt-templates.md) and the other five grounding sources are [SF_Agentforce · Grounding a Prompt Template](../../SF_Agentforce/grounding-a-prompt-template.md).
 

@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 9
+---
 # Flow Orchestrator
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 09
 
 **Scope:** Multi-step, multi-user processes that outlive a transaction — stages, steps, work items and the orchestration run. Approvals built on this engine are [17](17-approval-orchestration.md).
 

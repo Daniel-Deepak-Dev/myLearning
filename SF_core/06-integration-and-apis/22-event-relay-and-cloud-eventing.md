@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 13
+tags: [currency-new]
+---
 # Event Relay & cloud eventing
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 13
 
 **Scope:** Forwarding Salesforce events into a cloud event bus without running a subscriber. What goes in the payload is [12](12-platform-event-design.md); the transport you would otherwise write a client for is [11](11-pub-sub-api.md).
 

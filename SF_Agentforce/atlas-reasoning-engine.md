@@ -1,7 +1,14 @@
+---
+vault: SF_Agentforce
+format: light
+level: basic
+status: complete
+org_checks: 1
+labs: 4
+created: 2026-08-27
+updated: 2026-08-28
+---
 # Atlas Reasoning Engine
-
-> Folder: SF_Agentforce · Level: basic · Status: ✅ complete
-> Created: 2026-08-27 · Updated: 2026-08-28
 
 **One line:** The reasoning and planning engine behind Agentforce — the part that decides what to do, not the part that says it.
 

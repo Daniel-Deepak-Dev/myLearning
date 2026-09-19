@@ -1,6 +1,17 @@
+---
+vault: Interview
+area: Cross-domain
+format: dense
+level: complex
+status: learning
+created: 2026-08-23
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+set: 1
+set_total: 1
+scenarios: 6
+---
 # Cross-Domain — Architect Scenarios
-
-> Area: Cross-domain · Set 01 of 01 · Scenarios: 6 · Level: complex · Currency: **Summer '26 (API 67.0)**
 
 **Drills:** the questions with no single-domain answer. Every one of these fails if you reason inside one area — the constraint that decides it sits in another. This is the set that separates a strong senior developer from an architect, and the one to work through last.
 

@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 9
+tags: [currency-new, currency-warning]
+---
 # Migrate to Flow & Legacy Automation
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 09
 
 **Scope:** The **tool** — what it converts, and the traps in what it produces. Reading the legacy automation first is [26](26-reading-inherited-workflow-and-process-builder.md); sequencing the migration is [27](27-legacy-automation-migration-runbook.md). The tool-choice argument is [01](01-automation-landscape-and-tool-selection.md).
 

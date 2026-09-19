@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 12
+tags: [currency-new, currency-warning]
+---
 # API versions & the retirement treadmill
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 12
 
 **Scope:** What an API version number commits you to, and the retirement cycle running underneath every integration in the org. The endpoint *host* is [03](03-api-endpoints-hostnames-and-edge-network.md); per-version feature detail belongs to each API's own note.
 

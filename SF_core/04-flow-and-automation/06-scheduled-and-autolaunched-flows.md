@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 8
+---
 # Scheduled & Autolaunched Flows
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 08
 
 **Scope:** The two flow types with no user and no record trigger — autolaunched flows, which something else starts, and schedule-triggered flows, which a clock starts. Reuse patterns are [08](08-subflows-and-modular-flow-design.md).
 

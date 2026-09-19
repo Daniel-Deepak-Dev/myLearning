@@ -1,6 +1,14 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 19
+tags: [currency-warning]
+---
 # Experience Cloud DevOps
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
 **Scope:** Deploying and source-controlling a site in a pipeline — the metadata-type trap and the gotchas that break CI/CD. The bundle *distinction* is owned by [02](02-lwr-architecture-and-build-model.md); this note owns what it does to a pipeline. Rests on [09-devops · 05 Metadata API](../SF_core/09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md).
 

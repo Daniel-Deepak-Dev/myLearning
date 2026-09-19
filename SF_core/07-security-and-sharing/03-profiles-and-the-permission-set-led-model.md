@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 10
+tags: [currency-new, currency-warning]
+---
 # Profiles & the Permission-Set-Led Model
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 10
 
 **Scope:** How object, field and user permissions are actually assigned, and the state of the profile-to-permission-set migration. Grouping and muting are [04](04-permission-set-groups-and-muting.md); automating assignment is [05](05-user-access-policies-and-lifecycle.md).
 

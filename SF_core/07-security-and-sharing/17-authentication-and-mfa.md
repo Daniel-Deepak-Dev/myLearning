@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 11
+tags: [currency-warning]
+---
 # Authentication & MFA
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 11
 
 **Scope:** Proving who the user is. Layer 2 of [01](01-security-model-layers-overview.md), the half that runs *before* any permission is consulted. What happens to the session afterwards is [18](18-session-security-login-policies-and-step-up.md); federating the decision to another identity provider is [19](19-sso-saml-oidc-and-identity.md).
 

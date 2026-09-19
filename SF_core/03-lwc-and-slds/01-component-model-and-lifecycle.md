@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 5
+---
 # Component Model & Lifecycle
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 05
 
 **Scope:** What a component *is* on disk, and the order the platform calls into it. What the template can express is [02](02-templates-directives-and-rendering.md); what makes it re-render is [05](05-decorators-and-the-reactivity-model.md).
 

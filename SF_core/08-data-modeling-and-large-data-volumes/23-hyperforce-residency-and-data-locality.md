@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 15
+tags: [currency-new, currency-warning]
+---
 # Hyperforce, Residency & Data Locality
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 15
 
 **Scope:** Where the org's data physically runs, what the migration changes underneath you, and what residency does and does not promise. The ops-side view is [09-devops · 23](../09-devops-sfdx-and-release-management/INDEX.md).
 

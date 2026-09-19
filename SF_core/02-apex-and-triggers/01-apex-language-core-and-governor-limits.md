@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 3
+---
 # Apex Language Core & Governor Limits
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 03
 
 **Scope:** The type system, collections, state model and the per-transaction limit map every later note in this area refers back to. Security defaults and the async contexts that reset these limits are phase 04 — see [INDEX](INDEX.md).
 

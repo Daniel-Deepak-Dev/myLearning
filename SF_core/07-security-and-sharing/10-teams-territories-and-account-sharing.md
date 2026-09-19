@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 10
+---
 # Teams, Territories & Account Sharing
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 10
 
 **Scope:** The record-sharing mechanisms that are configured on the record rather than in Setup — account and opportunity teams — and the second hierarchy that Enterprise Territory Management adds. Ordinary rules are [09](09-sharing-rules-and-manual-sharing.md).
 

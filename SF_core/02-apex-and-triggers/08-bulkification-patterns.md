@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 3
+---
 # Bulkification Patterns
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 03
 
 **Scope:** Writing Apex that costs the same whether it processes one record or two hundred. The limits being defended are [01](01-apex-language-core-and-governor-limits.md); the DML end of it is [05](05-dml-database-methods-and-savepoints.md).
 

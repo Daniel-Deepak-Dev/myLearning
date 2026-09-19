@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 17
+tags: [currency-new]
+---
 # Hyperforce & Instance Operations
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 17
 
 **Scope:** The org as a thing that runs somewhere — instances, maintenance windows, and the migration work that lands on release operations. The residency and data-locality view is [08-data · 23](../08-data-modeling-and-large-data-volumes/23-hyperforce-residency-and-data-locality.md); same platform shift, other side.
 

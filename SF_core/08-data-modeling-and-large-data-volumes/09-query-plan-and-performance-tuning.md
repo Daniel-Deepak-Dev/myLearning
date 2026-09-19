@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 14
+---
 # Query Plan & Performance Tuning
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 14
 
 **Scope:** Proving *why* a specific query is slow, rather than guessing. The rules it tests against are [08](08-indexes-and-query-selectivity.md); Apex-side profiling is [02-apex · 24](../02-apex-and-triggers/24-apex-performance-and-profiling.md).
 

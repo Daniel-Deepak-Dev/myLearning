@@ -1,7 +1,18 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: light
+level: working
+status: open
+gaps: 3
+org_checks: 2
+labs: 3
+created: 2026-08-30
+updated: 2026-08-30
+currency: "Summer '26 (API 67.0)"
+tags: [currency-new]
+---
 # Calling a Prompt Template from Flow
-
-> Area: 04-flow-and-automation · Level: working · Status: 🌱 3 gaps open
-> Currency: **Summer '26 (API 67.0)** · Created: 2026-08-30 · Updated: 2026-08-30
 
 **One line:** An activated prompt template is automatically an invocable action, so any flow can call one and read the generated text back.
 

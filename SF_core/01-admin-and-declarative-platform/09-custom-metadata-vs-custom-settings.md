@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 01-admin-and-declarative-platform
+format: dense
+status: learning
+created: 2026-08-01
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 1
+tags: [currency-warning]
+---
 # Custom Metadata vs Custom Settings
-
-> Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 01
 
 **Scope:** Where configuration values live, and the decision between Custom Metadata Types and Custom Settings. Runtime access patterns in Apex are expanded in [02-apex](../02-apex-and-triggers/INDEX.md).
 

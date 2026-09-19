@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 14
+---
 # Record Locking & Concurrency
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 14
 
 **Scope:** Why concurrent writes fail at volume, and how to make them stop. The read-path chain ends at [11](11-skinny-tables-and-support-levers.md); this opens the write path. `FOR UPDATE` syntax is [10-soql · 01](../10-soql-and-sosl/01-query-anatomy-and-the-soql-model.md); retry policy is [06-integration · 23](../06-integration-and-apis/23-idempotency-retries-and-error-handling.md).
 

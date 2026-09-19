@@ -1,6 +1,14 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 18
+tags: [currency-new, currency-warning]
+---
 # LWR Architecture & Build Model
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** The one fact that makes the rest of this area make sense — an LWR site is **built and served**, not rendered per request. Templates are [01](01-template-choice-and-site-landscape.md); the operational side of publishing is [03](03-site-setup-domains-and-publishing.md).
 

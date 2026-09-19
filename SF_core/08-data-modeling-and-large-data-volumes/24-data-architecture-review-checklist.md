@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 15
+---
 # Data Architecture Review Checklist
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 15
 
 **Scope:** The capstone — auditing an unfamiliar org's data layer in about an hour. Every number lives in the note that owns it and is **linked, not restated**, because half-quoting a threshold is how this area's facts go wrong.
 

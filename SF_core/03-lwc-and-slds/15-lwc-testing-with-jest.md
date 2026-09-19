@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 7
+tags: [currency-warning]
+---
 # LWC Testing with Jest
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 07
 
 **Scope:** Unit-testing a component bundle off-platform with Jest — mounting, querying, mocking wires and Apex. Apex test classes are [02-apex · 20](../02-apex-and-triggers/INDEX.md); this runs in Node, not in the org.
 

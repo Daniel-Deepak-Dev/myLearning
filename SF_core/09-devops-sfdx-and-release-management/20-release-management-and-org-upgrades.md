@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 17
+tags: [currency-warning]
+---
 # Release Management & Org Upgrades
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 17
 
 **Scope:** The releases you do not control — Salesforce's three a year — and the operating rhythm around them. The admin-side feature view is [01-admin · 02](../01-admin-and-declarative-platform/02-release-cadence-and-release-updates.md); this note is the release manager's calendar and gates.
 

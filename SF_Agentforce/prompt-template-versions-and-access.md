@@ -1,7 +1,14 @@
+---
+vault: SF_Agentforce
+format: light
+level: basic
+status: complete
+org_checks: 1
+labs: 4
+created: 2026-08-28
+updated: 2026-08-30
+---
 # Prompt Template Versions & Access
-
-> Folder: SF_Agentforce · Level: basic · Status: ✅ complete
-> Created: 2026-08-28 · Updated: 2026-08-30
 
 **One line:** Who can build a template, who can run one, and what happens when you change one that is live.
 

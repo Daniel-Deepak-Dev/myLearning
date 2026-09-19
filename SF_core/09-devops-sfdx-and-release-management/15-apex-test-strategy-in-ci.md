@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 17
+---
 # Apex Test Strategy in CI
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 17
 
 **Scope:** Which tests run, where, and what a failure is allowed to block. How to *write* an Apex test is [02-apex · 20–21](../02-apex-and-triggers/20-apex-testing-fundamentals.md); this note is about the pipeline's relationship with the test suite.
 

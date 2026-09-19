@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 10-soql-and-sosl
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 22
+---
 # Semi-Joins, Anti-Joins & Set Filtering
-
-> Area: 10-soql-and-sosl · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 22
 
 **Scope:** Filtering one object by the existence of related records — `IN (SELECT …)`, `NOT IN (SELECT …)`, and when a two-query-and-a-map is the better answer. Traversal is [04](04-relationship-queries-in-depth.md).
 

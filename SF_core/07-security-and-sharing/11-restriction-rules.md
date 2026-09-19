@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 10
+tags: [currency-warning]
+---
 # Restriction Rules
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 10
 
 **Scope:** The one mechanism that reduces record access. What grants it is [06](06-org-wide-defaults-and-record-access.md)–[10](10-teams-territories-and-account-sharing.md); changing the *default view* without changing access is [12](12-scoping-rules.md).
 

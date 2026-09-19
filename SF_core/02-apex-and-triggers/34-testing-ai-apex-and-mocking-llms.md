@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 23
+tags: [currency-new]
+---
 # Testing AI Apex & Mocking LLMs
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 23
 
 **Scope:** Why none of [31](31-apex-grounded-prompt-templates.md)–[33](33-models-api-in-apex.md) is testable by reflex, and the one shape that makes them testable. The general mocking toolkit is [21](21-apex-testing-advanced-and-mocking.md); the injection mechanics are [28](28-dependency-injection-and-pluggable-apex.md).
 

@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 01-admin-and-declarative-platform
+format: dense
+status: learning
+created: 2026-08-01
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 1
+---
 # Objects, Fields & Relationships
-
-> Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 01
 
 **Scope:** The schema primitives — objects, field types, and the relationship types that connect them. Deliberately shallow on consequences and performance: cascade, reparenting and sharing fallout are [08-data · 02](../08-data-modeling-and-large-data-volumes/02-relationships-deep-dive.md); selectivity, indexing and ownership skew are [08-data · 08](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md).
 

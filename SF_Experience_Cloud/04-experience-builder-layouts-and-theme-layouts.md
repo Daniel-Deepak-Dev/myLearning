@@ -1,6 +1,13 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 18
+---
 # Experience Builder Layouts & Theme Layouts
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** The composition model inside Experience Builder — what a page is made of, and the two extension points you can replace with your own LWC. Component *authoring* rules are [06](06-custom-lwc-in-lwr-sites.md); colour and typography are [05](05-branding-sets-design-tokens-and-slds-2.md).
 

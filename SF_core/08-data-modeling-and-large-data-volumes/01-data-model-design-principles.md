@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 14
+---
 # Data Model Design Principles
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 14
 
 **Scope:** How to decide what becomes an object, and why *standard first* is a cost argument rather than a style preference. The schema primitives are [01-admin · 03](../01-admin-and-declarative-platform/03-objects-fields-and-relationships.md); the consequences of each relationship type are [02](02-relationships-deep-dive.md).
 

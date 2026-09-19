@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 01-admin-and-declarative-platform
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 2
+---
 # Search configuration & Einstein Search
-
-> Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 02
 
 **Scope:** What an admin can tune about global search, and what Einstein Search adds for free. Programmatic search (SOSL) is [02-apex](../02-apex-and-triggers/INDEX.md).
 

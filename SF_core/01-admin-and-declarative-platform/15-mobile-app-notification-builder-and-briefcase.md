@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 01-admin-and-declarative-platform
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 2
+---
 # Mobile app, Notification Builder & Briefcase
-
-> Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 02
 
 **Scope:** Configuring the Salesforce mobile app, sending custom notifications, and priming records for offline use. Mobile field composition is [05 · Dynamic Forms](05-dynamic-forms-and-lightning-app-builder.md); mobile action bars are [06](06-dynamic-actions-and-list-views.md).
 

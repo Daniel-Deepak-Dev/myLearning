@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 17
+tags: [currency-warning]
+---
 # CI/CD with GitHub Actions
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 17
 
 **Scope:** Assembling the pipeline — jobs, headless auth in CI, delta, gates, promotion. The deploy *mechanics* it drives are [05](05-metadata-api-and-deployment-mechanics.md), the CLI grammar is [01](01-sf-cli-v2-fundamentals.md), and what happens when a deploy goes wrong is [25](25-deployment-rollback-hotfix-and-destructive-changes.md).
 

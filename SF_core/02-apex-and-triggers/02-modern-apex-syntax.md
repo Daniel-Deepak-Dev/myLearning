@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 3
+tags: [currency-new]
+---
 # Modern Apex Syntax
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 03
 
 **Scope:** The language additions that post-date most published Apex — safe navigation, null coalescing, `switch`, and the Summer '26 string work. Query and DML idioms are [03](03-soql-fundamentals-and-relationship-queries.md) and [05](05-dml-database-methods-and-savepoints.md).
 

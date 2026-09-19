@@ -1,7 +1,13 @@
+---
+vault: SF_Agentforce
+format: light
+level: basic
+status: complete
+labs: 3
+created: 2026-08-27
+updated: 2026-08-28
+---
 # Prompt Builder & Prompt Templates
-
-> Folder: SF_Agentforce · Level: basic · Status: ✅ complete
-> Created: 2026-08-27 · Updated: 2026-08-28
 
 **One line:** Prompt Builder is the Setup tool. A prompt template is the reusable prompt it produces.
 

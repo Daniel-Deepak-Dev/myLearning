@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 8
+---
 # Platform Event & Async Path Flows
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 08
 
 **Scope:** The two declarative ways work leaves the triggering transaction — the **asynchronous path** on a record-triggered flow, and the **platform event-triggered flow**. The event *platform* itself is [02-apex · 18](../02-apex-and-triggers/18-platform-events-and-cdc-in-apex.md) and [06-integration](../06-integration-and-apis/INDEX.md).
 

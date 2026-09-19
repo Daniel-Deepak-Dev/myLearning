@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 13
+tags: [currency-new, currency-warning]
+---
 # Certificates, mutual TLS & the PKI changes
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 13
 
 **Scope:** The certificate layer under every integration — where certificates come from, what mutual TLS actually requires, and the industry changes now breaking both. Credentials that are secrets rather than keys are [17](17-named-credentials-and-external-credentials.md); SAML signing certificates are [07-security · 19](../07-security-and-sharing/19-sso-saml-oidc-and-identity.md).
 

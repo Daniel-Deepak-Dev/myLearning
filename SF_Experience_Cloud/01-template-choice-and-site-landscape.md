@@ -1,6 +1,14 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 18
+tags: [currency-new, currency-warning]
+---
 # Template Choice & Site Landscape
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** The first irreversible decision on an Experience Cloud project — which runtime and template. What LWR buys and what it costs. The build model itself is [02](02-lwr-architecture-and-build-model.md); moving an existing Aura site is [12](12-aura-to-lwr-migration-and-coexistence.md).
 

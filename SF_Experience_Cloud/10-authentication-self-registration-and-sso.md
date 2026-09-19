@@ -1,6 +1,13 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 18
+---
 # Authentication, Self-Registration & SSO
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 18
 
 **Scope:** How an external person becomes an authenticated user of your site — login page, self-registration, federated sign-on, and the headless option. The identity protocols are [07-security · 19](../SF_core/07-security-and-sharing/19-sso-saml-oidc-and-identity.md); OAuth as API authorization is [06-integration · 15](../SF_core/06-integration-and-apis/15-oauth-flows-and-authorization.md).
 

@@ -1,7 +1,14 @@
+---
+vault: SF_Agentforce
+format: light
+level: working
+status: complete
+org_checks: 2
+labs: 4
+created: 2026-08-28
+updated: 2026-08-28
+---
 # Prompt Template Metadata & Deployment
-
-> Folder: SF_Agentforce · Level: working · Status: ✅ complete
-> Created: 2026-08-28 · Updated: 2026-08-28
 
 **One line:** What a prompt template looks like as metadata, and what breaks when you move it between orgs.
 

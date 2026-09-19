@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 10
+tags: [currency-new]
+---
 # Auditing & Troubleshooting Access
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 10
 
 **Scope:** How to answer *"why can this user see this?"* and *"why can't they?"* from the org itself rather than by reading configuration. The layers being interrogated are [01](01-security-model-layers-overview.md)–[14](14-code-execution-context-and-security.md).
 

@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 322
+---
 # SOQL in Apex
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 03 *(narrowed in phase 22)*
 
 **Scope:** SOQL **as Apex sees it** — inline queries and binding, the `for` loop's heap behaviour, the governor budget, and reading `AggregateResult`. **The query language itself is [10-soql · 01–07](../10-soql-and-sosl/INDEX.md)**, which owns clause order, traversal rules, operators, date literals and aggregate syntax. Selectivity is [08-data · 08](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md); query plans are [08-data · 09](../08-data-modeling-and-large-data-volumes/09-query-plan-and-performance-tuning.md).
 

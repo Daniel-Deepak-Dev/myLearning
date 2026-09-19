@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 3
+---
 # Triggers & the Handler Framework
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 03
 
 **Scope:** The trigger as a dispatch point, its context variables, and the handler class that holds the actual logic. Where it fires in the save order and how to stop it re-entering is [07](07-order-of-execution-and-recursion.md).
 

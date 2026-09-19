@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 6
+---
 # Apex in LWC — Wire vs Imperative
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 06
 
 **Scope:** Calling Apex from a component — the two call styles, the `cacheable` contract, and refreshing stale data. What the Apex method itself must do about security is [02-apex · 10](../02-apex-and-triggers/INDEX.md) and is not restated here.
 

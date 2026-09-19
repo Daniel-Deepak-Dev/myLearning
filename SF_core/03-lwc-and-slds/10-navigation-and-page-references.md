@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 6
+---
 # Navigation & Page References
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 06
 
 **Scope:** Sending the user somewhere — the navigation service, the page reference vocabulary, and console tab control. Navigation *within* a Flow screen is [11](11-lwc-in-flow-screens-and-quick-actions.md); Experience Cloud routing and named pages are [SF_Experience_Cloud](../../SF_Experience_Cloud/INDEX.md).
 

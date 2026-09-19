@@ -1,6 +1,13 @@
+---
+vault: SF_Experience_Cloud
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 19
+---
 # Navigation, Search & Audiences
-
-> Folder: SF_Experience_Cloud · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 19
 
 **Scope:** How a visitor moves through an LWR site and what they see — navigation menus, site search, and audience-based personalization. The site scaffold this sits on is built in [02](02-lwr-architecture-and-build-model.md); the guest visibility rules underneath it are [07](07-guest-user-security-model.md).
 

@@ -1,7 +1,14 @@
+---
+vault: SF_Agentforce
+format: light
+level: basic
+status: complete
+org_checks: 1
+labs: 4
+created: 2026-08-27
+updated: 2026-08-28
+---
 # Einstein Trust Layer
-
-> Folder: SF_Agentforce · Level: basic · Status: ✅ complete
-> Created: 2026-08-27 · Updated: 2026-08-28
 
 **One line:** The security layer between Salesforce and the LLM provider. Every Agentforce and Prompt Builder call passes through it.
 

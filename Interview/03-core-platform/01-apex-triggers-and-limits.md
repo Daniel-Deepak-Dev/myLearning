@@ -1,6 +1,17 @@
+---
+vault: Interview
+area: Core Platform
+format: dense
+level: "medium→complex"
+status: learning
+created: 2026-08-23
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+set: 1
+set_total: 3
+scenarios: 4
+---
 # Core Platform — Apex, Triggers & Limits
-
-> Area: Core Platform · Set 01 of 03 · Scenarios: 4 · Level: medium→complex · Currency: **Summer '26 (API 67.0)**
 
 **Drills:** code that passes every test and is wrong at volume. Three of these four are invisible in a sandbox with one record and unmissable on the first real load — which is the definition of the class of bug this area exists to catch.
 

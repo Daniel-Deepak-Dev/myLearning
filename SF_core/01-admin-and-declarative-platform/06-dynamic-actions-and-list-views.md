@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 01-admin-and-declarative-platform
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 2
+tags: [currency-warning]
+---
 # Dynamic Actions & list views
-
-> Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 02
 
 **Scope:** Where record-page actions come from and how they are filtered, plus the list view surface admins configure. Field composition is [05 · Dynamic Forms](05-dynamic-forms-and-lightning-app-builder.md).
 

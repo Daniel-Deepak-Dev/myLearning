@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 11
+---
 # Field Audit Trail & Data Retention
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 11
 
 **Scope:** Shield's second pillar — keeping *field history* for years instead of months, and the retention policy object that governs it. The free Setup-side monitoring surfaces are [01-admin · 17](../01-admin-and-declarative-platform/17-setup-audit-trail-monitoring-and-usage.md), which forward-links here for exactly this. Configuration-change auditing is Setup Audit Trail, not this.
 

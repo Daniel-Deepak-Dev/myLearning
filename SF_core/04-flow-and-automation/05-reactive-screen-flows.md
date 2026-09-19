@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 8
+tags: [currency-new]
+---
 # Reactive Screen Flows
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 08
 
 **Scope:** Making one screen recalculate without a Next click — **reactive components** and **Screen Actions**, which are two different mechanisms people conflate. Screen composition is [04](04-screen-flows-and-ux-design.md).
 

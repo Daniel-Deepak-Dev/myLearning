@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 7
+tags: [currency-new]
+---
 # Offline LWC & Mobile Constraints
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 07
 
 **Scope:** What a component can and cannot do in the Salesforce mobile app with no network, and the device APIs it gains in exchange. The online GraphQL adapter is [07](07-graphql-wire-adapter.md).
 

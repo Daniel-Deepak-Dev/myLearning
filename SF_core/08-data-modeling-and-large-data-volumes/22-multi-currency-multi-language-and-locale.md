@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 15
+---
 # Multi-Currency, Multi-Language & Locale
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 15
 
 **Scope:** What internationalisation does to the *data model* — extra columns, conversion at read time, and one switch you cannot take back. Where the org physically sits is [23](23-hyperforce-residency-and-data-locality.md).
 

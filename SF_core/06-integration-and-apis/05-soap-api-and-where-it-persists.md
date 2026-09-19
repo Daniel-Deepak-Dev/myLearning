@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 12
+---
 # SOAP API & where it persists
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 12
 
 **Scope:** The XML/WSDL surface — the two WSDL flavours, what still genuinely runs on it, and the one call being withdrawn. The administration APIs that are *only* SOAP are [09](09-metadata-tooling-and-connect-apis.md).
 

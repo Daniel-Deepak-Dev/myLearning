@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 13
+tags: [currency-new, currency-warning]
+---
 # External Client Apps
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 13
 
 **Scope:** The app object an external caller authenticates through, and what replaced the connected app. The flows themselves are [15](15-oauth-flows-and-authorization.md); what an authenticated caller may then reach is [24](24-api-limits-monitoring-and-access-control.md).
 

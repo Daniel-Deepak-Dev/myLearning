@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 15
+tags: [currency-warning]
+---
 # External Objects vs Replicated Copies
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 15
 
 **Scope:** The copy-or-federate decision and what each side costs you. The Salesforce Connect *mechanism* is [06-integration · 20](../06-integration-and-apis/20-salesforce-connect-and-external-objects.md); the zero-copy third option is [18](18-zero-copy-and-data-360-as-data-tier.md).
 

@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 9
+---
 # Flow for External & Guest Users
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 09
 
 **Scope:** Running a flow for somebody who is not a licensed internal user — how access is granted, and what an unauthenticated visitor can reach. The general context model is [19](19-flow-run-context-and-sharing.md); site hardening is [SF_Experience_Cloud · 07](../../SF_Experience_Cloud/07-guest-user-security-model.md).
 

@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 7
+tags: [currency-new]
+---
 # Custom Lightning Types for Agent Output
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 07
 
 **Scope:** Replacing an Agentforce action's default input form and output text with your own LWC. The agent, the topic and the action's Apex live in [SF_Agentforce/](../../SF_Agentforce/INDEX.md); this is the rendering contract only.
 

@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 16
+---
 # Branching Strategy for Salesforce
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 16
 
 **Scope:** An argued opinion about branches, environments and merges on this platform. There is no docs page for this; the value is the reasoning. The pipeline that enforces it is [11](11-devops-center.md).
 

@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 13
+tags: [currency-warning]
+---
 # Named Credentials & External Credentials
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 13
 
 **Scope:** Outbound authentication — how Salesforce calls someone else's API without your code holding a secret. The Apex mechanics are [02-apex · 19](../02-apex-and-triggers/19-callouts-named-credentials-and-http-in-apex.md); certificates and mutual TLS are [26](26-certificates-mutual-tls-and-the-pki-changes.md); inbound auth is [15](15-oauth-flows-and-authorization.md).
 

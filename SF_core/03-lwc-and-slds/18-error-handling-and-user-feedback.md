@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 03-lwc-and-slds
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 7
+tags: [currency-warning]
+---
 # Error Handling & User Feedback
-
-> Area: 03-lwc-and-slds · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 07
 
 **Scope:** Getting an error from wherever it was thrown to something the user can act on. Where errors *originate* is [08](08-apex-in-lwc-wire-vs-imperative.md) and [06](06-lightning-data-service-and-ui-api-wires.md); this is what you do with them.
 

@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 08-data-modeling-and-large-data-volumes
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 15
+tags: [currency-new]
+---
 # Sandboxes, Seeding & Data Mask
-
-> Area: 08-data-modeling-and-large-data-volumes · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 15
 
 **Scope:** The **data** in non-production orgs — which sandbox holds what, how it gets there, and how it stops being real. Source tracking and the development workflow are [09-devops](../09-devops-sfdx-and-release-management/INDEX.md).
 

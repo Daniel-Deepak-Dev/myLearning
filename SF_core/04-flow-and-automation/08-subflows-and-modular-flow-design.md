@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 8
+---
 # Subflows & Modular Flow Design
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 08
 
 **Scope:** Reuse inside Flow — the subflow contract, what it does and does not buy you, and where to draw a module boundary. Reuse across the *code* boundary is [11](11-flow-and-apex-interop.md).
 

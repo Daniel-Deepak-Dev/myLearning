@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-05
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 24
+tags: [currency-warning]
+---
 # Reading Inherited Workflow Rules & Process Builder
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 24
 
 **Scope:** How the two legacy tools actually fire, so you can read what an inherited org is already doing. The conversion tool is [18](18-migrate-to-flow-and-legacy-retirement.md); the migration programme is [27](27-legacy-automation-migration-runbook.md).
 

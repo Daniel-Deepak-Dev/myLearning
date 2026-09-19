@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-09-19
+currency: "Summer '26 (API 67.0)"
+phase: 10
+---
 # Org-Wide Defaults & Record Access
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 10
 
 **Scope:** The baseline of record-level access and the grants layered on top of it — including the ones the platform creates without being asked. Who those grants reach is [08](08-groups-queues-and-the-grantee-model.md); the rules that create them are [09](09-sharing-rules-and-manual-sharing.md).
 

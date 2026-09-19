@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 4
+tags: [currency-warning]
+---
 # Queueable Apex & Chaining
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 04
 
 **Scope:** The default async mechanism — typed state, delay, chaining and duplicate suppression. Choosing between it and the alternatives is [12](12-async-apex-overview-and-choosing.md); recovering from its failures is [16](16-transaction-finalizers.md).
 

@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 04-flow-and-automation
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 8
+tags: [currency-warning]
+---
 # Fault Paths & Custom Errors
-
-> Area: 04-flow-and-automation · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 08
 
 **Scope:** What happens when a flow fails, and the three mechanisms for controlling it. Testing failure deliberately is [15 · Flow testing & debugging](15-flow-testing-and-debugging.md).
 

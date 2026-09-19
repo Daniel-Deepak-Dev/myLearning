@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 322
+---
 # Dynamic SOQL, SOSL & Describe in Apex
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 03 *(narrowed in phase 22)*
 
 **Scope:** The **Apex API** for querying at runtime — `Database.query` / `queryWithBinds` / `AccessLevel`, `Search.find()`, and schema describe. **The languages themselves are [10-soql](../10-soql-and-sosl/INDEX.md)**: traversal and `TYPEOF` are [· 04](../10-soql-and-sosl/04-relationship-queries-in-depth.md), semi-joins [· 06](../10-soql-and-sosl/06-semi-joins-anti-joins-and-set-filtering.md), injection defence [· 07](../10-soql-and-sosl/07-dynamic-soql-and-injection-defence.md), SOSL [· 08–09](../10-soql-and-sosl/08-sosl-mechanics-and-the-search-index.md). Static queries from Apex are [03](03-soql-fundamentals-and-relationship-queries.md).
 

@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 06-integration-and-apis
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 13
+---
 # Apex REST & custom endpoints
-
-> Area: 06-integration-and-apis · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 13
 
 **Scope:** Publishing your own inbound HTTP endpoint from Apex, and what it becomes once published. Standard REST is [04](04-rest-api-fundamentals.md); the OpenAPI document and catalog registration are [19](19-external-services-openapi-and-the-api-catalog.md); exposure to agents is [25](25-mcp-servers-and-agent-facing-apis.md).
 

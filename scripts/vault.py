@@ -60,6 +60,18 @@ TRUSTED_DOMAINS = ("salesforce.com", "trailhead.com", "trailhead.salesforce.com"
 STALE_MONTHS = 3
 TODAY = date.today()
 
+# Tags the tool owns, derived from the ⚠️ / 🆕 flags curated on INDEX rows.
+MACHINE_TAGS = {"currency-warning", "currency-new"}
+
+# The controlled vocabulary. Folders express product and area; tags express the
+# themes that cut across them. Kept short on purpose — a tag list that sprawls
+# stops being a filter and becomes noise. Add here first, then use.
+ALLOWED_TAGS = MACHINE_TAGS | {
+    "governor-limits", "security", "sharing", "api-67", "licensing",
+    "retirement", "performance", "testing", "deployment", "integration",
+    "async", "bulkification", "trust-layer", "grounding", "guest-access",
+}
+
 
 # ─────────────────────────────────────────────────────────────── model ──
 
@@ -84,8 +96,9 @@ class Note:
     text: str
     lines: list[str]
     kind: str = "other"                 # light | dense | other
-    meta: dict[str, str] = field(default_factory=dict)
+    meta: dict = field(default_factory=dict)
     sections: dict[str, tuple[int, int]] = field(default_factory=dict)
+    body_start: int = 0                 # first line after the frontmatter block
 
     def section_text(self, name: str) -> str:
         if name not in self.sections:
@@ -101,8 +114,111 @@ def rel_of(path: str) -> str:
     return os.path.relpath(path, ROOT).replace("\\", "/")
 
 
+# ─────────────────────────────────────────────────────── metadata I/O ──
+#
+# Metadata is YAML frontmatter. Obsidian reads it as Properties, which is what
+# makes Bases views, property search and sorting possible. The legacy `>`
+# blockquote reader below is kept only so `migrate` can read what it replaces.
+
+# Emitted in this order so every note's frontmatter reads the same way.
+FM_ORDER = [
+    "vault", "area", "format", "level", "status",
+    "gaps", "org_checks", "labs",
+    "created", "updated", "currency", "phase",
+    "set", "set_total", "scenarios", "tags",
+]
+
+# Legacy blockquote key -> canonical frontmatter key.
+LEGACY_KEYS = {
+    "Folder": "vault", "Area": "area", "Level": "level", "Status": "status",
+    "Created": "created", "Updated": "updated", "Currency": "currency",
+    "Phase": "phase", "Scenarios": "scenarios",
+}
+
+# Legacy status glyph/prose -> canonical word.
+STATUS_WORDS = {
+    "learning": "learning", "complete": "complete",
+    "not started": "not-started", "parked": "parked", "open": "open",
+}
+
+FM_KEY_RE = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*):\s*(.*)$")
+PLAIN_SCALAR_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9 _./-]*$")
+YAML_RESERVED = {"yes", "no", "true", "false", "null", "on", "off", "~"}
+
+
+def _unquote(s: str) -> str:
+    s = s.strip()
+    if len(s) >= 2 and s[0] == s[-1] and s[0] in "\"'":
+        body = s[1:-1]
+        return body.replace('\\"', '"').replace("\\\\", "\\") if s[0] == '"' else body
+    return s
+
+
+def yaml_scalar(v) -> str:
+    """Quote anything YAML would not read back as the string we meant."""
+    if isinstance(v, bool):
+        return "true" if v else "false"
+    if isinstance(v, int):
+        return str(v)
+    s = str(v)
+    if s == "":
+        return '""'
+    if PLAIN_SCALAR_RE.match(s) and s.lower() not in YAML_RESERVED:
+        return s
+    return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+
+def parse_frontmatter(lines: list[str]) -> tuple[dict, int]:
+    """Return (meta, body_start). ({}, 0) when the file has no frontmatter."""
+    if not lines or lines[0].strip() != "---":
+        return {}, 0
+    close = next((i for i in range(1, len(lines))
+                  if lines[i].strip() in ("---", "...")), None)
+    if close is None:
+        return {}, 0
+    meta: dict = {}
+    key = None
+    for raw in lines[1:close]:
+        if not raw.strip() or raw.lstrip().startswith("#"):
+            continue
+        stripped = raw.strip()
+        if stripped.startswith("- ") and key:          # block-sequence item
+            meta.setdefault(key, [])
+            if isinstance(meta[key], list):
+                meta[key].append(_unquote(stripped[2:]))
+            continue
+        m = FM_KEY_RE.match(raw)
+        if not m:
+            continue
+        key, val = m.group(1), m.group(2).strip()
+        if val == "":
+            meta[key] = []
+        elif val.startswith("[") and val.endswith("]"):
+            meta[key] = [_unquote(x) for x in val[1:-1].split(",") if x.strip()]
+        else:
+            meta[key] = _unquote(val)
+    return meta, close + 1
+
+
+def dump_frontmatter(meta: dict) -> list[str]:
+    """Render meta as frontmatter lines, canonical order first."""
+    out = ["---"]
+    rest = [k for k in sorted(meta) if k not in FM_ORDER and not k.startswith("_")]
+    for k in FM_ORDER + rest:
+        if k not in meta:
+            continue
+        v = meta[k]
+        if isinstance(v, list):
+            if v:
+                out.append(f"{k}: [{', '.join(yaml_scalar(x) for x in v)}]")
+        else:
+            out.append(f"{k}: {yaml_scalar(v)}")
+    out.append("---")
+    return out
+
+
 def parse_meta_blockquote(lines: list[str]) -> dict[str, str]:
-    """Metadata is a blockquote on lines 3-4. Never YAML frontmatter."""
+    """LEGACY. The pre-migration format: a `>` blockquote on lines 3-4."""
     meta: dict[str, str] = {}
     for raw in lines[1:6]:
         if not raw.startswith(">"):
@@ -120,6 +236,28 @@ def parse_meta_blockquote(lines: list[str]) -> dict[str, str]:
     return meta
 
 
+def legacy_to_canonical(raw: dict[str, str]) -> dict:
+    """Map a blockquote dict onto the frontmatter schema."""
+    meta: dict = {}
+    for old, new in LEGACY_KEYS.items():
+        if old in raw:
+            meta[new] = raw[old]
+    if "_stale_line" in raw:
+        meta["_stale_line"] = raw["_stale_line"]
+    if "currency" in meta:
+        meta["currency"] = meta["currency"].replace("**", "").strip()
+    if "phase" in meta:
+        meta["phase"] = meta["phase"].lstrip("0") or "0"
+    if "status" in meta:
+        parsed = parse_status(meta["status"])
+        if parsed:
+            kind, n = parsed
+            meta["status"] = STATUS_WORDS.get(kind, kind)
+            if kind == "open":
+                meta["gaps"] = n
+    return meta
+
+
 def parse_sections(lines: list[str]) -> dict[str, tuple[int, int]]:
     """Map '## Heading' -> (heading index, index of next '## ' or EOF)."""
     heads = [i for i, l in enumerate(lines) if l.startswith("## ")]
@@ -131,21 +269,42 @@ def parse_sections(lines: list[str]) -> dict[str, tuple[int, int]]:
 
 
 def load_note(path: str) -> Note:
+    """Read a note in either format. Frontmatter wins where both exist."""
     with open(path, encoding="utf-8") as fh:
         text = fh.read()
     lines = text.splitlines()
     rel = rel_of(path)
-    note = Note(
+    meta, body_start = parse_frontmatter(lines)
+    if meta:
+        kind = meta.get("format") or ("light" if "level" in meta else "dense")
+    else:
+        legacy = parse_meta_blockquote(lines)
+        meta = legacy_to_canonical(legacy)
+        # Pre-migration, kind is inferred from which keys happen to be present.
+        if "Level" in legacy and "Created" in legacy:
+            kind = "light"
+        elif "Currency" in legacy or "Phase" in legacy:
+            kind = "dense"
+        else:
+            kind = "other"
+    return Note(
         path=path, rel=rel, vault=rel.split("/")[0],
-        text=text, lines=lines,
-        meta=parse_meta_blockquote(lines),
-        sections=parse_sections(lines),
+        text=text, lines=lines, kind=kind, meta=meta,
+        sections=parse_sections(lines), body_start=body_start,
     )
-    if "Level" in note.meta and "Created" in note.meta:
-        note.kind = "light"
-    elif "Currency" in note.meta or "Phase" in note.meta:
-        note.kind = "dense"
-    return note
+
+
+def note_status(note: Note) -> tuple[str, int] | None:
+    """Status as (kind, gap count), whichever metadata format the note uses."""
+    raw = note.meta.get("status", "")
+    if not raw:
+        return None
+    if raw == "open":
+        try:
+            return ("open", int(note.meta.get("gaps") or 0))
+        except (TypeError, ValueError):
+            return ("open", 0)
+    return parse_status(str(raw))
 
 
 def walk_md(dirs: tuple[str, ...] | None = None) -> list[str]:
@@ -350,14 +509,14 @@ def r_status(notes, findings):
     for path, note in notes.items():
         if note.kind != "light":
             continue
-        got = parse_status(note.meta.get("Status", ""))
+        got = note_status(note)
         gaps = count_open_gaps(note)
         want = ("open", gaps) if gaps else ("complete", 0)
         if got != want:
             shown = "🌱 %d gaps open" % gaps if gaps else "✅ complete"
             findings.append(Finding(
                 "status-derived", note.rel, line_of(note, "Status:"),
-                f"Status is {note.meta.get('Status','(missing)')!r} "
+                f"status is {note.meta.get('status','(missing)')!r} "
                 f"but {gaps} open gap(s) — should be {shown!r}",
             ))
 
@@ -373,35 +532,62 @@ def r_gaps_empty(notes, findings):
             ))
 
 
-@rule("stale-flag")
+@rule("stale")
 def r_stale(notes, findings):
-    """Past 3 months a third metadata line appears; it goes the moment the note is touched."""
+    """Notes not updated in 3+ months. Derived from `updated` — nothing is stamped.
+
+    This is a study signal, not a defect, so it is deliberately left out of the
+    pre-commit gate. `HOME.md` surfaces the same list.
+    """
     for path, note in notes.items():
-        if note.kind != "light":
-            continue
-        updated = parse_date(note.meta.get("Updated", ""))
+        updated = parse_date(str(note.meta.get("updated", "")))
         if not updated:
             continue
         age = months_between(updated, TODAY)
-        has = "_stale_line" in note.meta
-        if age >= STALE_MONTHS and not has:
+        if age >= STALE_MONTHS:
             findings.append(Finding(
-                "stale-flag", note.rel, 4,
-                f"Updated {updated} is {age} months old — add "
-                f"'> ⏳ {age} months old — recheck against release notes'",
+                "stale", note.rel, 1,
+                f"last updated {updated} — {age} months old, recheck against release notes",
             ))
-        elif age < STALE_MONTHS and has:
-            findings.append(Finding(
-                "stale-flag", note.rel, 5,
-                f"staleness line present but the note is only {age} months old — remove it",
-            ))
-        elif has:
-            m = re.search(r"(\d+)\s+months old", note.meta["_stale_line"])
-            if m and int(m.group(1)) != age:
+
+
+@rule("tags")
+def r_tags(notes, findings):
+    """Tags come from the controlled vocabulary in ALLOWED_TAGS."""
+    for path, note in notes.items():
+        for tag in note.meta.get("tags", []):
+            if tag not in ALLOWED_TAGS:
                 findings.append(Finding(
-                    "stale-flag", note.rel, 5,
-                    f"staleness line says {m.group(1)} months, actual age is {age}",
+                    "tags", note.rel, 1,
+                    f"`{tag}` is not in the controlled vocabulary — "
+                    f"add it to ALLOWED_TAGS in scripts/vault.py first",
                 ))
+
+
+@rule("frontmatter")
+def r_frontmatter(notes, findings):
+    """Every note carries YAML frontmatter with the required keys for its format."""
+    required = {"vault", "format", "status", "created", "updated"}
+    for path, note in notes.items():
+        if note.body_start == 0:
+            findings.append(Finding(
+                "frontmatter", note.rel, 1,
+                "no YAML frontmatter — run `vault.py migrate`",
+            ))
+            continue
+        for key in sorted(required - set(note.meta)):
+            findings.append(Finding(
+                "frontmatter", note.rel, 1, f"frontmatter is missing `{key}`",
+            ))
+        if (blockquote := next(
+            (i for i in range(note.body_start, min(note.body_start + 8, len(note.lines)))
+             if note.lines[i].startswith(">") and re.search(r"\b(Status|Area|Folder|Currency|Phase|Level|Created|Updated):", note.lines[i])),
+            None,
+        )) is not None:
+            findings.append(Finding(
+                "frontmatter", note.rel, blockquote + 1,
+                "legacy metadata blockquote left behind — frontmatter is the source now",
+            ))
 
 
 # --- indexes --------------------------------------------------------------
@@ -475,12 +661,12 @@ def r_index_row(notes, findings):
                 return cells[col[name]] if name in col else None
 
             if (c := cell("Status")) is not None:
-                got, want = parse_status(c), parse_status(note.meta.get("Status", ""))
+                got, want = parse_status(c), note_status(note)
                 if want and got != want:
                     findings.append(Finding(
                         "index-row", rel_idx, lineno,
                         f"Status {c!r} does not match {note.rel} "
-                        f"({note.meta.get('Status','(missing)')!r})",
+                        f"({note.meta.get('status','(missing)')!r})",
                     ))
             if (c := cell("Org ✓")) is not None:
                 want_n = count_org_checks(note)
@@ -562,8 +748,8 @@ def r_index_summary(notes, findings):
                     "index-summary", note_idx.rel, i,
                     f"claims {c.group(1)} complete, notes hold {done}",
                 ))
-            dates = [d for n in here if (d := parse_date(n.meta.get("Updated", "")))]
-            created = [d for n in here if (d := parse_date(n.meta.get("Created", "")))]
+            dates = [d for n in here if (d := parse_date(str(n.meta.get("updated", ""))))]
+            created = [d for n in here if (d := parse_date(str(n.meta.get("created", ""))))]
             if dates and (nw := re.search(r"newest (\d{4}-\d{2}-\d{2})", line)):
                 if parse_date(nw.group(1)) != max(dates):
                     findings.append(Finding(
@@ -627,7 +813,8 @@ def r_length(notes, findings):
     for path, note in notes.items():
         cap = 50 if note.kind == "light" else 80
         end = note.sections.get("Related", (len(note.lines), 0))[0]
-        body = len([l for l in note.lines[:end]])
+        # Frontmatter is metadata, not body — it never counts towards the cap.
+        body = max(0, end - note.body_start)
         if body > cap:
             findings.append(Finding(
                 "format-length", note.rel, end or len(note.lines),
@@ -921,69 +1108,111 @@ class Editor:
         return self.dirty
 
 
-def set_meta_field(ed: Editor, key: str, value: str) -> bool:
-    """Replace one `Key: …` field inside the metadata blockquote, in place."""
-    for i in range(min(6, len(ed.raw))):
-        line = ed.get(i)
-        if not line.startswith(">") or f"{key}:" not in line:
-            continue
-        new = re.sub(
-            rf"{key}:\s*[^·\n]*?(\s*)(?=·|$)",
-            lambda m: f"{key}: {value}{m.group(1)}",
-            line, count=1,
-        )
-        ed.set(i, new)
-        return True
-    return False
+def write_meta(path: str, updates: dict, drop: tuple[str, ...] = ()) -> list[str]:
+    """Merge `updates` into a note's frontmatter and rewrite the block in place.
+
+    The whole block is re-rendered so key order and quoting stay canonical.
+    Returns the names of the keys that actually changed, or [] if nothing did.
+    """
+    ed = Editor(path)
+    meta, body_start = parse_frontmatter([ed.get(i) for i in range(len(ed.raw))])
+    if not body_start:
+        return []
+    before = dict(meta)
+    for key in drop:
+        meta.pop(key, None)
+    meta.update(updates)
+    if meta == before:
+        return []
+    for _ in range(body_start):
+        ed.drop(0)
+    for line in reversed(dump_frontmatter(meta)):
+        ed.insert(0, line)
+    ed.save()
+    return sorted(k for k in set(before) | set(meta)
+                  if str(before.get(k)) != str(meta.get(k)))
 
 
-@fixer("status-derived")
-def fix_status(notes, changes):
-    """Status is recomputed from the open-gap count."""
+@fixer("derived-fields")
+def fix_derived(notes, changes):
+    """status, gaps, org_checks and labs are recounted from the note body.
+
+    These four are the machine's fields. Everything else in the frontmatter —
+    vault, area, format, level, created, currency, phase, tags — is yours, and
+    this never touches it.
+    """
     for path, note in notes.items():
-        if note.kind != "light":
+        if not note.body_start:
             continue
         gaps = count_open_gaps(note)
-        want_pair = ("open", gaps) if gaps else ("complete", 0)
-        if parse_status(note.meta.get("Status", "")) == want_pair:
-            continue
-        shown = f"🌱 {gaps} gaps open" if gaps else "✅ complete"
-        ed = Editor(path)
-        if set_meta_field(ed, "Status", shown) and ed.save():
-            changes.append((note.rel, f"Status -> {shown}"))
+        org = count_org_checks(note)
+        labs = len([
+            i for i in range(*note.sections.get("Hands-on", (0, 0)))
+            if LAB_RE.match(note.lines[i])
+        ]) if "Hands-on" in note.sections else 0
+
+        updates: dict = {}
+        drop: list[str] = []
+        # A dense note's status is authored (learning / not-started / parked);
+        # only the light format derives it from the gap count.
+        if note.kind == "light":
+            updates["status"] = "open" if gaps else "complete"
+        for key, value in (("gaps", gaps), ("org_checks", org), ("labs", labs)):
+            if value:
+                updates[key] = value
+            else:
+                drop.append(key)
+
+        if changed := write_meta(path, updates, tuple(drop)):
+            changes.append((note.rel, "recounted " + ", ".join(changed)))
 
 
-@fixer("stale-flag")
-def fix_stale(notes, changes):
-    """The '⏳ N months old' line is added, corrected or removed."""
-    for path, note in notes.items():
-        if note.kind != "light":
+# No `stale-flag` fixer: staleness is derived from `updated` at read time
+# and surfaced by the `stale` rule and HOME.md. Nothing is stamped into a
+# note, so there is nothing to write back.
+
+
+@fixer("tags-currency")
+def fix_tags_currency(notes, changes):
+    """currency-warning / currency-new mirror the ⚠️ / 🆕 flags on INDEX rows.
+
+    Those flags are curated in the indexes, so the index is the source and the
+    tag is derived. Every other tag on a note is yours and is left alone.
+    """
+    wanted: dict[str, set[str]] = {}
+    for idx in index_files():
+        note_idx = load_note(idx)
+        base = os.path.dirname(idx)
+        headers, rows = parse_table(note_idx.lines)
+        if "Topic" not in headers:
             continue
-        updated = parse_date(note.meta.get("Updated", ""))
-        if not updated:
+        for _, cells in rows:
+            if len(cells) != len(headers):
+                continue
+            cell = cells[headers.index("Topic")]
+            m = MD_LINK_RE.search(cell)
+            if not m:
+                continue
+            target = os.path.normpath(os.path.join(base, m.group(2)))
+            if target not in notes:
+                continue
+            tags = set()
+            if "⚠️" in cell:
+                tags.add("currency-warning")
+            if "🆕" in cell:
+                tags.add("currency-new")
+            wanted[target] = tags
+
+    for path, tags in wanted.items():
+        note = notes[path]
+        current = list(note.meta.get("tags", []))
+        merged = sorted(set(t for t in current if t not in MACHINE_TAGS) | tags)
+        if merged == sorted(current):
             continue
-        age = months_between(updated, TODAY)
-        ed = Editor(path)
-        at = next(
-            (i for i in range(min(8, len(ed.raw)))
-             if ed.get(i).startswith(">") and "months old" in ed.get(i)),
-            None,
-        )
-        want = f"> ⏳ {age} months old — recheck against release notes"
-        if age >= STALE_MONTHS and at is None:
-            last = max(
-                (i for i in range(min(6, len(ed.raw))) if ed.get(i).startswith(">")),
-                default=1,
-            )
-            ed.insert(last + 1, want)
-            changes.append((note.rel, f"added staleness line ({age} months)"))
-        elif age < STALE_MONTHS and at is not None:
-            ed.drop(at)
-            changes.append((note.rel, "removed staleness line"))
-        elif at is not None and ed.get(at) != want:
-            ed.set(at, want)
-            changes.append((note.rel, f"staleness line -> {age} months"))
-        ed.save()
+        updates = {"tags": merged} if merged else {}
+        drop = () if merged else ("tags",)
+        if write_meta(path, updates, drop):
+            changes.append((note.rel, f"tags -> {merged or '(none)'}"))
 
 
 def _row_text(cells: list[str]) -> str:
@@ -1040,8 +1269,8 @@ def fix_index_summary(notes, changes):
             continue
         gaps = sum(count_open_gaps(n) for n in here)
         done = len([n for n in here if count_open_gaps(n) == 0])
-        upd = [d for n in here if (d := parse_date(n.meta.get("Updated", "")))]
-        crt = [d for n in here if (d := parse_date(n.meta.get("Created", "")))]
+        upd = [d for n in here if (d := parse_date(str(n.meta.get("updated", ""))))]
+        crt = [d for n in here if (d := parse_date(str(n.meta.get("created", ""))))]
         ed = Editor(idx)
         for i in range(len(ed.raw)):
             line = ed.get(i)
@@ -1099,6 +1328,163 @@ def fix_readme_counts(notes, changes):
     ed.save()
 
 
+# ───────────────────────────────────────────────────────────── migrate ──
+
+LEGACY_FIELD_RE = re.compile(
+    r"^(Folder|Area|Level|Status|Created|Updated|Currency|Phase|Scenarios|Set)\b"
+)
+SET_RE = re.compile(r"Set\s+(\d+)\s+of\s+(\d+)")
+
+
+def is_legacy_meta_line(line: str) -> bool:
+    """A `>` line that is metadata, not a content blockquote."""
+    if not line.startswith(">"):
+        return False
+    body = line.lstrip(">").strip()
+    if "months old" in body:
+        return True
+    return any(LEGACY_FIELD_RE.match(part.strip()) for part in body.split("·"))
+
+
+def git_dates(rel: str) -> tuple[str | None, str | None]:
+    """(created, updated) from git history — `--follow` survives the renames."""
+    def run(args):
+        try:
+            return subprocess.run(
+                ["git"] + args, cwd=ROOT, capture_output=True, text=True, check=True,
+            ).stdout.strip()
+        except Exception:
+            return ""
+    first = run(["log", "--diff-filter=A", "--follow", "--format=%as", "--", rel])
+    last = run(["log", "-1", "--format=%as", "--", rel])
+    created = first.splitlines()[-1] if first else None
+    return created, (last or None)
+
+
+def build_meta(note: Note, legacy: dict[str, str], created, updated) -> dict:
+    """Assemble frontmatter for one note from its legacy blockquote plus the body."""
+    meta: dict = {"vault": note.vault}
+
+    if note.vault == "SF_core" and "Area" in legacy:
+        meta["area"] = legacy["Area"]
+    elif note.vault == "Interview" and "Area" in legacy:
+        meta["area"] = legacy["Area"]
+
+    meta["format"] = note.kind if note.kind in ("light", "dense") else "dense"
+    if "Level" in legacy:
+        meta["level"] = legacy["Level"]
+
+    gaps = count_open_gaps(note)
+    org = count_org_checks(note)
+    labs = len([
+        1 for i in range(*note.sections.get("Hands-on", (0, 0)))
+        if LAB_RE.match(note.lines[i])
+    ]) if "Hands-on" in note.sections else 0
+
+    # Status: derived for light notes, carried over for dense ones.
+    if meta["format"] == "light":
+        meta["status"] = "open" if gaps else "complete"
+    else:
+        parsed = parse_status(legacy.get("Status", ""))
+        meta["status"] = STATUS_WORDS.get(parsed[0], parsed[0]) if parsed else "learning"
+
+    if gaps:
+        meta["gaps"] = gaps
+    if org:
+        meta["org_checks"] = org
+    if labs:
+        meta["labs"] = labs
+
+    # An authored date always wins. Git is a backfill for the 238 notes that
+    # never carried one — it must never overwrite a date you wrote by hand.
+    if "Created" in legacy:
+        meta["created"] = legacy["Created"]
+    elif created:
+        meta["created"] = created
+    if "Updated" in legacy:
+        meta["updated"] = legacy["Updated"]
+    elif updated:
+        meta["updated"] = updated
+
+    if "Currency" in legacy:
+        meta["currency"] = legacy["Currency"].replace("**", "").strip()
+    if "Phase" in legacy:
+        meta["phase"] = int(re.sub(r"\D", "", legacy["Phase"]) or 0)
+    if "Scenarios" in legacy:
+        meta["scenarios"] = int(re.sub(r"\D", "", legacy["Scenarios"]) or 0)
+
+    # `Set 01 of 03` is a keyless token the legacy parser silently dropped.
+    for raw in note.lines[1:6]:
+        if raw.startswith(">") and (m := SET_RE.search(raw)):
+            meta["set"], meta["set_total"] = int(m.group(1)), int(m.group(2))
+            break
+
+    # Currency flags already in the prose are the best tags the vault has.
+    tags = []
+    head = "\n".join(note.lines[:min(len(note.lines), 40)])
+    if "⚠️" in head:
+        tags.append("currency-warning")
+    if "🆕" in head:
+        tags.append("currency-new")
+    if tags:
+        meta["tags"] = tags
+
+    return meta
+
+
+def migrate_note(path: str) -> str | None:
+    """Rewrite one note's metadata as frontmatter. Returns a description, or None."""
+    note = load_note(path)
+    if note.body_start:
+        return None                                   # already migrated
+    legacy = parse_meta_blockquote(note.lines)
+    if not legacy:
+        return None
+
+    ed = Editor(path)
+    drop = [i for i in range(min(8, len(ed.raw))) if is_legacy_meta_line(ed.get(i))]
+    if not drop:
+        return None
+
+    created, updated = git_dates(note.rel)
+    meta = build_meta(note, legacy, created, updated)
+
+    for i in reversed(drop):
+        ed.drop(i)
+    # Collapse the blank line the blockquote left behind.
+    lo = min(drop)
+    while lo < len(ed.raw) and lo > 0 and ed.get(lo).strip() == "" and ed.get(lo - 1).strip() == "":
+        ed.drop(lo)
+    for line in reversed(dump_frontmatter(meta)):
+        ed.insert(0, line)
+    ed.save()
+    return f"{len(meta)} keys, dropped {len(drop)} blockquote line(s)"
+
+
+def cmd_migrate(only: list[str]) -> int:
+    targets = [p for p in walk_md() if is_note_file(p)]
+    targets += [
+        p for p in walk_md(("Interview",))
+        if os.path.basename(p) not in NON_NOTE_NAMES
+        and not os.path.basename(p).startswith("_")
+    ]
+    if only:
+        targets = [p for p in targets if any(o in rel_of(p) for o in only)]
+
+    done, skipped = 0, 0
+    for n, path in enumerate(sorted(targets), 1):
+        result = migrate_note(path)
+        if result:
+            done += 1
+        else:
+            skipped += 1
+        if n % 25 == 0 or n == len(targets):
+            print(f"  {n}/{len(targets)} …", flush=True)
+    print(f"\nmigrated {done}, already done or not applicable {skipped}.")
+    print("Review with `git diff` before committing.")
+    return 0
+
+
 # ────────────────────────────────────────────────────────────── driver ──
 
 
@@ -1132,7 +1518,14 @@ def main() -> int:
     fx.add_argument("--rule", action="append", default=[],
                     help="only fixers whose name starts with this (repeatable)")
     fx.add_argument("--list-rules", action="store_true")
+
+    mg = sub.add_parser("migrate", help="one-shot: blockquote metadata -> frontmatter")
+    mg.add_argument("--only", action="append", default=[],
+                    help="limit to paths containing this substring (repeatable)")
     args = ap.parse_args()
+
+    if args.cmd == "migrate":
+        return cmd_migrate(args.only)
 
     if getattr(args, "list_rules", False):
         table = FIXERS if args.cmd == "fix" else RULES

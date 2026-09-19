@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 17
+tags: [currency-warning]
+---
 # VS Code, Code Builder & Tooling
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 17
 
 **Scope:** Where a Salesforce developer actually sits, and which of the names in older material still refer to a live product. The component-authoring loop is [03-lwc · 21](../03-lwc-and-slds/21-local-dev-and-lightning-dev-server.md); installing and configuring the CLI is [01](01-sf-cli-v2-fundamentals.md).
 

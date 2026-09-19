@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 17
+tags: [currency-new]
+---
 # ApexGuru & Performance Review
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 17
 
 **Scope:** Finding the Apex that is actually slow in *this* org, and the entitlement wall in front of that. Static rules are [16](16-code-analyzer-v5.md); the language-level tuning is [02-apex · 24](../02-apex-and-triggers/24-apex-performance-and-profiling.md).
 

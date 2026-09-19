@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 09-devops-sfdx-and-release-management
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 17
+---
 # Code Review Conventions for Metadata
-
-> Area: 09-devops-sfdx-and-release-management · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 17
 
 **Scope:** Reviewing a pull request whose diff is mostly XML nobody wrote by hand. Automated checks are [16](16-code-analyzer-v5.md) and [18](18-linting-formatting-and-pre-commit.md); this note is the human protocol and the opinion behind it.
 

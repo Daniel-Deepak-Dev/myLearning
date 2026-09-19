@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 07-security-and-sharing
+format: dense
+status: learning
+created: 2026-08-03
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 11
+tags: [currency-new]
+---
 # Session Security, Login Policies & Step-Up
-
-> Area: 07-security-and-sharing · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 11
 
 **Scope:** Everything the platform decides *after* the credential check in [17](17-authentication-and-mfa.md) — where a login may originate, how long it lasts, how strong it is held to be, and what forces a user to re-prove identity mid-session.
 

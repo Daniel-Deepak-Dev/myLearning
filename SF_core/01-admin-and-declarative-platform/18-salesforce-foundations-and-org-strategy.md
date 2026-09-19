@@ -1,6 +1,15 @@
+---
+vault: SF_core
+area: 01-admin-and-declarative-platform
+format: dense
+status: learning
+created: 2026-08-02
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 2
+tags: [currency-new]
+---
 # Salesforce Foundations & org strategy
-
-> Area: 01-admin-and-declarative-platform · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 02
 
 **Scope:** What the Foundations add-on actually puts in an org, and how that lands on the single-org vs multi-org decision. Editions and limits are [01 · Org anatomy](01-org-anatomy-and-editions.md); Data 360 depth lives in [SF_Data_360](../../SF_Data_360/INDEX.md).
 

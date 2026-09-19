@@ -1,6 +1,14 @@
+---
+vault: SF_core
+area: 02-apex-and-triggers
+format: dense
+status: learning
+created: 2026-08-04
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+phase: 21
+---
 # Custom Iterators & Iterables
-
-> Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 21
 
 **Scope:** Writing `Iterator<T>` and `Iterable<T>` by hand, and the one place the platform genuinely asks for them — a Batch `start()` whose scope is not a query. Batch mechanics and scope sizing are [14](14-batch-apex-and-stateful-processing.md).
 

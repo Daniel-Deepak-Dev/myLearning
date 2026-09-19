@@ -1,6 +1,18 @@
+---
+vault: Interview
+area: Core Platform
+format: dense
+level: "medium→complex"
+status: learning
+created: 2026-08-23
+updated: 2026-08-27
+currency: "Summer '26 (API 67.0)"
+set: 2
+set_total: 3
+scenarios: 4
+tags: [currency-warning, currency-new]
+---
 # Core Platform — Sharing & Security
-
-> Area: Core Platform · Set 02 of 03 · Scenarios: 4 · Level: medium→complex · Currency: **Summer '26 (API 67.0)**
 
 **Drills:** the access model after it stopped being a pure union and after Apex and Flow stopped agreeing with each other. Every answer in this set turns on one question — **whose access is being enforced here, and is it being enforced at all?**
 
