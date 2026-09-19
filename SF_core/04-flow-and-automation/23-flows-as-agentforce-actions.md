@@ -60,5 +60,6 @@ A: The ability to build or deploy an agent — including a small purpose-built o
 
 - [SF_Agentforce · Template-Triggered Prompt Flows](../../SF_Agentforce/template-triggered-prompt-flows.md) — **a different flow type.** That one feeds a prompt template; this one is an action an agent calls
 - [SF_Agentforce · Atlas Reasoning Engine](../../SF_Agentforce/atlas-reasoning-engine.md) — the caller that reads your descriptions and decides whether to invoke this flow
+- [SF_Agentforce · Prompt Templates as Agent Actions](../../SF_Agentforce/prompt-templates-as-agent-actions.md) — the third kind of agent action, wired the same way
 - [02-apex · 22 Invocable Apex & Agentforce actions](../02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md) — the coded action, and the API 66.0 constructor rule
 - [11 · Flow & Apex interop](11-flow-and-apex-interop.md) — the typed-payload boundary an agent action inherits

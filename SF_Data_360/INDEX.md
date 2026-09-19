@@ -30,7 +30,7 @@ Read top to bottom. `#` is display order only — filenames carry no number, so 
 
 | Topic | Note |
 |---|---|
-| Grounding an agent on Data 360 | [SF_Agentforce · INDEX](../SF_Agentforce/INDEX.md) |
+| Grounding a prompt on Data 360 | [SF_Agentforce · Grounding a Prompt Template](../SF_Agentforce/grounding-a-prompt-template.md) |
 
 ## Backlog — referenced elsewhere, not yet fed
 

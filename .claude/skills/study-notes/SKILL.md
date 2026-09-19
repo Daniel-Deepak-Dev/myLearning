@@ -97,10 +97,12 @@ Also:
 
 ## 6 · Dates, status and sources
 
-**Status is derived, never typed.** Count the unchecked `- [ ]` boxes in `## Gaps to close`:
+**Closed gaps are deleted, not ticked.** When you answer a gap, remove its line. When the last one goes, remove the `## Gaps to close` heading with it. The answer belongs in the note body; a checklist of settled questions is clutter.
+
+**Status is derived, never typed.** Count the `- [ ]` lines in `## Gaps to close`:
 
 - at least one → `Status: 🌱 N gaps open`
-- zero → `Status: ✅ complete`
+- none, or no section at all → `Status: ✅ complete`
 
 **Dates.** `Created` never changes. `Updated` changes on every edit.
 
@@ -114,7 +116,7 @@ Remove that line as soon as the note is updated.
 
 **Sources.** Every fact you researched gets a `## Sources` entry with the date you read it. Salesforce domains are trusted; anything else carries 🚩.
 
-**History.** One dated line per feed, under `## History`. What was added, how many gaps opened or closed.
+**History.** One dated line per feed, under `## History`, saying what was **added or changed**. Never a gap tally — no "4 gaps opened", no "1 gap closed".
 
 ## 7 · Link both ways
 

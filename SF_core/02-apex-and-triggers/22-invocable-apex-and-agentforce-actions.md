@@ -78,4 +78,4 @@ A: The `label` and `description` on the method and its `@InvocableVariable` fiel
 
 - [23 · `UserDefinedType` & typed interop](23-userdefinedtype-and-typed-interop.md) — what a typed payload can legally contain
 - [10 · Apex security: user mode & FLS](10-apex-security-user-mode-and-fls.md) — the running-user semantics an action inherits at 67.0
-- [SF_Agentforce · custom agent actions](../../SF_Agentforce/INDEX.md) — description writing, action selection and exposure as an MCP tool
+- [SF_Agentforce · Prompt Templates as Agent Actions](../../SF_Agentforce/prompt-templates-as-agent-actions.md) — the *other* kind of action, and the description-as-specification rule both share

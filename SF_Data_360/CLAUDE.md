@@ -26,7 +26,9 @@ Template: [../_note-template.md](../_note-template.md).
 
 ## Rules
 
-- **Status is derived, never typed.** Count unchecked `- [ ]` boxes in `## Gaps to close`: some → `🌱 N gaps open`, none → `✅ complete`.
+- **Closed gaps are deleted, not ticked.** Answer one, remove the line. Last one gone, remove the `## Gaps to close` heading too.
+- **Status is derived, never typed.** Count `- [ ]` lines: some → `🌱 N gaps open`; none, or no section at all → `✅ complete`.
+- **`## History` records what was added or changed** — never a gap tally.
 - **`Created` never changes. `Updated` changes on every edit.** Past 3 months without a touch, add `> ⏳ N months old — recheck against release notes`. Remove it when the note is updated.
 - **Every researched fact gets a `## Sources` line** with the date read. Salesforce domains trusted; anything else carries 🚩.
 - **`## History`** takes one dated line per feed.

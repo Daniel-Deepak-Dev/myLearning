@@ -2,7 +2,7 @@
 
 > Area: 02-apex-and-triggers · Currency: **Summer '26 (API 67.0)** · Status: 🌱 learning · Phase: 23
 
-**Scope:** `@InvocableMethod(capabilityType=…)` — Apex invoked *while a prompt is being resolved*, to supply grounding data. The invocable signature rules are [22](22-invocable-apex-and-agentforce-actions.md) and are not repeated here; template authoring and grounding strategy are [SF_Agentforce · Prompt Builder & Templates](../../SF_Agentforce/prompt-builder-and-prompt-templates.md).
+**Scope:** `@InvocableMethod(capabilityType=…)` — Apex invoked *while a prompt is being resolved*, to supply grounding data. The invocable signature rules are [22](22-invocable-apex-and-agentforce-actions.md) and are not repeated here; template authoring is [SF_Agentforce · Prompt Builder & Templates](../../SF_Agentforce/prompt-builder-and-prompt-templates.md) and the other five grounding sources are [SF_Agentforce · Grounding a Prompt Template](../../SF_Agentforce/grounding-a-prompt-template.md).
 
 ## Core idea
 
@@ -77,3 +77,4 @@ A: Prompt resolution fails at runtime — the compiler-generated no-arg construc
 - [32 · Invoking prompt templates from Apex](32-invoking-prompt-templates-from-apex.md) — the inverse direction: Apex as the caller rather than the data provider
 - [10 · Apex security: user mode & FLS](10-apex-security-user-mode-and-fls.md) — why grounding queries can under-return at 67.0
 - [SF_Agentforce · Prompt Template Types](../../SF_Agentforce/prompt-template-types.md) — the six types these `capabilityType` URIs name, and what each grounds on
+- [SF_Agentforce · Prompt Template Metadata & Deployment](../../SF_Agentforce/prompt-template-metadata-and-deployment.md) — the same strings appear as `type` in `GenAiPromptTemplate`

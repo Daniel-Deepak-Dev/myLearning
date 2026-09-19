@@ -10,7 +10,7 @@ You learn topics in whatever order work throws at you. Prompt templates on Monda
 
 Your notes arrive rough and out of order. You want them to land in the right file, in an order you can learn from later, in a format you can re-read in two minutes.
 
-## The four rules
+## The five rules
 
 ### 1. Routing — one question decides the folder
 
@@ -29,8 +29,6 @@ Examples:
 | Einstein Trust Layer masking | `SF_Agentforce/` |
 | Identity resolution rulesets | `SF_Data_360/` |
 
-This is the rule `SF_core` already used to split itself from `AI_Data`. It works. We reuse it.
-
 ### 2. Format — light, not dense
 
 Template: [_note-template.md](_note-template.md).
@@ -38,7 +36,7 @@ Template: [_note-template.md](_note-template.md).
 - 50 lines max.
 - No paragraph longer than two sentences.
 - Bullets and one table. Not prose.
-- `## Key points` → `## Gotchas` → `## Gaps to close` → `## Related`.
+- `## Key points` → `## Gotchas` → `## Gaps to close` → `## Related` → `## Sources` → `## History`.
 
 Your own wording is kept in a `> **From my notes.**` callout. That way you can always tell what you wrote from what the AI added.
 
@@ -49,7 +47,8 @@ Existing `SF_core` notes keep their older, longer format. Only **new** notes use
 Every note carries a level:
 
 ```
-> Folder: SF_Agentforce · Level: basic · Status: 🌱 · Fed: 2026-08-27
+> Folder: SF_Agentforce · Level: basic · Status: 🌱 4 gaps open
+> Created: 2026-08-27 · Updated: 2026-08-27
 ```
 
 > **A note's gaps may go one level up. Never two.**
@@ -66,12 +65,14 @@ It does **not** get `@InvocableMethod`. That is a `deep` item, two levels up.
 
 When you later feed deeper notes on the same topic, the level rises. The deeper gaps unlock then.
 
-Gaps also stay on the topic. Never a syllabus. Never "you should also learn Data Cloud."
+Gaps also stay on the topic. Never a syllabus. Never "you should also learn Data 360."
 
 Two places a gap can appear:
 
 - `## Gaps to close` at the end — a checklist.
 - An inline `> **Gap.**` callout — when the hole sits mid-topic and would confuse the bullets around it.
+
+**A closed gap is deleted, not ticked.** Answer it, remove the line. When the last one goes, the `## Gaps to close` heading goes with it. What you learnt belongs in the note body — a list of settled questions is just clutter you have to read past.
 
 ### 4. Links go both ways
 
@@ -79,44 +80,75 @@ When an Agentforce note links to an Apex note, the Apex note gets a link back. I
 
 One-way links are a folder of files. Two-way links are a wiki. You asked for a wiki.
 
+### 5. Dates, status and sources
+
+**Status is derived, never typed.** Count the `- [ ]` lines in `## Gaps to close`:
+
+- at least one → `Status: 🌱 N gaps open`
+- none, or no section at all → `Status: ✅ complete`
+
+Delete a gap and the status moves on its own. A typed status goes stale the first time you forget to update it.
+
+**Dates.** `Created` never changes. `Updated` changes on every edit.
+
+**Staleness.** Past 3 months without an update, a third metadata line appears:
+
+```
+> ⏳ 4 months old — recheck against release notes
+```
+
+It disappears the moment the note is touched. Salesforce AI moves fast enough that a note going quiet for a quarter is worth flagging.
+
+**Sources.** Every researched fact carries a link and the date it was read:
+
+```markdown
+## Sources
+
+- [Prompt Template Types](https://help.salesforce.com/...) — Salesforce Help · read 2026-08-27
+- [Apex Hours](https://www.apexhours.com/...) — third party 🚩 · read 2026-08-27
+```
+
+Salesforce domains are trusted. Anything else carries 🚩.
+
+**History.** One dated line per feed, saying what was **added or changed** — never a gap tally:
+
+```markdown
+## History
+
+- 2026-08-27 · created from your Day-1 notes
+- 2026-09-02 · added Record Prioritization as the sixth type
+```
+
 ## Order without renumbering
 
 Filenames carry **no number**. `prompt-templates.md`, not `02-prompt-templates.md`.
 
 The learning order lives in each folder's `INDEX.md`:
 
-| # | Topic | One line | Level | Prereq | Fed |
-|---|---|---|---|---|---|
-| 1 | `einstein-trust-layer.md` | The masking and audit gate | basic | — | 2026-08-24 |
-| 2 | `prompt-templates.md` | Reusable LLM instruction as metadata | basic | 1 | 2026-08-22 |
+| # | Topic | One line | Level | Status | Pre | Created | Updated |
+|---|---|---|---|---|---|---|---|
+| 1 | `einstein-trust-layer.md` | The masking and audit gate | basic | 🌱 3 open | — | 2026-08-27 | 2026-08-27 |
+| 2 | `prompt-template-types.md` | The six types | basic | 🌱 4 open | 1 | 2026-08-27 | 2026-08-27 |
 
 - `#` is the recommended read order.
-- `Prereq` is the hard dependency.
-- `Fed` is the day you learned it.
+- `Pre` is the hard prerequisite.
+- `Status`, `Created` and `Updated` mirror the note's own metadata.
 
-Why this way: you will feed a Day-5 topic that belongs at position 3. With numbered filenames that means renaming files and fixing every link. Here it means moving one table row.
+Above the table, a summary line: **topic count · gaps open · complete · newest · oldest**. That answers "how old is all this?" without opening a note.
+
+Why no numbers in filenames: you will feed a Day-5 topic that belongs at position 3. With numbered filenames that means renaming files and fixing every link. Here it means moving one table row.
 
 `SF_core/PHASES.md` already records renumbering as expensive in that vault. We are not repeating it.
 
-## The `Fed` column and the log
+## The archive
 
-Your memory is by date. The vault is by topic.
+`_archive/AI_Data/` holds the old roadmap vault — 24 researched Agentforce and Data 360 topics, the study plan, the labs and the trackers.
 
-[LEARNING-LOG.md](LEARNING-LOG.md) records each feed with a date and where it landed. The `Fed` column in each `INDEX.md` does the same per topic.
+It is a **quarry, not a reference.**
 
-So "that thing I learned on Wednesday" is findable, even when you have forgotten its name.
-
-## Migrating out of AI_Data
-
-`AI_Data/02-salesforce-ai/` and `AI_Data/01-data-cloud/` already hold written Agentforce and Data 360 notes.
-
-We are not moving them all at once. Instead:
-
-- Feed a topic `AI_Data` already covers → the useful content gets folded into the new note.
-- The old `AI_Data` file gets a one-line pointer to the new home.
-- Everything else in `AI_Data` stays where it is.
-
-Migration follows what you are actually studying.
+- When you feed a topic it already covered, its verified facts get pulled into your new note, **cut to your level**.
+- Nothing links back to it. No note says "go read the archive".
+- Its glossary and release radar were kept and promoted: [GLOSSARY.md](GLOSSARY.md) and [RELEASE-RADAR/](RELEASE-RADAR/README.md).
 
 ## Anything that does not route
 
@@ -128,9 +160,14 @@ Filing friction must never stop capture. Triage it later.
 
 | Date | Decision | Why |
 |---|---|---|
-| 2026-08-27 | `SF/` renamed to `SF_core/` | Makes room for `SF_Agentforce/` and `SF_Data_360/` as peers. 112 links across 23 files were repaired in the same commit. |
+| 2026-08-27 | `SF/` renamed to `SF_core/` | Makes room for `SF_Agentforce/` and `SF_Data_360/` as peers. 112 links across 23 files repaired in the same pass. |
 | 2026-08-27 | New folders start empty | You wanted a vault fed by what you actually learn, not by a generated roadmap. |
-| 2026-08-27 | Gradual migration from `AI_Data`, not a bulk move | A bulk move would break `STUDY-PLAN.md`, `REVIEW.md`, `GLOSSARY.md`, both `INDEX.md` files and every `Interview/` probe link at once. |
 | 2026-08-27 | Filenames carry no number | You feed topics in random order. Numbered filenames make every insertion a rename. |
 | 2026-08-27 | Light format for all new notes, in every vault | You asked for notes you can recall from, not paragraphs. |
 | 2026-08-27 | Existing `SF_core` notes are enriched in place, not duplicated | 238 notes already exist. A second light file beside each would split the topic in two. |
+| 2026-08-27 | `AI_Data/` retired to `_archive/` | You said you will not use it for reference or recall. Its glossary and release radar were promoted to the root; ~270 links repointed to the new folders. |
+| 2026-08-27 | Archive is a quarry, never a link target | Keeps the research without asking you to read a vault you have abandoned. |
+| 2026-08-27 | Dates, derived status, staleness flag, sources and history on every note | You asked to know how old a note is and whether it is finished. Deriving status from the gap checklist stops it going stale. |
+| 2026-08-28 | Closed gaps are deleted, not ticked; empty section removed | A checklist of settled questions is clutter. What you learnt goes in the note body. |
+| 2026-08-28 | `## History` never records gap counts | It logs what changed, not bookkeeping. |
+| 2026-08-27 | Level beats migration depth | A one-line note of yours does not get replaced by 119 lines from the archive. Write at your level; the depth arrives when your notes do. |

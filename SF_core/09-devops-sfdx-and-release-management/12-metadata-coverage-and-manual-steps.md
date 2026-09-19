@@ -61,3 +61,4 @@ A: It should shrink — each release converts one or two steps into scripted aut
 - [08 · Unlocked packages (2GP)](08-unlocked-packages-2gp.md) — a second, stricter coverage column
 - [01-admin · 09 Custom metadata vs custom settings](../01-admin-and-declarative-platform/09-custom-metadata-vs-custom-settings.md) — the deployable-configuration decision
 - [20 · Release management & org upgrades](20-release-management-and-org-upgrades.md) — where the runbook is executed
+- [SF_Agentforce · Prompt Template Metadata & Deployment](../../SF_Agentforce/prompt-template-metadata-and-deployment.md) — the AI metadata types, their API 60.0 floor and their dependency order

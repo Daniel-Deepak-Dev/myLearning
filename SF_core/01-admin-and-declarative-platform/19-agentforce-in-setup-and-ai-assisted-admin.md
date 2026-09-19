@@ -66,3 +66,4 @@ A: Any three of: users and access troubleshooting, permission sets and sharing r
 - [17 · Setup Audit Trail, monitoring & usage](17-setup-audit-trail-monitoring-and-usage.md) — the control that makes agent-made config reviewable
 - [18 · Salesforce Foundations & org strategy](18-salesforce-foundations-and-org-strategy.md) — how Agentforce arrives in an ordinary Enterprise org
 - [SF_Agentforce · INDEX](../../SF_Agentforce/INDEX.md) — the agent platform itself: topics, actions, grounding, Trust Layer
+- [SF_Agentforce · Prompt Template Versions & Access](../../SF_Agentforce/prompt-template-versions-and-access.md) — the *other* prompt permissions: Prompt Template Manager and Prompt Template User, which are about authoring rather than Setup

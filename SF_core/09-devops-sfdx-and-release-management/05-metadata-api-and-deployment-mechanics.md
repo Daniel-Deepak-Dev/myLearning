@@ -62,3 +62,4 @@ A: It takes org-controlled bytes and writes them to a laptop or CI runner — a 
 - [06 · Source tracking & sandbox workflow](06-source-tracking-and-sandbox-workflow.md) — deploying without naming components
 - [12 · Metadata coverage & manual steps](12-metadata-coverage-and-manual-steps.md) — the components no manifest can carry
 - [04-flow · 24 Flow deployment & versioning](../04-flow-and-automation/24-flow-deployment-versioning-and-governance.md) — deployed does not mean active
+- [SF_Agentforce · Prompt Template Metadata & Deployment](../../SF_Agentforce/prompt-template-metadata-and-deployment.md) — `GenAiPromptTemplate` carries every version plus a pointer to the active one
