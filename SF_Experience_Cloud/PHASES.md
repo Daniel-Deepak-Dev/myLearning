@@ -79,4 +79,6 @@
 
 **Area complete.** 20 topics, phases 18–19 — and phase 19 was the last content run in the build. All 215 rows across the nine areas are live links; the final ⬜ in [../SF_core/PHASES.md](../SF_core/PHASES.md) is flipped.
 
+**The area closed at 20; fed topics append beyond it.** [INDEX.md](INDEX.md) will read higher than 20 and that is not drift — a topic fed through the `study-notes` contract takes the next `NN-` prefix and carries `—` in the Phase column, because it belongs to no phase. The phase record stops here; the learning path does not. And the append is not only more topics: **the area closed at 20 with zero `## Hands-on` labs**, because all twenty were written in the dense format before the lab contract existed. Fed topics are now the only source of labs in this vault, which is what [PRACTICE.md](PRACTICE.md) exists to queue.
+
 > **What this area proved, and it is the reason the standing rules exist.** Phase 18 found that the vault's own INDEX, area plan and `CURRENCY.md` all asserted the same wrong thing about Aura, and concluded: *when a phase overturns a correction, grep the vault for every place it was ever asserted.* Phase 19 had to run exactly that procedure against **phase 18's own finding**, correcting five notes and three plan-level artefacts. **A correction is not a durable fact; it is a dated observation.** Re-check at the source.

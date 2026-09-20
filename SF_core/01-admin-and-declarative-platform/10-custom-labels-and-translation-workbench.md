@@ -66,4 +66,4 @@ A: It falls back to the master language for that label, so a partly translated o
 
 - [09 · Custom Metadata vs Custom Settings](09-custom-metadata-vs-custom-settings.md) — the other place configuration lives as metadata
 - [03-lwc · INDEX](../03-lwc-and-slds/INDEX.md) — the `@salesforce/label` module and component-side i18n
-- [SF_Experience_Cloud · INDEX](../../SF_Experience_Cloud/INDEX.md) — site-level localisation built on top of labels
+- [SF_Experience_Cloud · 21 Multilingual sites & site translation](../../SF_Experience_Cloud/21-multilingual-sites-and-translation.md) — where this note's "stops at Experience Cloud site localisation" picks up: labels are only one of three translation surfaces a site has, and the other two never touch the Workbench

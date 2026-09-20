@@ -4,7 +4,7 @@ area: 03-lwc-and-slds
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-09-19
+updated: 2026-09-20
 currency: "Summer '26 (API 67.0)"
 phase: 7
 tags: [currency-warning]
@@ -68,3 +68,4 @@ A: Under SLDS 2 dark mode the surrounding theme changes and the fixed colour doe
 - [14 · SLDS 2 & styling hooks](14-slds-2-and-styling-hooks.md) — theme-aware colour, and why dark mode makes contrast a code concern
 - [18 · Error handling & user feedback](18-error-handling-and-user-feedback.md) — errors announced to assistive technology, not just displayed
 - [23 · Static resources & third-party JavaScript](23-static-resources-and-third-party-javascript.md) — `@salesforce/resourceUrl`, and the a11y cost of manual DOM
+- [SF_Experience_Cloud · 22 Site accessibility & conformance](../../SF_Experience_Cloud/22-site-accessibility-and-conformance.md) — the other half: who legally owes WCAG conformance for a published site, and why a component that passes here still leaves the obligation open

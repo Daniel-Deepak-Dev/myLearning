@@ -42,6 +42,7 @@ Enhanced sites being the default means `DigitalExperienceBundle` is the type you
 - **Deploy ≠ publish.** Metadata can be live in the org while the site serves the last published build.
 - **Guest profile is a dependency, not an afterthought** — omit it and the site deploys but guests see nothing, [07](07-guest-user-security-model.md).
 - **Cross-org site/network IDs differ** — hard-coded references break between sandbox and prod; parameterize them.
+- 🚩 **Translations do not travel inside the site bundle.** Label translations need the `Translations` component named separately, and CMS content variants are reported not to deploy at all — re-keyed per org → [21](21-multilingual-sites-and-translation.md).
 
 ## Recall
 
@@ -65,3 +66,4 @@ A: No — the site must still be published; deploy updates the definition, publi
 - [02 · LWR architecture & build model](02-lwr-architecture-and-build-model.md) — owns the LWR / enhanced-LWR / bundle-type distinction
 - [09-devops · 05 Metadata API](../SF_core/09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md) — the retrieve/deploy mechanics this rides on
 - [14 · Enhanced CMS & content delivery](14-enhanced-cms-and-content-delivery.md) — the content half of a site deploy
+- [21 · Multilingual sites & site translation](21-multilingual-sites-and-translation.md) — the translation components a multilingual site needs alongside its bundle

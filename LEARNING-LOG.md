@@ -23,6 +23,45 @@ Newest first.
 
 ---
 
+### 2026-09-20 · Multilingual sites — three translation surfaces, and the URL question with no public answer
+
+You fed: site language settings, language selector, per-language URLs, CMS content variants by locale, Translation Workbench for site content.
+
+- **Multilingual Sites & Site Translation** → [SF_Experience_Cloud/21-multilingual-sites-and-translation.md](SF_Experience_Cloud/21-multilingual-sites-and-translation.md) · `new` · Level: deep
+  - The spine: **three translation surfaces, three owners, three deploy routes.** Builder-authored strings translate inline in the component property editor; org metadata goes through **Translation Workbench**; CMS content becomes a **variant** in the workspace. Merging the three is what makes a translation estimate wrong.
+  - Concrete: **40 languages including the default**, set in Experience Builder → Settings → Languages. Bulk route is export → translate → import — `.xlf` XLIFF for the site, zipped XLIFF per CMS workspace, STF also offered by the Workbench.
+  - **Corrected your note: “per-language URLs” is not a documented Experience Cloud feature.** No reachable first-party page says a language gets its own URL, path or subdomain. Every documented switch is a runtime selection — the Language Selector, the profile language, or LWR's automatic detection. Carried as **gap 1** rather than asserted either way.
+  - The sharpest gotcha is documented, not folklore: **editing default-language content while it is out for translation loses the edit**, because the import overwrites the default too. That is lab `EC-I18N-02`.
+  - Left open, and both point at **16**: whether the auto-generated LWR sitemap emits per-language URLs or any `hreflang`, and whether a public page is cached **once** at the edge or **once per language** — the question a build-and-serve runtime forces and no source answers.
+
+- **[SF_core/01-admin · 10 Custom labels & Translation Workbench](SF_core/01-admin-and-declarative-platform/10-custom-labels-and-translation-workbench.md)** · `updated` — its *“stops at Experience Cloud site localisation”* forward reference finally has a target. The bullet had been aimed at the vault INDEX because no note existed to receive it.
+- **[SF_core/08-data · 22 Multi-currency, multi-language & locale](SF_core/08-data-modeling-and-large-data-volumes/22-multi-currency-multi-language-and-locale.md)** · `updated` — the cross-vault return link; it keeps language-vs-locale, **21** takes the site.
+
+**Also touched:** [14](SF_Experience_Cloud/14-enhanced-cms-and-content-delivery.md), [16](SF_Experience_Cloud/16-site-performance-caching-and-seo.md) and [18](SF_Experience_Cloud/18-experience-cloud-devops.md) each gained one gotcha and a `## Related` line — variants are mostly a translation mechanism, 16's sitemap claim is untested on a multilingual site, and translations do **not** travel inside the site bundle. `SF_Experience_Cloud/PRACTICE.md` created — this vault's first — with `EC-I18N-01..04` as #1–4. 4 new `GLOSSARY.md` rows; one line in [PHASES.md](SF_Experience_Cloud/PHASES.md) recording that the area closed at 20 and fed topics append beyond it.
+
+**Research conditions, because they affect every citation here.** `developer.salesforce.com` and `help.salesforce.com` both return **HTTP 403** to automated fetching from this machine — the same block [RELEASE-RADAR/01-agentforce/2026-07-28.md](RELEASE-RADAR/01-agentforce/2026-07-28.md) already records. Every first-party page was read through search extracts, so every source line says `via search` rather than `read`. Three facts rest on a single third-party source and carry 🚩.
+
+---
+
+### 2026-09-20 · Site accessibility — who actually owes WCAG conformance
+
+You flagged that `03-lwc · 17` covered component-level a11y and **nothing owned the site-level obligation**. Researched and filed, EU and US.
+
+- **Site Accessibility & Conformance** → [SF_Experience_Cloud/22-site-accessibility-and-conformance.md](SF_Experience_Cloud/22-site-accessibility-and-conformance.md) · `new` · Level: working
+  - The spine: **a Salesforce ACR describes Salesforce's components, not your configured site.** The EAA obliges the *service provider* — your client — so an ACR is evidence about one input, never the site's conformance claim.
+  - **Two ACRs, split by runtime**, and the split follows the template decision in **01**: *Experience Cloud – LWR* covers Build Your Own (LWR) and Microsite (LWR); *Experience Cloud – Aura* covers Customer Service, Customer Account Portal and Partner Central. Both Spring '25.
+  - **The version mismatch is the live trap.** Salesforce targets WCAG **2.2** AA; the EAA binds to **EN 301 549 v3.2.1 = WCAG 2.1 AA**. **v4.1.1 shipped 2 September 2026** with WCAG 2.2 and an EAA-mapping annex, but is **not yet cited in the Official Journal**, so it confers no presumption of conformity.
+  - Corrected two things the internet repeats: **"fines up to €100,000 or 4% of turnover"** is not in the directive (Art. 30 leaves penalties to Member States), and **Accessibility Mode is Salesforce Classic only** — it does nothing for a site's public pages.
+  - Left open: which criteria the LWR ACR marks *Partially Supports* (the PDF would not extract), whether Enhanced Chat and Mobile Publisher carry their own ACRs, and three org checks including whether a published LWR page emits a correct `<html lang>`.
+
+- **[SF_core/03-lwc-and-slds/17](SF_core/03-lwc-and-slds/17-accessibility-and-internationalization.md)** · `updated` — the cross-vault return link. It keeps the component half; **22** takes the obligation.
+
+**Also touched:** [RELEASE-RADAR/trust-security-and-governance.md](RELEASE-RADAR/trust-security-and-governance.md) — the *"accessibility enhancements, no obtainable per-component detail"* gap is **closed**. It is **two** Release Updates, both for **WCAG 2.2 *Resize and Reflow***, both **postponed twice** into Winter '27. The governance point is that a vendor's conformance target is dated and the date moves. 4 new `GLOSSARY.md` rows; first `## Hands-on` labs in this vault queued in `SF_Experience_Cloud/PRACTICE.md` as #5–8.
+
+**Note for the record:** this note landed in parallel with the multilingual-sites feed from another session. Both were briefly numbered 21; settled by creation order — multilingual **21**, accessibility **22**.
+
+---
+
 ### 2026-09-20 · Experience Cloud verification pass — the vault's own correction was wrong
 
 **No notes fed — a verification run over the 20 `SF_Experience_Cloud/` notes.**

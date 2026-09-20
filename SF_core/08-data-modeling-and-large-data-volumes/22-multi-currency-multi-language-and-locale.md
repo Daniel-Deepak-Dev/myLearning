@@ -65,3 +65,4 @@ A: No — the API name is stored, so filters, automation and reports are unaffec
 - [23 · Hyperforce, residency & data locality](23-hyperforce-residency-and-data-locality.md) — where the data physically lives, which is a different question
 - [25 · Data migration & cutover](25-data-migration-and-cutover.md) — locale-driven parsing errors in a load
 - [01 · Data model design principles](01-data-model-design-principles.md) — why schema-level switches deserve design review
+- [SF_Experience_Cloud · 21 Multilingual sites & site translation](../../SF_Experience_Cloud/21-multilingual-sites-and-translation.md) — the same language/locale split seen from a public site, where the visitor may have no user record to carry either setting

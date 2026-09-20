@@ -2,7 +2,7 @@
 
 > **Start at [../HOME.md](../HOME.md)** — what to study next, rebuilt from the notes.
 
-Public, partner and customer sites built **LWR-first**. **20 topics** · phases [18](PHASES.md), [19](PHASES.md).
+Public, partner and customer sites built **LWR-first**. **22 topics** · phases [18](PHASES.md), [19](PHASES.md), plus fed topics appended beyond them.
 
 > Currency: **Summer '26 (API 67.0)** · [flag legend](../SF_core/README.md#flag-legend) · [what changed](../SF_core/CURRENCY.md) · [how to write here](AGENTS.md)
 
@@ -38,6 +38,8 @@ Public, partner and customer sites built **LWR-first**. **20 topics** · phases 
 | 18 | [Experience Cloud DevOps](18-experience-cloud-devops.md) ⚠️ | ExperienceBundle vs DigitalExperienceBundle, deployment gotchas | 19 |
 | 19 | [Embedded messaging & agents in sites](19-embedded-messaging-and-agents-in-sites.md) 🆕⚠️ | **Enhanced Chat** (renamed 2025); legacy Chat **retired 14 Feb 2026**; agent on public sites | 19 |
 | 20 | [Site monitoring, limits & scale](20-site-monitoring-limits-and-scale.md) ⚠️ | **overage disables sites**, not just bills; EE 500k/mo, UE/PE 1M/mo | 19 |
+| 21 | [Multilingual sites & site translation](21-multilingual-sites-and-translation.md) | three translation surfaces; **40 languages**; CMS variants; the per-language URL question | — |
+| 22 | [Site accessibility & conformance](22-site-accessibility-and-conformance.md) 🆕⚠️ | **the ACR is not your site's claim**; EAA 28 Jun 2025, EN 301 549 v3.2.1 = WCAG 2.1 AA | — |
 
 ## Related
 

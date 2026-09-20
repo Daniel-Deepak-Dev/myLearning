@@ -45,6 +45,7 @@ The critical carry-forward from [02](02-lwr-architecture-and-build-model.md): **
 - **Stale content after publish** is usually CDN propagation lag, not a data bug.
 - **Client-only rendering kills SEO.** A page that builds its content purely in JS after load hands the crawler an empty shell.
 - **Meta tags are per-page and manual** — an unset title/description ships a generic one; SEO reviews catch this late.
+- **The sitemap and "clean URLs" claims above are untested on a multilingual site.** Whether the sitemap emits per-language URLs, whether anything emits `hreflang`, and whether the edge caches a page once or once per language are all open → [21](21-multilingual-sites-and-translation.md).
 
 ## Recall
 
@@ -68,3 +69,4 @@ A: At publish, when the static build regenerates and propagates to the CDN — n
 - [02 · LWR architecture & build model](02-lwr-architecture-and-build-model.md) — build-and-serve, the SSR capabilities, and Experience Delivery's withdrawal
 - [06 · Custom LWC in LWR sites](06-custom-lwc-in-lwr-sites.md) — the SSR-safe component rules performance depends on
 - [15 · Headless sites & Connect APIs](15-headless-sites-and-connect-apis.md) — where you take over SSR/SEO yourself
+- [21 · Multilingual sites & site translation](21-multilingual-sites-and-translation.md) — carries the open questions a second language puts to this note's caching and sitemap story

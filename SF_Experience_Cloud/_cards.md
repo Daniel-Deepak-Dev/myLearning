@@ -425,3 +425,23 @@ What is guest throttling for, and what's the blunt lever?
 ?
 To blunt scraping/abuse — you can rate-limit and fully disable guest API access via the site setting plus the guest profile's `API Enabled` permission.
 
+Does a Salesforce Accessibility Conformance Report make your Experience Cloud site conformant?
+?
+No. It describes Salesforce's components. A regulator looks at the rendered page — template, branding set, content, custom components — and the obligation sits with the service provider.
+
+Which WCAG version binds under the European Accessibility Act?
+?
+WCAG 2.1 AA, via EN 301 549 v3.2.1 — the version cited in the Official Journal. v4.1.1 (WCAG 2.2) was published 2 September 2026 but is not yet cited, so it confers no presumption of conformity.
+
+Which ACR covers your site, and what decides it?
+?
+The runtime, fixed by the template. *Experience Cloud – LWR* covers Build Your Own (LWR) and Microsite (LWR); *Experience Cloud – Aura* covers Customer Service, Customer Account Portal and Partner Central.
+
+What does the EAA require beyond an accessible site?
+?
+A statement — Art. 13(2) and Annex V — in the general terms, in accessible written and oral form, explaining how the service meets the requirements and kept current for the life of the service.
+
+Where do an LWR site's F6 navigation regions come from?
+?
+Slots in the theme layout. A custom theme layout that drops them loses the regions with no error.
+

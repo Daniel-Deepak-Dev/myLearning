@@ -89,7 +89,14 @@ Two governance points from the tooling window. **First, the version is settled**
 - **Enforcement is rolling**, applied *shortly after* your org receives Winter '27 — **not** on the upgrade weekend itself.
 - **It has been testable since 2026-06-19**: Setup → **My Domain** → **Redirections** → enable **Block API traffic that uses an incorrect instanced URL**.
 - **Doc IDs:** `release-notes.rn_update_instanced_urls_in_api_traffic.htm`, `release-notes.rn_security_domains_api_instanced_urls.htm`, knowledge article **005228941**.
-- **Third Winter '27 Release Update located this run:** a batch of **accessibility enhancements** to base components — cards, docked containers, menu lists, panels, date pickers, popovers, utility bars, record headers, modal windows.
+- **Third Winter '27 Release Update located this run:** a batch of **accessibility enhancements** to base components — cards, docked containers, menu lists, panels, date pickers, popovers, utility bars, record headers, modal windows. *(Detail obtained 2026-09-20 — see below.)*
+
+**2026-09-20 · the accessibility batch resolves into two Release Updates, and both have now slipped twice.** The "no obtainable per-component detail" note is closed. It is **two** updates, not one batch, and both exist for the same success criterion — **WCAG 2.2 *Resize and Reflow*, the behaviour of components at high magnification**:
+
+- **Date pickers, popovers, bottom utility bars and record headers** — first available **Winter '26**, scheduled for enforcement in **Summer '26**, **postponed to Winter '27**.
+- **Page headers and modal windows** — first available **Summer '25**, scheduled for enforcement in **Summer '26**, **postponed to Winter '27**.
+
+The governance point is the slippage, not the components. **A vendor's conformance claim is dated, and the date can move**: an accessibility statement written against "Salesforce conforms to WCAG 2.2 AA" was, for both of these criteria, describing an unenforced Release Update — twice. Anyone citing a platform conformance target in a client-facing statement needs the enforcement date beside it, not just the target → [SF_Experience_Cloud · 22](../SF_Experience_Cloud/22-site-accessibility-and-conformance.md). **Sourcing caveat:** located via search snippets of the Summer '26 release-notes change log and the Release Updates page; `help.salesforce.com` article bodies did not render to a direct fetch on 2026-09-20.
 
 **Relevant to:** **Architect** — every hard-coded endpoint is now a dated asset Salesforce can invalidate without telling you; **Developer** — configs holding an instance host stop getting a response, and the fix is to read `instance_url` at auth time; **Admin** — a Release Update to review and a My Domain switch to flip in a sandbox first.
 

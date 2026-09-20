@@ -37,6 +37,7 @@ Enhanced workspaces are the default and the only place taxonomy, variants and cr
 - **Manual collections cap at 50 items, single type — and dynamic ones at 250.** "Use a dynamic collection instead" raises the ceiling; it does not remove it, and a catalogue above 250 needs paging or a different component.
 - **Restricted channels still need sharing.** Authenticating a channel controls delivery; it doesn't grant record access to anything the content references.
 - **Publishing is per-channel.** Content live in a workspace is invisible on a site until published to that site's channel.
+- **Variants are mostly a translation mechanism.** Add languages to the *workspace*, mark an item **Ready for Translation**, export zipped XLIFF, import, then **publish the variant** — the variant *is* the translation, not a second item → [21](21-multilingual-sites-and-translation.md).
 
 ## Recall
 
@@ -60,3 +61,4 @@ A: Enhanced LWR (distinct from plain LWR) — the wrong runtime won't get the fu
 - [15 · Headless sites & Connect APIs](15-headless-sites-and-connect-apis.md) — delivering this same content to a decoupled front end
 - [18 · Experience Cloud DevOps](18-experience-cloud-devops.md) — `DigitalExperienceBundle` when deploying enhanced sites + CMS
 - [02 · LWR architecture & build model](02-lwr-architecture-and-build-model.md) — LWR vs enhanced LWR, the distinction Enhanced CMS depends on
+- [21 · Multilingual sites & site translation](21-multilingual-sites-and-translation.md) — the translation lifecycle variants exist for, and the two other surfaces it does not cover
