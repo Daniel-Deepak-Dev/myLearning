@@ -3,7 +3,7 @@ vault: SF_Experience_Cloud
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-09-19
+updated: 2026-09-20
 currency: "Summer '26 (API 67.0)"
 phase: 18
 tags: [currency-new, currency-warning]
@@ -37,11 +37,11 @@ The honest framing is a trade, not an upgrade. LWR is faster, is where Salesforc
 - **LWR has no generic record pages.** Record components live on object-specific pages; you cannot drop record detail onto an arbitrary site page the way Aura allows. This is the structural gap people meet in week two.
 - **LWR sites cap at 500 routes** (unique URLs), which is a real ceiling for catalogue-shaped or Knowledge-shaped sites.
 - **Chatter and parts of the CMS component set are thinner on LWR.** Summer '26 did move both forward — Chatter can be turned on in new orgs for Aura *and* LWR sites, and AI-assisted Self-Service components ship for both — but parity is not the assumption to plan against.
-- **Guest-heavy and public means LWR**, because caching and SSR are only possible on a runtime that builds pages ahead of time → [02](02-lwr-architecture-and-build-model.md).
+- **Guest-heavy and public means LWR**, because edge caching and server-side rendering are only possible on a runtime that builds pages ahead of time → [02](02-lwr-architecture-and-build-model.md).
 
 ## 2026 currency
 
-Summer '26's Experience Cloud items are additive rather than directional: 10 GB file uploads (was 2 GB) on Aura **and** LWR, AI-assisted Self-Service components on **both** runtimes, malware scanning for Salesforce Files GA, and Chatter enablement in new orgs. Read that list the right way — **Salesforce is still shipping to Aura sites in 2026**, which is the strongest available evidence against "Aura is retired". What is true is the asymmetry: enhanced CMS and Data 360 site integration are LWR-only, so the gap widens in one direction only. **Note that SSR is no longer part of that asymmetry** — Experience Delivery is being discontinued in Winter '27 and is closed to new enablement → [02](02-lwr-architecture-and-build-model.md), so the LWR case now rests on the static build, the CDN and where new capability lands.
+Summer '26's Experience Cloud items are additive rather than directional: 10 GB file uploads (was 2 GB) on Aura **and** LWR, AI-assisted Self-Service components on **both** runtimes, malware scanning for Salesforce Files GA, and Chatter enablement in new orgs. Read that list the right way — **Salesforce is still shipping to Aura sites in 2026**, which is the strongest available evidence against "Aura is retired". What is true is the asymmetry: enhanced CMS and Data 360 site integration are LWR-only, so the gap widens in one direction only. **What did change is the hosting tier, not the rendering model** — Experience Delivery is discontinued as of Winter '27 → [02](02-lwr-architecture-and-build-model.md), but islands SSR remains on standard LWR infrastructure, so the LWR case still rests on the static build, the CDN, server-side rendering and where new capability lands.
 
 ## Gotchas
 
@@ -49,7 +49,7 @@ Summer '26's Experience Cloud items are additive rather than directional: 10 GB 
 - **"LWR is the default" is a strategy statement, not a Setup fact** — the template gallery still offers more Aura templates than LWR ones.
 - **Picking Build Your Own (LWR) for a service portal buys you a blank page.** Knowledge, case deflection, search and the Chatter feed are what Customer Service was giving you.
 - **Microsite (LWR) is designed for unauthenticated visitors** — reaching for it because it sounds lightweight, then adding login, is the wrong starting point.
-- **A managed-package LWC is hidden in Experience Builder** unless its metadata declares `lightningCommunity__RelaxedCSP` → [06](06-custom-lwc-in-lwr-sites.md).
+- **A managed-package LWC is disabled in Experience Builder's Components panel on a site with Lightning Locker off** unless its metadata declares the `lightningCommunity__RelaxedCSP` **capability**. It is a relaxed-CSP rule, not a blanket packaging rule → [06](06-custom-lwc-in-lwr-sites.md).
 - **The 100-site org cap counts everything** — active, inactive, preview and Visualforce sites → [03](03-site-setup-domains-and-publishing.md).
 
 ## Recall

@@ -3,7 +3,7 @@ vault: SF_Experience_Cloud
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-09-19
+updated: 2026-09-20
 currency: "Summer '26 (API 67.0)"
 phase: 18
 ---
@@ -30,6 +30,7 @@ What is different about LWR is that **both extension points are ordinary Lightni
 - **Neither target supports component properties on its own.** `lightningCommunity__Theme_Layout` needs `lightningCommunity__Default` added alongside it, with the properties declared in `targetConfigs`, before anything is editable in the builder.
 - **Only properties defined for `lightningCommunity__Page` or `lightningCommunity__Page_Layout` are editable** in Experience Builder — which is the rule people discover after wiring the property to the wrong target.
 - **Theme layouts are assignable per page**, so a login page or a landing page can drop the site nav without a second site.
+- **The theme layout is also the SSR gate.** A page is server-rendered only if its theme layout declares the `lightning__ServerRenderable` capability — which the stock Build Your Own (LWR) theme does, and a hand-written replacement easily does not → [02](02-lwr-architecture-and-build-model.md), [16](16-site-performance-caching-and-seo.md).
 - **Pages come in kinds** — standard, object (list/detail/related), login, and error — and object pages are the only place record components work in LWR → [01](01-template-choice-and-site-landscape.md).
 - **Expression-based visibility** is an enhanced-LWR feature; on non-enhanced LWR you get component-level visibility rules only → [02](02-lwr-architecture-and-build-model.md).
 - **Audience targeting layers on top** of all of this and is covered with navigation in phase 19.
@@ -39,6 +40,7 @@ What is different about LWR is that **both extension points are ordinary Lightni
 - **A component with no `<slot>` swallows its children silently.** The builder shows an empty region and no error.
 - **Wiring a property to `lightningCommunity__Theme_Layout` alone makes it invisible in the builder** — add `lightningCommunity__Default` or it is not editable.
 - **A theme layout runs on every page including login and error pages**, so anything in it that assumes an authenticated user breaks the unauthenticated ones → [10](10-authentication-self-registration-and-sso.md).
+- **A custom theme layout without `lightning__ServerRenderable` turns SSR off for every page that uses it** — silently, with no error and no builder warning. The site just gets slower and less crawlable → [16](16-site-performance-caching-and-seo.md).
 - **Page layouts are not Salesforce page layouts.** Same word, unrelated concept; in a mixed conversation say *content layout* → [01-admin · 05](../SF_core/01-admin-and-declarative-platform/05-dynamic-forms-and-lightning-app-builder.md).
 - **Deleting a layout component that a page still uses breaks the page**, and the failure shows up at publish rather than at save.
 - **LWR has no generic record page.** Wanting record detail on a standard page is the single commonest Aura-shaped request that LWR refuses.
@@ -60,9 +62,13 @@ A: Because the theme layout target doesn't support properties on its own; `light
 Q: Which visibility mechanism requires enhanced LWR?
 A: Expression-based visibility — non-enhanced LWR sites get component-level visibility rules only.
 
+Q: What does a theme layout decide besides chrome?
+A: Whether the page is server-rendered. Without the `lightning__ServerRenderable` capability on the theme layout, the whole route is client-rendered.
+
 ## Related
 
 - [06 · Custom LWC in LWR sites](06-custom-lwc-in-lwr-sites.md) — the rest of the target vocabulary and the SSR constraints
 - [05 · Branding sets, design tokens & SLDS 2](05-branding-sets-design-tokens-and-slds-2.md) — how the chrome gets its colours
+- [16 · Site performance, caching & SEO](16-site-performance-caching-and-seo.md) — why the theme layout's SSR capability decides a page's crawlability
 - [12 · Aura to LWR: migration & coexistence](12-aura-to-lwr-migration-and-coexistence.md) — why an Aura theme layout cannot come across
 - [01-admin · 05 Dynamic Forms & Lightning App Builder](../SF_core/01-admin-and-declarative-platform/05-dynamic-forms-and-lightning-app-builder.md) — the internal-app cousin of this composition model

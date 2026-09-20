@@ -3,7 +3,7 @@ vault: SF_Experience_Cloud
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-09-19
+updated: 2026-09-20
 currency: "Summer '26 (API 67.0)"
 phase: 18
 tags: [currency-new]
@@ -31,7 +31,7 @@ renderedCallback() { /* safe place for browser APIs and async work */ }
 ```
 
 - **Four targets matter.** `lightningCommunity__Page` exposes the component to the builder; `lightningCommunity__Default` is what makes its properties editable; `lightningCommunity__Page_Layout` and `lightningCommunity__Theme_Layout` are the structural ones → [04](04-experience-builder-layouts-and-theme-layouts.md).
-- **A managed-package LWC is hidden from the Components panel** unless its metadata declares **`lightningCommunity__RelaxedCSP`**.
+- **`lightningCommunity__RelaxedCSP` is a *capability*, not a target**, and it is narrower than most write-ups suggest: a managed-package LWC is disabled in the Components panel **only on sites where Lightning Locker / LWS is off** — the relaxed-CSP case, which is where the B2B and D2C store LWR templates sit. On an ordinary LWR site with Locker on, a packaged component needs no such declaration.
 - **SSR requires portable *and* synchronous code** in `connectedCallback()` and in getters. Async work belongs in `renderedCallback()` or an event handler — never in `connectedCallback()`.
 - **`window` and `document` are undefined on the server.** Guard with `import.meta.env.SSR`, or keep the code out of the SSR path entirely.
 - **`ShowToastEvent` does not work in LWR sites.** It needs a Lightning Experience container and fails **silently**; use **`lightning/toast`** with **`lightning/toastContainer`** → [03-lwc · 18](../SF_core/03-lwc-and-slds/18-error-handling-and-user-feedback.md).
@@ -49,13 +49,17 @@ The security default that reached Apex at 67.0 matters more here than anywhere e
 - **Module-scope browser access breaks the build**, not the page — the error arrives at publish and reads like a bundler problem.
 - **`renderedCallback()` runs repeatedly.** Guarding client-only work with a flag is not optional there.
 - **A hydration mismatch shows as UI shifting**, because the framework silently re-renders to recover. Test with the SSR assertions rather than by eye.
-- **Base components are not uniformly SSR-capable.** Experience Delivery added support release by release and is now **being discontinued in Winter '27** → [02](02-lwr-architecture-and-build-model.md) — so on-platform SSR is not something to design against at all.
+- **Base components are not uniformly SSR-capable**, so a page marked server-renderable can still fall back to client rendering component by component. Test it rather than assume it.
+- **Experience Delivery's withdrawal did not remove SSR.** It was the hosting tier; the `lightning__ServerRenderable` capability still server-renders pages on standard infrastructure → [02](02-lwr-architecture-and-build-model.md). The SSR-safe authoring rules above stay mandatory.
 - **An old Apex class behind a guest-facing component bypasses the access model** even though a 67.0 class would not → [07](07-guest-user-security-model.md).
 
 ## Recall
 
 Q: Which target makes a component's properties editable in Experience Builder?
 A: `lightningCommunity__Default`, declared alongside the target that exposes the component.
+
+Q: When does a managed-package LWC actually need `lightningCommunity__RelaxedCSP`?
+A: Only on sites running with Lightning Locker / LWS off. It is a capability, not a target, and it is not required on a normal Locker-on LWR site.
 
 Q: Why does `ShowToastEvent` do nothing in an LWR site?
 A: It's a bubbling event that needs a Lightning Experience container. Use `lightning/toast` with `lightning/toastContainer`.

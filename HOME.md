@@ -17,7 +17,7 @@ First unblocked lab in [SF_core/PRACTICE.md](SF_core/PRACTICE.md). Tick it in it
 
 ## Review
 
-**1194 cards** across 238 notes: [SF_Experience_Cloud/_cards.md](SF_Experience_Cloud/_cards.md), [SF_core/_cards.md](SF_core/_cards.md)
+**1197 cards** across 238 notes: [SF_Experience_Cloud/_cards.md](SF_Experience_Cloud/_cards.md), [SF_core/_cards.md](SF_core/_cards.md)
 
 ## Open gaps — research can close these
 
@@ -49,7 +49,7 @@ First unblocked lab in [SF_core/PRACTICE.md](SF_core/PRACTICE.md). Tick it in it
 | [SF_core/](SF_core/README.md) | 219 | 1093 | 3 |
 | [SF_Agentforce/](SF_Agentforce/INDEX.md) | 10 | 0 | 38 |
 | [SF_Data_360/](SF_Data_360/INDEX.md) | 0 | 0 | 0 |
-| [SF_Experience_Cloud/](SF_Experience_Cloud/INDEX.md) | 20 | 101 | 0 |
+| [SF_Experience_Cloud/](SF_Experience_Cloud/INDEX.md) | 20 | 104 | 0 |
 
 *Rebuilt 2026-09-20.*
 

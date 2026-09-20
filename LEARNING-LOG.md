@@ -23,6 +23,30 @@ Newest first.
 
 ---
 
+### 2026-09-20 · Experience Cloud verification pass — the vault's own correction was wrong
+
+**No notes fed — a verification run over the 20 `SF_Experience_Cloud/` notes.**
+
+`scripts/vault.py check` was clean before and after; every finding here was a **factual** one, invisible to the mechanical rules.
+
+**The headline: phase 19 overcorrected, and the overcorrection was load-bearing.** Experience Delivery *is* discontinued as of Winter '27 — phase 19 had that right. But it was the **Cloudflare-backed hosting tier**, and phase 19 recorded its withdrawal as *"an LWR site has no server-side rendering."* **Islands SSR is a standard LWR Experience Cloud capability**, on by default on Build Your Own (LWR) standard pages, gated per page by `lightning__ServerRenderable` on the theme layout, with `lightning__ServerRenderableWithHydration` for components that stay interactive. The false claim had reached five notes, `INDEX.md`, `GLOSSARY.md`, `SF_core/CURRENCY.md`, `SF_core/PHASES.md`' grading rules and the vault's own `AGENTS.md` trap list.
+
+- **[02 LWR architecture & build model](SF_Experience_Cloud/02-lwr-architecture-and-build-model.md)** · `updated` — Experience Delivery reframed as the hosting tier; SSR capabilities added; `lwr:hydrate` replaced with the Experience Cloud capability tags; the unsourced "October 2026" runway replaced with the documented behaviour (republishing migrates the site to standard LWR infrastructure).
+- **[16 Site performance, caching & SEO](SF_Experience_Cloud/16-site-performance-caching-and-seo.md)** · `updated` — the heaviest rewrite: correction blockquote, core idea, caching table, SEO bullets, currency and 3 recall pairs. A crawler on a default LWR page gets real HTML, not an empty shell.
+- **[15 Headless sites & Connect APIs](SF_Experience_Cloud/15-headless-sites-and-connect-apis.md)** · `updated` — the trade flipped back: "we lose SSR by going headless" is a **live** argument again, not a dead one.
+- **[01](SF_Experience_Cloud/01-template-choice-and-site-landscape.md)**, **[03](SF_Experience_Cloud/03-site-setup-domains-and-publishing.md)**, **[06](SF_Experience_Cloud/06-custom-lwc-in-lwr-sites.md)** · `updated` — same correction, smaller surface.
+- **[04 Experience Builder layouts & theme layouts](SF_Experience_Cloud/04-experience-builder-layouts-and-theme-layouts.md)** · `updated` — **new fact, not a correction:** the theme layout is the SSR gate. A hand-written theme layout that omits `lightning__ServerRenderable` turns SSR off for every page using it, silently.
+
+**Second correction — `lightningCommunity__RelaxedCSP`** (notes [01](SF_Experience_Cloud/01-template-choice-and-site-landscape.md) and [06](SF_Experience_Cloud/06-custom-lwc-in-lwr-sites.md)). Both stated that a managed-package LWC is hidden in Experience Builder unless it declares this. Two errors in one line: it is a **capability**, not a target, and it only applies to sites running with **Lightning Locker / LWS off** — the relaxed-CSP case, which is where the B2B and D2C store LWR templates sit. On an ordinary Locker-on LWR site a packaged component needs no such declaration.
+
+**Verified and correct, left alone:** legacy Chat / Live Agent end of support **14 February 2026** and the **Enhanced Chat** rename of June 2025 — note 19's dates and naming both check out against Salesforce Help.
+
+**Also touched:** `SF_Experience_Cloud/AGENTS.md` currency trap #3 rewritten to flag *both* failure modes; `INDEX.md` banner; `GLOSSARY.md` LWR row; `SF_core/CURRENCY.md` (3 rows + a dated maintenance correction); `SF_core/PHASES.md` grading rule; both `PHASES.md` build records annotated; two cross-vault links mislabelled `SF_Agentforce · …` while pointing at `RELEASE-RADAR/` fixed in [15](SF_Experience_Cloud/15-headless-sites-and-connect-apis.md) and [18](SF_Experience_Cloud/18-experience-cloud-devops.md).
+
+**The lesson, logged in `CURRENCY.md`:** a withdrawal names a **product**, not a capability class. Phase 19 read "Experience Delivery is discontinued" as "SSR is gone" — and a correction written as a sweeping negative (*"there is no X"*) propagates faster, and is harder to dislodge, than the error it replaced.
+
+---
+
 ### 2026-09-20 · Metadata moved to frontmatter; the vault became usable for studying
 
 **No notes fed — a structural change, and the largest one so far.**

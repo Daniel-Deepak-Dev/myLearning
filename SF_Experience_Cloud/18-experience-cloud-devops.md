@@ -3,7 +3,7 @@ vault: SF_Experience_Cloud
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-09-19
+updated: 2026-09-20
 currency: "Summer '26 (API 67.0)"
 phase: 19
 tags: [currency-warning]
@@ -32,7 +32,7 @@ The metadata type behind a site is decided by its **template + runtime**, and th
 
 ## 2026 currency
 
-Enhanced sites being the default means `DigitalExperienceBundle` is the type you'll meet most, and the one stale tutorials get wrong by reaching for `ExperienceBundle` or `SiteDotCom`. Pipeline tooling (DevOps Center, Gearset-style tools) supports it — only if the manifest is right. CLI and deployment currency: [SF_Agentforce · developer tooling](../RELEASE-RADAR/developer-tooling-and-apis.md).
+Enhanced sites being the default means `DigitalExperienceBundle` is the type you'll meet most, and the one stale tutorials get wrong by reaching for `ExperienceBundle` or `SiteDotCom`. Pipeline tooling (DevOps Center, Gearset-style tools) supports it — only if the manifest is right. CLI and deployment currency: [RELEASE-RADAR · developer tooling & APIs](../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 ## Gotchas
 

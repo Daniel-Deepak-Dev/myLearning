@@ -12,14 +12,14 @@ Public, partner and customer sites built **LWR-first**. **20 topics** · phases 
 
 > ⚠️ **"LWR" is two products.** LWR and **enhanced LWR** use different metadata types, and the *Upgrade to Enhanced LWR Sites* Release Update — scheduled for enforcement in Spring '26 — **has not been enforced since Summer '25** → [02](02-lwr-architecture-and-build-model.md).
 
-> ⚠️ **There is no server-side rendering to plan for.** **Experience Delivery is being discontinued in Winter '27 and is already closed to new enablement** — if the org never turned it on, no toggle exists; those that did have until **October 2026**. It was Beta from Summer '24 and never flipped. Phase 18 recorded it as "still Beta", which was true and is now beside the point: **an LWR site's performance story is static build + CDN, full stop** → [02](02-lwr-architecture-and-build-model.md), [16](16-site-performance-caching-and-seo.md).
+> ⚠️ **Experience Delivery is discontinued as of Winter '27 — but SSR is not gone.** Experience Delivery was the Cloudflare-backed *hosting* tier: Beta from Summer '24, never flipped, and republishing an affected site migrates it to standard LWR infrastructure. **Islands server-side rendering survived it** and is a standard LWR capability, on by default on Build Your Own (LWR) standard pages, gated per page by `lightning__ServerRenderable` on the theme layout. Phase 18 called the feature "still Beta"; phase 19 read the withdrawal too broadly and declared SSR dead. **Both were wrong — name the thing that was withdrawn, not the category it sat in** → [02](02-lwr-architecture-and-build-model.md), [16](16-site-performance-caching-and-seo.md).
 
 > ⚠️ Runs **late** (phases 18–19) on purpose: guest-user hardening depends on [07-security-and-sharing](../SF_core/07-security-and-sharing/INDEX.md), and site deployment depends on [09-devops](../SF_core/09-devops-sfdx-and-release-management/INDEX.md).
 
 | # | Topic | Scope | Phase |
 |---|---|---|---|
 | 01 | [Template choice & site landscape](01-template-choice-and-site-landscape.md) 🆕⚠️ | **two LWR templates, five Aura ones, none retired** | 18 |
-| 02 | [LWR architecture & build model](02-lwr-architecture-and-build-model.md) 🆕⚠️ | built not rendered; enhanced LWR; Experience Delivery **discontinued Winter '27** | 18 |
+| 02 | [LWR architecture & build model](02-lwr-architecture-and-build-model.md) 🆕⚠️ | built not rendered; enhanced LWR; Experience Delivery **discontinued Winter '27**, islands SSR survives it | 18 |
 | 03 | [Site setup, domains & publishing](03-site-setup-domains-and-publishing.md) | irreversible names, Salesforce CDN vs Cloudflare, publish ≠ activate | 18 |
 | 04 | [Experience Builder layouts & theme layouts](04-experience-builder-layouts-and-theme-layouts.md) | theme vs page layout, slots, the LWR targets | 18 |
 | 05 | [Branding sets, design tokens & SLDS 2](05-branding-sets-design-tokens-and-slds-2.md) 🆕 | `--dxp` hooks, branding sets, **tokens inert under SLDS 2** | 18 |

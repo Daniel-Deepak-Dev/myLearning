@@ -43,11 +43,15 @@ No. Available Spring '25 and scheduled for Spring '26, but not enforced since Su
 
 What is the status and scope of Experience Delivery?
 ?
-**Being discontinued in Winter '27** and already closed to new enablement; existing sites run until October 2026. It was Beta from Summer '24, Build Your Own (LWR) only, Enterprise/Performance/Unlimited, no Developer Edition, served via Cloudflare.
+**Discontinued as of Winter '27.** It was the Cloudflare-backed hosting tier — Beta from Summer '24, Build Your Own (LWR) only, Enterprise/Performance/Unlimited, no Developer Edition. Republishing migrates a site to standard LWR infrastructure.
 
-What does islands architecture mean for an SSR page?
+Did SSR go away with Experience Delivery?
 ?
-The page is server-rendered to HTML and only components marked with `lwr:hydrate` become interactive; everything else stays static.
+No. Islands SSR is a standard LWR Experience Cloud capability and is on by default on Build Your Own (LWR) standard pages. Experience Delivery was the hosting tier, not the rendering model.
+
+What switches SSR on for an LWR page, and what turns it off by accident?
+?
+The theme layout's `lightning__ServerRenderable` capability. A custom theme layout that omits it makes the entire route client-rendered, silently.
 
 Which two setup decisions in Experience Cloud are permanent?
 ?
@@ -59,7 +63,7 @@ Publish makes Experience Builder changes live; activate makes the site reachable
 
 Which CDN serves an Experience Delivery site?
 ?
-Cloudflare — the default Salesforce CDN path for other Experience Cloud domains is Akamai. Note Experience Delivery itself is being discontinued in Winter '27, so Cloudflare's remaining Experience Cloud case is Commerce LWR.
+Cloudflare — the default Salesforce CDN path for other Experience Cloud domains is Akamai. Experience Delivery itself is discontinued as of Winter '27, so Cloudflare's remaining Experience Cloud case is Commerce LWR.
 
 What happens when a site is set to Inactive?
 ?
@@ -89,6 +93,10 @@ Which visibility mechanism requires enhanced LWR?
 ?
 Expression-based visibility — non-enhanced LWR sites get component-level visibility rules only.
 
+What does a theme layout decide besides chrome?
+?
+Whether the page is server-rendered. Without the `lightning__ServerRenderable` capability on the theme layout, the whole route is client-rendered.
+
 What is the `--dxp-*` custom property system for?
 ?
 LWR's reduced set of styling hooks that map onto lower-level component hooks, so one value brands many components at once.
@@ -112,6 +120,10 @@ Shadow DOM scopes styles, so selectors don't reach in. Custom properties do, whi
 Which target makes a component's properties editable in Experience Builder?
 ?
 `lightningCommunity__Default`, declared alongside the target that exposes the component.
+
+When does a managed-package LWC actually need `lightningCommunity__RelaxedCSP`?
+?
+Only on sites running with Lightning Locker / LWS off. It is a capability, not a target, and it is not required on a normal Locker-on LWR site.
 
 Why does `ShowToastEvent` do nothing in an LWR site?
 ?
@@ -299,7 +311,7 @@ In [10 · Authentication](10-authentication-self-registration-and-sso.md) — th
 
 What do you give up by going headless that Experience Builder gave you for free?
 ?
-The static build, the CDN, the auto-generated sitemap and per-page meta — you own caching and SEO yourself. Not SSR: with Experience Delivery being discontinued, the platform has none to give up, so a headless stack is now the *only* way to get server-side rendering.
+The static build, the CDN, the auto-generated sitemap, per-page meta — and the platform's islands SSR, which survived Experience Delivery's discontinuation. You own caching, SEO and server rendering yourself.
 
 What is the main judgment call for choosing headless?
 ?
@@ -311,19 +323,19 @@ The guest user — so the guest exposure audit and sharing rules govern every ex
 
 What single architectural fact explains LWR's caching, SEO and SSR-safe rules?
 ?
-LWR sites are built and served as static assets from a CDN, not rendered per request like Aura.
+LWR sites are built and served from a CDN, not rendered per request like Aura.
 
-What is the status of SSR / Experience Delivery on LWR, and why does it matter?
+What is the status of Experience Delivery, and what did it actually take with it?
 ?
-**Being discontinued in Winter '27 and already closed to new enablement** (existing orgs until October 2026). It was Beta from Summer '24 and never flipped — so SSR is not something you can plan to switch on, and static build + CDN is the entire performance story.
+**Discontinued as of Winter '27**; republishing migrates the site to standard LWR infrastructure. It was the Cloudflare hosting and edge tier — it did *not* take server-side rendering, which remains a standard LWR capability.
 
 What breaks server-side rendering (and the build) in a custom component?
 ?
 Touching `window`/`document` at module scope — guard browser-only code with `import.meta.env.SSR` and defer it to a lifecycle hook.
 
-What does LWR give you for SEO regardless of SSR?
+What does LWR give you for SEO?
 ?
-An auto-generated sitemap, clean URLs, and per-page meta/Open Graph tags — which, with Experience Delivery withdrawn, is the complete first-party SEO toolkit.
+Server-rendered HTML on SSR-enabled pages, an auto-generated sitemap, clean URLs, and per-page meta/Open Graph tags.
 
 When does a content change actually reach visitors?
 ?

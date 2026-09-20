@@ -3,7 +3,7 @@ vault: SF_Experience_Cloud
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-09-19
+updated: 2026-09-20
 currency: "Summer '26 (API 67.0)"
 phase: 18
 tags: [currency-new, currency-warning]
@@ -32,20 +32,24 @@ It also explains the constraints. A build step cannot run your browser code, so 
 
 - **Publish is a build.** Preview reflects the builder; the live site reflects the last publish. Two people editing and one publishing ships both sets of changes.
 - **Upgrade path is one-way**, from Experience Builder → *Settings* → *Updates* → **Upgrade**. Treat it as a migration with a regression test, not a checkbox.
-- **Experience Delivery was the SSR + CDN tier, and it is being discontinued in Winter '27.** It never left Beta. **If you did not already enable it, it is no longer available to turn on**; orgs that did may run it until **October 2026**, and Salesforce recommends disabling it first. It applied to **Build Your Own (LWR)** in Enterprise, Performance and Unlimited — never Developer Edition — served through **Cloudflare** rather than the default **Akamai** → [03](03-site-setup-domains-and-publishing.md).
-- **SSR is opt-in per page, not per site**, and uses **islands architecture**: the page renders to HTML on the server and only components marked for hydration (`lwr:hydrate`) become interactive. The rest stays static HTML.
+- **Experience Delivery was the *hosting* tier, not SSR itself, and it is discontinued as of Winter '27.** It never left Beta. It applied to **Build Your Own (LWR)** in Enterprise, Performance and Unlimited — never Developer Edition — and served through **Cloudflare** rather than the default **Akamai** → [03](03-site-setup-domains-and-publishing.md). **Republishing a site that still sits on it migrates that site to standard LWR infrastructure automatically.** A site left unpublished keeps serving, but its performance degrades over time.
+- **SSR did not leave with it.** Server-side rendering on **islands architecture** is a standard LWR Experience Cloud capability, and it is **on by default on the standard pages of Build Your Own (LWR)**. The gate is the **theme layout**: a page is server-rendered only if its theme layout declares the `lightning__ServerRenderable` capability — a custom theme layout that omits it makes the whole route client-rendered → [04](04-experience-builder-layouts-and-theme-layouts.md).
+- **Components opt in by capability, not by directive.** `lightning__ServerRenderable` server-renders a component that will never change after render; `lightning__ServerRenderableWithHydration` server-renders it and then hydrates it into an interactive island. Everything unmarked stays client-rendered.
 - **Synthetic shadow DOM is not supported under SSR.** SSR components use native shadow or light DOM → [03-lwc · 13](../SF_core/03-lwc-and-slds/13-shadow-dom-styling-and-scoped-css.md).
 - **500 routes per site** is the hard structural ceiling on how many unique URLs the build can produce.
 
 ## 2026 currency
 
-Two things worth carrying, and both are the same lesson from opposite ends. **Experience Delivery arrived in Summer '24, never left Beta, and is being discontinued in Winter '27** — new enablement is already closed, existing sites run until **October 2026**. A Beta that ships improvements for two years can still be withdrawn, so "we'll turn on Experience Delivery" is now not a plan with a Beta dependency, it is a plan with no feature behind it. And the **enhanced-LWR Release Update was de-enforced**: an announced enforcement that did not happen. Neither a promised arrival nor a promised deadline is a fact — verify both against Setup and the current doc before quoting either.
+Two things worth carrying, and both are the same lesson from opposite ends. **Experience Delivery arrived in Summer '24, never left Beta, and is discontinued as of Winter '27** — a Beta that shipped improvements for two years was still withdrawn, so "we'll turn on Experience Delivery" is a plan with no feature behind it. And the **enhanced-LWR Release Update was de-enforced**: an announced enforcement that did not happen. Neither a promised arrival nor a promised deadline is a fact — verify both against Setup and the current doc before quoting either.
+
+**Read the withdrawal narrowly, though.** Experience Delivery was the Cloudflare-backed hosting and edge tier. **Islands SSR is a separate thing and it survives** on standard LWR infrastructure, gated by the `lightning__ServerRenderable` capability on the theme layout. "Experience Delivery is gone, therefore LWR has no SSR" is the overcorrection — and it is the one this vault made in its own first draft.
 
 ## Gotchas
 
 - **Non-enhanced LWR and Aura share a metadata type.** `ExperienceBundle` in a repo does not tell you the runtime — check the template → [12](12-aura-to-lwr-migration-and-coexistence.md).
 - **Nothing ships without a publish**, including CMS content changes routed through the site.
-- **Do not design around Experience Delivery.** It is closed to new enablement and gone in Winter '27 — any SSR performance story that depends on it needs another answer. It also never ran on Developer Edition, so no scratch-org demo ever proved it.
+- **Do not design around Experience Delivery.** It is gone as of Winter '27, and it never ran on Developer Edition, so no scratch-org demo ever proved it. **Do not conclude that SSR went with it** — islands SSR is still there, on standard infrastructure.
+- **A custom theme layout silently switches SSR off for every page that uses it** unless it declares `lightning__ServerRenderable`. The page still works; it just becomes client-rendered, and nothing warns you → [04](04-experience-builder-layouts-and-theme-layouts.md).
 - **`import.meta.env.SSR` guards code, it does not make it portable.** Module-scope browser access still breaks the build → [06](06-custom-lwc-in-lwr-sites.md).
 - **A hydration mismatch is a UI defect, not a warning to ignore** — the framework recovers by re-rendering, which is the flicker your stakeholder screenshots.
 - **Upgrading to enhanced LWR changes what the pipeline retrieves.** Plan the DevOps change with the upgrade, not after it → [09-devops · 05](../SF_core/09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md).
@@ -62,10 +66,13 @@ Q: Is the Upgrade to Enhanced LWR Sites Release Update enforced?
 A: No. Available Spring '25 and scheduled for Spring '26, but not enforced since Summer '25 — it is a recommendation.
 
 Q: What is the status and scope of Experience Delivery?
-A: **Being discontinued in Winter '27** and already closed to new enablement; existing sites run until October 2026. It was Beta from Summer '24, Build Your Own (LWR) only, Enterprise/Performance/Unlimited, no Developer Edition, served via Cloudflare.
+A: **Discontinued as of Winter '27.** It was the Cloudflare-backed hosting tier — Beta from Summer '24, Build Your Own (LWR) only, Enterprise/Performance/Unlimited, no Developer Edition. Republishing migrates a site to standard LWR infrastructure.
 
-Q: What does islands architecture mean for an SSR page?
-A: The page is server-rendered to HTML and only components marked with `lwr:hydrate` become interactive; everything else stays static.
+Q: Did SSR go away with Experience Delivery?
+A: No. Islands SSR is a standard LWR Experience Cloud capability and is on by default on Build Your Own (LWR) standard pages. Experience Delivery was the hosting tier, not the rendering model.
+
+Q: What switches SSR on for an LWR page, and what turns it off by accident?
+A: The theme layout's `lightning__ServerRenderable` capability. A custom theme layout that omits it makes the entire route client-rendered, silently.
 
 ## Related
 
