@@ -4,13 +4,13 @@ area: 07-security-and-sharing
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 10
 ---
 # Teams, Territories & Account Sharing
 
-**Scope:** The record-sharing mechanisms that are configured on the record rather than in Setup — account and opportunity teams — and the second hierarchy that Enterprise Territory Management adds. Ordinary rules are [09](09-sharing-rules-and-manual-sharing.md).
+**Scope:** The record-sharing mechanisms that are configured on the record rather than in Setup — account and opportunity teams — and the second hierarchy that Enterprise Territory Management adds. Ordinary rules are [09](09-sharing-rules-and-manual-sharing.md). This note is the **sharing** side only; the selling side — team roles, Opportunity Splits, territory types and territory forecasts — is in [SF_Sales](../../SF_Sales/INDEX.md).
 
 ## Core idea
 
@@ -35,7 +35,7 @@ No change to teams or ETM in Summer '26. The change that reaches them is elsewhe
 ## Gotchas
 
 - **Teams scatter grants across records**, so there is no central place to read them. Auditing means querying `AccountTeamMember` and `OpportunityTeamMember`, not reading Setup.
-- **A default team is a template applied at record creation.** Editing it later changes nothing that already exists.
+- **A default team is a template, not a live link.** Editing it reaches saved records only when you ask: a default opportunity team's *Update open opportunity teams with these members* box pushes it onto open deals → [SF_Sales · Account & Opportunity Teams](../../SF_Sales/account-and-opportunity-teams.md).
 - **Account team access does not imply opportunity access.** The child object's own default access setting decides, and it defaults to none.
 - **Territory hierarchy is a second upward-inheritance path** that most access reviews forget, and it can silently grant what the role hierarchy was carefully designed to withhold.
 - **Only one territory model is active.** Building the new one is safe; activating it re-derives every account assignment and every share in one operation.
@@ -65,3 +65,5 @@ A: The most permissive path. Both hierarchies apply at the same time and access 
 - [07 · Role hierarchy & ownership](07-role-hierarchy-and-ownership.md) — the first hierarchy, which ETM runs alongside
 - [11 · Restriction rules](11-restriction-rules.md) — the subtraction that makes multi-mechanism models unreadable without tooling
 - [15 · Auditing & troubleshooting access](15-auditing-and-troubleshooting-access.md) — how to answer an access question when four mechanisms are in play
+- [SF_Sales · Account & Opportunity Teams](../../SF_Sales/account-and-opportunity-teams.md) — what the team is *for*: roles, default opportunity teams and splits, beyond the share rows it writes here
+- [SF_Sales · Enterprise Territory Management](../../SF_Sales/enterprise-territory-management.md) — how the second hierarchy is built and assigned before it grants anything

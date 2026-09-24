@@ -4,7 +4,7 @@ area: 07-security-and-sharing
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 10
 ---
@@ -63,3 +63,5 @@ A: Because record access is derived from ownership, so concentrated ownership ma
 - [08 · Groups, queues & the grantee model](08-groups-queues-and-the-grantee-model.md) — queue ownership and the Summer '26 hierarchy exception
 - [10 · Teams, territories & account sharing](10-teams-territories-and-account-sharing.md) — the parallel hierarchy
 - [08-data · 10 Data skew](../08-data-modeling-and-large-data-volumes/10-data-skew.md) — the volume side of ownership concentration, and why the fix is to remove the owner from the hierarchy
+- [SF_Sales · Enterprise Territory Management](../../SF_Sales/enterprise-territory-management.md) — the models and assignment rules that build the hierarchy running beside this one
+- [SF_Sales · Collaborative Forecasts](../../SF_Sales/collaborative-forecasts.md) — the forecast hierarchy generated from these roles, and why a role above a rep still sees nothing until it is named Forecast Manager

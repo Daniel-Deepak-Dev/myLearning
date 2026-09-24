@@ -13,7 +13,7 @@ Read the target note, work out how its feature behaves for a **human in the UI**
 ## 1 · Resolve the target
 
 - Use the path above. If empty, use the file currently open in the IDE. If there is none, ask for one — do not guess.
-- Accept only `.md` files under `SF_core/`, `SF_Agentforce/`, `SF_Data_360/`, `SF_Experience_Cloud/` or `SF_Service/`. Refuse anything else in one line and stop.
+- Accept only `.md` files under `SF_core/`, `SF_Agentforce/`, `SF_Data_360/`, `SF_Experience_Cloud/`, `SF_Service/` or `SF_Sales/`. Refuse anything else in one line and stop.
 - Read the whole file before analysing. Read `SF_core/README.md` or the sibling `INDEX.md` only if the feature is unclear from the note.
 
 ## 2 · Analyse against these six axes
@@ -72,7 +72,7 @@ Section shape — keep it to about 12 lines:
 Placement:
 
 - After `## How it works`. The `SF_core` template uses that heading.
-- Light-format notes (`SF_Agentforce/`, `SF_Data_360/`, `SF_Service/`, and new notes in `SF_core/` or `SF_Experience_Cloud/`) have no `## How it works`. There, insert after `## Key points`.
+- Light-format notes (`SF_Agentforce/`, `SF_Data_360/`, `SF_Service/`, `SF_Sales/`, and new notes in `SF_core/` or `SF_Experience_Cloud/`) have no `## How it works`. There, insert after `## Key points`.
 - Fallback order: before `## Gotchas` → before `## Gotchas & sharp edges` → before `## Gaps to close` → before `## Recall` → append at the end.
 - If `## Human vs Agent` already exists, rewrite it in place. Never create a second one.
 

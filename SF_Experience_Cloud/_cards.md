@@ -391,11 +391,11 @@ Not per Help. Token-based user verification is supported on an external website 
 
 Why is an agent on a public site the highest-risk deployment surface?
 ?
-It combines unauthenticated input, guest-user data context, and a reasoning engine — so prompt injection and over-broad actions can exfiltrate data.
+It combines unauthenticated input, the agent user's data reach, and a reasoning engine — so prompt injection and over-broad actions can exfiltrate data.
 
-As which user does a public-site agent operate, and what does that bound?
+As which user does a Service Agent on a public site read and act?
 ?
-The guest user — its data reach and every action are limited to guest sharing, so the guest profile and agent actions must both be tightly scoped.
+Its own agent user (the EinsteinServiceAgent user), not the guest user — that user's permission sets bound every action, so scope them and the agent's actions tightly.
 
 Where does an embedded agent belong on the exposure audit?
 ?

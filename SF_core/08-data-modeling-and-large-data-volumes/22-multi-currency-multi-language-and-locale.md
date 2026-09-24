@@ -4,7 +4,7 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 15
 ---
@@ -35,7 +35,7 @@ Language and locale are the opposite shape — reversible, per user, and touchin
 
 - **Multi-currency cannot be disabled.** Prove the reporting model in a sandbox before enabling it in production.
 - **`DatedConversionRate.StartDate` is settable on insert or upsert only** — never on update. Loading dated rates is an upsert job, and getting it wrong means deleting and reloading.
-- **Forecast figures ignore dated rates**, so forecasts and opportunity reports can legitimately disagree. Know which number you are being asked about.
+- **Forecast figures ignore dated rates**, so forecasts and opportunity reports can legitimately disagree. Know which number you are being asked about. A rate change also restates every forecast period — past, current and future → [SF_Sales · Collaborative Forecasts](../../SF_Sales/collaborative-forecasts.md).
 - **Currency formula fields lose their meaning across currencies** unless every operand is converted the same way.
 - **Locale changes sort order.** A list users swore was alphabetical is alphabetical *in their collation*, and export/import round-trips can reorder it.
 - **Date and number parsing on import follows the running user's locale** — the classic cause of a load that turns 03/04 into the wrong month → [25](25-data-migration-and-cutover.md).
@@ -66,3 +66,5 @@ A: No — the API name is stored, so filters, automation and reports are unaffec
 - [25 · Data migration & cutover](25-data-migration-and-cutover.md) — locale-driven parsing errors in a load
 - [01 · Data model design principles](01-data-model-design-principles.md) — why schema-level switches deserve design review
 - [SF_Experience_Cloud · 21 Multilingual sites & site translation](../../SF_Experience_Cloud/21-multilingual-sites-and-translation.md) — the same language/locale split seen from a public site, where the visitor may have no user record to carry either setting
+- [SF_Sales · Collaborative Forecasts](../../SF_Sales/collaborative-forecasts.md) — the forecast grid that converts at today's rate, which is why its numbers and an opportunity report's can differ
+- [SF_Sales · Products & Price Books](../../SF_Sales/products-and-price-books.md) — one `PricebookEntry` per currency, and why a line item always takes its opportunity's currency

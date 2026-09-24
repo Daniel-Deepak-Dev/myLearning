@@ -37,7 +37,7 @@ for _stream in (sys.stdout, sys.stderr):
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Vaults holding notes the contract applies to.
-NOTE_VAULTS = ("SF_core", "SF_Agentforce", "SF_Data_360", "SF_Experience_Cloud", "SF_Service")
+NOTE_VAULTS = ("SF_core", "SF_Agentforce", "SF_Data_360", "SF_Experience_Cloud", "SF_Service", "SF_Sales")
 # Walked for link integrity but not linted as notes.
 OTHER_LIVE = ("RELEASE-RADAR", "Interview")
 # Never walked at all.

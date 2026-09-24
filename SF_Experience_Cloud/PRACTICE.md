@@ -6,7 +6,7 @@
 >
 > If you catch yourself reading instead of running, you are in the wrong file.
 
-**16 labs · ~5.8 h total.** Nothing here runs over 45 minutes. If one overruns it was too big — split it into `NNa` / `NNb` rather than letting it become the lab you never start.
+**20 labs · ~7.3 h total.** Nothing here runs over 45 minutes. If one overruns it was too big — split it into `NNa` / `NNb` rather than letting it become the lab you never start.
 
 Each lab's full wording lives in its own note, as a `- [ ]` line under `## Hands-on`. **Tick it there when it is done** — labs are ticked, not deleted, because work you actually did is a record. That tick is the whole record: [Done](#done) is rebuilt from it.
 
@@ -26,6 +26,7 @@ The queue is **unblocked-first**, not INDEX order:
 - **#9–11** reuse the same site and need nothing else — the security level is a site setting.
 - **#12–15** need a **Customer Service (Aura)** site on Lightning Knowledge — topics are an Aura feature. **#14–15** also want a customer user.
 - **#16** needs the Trailhead project org, with Enhanced Chat already on its site.
+- **#17–20** need an **Enhanced Chat channel with a queue and a rep** — build it first with SF_Service's [SVC-CHSET-01](../SF_Service/PRACTICE.md) — plus a Build Your Own (LWR) site you can publish. #20 also switches the site's CSP level, so run it after #9.
 
 This vault's twenty phase-18/19 notes carry no labs — they were written in the dense format, before the `## Hands-on` contract existed. The queue starts here and grows as topics are fed.
 
@@ -67,6 +68,10 @@ Add a second language, place the Language Selector, translate one component inli
 | 14 | EC-TOPIC-02 | [Topics & Knowledge](23-topics-and-knowledge-on-sites.md) | 15 min | The channel, not the topic, gates articles | customer user · needs #12 |
 | 15 | EC-TOPIC-03 | [Topics & Knowledge](23-topics-and-knowledge-on-sites.md) | 20 min | Where an untopicked article disappears | customer user · needs #12 |
 | 16 | EC-CSP-03 | [Site CSP](24-site-csp-security-level-and-trusted-scripts.md) | 20 min | Which directives the chat's `scrt2URL` needs | the Knowledge & Enhanced Chat project org |
+| 17 | EC-CHAT-01 | [Chat on a site](25-enhanced-chat-on-a-site-step-by-step.md) | 30 min | The site side is five steps | Enhanced Chat channel · rep |
+| 18 | EC-CHAT-02 | [Chat on a site](25-enhanced-chat-on-a-site-step-by-step.md) | 20 min | Which publish each change needs | needs #17 |
+| 19 | EC-CHAT-03 | [Chat on a site](25-enhanced-chat-on-a-site-step-by-step.md) | 15 min | What a domain mismatch looks like | needs #17 |
+| 20 | EC-CHAT-04 | [Chat on a site](25-enhanced-chat-on-a-site-step-by-step.md) | 20 min | Site code needs Relaxed CSP | needs #17 · after #9 |
 
 ---
 

@@ -4,7 +4,7 @@ area: 01-admin-and-declarative-platform
 format: dense
 status: learning
 created: 2026-08-01
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 1
 ---
@@ -62,3 +62,4 @@ A: There is no built-in switch — check a custom permission or a hierarchy cust
 - [14 · Order of execution](14-order-of-execution-declarative-view.md) — the authoritative save-order positions
 - [04 · Record types & picklist architecture](04-record-types-and-picklist-architecture.md) — why rules must be record-type aware
 - [04-flow · INDEX](../04-flow-and-automation/INDEX.md) — before-save flows and Flow custom errors as the modern alternative
+- [SF_Sales · Lead Management & Conversion](../../SF_Sales/lead-management-and-conversion.md) — the conversion bypass in detail: *Require Validation for Converted Leads*, and the duplicate rules conversion never runs

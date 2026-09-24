@@ -37,6 +37,13 @@
       }
     },
     {
+      "query": "path:SF_Sales/",
+      "color": {
+        "a": 1,
+        "rgb": 14701233
+      }
+    },
+    {
       "query": "path:Interview/",
       "color": {
         "a": 1,

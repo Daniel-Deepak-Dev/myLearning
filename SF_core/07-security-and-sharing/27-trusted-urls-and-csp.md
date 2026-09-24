@@ -72,6 +72,7 @@ tags: [security]
 - [SF_Experience_Cloud · 24 Site CSP, security level & trusted scripts](../../SF_Experience_Cloud/24-site-csp-security-level-and-trusted-scripts.md) — the per-site script list and security level that sit on top of this one
 - [SF_Experience_Cloud · 19 Embedded messaging & agents in sites](../../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) — the chat widget whose `scrt2URL` needs an Experience Builder Sites entry
 - [SF_Service · Embedded Service deployments](../../SF_Service/embedded-service-deployments.md) — the deployment and Code Snippet the `scrt2URL` is copied from
+- [SF_Experience_Cloud · 25 Enhanced Chat on a site, step by step](../../SF_Experience_Cloud/25-enhanced-chat-on-a-site-step-by-step.md) — where the `scrt2URL` entry sits in the full site setup: step 3 of 6
 
 ## Sources
 
@@ -96,3 +97,4 @@ tags: [security]
 ## History
 
 - 2026-09-24 · created from your Trailhead feed (Knowledge & Enhanced Chat site project)
+- 2026-09-24 · linked SF_Experience_Cloud · 25, the step-by-step site guide

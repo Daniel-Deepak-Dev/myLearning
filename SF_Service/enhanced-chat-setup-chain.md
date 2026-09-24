@@ -70,6 +70,7 @@ tags: [deployment]
 - [Embedded Service Deployments](embedded-service-deployments.md) — whether a surface needs step 3 at all, and what the deployment holds
 - [SF_core · 06-integration · 28 CORS allowlist](../SF_core/06-integration-and-apis/28-cors-allowlist.md) — owns the open question of whether Enhanced Web Chat needs a CORS entry; lab SF-CORS-04 settles it
 - [SF_Experience_Cloud · 19 Embedded messaging & agents in sites](../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) — step 5 on a site: the Experience Builder component and the guest user behind it
+- [SF_Experience_Cloud · 25 Enhanced Chat on a site, step by step](../SF_Experience_Cloud/25-enhanced-chat-on-a-site-step-by-step.md) — step 5 on a site, every step in order: the site domain, the Trusted URL, the component, two publishes and a guest test
 
 ## Sources
 
@@ -93,3 +94,4 @@ tags: [deployment]
 
 - 2026-09-24 · created — research pass for the new SF_Service vault; takes over the setup chain from SF_Experience_Cloud · 19, which keeps the site-side component and guest exposure
 - 2026-09-24 · the CORS gap handed to SF_core · 06-integration · 28, which owns it as an org check; step 3 now points at Embedded Service Deployments
+- 2026-09-24 · linked SF_Experience_Cloud · 25, the step-by-step site guide

@@ -388,6 +388,25 @@ The numbers below are the reason each topic exists, and all four are routinely q
 
 > **A correction this vault owed itself.** [03-lwc · 23](03-lwc-and-slds/23-static-resources-and-third-party-javascript.md), [07-security · 20](07-security-and-sharing/20-my-domain-enhanced-domains-and-trusted-urls.md), and [07-security · 26](07-security-and-sharing/26-secure-coding-checklist.md) all said a blocked CDN script is fixed with a Trusted URL, and 03-lwc · 23 named a `script-src` box. [06-integration · 03](06-integration-and-apis/03-api-endpoints-hostnames-and-edge-network.md) kept the old name and said nothing server-side reports a violation — Setup's **Trusted URL and Browser Policy Violations** list now does, for Lightning Experience pages. **Trusted URLs has six directives and none of them is `script-src`.** A third-party script in Lightning must be a static resource; on an Experience Builder site it goes on that site's **Trusted Sites for Scripts** list. The CSP-not-LWS diagnosis in those notes was right; the fix they prescribed was the one thing the list cannot do.
 
+## New in Sales Cloud — checked 2026-09-24
+
+**Research pass for the new [SF_Sales/](../SF_Sales/INDEX.md) vault, not a phase.** Two product renames kept their API names, and three retirements land within a year of this check. Retirement dates come from Help KBs **005132112** (past) and **000381744** (upcoming), both updated 17 August 2026.
+
+| When | What | Where |
+|---|---|---|
+| **Summer '20** | **Customizable Forecasting retired.** Collaborative Forecasts replaced it | [SF_Sales · Collaborative Forecasts](../SF_Sales/collaborative-forecasts.md) |
+| **Summer '21** | **Original Territory Management retired** — KB **000383474**: its data is no longer reachable by UI or API. `Territory` exists only in API 7.0–52.0 | [SF_Sales · Enterprise Territory Management](../SF_Sales/enterprise-territory-management.md) |
+| **Summer '24** | **Enterprise Territory Management renamed Sales Territories.** The objects keep the `Territory2` prefix | [SF_Sales · Enterprise Territory Management](../SF_Sales/enterprise-territory-management.md) |
+| **Spring '25** | **Collaborative Forecasts renamed Pipeline Forecasting.** The objects keep the `Forecasting` prefix | [SF_Sales · Collaborative Forecasts](../SF_Sales/collaborative-forecasts.md) |
+| **Summer '25** | **Einstein Activity Capture can store email as `Task` + `EmailMessage`** (*Sync Email as Salesforce Activity*). Legacy EAC reporting is unavailable to new setups | [SF_Sales · Einstein Activity Capture](../SF_Sales/einstein-activity-capture.md) |
+| **October 2025** 🚩 | **Sales Cloud is now Agentforce Sales.** Help and the v68.0 Object Reference confirm the name; the date is from a third-party source | [SF_Sales/AGENTS.md](../SF_Sales/AGENTS.md) |
+| **10 July 2026** (page date) | **Salesforce CPQ is end of sale, not end of life.** No new customers; existing ones renew. Revenue Cloud Advanced is the successor | [SF_Sales · Quotes, Orders & Contracts](../SF_Sales/quotes-orders-and-contracts.md) |
+| **1 October 2026** | **EAC on Microsoft 365 must move from EWS to Microsoft Graph** if set up before Spring '26. No rollback | [SF_Sales · Einstein Activity Capture](../SF_Sales/einstein-activity-capture.md) |
+| **Spring '27** (February 2027) | **EAC Activity Metrics, Activities Dashboard, Recommended Connections and Activity 360 Reports retire** | [SF_Sales · Einstein Activity Capture](../SF_Sales/einstein-activity-capture.md) |
+| **1 April 2027** / **1 December 2027** | **Lightning Sync** / **Salesforce for Outlook** retire | — |
+
+> **Checked and left alone.** [08-data · 22](08-data-modeling-and-large-data-volumes/22-multi-currency-multi-language-and-locale.md) says forecasts ignore dated exchange rates. That line could have come from Customizable Forecasting docs, so it was re-checked against the current Pipeline Forecasting page: *"Dated exchange rates aren't used in forecasting."* It stands.
+
 ## Keeping this file honest
 
 When a phase discovers a currency fact, it goes **here** as a row and into the relevant note — not duplicated into five notes. If it's genuinely new news rather than a stable fact, it belongs in [RELEASE-RADAR/](../RELEASE-RADAR/README.md) instead and this file links to it.

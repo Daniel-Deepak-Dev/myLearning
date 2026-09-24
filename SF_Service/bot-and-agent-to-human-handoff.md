@@ -33,7 +33,7 @@ currency: "Summer '26 (API 67.0)"
 - **"Escalation loses context" really means "escalation was never wired".** The transcript rides on the session. What breaks is a missing Escalation Flow, an outbound flow that ends without Route Work, or a second request after a failed transfer.
 - **The transcript is not a form.** A rep should not have to read 40 messages to find an order number. Have an action write key facts to `MessagingSession` or `Case` fields before escalating 🚩 (design practice, not a documented requirement).
 - **There is no channel-level "we're closed" switch.** `MessagingChannel.OutsideBusinessHoursResponse` is *"Reserved for future use"* in the object reference. Out-of-hours behaviour has to be built in the outbound flow or the agent.
-- **A public site runs the agent as the guest user,** so a site handoff also inherits guest-user limits → [SF_Experience_Cloud · 19](../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md).
+- **A public-site agent acts as its agent user, not the guest user,** so what it can read before a handoff is that user's permission sets → [SF_Experience_Cloud · 19](../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md).
 - **Voice escalation is configured separately,** in the agent's call routing and escalation settings, and has telephony prerequisites of its own → [RELEASE-RADAR](../RELEASE-RADAR/agentforce-platform.md) 🚩.
 
 ## Gaps to close
@@ -60,7 +60,7 @@ currency: "Summer '26 (API 67.0)"
 - [Enhanced Chat](enhanced-chat.md) — the channel most handoffs run on
 - [Omni Supervisor](omni-supervisor.md) — where a supervisor sees the escalated conversation land and can step in
 - [SF_Agentforce · INDEX](../SF_Agentforce/INDEX.md) — where the Service Agent, its subagents and actions are built
-- [SF_Experience_Cloud · 19 Embedded messaging & agents in sites](../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) — the site-side half: the widget, the guest user, and the exposure audit
+- [SF_Experience_Cloud · 19 Embedded messaging & agents in sites](../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) — the site-side half: the widget, the agent user a public agent acts as, and the exposure audit
 - [SF_core · 04-flow · 23 Flows as Agentforce actions](../SF_core/04-flow-and-automation/23-flows-as-agentforce-actions.md) — the other way a flow meets an agent: as an action it calls, not a route around it
 - [RELEASE-RADAR · Agentforce platform](../RELEASE-RADAR/agentforce-platform.md) — Voice, Contact Center and their escalation prerequisites
 
@@ -75,8 +75,10 @@ currency: "Summer '26 (API 67.0)"
 - [Service | Check Rep Availability for Routing](https://help.salesforce.com/s/articleView?id=ai.copilot_actions_ref_check_availability_for_routing.htm&language=en_US&type=5) — Salesforce Help · via search 2026-09-24 · the agent-side action
 - [Configure Call Routing and Call Escalation for the Agent](https://help.salesforce.com/s/articleView?id=ai.agent_call_routing_escalation.htm&language=en_US&type=5) — Salesforce Help · via search 2026-09-24 · voice escalation is its own setup
 - [Object Reference for the Salesforce Platform (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/object_reference.pdf) — Salesforce Developers · read 2026-09-24 · `MessagingSession.AgentType`, `AgentWork.BotType` (API 63.0), the `ServiceRepFirstResponseTime` metric type (API 67.0), `MessagingChannel.OutsideBusinessHoursResponse` *"Reserved for future use"*
+- [Configure Service Agent Access](https://help.salesforce.com/s/articleView?language=en_US&id=ai.agent_user.htm&type=5) — Salesforce Help · via search 2026-09-24 · *"When a Service agent can't use an end user's user record to control access, it uses a dedicated user record"* — the agent user
 - [Optimize Call Routing with Omni-Channel Flows for Voice](https://trailhead.salesforce.com/content/learn/modules/ai-integration-for-agentforce-contact-center/manage-inbound-call-routing) — Trailhead · read 2026-09-24 · Route To *Agentforce Service Agent* for calls, then hand off to a rep
 
 ## History
 
 - 2026-09-24 · created — research pass for the new SF_Service vault; takes over the escalation gotcha from SF_Experience_Cloud · 19
+- 2026-09-24 · corrected the public-site gotcha: the agent acts as its agent user, not the guest user

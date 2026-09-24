@@ -67,7 +67,7 @@ window.addEventListener('onEmbeddedMessagingReady', () => {
 - [Bot & Agent to Human Handoff](bot-and-agent-to-human-handoff.md) — what happens when the v2 agent hands over to a rep
 - [Enhanced Chat Sessions & User Verification](enhanced-chat-sessions-and-user-verification.md) — verification as documented for v1, which gap 2 asks about for v2
 - [SF_core · 03-lwc · 19 Custom Lightning Types for agent output](../SF_core/03-lwc-and-slds/19-custom-lightning-types-for-agent-output.md) — the renderer contract and the `enhancedWebChat` folder v2 reads
-- [SF_Experience_Cloud · 19 Embedded messaging & agents in sites](../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) — a v2 agent on a public site, and the guest user it runs as
+- [SF_Experience_Cloud · 19 Embedded messaging & agents in sites](../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) — a v2 agent on a public site, and the agent user it acts as
 - [SF_Agentforce/](../SF_Agentforce/INDEX.md) — where the Service Agent and its context variables are built
 
 ## Sources
@@ -86,3 +86,4 @@ window.addEventListener('onEmbeddedMessagingReady', () => {
 ## History
 
 - 2026-09-24 · created — research pass for the new SF_Service vault; takes over the v2 facts from SF_Experience_Cloud · 19 and adds the feature-parity questions
+- 2026-09-24 · reworded the 19 link after its agent-user correction

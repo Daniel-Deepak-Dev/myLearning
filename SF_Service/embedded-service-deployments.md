@@ -69,6 +69,7 @@ tags: [deployment]
 - [Enhanced Chat](enhanced-chat.md) — the channel itself, and the legacy Chat retirement the old deployments belonged to
 - [Enhanced Conversation Component](enhanced-conversation-component.md) — the rep's end of the conversation a deployment starts
 - [SF_Experience_Cloud · 19 Embedded messaging & agents in sites](../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) — the Embedded Messaging component that reads a Web deployment on a site, and the guest user behind it
+- [SF_Experience_Cloud · 25 Enhanced Chat on a site, step by step](../SF_Experience_Cloud/25-enhanced-chat-on-a-site-step-by-step.md) — the Web deployment for a site's domain, from Setup → Domains to the guest test, and where head-markup code goes instead of the snippet
 - [SF_core · 06-integration · 28 CORS allowlist](../SF_core/06-integration-and-apis/28-cors-allowlist.md) — why the Trailhead added the site URL to CORS
 - [SF_core · 07-security · 27 Trusted URLs & CSP](../SF_core/07-security-and-sharing/27-trusted-urls-and-csp.md) — why `scrt2URL` needed a Trusted URL before the site could load the chat
 - [RELEASE-RADAR · Agentforce platform](../RELEASE-RADAR/agentforce-platform.md) — the Agentforce Mobile SDK releases that read a Mobile deployment
@@ -103,3 +104,4 @@ tags: [deployment]
 ## History
 
 - 2026-09-24 · created from your Trailhead feed (Knowledge & Enhanced Chat site project)
+- 2026-09-24 · linked SF_Experience_Cloud · 25, the step-by-step site guide

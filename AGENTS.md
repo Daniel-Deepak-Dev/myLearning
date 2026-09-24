@@ -20,6 +20,7 @@ These apply to every file in this repo. Each vault adds its own format rules in 
 | [SF_Data_360/](SF_Data_360/INDEX.md) | Data 360 only: ingestion, DMOs, identity resolution, segments, RAG | Light format |
 | [SF_Experience_Cloud/](SF_Experience_Cloud/INDEX.md) | Experience Cloud only: LWR & Aura sites, guest security, external licences, CMS, headless, site DevOps | Dense for the 20 phase-18/19 notes; light for new ones |
 | [SF_Service/](SF_Service/INDEX.md) | Service Cloud only: Enhanced Chat & messaging, Omni-Channel routing, Omni Supervisor, bot-to-human handoff | Light format |
+| [SF_Sales/](SF_Sales/INDEX.md) | Sales Cloud only: leads, opportunities & Path, products & quotes, teams & splits, territories, forecasts, campaigns, Pipeline Inspection, Einstein Activity Capture | Light format |
 | [Interview/](Interview/README.md) | Scenario question bank | Question + model answer + rubric |
 
 Shared at the root: [GLOSSARY.md](GLOSSARY.md) (all terms, greppable) and [RELEASE-RADAR/](RELEASE-RADAR/README.md) (what changed and when — the source of truth for currency).
@@ -32,7 +33,7 @@ Run the **`study-notes`** skill. Do not free-hand it.
 
 The full contract is in [NOTES-SYSTEM.md](NOTES-SYSTEM.md). The short version:
 
-- **Route by subtraction:** strip the product out of the sentence. *Still true with no Agentforce in it?* *With no Experience Cloud site in it?* *With no Service Cloud in it?* **Still true → `SF_core/`. Falls apart → the vault that owns that product** — `SF_Agentforce/`, `SF_Data_360/`, `SF_Experience_Cloud/` or `SF_Service/`.
+- **Route by subtraction:** strip the product out of the sentence. *Still true with no Agentforce in it?* *With no Experience Cloud site in it?* *With no Service Cloud in it?* *With no Sales Cloud in it?* **Still true → `SF_core/`. Falls apart → the vault that owns that product** — `SF_Agentforce/`, `SF_Data_360/`, `SF_Experience_Cloud/`, `SF_Service/` or `SF_Sales/`.
 - **New notes use the light format** in [templates/note.md](templates/note.md), in every vault. Start there → [HOME.md](HOME.md) is the front door.
 - **Add gaps, scoped by the note's `Level`.** One level up, never two. Same topic only.
 - **A link that crosses vaults gets a link back**, in the same edit. Same-vault links rely on Obsidian's Backlinks panel.

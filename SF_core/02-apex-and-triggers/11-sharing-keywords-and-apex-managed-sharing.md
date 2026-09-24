@@ -4,7 +4,7 @@ area: 02-apex-and-triggers
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 4
 tags: [currency-new, currency-warning]
@@ -85,3 +85,4 @@ A: It must filter on `RecordId`, and `RecordId IN` accepts at most 200 records p
 - [10 · Apex security: user mode & FLS](10-apex-security-user-mode-and-fls.md) — the object and field half of the same 67.0 flip
 - [06 · Triggers & the handler framework](06-triggers-and-the-handler-framework.md) — why security-sensitive logic belongs in the handler now that triggers are always system mode
 - [07-security · Access model & record sharing](../07-security-and-sharing/INDEX.md) — the declarative sharing model that Apex managed sharing extends
+- [SF_Sales · Account & Opportunity Teams](../../SF_Sales/account-and-opportunity-teams.md) — the team rows such code maintains, and the split row that blocks removing a member

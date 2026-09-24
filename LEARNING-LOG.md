@@ -23,6 +23,67 @@ Newest first.
 
 ---
 
+### 2026-09-24 · The chat bubble on an Experience Cloud site, step by step — and the agent that never ran as the guest
+
+**No notes fed — a research pass on your request** for a step-by-step guide to the chat bubble on a site. The pieces already existed in two vaults: the Service chain in `SF_Service/` and the site step in `SF_Experience_Cloud` · 19. None of them read top to bottom as one guide.
+
+- **Enhanced Chat on a Site, Step by Step** → [SF_Experience_Cloud/25-enhanced-chat-on-a-site-step-by-step.md](SF_Experience_Cloud/25-enhanced-chat-on-a-site-step-by-step.md) · `new` · Level: working
+  - Seven steps: the Service chain, the site domain, the Web deployment, the `scrt2URL` Trusted URL, **Embedded Messaging** in the footer, two separate publishes, and a guest test. The Service steps link into `SF_Service/` rather than being restated.
+  - Seven templates are supported, the two LWR ones included. LWR differs in three ways: the component's placement is undocumented, token verification is Aura-only, and Mobile Publisher apps lose file and transcript downloads.
+  - On a site there is no snippet. Button settings, your own launcher and hidden pre-chat all go in **head markup**, which puts the site's CSP level in play.
+- **Embedded Messaging & Agents in Sites** → [SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md](SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) · `updated`
+  - **Corrected:** a Service Agent on a public site acts as its own **agent user**, not the guest user (Help, *Configure Service Agent Access*). The claim sat in the Core idea, How it works, a gotcha and a Recall card. The same claim is also fixed in the handoff note and the glossary.
+
+**Also touched:**
+- Links back to note 25 from four SF_Service notes (setup chain, deployments, Enhanced Chat, sessions & verification) and from `SF_core/07` · 27.
+- The 19 link reworded in `enhanced-chat.md` and `enhanced-chat-v1-vs-v2.md`.
+- Glossary: new rows **Chat button (chat bubble)** and **Agent user**. The **Embedded Messaging** and **Enhanced Chat** rows were updated.
+- Four labs, EC-CHAT-01 to 04, added to [SF_Experience_Cloud/PRACTICE.md](SF_Experience_Cloud/PRACTICE.md) as #17–20.
+
+---
+
+### 2026-09-24 · SF_Sales vault — leads to forecasts, and the one SF_core note that failed the test
+
+**No notes fed — a structural change plus a research pass.** You asked for a Sales Cloud vault built the way `SF_Service/` was, with any Sales Cloud content taken out of `SF_core/`.
+
+**The segregation found one note, and even that one stayed.** Only [SF_core/07-security · 10](SF_core/07-security-and-sharing/10-teams-territories-and-account-sharing.md) fails the routing test by subject. It is written as a sharing note, though: `RowCause = Team`, share-row growth, a second hierarchy. So it keeps its number and phase, and the selling side became new notes. [08-data · 04](SF_core/08-data-modeling-and-large-data-volumes/04-standard-crm-object-map.md) and [08-data · 22](SF_core/08-data-modeling-and-large-data-volumes/22-multi-currency-multi-language-and-locale.md) keep their Sales rows as the object-graph and currency summary. About 30 more notes use Opportunity or Lead only as an example object. Forecasts, Path, splits, campaign influence and Einstein Activity Capture had **zero hits** anywhere, `_archive/` included.
+
+- **Lead Management & Conversion** → [SF_Sales/lead-management-and-conversion.md](SF_Sales/lead-management-and-conversion.md) · `new` · Level: basic
+  - Web-to-Lead's 500-a-day cap, and conversion as a one-way move that fills blanks but never overwrites. *Require Validation for Converted Leads* decides whether lead validation rules run at all.
+- **Opportunities, Sales Process & Path** → [SF_Sales/opportunities-sales-process-and-path.md](SF_Sales/opportunities-sales-process-and-path.md) · `new` · Level: basic
+  - Stage resets Probability and forecast category on every change. Closing a deal with a future Close Date moves that date to today.
+- **Products & Price Books** → [SF_Sales/products-and-price-books.md](SF_Sales/products-and-price-books.md) · `new` · Level: basic
+  - A standard price comes first, and each opportunity uses one price book. Several API updates are ignored silently rather than rejected.
+- **Quotes, Orders & Contracts** → [SF_Sales/quotes-orders-and-contracts.md](SF_Sales/quotes-orders-and-contracts.md) · `new` · Level: working
+  - One quote syncs at a time, both ways. An activated order locks its product list, and reduction orders can be created only in Classic.
+- **Campaigns & Campaign Influence** → [SF_Sales/campaigns-and-campaign-influence.md](SF_Sales/campaigns-and-campaign-influence.md) · `new` · Level: basic
+  - A campaign gets no influence credit unless its contact is a contact role on the deal. The Primary Campaign Source model is system-owned.
+- **Account & Opportunity Teams** → [SF_Sales/account-and-opportunity-teams.md](SF_Sales/account-and-opportunity-teams.md) · `new` · Level: working
+  - Both team types share one role list. Revenue splits must total 100% and overlay splits need not. A hidden split still blocks removing its member.
+- **Enterprise Territory Management** → [SF_Sales/enterprise-territory-management.md](SF_Sales/enterprise-territory-management.md) · `new` · Level: working
+  - Now *Sales Territories*. A Planning model grants nothing, an archived one never returns, and archiving deletes the territory forecasts.
+- **Collaborative Forecasts** → [SF_Sales/collaborative-forecasts.md](SF_Sales/collaborative-forecasts.md) · `new` · Level: working
+  - Now *Pipeline Forecasting*. At most four types can be active. Being above a rep in the role hierarchy is not enough to see their forecast; only being named Forecast Manager is.
+- **Pipeline Inspection** → [SF_Sales/pipeline-inspection.md](SF_Sales/pipeline-inspection.md) · `new` · Level: basic
+  - Its rollup setting is separate from the one in forecasting, so Best Case can differ between them. The flow chart needs Revenue Intelligence.
+- **Einstein Activity Capture** → [SF_Sales/einstein-activity-capture.md](SF_Sales/einstein-activity-capture.md) · `new` · Level: working
+  - Since Summer '25, captured email can be stored as real `Task` and `EmailMessage` rows. Microsoft 365 connections must move to Graph by **1 October 2026**.
+- **[SF_core/07-security · 10](SF_core/07-security-and-sharing/10-teams-territories-and-account-sharing.md)** · `updated` — its scope line now says it covers sharing only and points across to SF_Sales. One gotcha is corrected (below).
+
+**Corrections, and one that was checked and left alone.**
+- **07 · 10 overstated the default-team rule.** It said editing a default team *"changes nothing that already exists"*. Help offers *Update open opportunity teams with these members*, which pushes a default opportunity team onto open deals. The gotcha now says the change reaches saved records only when you ask. Its Recall pair is about default *account* teams and was not contradicted, so it is unchanged.
+- **08 · 22's "forecasts ignore dated rates" stands.** It might have come from Customizable Forecasting docs, so it was re-checked against the current Pipeline Forecasting page: *"Dated exchange rates aren't used in forecasting."* The note gained the second half of that page's warning: a rate change restates past forecast periods too.
+- **The brief's own guess was wrong.** It expected seven or more active forecast types. The Winter '27 guide says four, and the note follows the guide.
+
+**Also touched:**
+- [SF_core/CURRENCY.md](SF_core/CURRENCY.md) — a new *New in Sales Cloud* section with 10 rows: two renames that kept their API names, two old retirements, the EAC storage change, the Agentforce Sales brand, CPQ end of sale, and three upcoming deadlines between October 2026 and December 2027.
+- [GLOSSARY.md](GLOSSARY.md) — a new `## Sales Cloud` section with 41 rows.
+- Return links in nine SF_core notes: 01-admin 04, 08, 11; 02-apex 11; 07-security 02, 07, 10; 08-data 04, 22. The vault is registered in `scripts/vault.py`, the study-notes skill, the human-vs-agent command, every vault's `AGENTS.md`, `SF_core/README.md` (which had parked "Sales Cloud functional depth" as a future area), `NOTES-SYSTEM.md`, the Interview README and the graph colours.
+
+**Research conditions.** Most `help.salesforce.com` pages are rendered by JavaScript, so they were read through search extracts (`via search`). The *Sales Cloud Basics* (Spring '26), *Sales Territories* and *Forecasts* guide PDFs and the v68.0 Object Reference were read directly. Four facts rest on page titles alone, and the notes say so. The date of the Agentforce Sales rebrand comes from a third-party source and carries 🚩.
+
+---
+
 ### 2026-09-24 · Knowledge & Enhanced Chat site — two allowlists, three topic types, and a claim that confused navigation with access
 
 You fed questions from the Trailhead project *Build an Experience Cloud Site with Knowledge and Enhanced Chat*: Embedded Service deployments, CORS, Trusted URLs versus CSP, the Enhanced Conversation component, Knowledge topics and Topics for Objects, and featured / navigational topics with Article Management. The project uses current Enhanced Chat; its URL slugs are stale, but each question group matches one unit.

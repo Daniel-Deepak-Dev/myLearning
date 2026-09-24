@@ -4,7 +4,7 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 14
 ---
@@ -68,3 +68,7 @@ A: No. `Activity` is a reporting abstraction; `Task` and `Event` are the real ta
 - [02 · Relationships deep dive](02-relationships-deep-dive.md) — the consequences of each edge in this graph
 - [10 · Data skew](10-data-skew.md) — why Task, Event and Case go lopsided first
 - [02-apex · 04 Advanced SOQL, SOSL & dynamic queries](../02-apex-and-triggers/04-advanced-soql-sosl-and-dynamic-queries.md) — `TYPEOF` against the polymorphic joints
+- [SF_Sales · Lead Management & Conversion](../../SF_Sales/lead-management-and-conversion.md) — what the Pre-sale row's conversion actually creates, maps and locks
+- [SF_Sales · Products & Price Books](../../SF_Sales/products-and-price-books.md) — the four-hop Pricing row as a rep meets it: standard prices, custom books, one book per opportunity
+- [SF_Sales · Quotes, Orders & Contracts](../../SF_Sales/quotes-orders-and-contracts.md) — the Post-sale row's lifecycle: quote sync, order activation, contract status
+- [SF_Sales · Campaigns & Campaign Influence](../../SF_Sales/campaigns-and-campaign-influence.md) — what the `CampaignMember` join is used for: statuses, hierarchy rollups and credit back to opportunities

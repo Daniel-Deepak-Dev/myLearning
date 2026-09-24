@@ -66,7 +66,8 @@ tags: [retirement]
 - [Enhanced Chat Custom Client & In-App SDK](enhanced-chat-custom-client-and-mobile-sdk.md) — the "In-App" half of the old name, and the REST API
 - [Omni-Channel Fundamentals](omni-channel-fundamentals.md) — the routing engine every Enhanced Chat conversation goes through
 - [Bot & Agent to Human Handoff](bot-and-agent-to-human-handoff.md) — moving a conversation from an enhanced bot or agent to a rep
-- [SF_Experience_Cloud · 19 Embedded messaging & agents in sites](../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) — the widget on a site, and the guest user it runs as
+- [SF_Experience_Cloud · 19 Embedded messaging & agents in sites](../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) — the widget on a site, and why a public agent's reach is its agent user, not the guest
+- [SF_Experience_Cloud · 25 Enhanced Chat on a site, step by step](../SF_Experience_Cloud/25-enhanced-chat-on-a-site-step-by-step.md) — this channel on a site end to end, including the rep licence and the legacy Chat it must replace
 - [SF_Agentforce/](../SF_Agentforce/INDEX.md) — where the Service Agent this channel routes to is built
 - [SF_core · CURRENCY](../SF_core/CURRENCY.md) — the retirement and rename rows this note rests on
 
@@ -90,3 +91,4 @@ tags: [retirement]
 ## History
 
 - 2026-09-24 · created — research pass for the new SF_Service vault; takes over the rename, retirement and product-level facts from SF_Experience_Cloud · 19
+- 2026-09-24 · linked SF_Experience_Cloud · 25, the step-by-step site guide; reworded the 19 link after its agent-user correction

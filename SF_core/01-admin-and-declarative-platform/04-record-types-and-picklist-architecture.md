@@ -4,7 +4,7 @@ area: 01-admin-and-declarative-platform
 format: dense
 status: learning
 created: 2026-08-01
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 1
 ---
@@ -91,3 +91,4 @@ A: The layout job is dead weight to them, but the value-set subsetting becomes t
 - [19 · Agentforce in Setup & AI-assisted admin](19-agentforce-in-setup-and-ai-assisted-admin.md) — the agent user whose permission sets grant record types
 - [06-integration · 25 · MCP servers & agent-facing APIs](../06-integration-and-apis/25-mcp-servers-and-agent-facing-apis.md) — UI API as the record-type-aware read path
 - [04-flow · 23 · Flows as Agentforce actions](../04-flow-and-automation/23-flows-as-agentforce-actions.md) — the invocable write path that can enforce the subset
+- [SF_Sales · Opportunities, Sales Process & Path](../../SF_Sales/opportunities-sales-process-and-path.md) — the Opportunity business process in use: Stage values, their probability and forecast mapping, and Path on top

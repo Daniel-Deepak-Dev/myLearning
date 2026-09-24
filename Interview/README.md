@@ -2,7 +2,7 @@
 
 > **Start at [../HOME.md](../HOME.md)** — what to study next, rebuilt from the notes.
 
-Sixth vault, alongside [SF_core/](../SF_core/README.md) (core platform), [SF_Agentforce/](../SF_Agentforce/INDEX.md), [SF_Data_360/](../SF_Data_360/INDEX.md), [SF_Experience_Cloud/](../SF_Experience_Cloud/INDEX.md) and [SF_Service/](../SF_Service/INDEX.md). Those five hold knowledge. This one holds **being asked about it under pressure**.
+Seventh vault, alongside [SF_core/](../SF_core/README.md) (core platform), [SF_Agentforce/](../SF_Agentforce/INDEX.md), [SF_Data_360/](../SF_Data_360/INDEX.md), [SF_Experience_Cloud/](../SF_Experience_Cloud/INDEX.md), [SF_Service/](../SF_Service/INDEX.md) and [SF_Sales/](../SF_Sales/INDEX.md). Those six hold knowledge. This one holds **being asked about it under pressure**.
 
 ## Why this exists
 

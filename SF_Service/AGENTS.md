@@ -13,11 +13,12 @@ Service Cloud only. Enhanced Chat (formerly Messaging for In-App and Web) and th
 
 So queues, assignment rules and the grantee model go to `SF_core/`. They also work on Lead, Task and custom objects. *How Omni-Channel pushes a queue's work to a rep* stays here.
 
-**Three neighbours.**
+**Four neighbours.**
 
 - An **Agentforce Service Agent** is built in [../SF_Agentforce/](../SF_Agentforce/INDEX.md). This vault owns the channel it answers on, the Omni-Channel flow that routes to it, and the handoff to a human.
 - The **Enhanced Chat widget on an Experience Cloud site** splits. The channel, deployment and routing are here. The site-side exposure is [../SF_Experience_Cloud/](../SF_Experience_Cloud/INDEX.md) · 19: the Experience Builder component, the guest user and the audit line item.
 - **Custom Lightning Types** for chat output are an LWC contract in `SF_core/03-lwc-and-slds/`. *Which Enhanced Chat version renders them* stays here.
+- **Leads routed by Omni-Channel** split. Lead assignment, statuses and conversion are [../SF_Sales/](../SF_Sales/INDEX.md). *How Omni-Channel pushes a lead to a rep* stays here.
 
 ## The note format
 
@@ -42,7 +43,7 @@ Template: [../templates/note.md](../templates/note.md).
 - **`Level` sets the gap ceiling.** Gaps may go one level up, never two. A `basic` note never gets a `deep` gap.
 - **Gaps stay on this topic.** Never a syllabus. Never another subject.
 - **Keep the user's own wording** in a `> **From my notes.**` callout. Correct it inline if it is wrong.
-- **A link that crosses vaults gets a link back**, added in the same edit — that means links into `SF_core/`, `SF_Agentforce/`, `SF_Data_360/` and `SF_Experience_Cloud/`. Same-vault links rely on Obsidian's Backlinks panel.
+- **A link that crosses vaults gets a link back**, added in the same edit — that means links into `SF_core/`, `SF_Agentforce/`, `SF_Data_360/`, `SF_Experience_Cloud/` and `SF_Sales/`. Same-vault links rely on Obsidian's Backlinks panel.
 - **Unsure of a fact? Mark it 🚩.** There is no Service Cloud radar file. For release-dependent facts, check [../SF_core/CURRENCY.md](../SF_core/CURRENCY.md) and [../RELEASE-RADAR/agentforce-platform.md](../RELEASE-RADAR/agentforce-platform.md) first. Never draft release facts from recall.
 
 ## Four live currency traps

@@ -71,3 +71,5 @@ A: Permissions are locks, licences are rings of keys. A permission without the m
 - [01-admin · 01 Org anatomy & editions](../01-admin-and-declarative-platform/01-org-anatomy-and-editions.md) — the note that hands off to this one
 - [SF_Service · Omni-Channel fundamentals](../../SF_Service/omni-channel-fundamentals.md) — which licences carry Omni-Channel, and where the Service Cloud User feature licence fits for a rep
 - [SF_Service · Knowledge](../../SF_Service/knowledge.md) — the Knowledge User feature licence in practice: authors need it to write, customers and partners never do
+- [SF_Sales · Pipeline Inspection](../../SF_Sales/pipeline-inspection.md) — the PSL example above in practice: access comes from the *Pipeline Inspection User* permission set, and whether a licence backs it is still an open gap there
+- [SF_Sales · Einstein Activity Capture](../../SF_Sales/einstein-activity-capture.md) — a licence, a permission set and a configuration: three separate gates before one email is captured

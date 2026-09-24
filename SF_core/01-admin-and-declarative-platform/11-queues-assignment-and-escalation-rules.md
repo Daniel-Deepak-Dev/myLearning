@@ -64,3 +64,4 @@ A: All after them — steps 9, 10 and 12 respectively, against after-triggers at
 - [07-security · INDEX](../07-security-and-sharing/INDEX.md) — what queue ownership means for sharing
 - [04-flow · INDEX](../04-flow-and-automation/INDEX.md) — when routing logic outgrows an assignment rule
 - [SF_Service · Omni-Channel fundamentals](../../SF_Service/omni-channel-fundamentals.md) — how Omni-Channel pushes a queue's work to an available rep, by capacity and presence
+- [SF_Sales · Lead Management & Conversion](../../SF_Sales/lead-management-and-conversion.md) — the lead rule in context: Web-to-Lead feeding it, auto-response rules beside it, and conversion after it

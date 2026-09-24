@@ -69,6 +69,7 @@ tags: [security]
 - [Omni-Channel Routing & Capacity](omni-channel-routing-and-capacity.md) — tab-based vs status-based capacity, which decides how Inactive and Paused behave
 - [Enhanced Chat](enhanced-chat.md) — why legacy Chat had no conversations to persist in the first place
 - [SF_Experience_Cloud · 19 Embedded messaging & agents in sites](../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) — the unverified case on a public site: the guest user, and why that is the risky one
+- [SF_Experience_Cloud · 25 Enhanced Chat on a site, step by step](../SF_Experience_Cloud/25-enhanced-chat-on-a-site-step-by-step.md) — where the three-Aura-templates rule bites: a chat on an LWR site stays unverified
 - [SF_core · 06-integration · 15 OAuth flows & authorization](../SF_core/06-integration-and-apis/15-oauth-flows-and-authorization.md) — JWTs and signing keys in the platform's own flows; this JWT is yours, not an OAuth token
 
 ## Sources
@@ -91,3 +92,4 @@ tags: [security]
 ## History
 
 - 2026-09-24 · created — research pass for the new SF_Service vault; new ground beyond SF_Experience_Cloud · 19, which keeps the guest-user side of an unverified chat
+- 2026-09-24 · linked SF_Experience_Cloud · 25, the step-by-step site guide

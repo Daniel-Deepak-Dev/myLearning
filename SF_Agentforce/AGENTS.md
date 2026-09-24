@@ -17,6 +17,8 @@ So `@InvocableMethod` signatures and return types go to `SF_core/02-apex-and-tri
 
 **And a third.** A **Service Agent on a messaging channel** splits the same way: the agent is built here; the Enhanced Chat channel, the Omni-Channel flow that routes to the agent, and the handoff to a human are [../SF_Service/](../SF_Service/INDEX.md).
 
+**And a fourth.** A **Sales agent** — one that nurtures leads or coaches a rep on a deal — is built here. The lead and opportunity records it works, and the sales process it coaches against, are [../SF_Sales/](../SF_Sales/INDEX.md).
+
 ## The note format
 
 Template: [../templates/note.md](../templates/note.md).
@@ -41,7 +43,7 @@ Template: [../templates/note.md](../templates/note.md).
 - **`Level` sets the gap ceiling.** Gaps may go one level up, never two. A `basic` note never gets a `deep` gap.
 - **Gaps stay on this topic.** Never a syllabus. Never another subject.
 - **Keep the user's own wording** in a `> **From my notes.**` callout. Correct it inline if it is wrong.
-- **A link that crosses vaults gets a link back**, added in the same edit — that means links into `SF_core/`, `SF_Experience_Cloud/` and `SF_Service/`. Same-vault links rely on Obsidian's Backlinks panel.
+- **A link that crosses vaults gets a link back**, added in the same edit — that means links into `SF_core/`, `SF_Experience_Cloud/`, `SF_Service/` and `SF_Sales/`. Same-vault links rely on Obsidian's Backlinks panel.
 - **Unsure of a fact? Mark it 🚩.** For release-dependent facts, check [../RELEASE-RADAR/agentforce-platform.md](../RELEASE-RADAR/agentforce-platform.md) first. Never draft release facts from recall.
 - **Two live currency traps:** agents are authored in **Agent Script** — the legacy topics-and-instructions builder stopped creating new agents the week of 2026-07-13. And **Data Cloud is Data 360**.
 - **New topic** → new file, plus a row in [INDEX.md](INDEX.md) at the right point in the path.
