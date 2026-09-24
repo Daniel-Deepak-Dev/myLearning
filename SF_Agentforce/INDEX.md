@@ -46,6 +46,7 @@ These `SF_core` notes own the code side. Link to them rather than restating.
 | Calling a prompt template **from** Flow | [04-flow · 28 Calling a prompt template from Flow](../SF_core/04-flow-and-automation/28-calling-prompt-templates-from-flow.md) |
 | Agent-facing APIs | [06-integration · 25 MCP servers & agent-facing APIs](../SF_core/06-integration-and-apis/25-mcp-servers-and-agent-facing-apis.md) |
 | Agents in a site | [SF_Experience_Cloud · 19 Embedded messaging & agents in sites](../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) |
+| An agent on a messaging channel, and its handoff to a human | [SF_Service · Bot & agent to human handoff](../SF_Service/bot-and-agent-to-human-handoff.md) |
 | Moving AI metadata between orgs | [09-devops · 05 Metadata API & deployment mechanics](../SF_core/09-devops-sfdx-and-release-management/05-metadata-api-and-deployment-mechanics.md) |
 
 ## Backlog — referenced elsewhere, not yet fed

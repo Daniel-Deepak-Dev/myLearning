@@ -4,7 +4,7 @@ area: 07-security-and-sharing
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-09-19
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 10
 tags: [currency-new]
@@ -69,3 +69,5 @@ A: Permissions are locks, licences are rings of keys. A permission without the m
 - [05 · User Access Policies & lifecycle](05-user-access-policies-and-lifecycle.md) — automating PSL and permission set assignment together
 - [SF_Experience_Cloud · 08 Licences & external user types](../../SF_Experience_Cloud/08-licences-and-external-user-types.md) — the customer, partner and external identity half of this note
 - [01-admin · 01 Org anatomy & editions](../01-admin-and-declarative-platform/01-org-anatomy-and-editions.md) — the note that hands off to this one
+- [SF_Service · Omni-Channel fundamentals](../../SF_Service/omni-channel-fundamentals.md) — which licences carry Omni-Channel, and where the Service Cloud User feature licence fits for a rep
+- [SF_Service · Knowledge](../../SF_Service/knowledge.md) — the Knowledge User feature licence in practice: authors need it to write, customers and partners never do

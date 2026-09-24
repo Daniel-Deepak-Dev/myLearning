@@ -4,7 +4,7 @@ area: 04-flow-and-automation
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-09-19
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 8
 tags: [currency-warning]
@@ -71,3 +71,4 @@ A: Flow shares the same per-transaction governor budget as Apex, with less contr
 - [01-admin · 14 Order of execution](../01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md) — where each automation type sits in the save pipeline
 - [02-apex · 06 Triggers & the handler framework](../02-apex-and-triggers/06-triggers-and-the-handler-framework.md) — the other side of the boundary this note draws
 - [28 · Calling a prompt template from Flow](28-calling-prompt-templates-from-flow.md) — the AI branch of the same tool-selection question, and the flow type this area does not own
+- [SF_Service · Omni-Channel flows](../../SF_Service/omni-channel-flows.md) — **Omni-Channel Flow**, a routing flow type this landscape leaves out: it decides who works an item, and records reach it only as a subflow

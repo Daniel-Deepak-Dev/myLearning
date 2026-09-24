@@ -2,11 +2,11 @@
 
 > **Start at [../HOME.md](../HOME.md)** — what to study next, rebuilt from the notes.
 
-Public, partner and customer sites built **LWR-first**. **22 topics** · phases [18](PHASES.md), [19](PHASES.md), plus fed topics appended beyond them.
+Public, partner and customer sites built **LWR-first**. **24 topics** · phases [18](PHASES.md), [19](PHASES.md), plus fed topics appended beyond them.
 
 > Currency: **Summer '26 (API 67.0)** · [flag legend](../SF_core/README.md#flag-legend) · [what changed](../SF_core/CURRENCY.md) · [how to write here](AGENTS.md)
 
-> **This vault was `SF_core/05-experience-cloud-lwr/` until 2026-09-19.** It is now a root-level vault beside [SF_core/](../SF_core/README.md), [SF_Agentforce/](../SF_Agentforce/INDEX.md) and [SF_Data_360/](../SF_Data_360/INDEX.md). Filenames and numbering are unchanged. The build record stays in [../SF_core/PHASES.md](../SF_core/PHASES.md) and the currency rows stay in [../SF_core/CURRENCY.md](../SF_core/CURRENCY.md) — one ledger for the whole platform.
+> **This vault was `SF_core/05-experience-cloud-lwr/` until 2026-09-19.** It is now a root-level vault beside [SF_core/](../SF_core/README.md), [SF_Agentforce/](../SF_Agentforce/INDEX.md), [SF_Data_360/](../SF_Data_360/INDEX.md) and — since 2026-09-24 — [SF_Service/](../SF_Service/INDEX.md). Filenames and numbering are unchanged. The build record stays in [../SF_core/PHASES.md](../SF_core/PHASES.md) and the currency rows stay in [../SF_core/CURRENCY.md](../SF_core/CURRENCY.md) — one ledger for the whole platform.
 
 > ⚠️ **The area's own headline was half wrong, and phase 18 corrected it.** LWR is the strategic runtime and where every new capability lands — but **only two templates are LWR**, *Build Your Own (LWR)* and *Microsite (LWR)*. **Customer Service, Partner Central, Customer Account Portal, Help Center and Build Your Own are Aura templates, still creatable at 67.0, still receiving Summer '26 features, with no announced retirement date.** This vault teaches LWR because that is where the platform is going; it does **not** claim Aura is dead, and a migration business case built on that claim is built on sand → [01](01-template-choice-and-site-landscape.md), [12](12-aura-to-lwr-migration-and-coexistence.md).
 
@@ -40,6 +40,8 @@ Public, partner and customer sites built **LWR-first**. **22 topics** · phases 
 | 20 | [Site monitoring, limits & scale](20-site-monitoring-limits-and-scale.md) ⚠️ | **overage disables sites**, not just bills; EE 500k/mo, UE/PE 1M/mo | 19 |
 | 21 | [Multilingual sites & site translation](21-multilingual-sites-and-translation.md) | three translation surfaces; **40 languages**; CMS variants; the per-language URL question | — |
 | 22 | [Site accessibility & conformance](22-site-accessibility-and-conformance.md) 🆕⚠️ | **the ACR is not your site's claim**; EAA 28 Jun 2025, EN 301 549 v3.2.1 = WCAG 2.1 AA | — |
+| 23 | [Topics & Knowledge on sites](23-topics-and-knowledge-on-sites.md) | navigational, featured and content topics; Article Management; what really makes an article visible | — |
+| 24 | [Site CSP, security level & trusted scripts](24-site-csp-security-level-and-trusted-scripts.md) | Strict vs Relaxed CSP; Trusted Sites for Scripts per site; how it stacks on org Trusted URLs | — |
 
 ## Related
 

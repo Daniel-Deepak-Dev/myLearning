@@ -4,7 +4,7 @@ area: 01-admin-and-declarative-platform
 format: dense
 status: learning
 created: 2026-08-01
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 1
 ---
@@ -28,7 +28,7 @@ A **queue** is an owner that is not a person: assign a record to it and every qu
 
 ## 2026 currency
 
-Queue-plus-assignment-rule remains correct for record routing, but it is no longer the answer for real-time work distribution in Service Cloud — **Omni-Channel** owns that, with capacity-based routing and presence. Treat assignment rules as the mechanism for *ownership on create* and Omni-Channel as the mechanism for *who works it now*.
+Assignment rules decide *ownership on create*. Real-time work distribution in Service Cloud — *who works it now*, by capacity and presence — is **Omni-Channel**, which now has its own vault → [SF_Service · Omni-Channel fundamentals](../../SF_Service/omni-channel-fundamentals.md).
 
 ## Gotchas
 
@@ -63,3 +63,4 @@ A: All after them — steps 9, 10 and 12 respectively, against after-triggers at
 - [14 · Order of execution](14-order-of-execution-declarative-view.md) — the authoritative positions for all three rule types
 - [07-security · INDEX](../07-security-and-sharing/INDEX.md) — what queue ownership means for sharing
 - [04-flow · INDEX](../04-flow-and-automation/INDEX.md) — when routing logic outgrows an assignment rule
+- [SF_Service · Omni-Channel fundamentals](../../SF_Service/omni-channel-fundamentals.md) — how Omni-Channel pushes a queue's work to an available rep, by capacity and presence

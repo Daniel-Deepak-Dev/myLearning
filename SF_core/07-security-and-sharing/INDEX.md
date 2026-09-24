@@ -1,6 +1,6 @@
 # 07 · Security & Sharing
 
-Sharing & Visibility architect depth, updated for the access model as it stands at 67.0 — including the retirement that **did not happen** and the enforcement wave that did. **26 topics** · phases [10](PHASES.md), [11](PHASES.md).
+Sharing & Visibility architect depth, updated for the access model as it stands at 67.0 — including the retirement that **did not happen** and the enforcement wave that did. **27 topics** · phases [10](PHASES.md), [11](PHASES.md).
 
 > Currency: **Summer '26 (API 67.0)** · [flag legend](../README.md#flag-legend) · [what changed](../CURRENCY.md)
 
@@ -36,6 +36,7 @@ Sharing & Visibility architect depth, updated for the access model as it stands 
 | 24 | [Security Center & Health Check](24-security-center-and-health-check.md) 🆕⚠️ | **Essentials free Jul 2026**; baselines, drift, Who Sees What Explorer | 11 |
 | 25 | [Privacy, consent & data protection](25-privacy-consent-and-data-protection.md) | `Individual`, the four consent levels, DSR patterns, Data Mask | 11 |
 | 26 | [Secure coding checklist](26-secure-coding-checklist.md) ⚠️ | 16 checks, each naming what to grep for | 11 |
+| 27 | [Trusted URLs & CSP](27-trusted-urls-and-csp.md) | the six CSP directives, contexts and Permissions-Policy — and why site scripts need a second list | — |
 
 ## Related
 

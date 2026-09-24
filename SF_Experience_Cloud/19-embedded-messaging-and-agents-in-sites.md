@@ -3,7 +3,7 @@ vault: SF_Experience_Cloud
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-09-19
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 19
 tags: [currency-new, currency-warning]
@@ -12,7 +12,7 @@ tags: [currency-new, currency-warning]
 
 **Scope:** Putting a chat channel — human-routed messaging or an **Agentforce agent** — on a site, and why an agent on a *public* site is the highest-risk surface on the platform. The agent itself is built in [SF_Agentforce/](../SF_Agentforce/INDEX.md); an agent is also **a new line item on the exposure audit**, [11](11-public-site-exposure-audit.md).
 
-> **What changed — a retirement and a rename, and most writing gets one of the two wrong.** Legacy **Chat / Live Agent** (LiveAgent, Salesforce Chat, Embedded Chat, Service Chat) **was retired on 14 February 2026** — a real retirement with a real date, unusual in this vault. Its replacement is **not** called *Messaging for In-App and Web* any more: that product was **renamed Enhanced Chat in June 2025**, and **Enhanced Chat v2** shipped in Winter '26 (24 October 2025) as the Agentforce-first UI. Salesforce's own docs still carry the old name in places, so both names in one search result is expected — **Enhanced Chat is the current one**.
+> **What changed.** Legacy **Chat / Live Agent was retired on 14 February 2026**, and its replacement *Messaging for In-App and Web* was **renamed Enhanced Chat in June 2025**. The product, the rename and the v2 client are now owned by [SF_Service · Enhanced Chat](../SF_Service/enhanced-chat.md); this note keeps only what a **site** does to it.
 
 ## Core idea
 
@@ -20,8 +20,8 @@ The delivery mechanism is **Enhanced Chat** (formerly Messaging for In-App and W
 
 ## How it works
 
-- **Setup chain:** Messaging Settings → **New Channel** (In-App and Web) → **Embedded Service Deployment** → add the **Embedded Messaging** component in Experience Builder → publish. **v2 deployments attach to an existing channel**, so moving to Enhanced Chat v2 is a new deployment, not a new channel.
-- **Routing:** the channel links to Omni-Channel; route to a queue (human) or an **Agentforce Service Agent**. Escalation agent→human is routing configuration, not a rebuild.
+- **The site's step is the last one.** The channel and its **Embedded Service Deployment** are built in Service Setup → [SF_Service · setup chain](../SF_Service/enhanced-chat-setup-chain.md). The site's part is dragging the **Embedded Messaging** component into the **Template Footer** in Experience Builder — drag and drop is the only supported method — then publishing the site.
+- **Routing happens behind the channel**, in an Omni-Channel flow — to a queue or an **Agentforce Service Agent**. Nothing on the site changes when routing does → [SF_Service · handoff](../SF_Service/bot-and-agent-to-human-handoff.md).
 - **Guest context:** on a public site the conversation runs as the **guest user** — the agent's data reach is exactly the guest's sharing, [07](07-guest-user-security-model.md).
 - **Trust Layer** governs every turn — masking, toxicity, grounding, audit. Cross-link, don't restate: [SF_Agentforce · Einstein Trust Layer](../SF_Agentforce/INDEX.md).
 
@@ -34,21 +34,17 @@ Deploying an Agentforce Service Agent to a site is now a channel-configuration e
 - **A public agent runs as the guest user.** Every action and grounding query is bounded by guest sharing — scope the guest profile *and* the agent's actions, and treat the input as hostile, [11](11-public-site-exposure-audit.md).
 - **Prompt injection is an open door on a public site.** Unauthenticated free-text into a reasoning engine — Trust Layer and action allow-lists are mandatory, not optional.
 - **Agent actions inherit the running context.** An over-broad action exposed to a guest agent is a data-exfiltration path, not a convenience.
-- **Escalation loses context if unplanned** — handing off to a human without transcript/routing config drops the thread.
-- **Legacy Chat/Live Agent was retired on 14 February 2026** — genuinely gone, not merely superseded, and running as-is with no SLA for anyone who never migrated. Build on **Enhanced Chat**.
-- **Call it Enhanced Chat.** *Messaging for In-App and Web* is the pre-June-2025 name; tutorials, and half of Salesforce's own docs, still use it. Same product, and **v2** is a further UI generation on top.
+- **The retirement, the rename and the escalation design are not site problems.** Legacy Chat's end date, *Enhanced Chat* vs *Messaging for In-App and Web*, and why a handoff drops context all live in [SF_Service/](../SF_Service/INDEX.md). A site cannot fix any of them.
+- **The Trailhead's site chat adds two allowlists, pointing opposite ways.** The deployment's `scrt2URL` goes in **Trusted URLs** with CSP context *Experience Builder Sites*. It also adds the site URL to **CORS** — 🚩 no Salesforce source says Enhanced Chat needs that entry, so it is an open org check → [SF_core · CORS](../SF_core/06-integration-and-apis/28-cors-allowlist.md), [· Trusted URLs](../SF_core/07-security-and-sharing/27-trusted-urls-and-csp.md).
 - **Consumption billing.** Agent turns consume Flex/agent credits — a public agent's cost scales with traffic, not with resolved cases.
 
 ## Recall
 
 Q: What is the deployment chain for putting a chat or agent on a site?
-A: Messaging Channel (In-App and Web) → Embedded Service Deployment → Embedded Messaging component in Experience Builder → publish.
+A: An Enhanced Chat **Messaging Channel** → a **Web** Embedded Service Deployment, published → the **Embedded Messaging** component in the Template Footer in Experience Builder → publish the site.
 
-Q: What is the product called, and what happened to the one before it?
-A: **Enhanced Chat** — renamed from *Messaging for In-App and Web* in June 2025, with **v2** since Winter '26. Legacy Chat / Live Agent **was retired on 14 February 2026**.
-
-Q: How does the site know whether a conversation goes to a human or an agent?
-A: It doesn't — the channel routes via Omni-Channel to a queue or an Agentforce Service Agent; routing is configured behind the channel.
+Q: Can Enhanced Chat verify a logged-in member on a Build Your Own (LWR) site with a token?
+A: Not per Help. Token-based user verification is supported on an external website and three **Aura** templates only — Build Your Own (Aura), Help Center, Customer Service. On any other site the chat is unverified.
 
 Q: Why is an agent on a public site the highest-risk deployment surface?
 A: It combines unauthenticated input, guest-user data context, and a reasoning engine — so prompt injection and over-broad actions can exfiltrate data.
@@ -64,3 +60,11 @@ A: It's a new line item on the public-site exposure audit ([11](11-public-site-e
 - [11 · Public site exposure audit](11-public-site-exposure-audit.md) — an embedded agent is a new item on that audit
 - [SF_Agentforce · Einstein Trust Layer](../SF_Agentforce/INDEX.md) — the guardrails a public agent depends on
 - [SF_Agentforce/](../SF_Agentforce/INDEX.md) — where the agent, its actions and topics are built
+- [SF_Service · Enhanced Chat](../SF_Service/enhanced-chat.md) — the product behind the widget: the MIAW rename, the legacy Chat retirement, and what a conversation is
+- [SF_Service · Enhanced Chat setup chain](../SF_Service/enhanced-chat-setup-chain.md) — the channel and deployment that must exist before the Experience Builder component has anything to show
+- [SF_Service · Enhanced Chat v1 vs v2](../SF_Service/enhanced-chat-v1-vs-v2.md) — the v2 client a site's Service Agent now ships in, and why v1 and v2 must never share the site's domain
+- [SF_Service · Sessions & user verification](../SF_Service/enhanced-chat-sessions-and-user-verification.md) — which site templates can verify a logged-in member, and what an unverified guest conversation keeps
+- [SF_Service · Embedded Service deployments](../SF_Service/embedded-service-deployments.md) — whether a site needs a deployment at all, what one holds, and how to tell a legacy Embedded Service Chat snippet from an Enhanced Chat one
+- [SF_core · 06-integration · 28 CORS allowlist](../SF_core/06-integration-and-apis/28-cors-allowlist.md) — the CORS entry the Trailhead adds for the site URL, and the open question of whether chat needs it at all
+- [SF_core · 07-security · 27 Trusted URLs & CSP](../SF_core/07-security-and-sharing/27-trusted-urls-and-csp.md) — why `scrt2URL` needs a Trusted URL in the Experience Builder Sites context
+- [SF_Service · Bot & agent to human handoff](../SF_Service/bot-and-agent-to-human-handoff.md) — the routing behind the channel, and why an unplanned escalation loses the thread

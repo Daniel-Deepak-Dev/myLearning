@@ -1523,7 +1523,7 @@ Lightning dashboards — a custom component can be added as a dashboard widget a
 
 A CDN-hosted script will not load in an LWC. What is the first thing to check?
 ?
-CSP Trusted Sites, with `script-src` enabled for that origin. This is Content Security Policy, not Lightning Web Security.
+Content Security Policy, not Lightning Web Security — and no Trusted URL can allow it, because Trusted URLs has no `script-src`. Upload the library as a static resource and load it with `loadScript`.
 
 Why must `loadScript` in `renderedCallback` be guarded by a flag?
 ?
@@ -2153,9 +2153,9 @@ Where should a client get the host it calls after authenticating?
 ?
 From `instance_url` in the OAuth token response, used verbatim — never from a stored constant.
 
-What is the difference between CORS and CSP Trusted Sites?
+What is the difference between CORS and Trusted URLs (formerly CSP Trusted Sites)?
 ?
-CORS allowlists origins that call Salesforce; CSP Trusted Sites allowlists destinations Salesforce pages may call. Opposite directions.
+CORS allowlists origins that call Salesforce; Trusted URLs allowlists destinations Salesforce pages may call. Opposite directions.
 
 Which free log finds integrations still using old hostnames?
 ?
@@ -3035,7 +3035,7 @@ Shared instance hostnames depend on third-party cookie behaviour browsers have r
 
 An LWC cannot load a script from an external CDN. Which setting is responsible?
 ?
-Trusted URLs (CSP) — not Lightning Web Security. LWS is namespace isolation and does not block CDNs.
+Content Security Policy — not Lightning Web Security, which is namespace isolation and does not block CDNs. No Trusted URL can fix it, because there is no `script-src` directive; use a static resource.
 
 What is the difference between the CORS allowlist and Trusted URLs?
 ?
@@ -3155,7 +3155,7 @@ A trigger body. It is always system mode, which is why security-sensitive logic 
 
 A component cannot load a script from an external CDN. Which control, and which note?
 ?
-Trusted URLs / CSP — not LWS. See [20](20-my-domain-enhanced-domains-and-trusted-urls.md).
+CSP — not LWS. A `fetch` host goes in Trusted URLs; a script has no Trusted URL directive, so it becomes a static resource. See [27](27-trusted-urls-and-csp.md).
 
 Name the one-line diff that silently changes a class's data access.
 ?

@@ -4,7 +4,7 @@ area: 03-lwc-and-slds
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 7
 tags: [currency-new]
@@ -76,3 +76,4 @@ A: It lets an LWC control the Agentforce side panel — `open()`, `close()`, `ex
 - [22 · LWC OSS & off-platform reuse](22-lwc-open-source-and-off-platform-reuse.md) — how far a component like this travels
 - [SF_Agentforce/](../../SF_Agentforce/INDEX.md) — agent actions, topics and the invocable side of the contract
 - [04-flow · Flows as agent actions](../04-flow-and-automation/INDEX.md) — the other way an action gets built
+- [SF_Service · Enhanced Chat v1 vs v2](../../SF_Service/enhanced-chat-v1-vs-v2.md) — which chat client reads the `enhancedWebChat` folder: **v2 only**, and why a v1 window on the same domain drops the rendered type

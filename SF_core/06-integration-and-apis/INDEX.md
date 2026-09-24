@@ -1,6 +1,6 @@
 # 06 · Integration & APIs
 
-Every inbound and outbound path, with the 2024–2026 replacements. **27 topics** · phases [12](PHASES.md), [13](PHASES.md), [20](PHASES.md).
+Every inbound and outbound path, with the 2024–2026 replacements. **28 topics** · phases [12](PHASES.md), [13](PHASES.md), [20](PHASES.md).
 
 > Currency: **Summer '26 (API 67.0)** · [flag legend](../README.md#flag-legend) · [what changed](../CURRENCY.md)
 
@@ -37,6 +37,7 @@ Every inbound and outbound path, with the 2024–2026 replacements. **27 topics*
 | 25 | [MCP servers & agent-facing APIs](25-mcp-servers-and-agent-facing-apis.md) 🆕 | org-hosted MCP tools honouring sharing and user mode; **no M2M flow** | 13 |
 | 26 | [Certificates, mutual TLS & the PKI changes](26-certificates-mutual-tls-and-the-pki-changes.md) 🆕⚠️ | dual-use roots banned, validity 200 → 100 → 47 days, stop pinning | 13 |
 | 27 | [Event bus allocations, limits & monitoring](27-event-bus-allocations-limits-and-monitoring.md) 🆕⚠️ | publish/hour vs delivery/24 h, CDC's 5-entity cap, **standard-volume retiring**, parallel subscriptions GA | 20 |
+| 28 | [CORS allowlist](28-cors-allowlist.md) | which browser origins may call Salesforce APIs; the preflight; **not authentication** | — |
 
 ## Related
 

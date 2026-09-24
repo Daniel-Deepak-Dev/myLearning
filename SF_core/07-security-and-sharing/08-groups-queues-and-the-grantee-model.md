@@ -4,7 +4,7 @@ area: 07-security-and-sharing
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-09-19
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 10
 tags: [currency-new, currency-warning]
@@ -78,3 +78,4 @@ A: The `Group` and `GroupMember` objects, both queryable via SOQL.
 - [01-admin · 11 Queues, assignment & escalation rules](../01-admin-and-declarative-platform/11-queues-assignment-and-escalation-rules.md) — the routing side of the same object
 - [15 · Auditing & troubleshooting access](15-auditing-and-troubleshooting-access.md) — resolving a group to its real membership
 - [SF_Experience_Cloud · 08 Licences & external user types](../../SF_Experience_Cloud/08-licences-and-external-user-types.md) — portal roles, and how they surface inside *Roles and Subordinates*
+- SF_Service · [Omni-Channel fundamentals](../../SF_Service/omni-channel-fundamentals.md), [routing & capacity](../../SF_Service/omni-channel-routing-and-capacity.md), [Omni-Channel flows](../../SF_Service/omni-channel-flows.md), [Omni Supervisor](../../SF_Service/omni-supervisor.md) — what an Omni queue adds on top of the `Group`: a routing configuration, a push to one rep by capacity, a fallback queue that swallows work when it has no members, and supervisor views that read direct group members only

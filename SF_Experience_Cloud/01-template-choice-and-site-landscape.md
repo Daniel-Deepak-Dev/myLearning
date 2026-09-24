@@ -3,7 +3,7 @@ vault: SF_Experience_Cloud
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-09-20
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 18
 tags: [currency-new, currency-warning]
@@ -47,7 +47,7 @@ Summer '26's Experience Cloud items are additive rather than directional: 10 GB 
 
 - **Template choice is permanent.** Changing runtime is a rebuild in a new site, then a cutover → [12](12-aura-to-lwr-migration-and-coexistence.md).
 - **"LWR is the default" is a strategy statement, not a Setup fact** — the template gallery still offers more Aura templates than LWR ones.
-- **Picking Build Your Own (LWR) for a service portal buys you a blank page.** Knowledge, case deflection, search and the Chatter feed are what Customer Service was giving you.
+- **Picking Build Your Own (LWR) for a service portal buys you a blank page.** Knowledge, case deflection, search and the Chatter feed are what Customer Service was giving you. LWR does have standard Knowledge components since Spring '24, but they are organised by **data categories, not topics** → [23](23-topics-and-knowledge-on-sites.md).
 - **Microsite (LWR) is designed for unauthenticated visitors** — reaching for it because it sounds lightweight, then adding login, is the wrong starting point.
 - **A managed-package LWC is disabled in Experience Builder's Components panel on a site with Lightning Locker off** unless its metadata declares the `lightningCommunity__RelaxedCSP` **capability**. It is a relaxed-CSP rule, not a blanket packaging rule → [06](06-custom-lwc-in-lwr-sites.md).
 - **The 100-site org cap counts everything** — active, inactive, preview and Visualforce sites → [03](03-site-setup-domains-and-publishing.md).
@@ -61,7 +61,7 @@ Q: Have Aura templates been retired?
 A: No. They are legacy in direction only — still creatable at 67.0, still receiving Summer '26 features, with no announced retirement date.
 
 Q: What does choosing LWR cost you on a self-service portal project?
-A: Everything Customer Service gave you for free — Knowledge, case deflection, feed and search all become build work on a blank canvas.
+A: Everything Customer Service gave you for free — Knowledge, case deflection, feed and search all become build work on a blank canvas. LWR's standard Knowledge components (Spring '24) help, but they browse by data category, not topic.
 
 Q: Can Aura components run in an LWR site?
 A: No. LWR runs Lightning web components only, and there is no compatibility layer.

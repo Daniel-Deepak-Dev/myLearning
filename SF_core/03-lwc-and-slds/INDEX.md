@@ -32,7 +32,7 @@ LWC as the **only** UI framework in this vault. **24 topics** · phases [05](PHA
 | 20 | [Offline LWC & mobile constraints](20-offline-lwc-and-mobile-constraints.md) 🆕 | **no Apex offline, at all**; draft records, `lightning/uiGraphQLApi` | 07 |
 | 21 | [Local dev & Lightning Dev Server](21-local-dev-and-lightning-dev-server.md) 🆕⚠️ | `sf lightning dev component\|app\|site`; **Local Dev → Live Preview**, GA 67.0 | 07 |
 | 22 | [LWC Open Source & off-platform reuse](22-lwc-open-source-and-off-platform-reuse.md) | the import list decides portability; **LWC in dashboards** is new | 07 |
-| 23 | [Static resources & third-party JavaScript](23-static-resources-and-third-party-javascript.md) | `loadScript`, CSP Trusted Sites, `lwc:dom="manual"` | 07 |
+| 23 | [Static resources & third-party JavaScript](23-static-resources-and-third-party-javascript.md) | `loadScript`, Trusted URLs (no `script-src`), `lwc:dom="manual"` | 07 |
 | 24 | [LWC State Managers](24-lwc-state-managers.md) 🆕 | `defineState` / `atom` / `computed`, **GA at 67.0** — context, not a bus | 07 |
 
 ## Reading order

@@ -11,6 +11,7 @@ This folder is the **platform underneath** the AI vaults. It cross-links to them
 | [SF_Agentforce/](../SF_Agentforce/INDEX.md) | Prompt templates, agents, actions, Agent Script, Atlas, Trust Layer |
 | [SF_Data_360/](../SF_Data_360/INDEX.md) | Ingestion, DMOs, identity resolution, segments, zero-copy, RAG |
 | [SF_Experience_Cloud/](../SF_Experience_Cloud/INDEX.md) | LWR sites, guest security & exposure audit, Aura→LWR, CMS, headless, SEO |
+| [SF_Service/](../SF_Service/INDEX.md) | Enhanced Chat & messaging, Omni-Channel routing and capacity, Omni Supervisor, bot-to-human handoff |
 | [Interview/](../Interview/README.md) | Scenario question bank |
 
 > **Currency: Summer '26 · API 67.0** · see [CURRENCY.md](CURRENCY.md) for the version map and the six defaults that invalidate older tutorials.
@@ -19,25 +20,26 @@ This folder is the **platform underneath** the AI vaults. It cross-links to them
 
 | Area | Covers | Topics |
 |---|---|---|
-| [01-admin-and-declarative-platform/](01-admin-and-declarative-platform/INDEX.md) | Org anatomy, data model config, Dynamic Forms, CMDT, order of execution | 19 |
+| [01-admin-and-declarative-platform/](01-admin-and-declarative-platform/INDEX.md) | Org anatomy, data model config, Dynamic Forms, CMDT, order of execution | 20 |
 | [02-apex-and-triggers/](02-apex-and-triggers/INDEX.md) | Apex language, SOQL/SOSL, triggers, async, user-mode security, testing, Platform Cache, enterprise patterns & DI, serialization, **prompt templates & the Models API in Apex** | 34 |
 | [03-lwc-and-slds/](03-lwc-and-slds/INDEX.md) | LWC component model, LDS, GraphQL wire, LWS, SLDS 2, Jest, State Managers | 24 |
 | [04-flow-and-automation/](04-flow-and-automation/INDEX.md) | Flow Builder end-to-end, HTTP callout, Orchestrator, run context, testing, agent actions | 28 |
-| [06-integration-and-apis/](06-integration-and-apis/INDEX.md) | REST/Bulk/GraphQL/Pub-Sub, endpoints, Metadata & Tooling, OAuth, External Client Apps, MCP, certificates, event bus allocations | 27 |
-| [07-security-and-sharing/](07-security-and-sharing/INDEX.md) | Licences, permission-set-led access, sharing, restriction rules, access auditing, identity & MFA, Shield, posture | 26 |
+| [06-integration-and-apis/](06-integration-and-apis/INDEX.md) | REST/Bulk/GraphQL/Pub-Sub, endpoints, Metadata & Tooling, OAuth, External Client Apps, MCP, certificates, event bus allocations | 28 |
+| [07-security-and-sharing/](07-security-and-sharing/INDEX.md) | Licences, permission-set-led access, sharing, restriction rules, access auditing, identity & MFA, Shield, posture | 27 |
 | [08-data-modeling-and-large-data-volumes/](08-data-modeling-and-large-data-volumes/INDEX.md) | Relationships, storage, selectivity, skew, locking, deletes, big objects, archiving, migration, backup, Hyperforce | 26 |
 | [09-devops-sfdx-and-release-management/](09-devops-sfdx-and-release-management/INDEX.md) | `sf` CLI v2, 2GP, DevOps Center, metadata coverage, DX MCP, CI/CD, Code Analyzer v5, release ops & rollback | 25 |
 | [10-soql-and-sosl/](10-soql-and-sosl/INDEX.md) | Query anatomy, filtering & literals, relationships, aggregates & ROLLUP, semi-joins, dynamic SOQL, **SOSL in depth**, cross-store & tooling | 10 |
 | [PHASES.md](PHASES.md) | The 23-run build plan — what each AI run produces | — |
 | [_notion-seed/INVENTORY.md](_notion-seed/INVENTORY.md) | The old Notion notes, mapped to target topics | — |
 
-**219 topics across 9 areas.** Rows in each `INDEX.md` are plain text until written, links once they exist. *(Experience Cloud's 20 left with it on 2026-09-19 — see [SF_Experience_Cloud/](../SF_Experience_Cloud/INDEX.md). The per-area counts in the table above lag the newest additions.)*
+**222 topics across 9 areas.** Rows in each `INDEX.md` are plain text until written, links once they exist. *(Experience Cloud's 20 left with it on 2026-09-19 — see [SF_Experience_Cloud/](../SF_Experience_Cloud/INDEX.md). The per-area counts in the table above lag the newest additions.)*
 
 ## Out of scope — deliberately
 
 - **Aura components** and **Visualforce.** Both are legacy; LWC is the only UI framework here. They appear only where a note must explain a migration or a coexistence rule. **Legacy in direction, not dead** — phase 18 found five of the seven Experience Cloud templates are still Aura and still receiving features → [SF_Experience_Cloud · 01](../SF_Experience_Cloud/01-template-choice-and-site-landscape.md).
 - **Experience Cloud.** Moved out to its own root vault, [SF_Experience_Cloud/](../SF_Experience_Cloud/INDEX.md) — 20 topics, phases 18–19. It was area 05 here until then; the build record stays in [PHASES.md](PHASES.md) and its currency rows stay in [CURRENCY.md](CURRENCY.md).
-- **OmniStudio**, **Reporting & Analytics**, **Sales/Service Cloud functional depth.** Not excluded on merit — just not in this build. Add as areas 11–13 later if wanted. *(The reserved area-10 slot was taken by [SOQL & SOSL](10-soql-and-sosl/INDEX.md) in phase 22 — the query language had no owner and SOSL was the vault's largest single gap.)*
+- **Service Cloud.** Its own root vault since 2026-09-24, [SF_Service/](../SF_Service/INDEX.md). Queues, assignment and escalation rules stay here in [01-admin · 11](01-admin-and-declarative-platform/11-queues-assignment-and-escalation-rules.md), because they also work on Lead, Task and custom objects; *how Omni-Channel pushes that work to a rep* is there.
+- **OmniStudio**, **Reporting & Analytics**, **Sales Cloud functional depth.** Not excluded on merit — just not in this build. Add as areas 11–13 later if wanted. *(The reserved area-10 slot was taken by [SOQL & SOSL](10-soql-and-sosl/INDEX.md) in phase 22 — the query language had no owner and SOSL was the vault's largest single gap.)*
 - **Agentforce / Data 360 / Claude.** Agentforce lives in [SF_Agentforce/](../SF_Agentforce/INDEX.md), Data 360 in [SF_Data_360/](../SF_Data_360/INDEX.md). Notes here link across instead of repeating.
 
   **The line is drawn by artefact, not by subject.** `SF_core/` owns class names, signatures, exceptions, limits and entitlement → [02-apex · 31–34](02-apex-and-triggers/INDEX.md). The AI vaults own prompt authoring, agent reasoning and Trust Layer policy. **Ask: is this sentence still true with no Agentforce in it?** Yes → here. No → there.

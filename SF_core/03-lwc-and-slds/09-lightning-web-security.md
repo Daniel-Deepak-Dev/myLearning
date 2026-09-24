@@ -4,14 +4,14 @@ area: 03-lwc-and-slds
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 6
 tags: [currency-new, currency-warning]
 ---
 # Lightning Web Security
 
-**Scope:** The sandbox your component's JavaScript actually runs in, and the behaviour changes it causes. Org-level security — profiles, permission sets, sharing — is [07-security](../07-security-and-sharing/INDEX.md); CSP trusted sites belong to [06-integration](../06-integration-and-apis/INDEX.md).
+**Scope:** The sandbox your component's JavaScript actually runs in, and the behaviour changes it causes. Org-level security — profiles, permission sets, sharing — is [07-security](../07-security-and-sharing/INDEX.md); Trusted URLs (formerly CSP Trusted Sites) belong to [07-security · 27](../07-security-and-sharing/27-trusted-urls-and-csp.md); CORS to [06-integration · 28](../06-integration-and-apis/28-cors-allowlist.md).
 
 > **What changed.** **Lightning Locker was replaced by Lightning Web Security (LWS)** — a different architecture with different rules, so every "Locker blocks X" answer needs re-testing rather than translating. Two corrections to the usual telling: Locker is **not retired** (it remains the default in orgs created before Winter '23, and LWS is a Session Settings checkbox you can still switch off), and LWS is **not a blanket firewall** — it is namespace isolation, and most of what people attribute to it is actually namespacing, sanitization, CSP or the LWC framework.
 

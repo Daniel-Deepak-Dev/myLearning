@@ -4,7 +4,7 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 13
 tags: [currency-warning]
@@ -75,3 +75,4 @@ A: The OAuth username-password flow in **Winter '27**, and SOAP `login()` for AP
 - [24 · API limits, monitoring & access control](24-api-limits-monitoring-and-access-control.md) — restricting which apps may call at all
 - [07-security · 19 SSO, SAML, OIDC & identity](../07-security-and-sharing/19-sso-saml-oidc-and-identity.md) — authentication as federation rather than authorization
 - [SF_Experience_Cloud · 10 Authentication, self-registration & SSO](../../SF_Experience_Cloud/10-authentication-self-registration-and-sso.md) — site login, which is deliberately **not** OAuth, and the confusion that causes
+- [SF_Service · Enhanced Chat sessions & user verification](../../SF_Service/enhanced-chat-sessions-and-user-verification.md) — a JWT that is **not** OAuth: your server signs it (RS256/RS512) and Salesforce checks it against a keyset uploaded in Setup

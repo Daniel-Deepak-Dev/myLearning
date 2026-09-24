@@ -4,7 +4,7 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 12
 tags: [currency-new, currency-warning]
@@ -33,7 +33,7 @@ The reason this deserves its own note is that the failure is **configuration you
 - **Never hardcode the host after login.** The OAuth token response returns **`instance_url`**; use it verbatim for subsequent calls. A client that authenticates correctly and then rebuilds the URL from a stored constant is the exact shape this retirement breaks.
 - **`test.salesforce.com` is for sandbox *authentication*.** The `instance_url` that comes back is the sandbox's own My Domain host.
 - **Salesforce Edge Network** terminates TLS and routes at points of presence near the caller, cutting round-trip latency. It is a routing layer, not a new address — you still call the My Domain host.
-- **Browser-origin calls need two allowlists, and they are not interchangeable.** **CORS** allowlists the *origin calling Salesforce*; **CSP Trusted Sites** allowlists *destinations Salesforce pages may call*. → [03-lwc · 09](../03-lwc-and-slds/09-lightning-web-security.md)
+- **Browser-origin calls need two allowlists, and they are not interchangeable.** **CORS** allowlists the *origin calling Salesforce*; **Trusted URLs** (formerly CSP Trusted Sites) allowlists *destinations Salesforce pages may call*. → [28](28-cors-allowlist.md), [07-security · 27](../07-security-and-sharing/27-trusted-urls-and-csp.md)
 - **CORS does not replace authentication.** An allowlisted origin still needs a valid token; the allowlist only stops the browser from blocking the response.
 
 ## 2026 currency
@@ -48,7 +48,7 @@ The instanced-URL withdrawal is the live one and its timeline is tight. An opt-i
 - **Sandbox refresh changes the host.** Any config naming a sandbox hostname needs a post-refresh step, and this is where instanced URLs get reintroduced by hand.
 - **A 404 reads like "wrong path", not "wrong host"**, so the end of redirections sends investigations to the URI when the hostname is the fault.
 - **`instance_url` can change** — org migrations and Hyperforce moves do change it. Storing it once at first login and never refreshing is a slow-motion outage. → [08-data · Hyperforce](../08-data-modeling-and-large-data-volumes/INDEX.md)
-- **CSP Trusted Sites failures surface in the browser console, not in Apex.** Nothing server-side reports them, so they get blamed on LWS. → [03-lwc · 09](../03-lwc-and-slds/09-lightning-web-security.md)
+- **Trusted URL failures surface in the browser console, not in Apex.** Setup → **Trusted URL and Browser Policy Violations** (7 days) and the free **CSP Violation** event type record them for Lightning Experience pages only, so on a site they still get blamed on LWS. → [03-lwc · 09](../03-lwc-and-slds/09-lightning-web-security.md)
 - **Hardcoded hostnames are a secure-coding finding**, already on the checklist as item 16. → [07-security · 26](../07-security-and-sharing/26-secure-coding-checklist.md)
 
 ## Recall
@@ -62,8 +62,8 @@ A: With Winter '27 — sandboxes from August 2026, production from September 202
 Q: Where should a client get the host it calls after authenticating?
 A: From `instance_url` in the OAuth token response, used verbatim — never from a stored constant.
 
-Q: What is the difference between CORS and CSP Trusted Sites?
-A: CORS allowlists origins that call Salesforce; CSP Trusted Sites allowlists destinations Salesforce pages may call. Opposite directions.
+Q: What is the difference between CORS and Trusted URLs (formerly CSP Trusted Sites)?
+A: CORS allowlists origins that call Salesforce; Trusted URLs allowlists destinations Salesforce pages may call. Opposite directions.
 
 Q: Which free log finds integrations still using old hostnames?
 A: The Hostname Redirects event type, available without Shield.

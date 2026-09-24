@@ -4,7 +4,7 @@ area: 01-admin-and-declarative-platform
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 2
 ---
@@ -65,3 +65,4 @@ A: Einstein Search Dictionaries, which is a Commerce storefront feature for shop
 - [03 · Objects, fields & relationships](03-objects-fields-and-relationships.md) — which field types can be indexed at all
 - [10 · Custom labels & Translation Workbench](10-custom-labels-and-translation-workbench.md) — searching in a multi-language org
 - [02-apex · INDEX](../02-apex-and-triggers/INDEX.md) — SOSL, the programmatic path into the same index
+- [SF_Service · Knowledge](../../SF_Service/knowledge.md) — the articles Promoted Search Terms pin, and the channels that decide who can find them at all

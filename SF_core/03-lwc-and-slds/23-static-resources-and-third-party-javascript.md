@@ -4,7 +4,7 @@ area: 03-lwc-and-slds
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-09-19
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 7
 ---
@@ -14,7 +14,7 @@ phase: 7
 
 ## Core idea
 
-An LWC bundle has no `npm install`. Third-party code arrives one of two ways, and the platform has a clear preference. **Upload it as a static resource** and load it with `loadScript` — the file is served from your org, needs no external permission, and cannot disappear because someone else's CDN did. Or **reference an external origin**, which requires a CSP Trusted Site entry and makes a third party a runtime dependency of your page. The second is where most of the confusion in this area lives: a CDN script that will not load is almost always **Content Security Policy**, and it gets blamed on Lightning Web Security, which is a different mechanism with a much narrower blocked set ([09](09-lightning-web-security.md)). The other half of the topic is what happens once the library is loaded — because a library that writes DOM is writing into a tree the framework believes it owns, and that needs `lwc:dom="manual"` and a hard look at where the markup came from.
+An LWC bundle has no `npm install`. Third-party code arrives one of two ways, and the platform has a clear preference. **Upload it as a static resource** and load it with `loadScript` — the file is served from your org, needs no external permission, and cannot disappear because someone else's CDN did. Or **reference an external origin** for images, fonts, styles or `fetch` targets, which requires a Trusted URL entry and makes a third party a runtime dependency of your page — a script cannot be loaded that way at all. The second is where most of the confusion in this area lives: a CDN script that will not load is almost always **Content Security Policy**, and it gets blamed on Lightning Web Security, which is a different mechanism with a much narrower blocked set ([09](09-lightning-web-security.md)). The other half of the topic is what happens once the library is loaded — because a library that writes DOM is writing into a tree the framework believes it owns, and that needs `lwc:dom="manual"` and a hard look at where the markup came from.
 
 ## How it works
 
@@ -22,7 +22,7 @@ An LWC bundle has no `npm install`. Third-party code arrives one of two ways, an
 - **A zip static resource is addressed by path** — `RESOURCE + '/dist/chart.min.js'` — which is how you ship a library with its CSS and fonts in one artefact.
 - **`loadScript` and `loadStyle` return promises** and de-duplicate: loading the same URL twice in a page fetches once. Import them from `lightning/platformResourceLoader`.
 - **Load in `renderedCallback`, guarded by a flag.** The library usually needs a DOM node to attach to, and `renderedCallback` runs on **every** render — without the flag you reload on every reactive change.
-- **External origins need a CSP Trusted Site** — Setup → CSP Trusted Sites, with the right directive checked (`script-src` for scripts, `connect-src` for `fetch`, `font-src`, `img-src`). Missing entry, silent console-only failure.
+- **External origins need a Trusted URL — but never for a script.** Setup → **Trusted URLs** (formerly CSP Trusted Sites) opens `connect-src` for `fetch`, plus `font-src`, `img-src` and three more. There is **no `script-src`**, so a third-party library must be a static resource → [07-security · 27](../07-security-and-sharing/27-trusted-urls-and-csp.md). Missing entry, silent console-only failure.
 - **`lwc:dom="manual"`** marks an element whose children are inserted outside the framework, so synthetic shadow can still scope styles into it. It goes on the *container*, and nothing inside it is reactive.
 
 ```js
@@ -50,7 +50,7 @@ Two constraints tightened. **At 67.0 LWS blocks the `data:` URI scheme** — a p
 
 ## Gotchas
 
-- **A blocked CDN script is CSP, not LWS.** Checking LWS settings for this wastes an afternoon; the fix is a CSP Trusted Site entry with the correct directive.
+- **A blocked CDN script is CSP, not LWS.** Checking LWS settings for this wastes an afternoon; and no Trusted URL fixes it either, because Trusted URLs has no `script-src`. Upload the library as a static resource.
 - **`renderedCallback` without a guard reloads the library on every render** — the single most common cause of a component that gets slower the longer it is open.
 - **`@salesforce/resourceUrl/x` is a URL, not the library.** Importing it does not make `window.Chart` exist; `loadScript` does.
 - **Libraries that use `eval`, `document.write()` or `Worker()` can fail under LWS** — `document.write()` and `Worker()` are on the genuinely blocked list.
@@ -62,7 +62,7 @@ Two constraints tightened. **At 67.0 LWS blocks the `data:` URI scheme** — a p
 ## Recall
 
 Q: A CDN-hosted script will not load in an LWC. What is the first thing to check?
-A: CSP Trusted Sites, with `script-src` enabled for that origin. This is Content Security Policy, not Lightning Web Security.
+A: Content Security Policy, not Lightning Web Security — and no Trusted URL can allow it, because Trusted URLs has no `script-src`. Upload the library as a static resource and load it with `loadScript`.
 
 Q: Why must `loadScript` in `renderedCallback` be guarded by a flag?
 A: `renderedCallback` runs after every render, so an unguarded load re-fetches and re-initialises the library on every reactive change.
@@ -83,4 +83,5 @@ A: LWS blocks the `data:` URI scheme. Create a blob and use a `blob:` object URL
 - [17 · Accessibility & internationalization](17-accessibility-and-internationalization.md) — the a11y cost of DOM the framework does not manage
 - [22 · LWC OSS & off-platform reuse](22-lwc-open-source-and-off-platform-reuse.md) — where `npm install` *is* the answer
 - [07-security · Secure coding](../07-security-and-sharing/INDEX.md) — XSS, sanitization and CSP as an org-level control
+- [07-security · 27 Trusted URLs & CSP](../07-security-and-sharing/27-trusted-urls-and-csp.md) — which non-script resources a Trusted URL can open, and why a script never can
 - [SF_Experience_Cloud · 05 Branding sets, design tokens & SLDS 2](../../SF_Experience_Cloud/05-branding-sets-design-tokens-and-slds-2.md) — fonts and imagery in a site, and the guest caching rule that catches people out

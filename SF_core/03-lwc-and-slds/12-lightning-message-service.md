@@ -4,7 +4,7 @@ area: 03-lwc-and-slds
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-09-19
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 6
 ---
@@ -86,3 +86,4 @@ A: True events, and communication that crosses into Aura or Visualforce during a
 - [04 · Events & component communication](04-events-and-component-communication.md) — the DOM-bound alternatives to try first
 - [05 · Decorators & the reactivity model](05-decorators-and-the-reactivity-model.md) — State Managers, which displace much of what LMS was used for
 - [09 · Lightning Web Security](09-lightning-web-security.md) — why cross-namespace payloads should be primitives
+- [SF_Service · Enhanced Conversation component](../../SF_Service/enhanced-conversation-component.md) — a real LMS consumer: the Conversation Toolkit API's `lightning__conversation…` events arrive as message channels, and only while that component is on the page

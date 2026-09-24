@@ -4,7 +4,7 @@ area: 04-flow-and-automation
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-09-19
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 9
 tags: [currency-new]
@@ -73,3 +73,4 @@ A: The ability to build or deploy an agent — including a small purpose-built o
 - [SF_Agentforce · Prompt Templates as Agent Actions](../../SF_Agentforce/prompt-templates-as-agent-actions.md) — the third kind of agent action, wired the same way
 - [02-apex · 22 Invocable Apex & Agentforce actions](../02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md) — the coded action, and the API 66.0 constructor rule
 - [11 · Flow & Apex interop](11-flow-and-apex-interop.md) — the typed-payload boundary an agent action inherits
+- [SF_Service · Bot & agent to human handoff](../../SF_Service/bot-and-agent-to-human-handoff.md) — **the other way a flow meets an agent.** An Omni-Channel flow routes a conversation *to* the agent and back out to a rep; it is never an action the agent calls

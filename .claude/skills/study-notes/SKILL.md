@@ -1,6 +1,6 @@
 ---
 name: study-notes
-description: Turn rough, out-of-order Salesforce learning notes into ordered wiki notes across SF_core, SF_Agentforce, SF_Data_360 and SF_Experience_Cloud. Use whenever the user pastes study notes, says "I learned X today", dumps rough bullets about a Salesforce, Agentforce or Data 360 topic, or asks to file notes into the vault.
+description: Turn rough, out-of-order Salesforce learning notes into ordered wiki notes across SF_core, SF_Agentforce, SF_Data_360, SF_Experience_Cloud and SF_Service. Use whenever the user pastes study notes, says "I learned X today", dumps rough bullets about a Salesforce, Agentforce, Data 360 or Service Cloud topic, or asks to file notes into the vault.
 allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch, AskUserQuestion
 ---
 
@@ -24,10 +24,10 @@ One question per piece:
 
 > **Strip the product out of the sentence. Is it still true?**
 
-Ask it once per product: *with no Agentforce in it?* *With no Experience Cloud site in it?*
+Ask it once per product: *with no Agentforce in it?* *With no Experience Cloud site in it?* *With no Service Cloud in it?*
 
 - **Still true** → `SF_core/`, in the numbered area it fits.
-- **Falls apart** → the vault that owns that product: `SF_Agentforce/`, `SF_Data_360/` or `SF_Experience_Cloud/`.
+- **Falls apart** → the vault that owns that product: `SF_Agentforce/`, `SF_Data_360/`, `SF_Experience_Cloud/` or `SF_Service/`.
 
 If a topic has both sides — say "a prompt template can call Apex", or "an agent embedded on a public site" — write **both** notes. The product vault says why. The `SF_core` note says how. They link to each other.
 
@@ -38,7 +38,7 @@ Cannot route it? One dated bullet in that folder's `_inbox.md`. Move on. Never s
 Always search first. Duplicates are the main failure mode here.
 
 - `Glob` the target folder for a matching filename.
-- `Grep` all four vaults for the topic's key terms: `SF_core/`, `SF_Agentforce/`, `SF_Data_360/`, `SF_Experience_Cloud/`.
+- `Grep` all five vaults for the topic's key terms: `SF_core/`, `SF_Agentforce/`, `SF_Data_360/`, `SF_Experience_Cloud/`, `SF_Service/`.
 - Also grep `_archive/AI_Data/` — it is a **quarry** for verified facts, never a link target.
 
 Then decide:
@@ -115,7 +115,7 @@ Grammar, in order: **ID · time box · what you do · `Proves:` · `Needs:`** (l
 - **Every lab needs a `Proves:`.** A lab without one is a chore. "Build a Flex template" is a chore; "prove an unactivated template is invisible to an agent" is a lab.
 - **Roughly a third should break something on purpose.** `## Gotchas` is already a list of things that break — mine it. A failure caused deliberately once is one the user will recognise at a client.
 - **Scope to the note's `Level`**, same ceiling as gaps. Nothing over 45 minutes; if a lab needs more, split it `NNa` / `NNb`.
-- **IDs are `<VAULT>-<TOPIC>-NN`**, stable and never reused. `AF-` for SF_Agentforce, `EC-` for SF_Experience_Cloud.
+- **IDs are `<VAULT>-<TOPIC>-NN`**, stable and never reused. `AF-` for SF_Agentforce, `EC-` for SF_Experience_Cloud, `SVC-` for SF_Service.
 - **Ticked, never deleted** — the opposite of the gap rule. Labs never count towards `Status`.
 
 ## 5b · Close pass

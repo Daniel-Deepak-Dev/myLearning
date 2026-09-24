@@ -4,7 +4,7 @@ area: 10-soql-and-sosl
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-09-19
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 22
 ---
@@ -70,3 +70,4 @@ A: No. Ranking is the platform's and is not exposed. `ORDER BY` in a `RETURNING`
 - [07-security · 11 Restriction rules](../07-security-and-sharing/11-restriction-rules.md) — the one access control that reaches search and ignores `View All Data`
 - [SF_Experience_Cloud · 09 Sharing for external users](../../SF_Experience_Cloud/09-sharing-for-external-users.md) — why `WITH NETWORK` is not an access control
 - [10 · Querying across stores & the tooling surface](10-querying-across-stores-and-tooling.md) — where else a query can be issued from, including Knowledge and Data 360
+- [SF_Service · Knowledge](../../SF_Service/knowledge.md) — the data category groups `WITH DATA CATEGORY` filters on, and the category visibility that decides who sees each article

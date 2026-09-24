@@ -4,7 +4,7 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 12
 ---
@@ -72,3 +72,4 @@ A: `/queryAll` includes soft-deleted and archived records; `/query` silently exc
 - [07 · Bulk API 2.0](07-bulk-api-2.md) — where REST stops being the right answer
 - [10 · GraphQL API](10-graphql-api.md) — one round trip instead of many, for reads
 - [07-security · 13 Field-level security](../07-security-and-sharing/13-field-level-security-and-visibility-layers.md) — why a field is missing from a response
+- [SF_Service · Enhanced Chat custom client & In-App SDK](../../SF_Service/enhanced-chat-custom-client-and-mobile-sdk.md) — a Salesforce REST API that is **not** under `/services/data`: the Enhanced Chat API runs on the SCRT host with its own access token

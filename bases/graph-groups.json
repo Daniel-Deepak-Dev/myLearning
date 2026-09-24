@@ -30,6 +30,13 @@
       }
     },
     {
+      "query": "path:SF_Service/",
+      "color": {
+        "a": 1,
+        "rgb": 14725458
+      }
+    },
+    {
       "query": "path:Interview/",
       "color": {
         "a": 1,

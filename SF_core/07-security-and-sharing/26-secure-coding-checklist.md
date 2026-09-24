@@ -4,7 +4,7 @@ area: 07-security-and-sharing
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 11
 tags: [currency-warning]
@@ -35,7 +35,7 @@ A secure-by-default platform does not remove the review, it moves it. When enfor
 | 10 | Flow run context | record-, schedule- or event-triggered flows | they still bypass object, field **and** sharing, with no setting |
 | 11 | guest exposure | site guest profile, `@AuraEnabled` reachable from a public page | guest users cannot own records and read-only sharing is the only grant |
 | 12 | XSS sinks | `innerHTML`, `lwc:dom="manual"`, `unescape`, `{!$…}` in VF | LWS sanitises much and is **not** a firewall |
-| 13 | external hosts | new script or `fetch` targets | a CDN block is **CSP / Trusted URLs**, not LWS |
+| 13 | external hosts | new script or `fetch` targets | a CDN block is **CSP**, not LWS — `fetch` hosts go in Trusted URLs, scripts become static resources |
 | 14 | secrets | hardcoded keys, tokens, endpoints, `String` constants that look like credentials | named credentials or protected custom metadata, never a class constant |
 | 15 | legacy auth | `login()`, `grant_type=password`, new Connected Apps | password-only session minting; being retired for that reason |
 | 16 | hardcoded URLs | `.my.salesforce.com` literals, instance hostnames like `na139` | legacy redirections ended, instanced URLs unsupported in Winter '27 |
@@ -66,7 +66,7 @@ Q: Which construct still cannot declare an access mode at all?
 A: A trigger body. It is always system mode, which is why security-sensitive logic belongs in the handler class.
 
 Q: A component cannot load a script from an external CDN. Which control, and which note?
-A: Trusted URLs / CSP — not LWS. See [20](20-my-domain-enhanced-domains-and-trusted-urls.md).
+A: CSP — not LWS. A `fetch` host goes in Trusted URLs; a script has no Trusted URL directive, so it becomes a static resource. See [27](27-trusted-urls-and-csp.md).
 
 Q: Name the one-line diff that silently changes a class's data access.
 A: Raising `<apiVersion>` in the `.cls-meta.xml` to 67.0 — the code is untouched, the enforcement is not.

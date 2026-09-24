@@ -13,7 +13,7 @@ Experience Cloud only. LWR and Aura sites, Experience Builder, branding and them
 
 So OWD, sharing rules and the grantee model are `SF_core/07-security-and-sharing/`. *What a guest user sharing rule may grant* stays here. `NavigationMixin` and the page reference vocabulary are `SF_core/03-lwc-and-slds/`. *Which of them work in an LWR container* stays here.
 
-**The two near neighbours.** An embedded **agent** is built in [../SF_Agentforce/](../SF_Agentforce/INDEX.md) — this vault owns only its site-side exposure, in [19](19-embedded-messaging-and-agents-in-sites.md) and as a line item on [11](11-public-site-exposure-audit.md). Site data feeding a segment is [../SF_Data_360/](../SF_Data_360/INDEX.md).
+**The three near neighbours.** An embedded **agent** is built in [../SF_Agentforce/](../SF_Agentforce/INDEX.md). The **Enhanced Chat** channel it answers on — deployment, routing, handoff to a human — is [../SF_Service/](../SF_Service/INDEX.md). This vault owns only the site-side exposure, in [19](19-embedded-messaging-and-agents-in-sites.md) and as a line item on [11](11-public-site-exposure-audit.md). Site data feeding a segment is [../SF_Data_360/](../SF_Data_360/INDEX.md).
 
 ## Two note formats live here
 
@@ -40,7 +40,7 @@ So OWD, sharing rules and the grantee model are `SF_core/07-security-and-sharing
 - **Closed gaps are deleted, not ticked.** Last one gone, remove the `## Gaps to close` heading too.
 - **A question no public doc answers goes in `## Confirm in org`**, as a `- 🚩 ` bullet naming what to open. A sandbox to-do, not a gap.
 - **`## Hands-on` holds 3–4 labs** on new notes, IDs `EC-<TOPIC>-NN`, each with a `Proves:` and a time box. **Ticked, never deleted.** Bias to labs that break something on purpose — mine `## Gotchas` for them. New lab → add its row to `PRACTICE.md` in the same edit, creating that file when the first lab lands.
-- **A link that crosses vaults gets a link back**, added in the same edit — that means links into `SF_core/`. Same-vault links rely on Obsidian's Backlinks panel.
+- **A link that crosses vaults gets a link back**, added in the same edit — that means links into `SF_core/`, `SF_Agentforce/` and `SF_Service/`. Same-vault links rely on Obsidian's Backlinks panel.
 - **Unsure of a fact? Mark it 🚩.**
 
 ## Four live currency traps

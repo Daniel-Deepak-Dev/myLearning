@@ -19,7 +19,7 @@ No. They are legacy in direction only — still creatable at 67.0, still receivi
 
 What does choosing LWR cost you on a self-service portal project?
 ?
-Everything Customer Service gave you for free — Knowledge, case deflection, feed and search all become build work on a blank canvas.
+Everything Customer Service gave you for free — Knowledge, case deflection, feed and search all become build work on a blank canvas. LWR's standard Knowledge components (Spring '24) help, but they browse by data category, not topic.
 
 Can Aura components run in an LWR site?
 ?
@@ -383,15 +383,11 @@ No — the site must still be published; deploy updates the definition, publish 
 
 What is the deployment chain for putting a chat or agent on a site?
 ?
-Messaging Channel (In-App and Web) → Embedded Service Deployment → Embedded Messaging component in Experience Builder → publish.
+An Enhanced Chat **Messaging Channel** → a **Web** Embedded Service Deployment, published → the **Embedded Messaging** component in the Template Footer in Experience Builder → publish the site.
 
-What is the product called, and what happened to the one before it?
+Can Enhanced Chat verify a logged-in member on a Build Your Own (LWR) site with a token?
 ?
-**Enhanced Chat** — renamed from *Messaging for In-App and Web* in June 2025, with **v2** since Winter '26. Legacy Chat / Live Agent **was retired on 14 February 2026**.
-
-How does the site know whether a conversation goes to a human or an agent?
-?
-It doesn't — the channel routes via Omni-Channel to a queue or an Agentforce Service Agent; routing is configured behind the channel.
+Not per Help. Token-based user verification is supported on an external website and three **Aura** templates only — Build Your Own (Aura), Help Center, Customer Service. On any other site the chat is unverified.
 
 Why is an agent on a public site the highest-risk deployment surface?
 ?

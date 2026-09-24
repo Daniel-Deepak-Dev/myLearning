@@ -4,7 +4,7 @@ area: 07-security-and-sharing
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-09-19
+updated: 2026-09-24
 currency: "Summer '26 (API 67.0)"
 phase: 11
 tags: [currency-warning]
@@ -29,8 +29,8 @@ Enhanced domains put your My Domain name into **every** URL the org serves — L
 | API endpoints | `MyDomainName.my.salesforce.com` |
 | Sandboxes | the My Domain name carries the sandbox name — which is why refreshes break allowlists |
 
-- **Trusted URLs is the renamed CSP Trusted Sites**, and it is what lets a page load scripts, images, fonts, frames or make requests to a host other than Salesforce. Each entry chooses which CSP directives it relaxes.
-- **A blocked external script is a CSP failure, not an LWS failure.** Phase 06 established this distinction and it is the single commonest misdiagnosis in LWC work — the fix is a Trusted URL entry, not a Session Settings checkbox. → [03-lwc · 09](../03-lwc-and-slds/09-lightning-web-security.md)
+- **Trusted URLs is the renamed CSP Trusted Sites** (Winter '24, API 59.0). It lets a page make requests to, frame, or load images, fonts, styles or media from a host other than Salesforce — **not scripts**, which have no directive. Each entry chooses which of the six CSP directives it relaxes → [27](27-trusted-urls-and-csp.md).
+- **A blocked external script is a CSP failure, not an LWS failure.** Phase 06 established this distinction and it is the single commonest misdiagnosis in LWC work — the fix is a **static resource** — Trusted URLs has no `script-src` box — not a Session Settings checkbox. → [03-lwc · 09](../03-lwc-and-slds/09-lightning-web-security.md)
 - **Clickjacking protection lives beside it** in Session Settings, and its defaults now block framing Salesforce pages in external sites — deliberate, and a frequent Experience Cloud embedding surprise.
 - **Login discovery, SP-initiated SSO and multiple IdPs all depend on My Domain.** → [19](19-sso-saml-oidc-and-identity.md)
 - **Instanced URLs are the remaining exposure.** An integration pinned to `na139.salesforce.com` or an instance-specific API host still works today, will fail on the opt-in switch, and stops being supported in Winter '27. Test with the switch on before the release forces it.
@@ -61,7 +61,7 @@ Q: Why do enhanced domains exist at all?
 A: Shared instance hostnames depend on third-party cookie behaviour browsers have removed. Putting the org's name in every URL removes that dependency.
 
 Q: An LWC cannot load a script from an external CDN. Which setting is responsible?
-A: Trusted URLs (CSP) — not Lightning Web Security. LWS is namespace isolation and does not block CDNs.
+A: Content Security Policy — not Lightning Web Security, which is namespace isolation and does not block CDNs. No Trusted URL can fix it, because there is no `script-src` directive; use a static resource.
 
 Q: What is the difference between the CORS allowlist and Trusted URLs?
 A: CORS controls which external origins may call Salesforce. Trusted URLs control which external hosts a Salesforce-served page may load from or call.
@@ -71,5 +71,7 @@ A: CORS controls which external origins may call Salesforce. Trusted URLs contro
 - [19 · SSO, SAML, OIDC & identity](19-sso-saml-oidc-and-identity.md) — My Domain as the prerequisite for SP-initiated SSO
 - [03-lwc · 09 Lightning Web Security](../03-lwc-and-slds/09-lightning-web-security.md) — what LWS does and does not block, and why CSP gets the blame
 - [24 · Security Center & Health Check](24-security-center-and-health-check.md) — where loose Trusted URL entries surface
+- [27 · Trusted URLs & CSP](27-trusted-urls-and-csp.md) — the six directives, CSP Context and Permissions-Policy this note only names
+- [06-integration · 28 CORS allowlist](../06-integration-and-apis/28-cors-allowlist.md) — the other list in the CORS-vs-Trusted-URLs gotcha
 - [26 · Secure coding checklist](26-secure-coding-checklist.md) — the grep list, including hardcoded instance URLs
 - [SF_Experience_Cloud · 03 Site setup, domains & publishing](../../SF_Experience_Cloud/03-site-setup-domains-and-publishing.md) — the site domains that inherit these rules, and where they diverge

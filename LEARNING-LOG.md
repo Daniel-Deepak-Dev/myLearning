@@ -23,6 +23,102 @@ Newest first.
 
 ---
 
+### 2026-09-24 · Knowledge & Enhanced Chat site — two allowlists, three topic types, and a claim that confused navigation with access
+
+You fed questions from the Trailhead project *Build an Experience Cloud Site with Knowledge and Enhanced Chat*: Embedded Service deployments, CORS, Trusted URLs versus CSP, the Enhanced Conversation component, Knowledge topics and Topics for Objects, and featured / navigational topics with Article Management. The project uses current Enhanced Chat; its URL slugs are stale, but each question group matches one unit.
+
+The feed routed to four vaults — eight new notes, each routed by the *strip the product out* test.
+
+- **CORS allowlist** → [SF_core/06-integration-and-apis/28-cors-allowlist.md](SF_core/06-integration-and-apis/28-cors-allowlist.md) · `new` · Level: basic
+  - The browser's same-origin rule, the preflight, Setup → **CORS**, which APIs honour it, and the separate OAuth-endpoint switch. **CORS is not authentication.**
+- **Trusted URLs & CSP** → [SF_core/07-security-and-sharing/27-trusted-urls-and-csp.md](SF_core/07-security-and-sharing/27-trusted-urls-and-csp.md) · `new` · Level: working
+  - The six directives, each with a use case, the four CSP contexts, and Permissions-Policy (`camera`, `microphone`). **There is no `script-src`.** The Summer '25 release update was **canceled**, not enforced.
+- **Site CSP: security level & Trusted Sites for Scripts** → [SF_Experience_Cloud/24-site-csp-security-level-and-trusted-scripts.md](SF_Experience_Cloud/24-site-csp-security-level-and-trusted-scripts.md) · `new` · Level: working
+  - **Your "why two options" answered:** org Trusted URLs cover everything except scripts, and each site's own **Trusted Sites for Scripts** list covers scripts, beside a Strict or Relaxed CSP level.
+- **Topics for Objects** → [SF_core/01-admin-and-declarative-platform/20-topics-for-objects.md](SF_core/01-admin-and-declarative-platform/20-topics-for-objects.md) · `new` · Level: basic
+  - `Topic` / `TopicAssignment`, the per-object switch, and the fields that feed up to three suggestions. It makes records **taggable, not visible**.
+- **Knowledge** → [SF_Service/knowledge.md](SF_Service/knowledge.md) · `new` · Level: basic
+  - `Knowledge__kav` versions, record types, the Knowledge User licence, data categories, and the **four channels** — the real control over who outside the org can read an article.
+- **Topics & Knowledge on sites** → [SF_Experience_Cloud/23-topics-and-knowledge-on-sites.md](SF_Experience_Cloud/23-topics-and-knowledge-on-sites.md) · `new` · Level: basic
+  - Navigational, featured and content topics, their caps, and Article Management. **LWR sites browse Knowledge by data category, not by topic** (Spring '24).
+- **Embedded Service Deployments** → [SF_Service/embedded-service-deployments.md](SF_Service/embedded-service-deployments.md) · `new` · Level: working
+  - The *do you need one?* table. **Yes** for a website, a site, a native app or your own UI. **No** for WhatsApp, SMS, Messenger, Apple, LINE, Voice, an employee agent or the Agent API.
+- **Enhanced Conversation Component** → [SF_Service/enhanced-conversation-component.md](SF_Service/enhanced-conversation-component.md) · `new` · Level: basic
+  - The rep's chat window: the live transcript, earlier sessions included, the composer, and the properties that hide each action. The Voice Call page uses it too.
+
+**Corrections to what you wrote.**
+
+- **"CSP vs Trusted URLs" is not a choice.** CSP is the mechanism; Trusted URLs is how you edit Salesforce's CSP header. The real pair is org Trusted URLs versus a site's script list.
+- **"Article Management in CMS"** lives in Workspaces → **Content Management → Topics**. That is the site's topic management, not Salesforce CMS.
+- **Trailhead's *"Without enabling Salesforce Knowledge topics, articles can't be displayed outside an org"* states a navigation fact as an access fact.** Channels, category visibility or sharing, and Read on Knowledge decide who can see an article. Topics decide where an Aura site surfaces it.
+- **"Knowledge topics" is not a separate feature.** It is Topics for Objects with Knowledge ticked.
+
+**Corrections to the vault.**
+
+- **Trusted URLs has no `script-src` directive.** [03-lwc · 23](SF_core/03-lwc-and-slds/23-static-resources-and-third-party-javascript.md), [07-security · 20](SF_core/07-security-and-sharing/20-my-domain-enhanced-domains-and-trusted-urls.md) and [07-security · 26](SF_core/07-security-and-sharing/26-secure-coding-checklist.md) all prescribed a Trusted URL for a blocked CDN script. The fix is a static resource. All three now say so, and [06-integration · 03](SF_core/06-integration-and-apis/03-api-endpoints-hostnames-and-edge-network.md) lost the old name.
+- **CSP ownership is settled.** [03-lwc · 09](SF_core/03-lwc-and-slds/09-lightning-web-security.md) said CSP belonged to 06-integration while 07-security · 20 claimed it. It now points at 07-security · 27.
+- **[SF_Experience_Cloud · 01](SF_Experience_Cloud/01-template-choice-and-site-landscape.md)** said Build Your Own (LWR) leaves Knowledge as blank-canvas work. Since Spring '24, LWR has standard Knowledge components, browsed by data category.
+- **Nothing in Salesforce's docs says Enhanced Chat needs a CORS entry.** The Trailhead adds one without saying why. [EC · 19](SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) now reports it as what the project did, and the question has one owner: an org check in 06-integration · 28, settled by lab SF-CORS-04. The same gap was removed from [the setup chain](SF_Service/enhanced-chat-setup-chain.md).
+
+**Also touched:**
+- 31 labs queued:
+  - 12 in [SF_core/PRACTICE.md](SF_core/PRACTICE.md), the first labs beyond Prompt Builder.
+  - 8 in [SF_Experience_Cloud/PRACTICE.md](SF_Experience_Cloud/PRACTICE.md).
+  - 11 in [SF_Service/PRACTICE.md](SF_Service/PRACTICE.md), renumbered with every `needs #` remapped.
+- `SF_Service/INDEX.md` is now 13 topics, and its Knowledge backlog row is closed.
+- 20 new `GLOSSARY.md` rows, across Platform, Service Cloud and a new feed block.
+- A new dated section in [SF_core/CURRENCY.md](SF_core/CURRENCY.md): the Trusted URLs rename (Winter '24), the canceled CSP release update, and LWR Knowledge on data categories.
+- Return links added to six notes across SF_core, SF_Experience_Cloud and SF_Service.
+
+**Research conditions.** Help pages were read through search extracts (`via search`). Trailhead and the Winter '27 resource PDFs were read directly, and only long-standing facts were taken from them.
+
+---
+
+### 2026-09-24 · SF_Service vault — Enhanced Chat, MIAW and Omni-Channel
+
+**No notes fed — a structural change plus a research pass.** You asked for more depth on Enhanced Chat, MIAW and Omni-Channel, in a new vault that owns Service Cloud only, with the existing Service Cloud material segregated into it.
+
+**The segregation found almost nothing to move.** Only [SF_Experience_Cloud · 19](SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md) had a real Service core, and its guest-exposure half belongs where it is. Most Service terms — Omni-Channel Flow, `MessagingSession`, `AgentWork`, presence, capacity — had **zero hits** anywhere, `_archive/` included. So the content was **extracted, not moved**: no file renames, EC · 19 keeps its number.
+
+- **Enhanced Chat** → [SF_Service/enhanced-chat.md](SF_Service/enhanced-chat.md) · `new` · Level: basic
+  - **MIAW and Enhanced Chat are one product**, renamed June 2025. Legacy Chat retired 14 February 2026. No Sneak Peek, and Messaging Session Metrics only exist from 30 September 2024.
+- **Enhanced Chat Setup Chain** → [SF_Service/enhanced-chat-setup-chain.md](SF_Service/enhanced-chat-setup-chain.md) · `new` · Level: working
+  - Five steps in a fixed order. Nothing reaches the page before **Publish**, which takes up to 10 minutes. **Every pre-chat value arrives as a string.**
+- **Enhanced Chat v1 vs v2** → [SF_Service/enhanced-chat-v1-vs-v2.md](SF_Service/enhanced-chat-v1-vs-v2.md) · `new` · Level: working
+  - v2 is a new deployment on the same channel, and the only client that renders Custom Lightning Types. Never mix v1 and v2 on one domain.
+- **Sessions & User Verification** → [SF_Service/enhanced-chat-sessions-and-user-verification.md](SF_Service/enhanced-chat-sessions-and-user-verification.md) · `new` · Level: deep
+  - Verified users need an RS256/RS512 JWT checked against a keyset in Setup. **Token-based verification works on external websites and three Aura templates only — not LWR, per Help.** Message text is stored off-platform, outside SOQL.
+- **Custom Client & In-App SDK** → [SF_Service/enhanced-chat-custom-client-and-mobile-sdk.md](SF_Service/enhanced-chat-custom-client-and-mobile-sdk.md) · `new` · Level: deep
+  - The Enhanced Chat API is REST plus Server-Sent Events on the SCRT host. **The In-App SDK is not the Agentforce Mobile SDK**, although both can read one Mobile deployment.
+- **Omni-Channel Fundamentals** → [SF_Service/omni-channel-fundamentals.md](SF_Service/omni-channel-fundamentals.md) · `new` · Level: basic
+  - **Standard Omni-Channel retired in Summer '26.** The auto-upgrade reached only Hyperforce orgs with no active standard channels — so an org still on legacy Chat also missed the Omni upgrade, and its reps cannot log in.
+- **Omni-Channel Routing & Capacity** → [SF_Service/omni-channel-routing-and-capacity.md](SF_Service/omni-channel-routing-and-capacity.md) · `new` · Level: working
+  - Queue, skills, direct-to-agent and external routing. A decline or push timeout is **final for that rep**. Status-based capacity frees on Status, not on closing the tab.
+- **Omni-Channel Flows** → [SF_Service/omni-channel-flows.md](SF_Service/omni-channel-flows.md) · `new` · Level: working
+  - Route Work plus a fallback queue, which also catches flow exceptions. Records reach a routing flow only as a subflow.
+- **Bot & Agent to Human Handoff** → [SF_Service/bot-and-agent-to-human-handoff.md](SF_Service/bot-and-agent-to-human-handoff.md) · `new` · Level: working
+  - An inbound flow routes to the agent; an outbound **Escalation Flow** routes out, **once per session**. "Escalation loses context" really means escalation was never wired — the transcript rides on the same `MessagingSession`.
+- **Omni Supervisor** → [SF_Service/omni-supervisor.md](SF_Service/omni-supervisor.md) · `new` · Level: basic
+  - Now called **Command Center for Service**. A supervisor configuration filters the view and grants nothing; it reads direct group members only.
+
+- **[SF_Experience_Cloud · 19](SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md)** · `updated` — the Service half extracted; keeps the Embedded Messaging component (Template Footer, drag and drop only), the guest user and the audit line. Recall is back to the contract's five pairs, with a new one on LWR user verification.
+- **[SF_core/01-admin · 11](SF_core/01-admin-and-declarative-platform/11-queues-assignment-and-escalation-rules.md)** · `updated` — its Omni-Channel paragraph moved to Omni-Channel Fundamentals; queues and assignment rules stay, because they also work on Lead, Task and custom objects.
+
+**Corrections, and one rejected correction.**
+
+- **Service Cloud is now called *Agentforce Service*** in Help, and Service Cloud Voice is *Salesforce Voice*. The vault keeps writing Service Cloud on purpose — *Agentforce Service* collides with *Agentforce Service Agent*. Logged as a currency trap in [SF_Service/AGENTS.md](SF_Service/AGENTS.md).
+- **Omni Supervisor is now *Command Center for Service***, with renamed tabs: Agents → Service Reps, Assigned Work → In-Progress Work.
+- **Rejected:** a research pass claimed the *Embedded Messaging* component name was unverified. Help has a page titled exactly that, so EC · 19 was right and stays.
+
+**Also touched:**
+- [SF_core/CURRENCY.md](SF_core/CURRENCY.md) — two new retirement rows: Standard Omni-Channel (Summer '26) and standard Facebook Messenger channels (retired 14 February 2026, stopped working the week of 1 June 2026). The Legacy Chat rows now point at SF_Service.
+- [GLOSSARY.md](GLOSSARY.md) — a new `## Service Cloud` section, 31 rows. The Enhanced Chat row moved into it from the unsorted section.
+- Return links from eight SF_core notes and EC · 19. The vault is registered in `scripts/vault.py`, the study-notes skill, the human-vs-agent command, every vault's `AGENTS.md`, `SF_core/README.md`, the Interview README and the graph colours.
+
+**Research conditions.** `help.salesforce.com` and `developer.salesforce.com` were read through search extracts (`via search`); Trailhead and the resources PDFs were read directly. The custom-client endpoint paths come from Salesforce's own sample app on GitHub and carry 🚩.
+
+---
+
 ### 2026-09-20 · Multilingual sites — three translation surfaces, and the URL question with no public answer
 
 You fed: site language settings, language selector, per-language URLs, CMS content variants by locale, Translation Workbench for site content.

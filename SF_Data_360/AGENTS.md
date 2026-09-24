@@ -35,7 +35,7 @@ Template: [../templates/note.md](../templates/note.md).
 - **`Level` sets the gap ceiling.** Gaps may go one level up, never two. A `basic` note never gets a `deep` gap.
 - **Gaps stay on this topic.** Never a syllabus. Never another subject.
 - **Keep the user's own wording** in a `> **From my notes.**` callout. Correct it inline if it is wrong.
-- **A link that crosses vaults gets a link back**, added in the same edit — that means links into `SF_core/`, `SF_Agentforce/` and `SF_Experience_Cloud/`. Same-vault links rely on Obsidian's Backlinks panel.
+- **A link that crosses vaults gets a link back**, added in the same edit — that means links into `SF_core/`, `SF_Agentforce/`, `SF_Experience_Cloud/` and `SF_Service/`. Same-vault links rely on Obsidian's Backlinks panel.
 - **Unsure of a fact? Mark it 🚩.** For release-dependent facts, check [../RELEASE-RADAR/data-360.md](../RELEASE-RADAR/data-360.md) first. Never draft release facts from recall.
 - **Naming:** the product is **Data 360**. Write Data 360, not Data Cloud. Mention the old name once where a note would otherwise be unsearchable.
 - **New topic** → new file, plus a row in [INDEX.md](INDEX.md) at the right point in the path.

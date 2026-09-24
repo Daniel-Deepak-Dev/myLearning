@@ -59,10 +59,10 @@ Your notes arrive rough and out of order. You want them to land in the right fil
 
 > **Strip the product out of the sentence. Is it still true?**
 
-Ask it once per product: *with no Agentforce in it?* *With no Experience Cloud site in it?*
+Ask it once per product: *with no Agentforce in it?* *With no Experience Cloud site in it?* *With no Service Cloud in it?*
 
 - **Still true** → `SF_core/`. Apex, Flow, security, data model, integration.
-- **Falls apart** → the vault that owns that product: `SF_Agentforce/`, `SF_Data_360/` or `SF_Experience_Cloud/`.
+- **Falls apart** → the vault that owns that product: `SF_Agentforce/`, `SF_Data_360/`, `SF_Experience_Cloud/` or `SF_Service/`.
 
 Examples:
 
@@ -75,7 +75,9 @@ Examples:
 | Identity resolution rulesets | `SF_Data_360/` |
 | What a guest user sharing rule may grant | `SF_Experience_Cloud/` |
 | OWD and the grantee model underneath it | `SF_core/07-security-and-sharing/` |
-| An Agentforce agent embedded on a public site | **Both.** `SF_Agentforce/` builds the agent; `SF_Experience_Cloud/` owns its site-side exposure. |
+| Queues and assignment rules | `SF_core/01-admin-and-declarative-platform/` — they also work on Lead, Task and custom objects |
+| How Omni-Channel pushes a queue's work to an available rep | `SF_Service/` |
+| An Agentforce agent embedded on a public site | **Three ways.** `SF_Agentforce/` builds the agent; `SF_Service/` owns the Enhanced Chat channel, its routing and the handoff to a human; `SF_Experience_Cloud/` owns the site-side exposure. |
 
 ### 2. Format — light, not dense
 
@@ -158,7 +160,7 @@ Four rules, and each one is doing work:
 - **Ticked, not deleted.** The opposite of the gap rule, and deliberately so. A settled question is clutter; work you actually did is a record.
 - **3–4 per note, one line each, scoped to the note's `Level`** — the same ceiling gaps get. Labs never count towards `Status`.
 
-IDs are `<VAULT>-<TOPIC>-NN` — `AF-TRUST-01`, `AF-ATLAS-02`. Stable, never reused, so you can say "close AF-ATLAS-02" and so the practice queue can point at a lab without copying its text.
+IDs are `<VAULT>-<TOPIC>-NN` — `AF-TRUST-01`, `AF-ATLAS-02`, `EC-I18N-01`, `SVC-OMNI-01`. Stable, never reused, so you can say "close AF-ATLAS-02" and so the practice queue can point at a lab without copying its text.
 
 **The doing view is a separate file.** Each vault gets a `PRACTICE.md`: `▶ Next` (exactly one), `In flight` (max 3), a dependency-ordered `Queue` with a time box and a `Proves` phrase, and a `Done` table. The note is where a lab is captured; `PRACTICE.md` is what you open when the goal is to *run* something. See [SF_Agentforce/PRACTICE.md](SF_Agentforce/PRACTICE.md).
 
@@ -294,4 +296,6 @@ Filing friction must never stop capture. Triage it later.
 | 2026-09-19 | `SF_core/05-experience-cloud-lwr/` promoted to the root vault `SF_Experience_Cloud/` | Experience Cloud is a product with its own runtime, licences, security model and deployment story — the same case that made `SF_Agentforce/` and `SF_Data_360/` peers rather than areas. 65 inbound links across 27 files and ~100 outbound links repointed in the same pass. |
 | 2026-09-19 | Experience Cloud filenames keep their `NN-` numbers | The numbering is the learning path and `PHASES.md` depends on it. Eight notes in other vaults cite **05 · 07–12** by number in link text; renumbering would break all of them for no gain. |
 | 2026-09-19 | Currency and the phase record stay in `SF_core/` | `CURRENCY.md` is one ledger for the whole platform and its Experience Cloud rows cross-reference LWC, security and DevOps rows. Splitting it would break the running *"the plan's own correction was stale"* thread that phases 10–19 built. |
+| 2026-09-24 | `SF_Service/` created as a root vault for Service Cloud | Enhanced Chat, Omni-Channel and the handoff to a human fail the routing test for `SF_core/` — strip Service Cloud out and the sentence falls apart. Nothing owned them: most Service terms had zero hits in the repo. |
+| 2026-09-24 | Service Cloud content was **extracted, not moved** | Only `SF_Experience_Cloud` · 19 had a real Service core, and its guest-exposure half belongs where it is. The Service half became `SF_Service/` notes; 19 keeps its number and points across. Queues and assignment rules stay in `SF_core/` because they also work on Lead, Task and custom objects. |
 | 2026-08-27 | Level beats migration depth | A one-line note of yours does not get replaced by 119 lines from the archive. Write at your level; the depth arrives when your notes do. |

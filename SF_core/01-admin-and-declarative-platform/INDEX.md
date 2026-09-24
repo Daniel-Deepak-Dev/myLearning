@@ -1,6 +1,6 @@
 # 01 · Admin & Declarative Platform
 
-The declarative surface an architect must know cold before writing any code. **19 topics** · phases [01](PHASES.md), [02](PHASES.md) — **both complete ✅**.
+The declarative surface an architect must know cold before writing any code. **20 topics** · phases [01](PHASES.md), [02](PHASES.md) — **both complete ✅**.
 
 > Currency: **Summer '26 (API 67.0)** · [flag legend](../README.md#flag-legend) · [what changed](../CURRENCY.md)
 
@@ -27,6 +27,7 @@ The declarative surface an architect must know cold before writing any code. **1
 | 17 | [Setup Audit Trail, monitoring & usage](17-setup-audit-trail-monitoring-and-usage.md) | Audit Trail 180 days, Lightning Usage App, job monitors | 02 |
 | 18 | [Salesforce Foundations & org strategy](18-salesforce-foundations-and-org-strategy.md) 🆕 | $0 add-on, auto-provisions Data 360, single vs multi-org | 02 |
 | 19 | [Agentforce in Setup & AI-assisted admin](19-agentforce-in-setup-and-ai-assisted-admin.md) 🆕 | Setup with Agentforce GA, non-billable, review discipline | 02 |
+| 20 | [Topics for Objects](20-topics-for-objects.md) | tagging records with topics, per object — the switch a site's Knowledge navigation depends on | — |
 
 ## Related
 
