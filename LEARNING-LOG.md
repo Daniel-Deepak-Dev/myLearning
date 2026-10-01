@@ -23,6 +23,22 @@ Newest first.
 
 ---
 
+### 2026-10-01 · Obsidian review decks split by topic, with the source note on every card
+
+**No notes fed — a structural change.** The Obsidian decks were one flat pile of 1,201 cards. You could not review just Apex, and a card did not say which note it came from.
+
+- `python scripts/vault.py cards` now writes each `_cards.md` grouped by note:
+  - An `## <note title>` heading per note. The Spaced Repetition plugin shows it as the card's context line: `_cards > SF_core > <note title>`.
+  - An `[Open note](…)` link to the source note, followed by that note's deck tags.
+  - **Topic decks:** `flashcards/<vault>/<area folder>`, e.g. `flashcards/SF_core/02-apex-and-triggers`.
+  - **Cross-topic decks:** `flashcards/currency-warning` (the 2019–2021 answer is now wrong) and `flashcards/currency-new` (GA'd 2024–2026), taken from the note's `tags`. A card can sit in its topic deck and a currency deck at once. The plugin counts it once and clears it from both when reviewed.
+- Checked against the plugin's own parser (v1.15.4): all 1,201 cards parse as multi-line cards. No heading or tag line leaks into a card.
+- Schedule comments still survive a rebuild, including the FSRS form `<!--SR:!fsrs,…-->`.
+
+**Also touched:** nothing in the notes. The Anki TSV export is unchanged.
+
+---
+
 ### 2026-09-24 · The chat bubble on an Experience Cloud site, step by step — and the agent that never ran as the guest
 
 **No notes fed — a research pass on your request** for a step-by-step guide to the chat bubble on a site. The pieces already existed in two vaults: the Service chain in `SF_Service/` and the site step in `SF_Experience_Cloud` · 19. None of them read top to bottom as one guide.
