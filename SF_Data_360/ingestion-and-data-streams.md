@@ -18,6 +18,11 @@ currency: "Summer '26 (API 67.0)"
 ## Key points
 
 - **The data stream is the unit of ingestion.** One stream per object per connection. It lands rows in a DLO, still in the source's shape → [Data model](data-model-dso-dlo-dmo.md).
+- **Every stream has a category, fixed once saved.** **Profile**: people or accounts with identifiers, the population you segment on. **Engagement**: time-series events. **Other**: reference data that describes profile or engagement records.
+- **An Engagement stream needs an Event Time Field**: a Date or DateTime that never changes for a record. It can't be edited after setup. A mutable date adds duplicate rows with the same primary key.
+- **The primary key is a unique field per source record.** If the key is composite or missing, build it with a formula field.
+- **Starter data bundles** are Salesforce-defined stream definitions, already mapped to DMOs, for Salesforce sources. The CRM bundle covers objects such as accounts and cases.
+- **Websites and apps send engagement through SDKs.** The **Salesforce Interactions SDK** runs on a website; the Data 360 module of the **Engagement Mobile SDK** runs in an app.
 - **Three ways in.** Copy it with a data stream; query it in place with zero copy → [Zero copy](zero-copy-and-byol.md); or, for CRM data, **Accelerated Data Ingest** (real time, no pipeline delay, **GA in Summer '26**).
 - **The Salesforce CRM connector refreshes on its own.** An incremental refresh runs about every **10 minutes** after a full refresh. Periodic full refresh is **off by default** in new streams.
 - **Batch vs streaming.** Batch mode checks the source every **10–15 minutes**; streaming mode reflects changes as soon as they are made.
@@ -62,7 +67,13 @@ currency: "Summer '26 (API 67.0)"
 - [Data Stream Schedule in Data 360](https://help.salesforce.com/s/articleView?id=sf.c360_a_data_stream_schedule.htm&language=en_US) — Salesforce Help · via search 2026-10-02 · incremental refresh every 10 minutes; periodic full refresh off by default in new streams
 - [CRM Connector Streaming](https://help.salesforce.com/s/articleView?id=data.c360_a_crm_connector_streaming.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-02 · batch every 10–15 minutes vs streaming
 - [Data 360 — Summer '26 release notes](https://help.salesforce.com/s/articleView?id=release-notes.rn_c360_truth.htm&language=en_US&release=262&type=5) — Salesforce Help · via search 2026-10-02 · Accelerated Data Ingest *"now Generally Available"*
+- [Category](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_category.htm&type=5) — Salesforce Help · via search 2026-10-02 · Profile, Engagement, Other; category can't be changed after saving; event time must not change
+- [Primary Key](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_primary_key.htm&type=5) — Salesforce Help · via search 2026-10-02 · build a composite or missing key with a formula field
+- [Salesforce Connectors for Data Cloud](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_salesforce_connectors.htm&type=5) — Salesforce Help · via search 2026-10-02 · starter data bundles: Salesforce-defined stream definitions mapped to DMOs
+- [Set Up the Salesforce Interactions SDK](https://developer.salesforce.com/docs/data/data-cloud-int/guide/c360-a-setup-web-sdk-as-a-developer.html) — Salesforce Developers · via search 2026-10-02 · the web SDK that sends website data to Data 360
+- [Integrate Your Mobile Applications](https://developer.salesforce.com/docs/data/data-cloud-engagement-mobile-sdk/guide/c360a-api-engagement-mobile-sdk.html) — Salesforce Developers · via search 2026-10-02 · the Data 360 module for the Engagement Mobile SDK
 
 ## History
 
 - 2026-10-02 · created — first Data 360 note; facts carried over from the archived roadmap notes and confirmed against Salesforce search extracts, because help.salesforce.com was blocked from this session
+- 2026-10-02 · updated — stream categories, Event Time Field, primary key, starter data bundles and the web and mobile SDKs, for the terminology flashcards

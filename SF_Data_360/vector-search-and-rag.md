@@ -22,7 +22,9 @@ currency: "Summer '26 (API 67.0)"
 - **Chunking is usually the biggest quality lever.** Retrieval returns chunks, not documents. A chunk split mid-procedure gives the agent half a procedure.
 - **Custom chunking (Summer '26):** with **Code Extension**, a deployed **Python** function can be chosen as the chunking strategy in a search index's Advanced Setup → [DevOps](data-360-devops.md).
 - **Retrievers ground prompt templates.** They supply relevant, specialised content at run time → [SF_Agentforce · Grounding a prompt template](../SF_Agentforce/grounding-a-prompt-template.md).
+- **Unstructured files arrive as a UDLO mapped to a UDMO** (unstructured data lake object → unstructured data model object). From a blob store, Data 360 doesn't import the files; the UDMO references them, and the search index is built on it.
 - **Structured questions want a data graph, not vector search.** For "what do we know about this customer", a precomputed data graph answers in milliseconds, exactly. Semantic search over structured data is slower and fuzzier.
+- **A data graph combines related DMO data into one JSON blob.** A **standard** data graph refreshes with a delay of minutes to hours. A **real-time** data graph refreshes continuously and is read in milliseconds.
 
 ## Gotchas
 
@@ -32,6 +34,7 @@ currency: "Summer '26 (API 67.0)"
 - **Top-N is a cost lever.** Every retrieved chunk is tokens in every call.
 - **Indexed content needs an access decision first.** Think about who may retrieve what before you index sensitive documents.
 - **Retrieval can't fix a stale source.** If ingestion is behind, the index faithfully returns old facts.
+- **Changing a DLO's data space filter doesn't update an existing search index.** The index keeps what it indexed under the old filter, even rows that no longer qualify.
 
 ## Gaps to close
 
@@ -59,7 +62,11 @@ currency: "Summer '26 (API 67.0)"
 - [Use Search for AI, Automation, and Analytics](https://help.salesforce.com/s/articleView?id=data.c360_a_search_index_ground_ai.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-02 · hybrid search merges vector and keyword results
 - [Data 360 Architecture](https://architect.salesforce.com/docs/architect/fundamentals/guide/data-360-architecture) — Salesforce Architects · via search 2026-10-02 · keyword, vector and hybrid indexing; chunking and embedding pipelines
 - [Use Custom Functions in Data 360](https://developer.salesforce.com/docs/data/data-cloud-code-ext/guide/use-custom-function.html) — Salesforce Developers · via search 2026-10-02 · a deployed function as the chunking strategy
+- [Unstructured Data in Data Cloud](https://trailhead.salesforce.com/content/learn/projects/unstructured-data-in-data-cloud/get-started-with-unstructured-data-in-data-cloud) — Trailhead · via search 2026-10-02 · UDLO mapped to UDMO; blob-store files referenced, not imported
+- [Data Graphs](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_data_graphs.htm&type=5) — Salesforce Help · via search 2026-10-02 · standard vs real-time data graphs; one JSON blob
+- [Search Index Reference](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_search_index_reference.htm&type=5) — Salesforce Help · via search 2026-10-02 · a changed data space filter doesn't update the index
 
 ## History
 
 - 2026-10-02 · created — facts carried over from the archived roadmap notes and confirmed against Salesforce search extracts
+- 2026-10-02 · updated — UDLO/UDMO, standard vs real-time data graphs, and the data space filter gotcha, for the terminology flashcards

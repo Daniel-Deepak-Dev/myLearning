@@ -26,7 +26,11 @@ currency: "Summer '26 (API 67.0)"
 - **Harmonization is the DLO → DMO mapping.** "Email" from five systems becomes one attribute on one DMO.
 - **Everything downstream reads DMOs.** Identity resolution matches on DMO fields. Insights compute over them, segments filter them, and agents ground on them. A mapping mistake spreads into every one of those.
 - **Prefer standard DMOs.** Cross-source consistency is the point, and standard DMOs carry downstream behaviour. A custom DMO per source rebuilds the silos.
-- **A data space is a logical partition** for profile unification, insights and marketing. Every org starts with a **default data space**, which can't be deleted. DLOs are associated with a data space, with or without filters.
+- **The mapping minimum for unification:** **Individual**, plus at least one **Contact Point** DMO (Email, Phone, Address) or **Party Identification**. A contact point is how you reach the person; without one there is nothing to activate to.
+- **Party Identification holds third-party IDs**, such as a loyalty card or driver's licence number. Records with the same identification type, name and number can match.
+- **A fully qualified key (FQK) is the source key plus a key qualifier.** It stops two sources' keys colliding in one DMO. Data 360 adds key qualifier fields to DLOs and DMOs. Salesforce advises one on every primary and foreign key field; up to **20** can be active.
+- **Data transforms reshape DLOs into new DLOs.** **Batch**: scheduled, a visual editor that joins, aggregates and appends, with multiple outputs. **Streaming**: one SQL statement run continuously, near real time, and it uses more credits.
+- **A data space is a logical partition** for profile unification, insights and marketing. Every org starts with a **default data space**, which can't be deleted. DLOs are associated with a data space, with or without filters, and one DLO can sit in more than one data space.
 - **API names carry a suffix.** A DLO is queried as `Name__dll`. Standard DMOs use the `ssot__` prefix, and standard DMOs added after January 2026 end in `_std__dlm`.
 - **Querying a DLO with SOQL needs `SET OPTIONS (dataspace = …)`** at the very end of the query. The dataspace option is valid **only for DLO queries**, not DMO queries.
 - **`honorEmptyStrings`** controls `NULL` vs `''`. DLOs store them as different values; the default (`false`) treats them as the same, like Platform objects.
@@ -65,8 +69,14 @@ currency: "Summer '26 (API 67.0)"
 - [SET OPTIONS](https://developer.salesforce.com/docs/platform/salesforce-soql-sosl/guide/sforce-api-calls-soql-select-set-options.html) — Salesforce Developers · via search 2026-10-02 · zero records without a dataspace; DLO-only; `honorEmptyStrings`
 - [Data Lake Object Naming Standards](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_data_lake_object_naming.htm&type=5) — Salesforce Help · via search 2026-10-02 · `__dll` appended to the DLO API name
 - [SSOT DMOs](https://developer.salesforce.com/docs/data/data-cloud-dmo-mapping/guide/c360dm-datamodelobjects.html) — Salesforce Developers · via search 2026-10-02 · `ssot__` prefix; `_std__dlm` for standard DMOs added after January 2026
-- [About Data Spaces](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_data_spaces.htm&type=5) — Salesforce Help · via search 2026-10-02 · logical partition; default data space can't be deleted
+- [About Data Spaces](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_data_spaces.htm&type=5) — Salesforce Help · via search 2026-10-02 · logical partition; default data space can't be deleted; a DLO can be added to more than one data space
+- [Data Mapping Requirements in Data 360](https://help.salesforce.com/s/articleView?id=sf.c360_a_required_data_mappings.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-02 · Individual plus a Contact Point or Party Identification
+- [Party Data Model](https://help.salesforce.com/s/articleView?language=en_US&id=sf.c360_a_party_data_model.htm&type=5) — Salesforce Help · via search 2026-10-02 · Party Identification matches on type, name and number
+- [Contact Point Email DMO](https://developer.salesforce.com/docs/data/data-cloud-dmo-mapping/guide/c360dm-contact-point-email-dmo.html) — Salesforce Developers · via search 2026-10-02
+- [Fully Qualified Keys](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_fully_qualified_keys.htm&type=5) and [Fully Qualified Keys in Data Objects](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_dlo_dmo_key_qualifiers.htm&type=5) — Salesforce Help · via search 2026-10-02 · source key + key qualifier; advised for every primary and foreign key; up to 20 active key qualifiers
+- [Get Started With Batch Data Transforms](https://trailhead.salesforce.com/content/learn/modules/batch-data-transforms-in-data-cloud-quick-look/get-started-with-batch-data-transforms-in-data-360) and [Streaming Data Transforms](https://trailhead.salesforce.com/content/learn/modules/streaming-data-transforms-quick-look/get-started-with-streaming-data-transforms-in-data-cloud) — Trailhead · via search 2026-10-02 · batch vs streaming; streaming uses more credits
 
 ## History
 
 - 2026-10-02 · created — facts carried over from the archived roadmap notes and confirmed against Salesforce search extracts
+- 2026-10-02 · updated — mapping minimum, Contact Point and Party Identification DMOs, fully qualified keys and data transforms, for the terminology flashcards

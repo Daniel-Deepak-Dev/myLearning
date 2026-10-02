@@ -22,6 +22,8 @@ currency: "Summer '26 (API 67.0)"
 - **Three match methods.** **Exact**: no typos, no format differences. **Fuzzy**: tolerates spelling differences, and is available **only for first name**. **Normalized**: same value regardless of formatting, for **email, phone and address**.
 - **Three reconciliation rules:** **Last Updated**, **Most Frequent** and **Source Priority**. They are set at **object and field level**, so `Email` and `LifetimeValue` can follow different rules.
 - **A ruleset targets one object**, such as Individual, and runs as a job. The output links each source record to its unified individual (Unified Individual and the link objects) → [Data model](data-model-dso-dlo-dmo.md).
+- **Unified Link Individual is the bridge.** It joins each source record to its Unified Individual, so you can trace a profile value back to its source. Join Individual, Unified Link Individual and Unified Individual in SQL to see the result. The run also creates unified contact point objects.
+- **Profile Explorer** shows one unified profile as a dashboard. Use it to check a resolved profile against its sources.
 - **Real-time identity resolution** compares an active visitor with existing profiles in milliseconds. It uses an existing ruleset whose output feeds a **real-time data graph**.
 - **Under-matching vs over-matching are not symmetric.** Too strict splits one person into several profiles, so the agent sees part of their history. Too loose merges two people, so one customer's data reaches another. That is a **privacy incident**.
 
@@ -63,7 +65,11 @@ currency: "Summer '26 (API 67.0)"
 - [Identity Resolution Reconciliation Rules](https://help.salesforce.com/s/articleView?language=en_US&id=sf.c360_a_reconciliation_rules.htm&type=5) — Salesforce Help · via search 2026-10-02 · Last Updated, Most Frequent, Source Priority; object and field level
 - [Real-Time Identity Resolution](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_identity_resolution_real_time.htm&type=5) — Salesforce Help · via search 2026-10-02 · milliseconds; ruleset output feeds a real-time data graph
 - [Unify Your Data](https://trailhead.salesforce.com/content/learn/projects/explore-data-cloud-core-functionality/unify-your-data) — Trailhead · via search 2026-10-02 · reconciliation by frequency, recency or source
+- [Building a Complete View of Your Customers with Data Cloud and Identity Resolution](https://developer.salesforce.com/blogs/2024/10/data-cloud-and-identity-resolution) — Salesforce Developers blog · via search 2026-10-02 · Unified Link Individual joins source data to the unified individual
+- [Understand Unified Profiles](https://trailhead.salesforce.com/content/learn/modules/data-and-identity-in-salesforce-cdp/get-to-know-unified-profiles) — Trailhead · via search 2026-10-02 · unified, link and unified contact point objects
+- [Profile Explorer in Data 360](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_profile_explorer.htm&type=5) — Salesforce Help · via search 2026-10-02 · validate unified profile data
 
 ## History
 
 - 2026-10-02 · created — facts carried over from the archived roadmap notes and confirmed against Salesforce search extracts; corrected "most recent" to the documented **Last Updated** and narrowed fuzzy matching to first name
+- 2026-10-02 · updated — Unified Link Individual and Profile Explorer, for the terminology flashcards

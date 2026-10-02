@@ -18,6 +18,7 @@ currency: "Summer '26 (API 67.0)"
 ## Key points
 
 - **Zero copy means no ETL pipeline.** That is how the requirement usually arrives: "can we do this without building a pipeline?" It works both ways: Data 360 can also share its data out to those platforms.
+- **Sharing out uses a data share and a data share target.** The **target** is the connection to the external platform, such as Snowflake. The **data share** is the set of Data 360 objects linked to it; those objects then appear natively in the platform, with nothing copied.
 - **Live Query** pushes the query to the source's engine and returns only the result. Good for interactive analysis and live dashboards.
 - **Accelerated Query** keeps a cached local copy of a federated query, refreshed every **15 minutes to 7 days**. You trade freshness for speed.
 - **File Federation** reads the source's **storage layer** (S3, Iceberg, BigQuery, Redshift) with Data 360's own compute. It suits large historical datasets and generally costs less.
@@ -58,7 +59,10 @@ currency: "Summer '26 (API 67.0)"
 - [AWS Glue Data Catalog Connector](https://developer.salesforce.com/docs/data/data-cloud-int/guide/c360-a-awsglue-connector.html) — Salesforce Developers · via search 2026-10-02
 - [Microsoft Integration](https://developer.salesforce.com/docs/data/data-cloud-int/guide/c360-a-microsoft-integration.html) — Salesforce Developers · via search 2026-10-02 · the OneLake connector federates using zero copy
 - [From Hype to Reality: 4 Things I Learned Implementing Zero Copy with Data 360](https://www.salesforce.com/blog/4-lessons-implementing-zero-copy-data360/) — Salesforce blog · via search 2026-10-02
+- [Create a Data Share Target to Connect with Snowflake](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_create_data_share_target_snowflake.htm&type=5) — Salesforce Help · via search 2026-10-02 · the target is the connection to the external system
+- [Share Your Data from Salesforce Data Cloud to Snowflake](https://developer.salesforce.com/blogs/2024/08/share-your-data-from-salesforce-data-cloud-to-snowflake) — Salesforce Developers blog · via search 2026-10-02 · data share objects linked to a target appear natively in Snowflake
 
 ## History
 
 - 2026-10-02 · created — facts carried over from the archived roadmap notes and confirmed against Salesforce search extracts
+- 2026-10-02 · updated — data shares and data share targets, for the terminology flashcards

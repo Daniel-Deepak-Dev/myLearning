@@ -24,6 +24,9 @@ currency: "Summer '26 (API 67.0)"
 - **The Data Cloud Salesforce Connector permission set** controls which objects the connector reads. Since Winter '25 it has **View All Data** on by default in new orgs.
 - **The Ingestion API works from anything** — an org with no connector, a script, a serverless function → [Ingestion](ingestion-and-data-streams.md).
 - **Enterprise Edition and above can provision Data 360 at no cost** with the Data 360 Provisioning (Everywhere) licence, added under *Your Account*.
+- **Four standard permission sets.** **Data Cloud Architect** (formerly Data Cloud Admin): everything. **Data Cloud Activation Manager** (formerly Marketing Manager): activation targets and activations. **Data Cloud Activation Specialist** (formerly Marketing Specialist): segments. **Data Cloud User**: view only.
+- **Three tools to look at data.** **Data Explorer** browses objects. **Profile Explorer** shows one unified profile → [Identity resolution](identity-resolution.md). **Query Editor** runs Data 360 SQL over DLOs, DMOs, CIOs and data graphs. Both explorers are on by default for admins; other users need a permission set.
+- **Everything spends credits.** **Data Services credits** are Data 360's own currency, split into 21 usage types; **Flex Credits** also cover generative AI. Credits used = units × the rate-card multiplier, tracked on **Digital Wallet** consumption cards.
 
 ## Gotchas
 
@@ -58,7 +61,11 @@ currency: "Summer '26 (API 67.0)"
 - [Set Up a Standard Salesforce Org Connection in Data Cloud](https://help.salesforce.com/s/articleView?id=sf.c360_a_set_up_crm_connection.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-02 · connect orgs other than the home org
 - [Data 360 Standard Permission Sets](https://help.salesforce.com/s/articleView?id=data.c360_a_userpermissions.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-02 · the Salesforce Connector permission set; View All Data by default since Winter '25
 - [Free Data Cloud Account](https://help.salesforce.com/s/articleView?language=en_US&id=000396380&type=1) — Salesforce Help · via search 2026-10-02 · Enterprise Edition and above, Data 360 Provisioning at no cost
+- [Data Cloud Standard Permission Sets](https://help.salesforce.com/s/articleView?language=en_US&id=sf.c360_a_userpermissions.htm&type=5) — Salesforce Help · via search 2026-10-02 · Architect, Activation Manager, Activation Specialist, User; the former names
+- [Grant or Remove Access to Data Explorer or Profile Explorer](https://help.salesforce.com/s/articleView?language=en_US&id=sf.c360_a_enable_data_explorer_permissions.htm&type=5) and [Query Editor](https://help.salesforce.com/s/articleView?id=sf.c360_a_query_editor.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-02
+- [Data Services Billable Usage Types](https://help.salesforce.com/s/articleView?id=data.c360_a_data_usage_types.htm&language=en_US&type=5) and [Maximize Your Data 360 Credits](https://trailhead.salesforce.com/content/learn/modules/data-cloud-credit-consumption-quick-look/get-started-with-data-cloud-credit-consumption) — Salesforce Help, Trailhead · via search 2026-10-02 · 21 usage types; Flex Credits; units × multiplier; Digital Wallet
 
 ## History
 
 - 2026-10-02 · created — facts carried over from the archived lab-environment note and confirmed against Salesforce search extracts
+- 2026-10-02 · updated — standard permission sets, the three data tools and credits, for the terminology flashcards

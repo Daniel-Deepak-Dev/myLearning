@@ -23,6 +23,27 @@ Newest first.
 
 ---
 
+### 2026-10-02 · Data 360 terminology deck — 101 cards, and the notes fed first
+
+**Research pass on your request:** a separate `Salesforce › Data 360 › Terminology` deck, one term per card, giving what it means and what it is used for. Terms the notes did not yet hold were researched from Salesforce search extracts and added to the notes before any card was written.
+
+- **Flashcards** → [Flashcards/data-360-terminology.md](Flashcards/data-360-terminology.md) · `new` · 89 Foundations + 12 Hard
+  - Foundations in nine subtopics: platform & licensing, ingestion, data model, identity resolution, insights/segments/activation, zero copy, search & RAG, DevOps. Three clozes (permission sets, API-name suffixes, match methods).
+  - Hard is "commonly confused": activation vs data action, data space vs permission set, federation direction, copy field vs related list, waterfall vs nested, standard CRM vs companion connection, and six more.
+- **Ingestion & Data Streams** → [SF_Data_360/ingestion-and-data-streams.md](SF_Data_360/ingestion-and-data-streams.md) · `updated` · Level: basic
+  - Stream **category** (Profile, Engagement, Other) is fixed once saved. An Engagement stream's **Event Time Field** must never change, or rows duplicate.
+- **Data Model: DSO, DLO & DMO** → [SF_Data_360/data-model-dso-dlo-dmo.md](SF_Data_360/data-model-dso-dlo-dmo.md) · `updated` · Level: basic
+  - Unification needs Individual plus a **Contact Point** or **Party Identification**. **Fully qualified keys** stop cross-source key collisions; batch vs streaming **data transforms**.
+- **Identity Resolution** → [SF_Data_360/identity-resolution.md](SF_Data_360/identity-resolution.md) · `updated` · Level: working — Unified Link Individual, Profile Explorer.
+- **Calculated Insights & Segmentation** → [SF_Data_360/calculated-insights-and-segmentation.md](SF_Data_360/calculated-insights-and-segmentation.md) · `updated` · Level: working
+  - `__cio`, **Segment On**, nested / waterfall (up to 20, mutually exclusive) / real-time segments, Rapid Publish (1 or 4 h vs 12 or 24 h), copy field vs related list enrichments.
+- **Zero Copy & BYOL** → [SF_Data_360/zero-copy-and-byol.md](SF_Data_360/zero-copy-and-byol.md) · `updated` · Level: working — data share and data share target.
+- **Vector Search & RAG** → [SF_Data_360/vector-search-and-rag.md](SF_Data_360/vector-search-and-rag.md) · `updated` · Level: working
+  - UDLO → UDMO, standard vs real-time data graphs. Gotcha: a changed data space filter does **not** update an existing search index.
+- **Lab Environment** → [SF_Data_360/lab-environment.md](SF_Data_360/lab-environment.md) · `updated` · Level: basic — the four standard permission sets, Data Explorer / Profile Explorer / Query Editor, Data Services credits and Digital Wallet.
+
+**Also touched:** [GLOSSARY.md](GLOSSARY.md) gains 26 Data 360 rows (468 → 494 terms), each linking its note. [Flashcards/README.md](Flashcards/README.md) bank table, [HOME.md](HOME.md) card counts.
+
 ### 2026-10-02 · Data 360: eight notes and 24 interview cards — plus npm shortcuts
 
 **Research pass on your request.** help.salesforce.com, developer.salesforce.com and trailhead.salesforce.com were still blocked from this session. Facts came from the archived roadmap notes, the [release radar](RELEASE-RADAR/data-360.md) and the [Data 360 interview sets](Interview/02-data-360/INDEX.md), and each was confirmed against a Salesforce search extract. Every note keeps one gap: re-read the full pages.

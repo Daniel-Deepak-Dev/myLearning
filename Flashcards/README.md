@@ -13,6 +13,7 @@ Every card links the note that holds the full reasoning. The card is the prompt;
 |---|---|---|---|
 | [core/integration.md](core/integration.md) | Core › Integration | 13 | 13 |
 | [data-360.md](data-360.md) | Data 360 › Ingestion & Modelling, Identity Resolution, Insights & Segmentation, Zero Copy, RAG & Vector Search, DevOps & Environments | 12 | 12 |
+| [data-360-terminology.md](data-360-terminology.md) | Data 360 › Terminology: one term per card, *what it means* and *what it's used for*. Hard = commonly confused terms | 89 | 12 |
 
 Next: Agentforce, then Service, Sales, Experience Cloud and the other Core topics.
 
@@ -43,7 +44,7 @@ After editing the bank, run `sync` again. Cards are matched by ID, so an edited 
 
 ### What you get
 
-- **Decks**: `Salesforce › Core › Integration › Foundations` and `› Hard`. Study a whole topic, or one level of it.
+- **Decks**: `Salesforce › Core › Integration › Foundations` and `› Hard`. Study a whole topic, or one level of it. Study `Salesforce › Data 360 › Terminology` to drill just the vocabulary.
 - **Colour-coded cards**:
   - An accent bar per area: Core blue, Agentforce purple, Data 360 teal, Service green, Sales orange, Experience Cloud pink.
   - A green **FOUNDATIONS** or red **HARD** pill.
