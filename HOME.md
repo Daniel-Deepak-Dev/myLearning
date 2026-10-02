@@ -13,15 +13,16 @@ Everything below is counted from the notes, so it cannot drift.
 
 First unblocked lab in [SF_core/PRACTICE.md](SF_core/PRACTICE.md). Tick it in its note when done — that is the whole record.
 
-*0 of 164 labs done.*
+*0 of 189 labs done.*
 
 ## Review
 
-**26 flashcards** in [Flashcards/](Flashcards/README.md) — `python scripts/flashcards.py sync` pushes them to Anki.
+**50 flashcards** in [Flashcards/](Flashcards/README.md) — `npm run cards:sync` pushes them to Anki.
 
 | Area | Foundations | Hard |
 |---|---|---|
 | Core | 13 | 13 |
+| Data 360 | 12 | 12 |
 
 ## Open gaps — research can close these
 
@@ -49,6 +50,13 @@ First unblocked lab in [SF_core/PRACTICE.md](SF_core/PRACTICE.md). Tick it in it
 - **3** · [SF_core/01-admin-and-declarative-platform/20-topics-for-objects.md](SF_core/01-admin-and-declarative-platform/20-topics-for-objects.md)
 - **3** · [SF_core/04-flow-and-automation/28-calling-prompt-templates-from-flow.md](SF_core/04-flow-and-automation/28-calling-prompt-templates-from-flow.md)
 - **3** · [SF_core/06-integration-and-apis/28-cors-allowlist.md](SF_core/06-integration-and-apis/28-cors-allowlist.md)
+- **2** · [SF_Data_360/calculated-insights-and-segmentation.md](SF_Data_360/calculated-insights-and-segmentation.md)
+- **2** · [SF_Data_360/data-360-devops.md](SF_Data_360/data-360-devops.md)
+- **2** · [SF_Data_360/data-model-dso-dlo-dmo.md](SF_Data_360/data-model-dso-dlo-dmo.md)
+- **2** · [SF_Data_360/identity-resolution.md](SF_Data_360/identity-resolution.md)
+- **2** · [SF_Data_360/ingestion-and-data-streams.md](SF_Data_360/ingestion-and-data-streams.md)
+- **2** · [SF_Data_360/vector-search-and-rag.md](SF_Data_360/vector-search-and-rag.md)
+- **2** · [SF_Data_360/zero-copy-and-byol.md](SF_Data_360/zero-copy-and-byol.md)
 - **2** · [SF_Experience_Cloud/23-topics-and-knowledge-on-sites.md](SF_Experience_Cloud/23-topics-and-knowledge-on-sites.md)
 - **2** · [SF_Experience_Cloud/24-site-csp-security-level-and-trusted-scripts.md](SF_Experience_Cloud/24-site-csp-security-level-and-trusted-scripts.md)
 - **2** · [SF_Sales/collaborative-forecasts.md](SF_Sales/collaborative-forecasts.md)
@@ -57,6 +65,7 @@ First unblocked lab in [SF_core/PRACTICE.md](SF_core/PRACTICE.md). Tick it in it
 - **2** · [SF_Service/omni-channel-fundamentals.md](SF_Service/omni-channel-fundamentals.md)
 - **2** · [SF_Service/omni-supervisor.md](SF_Service/omni-supervisor.md)
 - **2** · [SF_core/07-security-and-sharing/27-trusted-urls-and-csp.md](SF_core/07-security-and-sharing/27-trusted-urls-and-csp.md)
+- **1** · [SF_Data_360/lab-environment.md](SF_Data_360/lab-environment.md)
 - **1** · [SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md](SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md)
 - **1** · [SF_Service/enhanced-chat-setup-chain.md](SF_Service/enhanced-chat-setup-chain.md)
 
@@ -86,7 +95,7 @@ First unblocked lab in [SF_core/PRACTICE.md](SF_core/PRACTICE.md). Tick it in it
 |---|---|---|---|
 | [SF_core/](SF_core/README.md) | 222 | 26 | 15 |
 | [SF_Agentforce/](SF_Agentforce/INDEX.md) | 10 | 0 | 38 |
-| [SF_Data_360/](SF_Data_360/INDEX.md) | 0 | 0 | 0 |
+| [SF_Data_360/](SF_Data_360/INDEX.md) | 8 | 24 | 25 |
 | [SF_Experience_Cloud/](SF_Experience_Cloud/INDEX.md) | 25 | 0 | 20 |
 | [SF_Service/](SF_Service/INDEX.md) | 13 | 0 | 51 |
 | [SF_Sales/](SF_Sales/INDEX.md) | 10 | 0 | 40 |

@@ -23,6 +23,28 @@ Newest first.
 
 ---
 
+### 2026-10-02 · Data 360: eight notes and 24 interview cards — plus npm shortcuts
+
+**Research pass on your request.** help.salesforce.com, developer.salesforce.com and trailhead.salesforce.com were still blocked from this session. Facts came from the archived roadmap notes, the [release radar](RELEASE-RADAR/data-360.md) and the [Data 360 interview sets](Interview/02-data-360/INDEX.md), and each was confirmed against a Salesforce search extract. Every note keeps one gap: re-read the full pages.
+
+- **Lab Environment** → [SF_Data_360/lab-environment.md](SF_Data_360/lab-environment.md) · `new` · Level: basic
+  - A Developer Edition gets **1 data space, 10 GB and no scheduled refreshes**, so you run every stream and ruleset by hand.
+- **Ingestion & Data Streams** → [SF_Data_360/ingestion-and-data-streams.md](SF_Data_360/ingestion-and-data-streams.md) · `new` · Level: basic
+- **Data Model: DSO, DLO & DMO** → [SF_Data_360/data-model-dso-dlo-dmo.md](SF_Data_360/data-model-dso-dlo-dmo.md) · `new` · Level: basic
+  - `SET OPTIONS` dataspace is for **DLO queries only**; a DLO query without it returns zero rows silently. DLOs are queried as `Name__dll`.
+- **Identity Resolution** → [SF_Data_360/identity-resolution.md](SF_Data_360/identity-resolution.md) · `new` · Level: working
+  - Corrected from the archive: the reconciliation rule is **Last Updated** (not "most recent"), and fuzzy matching works on **first name only**. Email, phone and address use *normalized* matching.
+- **Calculated Insights & Segmentation** → [SF_Data_360/calculated-insights-and-segmentation.md](SF_Data_360/calculated-insights-and-segmentation.md) · `new` · Level: working
+- **Zero Copy & BYOL** → [SF_Data_360/zero-copy-and-byol.md](SF_Data_360/zero-copy-and-byol.md) · `new` · Level: working
+  - Live Query vs Accelerated Query (cached for 15 minutes to 7 days) vs File Federation. AWS Glue federation is GA; Fabric OneLake is Beta.
+- **Vector Search & RAG** → [SF_Data_360/vector-search-and-rag.md](SF_Data_360/vector-search-and-rag.md) · `new` · Level: working
+- **Data 360 DevOps** → [SF_Data_360/data-360-devops.md](SF_Data_360/data-360-devops.md) · `new` · Level: basic
+  - A Data 360 sandbox holds **metadata only**, and its connections arrive Inactive.
+- **Flashcards** → [Flashcards/data-360.md](Flashcards/data-360.md) · `new` · 12 Foundations + 12 Hard across 6 topic decks. Hard cards come from the interview scenarios; one code review, one cloze, one type-in.
+- **npm shortcuts** → [package.json](package.json) · `new` — `npm run cards:sync`, `cards:check`, `check` and the rest. [scripts/py.js](scripts/py.js) finds `py -3`, `python` or `python3` on any OS.
+
+**Also touched:** [SF_Data_360/INDEX.md](SF_Data_360/INDEX.md) learning path and a new [PRACTICE.md](SF_Data_360/PRACTICE.md) (25 labs). Return links added in SF_core 04 · 22, 06 · 07, 08 · 18, 08 · 19 and [SF_Agentforce · Grounding](SF_Agentforce/grounding-a-prompt-template.md); two seam links that said "SF_Agentforce" for a Data 360 target were repointed. Glossary: Match and Reconciliation rows corrected; Activation Target, Hybrid Search and Streaming Insight added.
+
 ### 2026-10-02 · A new flashcard bank for interviews, synced to Anki — pilot: Core Integration
 
 **No notes fed — a structural change.** You found the 1,201 exported `## Recall` cards useless for interviews: single facts, with no scenario and no level. They are replaced by a hand-written bank in [Flashcards/](Flashcards/README.md), written for technical architect and senior developer interviews.

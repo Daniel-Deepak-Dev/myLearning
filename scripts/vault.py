@@ -1518,7 +1518,7 @@ def cmd_home() -> int:
         levels[c.area][c.level] += 1
     out += ["## Review", "",
             f"**{len(bank)} flashcards** in [Flashcards/](Flashcards/README.md) — "
-            "`python scripts/flashcards.py sync` pushes them to Anki.", ""]
+            "`npm run cards:sync` pushes them to Anki.", ""]
     if levels:
         out += ["| Area | Foundations | Hard |", "|---|---|---|"]
         for area in sorted(levels):

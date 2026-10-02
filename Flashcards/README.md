@@ -12,8 +12,9 @@ Every card links the note that holds the full reasoning. The card is the prompt;
 | File | Area › Topic | Foundations | Hard |
 |---|---|---|---|
 | [core/integration.md](core/integration.md) | Core › Integration | 13 | 13 |
+| [data-360.md](data-360.md) | Data 360 › Ingestion & Modelling, Identity Resolution, Insights & Segmentation, Zero Copy, RAG & Vector Search, DevOps & Environments | 12 | 12 |
 
-Pilot scope. Data 360 is next, once its notes exist. Then Agentforce, Service, Sales, Experience Cloud and the other Core topics.
+Next: Agentforce, then Service, Sales, Experience Cloud and the other Core topics.
 
 ## Levels
 

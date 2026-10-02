@@ -27,6 +27,7 @@ currency: "Summer '26 (API 67.0)"
 - **Everything downstream reads DMOs.** Identity resolution matches on DMO fields. Insights compute over them, segments filter them, and agents ground on them. A mapping mistake spreads into every one of those.
 - **Prefer standard DMOs.** Cross-source consistency is the point, and standard DMOs carry downstream behaviour. A custom DMO per source rebuilds the silos.
 - **A data space is a logical partition** for profile unification, insights and marketing. Every org starts with a **default data space**, which can't be deleted. DLOs are associated with a data space, with or without filters.
+- **API names carry a suffix.** A DLO is queried as `Name__dll`. Standard DMOs use the `ssot__` prefix, and standard DMOs added after January 2026 end in `_std__dlm`.
 - **Querying a DLO with SOQL needs `SET OPTIONS (dataspace = …)`** at the very end of the query. The dataspace option is valid **only for DLO queries**, not DMO queries.
 - **`honorEmptyStrings`** controls `NULL` vs `''`. DLOs store them as different values; the default (`false`) treats them as the same, like Platform objects.
 
@@ -62,6 +63,8 @@ currency: "Summer '26 (API 67.0)"
 - [Model Data in Data 360](https://developer.salesforce.com/docs/data/data-cloud-dmo-mapping/guide/c360dm-model-data.html) — Salesforce Developers · via search 2026-10-02 · DLOs map into standard or custom DMOs
 - [Data 360: Data Type of Data Lake Object and Data Model Object Fields Cannot be Changed](https://help.salesforce.com/s/articleView?id=001233477&language=en_US&type=1) — Salesforce Help · via search 2026-10-02
 - [SET OPTIONS](https://developer.salesforce.com/docs/platform/salesforce-soql-sosl/guide/sforce-api-calls-soql-select-set-options.html) — Salesforce Developers · via search 2026-10-02 · zero records without a dataspace; DLO-only; `honorEmptyStrings`
+- [Data Lake Object Naming Standards](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_data_lake_object_naming.htm&type=5) — Salesforce Help · via search 2026-10-02 · `__dll` appended to the DLO API name
+- [SSOT DMOs](https://developer.salesforce.com/docs/data/data-cloud-dmo-mapping/guide/c360dm-datamodelobjects.html) — Salesforce Developers · via search 2026-10-02 · `ssot__` prefix; `_std__dlm` for standard DMOs added after January 2026
 - [About Data Spaces](https://help.salesforce.com/s/articleView?language=en_US&id=data.c360_a_data_spaces.htm&type=5) — Salesforce Help · via search 2026-10-02 · logical partition; default data space can't be deleted
 
 ## History
