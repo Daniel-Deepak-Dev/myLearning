@@ -4,7 +4,7 @@ area: 04-flow-and-automation
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
+updated: 2026-10-02
 currency: "Summer '26 (API 67.0)"
 phase: 9
 tags: [currency-new]
@@ -67,5 +67,6 @@ A: These flows run after the DMO change commits and prior-value semantics are no
 ## Related
 
 - [SF_Data_360/](../../SF_Data_360/INDEX.md) — DMOs, CIOs, data spaces and activations, where this half of the story is owned
+- [SF_Data_360 · Calculated Insights & Segmentation](../../SF_Data_360/calculated-insights-and-segmentation.md) — the streaming insights and activations that trigger these flows
 - [07 · Platform event & async path flows](07-platform-event-and-async-path-flows.md) — the flow type a platform event data action lands in
 - [23 · Flows as Agentforce actions](23-flows-as-agentforce-actions.md) — the other seam where Flow meets the AI stack

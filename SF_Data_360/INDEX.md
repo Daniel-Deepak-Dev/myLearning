@@ -12,11 +12,22 @@ Data 360 is the current name. Data Cloud is the old one. The platform underneath
 
 Read top to bottom. `#` is display order only — filenames carry no number, so reordering costs one row edit.
 
-**0 topics** · 0 gaps open · 0 complete
+**8 topics** · 15 gaps open · 0 complete · newest 2026-10-02 · oldest 2026-10-02
+
+**25 hands-on labs · ~9 h.** This file is the reading order. When the goal is to *do* something, open [PRACTICE.md](PRACTICE.md) instead.
+
+> **Sourcing.** These notes were written on 2026-10-02 while help.salesforce.com, developer.salesforce.com and trailhead.salesforce.com were blocked from the authoring session. Facts come from the archived roadmap notes and were confirmed against Salesforce search extracts (`via search` in each note's Sources). Every note keeps one gap: re-read the full pages.
 
 | # | Topic | One line | Level | Status | Pre | Created | Updated |
 |---|---|---|---|---|---|---|---|
-| — | *Nothing fed yet.* | | | | | | |
+| 1 | [Lab Environment](lab-environment.md) | What a Developer Edition can do, and which orgs can feed it | basic | 🌱 1 open | — | 2026-10-02 | 2026-10-02 |
+| 2 | [Ingestion & Data Streams](ingestion-and-data-streams.md) | Connector → data stream → DLO; freshness is decided per stream | basic | 🌱 2 open | 1 | 2026-10-02 | 2026-10-02 |
+| 3 | [Data Model: DSO, DLO & DMO](data-model-dso-dlo-dmo.md) | Raw → lake → canonical model, data spaces and the zero-row trap | basic | 🌱 2 open | 2 | 2026-10-02 | 2026-10-02 |
+| 4 | [Identity Resolution](identity-resolution.md) | Match rules, reconciliation rules, and why over-matching is the dangerous direction | working | 🌱 2 open | 3 | 2026-10-02 | 2026-10-02 |
+| 5 | [Calculated Insights & Segmentation](calculated-insights-and-segmentation.md) | Metrics over profiles, segments, activation targets | working | 🌱 2 open | 4 | 2026-10-02 | 2026-10-02 |
+| 6 | [Zero Copy & BYOL](zero-copy-and-byol.md) | Live Query, Accelerated Query, File Federation — and reading GA vs Beta literally | working | 🌱 2 open | 2 | 2026-10-02 | 2026-10-02 |
+| 7 | [Vector Search & RAG](vector-search-and-rag.md) | Chunk → embed → index → retriever, and when a data graph beats it | working | 🌱 2 open | 3 | 2026-10-02 | 2026-10-02 |
+| 8 | [Data 360 DevOps](data-360-devops.md) | DevOps vs standard data kits, metadata-only sandboxes, Code Extension | basic | 🌱 2 open | 3 | 2026-10-02 | 2026-10-02 |
 
 ## Seams into SF_core
 
@@ -38,16 +49,7 @@ Read top to bottom. `#` is display order only — filenames carry no number, so 
 
 Other notes in the repo link here for these topics. The count is how many places expect them, so it doubles as a priority order.
 
-| Topic | Wanted by |
-|---|---|
-| Identity resolution | 12 |
-| Zero-copy & BYOL | 10 |
-| RAG on platform | 7 |
-| Insights & segmentation | 7 |
-| Ingestion | 7 |
-| Data modeling: DSO, DLO, DMO | 5 |
-| Data 360 DevOps | 4 |
-| Lab environment | 2 |
+Nothing outstanding. All eight backlog topics got a note on 2026-10-02; their old row counts were how the reading order above was chosen.
 
 ## Unfiled
 

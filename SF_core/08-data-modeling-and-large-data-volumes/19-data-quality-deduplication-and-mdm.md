@@ -4,7 +4,7 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
+updated: 2026-10-02
 currency: "Summer '26 (API 67.0)"
 phase: 15
 ---
@@ -64,4 +64,5 @@ A: Duplicates that already exist, and paths that bypass the rules such as lead c
 - [01-admin · 08 Validation rules & duplicate management](../01-admin-and-declarative-platform/08-validation-rules-and-duplicate-management.md) — matching and duplicate rule mechanics
 - [03 · Record IDs, external IDs & upsert](03-record-ids-external-ids-and-upsert.md) — the prevention story
 - [25 · Data migration & cutover](25-data-migration-and-cutover.md) — where quality is decided once and for all
-- [SF_Agentforce · Identity resolution](../../SF_Data_360/INDEX.md) — unification without merging
+- [SF_Data_360 · Identity Resolution](../../SF_Data_360/identity-resolution.md) — unification without merging: match and reconciliation rules over source records
+- [SF_Data_360 · Data Model: DSO, DLO & DMO](../../SF_Data_360/data-model-dso-dlo-dmo.md) — the mapping identity resolution matches on, and the `NULL` vs `''` trap that skews it

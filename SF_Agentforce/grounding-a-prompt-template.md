@@ -6,7 +6,7 @@ status: complete
 org_checks: 1
 labs: 4
 created: 2026-08-28
-updated: 2026-08-30
+updated: 2026-10-02
 ---
 # Grounding a Prompt Template
 
@@ -63,6 +63,7 @@ A **search index** does the indexing; the **retriever** is the query wrapper you
 - [Template-Triggered Prompt Flows](template-triggered-prompt-flows.md) — the flow source in full
 - [SF_core · 31 Apex-grounded prompt templates](../SF_core/02-apex-and-triggers/31-apex-grounded-prompt-templates.md) — the Apex source in full, and the injection surface it opens
 - [SF_Data_360 · INDEX](../SF_Data_360/INDEX.md) — where the Data 360 and retriever story continues
+- [SF_Data_360 · Vector Search & RAG](../SF_Data_360/vector-search-and-rag.md) — how the retriever's search index is chunked, embedded and built
 
 ## Sources
 
@@ -72,6 +73,7 @@ A **search index** does the indexing; the **retriever** is the query wrapper you
 
 ## History
 
+- 2026-10-02 · linked the new SF_Data_360 notes from ## Related
 - 2026-08-28 · split out of [Prompt Builder & Prompt Templates](prompt-builder-and-prompt-templates.md) once the full source list was researched
 - 2026-08-28 · retriever written up properly — index vs retriever, where each is built, the settings it exposes, the 20-result default; confirmed sources combine rather than compete
 - 2026-08-30 · linked to [Flex Prompt Templates](flex-prompt-templates.md) to draw the line between a declared input and a grounding source

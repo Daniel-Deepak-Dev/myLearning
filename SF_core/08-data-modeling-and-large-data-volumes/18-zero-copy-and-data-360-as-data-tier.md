@@ -4,7 +4,7 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
+updated: 2026-10-02
 currency: "Summer '26 (API 67.0)"
 phase: 15
 tags: [currency-new]
@@ -63,5 +63,5 @@ A: Data Cloud. Sources older than that use the old name throughout.
 
 - [17 · External objects vs replicated copies](17-external-objects-vs-replicated-copies.md) — the same decision before this tier existed
 - [15 · Archiving & retention strategy](15-archiving-and-retention-strategy.md) — Data 360 as an archive destination
-- [SF_Agentforce · Zero Copy & BYOL](../../SF_Data_360/INDEX.md) — connectors, GA status and the grounding story
+- [SF_Data_360 · Zero Copy & BYOL](../../SF_Data_360/zero-copy-and-byol.md) — Live Query vs Accelerated Query vs File Federation, GA vs Beta, and the grounding story
 - [04-flow · 22 Data Cloud-triggered flows](../04-flow-and-automation/22-data-cloud-triggered-flows-and-data-actions.md) — reacting to the tier from the core platform

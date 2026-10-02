@@ -12,7 +12,7 @@ The code underneath lives in [SF_core/](../SF_core/README.md) and is linked from
 
 Read top to bottom. `#` is display order only — filenames carry no number, so reordering costs one row edit.
 
-**10 topics** · 3 gaps open · 9 complete · newest 2026-08-30 · oldest 2026-08-27
+**10 topics** · 3 gaps open · 9 complete · newest 2026-10-02 · oldest 2026-08-27
 
 **16 org checks** sit under `## Confirm in org` across 9 notes. Those are sandbox to-dos, not research — they do not count as gaps and do not stop a note being complete.
 
@@ -24,7 +24,7 @@ Read top to bottom. `#` is display order only — filenames carry no number, so 
 | 2 | [Prompt Template Types](prompt-template-types.md) | The six types and what each grounds on | basic | ✅ complete | 2 | 1 | 2026-08-27 | 2026-08-30 |
 | 3 | [Prompt Template Versions & Access](prompt-template-versions-and-access.md) | Who can build one, who can run one, and editing a live version | basic | ✅ complete | 1 | 1 | 2026-08-28 | 2026-08-30 |
 | 4 | [Prompt Template Metadata & Deployment](prompt-template-metadata-and-deployment.md) | The XML, and what breaks moving it between orgs | working | ✅ complete | 2 | 3 | 2026-08-28 | 2026-08-28 |
-| 5 | [Grounding a Prompt Template](grounding-a-prompt-template.md) | The six ways data reaches the prompt | working | ✅ complete | 1 | 2 | 2026-08-28 | 2026-08-30 |
+| 5 | [Grounding a Prompt Template](grounding-a-prompt-template.md) | The six ways data reaches the prompt | working | ✅ complete | 1 | 2 | 2026-08-28 | 2026-10-02 |
 | 6 | [Flex Prompt Templates](flex-prompt-templates.md) | The type with no entry point — and the four callers you give it | working | 🌱 3 open | 2 | 2 | 2026-08-30 | 2026-08-30 |
 | 7 | [Prompt Templates as Agent Actions](prompt-templates-as-agent-actions.md) | How a template becomes something an agent calls | working | ✅ complete | 3 | 6 | 2026-08-28 | 2026-08-30 |
 | 8 | [Template-Triggered Prompt Flows](template-triggered-prompt-flows.md) | Feeding a template when merge fields cannot reach the data | working | ✅ complete | 3 | 5 | 2026-08-27 | 2026-08-30 |

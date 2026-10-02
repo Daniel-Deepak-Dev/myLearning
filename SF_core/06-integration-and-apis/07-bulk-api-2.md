@@ -4,7 +4,7 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
+updated: 2026-10-02
 currency: "Summer '26 (API 67.0)"
 phase: 12
 tags: [currency-warning]
@@ -76,3 +76,4 @@ A: No. It is legacy — still callable, but no new capability lands there.
 - [01-admin · 13 Data import, export & loading tools](../01-admin-and-declarative-platform/13-data-import-export-and-loading-tools.md) — Data Loader, and its Bulk checkboxes
 - [08-data · 12 Record locking & concurrency](../08-data-modeling-and-large-data-volumes/12-record-locking-and-concurrency.md) — why large loads are slow, and the three fixes in order
 - [24 · API limits, monitoring & access control](INDEX.md) — the daily allowance Bulk draws on
+- [SF_Data_360 · Ingestion & Data Streams](../../SF_Data_360/ingestion-and-data-streams.md) — the Data 360 Ingestion API's bulk pattern: CSV files up to 150 MB into a data stream
