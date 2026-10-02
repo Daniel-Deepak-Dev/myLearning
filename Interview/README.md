@@ -6,7 +6,7 @@ Seventh vault, alongside [SF_core/](../SF_core/README.md) (core platform), [SF_A
 
 ## Why this exists
 
-The recall layer in the knowledge vaults is atomic — 1,194 `## Recall` pairs, exported to Anki and an Obsidian deck by `python scripts/vault.py cards`, every one a single-fact prompt. That trains definitions, and definitions are not what an interview tests. An interview hands you a messy situation with three constraints in tension and watches you reason out loud.
+The `## Recall` pairs inside each note are atomic single-fact prompts. That trains definitions, and definitions are not what an interview tests. The [Flashcards/](../Flashcards/README.md) bank sits between the two: short Foundations and Hard cards for daily review in Anki, each linking back to the note that holds the reasoning. An interview hands you a messy situation with three constraints in tension and watches you reason out loud.
 
 Nothing in the repo rehearsed that. The three `_cert-*/practice-questions.md` files are still empty stubs. This vault is the missing layer, and it runs in both directions: **candidate** (architect interviews) and **interviewer** (screening at Geeksoft).
 
@@ -29,7 +29,7 @@ Nothing in the repo rehearsed that. The three `_cert-*/practice-questions.md` fi
 | **Medium** | One domain, one or two constraints. A strong senior dev answers it. Tests whether you know the mechanism. |
 | **Complex** | Constraints that genuinely conflict, so there is no clean answer — only a defensible trade-off with its cost named. Tests whether you can architect. |
 
-There are no easy questions here by design. "What is a DMO?" is a flashcard, and it already exists in [SF_Data_360](../SF_Data_360/INDEX.md).
+There are no easy questions here by design. "What is a DMO?" belongs in a flashcard in [Flashcards/](../Flashcards/README.md), not here.
 
 ## How to use it
 

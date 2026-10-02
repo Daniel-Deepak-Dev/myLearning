@@ -17,7 +17,7 @@ Run the vault checker and report what it found.
 | `check` | read-only; reports `file:line` for every mechanical rule |
 | `fix` | rewrites derived values only — never prose |
 | `home` | regenerates `HOME.md`, the what-to-study-next page |
-| `cards` | exports the `## Recall` pairs to Anki TSV + Obsidian decks |
+| `flashcards.py check` | validates the [Flashcards/](../../Flashcards/README.md) bank (also run as the `flashcards-bank` rule) |
 | `migrate` | one-shot, already run: blockquote metadata → frontmatter |
 
 After any note changes, the loop is `fix` → `home` → `check`.

@@ -12,7 +12,8 @@
 # `stale` is deliberately absent: a note going 3 months without an update is a
 # study signal for HOME.md, not a reason to block a commit.
 RULES="--rule status --rule frontmatter --rule tags --rule index --rule readme \
---rule link --rule lab --rule sources --rule history --rule format --rule naming"
+--rule link --rule lab --rule sources --rule history --rule format --rule naming \
+--rule flashcards"
 
 # shellcheck disable=SC2086
 if ! python scripts/vault.py check $RULES --quiet; then

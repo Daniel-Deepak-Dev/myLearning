@@ -1,6 +1,6 @@
 # Glossary — 468 Terms
 
-Extracted from the roadmap glossary tab, grouped by track and alphabetized. Greppable and extendable — **add new terms here as you meet them**, in the right section, keeping alphabetical order. If a term deserves depth, it also earns a flashcard in its topic folder.
+Extracted from the roadmap glossary tab, grouped by track and alphabetized. Greppable and extendable — **add new terms here as you meet them**, in the right section, keeping alphabetical order. If a term deserves depth, it also earns a flashcard in [Flashcards/](Flashcards/README.md).
 
 > **Currency:** definitions reflect **Summer '26 (API 67.0)**, the current release as of 2026-08-02. Where a term changed meaning in 2026, the entry says so — knowing the old meaning is what stops you answering an exam question from 2025 memory. Running detail and sources live in [RELEASE-RADAR/](RELEASE-RADAR/README.md).
 

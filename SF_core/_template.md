@@ -41,7 +41,7 @@ A: <answer>
 Q: <question>
 A: <answer>
 
-<!-- 5 pairs. Keep the format strict so the Anki script works. -->
+<!-- 5 pairs: a self-check while reading. Reviewable flashcards live in Flashcards/. -->
 
 ## Related
 

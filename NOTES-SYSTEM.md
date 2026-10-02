@@ -34,7 +34,7 @@ editing a note to satisfy a bad check.
 
 ## The furniture Obsidian uses
 
-Four things exist for Obsidian that are easy to miss because nothing else links them:
+Five things exist for Obsidian that are easy to miss because nothing else links them:
 
 | Path | What it is |
 |---|---|
@@ -42,6 +42,7 @@ Four things exist for Obsidian that are easy to miss because nothing else links 
 | `bases/topics.base` | Six Bases views over the frontmatter — all topics, open gaps, org checks, currency warnings, new-since-2024, oldest-first. They read the notes directly, so they cannot drift. |
 | `templates/note.md`, `templates/daily.md` | Inserted by the core **Templates** plugin. The daily one is the study log: what you studied, what broke verbatim, weak answers, next. |
 | `journal/` | Where **Daily Notes** writes. One file per day, `YYYY-MM-DD`. |
+| [Flashcards/](Flashcards/README.md) | The interview flashcard bank: Foundations and Hard cards per area and topic, each linking the note that holds the reasoning. Reviewable in Obsidian's Spaced Repetition plugin as-is; `python scripts/flashcards.py sync` pushes it to Anki. |
 
 `bases/graph-groups.json` holds the graph colour groups. `.obsidian/graph.json`
 is gitignored because Obsidian rewrites its zoom level constantly; if the colours
@@ -303,3 +304,4 @@ Filing friction must never stop capture. Triage it later.
 | 2026-09-24 | `SF_Sales/` created as a root vault for Sales Cloud | Forecasts, splits, Path, territories and campaign influence fail the routing test for `SF_core/`. `SF_core/README.md` had parked "Sales Cloud functional depth" as a future area; a peer vault matches how Service Cloud was handled the same day. |
 | 2026-09-24 | Sales Cloud content was **extracted, not moved** | Only `SF_core/07` · 10 fails the test by subject, and it is written as a sharing note: `RowCause`, share-row growth, a second hierarchy. It keeps its number and phase; the selling side became `SF_Sales/` notes, linked both ways. The Sales rows in `08` · 04 and `08` · 22 stay as the object-graph and currency summary. |
 | 2026-08-27 | Level beats migration depth | A one-line note of yours does not get replaced by 119 lines from the archive. Write at your level; the depth arrives when your notes do. |
+| 2026-10-02 | Flashcards moved from the `## Recall` export to a hand-written bank in `Flashcards/` | You found the 1,201 exported Recall pairs useless for interviews: single facts with no scenario and no level. The bank is written for architect and senior-developer interviews, split Foundations/Hard by topic, and syncs to Anki with IDs so edits keep review history. `## Recall` stays in notes as a self-check; the two `_cards.md` decks were deleted. |

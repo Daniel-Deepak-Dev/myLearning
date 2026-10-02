@@ -27,7 +27,7 @@ So OWD, sharing rules and the grantee model are `SF_core/07-security-and-sharing
 
 - **Hard cap ~80 lines.** If it will not fit, the taxonomy is wrong — split the topic.
 - **At most one table and one code block (≤15 lines)** in `## How it works`.
-- **`## Recall` is 5 `Q:`/`A:` pairs**, kept strict so one Anki script works across the vault.
+- **`## Recall` is 5 `Q:`/`A:` pairs**: an in-note self-check, not exported anywhere. Reviewable flashcards live in [../Flashcards/](../Flashcards/README.md).
 - **Delete `## 2026 currency`** when nothing has changed. An empty heading is noise.
 - **Metadata is YAML frontmatter**, read by Obsidian as Properties. `status`, `gaps`, `org_checks` and `labs` are recomputed by `scripts/vault.py fix`; every other key is yours. See [NOTES-SYSTEM.md](../NOTES-SYSTEM.md).
 

@@ -11,7 +11,7 @@ __pycache__/
 .obsidian/workspace*.json
 .obsidian/cache
 
-# Generated Anki decks — rebuild with `python scripts/vault.py cards`
+# Anki TSV fallback — `python scripts/flashcards.py export`
 cards/
 
 # Obsidian rewrites the graph zoom constantly; colour groups live in bases/graph-groups.json

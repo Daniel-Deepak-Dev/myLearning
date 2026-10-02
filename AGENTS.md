@@ -23,7 +23,7 @@ These apply to every file in this repo. Each vault adds its own format rules in 
 | [SF_Sales/](SF_Sales/INDEX.md) | Sales Cloud only: leads, opportunities & Path, products & quotes, teams & splits, territories, forecasts, campaigns, Pipeline Inspection, Einstein Activity Capture | Light format |
 | [Interview/](Interview/README.md) | Scenario question bank | Question + model answer + rubric |
 
-Shared at the root: [GLOSSARY.md](GLOSSARY.md) (all terms, greppable) and [RELEASE-RADAR/](RELEASE-RADAR/README.md) (what changed and when — the source of truth for currency).
+Shared at the root: [GLOSSARY.md](GLOSSARY.md) (all terms, greppable), [RELEASE-RADAR/](RELEASE-RADAR/README.md) (what changed and when — the source of truth for currency) and [Flashcards/](Flashcards/README.md) (the interview flashcard bank, synced to Anki).
 
 [_archive/AI_Data/](_archive/AI_Data/) is the retired roadmap vault. It is a **quarry for verified facts, never a link target.** Nothing live should link into it.
 
@@ -43,3 +43,12 @@ The full contract is in [NOTES-SYSTEM.md](NOTES-SYSTEM.md). The short version:
 - **Every note carries 3–4 `## Hands-on` labs**, each with a `Proves:` and a time box, biased towards breaking something on purpose. **Labs are ticked, not deleted.** They queue in the vault's `PRACTICE.md` — see [SF_Agentforce/PRACTICE.md](SF_Agentforce/PRACTICE.md).
 - **Every researched fact gets a `## Sources` entry** with the date it was read. Salesforce domains are trusted; anything else carries 🚩.
 - **Log the feed** in [LEARNING-LOG.md](LEARNING-LOG.md).
+
+## Flashcards
+
+The bank in [Flashcards/](Flashcards/README.md) follows its README. In short:
+
+- **Ground every card in a live note**, linked on its `Source:` line. Never from recall, never from `_archive/`.
+- **Foundations** is a must-know concept and why it matters. **Hard** is a scenario, trade-off, failure or code review, at architect and senior-developer level.
+- **Answers stay short.** The reasoning lives in the linked note.
+- **Never edit or reuse an ID.** Run `python scripts/flashcards.py ids` for new cards and `check` before committing.
