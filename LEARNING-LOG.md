@@ -23,6 +23,25 @@ Newest first.
 
 ---
 
+### 2026-10-02 · A new flashcard bank for interviews, synced to Anki — pilot: Core Integration
+
+**No notes fed — a structural change.** You found the 1,201 exported `## Recall` cards useless for interviews: single facts, with no scenario and no level. They are replaced by a hand-written bank in [Flashcards/](Flashcards/README.md), written for technical architect and senior developer interviews.
+
+- **Core › Integration** → [Flashcards/core/integration.md](Flashcards/core/integration.md) · `new` · 13 Foundations + 13 Hard
+  - Every card comes from the 28 notes in [SF_core/06-integration-and-apis/](SF_core/06-integration-and-apis/INDEX.md) and the [integration interview set](Interview/03-core-platform/03-integration-and-async.md), and links its note on a `Source:` line.
+  - Hard cards include two code reviews (a composite request with `allOrNone` left off, and an Apex REST class that cannot compile) and the four interview scenarios condensed.
+- **[scripts/flashcards.py](scripts/flashcards.py)** · `new` — `check`, `ids`, `export` and `sync`.
+  - `sync` pushes the bank into Anki through AnkiConnect, with two colour-coded note types: hint, type-in answer, cloze, trap box, and a Source link that opens the note in Obsidian.
+  - Cards are matched by a stable ID, so an edit keeps the review history. Your own tags and flags are never touched.
+  - Tested against a mock AnkiConnect (add, re-sync no-op, edit, deck move, user tag kept, prune). Rendered through Anki 26.09.3's own backend, which generated 31 cards with fields stored byte-for-byte. Parsed by the Spaced Repetition plugin's own parser: 26 cards, matching `check`.
+- **Retired:** both `_cards.md` decks, `vault.py cards`, and the `_sandbox/` test deck. `## Recall` stays in notes as a self-check.
+
+**Blocked:** the Data 360 half of the pilot needs 8 new notes researched from Salesforce docs. help.salesforce.com, developer.salesforce.com and trailhead.salesforce.com are blocked by this environment's network policy, so nothing was drafted from recall.
+
+**Also touched:** [AGENTS.md](AGENTS.md) and [NOTES-SYSTEM.md](NOTES-SYSTEM.md) (Flashcards rules and decision row), the `flashcards-bank` rule in `vault.py` and the pre-commit hook, [HOME.md](HOME.md) card counts, and wording in `Interview/README.md`, `GLOSSARY.md`, `SF_core/_template.md` and two `AGENTS.md` files.
+
+---
+
 ### 2026-10-01 · Obsidian review decks split by topic, with the source note on every card
 
 **No notes fed — a structural change.** The Obsidian decks were one flat pile of 1,201 cards. You could not review just Apex, and a card did not say which note it came from.
