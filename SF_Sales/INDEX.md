@@ -6,7 +6,7 @@ Sales Cloud only — now branded **Agentforce Sales**. Leads and conversion, opp
 
 The platform pieces underneath — assignment rules, record types, the share rows teams add, the object graph, multi-currency — live in [SF_core/](../SF_core/README.md) and are linked from each note. A Sales agent is built in [SF_Agentforce/](../SF_Agentforce/INDEX.md); a partner site's licence and sharing are [SF_Experience_Cloud · 08](../SF_Experience_Cloud/08-licences-and-external-user-types.md).
 
-> Currency: **Summer '26 (API 67.0)** · what changed: [SF_core/CURRENCY.md](../SF_core/CURRENCY.md), section *New in Sales Cloud* · renames that kept their API names: [AGENTS.md](AGENTS.md#four-live-currency-traps)
+> Currency: **Winter '27 (API 68.0)** · [release radar](../RELEASE-RADAR/README.md) · what changed: [SF_core/CURRENCY.md](../SF_core/CURRENCY.md), section *New in Sales Cloud* · renames that kept their API names: [AGENTS.md](AGENTS.md#four-live-currency-traps)
 
 ## Learning path
 

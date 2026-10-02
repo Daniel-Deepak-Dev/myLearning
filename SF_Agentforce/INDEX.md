@@ -6,7 +6,7 @@ Agentforce only. Prompt templates, agents, actions, Agent Script, Atlas Reasonin
 
 The code underneath lives in [SF_core/](../SF_core/README.md) and is linked from each note.
 
-> Currency: **Summer '26 (API 67.0)** · what changed: [RELEASE-RADAR/agentforce-platform.md](../RELEASE-RADAR/agentforce-platform.md)
+> Currency: **Winter '27 (API 68.0)** · what changed: [RELEASE-RADAR/agentforce-platform.md](../RELEASE-RADAR/agentforce-platform.md) · [release radar](../RELEASE-RADAR/README.md)
 
 ## Learning path
 

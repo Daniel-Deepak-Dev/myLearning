@@ -6,7 +6,7 @@ Service Cloud only. Enhanced Chat and messaging channels, Omni-Channel routing, 
 
 The platform pieces underneath — queues, assignment rules, licences, Flow, LWC — live in [SF_core/](../SF_core/README.md) and are linked from each note. The agent a channel routes to is built in [SF_Agentforce/](../SF_Agentforce/INDEX.md); the chat widget's site-side exposure is [SF_Experience_Cloud · 19](../SF_Experience_Cloud/19-embedded-messaging-and-agents-in-sites.md).
 
-> Currency: **Summer '26 (API 67.0)** · what changed: [SF_core/CURRENCY.md](../SF_core/CURRENCY.md) · Agentforce side: [RELEASE-RADAR/agentforce-platform.md](../RELEASE-RADAR/agentforce-platform.md)
+> Currency: **Winter '27 (API 68.0)** · [release radar](../RELEASE-RADAR/README.md) · what changed: [SF_core/CURRENCY.md](../SF_core/CURRENCY.md) · Agentforce side: [RELEASE-RADAR/agentforce-platform.md](../RELEASE-RADAR/agentforce-platform.md)
 
 ## Learning path
 

@@ -35,7 +35,7 @@ So OWD, sharing rules and the grantee model are `SF_core/07-security-and-sharing
 
 - **🆕 topic → research the release notes before writing. Never draft from recall.**
 - **⚠️ topic → the one-line "What changed" correction comes first,** before `## Core idea`.
-- **Currency: Summer '26 · API 67.0** — the currency ledger stays shared, in [../SF_core/CURRENCY.md](../SF_core/CURRENCY.md). Never duplicate currency detail; link to [../RELEASE-RADAR/](../RELEASE-RADAR/README.md).
+- **Currency: Winter '27 · API 68.0** — the currency ledger stays shared, in [../SF_core/CURRENCY.md](../SF_core/CURRENCY.md). Never duplicate currency detail; link to [../RELEASE-RADAR/](../RELEASE-RADAR/README.md).
 - **Filenames keep their numbers.** Order is the learning path and [PHASES.md](PHASES.md) depends on it. Renumbering is expensive — append, never insert.
 - **Closed gaps are deleted, not ticked.** Last one gone, remove the `## Gaps to close` heading too.
 - **A question no public doc answers goes in `## Confirm in org`**, as a `- 🚩 ` bullet naming what to open. A sandbox to-do, not a gap.

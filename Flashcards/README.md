@@ -12,6 +12,8 @@ Every card links the note that holds the full reasoning. The card is the prompt;
 | File | Area › Topic | Foundations | Hard |
 |---|---|---|---|
 | [core/integration.md](core/integration.md) | Core › Integration | 13 | 13 |
+| [core/apex.md](core/apex.md) | Core › Apex & Triggers: limits, queries & DML, triggers, security, async, events & callouts, testing, design & AI | 16 | 16 |
+| [core/apex-terminology.md](core/apex-terminology.md) | Core › Apex Terminology: one term per card, *what it means* and *what it's used for*. Hard = commonly confused terms | 72 | 12 |
 | [data-360.md](data-360.md) | Data 360 › Ingestion & Modelling, Identity Resolution, Insights & Segmentation, Zero Copy, RAG & Vector Search, DevOps & Environments | 12 | 12 |
 | [data-360-terminology.md](data-360-terminology.md) | Data 360 › Terminology: one term per card, *what it means* and *what it's used for*. Hard = commonly confused terms | 89 | 12 |
 

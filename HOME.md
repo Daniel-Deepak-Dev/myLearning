@@ -17,11 +17,11 @@ First unblocked lab in [SF_core/PRACTICE.md](SF_core/PRACTICE.md). Tick it in it
 
 ## Review
 
-**151 flashcards** in [Flashcards/](Flashcards/README.md) — `npm run cards:sync` pushes them to Anki.
+**267 flashcards** in [Flashcards/](Flashcards/README.md) — `npm run cards:sync` pushes them to Anki.
 
 | Area | Foundations | Hard |
 |---|---|---|
-| Core | 13 | 13 |
+| Core | 101 | 41 |
 | Data 360 | 101 | 24 |
 
 ## Open gaps — research can close these
@@ -93,7 +93,7 @@ First unblocked lab in [SF_core/PRACTICE.md](SF_core/PRACTICE.md). Tick it in it
 
 | Vault | Notes | Cards | Labs |
 |---|---|---|---|
-| [SF_core/](SF_core/README.md) | 222 | 26 | 15 |
+| [SF_core/](SF_core/README.md) | 222 | 142 | 15 |
 | [SF_Agentforce/](SF_Agentforce/INDEX.md) | 10 | 0 | 38 |
 | [SF_Data_360/](SF_Data_360/INDEX.md) | 8 | 125 | 25 |
 | [SF_Experience_Cloud/](SF_Experience_Cloud/INDEX.md) | 25 | 0 | 20 |

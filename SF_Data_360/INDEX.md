@@ -6,7 +6,7 @@ Data 360 only. Ingestion, data model objects, identity resolution, segments, zer
 
 Data 360 is the current name. Data Cloud is the old one. The platform underneath lives in [SF_core/](../SF_core/README.md).
 
-> Currency: **Summer '26 (API 67.0)** · what changed: [RELEASE-RADAR/data-360.md](../RELEASE-RADAR/data-360.md)
+> Currency: **Winter '27 (API 68.0)** · what changed: [RELEASE-RADAR/data-360.md](../RELEASE-RADAR/data-360.md) · [release radar](../RELEASE-RADAR/README.md)
 
 ## Learning path
 

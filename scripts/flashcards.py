@@ -811,7 +811,8 @@ def cmd_ids(args) -> int:
         if not prefix:
             print(f"  {rel(path)}: needs `id_prefix:` in its frontmatter")
             continue
-        nums = [int(t.rsplit("-", 1)[1]) for t in taken if t.startswith(prefix + "-") and t.rsplit("-", 1)[1].isdigit()]
+        # Only <prefix>-<digits>: a sibling prefix like d360-term must not bump d360's numbering.
+        nums = [int(t[len(prefix) + 1:]) for t in taken if t.startswith(prefix + "-") and t[len(prefix) + 1:].isdigit()]
         nxt = max(nums, default=0) + 1
         for c in missing:
             new = f"{prefix}-{nxt:03d}"

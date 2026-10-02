@@ -15,7 +15,7 @@ This folder is the **platform underneath** the AI vaults. It cross-links to them
 | [SF_Sales/](../SF_Sales/INDEX.md) | Leads & conversion, opportunities & Path, products & quotes, teams & splits, territories, forecasts, campaigns, Pipeline Inspection, EAC |
 | [Interview/](../Interview/README.md) | Scenario question bank |
 
-> **Currency: Summer '26 · API 67.0** · see [CURRENCY.md](CURRENCY.md) for the version map and the six defaults that invalidate older tutorials.
+> **Currency: Winter '27 · API 68.0** · see [CURRENCY.md](CURRENCY.md) for the version map and the six defaults that invalidate older tutorials · [release radar](../RELEASE-RADAR/README.md)
 
 ## Map
 

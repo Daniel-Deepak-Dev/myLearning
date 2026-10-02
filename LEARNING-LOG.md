@@ -23,6 +23,21 @@ Newest first.
 
 ---
 
+### 2026-10-02 · Core › Apex & Triggers: 32 interview cards and an 84-card terminology deck
+
+**No notes fed — cards on your request.** Every card is grounded in the 34 notes in [SF_core/02-apex-and-triggers/](SF_core/02-apex-and-triggers/INDEX.md), read in full before writing. Hard cards condense the [Apex](Interview/03-core-platform/01-apex-triggers-and-limits.md) and [async](Interview/03-core-platform/03-integration-and-async.md) interview sets where they overlap.
+
+- **Flashcards** → [Flashcards/core/apex.md](Flashcards/core/apex.md) · `new` · 16 Foundations + 16 Hard
+  - Eight subtopics, 2 + 2 each: limits & language, queries & DML, triggers & order of execution, security & sharing, async, events & callouts, testing, design/interop & AI.
+  - Hard covers the `hasRun` guard at 19,000 rows, the stale roll-up, user-mode NPEs after a 67.0 recompile, per-record Queueables, a dead event subscriber, and `Type.forName` returning null.
+- **Flashcards** → [Flashcards/core/apex-terminology.md](Flashcards/core/apex-terminology.md) · `new` · 72 Foundations + 12 Hard
+  - One term per card, *means* and *used for*. Hard is "commonly confused": inner-class sharing, `without sharing` vs user mode, `Database.Stateful` vs a static, finalizer vs `BatchApexErrorEvent`, `Iterator` vs `Iterable`, `throw` vs `addError()`, `EinsteinLLM` vs `ModelsAPI`, org vs session cache, and four more.
+- **Left off the cards on purpose:** Beta and Developer Preview features (elastic async limits, `RunRelevantTests`, Apex Integration Tests, Unified Logic Testing), the two "confirm in org" items in notes 32 and 34, `validFor` decoding, and the Queueable chain-depth of 5, where notes 13 and 16 disagree. Facts already carded in `core/integration.md` were not repeated.
+
+**Also touched:** 15 Apex rows in [GLOSSARY.md](GLOSSARY.md) (`@future`, `@InvocableMethod`, `@TestSetup`, Batch Apex, Custom Iterator, `HttpCalloutMock`, `JSON.deserializeUntyped`, `QueryLocator`, Recursion Guard, Savepoint, Scheduled Apex, `SeeAllData`, `System.Callable`, `System.runAs`, `Type.forName`; 494 → 509 terms) · the bank table in [Flashcards/README.md](Flashcards/README.md) · `scripts/flashcards.py` `ids` now counts only `<prefix>-<digits>`, so `core-apex-term-*` no longer bumps `core-apex` numbering (and `d360` would have jumped to 102).
+
+---
+
 ### 2026-10-02 · Data 360 terminology deck — 101 cards, and the notes fed first
 
 **Research pass on your request:** a separate `Salesforce › Data 360 › Terminology` deck, one term per card, giving what it means and what it is used for. Terms the notes did not yet hold were researched from Salesforce search extracts and added to the notes before any card was written.
