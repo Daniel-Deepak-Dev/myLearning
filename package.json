@@ -1,0 +1,17 @@
+{
+  "name": "mylearning",
+  "private": true,
+  "description": "Shortcuts for the vault and flashcard tools. Needs Node 16+ and Python 3.9+; no npm install required.",
+  "scripts": {
+    "cards:check": "node scripts/py.js scripts/flashcards.py check",
+    "cards:ids": "node scripts/py.js scripts/flashcards.py ids",
+    "cards:sync": "node scripts/py.js scripts/flashcards.py sync",
+    "cards:sync:dry": "node scripts/py.js scripts/flashcards.py sync --dry-run",
+    "cards:preset": "node scripts/py.js scripts/flashcards.py sync --preset",
+    "cards:export": "node scripts/py.js scripts/flashcards.py export",
+    "vault:check": "node scripts/py.js scripts/vault.py check",
+    "vault:fix": "node scripts/py.js scripts/vault.py fix",
+    "vault:home": "node scripts/py.js scripts/vault.py home",
+    "check": "node scripts/py.js scripts/vault.py check --quiet && node scripts/py.js scripts/flashcards.py check"
+  }
+}

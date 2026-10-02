@@ -22,6 +22,8 @@ Run the vault checker and report what it found.
 
 After any note changes, the loop is `fix` → `home` → `check`.
 
+The same commands run as `npm run vault:check`, `npm run vault:fix`, `npm run vault:home`, and `npm run check` (vault plus flashcards). See `package.json`.
+
 ## How to read the findings
 
 `scripts/vault.py` only covers rules from [NOTES-SYSTEM.md](../../NOTES-SYSTEM.md)

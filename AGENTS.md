@@ -51,4 +51,4 @@ The bank in [Flashcards/](Flashcards/README.md) follows its README. In short:
 - **Ground every card in a live note**, linked on its `Source:` line. Never from recall, never from `_archive/`.
 - **Foundations** is a must-know concept and why it matters. **Hard** is a scenario, trade-off, failure or code review, at architect and senior-developer level.
 - **Answers stay short.** The reasoning lives in the linked note.
-- **Never edit or reuse an ID.** Run `python scripts/flashcards.py ids` for new cards and `check` before committing.
+- **Never edit or reuse an ID.** Run `npm run cards:ids` for new cards and `npm run check` before committing.

@@ -2,7 +2,7 @@
 
 Interview flashcards for Salesforce, written for **technical architect and senior developer** interviews. One hand-written bank, reviewable in two places:
 
-- **Anki** (desktop, AnkiDroid, AnkiWeb): `python scripts/flashcards.py sync` pushes the bank in through AnkiConnect.
+- **Anki** (desktop, AnkiDroid, AnkiWeb): `npm run cards:sync` pushes the bank in through AnkiConnect.
 - **Obsidian**: the files are already in the Spaced Repetition plugin's format. Nothing to build.
 
 Every card links the note that holds the full reasoning. The card is the prompt; the note is the answer you would give out loud.
@@ -28,9 +28,11 @@ Pilot scope. Data 360 is next, once its notes exist. Then Agentforce, Service, S
 2. With Anki open, from the repo folder, run:
 
    ```
-   python scripts/flashcards.py sync --dry-run
-   python scripts/flashcards.py sync --preset
+   npm run cards:sync:dry
+   npm run cards:preset
    ```
+
+   No `npm install` is needed. It only needs Node and Python 3.9+, and finds `py`, `python` or `python3` by itself. Pass extra options after `--`, e.g. `npm run cards:sync -- --vault "My Vault"`.
 
    The dry run shows what will change. `--preset` creates the **Salesforce Interview** deck options: 10 new cards a day, and leeches tagged rather than suspended.
 3. Turn on **FSRS**: *deck options → FSRS → on*, desired retention **0.90**. After about a month of reviews, press **Optimize**. FSRS is a global switch and can't be set by script.
@@ -131,7 +133,7 @@ Source: [Note title](../../SF_core/<area>/<note>.md)
 - **`Hint:`, `Trap:`, `Exact:` are optional.** `Source:` is required.
 - **No blank lines inside a card.** A blank line ends the card, except inside a fenced code block.
 - **No `::` outside backticks.** Obsidian would read it as a single-line card.
-- **New card?** Leave the ID off and run `python scripts/flashcards.py ids`. **Never change or reuse an ID**: it is what links the card to its Anki history.
+- **New card?** Leave the ID off and run `npm run cards:ids`. **Never change or reuse an ID**: it is what links the card to its Anki history.
 
 ### Rules
 
@@ -142,8 +144,14 @@ Source: [Note title](../../SF_core/<area>/<note>.md)
 
 ### Checking
 
-```
-python scripts/flashcards.py check     # IDs, decks, Source links, cloze syntax
-python scripts/vault.py check          # runs the same check as the flashcards-bank rule
-python scripts/flashcards.py export    # TSV fallback in cards/ (note types must exist: run sync once)
-```
+| npm | What it does |
+|---|---|
+| `npm run cards:check` | IDs, decks, Source links, cloze syntax |
+| `npm run cards:ids` | gives new cards an ID |
+| `npm run cards:sync:dry` | shows what a sync would change in Anki |
+| `npm run cards:sync` | pushes the bank to Anki |
+| `npm run cards:preset` | sync, plus the deck-options preset |
+| `npm run cards:export` | TSV fallback in `cards/` (note types must exist: run a sync once) |
+| `npm run check` | the whole vault check plus the bank check; run before committing |
+
+Without npm, call the scripts directly: `python scripts/flashcards.py check` (or `py -3 …` on Windows).
