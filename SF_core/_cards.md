@@ -2504,6 +2504,7 @@ It supports named credentials.
 What are the three API-led layers, and what distinguishes them?
 ?
 System, process and experience — distinguished by rate of change: the source system, the business, and one consumer's UI.
+<!--SR:!2026-10-03,1,230-->
 
 When does work belong off-platform?
 ?
@@ -2888,6 +2889,7 @@ Field-level security. Page layouts hide a field on one layout; Dynamic Forms vis
 What is the Summer '26 Field Access tab, and what can it not do?
 ?
 A read-only tab in Object Manager showing which profiles, permission sets and permission set groups grant each field. It cannot change access.
+<!--SR:!2026-10-03,1,230-->
 
 How does a formula field defeat field-level security?
 ?
@@ -3476,6 +3478,7 @@ To keep all children of a parent inside one batch, so batches do not contend for
 What does the Defer Sharing Calculation permission buy you?
 ?
 It suspends group membership and sharing rule recalculation during the load so it runs once afterwards rather than continuously.
+<!--SR:!2026-10-02,0,230-->
 
 When is Bulk API v1 still the right choice?
 ?
