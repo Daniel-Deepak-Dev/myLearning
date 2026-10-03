@@ -51,6 +51,13 @@
       }
     },
     {
+      "query": "path:Claude_Code/",
+      "color": {
+        "a": 1,
+        "rgb": 14251863
+      }
+    },
+    {
       "query": "tag:#currency-warning",
       "color": {
         "a": 1,

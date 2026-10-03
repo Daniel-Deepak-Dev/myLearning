@@ -25,6 +25,8 @@ These apply to every file in this repo. Each vault adds its own format rules in 
 
 Shared at the root: [GLOSSARY.md](GLOSSARY.md) (all terms, greppable), [RELEASE-RADAR/](RELEASE-RADAR/README.md) (what changed and when — the source of truth for currency) and [Flashcards/](Flashcards/README.md) (the interview flashcard bank, synced to Anki).
 
+[Claude_Code/](Claude_Code/README.md) is a self-paced track for learning Claude Code. It is **not a vault**: the routing contract and flashcards don't apply, and it has its own rules in [Claude_Code/AGENTS.md](Claude_Code/AGENTS.md). `npm run today` adds its next topic and lab to the daily session.
+
 [_archive/AI_Data/](_archive/AI_Data/) is the retired roadmap vault. It is a **quarry for verified facts, never a link target.** Nothing live should link into it.
 
 ## When the user pastes rough learning notes

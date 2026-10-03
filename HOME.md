@@ -9,11 +9,12 @@ Everything below is counted from the notes, so it cannot drift.
 
 ## ▶ Today
 
-Your session is in [journal/2026-10-02.md](journal/2026-10-02.md). Tick each line as you do it.
+Run `npm run today`. It writes this session into `journal/2026-10-03.md`, with room to blurt before you open the note.
 
-- **Data 360** · [Lab Environment](SF_Data_360/lab-environment.md) — a flashcard leans on it
+- **Core dev** · [Order of Execution — Declarative View](SF_core/01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md) — an interview question probes it
 - **Review:** 0 due
-- **Drill:** one project story, out loud
+- **Drill:** one recall sheet, answers covered
+- **Claude Code** · learn next: Instructions & memory
 
 *In your words: 0 of 288 notes. Each vault's `RECALL.md` collects them — linked in the table at the bottom.*
 
@@ -102,5 +103,5 @@ Your session is in [journal/2026-10-02.md](journal/2026-10-02.md). Tick each lin
 | [SF_Service/](SF_Service/INDEX.md) | 13 | [0](SF_Service/RECALL.md) | 0 | 51 |
 | [SF_Sales/](SF_Sales/INDEX.md) | 10 | [0](SF_Sales/RECALL.md) | 0 | 40 |
 
-*Rebuilt 2026-10-02.*
+*Rebuilt 2026-10-03.*
 

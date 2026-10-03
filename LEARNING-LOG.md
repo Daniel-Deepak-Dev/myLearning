@@ -23,6 +23,19 @@ Newest first.
 
 ---
 
+### 2026-10-03 · A Claude Code track in `npm run today`
+
+**No notes fed — a structural change.** You're starting to learn Claude Code and wanted the same feed-and-recall loop as the Salesforce vaults, without flashcards for now.
+
+- **Track** → [Claude_Code/README.md](Claude_Code/README.md) · `new`
+  - A 10-topic path, each topic with its official docs page. The first topic with no note is the day's **Learn** line.
+- **Rules** → [Claude_Code/AGENTS.md](Claude_Code/AGENTS.md) and [templates/claude-code-note.md](templates/claude-code-note.md) · `new`
+  - Your words in `## My recall`; researched body from the docs; 2–3 `CC-` labs that build into this repo.
+- **Session** → `scripts/vault.py` · `updated`
+  - `today` adds a `## Claude Code` block with **Learn** and **Build** lines. Fed notes join the spaced reviews from their `created` date.
+
+**Also touched:** [study-notes skill](.claude/skills/study-notes/SKILL.md) (Claude Code branch), [AGENTS.md](AGENTS.md), [NOTES-SYSTEM.md](NOTES-SYSTEM.md) § 2b, `bases/graph-groups.json`.
+
 ### 2026-10-02 · Your words on top: the recall layer, RECALL sheets and `npm run today`
 
 **No notes fed — a structural change.** You said you barely learn from this vault: it isn't in your words, you never open it, and you can't find things. The fix gives back what made your Notion notes stick: you write, you recall, and you fix what goes stale. The research is in the [NOTES-SYSTEM.md](NOTES-SYSTEM.md) decisions log.

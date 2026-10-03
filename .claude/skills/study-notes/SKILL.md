@@ -1,6 +1,6 @@
 ---
 name: study-notes
-description: Turn rough, out-of-order Salesforce learning notes into ordered wiki notes across SF_core, SF_Agentforce, SF_Data_360, SF_Experience_Cloud, SF_Service and SF_Sales. Use whenever the user pastes study notes, says "I learned X today", dumps rough bullets about a Salesforce, Agentforce, Data 360, Service Cloud or Sales Cloud topic, or asks to file notes into the vault.
+description: Turn rough, out-of-order learning notes into ordered wiki notes — Salesforce across SF_core, SF_Agentforce, SF_Data_360, SF_Experience_Cloud, SF_Service and SF_Sales, and Claude Code into the Claude_Code track. Use whenever the user pastes study notes, says "I learned X today", dumps rough bullets about a Salesforce, Agentforce, Data 360, Service Cloud, Sales Cloud or Claude Code topic (hooks, skills, subagents, MCP, settings…), or asks to file notes into the vault.
 allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch, AskUserQuestion
 ---
 
@@ -17,6 +17,8 @@ Break the dump into distinct topics. One topic, one note.
 A single sentence can belong to two topics. That is normal. Split it and cross-link.
 
 Do not merge unrelated things into one file just because they arrived together.
+
+**About Claude Code, not Salesforce?** Skip steps 2–9 and follow [Claude_Code/AGENTS.md](../../../Claude_Code/AGENTS.md) instead: its own template, labs, sources and README path table. The Salesforce routing, currency traps, org checks and gap rules don't apply there. The `## My recall` rule does, word for word. Then go to step 10 and report back.
 
 ## 2 · Route
 

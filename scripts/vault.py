@@ -41,7 +41,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Vaults holding notes the contract applies to.
 NOTE_VAULTS = ("SF_core", "SF_Agentforce", "SF_Data_360", "SF_Experience_Cloud", "SF_Service", "SF_Sales")
 # Walked for link integrity but not linted as notes.
-OTHER_LIVE = ("RELEASE-RADAR", "Interview")
+OTHER_LIVE = ("RELEASE-RADAR", "Interview", "Claude_Code")
 # Never walked at all.
 SKIP_DIRS = {".git", "_archive", "node_modules", ".obsidian", ".vscode", ".claude"}
 # Live files that are scaffolding, not notes.
@@ -1566,8 +1566,14 @@ def cmd_home() -> int:
         f"- **Review:** {len(s.reviews)} due" + (
             " — " + ", ".join(f"[{note_title(n)}]({n.rel})" for n in s.reviews)
             if s.reviews else ""),
-        f"- **Drill:** {DRILL_NAMES[s.drill]}", "",
+        f"- **Drill:** {DRILL_NAMES[s.drill]}",
     ]
+    if s.learn or s.build:
+        parts = [f"learn next: {s.learn[0]}"] if s.learn else []
+        if s.build:
+            parts.append(f"build: [{note_title(s.build[0])}]({s.build[0].rel})")
+        out.append(f"- **{TRACK_TITLE}** · " + " · ".join(parts))
+    out.append("")
     mine = sum(m for m, _ in recall.values())
     total = sum(t for _, t in recall.values())
     out += [f"*In your words: {mine} of {total} notes. Each vault's `RECALL.md` "
@@ -1694,6 +1700,11 @@ STUDY_AREAS = (
     ("Agentforce", ("SF_Agentforce/",), ("Interview/01-agentforce/",)),
     ("Data 360", ("SF_Data_360/",), ("Interview/02-data-360/",)),
 )
+
+# A self-paced track outside the vault contract: no cards, no rotation, no
+# linting. Its README's path table orders the topics; a note exists once fed.
+TRACK_DIR, TRACK_TITLE = "Claude_Code", "Claude Code"
+TRACK_README = os.path.join(ROOT, TRACK_DIR, "README.md")
 
 # Days until a studied topic comes back, by how many times it has been ticked.
 REVIEW_DAYS = (3, 7, 16, 35, 75)
@@ -1875,6 +1886,51 @@ def story_slots() -> list[tuple[str, bool]]:
     return out
 
 
+def first_open_lab(note: Note) -> str | None:
+    """The note's first unticked ## Hands-on lab, rendered for a session line."""
+    if "Hands-on" not in note.sections:
+        return None
+    for line in note.lines[slice(*note.sections["Hands-on"])]:
+        m = LAB_RE.match(line)
+        if m and m.group(1) == " ":
+            return f"**{m.group('id')}** · {m.group('box')} min ·{m.group('rest')}"
+    return None
+
+
+def track_notes() -> list[Note]:
+    """Every fed note in the track folder. None until the first feed."""
+    folder = os.path.join(ROOT, TRACK_DIR)
+    if not os.path.isdir(folder):
+        return []
+    return [load_note(os.path.join(folder, f)) for f in sorted(os.listdir(folder))
+            if f.endswith(".md") and f not in NON_NOTE_NAMES and not f.startswith("_")]
+
+
+def track_path(notes: list[Note]) -> list[tuple[str, str, Note | None]]:
+    """The README path table as (topic, learn from, fed note or None), in order.
+
+    Fed notes the table does not list follow at the end, so their labs still surface.
+    """
+    if not os.path.exists(TRACK_README):
+        return []
+    by_rel = {n.rel: n for n in notes}
+    headers, rows = parse_table(load_note(TRACK_README).lines, 0)
+    if "Topic" not in headers:
+        return []
+    col = {h: headers.index(h) for h in ("Topic", "Learn from", "Note") if h in headers}
+    cell = lambda cells, h: cells[col[h]] if h in col and len(cells) > col[h] else ""
+    out, listed = [], set()
+    for _, cells in rows:
+        m = MD_LINK_RE.search(cell(cells, "Note"))
+        rel = rel_of(os.path.normpath(os.path.join(ROOT, TRACK_DIR, m.group(2)))) if m else None
+        note = by_rel.get(rel)
+        if note:
+            listed.add(note.rel)
+        out.append((cell(cells, "Topic"), cell(cells, "Learn from"), note))
+    out += [(note_title(n), "", n) for n in notes if n.rel not in listed]
+    return out
+
+
 @dataclass
 class Session:
     day: date
@@ -1887,6 +1943,8 @@ class Session:
     question: tuple[str, str, str, set[str]] | None
     lab: str | None
     story: str | None
+    learn: tuple[str, str] | None = None      # track: next topic to learn, where from
+    build: tuple[Note, str] | None = None     # track: next unticked lab in a fed note
 
 
 def plan_session(notes, day: date) -> Session:
@@ -1894,9 +1952,16 @@ def plan_session(notes, day: date) -> Session:
     studied, ticked_text = journal_record(day)
     order = read_order(notes)
 
+    # Track notes are fed, never picked, so the day they were fed is their first study.
+    track = track_notes()
+    for n in track:
+        fed = parse_date(str(n.meta.get("created", "")))
+        if fed and fed < day:
+            studied[n.rel].add(fed)
+
     # Reviews: notes in your words whose next spaced date has come, most overdue first.
     due = []
-    for n in order:
+    for n in order + track:
         dates = studied.get(n.rel)
         if not dates or not recall_lines(n):
             continue
@@ -1942,20 +2007,18 @@ def plan_session(notes, day: date) -> Session:
     if not question:
         question = next((q for q in unused if q[0].startswith(q_prefixes)), None)
 
-    lab = None
-    if topic and "Hands-on" in topic.sections:
-        for line in topic.lines[slice(*topic.sections["Hands-on"])]:
-            m = LAB_RE.match(line)
-            if m and m.group(1) == " ":
-                lab = f"**{m.group('id')}** · {m.group('box')} min ·{m.group('rest')}"
-                break
+    lab = first_open_lab(topic) if topic else None
 
     slots = story_slots()
     empty = [h for h, filled in slots if not filled]
     story = empty[0] if empty else (slots[day.toordinal() % len(slots)][0] if slots else None)
 
+    path = track_path(track)
+    learn = next(((t, src) for t, src, n in path if not n), None)
+    build = next(((n, l) for _, _, n in path if n and (l := first_open_lab(n))), None)
+
     return Session(day, area, prefixes[0].split("/")[0], topic, why, reviews,
-                   drill, question, lab, story)
+                   drill, question, lab, story, learn, build)
 
 
 def render_session(s: Session) -> list[str]:
@@ -2018,6 +2081,19 @@ def render_session(s: Session) -> list[str]:
     out += ["", "Said something wrong, thin or slow? Log it under **Weak answers** and as a "
             "row in [WEAK-ANSWERS.md](../Interview/WEAK-ANSWERS.md). That row brings the "
             "topic back."]
+
+    if os.path.exists(TRACK_README):
+        out += ["", f"## {TRACK_TITLE}", ""]
+        if s.learn:
+            topic, source = s.learn
+            out.append(f"- [ ] **Learn** · 20 min · {topic}" + (f" — {source}" if source else "")
+                       + ". Then paste what you learnt and say \"I learned … today\".")
+        if s.build:
+            out.append(f"- [ ] **Build** · {link(s.build[0])} — {s.build[1]} "
+                       f"Tick the lab in the note too.")
+        if not (s.learn or s.build):
+            out.append(f"*Path done — add the next topic to [{TRACK_DIR}/README.md]"
+                       f"(../{TRACK_DIR}/README.md).*")
     return out
 
 
@@ -2051,7 +2127,8 @@ def cmd_today(day: date, dry_run: bool) -> int:
         write_generated(path, lines[:at] + block + lines[at + 1:])
         print(f"wrote {rel} — {s.area}: "
               f"{note_title(s.topic) if s.topic else 'no topic'}, "
-              f"{len(s.reviews)} review(s), drill: {DRILL_NAMES[s.drill]}")
+              f"{len(s.reviews)} review(s), drill: {DRILL_NAMES[s.drill]}"
+              + (f", {TRACK_TITLE}: {s.learn[0]}" if s.learn else ""))
     if day == TODAY:
         cmd_home()
     return 0

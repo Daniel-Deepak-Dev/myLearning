@@ -131,12 +131,14 @@ Why: you remember what you produce, not what you read. Every study behind this d
 | Review | 5 min | Up to 3 notes in your words whose spaced date has come. Read only the cues; say the rest. |
 | Topic | 20 min | Blurt everything you remember **before** opening the note. Then open it, write what you missed, and write or fix its `## My recall`. |
 | Drill | 10 min | Mon/Wed a scenario out loud · Tue/Thu the topic's code from a blank file · Fri a project story · weekend a recall sheet, answers covered. |
+| Claude Code | 20 min + lab | **Learn** the next unfed topic on the [Claude_Code/](Claude_Code/README.md) path, then paste what you learnt. **Build** the first unticked lab in a fed note. |
 
 **How it picks**, all derived and nothing stamped:
 
 - **Area** rotates daily through Core dev, Architect, Agentforce and Data 360 (`STUDY_AREAS` in `scripts/vault.py`).
 - **Topic** — an open [WEAK-ANSWERS](Interview/WEAK-ANSWERS.md) row in that area first. Then a new note an interview question probes, then one a flashcard cites, then read order. Then the note studied longest ago.
-- **Reviews** come back 3, 7, 16, 35 and 75 days after each tick.
+- **Reviews** come back 3, 7, 16, 35 and 75 days after each tick. A Claude Code note counts its `created` date as its first tick, because you feed it rather than `today` picking it.
+- **Claude Code** is a track outside the rotation. The first README path row with an empty `Note` cell is the Learn line. A fed note's first unticked lab is the Build line.
 - **The record is the tick.** A ticked `- [x]` line in a journal file is what counts as studied. An unticked pick is a day skipped, and it comes back.
 
 ### 3. Gaps — scoped to where you actually are
