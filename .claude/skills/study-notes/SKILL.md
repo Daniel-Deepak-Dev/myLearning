@@ -60,13 +60,24 @@ Use [templates/note.md](../../../templates/note.md).
 - One table max. One code block max, 12 lines.
 - Metadata is YAML frontmatter. Run `python scripts/vault.py fix` after writing; it sets `status`, `gaps`, `org_checks` and `labs` from the body. Never type those four.
 
-Keep the user's own wording where it captures a real gotcha:
+### The user's words go on top — `## My recall`
+
+Their rough notes become the note's **first section**, before `## Key points` (and before `## Core idea` in a dense note):
 
 ```markdown
-> **From my notes.** <their words> — <inline correction if it is wrong>
+## My recall
+
+- **<cue>** — <their power words>
 ```
 
-That callout is how they tell what they wrote from what you added. Use it.
+- **Use their words, tightened.** Reorder, merge duplicates, trim filler, fix spelling, put the cue in bold. **Never add a word, phrase or fact of your own,** even a better one. They remember what they wrote, not what you wrote. NOTES-SYSTEM.md § 2a.
+- **3–7 lines.** Give each line a cue they would recognise. If the dump has more than seven points, keep the seven that carry the topic; the rest go in the body below, in your words.
+- **A wrong line stays, with their wording.** Append ` 🚩 <one-line why>`. Do not correct it in place: rewriting it is their study step.
+- **No links, tables or code inside it.** A code snippet they wrote and ran goes in `## My code` right after, unchanged apart from their own comments.
+- **Note already has a `## My recall`?** Add the new lines to it, still within seven, and never rewrite the lines already there.
+- **Note has an old `> **From my notes.**` callout?** Leave it. Do not migrate it. The user starts their recall layer from it when `npm run today` picks that note.
+
+Everything you research goes **below**, in the reference body, as before.
 
 Set `Level` from the depth of what they actually gave you:
 
@@ -187,7 +198,7 @@ Two live currency traps to watch for in the user's notes:
 - Agents are authored in **Agent Script**. The legacy topics-and-instructions builder stopped creating new agents the week of 2026-07-13.
 - **Data Cloud is Data 360.**
 
-If their note contradicts one of these, correct it inline in the `> **From my notes.**` callout. Do not silently drop what they wrote.
+If their note contradicts one of these, keep their line in `## My recall` and append `🚩 <why>`, naming the current term. Do not silently drop or rewrite what they wrote.
 
 ## 10 · Report back
 
@@ -195,7 +206,7 @@ Short. Bullets. No paragraphs.
 
 - Files created, with paths.
 - Files updated, and what changed in each.
-- Corrections made to what they wrote, and why.
+- Every `🚩` you put on one of their recall lines, quoted, with the reason. Those are theirs to rewrite.
 - Gaps **closed**, and gaps added with the level you scoped them to.
 - Whether a research pass spawned a new deeper note — say it plainly, it is why the total may not fall.
 - Anything moved to `## Confirm in org`, and what to open in the org to settle it.

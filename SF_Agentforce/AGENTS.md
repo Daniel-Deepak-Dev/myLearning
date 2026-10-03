@@ -42,7 +42,7 @@ Template: [../templates/note.md](../templates/note.md).
 - **`## History`** takes one dated line per feed.
 - **`Level` sets the gap ceiling.** Gaps may go one level up, never two. A `basic` note never gets a `deep` gap.
 - **Gaps stay on this topic.** Never a syllabus. Never another subject.
-- **Keep the user's own wording** in a `> **From my notes.**` callout. Correct it inline if it is wrong.
+- **The user's words go in `## My recall`**, the first section, tightened but never added to. A wrong line keeps its wording and gets `🚩 <why>` for them to fix. Older notes keep their `> **From my notes.**` callouts. See [NOTES-SYSTEM.md](../NOTES-SYSTEM.md) § 2a.
 - **A link that crosses vaults gets a link back**, added in the same edit — that means links into `SF_core/`, `SF_Experience_Cloud/`, `SF_Service/` and `SF_Sales/`. Same-vault links rely on Obsidian's Backlinks panel.
 - **Unsure of a fact? Mark it 🚩.** For release-dependent facts, check [../RELEASE-RADAR/agentforce-platform.md](../RELEASE-RADAR/agentforce-platform.md) first. Never draft release facts from recall.
 - **Two live currency traps:** agents are authored in **Agent Script** — the legacy topics-and-instructions builder stopped creating new agents the week of 2026-07-13. And **Data Cloud is Data 360**.

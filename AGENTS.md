@@ -35,6 +35,8 @@ The full contract is in [NOTES-SYSTEM.md](NOTES-SYSTEM.md). The short version:
 
 - **Route by subtraction:** strip the product out of the sentence. *Still true with no Agentforce in it?* *With no Experience Cloud site in it?* *With no Service Cloud in it?* *With no Sales Cloud in it?* **Still true → `SF_core/`. Falls apart → the vault that owns that product** — `SF_Agentforce/`, `SF_Data_360/`, `SF_Experience_Cloud/`, `SF_Service/` or `SF_Sales/`.
 - **New notes use the light format** in [templates/note.md](templates/note.md), in every vault. Start there → [HOME.md](HOME.md) is the front door.
+- **`## My recall` is the user's words. Never author it.** Their rough notes go there, tightened: reorder, trim, fix spelling. Never add a word, phrase or fact. A wrong line keeps its wording and gets `🚩 <why>`, and the user fixes it. Your research goes in the reference body below. The same holds for `## My code`, [Interview/my-stories.md](Interview/my-stories.md) and a flashcard answer the user has rewritten.
+- **Flag, don't fix, what the user learns from.** When a release changes something the user wrote, tell them the line and why. They rewrite it.
 - **Add gaps, scoped by the note's `Level`.** One level up, never two. Same topic only.
 - **A link that crosses vaults gets a link back**, in the same edit. Same-vault links rely on Obsidian's Backlinks panel.
 - **Metadata is YAML frontmatter.** `status`, `gaps`, `org_checks` and `labs` are recomputed by `python scripts/vault.py fix`; every other key is yours. `created` never changes, `updated` does. Staleness is derived from `updated`, never stamped.

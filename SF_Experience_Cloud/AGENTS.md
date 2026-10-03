@@ -20,6 +20,7 @@ So OWD, sharing rules and the grantee model are `SF_core/07-security-and-sharing
 - **The 20 notes written as SF_core area 05** (phases 18–19) keep the dense format below. Do not rewrite them wholesale.
 - **New notes** use the light format in [../templates/note.md](../templates/note.md): 50 lines, bullets, `## Gaps to close`, `## Hands-on`. Filenames still take the next `NN-` prefix.
 - **A fed topic that already has a note here** → enrich that note in place. Add the cross-link and a `## Gaps to close` section. Never create a second file for the same topic.
+- **Both formats take `## My recall` as the first section**, with `## My code` after it if there is one. The user's words go there, tightened but never added to; a wrong line gets `🚩 <why>` for them to fix. It does not count towards the line cap. See [NOTES-SYSTEM.md](../NOTES-SYSTEM.md) § 2a.
 
 ## The dense format
 

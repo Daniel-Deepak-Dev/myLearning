@@ -19,6 +19,7 @@ Nothing in the repo rehearsed that. The three `_cert-*/practice-questions.md` fi
 | [03-core-platform/](03-core-platform/INDEX.md) | 3 · 12 scenarios | Apex and limits, sharing and security, integration and async |
 | [04-cross-domain/](04-cross-domain/INDEX.md) | 1 · 6 scenarios | The architect-level ones that only resolve by spanning all three |
 | [WEAK-ANSWERS.md](WEAK-ANSWERS.md) | — | The fumble log. **The most valuable file here after a month of use.** |
+| [my-stories.md](my-stories.md) | — | Your seven STAR project stories, in your words. Covers "explain what you built". |
 
 **42 scenarios.** Sized for depth, not coverage — each one carries the reasoning, the trap, the follow-up probes and a scoring rubric.
 

@@ -22,4 +22,5 @@ Skeleton in [_template.md](_template.md). Every scenario, in this order:
 - **Two currency traps:** agents are authored in Agent Script — the legacy builder stopped creating new agents the week of 2026-07-13 — and Data Cloud is Data 360.
 - **New scenario** → append to the set file it belongs to, renumber nothing, bump `scenarios:` in the frontmatter **and** the count in the area `INDEX.md`.
 - **New set** → next `NN` in the area, copy [_template.md](_template.md), add a row to the area's `INDEX.md`.
-- **Misses go in** [WEAK-ANSWERS.md](WEAK-ANSWERS.md), with a link back to the note to re-study.
+- **Misses go in** [WEAK-ANSWERS.md](WEAK-ANSWERS.md), with a link back to the note to re-study. An open row brings that note back as the topic in `npm run today`.
+- **[my-stories.md](my-stories.md) is the user's, like `## My recall`.** Never write or invent a story. Tighten wording only when asked, and keep their words.

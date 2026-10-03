@@ -38,10 +38,12 @@ Five things exist for Obsidian that are easy to miss because nothing else links 
 
 | Path | What it is |
 |---|---|
-| [HOME.md](HOME.md) | **Open this first.** Generated — what to study next: one unblocked lab, cards, open gaps, org checks, stale notes, missing seams. Rebuild with `vault.py home`. |
+| [HOME.md](HOME.md) | **Open this first.** Generated — today's session, cards, open gaps, org checks, stale notes, missing seams. Rebuild with `npm run vault:home`. |
+| `<vault>/RECALL.md` | Generated with HOME — every note's `## My recall` in read order, one file per vault. The page you read top to bottom before an interview, or cover and recite. |
+| `npm run today` | Writes today's session into `journal/YYYY-MM-DD.md`: cards, due reviews, one topic, one drill. See [The daily session](#the-daily-session). |
 | `bases/topics.base` | Six Bases views over the frontmatter — all topics, open gaps, org checks, currency warnings, new-since-2024, oldest-first. They read the notes directly, so they cannot drift. |
-| `templates/note.md`, `templates/daily.md` | Inserted by the core **Templates** plugin. The daily one is the study log: what you studied, what broke verbatim, weak answers, next. |
-| `journal/` | Where **Daily Notes** writes. One file per day, `YYYY-MM-DD`. |
+| `templates/note.md`, `templates/daily.md` | Inserted by the core **Templates** plugin. The daily one holds a `<!-- today` line that `npm run today` replaces with the session, plus weak answers and what broke, verbatim. |
+| `journal/` | Where **Daily Notes** and `npm run today` write. One file per day, `YYYY-MM-DD`. Its ticked lines are the study record. |
 | [Flashcards/](Flashcards/README.md) | The interview flashcard bank: Foundations and Hard cards per area and topic, each linking the note that holds the reasoning. Reviewable in Obsidian's Spaced Repetition plugin as-is; `python scripts/flashcards.py sync` pushes it to Anki. |
 
 `bases/graph-groups.json` holds the graph colour groups. `.obsidian/graph.json`
@@ -89,11 +91,53 @@ Template: [templates/note.md](templates/note.md) — Obsidian's Templates plugin
 - **50 lines max — counted to `## Related`.** The ceiling is on the part you read. `## Related`, `## Sources` and `## History` are a footer: reference material you scan, not prose you re-read. They do not count.
 - No paragraph longer than two sentences.
 - Bullets and one table. Not prose.
-- `## Key points` → `## Gotchas` → `## Gaps to close` → `## Confirm in org` → `## Hands-on` → `## Related` → `## Sources` → `## History`.
+- `## My recall` → `## My code` → `## Key points` → `## Gotchas` → `## Gaps to close` → `## Confirm in org` → `## Hands-on` → `## Related` → `## Sources` → `## History`.
 
-Your own wording is kept in a `> **From my notes.**` callout. That way you can always tell what you wrote from what the AI added.
+Existing `SF_core` notes keep their older, longer format. Only **new** notes use the light one. Both formats take the recall layer.
 
-Existing `SF_core` notes keep their older, longer format. Only **new** notes use the light one.
+### 2a. The recall layer — your words on top
+
+Every note has two layers. **The top is yours. The rest is reference.**
+
+```markdown
+## My recall
+
+- **DI event** — low-code LMS · App Builder only · one → many
+- **Map it** — `{!Event.prop1}` in the receiver's property
+
+## My code
+
+<a snippet you wrote and ran, with your own comments — optional>
+```
+
+- **`## My recall` is 3–7 lines of `**cue** — power words`, in your words.** The cue on the left is what you see when you test yourself; everything after the dash is what you say.
+- **Claude never writes vocabulary here.** When you feed rough notes it may reorder, trim and fix spelling. It never adds a word, phrase or fact of its own.
+- **A wrong line stays, flagged.** Claude appends `🚩 <why>` and you rewrite the line. The fix is the study.
+- **No links, tables or code inside it.** `RECALL.md` lives in another folder, so a relative link would break there. Code goes in `## My code`.
+- **Both sections come first,** before the reference body, and neither counts towards the line or code-block caps.
+- **Written when you study a topic, not before.** A note without one is fine. `npm run today` brings up one topic a day, and `RECALL.md` counts how many are in your words.
+
+Old notes carry your words in a `> **From my notes.**` callout. Those stay. When `npm run today` picks one of those notes, start the recall layer from the callout.
+
+Why: you remember what you produce, not what you read. Every study behind this design is listed in the 2026-10-02 decisions-log rows.
+
+### 2b. The daily session
+
+`npm run today` picks one session and writes it into `journal/YYYY-MM-DD.md`. It is built for 30–45 minutes:
+
+| Block | Time | What you do |
+|---|---|---|
+| Cards | 10 min | Due Anki cards. A miss means rewrite that answer in your words; keep its id. |
+| Review | 5 min | Up to 3 notes in your words whose spaced date has come. Read only the cues; say the rest. |
+| Topic | 20 min | Blurt everything you remember **before** opening the note. Then open it, write what you missed, and write or fix its `## My recall`. |
+| Drill | 10 min | Mon/Wed a scenario out loud · Tue/Thu the topic's code from a blank file · Fri a project story · weekend a recall sheet, answers covered. |
+
+**How it picks**, all derived and nothing stamped:
+
+- **Area** rotates daily through Core dev, Architect, Agentforce and Data 360 (`STUDY_AREAS` in `scripts/vault.py`).
+- **Topic** — an open [WEAK-ANSWERS](Interview/WEAK-ANSWERS.md) row in that area first. Then a new note an interview question probes, then one a flashcard cites, then read order. Then the note studied longest ago.
+- **Reviews** come back 3, 7, 16, 35 and 75 days after each tick.
+- **The record is the tick.** A ticked `- [x]` line in a journal file is what counts as studied. An unticked pick is a day skipped, and it comes back.
 
 ### 3. Gaps — scoped to where you actually are
 
@@ -304,4 +348,8 @@ Filing friction must never stop capture. Triage it later.
 | 2026-09-24 | `SF_Sales/` created as a root vault for Sales Cloud | Forecasts, splits, Path, territories and campaign influence fail the routing test for `SF_core/`. `SF_core/README.md` had parked "Sales Cloud functional depth" as a future area; a peer vault matches how Service Cloud was handled the same day. |
 | 2026-09-24 | Sales Cloud content was **extracted, not moved** | Only `SF_core/07` · 10 fails the test by subject, and it is written as a sharing note: `RowCause`, share-row growth, a second hierarchy. It keeps its number and phase; the selling side became `SF_Sales/` notes, linked both ways. The Sales rows in `08` · 04 and `08` · 22 stay as the object-graph and currency summary. |
 | 2026-08-27 | Level beats migration depth | A one-line note of yours does not get replaced by 119 lines from the archive. Write at your level; the depth arrives when your notes do. |
+| 2026-10-02 | Every note gets a `## My recall` layer on top, in the user's words; Claude may tighten it but never add to it | The vault was almost entirely Claude-written: 0 of 189 labs done, the journal empty, and "not my words" was the first complaint. Self-generated material is remembered better than read material, d ≈ 0.40 across 86 studies ([Bertsch 2007](https://pubmed.ncbi.nlm.nih.gov/17645161/)). People who wrote with an LLM could not quote their own essays minutes later ([Kosmyna 2025](https://maketecheasier.com/mit-researchers-wired-eeg-sensors-onto-54-people-writing-essays-and-found-that-the-group-using-chatgpt-not-only-thought-the-least-measured-by-brain-connectivity-but-afterwards-mostly-could-not-recal/) 🚩 preprint). |
+| 2026-10-02 | `RECALL.md` per vault, generated from the recall layers | The user's interview habit is reading a short summary top to bottom. Generating it from the notes means it cannot drift from them. |
+| 2026-10-02 | `npm run today` replaces HOME's single-lab pick with a daily session: recall first, then the note | Practice testing and spacing are the only techniques rated high utility; rereading is rated low ([Dunlosky 2013](https://www.psychologicalscience.org/news/releases/which-study-strategies-make-the-grade.html)). Recall beat restudy 80% to 36% after a week ([Karpicke & Roediger 2008](https://sciencedaily.com/releases/2009/12/091210125928.htm)). 189 queued labs were "too many to start". |
+| 2026-10-02 | Claude checks, flags and researches, and does not author what the user learns from | Unrestricted GPT-4 raised practice scores 48% and cut exam scores 17%; a tutor that gave hints, not answers, caused no loss ([Bastani, PNAS 2025](https://papers.ssrn.com/abstract=4895486)). Release changes are flagged for the user to fix: re-encoding was how the old Notion notes stuck. |
 | 2026-10-02 | Flashcards moved from the `## Recall` export to a hand-written bank in `Flashcards/` | You found the 1,201 exported Recall pairs useless for interviews: single facts with no scenario and no level. The bank is written for architect and senior-developer interviews, split Foundations/Hard by topic, and syncs to Anki with IDs so edits keep review history. `## Recall` stays in notes as a self-check; the two `_cards.md` decks were deleted. |

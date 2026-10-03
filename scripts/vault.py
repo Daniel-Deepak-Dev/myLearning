@@ -9,6 +9,8 @@ reading of the prose stays with you and the study-notes skill.
     python scripts/vault.py check --rule backlink report one rule (prefix match)
     python scripts/vault.py check --changed       only files touched vs HEAD
     python scripts/vault.py check --list-rules    what it knows how to check
+    python scripts/vault.py home                  rebuild HOME.md and every RECALL.md
+    python scripts/vault.py today                 write today's session into journal/
 
 Exit code is 1 when anything is reported, so a pre-commit hook can use it.
 
@@ -45,7 +47,7 @@ SKIP_DIRS = {".git", "_archive", "node_modules", ".obsidian", ".vscode", ".claud
 # Live files that are scaffolding, not notes.
 NON_NOTE_NAMES = {
     "INDEX.md", "README.md", "PRACTICE.md", "PHASES.md",
-    "CURRENCY.md", "AGENTS.md", "REVIEW.md",
+    "CURRENCY.md", "AGENTS.md", "REVIEW.md", "RECALL.md",
 }
 
 # Interview/ links out deliberately and never expects a return link.
@@ -385,6 +387,32 @@ def line_of(note: Note, needle: str) -> int:
         if needle in l:
             return i + 1
     return 0
+
+
+# ─────────────────────────────────────────────────────── the user's layer ──
+#
+# `## My recall` and `## My code` are the user's words, not Claude's. They sit
+# above the reference body as its first sections, so the caps that govern the
+# body never count them. NOTES-SYSTEM.md, "The recall layer".
+
+OWN_SECTIONS = ("My recall", "My code")
+RECALL_MAX = 7
+HTML_COMMENT_RE = re.compile(r"<!--.*?-->", re.S)
+
+
+def own_lines(note: Note) -> set[int]:
+    """Line indices inside the user's own sections, headings included."""
+    out: set[int] = set()
+    for name in OWN_SECTIONS:
+        if name in note.sections:
+            out.update(range(*note.sections[name]))
+    return out
+
+
+def recall_lines(note: Note) -> list[str]:
+    """The written lines of ## My recall. The template's guidance comment is not one."""
+    text = HTML_COMMENT_RE.sub("", note.section_text("My recall"))
+    return [l.rstrip() for l in text.splitlines() if l.strip()]
 
 
 # ──────────────────────────────────────────────────────────────── rules ──
@@ -862,12 +890,14 @@ def r_readme_counts(notes, findings):
 
 @rule("format-length")
 def r_length(notes, findings):
-    """50 lines max for light notes, counted to ## Related. The footer is exempt."""
+    """50 lines max for light notes, counted to ## Related. The footer and the user's own sections are exempt."""
     for path, note in notes.items():
         cap = 50 if note.kind == "light" else 80
         end = note.sections.get("Related", (len(note.lines), 0))[0]
         # Frontmatter is metadata, not body — it never counts towards the cap.
-        body = max(0, end - note.body_start)
+        # Neither does the user's own layer: the cap governs the reference body.
+        own = sum(1 for i in own_lines(note) if note.body_start <= i < end)
+        body = max(0, end - note.body_start - own)
         if body > cap:
             findings.append(Finding(
                 "format-length", note.rel, end or len(note.lines),
@@ -883,13 +913,17 @@ def r_blocks(notes, findings):
         # SF_core notes predate them and are not held to them.
         if note.kind != "light":
             continue
-        tables = len(re.findall(r"^\|[-: |]+\|\s*$", note.text, re.M))
+        # The user's own code is theirs at whatever length they ran it.
+        own = own_lines(note)
+        tables = sum(1 for i, l in enumerate(note.lines)
+                     if i not in own and SEPARATOR_RE.match(l))
         if tables > 1:
             findings.append(Finding(
                 "format-blocks", note.rel, 0,
                 f"{tables} tables — the template allows one",
             ))
-        fences = [i for i, l in enumerate(note.lines) if l.startswith("```")]
+        fences = [i for i, l in enumerate(note.lines)
+                  if i not in own and l.startswith("```")]
         if len(fences) // 2 > 1:
             findings.append(Finding(
                 "format-blocks", note.rel, fences[2] + 1,
@@ -921,6 +955,44 @@ def r_section_order(notes, findings):
                     f"## {n2} appears after ## {n1} — expected order is {' -> '.join(order)}",
                 ))
                 break
+
+
+@rule("recall-layer")
+def r_recall(notes, findings):
+    """## My recall then ## My code come first; recall is at most 7 lines, no links, tables or code."""
+    for path, note in notes.items():
+        expected = [n for n in OWN_SECTIONS if n in note.sections]
+        if not expected:
+            continue
+        heads = [n for _, n in sorted((a, n) for n, (a, _) in note.sections.items())]
+        if heads[:len(expected)] != expected:
+            findings.append(Finding(
+                "recall-layer", note.rel, note.section_line(expected[0]),
+                f"{' and '.join('## ' + n for n in expected)} must be the first "
+                f"section(s), in that order — they are the top layer",
+            ))
+        if "My recall" not in note.sections:
+            continue
+        start = note.section_line("My recall")
+        lines = recall_lines(note)
+        if len(lines) > RECALL_MAX:
+            findings.append(Finding(
+                "recall-layer", note.rel, start,
+                f"{len(lines)} recall lines, cap is {RECALL_MAX} — power words, not a summary",
+            ))
+        for off, line in enumerate(note.lines[start:note.sections["My recall"][1]], start + 1):
+            if LINK_RE.search(line) or WIKILINK_RE.search(line):
+                # RECALL.md sits in another folder, so a relative link would
+                # break there; links belong in ## Related anyway.
+                findings.append(Finding(
+                    "recall-layer", note.rel, off,
+                    "link in ## My recall — keep it to words; links go in ## Related",
+                ))
+            elif line.startswith("```") or SEPARATOR_RE.match(line):
+                findings.append(Finding(
+                    "recall-layer", note.rel, off,
+                    "table or code in ## My recall — code goes in ## My code",
+                ))
 
 
 @rule("sources")
@@ -1452,20 +1524,9 @@ def fix_readme_counts(notes, changes):
 # cannot go stale the way the hand-maintained REVIEW.md did -- that file sat at
 # "Sessions logged: 0" with 18 empty rows, in the one folder the rules forbid
 # linking to.
-
-
-def queue_rows(vault: str) -> list[tuple[str, str, str, str]]:
-    """(lab id, topic cell, time box, needs) from a vault's PRACTICE queue."""
-    pfile = os.path.join(ROOT, vault, "PRACTICE.md")
-    if not os.path.exists(pfile):
-        return []
-    practice = load_note(pfile)
-    rows = []
-    for line in practice.lines:
-        cells = split_row(line) if line.strip().startswith("|") else []
-        if len(cells) >= 6 and re.fullmatch(r"\d+", cells[0]):
-            rows.append((cells[1], cells[2], cells[3], cells[5]))
-    return rows
+#
+# Its top used to be the first unblocked lab in a 189-lab queue. That was a wall,
+# and none got done. It now shows the same session `today` writes: one topic.
 
 
 def cmd_home() -> int:
@@ -1486,31 +1547,31 @@ def cmd_home() -> int:
         "Everything below is counted from the notes, so it cannot drift.", "",
     ]
 
-    # --- one lab, not a list -------------------------------------------
-    out += ["## ▶ Do this next", ""]
-    picked = None
-    for vault in NOTE_VAULTS:
-        for lab, topic, box, needs in queue_rows(vault):
-            if lab not in ticked and needs.strip() in ("—", "-", ""):
-                picked = (vault, lab, topic, box)
-                break
-        if picked:
-            break
-    if picked:
-        vault, lab, topic, box = picked
-        # The PRACTICE row's link is relative to its own vault; HOME.md is at
-        # the root, so it has to be re-anchored.
-        topic = MD_LINK_RE.sub(
-            lambda m: f"[{m.group(1)}]({vault}/{m.group(2)})", topic, count=1,
-        )
-        out += [
-            f"**{lab}** · {box} · {topic}", "",
-            f"First unblocked lab in [{vault}/PRACTICE.md]({vault}/PRACTICE.md). "
-            f"Tick it in its note when done — that is the whole record.", "",
-        ]
+    # --- one session, not a list ----------------------------------------
+    # The same pick `npm run today` writes into the journal: one area, one
+    # topic, the reviews that are due and one drill.
+    recall = write_recall_sheets(notes)
+    s = plan_session(notes, TODAY)
+    jrel = f"journal/{TODAY}.md"
+    jpath = os.path.join(ROOT, jrel)
+    out += ["## ▶ Today", ""]
+    if os.path.exists(jpath) and not session_marker_at(jpath):
+        out += [f"Your session is in [{jrel}]({jrel}). Tick each line as you do it.", ""]
     else:
-        out += ["Every queued lab is ticked or blocked. ", ""]
-    out += [f"*{len(ticked)} of {total_labs} labs done.*", ""]
+        out += [f"Run `npm run today`. It writes this session into `{jrel}`, "
+                f"with room to blurt before you open the note.", ""]
+    if s.topic:
+        out.append(f"- **{s.area}** · [{note_title(s.topic)}]({s.topic.rel}) — {s.why}")
+    out += [
+        f"- **Review:** {len(s.reviews)} due" + (
+            " — " + ", ".join(f"[{note_title(n)}]({n.rel})" for n in s.reviews)
+            if s.reviews else ""),
+        f"- **Drill:** {DRILL_NAMES[s.drill]}", "",
+    ]
+    mine = sum(m for m, _ in recall.values())
+    total = sum(t for _, t in recall.values())
+    out += [f"*In your words: {mine} of {total} notes. Each vault's `RECALL.md` "
+            f"collects them — linked in the table at the bottom.*", ""]
 
     # --- review ---------------------------------------------------------
     levels = defaultdict(lambda: defaultdict(int))
@@ -1585,7 +1646,7 @@ def cmd_home() -> int:
 
     out += [
         "## The vault", "",
-        f"| Vault | Notes | Cards | Labs |", "|---|---|---|---|",
+        f"| Vault | Notes | In my words | Cards | Labs |", "|---|---|---|---|---|",
     ]
     for vault in NOTE_VAULTS:
         vn = [n for n in notes.values() if n.vault == vault]
@@ -1594,7 +1655,8 @@ def cmd_home() -> int:
               if any(n.vault == vault for n, _, _ in places)]
         # SF_core indexes per area, so its front door is README.md.
         door = "README.md" if vault == "SF_core" else "INDEX.md"
-        out.append(f"| [{vault}/]({vault}/{door}) | {len(vn)} | {len(vc)} | {len(vl)} |")
+        out.append(f"| [{vault}/]({vault}/{door}) | {len(vn)} "
+                   f"| [{recall[vault][0]}]({vault}/RECALL.md) | {len(vc)} | {len(vl)} |")
     out += ["", f"*Rebuilt {TODAY}.*", ""]
 
     path = os.path.join(ROOT, "HOME.md")
@@ -1603,6 +1665,395 @@ def cmd_home() -> int:
         fh.write(nl.join(out) + nl)
     print(f"wrote HOME.md — {len(ticked)}/{total_labs} labs, {len(bank)} flashcards, "
           f"{sum(c for c, _ in gapped)} open gaps, {sum(c for c, _ in orgs)} org checks")
+    print(f"wrote {len(recall)} RECALL.md sheets — {mine} of {total} notes in your words")
+    return 0
+
+
+# ──────────────────────────────────────────────────── recall and today ──
+#
+# RECALL.md is the summary page: every note's ## My recall, in read order, one
+# file per vault. `today` picks one session from the notes and the journal and
+# writes it into journal/YYYY-MM-DD.md. Both are derived, so neither can drift.
+
+VAULT_TITLE = {
+    "SF_core": "Core platform", "SF_Agentforce": "Agentforce", "SF_Data_360": "Data 360",
+    "SF_Experience_Cloud": "Experience Cloud", "SF_Service": "Service Cloud",
+    "SF_Sales": "Sales Cloud",
+}
+
+# The interview areas `today` rotates through, one a day:
+# (name, note path prefixes, interview file prefixes). Experience Cloud,
+# Service and Sales are out of the rotation; add a row to bring one in.
+STUDY_AREAS = (
+    ("Core dev",
+     ("SF_core/01-", "SF_core/02-", "SF_core/03-", "SF_core/04-", "SF_core/10-"),
+     ("Interview/03-core-platform/01-", "Interview/03-core-platform/03-")),
+    ("Architect",
+     ("SF_core/06-", "SF_core/07-", "SF_core/08-", "SF_core/09-"),
+     ("Interview/03-core-platform/02-", "Interview/04-cross-domain/")),
+    ("Agentforce", ("SF_Agentforce/",), ("Interview/01-agentforce/",)),
+    ("Data 360", ("SF_Data_360/",), ("Interview/02-data-360/",)),
+)
+
+# Days until a studied topic comes back, by how many times it has been ticked.
+REVIEW_DAYS = (3, 7, 16, 35, 75)
+REVIEWS_PER_DAY = 3
+
+# Monday is 0. Scenarios and code alternate; Friday is a story; the weekend
+# reads a recall sheet with the answers covered.
+DRILL_BY_WEEKDAY = ("scenario", "code", "scenario", "code", "story", "sheet", "sheet")
+DRILL_NAMES = {
+    "scenario": "one scenario question, out loud",
+    "code": "the topic's code, from a blank file",
+    "story": "one project story, out loud",
+    "sheet": "one recall sheet, answers covered",
+}
+
+JOURNAL = os.path.join(ROOT, "journal")
+DAILY_TEMPLATE = os.path.join(ROOT, "templates", "daily.md")
+STORIES = os.path.join(ROOT, "Interview", "my-stories.md")
+TICKED_RE = re.compile(r"^\s*-\s\[[xX]\]\s(.*)$")
+QUESTION_RE = re.compile(r"^###\s+(Q\d+)\s*·\s*(.+?)\s*$")
+STORY_FIELD_RE = re.compile(r"^-\s\*\*[^*]+:\*\*\s*(.*)$")
+
+
+def write_generated(path: str, out: list[str]) -> None:
+    """Write a generated file with LF endings, as .gitattributes stores them."""
+    with open(path, "w", encoding="utf-8", newline="") as fh:
+        fh.write("\n".join(out) + "\n")
+
+
+def note_title(note: Note) -> str:
+    for line in note.lines[note.body_start:]:
+        if line.startswith("# "):
+            return line[2:].strip()
+    return os.path.splitext(os.path.basename(note.rel))[0]
+
+
+def read_order(notes) -> list[Note]:
+    """Every note in INDEX order: vault by vault, SF_core area by area. Unlisted notes last."""
+    def key(p: str) -> tuple[int, str]:
+        r = rel_of(p)
+        return NOTE_VAULTS.index(r.split("/")[0]), r
+
+    seen: set[str] = set()
+    out: list[Note] = []
+    for idx in sorted(index_files(), key=key):
+        folder = os.path.dirname(idx)
+        headers, rows = parse_table(load_note(idx).lines, 0)
+        if "Topic" not in headers:
+            continue
+        col = headers.index("Topic")
+        for _, cells in rows:
+            m = MD_LINK_RE.search(cells[col]) if len(cells) > col else None
+            p = os.path.normpath(os.path.join(folder, m.group(2))) if m else None
+            if p in notes and p not in seen:
+                seen.add(p)
+                out.append(notes[p])
+    out += sorted((n for p, n in notes.items() if p not in seen), key=lambda n: n.rel)
+    return out
+
+
+def write_recall_sheets(notes) -> dict[str, tuple[int, int]]:
+    """Write <vault>/RECALL.md for every vault. Returns vault -> (in your words, notes)."""
+    order = read_order(notes)
+    counts: dict[str, tuple[int, int]] = {}
+    for vault in NOTE_VAULTS:
+        vnotes = [n for n in order if n.vault == vault]
+        mine = [n for n in vnotes if recall_lines(n)]
+        out = [
+            "---", f"vault: {vault}", "format: recall", "---",
+            f"# {VAULT_TITLE[vault]} — in my words", "",
+            "**Generated from every note's `## My recall` by `npm run vault:home`. "
+            "Edit the note, never this file.**",
+            "Cover everything after the dash, say it out loud, then check.", "",
+        ]
+        area = None
+        for n in mine:
+            if vault == "SF_core":
+                folder = n.rel.split("/")[1]
+                if folder != area:
+                    area = folder
+                    num, _, name = folder.partition("-")
+                    out += [f"## {num} · {name.replace('-', ' ').capitalize()}", ""]
+            heading = "###" if vault == "SF_core" else "##"
+            out += [f"{heading} [{note_title(n)}]({n.rel[len(vault) + 1:]})", ""]
+            out += recall_lines(n) + [""]
+        if not mine:
+            out += ["*Nothing here yet.* A note appears once you write its `## My recall`. "
+                    "`npm run today` brings up one topic a day.", ""]
+        out += ["---", "", f"*In your words: {len(mine)} of {len(vnotes)} notes.*"]
+        write_generated(os.path.join(ROOT, vault, "RECALL.md"), out)
+        counts[vault] = (len(mine), len(vnotes))
+    return counts
+
+
+def journal_record(before: date) -> tuple[dict[str, set[date]], str]:
+    """What the journal says was done: note rel -> dates its link was ticked, plus all ticked text.
+
+    Only ticked lines count — an unticked pick is a day skipped, and it comes
+    back. Files dated `before` or later are ignored, so the pick holds all day.
+    """
+    studied: dict[str, set[date]] = defaultdict(set)
+    text: list[str] = []
+    if not os.path.isdir(JOURNAL):
+        return studied, ""
+    for name in sorted(os.listdir(JOURNAL)):
+        d = parse_date(name)
+        if not name.endswith(".md") or not d or d >= before:
+            continue
+        with open(os.path.join(JOURNAL, name), encoding="utf-8") as fh:
+            for line in fh:
+                m = TICKED_RE.match(line)
+                if not m:
+                    continue
+                text.append(m.group(1))
+                for _, target in MD_LINK_RE.findall(m.group(1)):
+                    studied[rel_of(os.path.normpath(os.path.join(JOURNAL, target)))].add(d)
+    return studied, "\n".join(text)
+
+
+def interview_questions() -> list[tuple[str, str, str, set[str]]]:
+    """(file rel, Qn, title, note rels it probes) for every scenario in Interview/."""
+    out = []
+    for p in walk_md(("Interview/",)):
+        name = os.path.basename(p)
+        if name in NON_NOTE_NAMES or name.startswith("_"):
+            continue
+        with open(p, encoding="utf-8") as fh:
+            lines = fh.read().splitlines()
+        for i, line in enumerate(lines):
+            m = QUESTION_RE.match(line)
+            if not m:
+                continue
+            probes: set[str] = set()
+            for nxt in lines[i + 1:i + 6]:
+                if "Probes:" in nxt:
+                    probes = {
+                        rel_of(os.path.normpath(os.path.join(os.path.dirname(p), t)))
+                        for _, t in MD_LINK_RE.findall(nxt)
+                    }
+                    break
+            out.append((rel_of(p), m.group(1), m.group(2), probes))
+    return out
+
+
+def weak_answer_notes() -> list[tuple[date, str]]:
+    """(date logged, note rel) for every open WEAK-ANSWERS row that names a note to re-study."""
+    path = os.path.join(ROOT, "Interview", "WEAK-ANSWERS.md")
+    if not os.path.exists(path):
+        return []
+    lines = load_note(path).lines
+    start = next((i for i, l in enumerate(lines) if l.startswith("## Open")), None)
+    if start is None:
+        return []
+    headers, rows = parse_table(lines, start)
+    if "Re-study" not in headers:
+        return []
+    out = []
+    for _, cells in rows:
+        d = parse_date(cells[0]) if cells else None
+        if not d or len(cells) <= headers.index("Re-study"):
+            continue
+        for _, t in MD_LINK_RE.findall(cells[headers.index("Re-study")]):
+            rel = rel_of(os.path.normpath(os.path.join(ROOT, "Interview", t)))
+            if rel.startswith(NOTE_VAULTS):
+                out.append((d, rel))
+    return out
+
+
+def story_slots() -> list[tuple[str, bool]]:
+    """(heading, filled?) for each story in Interview/my-stories.md."""
+    if not os.path.exists(STORIES):
+        return []
+    note = load_note(STORIES)
+    out = []
+    for name, (a, b) in sorted(note.sections.items(), key=lambda kv: kv[1][0]):
+        fields = [STORY_FIELD_RE.match(l) for l in note.lines[a + 1:b]]
+        if any(fields):
+            out.append((name, any(m and m.group(1).strip() for m in fields)))
+    return out
+
+
+@dataclass
+class Session:
+    day: date
+    area: str
+    area_vault: str
+    topic: Note | None
+    why: str
+    reviews: list[Note]
+    drill: str
+    question: tuple[str, str, str, set[str]] | None
+    lab: str | None
+    story: str | None
+
+
+def plan_session(notes, day: date) -> Session:
+    """One area, one topic, the due reviews and one drill — derived, never stored."""
+    studied, ticked_text = journal_record(day)
+    order = read_order(notes)
+
+    # Reviews: notes in your words whose next spaced date has come, most overdue first.
+    due = []
+    for n in order:
+        dates = studied.get(n.rel)
+        if not dates or not recall_lines(n):
+            continue
+        wait = REVIEW_DAYS[min(len(dates), len(REVIEW_DAYS)) - 1]
+        over = (day - max(dates)).days - wait
+        if over >= 0:
+            due.append((-over, n.rel, n))
+    reviews = [n for *_, n in sorted(due)][:REVIEWS_PER_DAY]
+    skip = {n.rel for n in reviews}
+
+    area, prefixes, q_prefixes = STUDY_AREAS[day.toordinal() % len(STUDY_AREAS)]
+    in_area = [n for n in order if n.rel.startswith(prefixes) and n.rel not in skip]
+    by_rel = {n.rel: n for n in in_area}
+    questions = interview_questions()
+    asked = {r for *_, probes in questions for r in probes}
+    carded = {p for c in load_bank() for _, p in c.sources}
+
+    topic, why = None, ""
+    for logged, rel in weak_answer_notes():
+        if rel in by_rel and not any(d >= logged for d in studied.get(rel, ())):
+            topic, why = by_rel[rel], "it is in your weak answers"
+            break
+    # New topics first, the ones an interview question probes ahead of the rest.
+    fresh = [n for n in in_area if n.rel not in studied]
+    for pool, reason in ((asked, "an interview question probes it"),
+                         (carded, "a flashcard leans on it")):
+        if not topic:
+            topic = next((n for n in fresh if n.rel in pool), None)
+            why = reason
+    if not topic and fresh:
+        topic, why = fresh[0], "next in read order"
+    if not topic and in_area:
+        topic = min(in_area, key=lambda n: max(studied[n.rel]))
+        why = "studied longest ago"
+
+    drill = DRILL_BY_WEEKDAY[day.weekday()]
+    if drill == "code" and not (topic and "```" in topic.text):
+        drill = "scenario"  # nothing to write from blank; say it instead
+    unused = [q for q in questions if f"{q[1]} · {q[2]}" not in ticked_text]
+    question = None
+    if topic:
+        question = next((q for q in unused if topic.rel in q[3]), None)
+    if not question:
+        question = next((q for q in unused if q[0].startswith(q_prefixes)), None)
+
+    lab = None
+    if topic and "Hands-on" in topic.sections:
+        for line in topic.lines[slice(*topic.sections["Hands-on"])]:
+            m = LAB_RE.match(line)
+            if m and m.group(1) == " ":
+                lab = f"**{m.group('id')}** · {m.group('box')} min ·{m.group('rest')}"
+                break
+
+    slots = story_slots()
+    empty = [h for h, filled in slots if not filled]
+    story = empty[0] if empty else (slots[day.toordinal() % len(slots)][0] if slots else None)
+
+    return Session(day, area, prefixes[0].split("/")[0], topic, why, reviews,
+                   drill, question, lab, story)
+
+
+def render_session(s: Session) -> list[str]:
+    """The session block that replaces the template's `<!-- today` line."""
+    def link(n: Note) -> str:
+        return f"[{note_title(n)}](../{n.rel})"
+
+    out = [
+        f"**{s.area} day.** Tick each line when it is done. A ticked line is the "
+        f"whole record: `npm run today` reads the ticks to decide what comes back, and when.",
+        "",
+        "## Cards · 10 min", "",
+        "- [ ] Review the cards due in Anki (`npm run cards:sync` first). "
+        "Missed one? Rewrite its answer in your own words, and keep its id.",
+        "",
+        "## Review · 5 min", "",
+    ]
+    if s.reviews:
+        out += ["Read only the cues. Say the rest, then check the note.", ""]
+        out += [f"- [ ] {link(n)}" for n in s.reviews]
+    else:
+        out += ["*Nothing due.* A topic comes back 3, 7, 16, 35 and 75 days after you "
+                "tick it, once it has a `## My recall`."]
+    out += ["", "## Topic · 20 min", ""]
+    if s.topic:
+        out += [f"- [ ] {link(s.topic)} — picked because {s.why}.", "",
+                "1. **Blurt** everything you remember below, before you open the note.",
+                "2. Open the note. Under **Missed**, write what it had that you did not.",
+                "3. Write or fix the note's `## My recall`: 3–7 lines of "
+                "`**cue** — power words`, in your words only."]
+        if "From my notes" in s.topic.text:
+            out.append("4. Your old wording is in its `From my notes` callout. Start from that.")
+    else:
+        out.append("*No topic left in this area.*")
+    out += ["", "### Blurt", "", "- ", "", "### Missed", "", "- ", "",
+            "## Drill · 10 min", ""]
+
+    if s.drill == "scenario" and s.question:
+        rel, qid, title, _ = s.question
+        source = note_title(load_note(os.path.join(ROOT, rel)))
+        out.append(f"- [ ] **Scenario** · {qid} · {title} — [{source}](../{rel}). "
+                   f"Answer out loud before you open the model answer, then score it on the rubric.")
+    elif s.drill == "scenario" and s.topic:
+        out.append(f"- [ ] **Scenario** · Explain {link(s.topic)} out loud in two minutes, "
+                   f"as if an interviewer asked. Then check the note.")
+    elif s.drill == "code" and s.topic:
+        out.append(f"- [ ] **Code from blank** · In an empty file, write the smallest working "
+                   f"example of {link(s.topic)} from memory. Compare it with the note, and keep "
+                   f"the version you ran in its `## My code`.")
+        if s.lab:
+            out.append(f"- [ ] *With an org:* {s.lab}")
+    elif s.drill == "story" and s.story:
+        out.append(f"- [ ] **Story** · {s.story} — fill it in "
+                   f"[my-stories.md](../Interview/my-stories.md), then say it out loud in "
+                   f"under two minutes.")
+    else:
+        out += [f"- [ ] **Recall sheet** · Open [{VAULT_TITLE[s.area_vault]} — in my words]"
+                f"(../{s.area_vault}/RECALL.md). Cover everything after the dash and say it.",
+                "- [ ] **Cards** · Rewrite the answer of every card you missed this week."]
+    out += ["", "Said something wrong, thin or slow? Log it under **Weak answers** and as a "
+            "row in [WEAK-ANSWERS.md](../Interview/WEAK-ANSWERS.md). That row brings the "
+            "topic back."]
+    return out
+
+
+def session_marker_at(path: str) -> int | None:
+    """Index of the template's `<!-- today` line, or None once the session is written."""
+    with open(path, encoding="utf-8") as fh:
+        lines = fh.read().splitlines()
+    return next((i for i, l in enumerate(lines) if l.startswith("<!-- today")), None)
+
+
+def cmd_today(day: date, dry_run: bool) -> int:
+    notes = load_all_notes()
+    s = plan_session(notes, day)
+    block = render_session(s)
+    if dry_run:
+        print("\n".join(block))
+        return 0
+
+    rel = f"journal/{day}.md"
+    path = os.path.join(ROOT, rel)
+    # Obsidian's Daily Notes may have created the file from the template
+    # already; the session goes where its `<!-- today` line is, either way.
+    source = path if os.path.exists(path) else DAILY_TEMPLATE
+    with open(source, encoding="utf-8") as fh:
+        lines = fh.read().replace("{{date:YYYY-MM-DD}}", str(day)).splitlines()
+    at = next((i for i, l in enumerate(lines) if l.startswith("<!-- today")), None)
+    if at is None:
+        print(f"{rel} already has today's session — open it.")
+    else:
+        os.makedirs(JOURNAL, exist_ok=True)
+        write_generated(path, lines[:at] + block + lines[at + 1:])
+        print(f"wrote {rel} — {s.area}: "
+              f"{note_title(s.topic) if s.topic else 'no topic'}, "
+              f"{len(s.reviews)} review(s), drill: {DRILL_NAMES[s.drill]}")
+    if day == TODAY:
+        cmd_home()
     return 0
 
 
@@ -1797,7 +2248,12 @@ def main() -> int:
                     help="only fixers whose name starts with this (repeatable)")
     fx.add_argument("--list-rules", action="store_true")
 
-    sub.add_parser("home", help="regenerate HOME.md, the what-to-study-next page")
+    sub.add_parser("home", help="regenerate HOME.md and every vault's RECALL.md")
+
+    td = sub.add_parser("today", help="write today's study session into journal/YYYY-MM-DD.md")
+    td.add_argument("--date", type=date.fromisoformat, default=TODAY,
+                    help="plan for another day (YYYY-MM-DD) — for trying the picker")
+    td.add_argument("--dry-run", action="store_true", help="print the session, write nothing")
 
     mg = sub.add_parser("migrate", help="one-shot: blockquote metadata -> frontmatter")
     mg.add_argument("--only", action="append", default=[],
@@ -1809,6 +2265,9 @@ def main() -> int:
 
     if args.cmd == "home":
         return cmd_home()
+
+    if args.cmd == "today":
+        return cmd_today(args.date, args.dry_run)
 
     if getattr(args, "list_rules", False):
         table = FIXERS if args.cmd == "fix" else RULES

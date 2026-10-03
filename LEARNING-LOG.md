@@ -23,6 +23,22 @@ Newest first.
 
 ---
 
+### 2026-10-02 · Your words on top: the recall layer, RECALL sheets and `npm run today`
+
+**No notes fed — a structural change.** You said you barely learn from this vault: it isn't in your words, you never open it, and you can't find things. The fix gives back what made your Notion notes stick: you write, you recall, and you fix what goes stale. The research is in the [NOTES-SYSTEM.md](NOTES-SYSTEM.md) decisions log.
+
+- **Contract** → [NOTES-SYSTEM.md](NOTES-SYSTEM.md) § 2a and 2b · `updated`
+  - Every note can carry `## My recall` (3–7 lines, `**cue** — power words`, your words) and `## My code` as its first sections. Claude tightens them but never adds to them; a wrong line gets 🚩 and you fix it.
+- **Tooling** → `scripts/vault.py` · `updated`
+  - New `recall-layer` rule. Your own sections are exempt from the line and code-block caps.
+  - `home` now also writes a `RECALL.md` per vault.
+  - New `today` command (`npm run today`) writes the day's session into `journal/`: cards, due reviews, one topic, one drill.
+- **Story bank** → [Interview/my-stories.md](Interview/my-stories.md) · `new` · seven empty STAR slots, yours to write.
+
+**Also touched:** [templates/note.md](templates/note.md) and [templates/daily.md](templates/daily.md) · the root and five vault `AGENTS.md` files · the `study-notes` skill (your notes now land in `## My recall`, not a callout) · [Flashcards/README.md](Flashcards/README.md) (a miss means a rewrite, same id) · [Interview/README.md](Interview/README.md) · `package.json`.
+
+---
+
 ### 2026-10-02 · Core › Apex & Triggers: 32 interview cards and an 84-card terminology deck
 
 **No notes fed — cards on your request.** Every card is grounded in the 34 notes in [SF_core/02-apex-and-triggers/](SF_core/02-apex-and-triggers/INDEX.md), read in full before writing. Hard cards condense the [Apex](Interview/03-core-platform/01-apex-triggers-and-limits.md) and [async](Interview/03-core-platform/03-integration-and-async.md) interview sets where they overlap.

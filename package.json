@@ -12,6 +12,7 @@
     "vault:check": "node scripts/py.js scripts/vault.py check",
     "vault:fix": "node scripts/py.js scripts/vault.py fix",
     "vault:home": "node scripts/py.js scripts/vault.py home",
+    "today": "node scripts/py.js scripts/vault.py today",
     "check": "node scripts/py.js scripts/vault.py check --quiet && node scripts/py.js scripts/flashcards.py check"
   }
 }

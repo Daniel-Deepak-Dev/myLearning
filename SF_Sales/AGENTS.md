@@ -44,7 +44,7 @@ Template: [../templates/note.md](../templates/note.md).
 - **`## History`** takes one dated line per feed, saying what was added or changed — never a gap tally.
 - **`Level` sets the gap ceiling.** Gaps may go one level up, never two. A `basic` note never gets a `deep` gap.
 - **Gaps stay on this topic.** Never a syllabus. Never another subject.
-- **Keep the user's own wording** in a `> **From my notes.**` callout. Correct it inline if it is wrong.
+- **The user's words go in `## My recall`**, the first section, tightened but never added to. A wrong line keeps its wording and gets `🚩 <why>` for them to fix. Older notes keep their `> **From my notes.**` callouts. See [NOTES-SYSTEM.md](../NOTES-SYSTEM.md) § 2a.
 - **A link that crosses vaults gets a link back**, added in the same edit — that means links into `SF_core/`, `SF_Agentforce/`, `SF_Experience_Cloud/` and `SF_Service/`. Same-vault links rely on Obsidian's Backlinks panel.
 - **Unsure of a fact? Mark it 🚩.** There is no Sales Cloud radar file. For release-dependent facts, check [../SF_core/CURRENCY.md](../SF_core/CURRENCY.md) and [../RELEASE-RADAR/pricing-and-certification.md](../RELEASE-RADAR/pricing-and-certification.md) first. Never draft release facts from recall.
 

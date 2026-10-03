@@ -101,6 +101,7 @@ Rename them once in the desktop Browser (sidebar → Flags → right-click → R
 - **Press Again, not Hard, when you forgot.** FSRS reads Hard as "remembered with effort", so pressing it after a miss makes your intervals far too long.
 - **Answer Hard cards out loud** before you flip. On AnkiDroid, the whiteboard is good for sketching an architecture before revealing the answer.
 - **Never edit cards in Anki.** The next sync overwrites the edit. Flag it orange and fix it in the bank.
+- **A miss means a rewrite.** The first time you press Again on a card, rewrite its answer in your own power words, in the bank, then sync. Keep the `<!--id:…-->` exactly as it is, so Anki keeps the card's history. Claude wrote these answers, and a card you have reworded is one you will remember.
 
 ## Using it in Obsidian
 
@@ -143,6 +144,7 @@ Source: [Note title](../../SF_core/<area>/<note>.md)
 
 1. **Ground every card in a live note.** Never from recall, never from `_archive/`. If the note doesn't support it, fix the note first.
 2. **Short answers.** If an answer needs a paragraph, the reasoning belongs in the note.
+   An answer you rewrote after a miss is yours. Claude does not rewrite it back.
 3. **A Hard card needs a trap.** If there is no plausible wrong answer, it is a Foundations card.
 4. **Currency:** say **Data 360**, not Data Cloud; agents are authored in **Agent Script**.
 

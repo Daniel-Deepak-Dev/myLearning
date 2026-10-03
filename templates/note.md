@@ -14,6 +14,16 @@ tags: []
 
 **Reach for it when:** <the situation where you would use it>
 
+## My recall
+
+<!-- Yours. 3–7 lines of `- **cue** — power words`, in your own words. No links.
+     Claude may tighten and reorder these, never add words of its own.
+     Every vault's RECALL.md collects this section. -->
+
+## My code
+
+<!-- Optional. Code you wrote and ran, with your own comments. Delete if unused. -->
+
 ## Key points
 
 - <one fact per bullet, 5 to 9 bullets, one line each>

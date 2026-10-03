@@ -7,13 +7,15 @@ format: dashboard
 **Generated — `python scripts/vault.py home`. Do not edit by hand.**
 Everything below is counted from the notes, so it cannot drift.
 
-## ▶ Do this next
+## ▶ Today
 
-**SF-PTFLOW-01** · 20 min · [Prompt templates from Flow](SF_core/04-flow-and-automation/28-calling-prompt-templates-from-flow.md)
+Your session is in [journal/2026-10-02.md](journal/2026-10-02.md). Tick each line as you do it.
 
-First unblocked lab in [SF_core/PRACTICE.md](SF_core/PRACTICE.md). Tick it in its note when done — that is the whole record.
+- **Data 360** · [Lab Environment](SF_Data_360/lab-environment.md) — a flashcard leans on it
+- **Review:** 0 due
+- **Drill:** one project story, out loud
 
-*0 of 189 labs done.*
+*In your words: 0 of 288 notes. Each vault's `RECALL.md` collects them — linked in the table at the bottom.*
 
 ## Review
 
@@ -91,14 +93,14 @@ First unblocked lab in [SF_core/PRACTICE.md](SF_core/PRACTICE.md). Tick it in it
 
 ## The vault
 
-| Vault | Notes | Cards | Labs |
-|---|---|---|---|
-| [SF_core/](SF_core/README.md) | 222 | 142 | 15 |
-| [SF_Agentforce/](SF_Agentforce/INDEX.md) | 10 | 0 | 38 |
-| [SF_Data_360/](SF_Data_360/INDEX.md) | 8 | 125 | 25 |
-| [SF_Experience_Cloud/](SF_Experience_Cloud/INDEX.md) | 25 | 0 | 20 |
-| [SF_Service/](SF_Service/INDEX.md) | 13 | 0 | 51 |
-| [SF_Sales/](SF_Sales/INDEX.md) | 10 | 0 | 40 |
+| Vault | Notes | In my words | Cards | Labs |
+|---|---|---|---|---|
+| [SF_core/](SF_core/README.md) | 222 | [0](SF_core/RECALL.md) | 142 | 15 |
+| [SF_Agentforce/](SF_Agentforce/INDEX.md) | 10 | [0](SF_Agentforce/RECALL.md) | 0 | 38 |
+| [SF_Data_360/](SF_Data_360/INDEX.md) | 8 | [0](SF_Data_360/RECALL.md) | 125 | 25 |
+| [SF_Experience_Cloud/](SF_Experience_Cloud/INDEX.md) | 25 | [0](SF_Experience_Cloud/RECALL.md) | 0 | 20 |
+| [SF_Service/](SF_Service/INDEX.md) | 13 | [0](SF_Service/RECALL.md) | 0 | 51 |
+| [SF_Sales/](SF_Sales/INDEX.md) | 10 | [0](SF_Sales/RECALL.md) | 0 | 40 |
 
 *Rebuilt 2026-10-02.*
 

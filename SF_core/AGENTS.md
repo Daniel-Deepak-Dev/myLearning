@@ -7,6 +7,7 @@ Style rules: [../AGENTS.md](../AGENTS.md). Full conventions: [README.md](README.
 - **Existing notes** (the 238 already written) keep the format below. Do not rewrite them wholesale.
 - **New notes** use the light format in [../templates/note.md](../templates/note.md): 50 lines, bullets, `## Gaps to close`. Filenames still take the area's next `NN-` prefix.
 - **A fed topic that already has a note here** → enrich that note in place. Add the cross-link and a `## Gaps to close` section. Never create a second file for the same topic.
+- **Both formats take `## My recall` as the first section**, with `## My code` after it if there is one. The user's words go there, tightened but never added to; a wrong line gets `🚩 <why>` for them to fix. It does not count towards the line cap. See [NOTES-SYSTEM.md](../NOTES-SYSTEM.md) § 2a.
 
 - **Metadata is YAML frontmatter**, read by Obsidian as Properties. `status`, `gaps`, `org_checks` and `labs` are recomputed by `python scripts/vault.py fix`; `vault`, `area`, `format`, `level`, `created`, `currency`, `phase` and `tags` are yours.
 
