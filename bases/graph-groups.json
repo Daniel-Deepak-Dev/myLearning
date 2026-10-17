@@ -58,6 +58,13 @@
       }
     },
     {
+      "query": "path:General/",
+      "color": {
+        "a": 1,
+        "rgb": 5093036
+      }
+    },
+    {
       "query": "tag:#currency-warning",
       "color": {
         "a": 1,

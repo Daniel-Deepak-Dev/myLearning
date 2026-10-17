@@ -1,6 +1,6 @@
 ---
 name: study-notes
-description: Turn rough, out-of-order learning notes into ordered wiki notes — Salesforce across SF_core, SF_Agentforce, SF_Data_360, SF_Experience_Cloud, SF_Service and SF_Sales, and Claude Code into the Claude_Code track. Use whenever the user pastes study notes, says "I learned X today", dumps rough bullets about a Salesforce, Agentforce, Data 360, Service Cloud, Sales Cloud or Claude Code topic (hooks, skills, subagents, MCP, settings…), or asks to file notes into the vault.
+description: Turn rough, out-of-order learning notes into ordered wiki notes — Salesforce across SF_core, SF_Agentforce, SF_Data_360, SF_Experience_Cloud, SF_Service and SF_Sales, Claude Code into the Claude_Code track, and any other subject (money, history, health, languages, general tech…) into General/. Use whenever the user pastes study notes, says "I learned X today", dumps rough bullets about any topic they learned — Salesforce, Agentforce, Data 360, Service Cloud, Sales Cloud, Claude Code (hooks, skills, subagents, MCP, settings…) or anything else — or asks to capture, save or file notes, including "file today's notes", "file my notes" or "map my notes" from the journal.
 allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch, AskUserQuestion
 ---
 
@@ -9,6 +9,15 @@ The user pastes rough notes. You file them.
 Their notes arrive in whatever order they learned things. Your job is to put each piece in the right file, in an order they can learn from later.
 
 Read [NOTES-SYSTEM.md](../../../NOTES-SYSTEM.md) once per session for the full contract. This file is the procedure.
+
+## 0 · Feeding from the journal
+
+The user often learns from a blank page, across two or more topics at once, and writes in the journal's `## Notes` section.
+
+- **"File today's notes"** → read `journal/<today>.md` from `## Notes` to the next `## ` heading. Skip the guidance comment and any `### Filed` block.
+- **"File notes from YYYY-MM-DD"** → read that day's file instead.
+- Treat the text exactly like a paste: steps 1–10 apply unchanged.
+- **Never edit the user's lines in `## Notes`.** The journal is their record. You only add `### Filed` (step 10).
 
 ## 1 · Split
 
@@ -19,6 +28,8 @@ A single sentence can belong to two topics. That is normal. Split it and cross-l
 Do not merge unrelated things into one file just because they arrived together.
 
 **About Claude Code, not Salesforce?** Skip steps 2–9 and follow [Claude_Code/AGENTS.md](../../../Claude_Code/AGENTS.md) instead: its own template, labs, sources and README path table. The Salesforce routing, currency traps, org checks and gap rules don't apply there. The `## My recall` rule does, word for word. Then go to step 10 and report back.
+
+**Not Salesforce and not Claude Code at all?** Skip steps 2–9 and follow [General/AGENTS.md](../../../General/AGENTS.md): one folder per subject, a short researched body, no gaps or labs. The `## My recall` rule applies word for word. Then go to step 10. General tech that Salesforce uses, such as OAuth or REST, goes there only when the notes never name a Salesforce feature.
 
 ## 2 · Route
 
@@ -33,7 +44,7 @@ Ask it once per product: *with no Agentforce in it?* *With no Experience Cloud s
 
 If a topic has both sides — say "a prompt template can call Apex", or "an agent embedded on a public site" — write **both** notes. The product vault says why. The `SF_core` note says how. They link to each other.
 
-Cannot route it? One dated bullet in that folder's `_inbox.md`. Move on. Never stall.
+Salesforce, but you cannot tell which vault? One dated bullet in that folder's `_inbox.md`. Move on. Never stall. (Not Salesforce at all → `General/`, per step 1.)
 
 ## 3 · Check before you write
 
@@ -102,6 +113,12 @@ This is the part the user cares about most. Get the scope right.
 A `basic` prompt-template note gets gaps like *"can Sales Email ground on Lead as well as Contact?"*
 
 It does **not** get `@InvocableMethod`. That is `deep`, two levels up. Hold it back until the note's level rises.
+
+A dense note with no `level` key, such as `SF_core/02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md`, takes the level of the feed itself.
+
+> **Most important first. Five at most per feed.**
+
+Within the ceiling, order gaps by what hurts first if missed. First come a required signature or setting, a limit, the security or sharing mode, a licence, and the supported objects. Edge cases come last. Add at most five new gaps to one note in one feed. The rest wait for the next feed.
 
 Also:
 
@@ -202,7 +219,23 @@ Two live currency traps to watch for in the user's notes:
 
 If their note contradicts one of these, keep their line in `## My recall` and append `🚩 <why>`, naming the current term. Do not silently drop or rewrite what they wrote.
 
-## 10 · Report back
+## 10 · Write `### Filed`, then report back
+
+**First, record the feed in the journal.** Do this whether the notes came from `## Notes` or were pasted in chat, as long as that day's `journal/YYYY-MM-DD.md` exists. At the end of its `## Notes` section, write:
+
+```markdown
+### Filed
+
+- [x] [Invocable Apex & Agentforce actions](../SF_core/02-apex-and-triggers/22-invocable-apex-and-agentforce-actions.md) — updated · 3 gaps added
+- [x] [Custom agent actions](../SF_Agentforce/custom-agent-actions.md) — created · 5 gaps added
+```
+
+- **One ticked line per note created or updated.** The tick is the study record: `npm run today` starts that note's spaced reviews from it. Without it, a fed vault note is never reviewed.
+- **Gaps are counted here, never copied.** The checkboxes live only in the note. One note owns each gap.
+- **Filing twice is safe.** Add lines only for notes not listed yet, and refresh the gap count on lines that are.
+- **Something sent to `_inbox.md`** gets a plain, unticked `- inbox: <what>` line.
+
+Then report back.
 
 Short. Bullets. No paragraphs.
 

@@ -9,9 +9,9 @@ Everything below is counted from the notes, so it cannot drift.
 
 ## ▶ Today
 
-Run `npm run today`. It writes this session into `journal/2026-10-03.md`, with room to blurt before you open the note.
+Your session is in [journal/2026-10-17.md](journal/2026-10-17.md). Tick each line as you do it.
 
-- **Core dev** · [Order of Execution — Declarative View](SF_core/01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md) — an interview question probes it
+- **Agentforce** · [Prompt Builder & Prompt Templates](SF_Agentforce/prompt-builder-and-prompt-templates.md) — next in read order
 - **Review:** 0 due
 - **Drill:** one recall sheet, answers covered
 - **Claude Code** · learn next: Instructions & memory
@@ -102,6 +102,7 @@ Run `npm run today`. It writes this session into `journal/2026-10-03.md`, with r
 | [SF_Experience_Cloud/](SF_Experience_Cloud/INDEX.md) | 25 | [0](SF_Experience_Cloud/RECALL.md) | 0 | 20 |
 | [SF_Service/](SF_Service/INDEX.md) | 13 | [0](SF_Service/RECALL.md) | 0 | 51 |
 | [SF_Sales/](SF_Sales/INDEX.md) | 10 | [0](SF_Sales/RECALL.md) | 0 | 40 |
+| [General/](General/INDEX.md) | 0 | 0 | — | — |
 
-*Rebuilt 2026-10-03.*
+*Rebuilt 2026-10-17.*
 

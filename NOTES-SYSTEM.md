@@ -40,9 +40,9 @@ Five things exist for Obsidian that are easy to miss because nothing else links 
 |---|---|
 | [HOME.md](HOME.md) | **Open this first.** Generated — today's session, cards, open gaps, org checks, stale notes, missing seams. Rebuild with `npm run vault:home`. |
 | `<vault>/RECALL.md` | Generated with HOME — every note's `## My recall` in read order, one file per vault. The page you read top to bottom before an interview, or cover and recite. |
-| `npm run today` | Writes today's session into `journal/YYYY-MM-DD.md`: cards, due reviews, one topic, one drill. See [The daily session](#the-daily-session). |
+| `npm run today` | Writes today's session into `journal/YYYY-MM-DD.md`: cards, due reviews, one topic, one drill, and a blank Notes section. See [The daily session](#the-daily-session). |
 | `bases/topics.base` | Six Bases views over the frontmatter — all topics, open gaps, org checks, currency warnings, new-since-2024, oldest-first. They read the notes directly, so they cannot drift. |
-| `templates/note.md`, `templates/daily.md` | Inserted by the core **Templates** plugin. The daily one holds a `<!-- today` line that `npm run today` replaces with the session, plus weak answers and what broke, verbatim. |
+| `templates/note.md`, `templates/daily.md` | Inserted by the core **Templates** plugin. The daily one holds a `<!-- today` line that `npm run today` replaces with the session, plus a blank `## Notes` section, weak answers and what broke, verbatim. |
 | `journal/` | Where **Daily Notes** and `npm run today` write. One file per day, `YYYY-MM-DD`. Its ticked lines are the study record. |
 | [Flashcards/](Flashcards/README.md) | The interview flashcard bank: Foundations and Hard cards per area and topic, each linking the note that holds the reasoning. Reviewable in Obsidian's Spaced Repetition plugin as-is; `python scripts/flashcards.py sync` pushes it to Anki. |
 
@@ -131,7 +131,8 @@ Why: you remember what you produce, not what you read. Every study behind this d
 | Review | 5 min | Up to 3 notes in your words whose spaced date has come. Read only the cues; say the rest. |
 | Topic | 20 min | Blurt everything you remember **before** opening the note. Then open it, write what you missed, and write or fix its `## My recall`. |
 | Drill | 10 min | Mon/Wed a scenario out loud · Tue/Thu the topic's code from a blank file · Fri a project story · weekend a recall sheet, answers covered. |
-| Claude Code | 20 min + lab | **Learn** the next unfed topic on the [Claude_Code/](Claude_Code/README.md) path, then paste what you learnt. **Build** the first unticked lab in a fed note. |
+| Claude Code | 20 min + lab | **Learn** the next unfed topic on the [Claude_Code/](Claude_Code/README.md) path, then write what you learnt under Notes. **Build** the first unticked lab in a fed note. |
+| Notes | any | Learn anything, on any number of topics, from a blank page. Say "file today's notes": Claude maps each piece to its note in each vault, adds the gaps you skipped, and writes `### Filed`. |
 
 **How it picks**, all derived and nothing stamped:
 
@@ -140,6 +141,7 @@ Why: you remember what you produce, not what you read. Every study behind this d
 - **Reviews** come back 3, 7, 16, 35 and 75 days after each tick. A Claude Code note counts its `created` date as its first tick, because you feed it rather than `today` picking it.
 - **Claude Code** is a track outside the rotation. The first README path row with an empty `Note` cell is the Learn line. A fed note's first unticked lab is the Build line.
 - **The record is the tick.** A ticked `- [x]` line in a journal file is what counts as studied. An unticked pick is a day skipped, and it comes back.
+- **A note you fed counts too.** Filing writes one ticked line per note under `### Filed`, linking the note. That tick starts its reviews, the same as a picked topic you ticked. The gaps stay in the note; Filed shows only how many were added.
 
 ### 3. Gaps — scoped to where you actually are
 
@@ -172,6 +174,8 @@ It does **not** get `@InvocableMethod`. That is a `deep` item, two levels up.
 When you later feed deeper notes on the same topic, the level rises. The deeper gaps unlock then.
 
 Gaps also stay on the topic. Never a syllabus. Never "you should also learn Data 360."
+
+**Most important first, five at most per feed.** Within the ceiling, order gaps by what hurts first if missed. First come a required signature or setting, a limit, the security or sharing mode, a licence, and the supported objects. Edge cases come last. One feed adds no more than five new gaps to one note. A dense note with no `level` key takes the level of the feed.
 
 Two places a gap can appear:
 
@@ -319,7 +323,9 @@ It is a **quarry, not a reference.**
 
 ## Anything that does not route
 
-Goes to that folder's `_inbox.md`, as one bullet, with the date.
+**Not Salesforce at all** → [General/](General/README.md), in a folder for its subject. Claude Code is the one exception: it goes to [Claude_Code/](Claude_Code/README.md). General has its own lighter rules in [General/AGENTS.md](General/AGENTS.md).
+
+**Salesforce, but no clear vault** → that folder's `_inbox.md`, as one bullet, with the date.
 
 Filing friction must never stop capture. Triage it later.
 
@@ -355,3 +361,5 @@ Filing friction must never stop capture. Triage it later.
 | 2026-10-02 | `npm run today` replaces HOME's single-lab pick with a daily session: recall first, then the note | Practice testing and spacing are the only techniques rated high utility; rereading is rated low ([Dunlosky 2013](https://www.psychologicalscience.org/news/releases/which-study-strategies-make-the-grade.html)). Recall beat restudy 80% to 36% after a week ([Karpicke & Roediger 2008](https://sciencedaily.com/releases/2009/12/091210125928.htm)). 189 queued labs were "too many to start". |
 | 2026-10-02 | Claude checks, flags and researches, and does not author what the user learns from | Unrestricted GPT-4 raised practice scores 48% and cut exam scores 17%; a tutor that gave hints, not answers, caused no loss ([Bastani, PNAS 2025](https://papers.ssrn.com/abstract=4895486)). Release changes are flagged for the user to fix: re-encoding was how the old Notion notes stuck. |
 | 2026-10-02 | Flashcards moved from the `## Recall` export to a hand-written bank in `Flashcards/` | You found the 1,201 exported Recall pairs useless for interviews: single facts with no scenario and no level. The bank is written for architect and senior-developer interviews, split Foundations/Hard by topic, and syncs to Anki with IDs so edits keep review history. `## Recall` stays in notes as a self-check; the two `_cards.md` decks were deleted. |
+| 2026-10-07 | `General/` created for everything that is not Salesforce or Claude Code: one folder per subject, recall layer on top, no gaps, labs or flashcards | You wanted random topics captured and organised too. Before this, a non-Salesforce feed had no home: the skill sent it to a Salesforce vault's `_inbox.md`, where it would never be reviewed. It copies the Claude Code track (not a vault, joins the reviews from `created`) and adds a generated `INDEX.md`, because a subject folder you never browse is not organised. |
+| 2026-10-18 | The journal gets a blank `## Notes` section. "File today's notes" maps it to every topic it touches and writes ticked `### Filed` links. Gaps are ranked, at most five new per note per feed | You mostly learn from a blank page, often across two topics at once, such as calling Apex from Agentforce Builder. `today` only offered one picked topic with a fixed routine. A fed vault note also never started its reviews, because only a ticked journal link counts as studied. The picked topic and its routine stay as they were. |

@@ -27,19 +27,22 @@ Shared at the root: [GLOSSARY.md](GLOSSARY.md) (all terms, greppable), [RELEASE-
 
 [Claude_Code/](Claude_Code/README.md) is a self-paced track for learning Claude Code. It is **not a vault**: the routing contract and flashcards don't apply, and it has its own rules in [Claude_Code/AGENTS.md](Claude_Code/AGENTS.md). `npm run today` adds its next topic and lab to the daily session.
 
+[General/](General/README.md) holds everything else you learn: money, history, health, a language, general tech. It is **not a vault** either. Notes sit in one folder per subject, with your words on top and a short researched body, and no gaps, labs or flashcards. Rules are in [General/AGENTS.md](General/AGENTS.md). Its notes join `npm run today`'s reviews from their `created` date, and [General/INDEX.md](General/INDEX.md) is generated.
+
 [_archive/AI_Data/](_archive/AI_Data/) is the retired roadmap vault. It is a **quarry for verified facts, never a link target.** Nothing live should link into it.
 
 ## When the user pastes rough learning notes
 
-Run the **`study-notes`** skill. Do not free-hand it.
+Run the **`study-notes`** skill. Do not free-hand it. The same goes for "file today's notes": the skill reads the `## Notes` section of today's journal.
 
 The full contract is in [NOTES-SYSTEM.md](NOTES-SYSTEM.md). The short version:
 
-- **Route by subtraction:** strip the product out of the sentence. *Still true with no Agentforce in it?* *With no Experience Cloud site in it?* *With no Service Cloud in it?* *With no Sales Cloud in it?* **Still true → `SF_core/`. Falls apart → the vault that owns that product** — `SF_Agentforce/`, `SF_Data_360/`, `SF_Experience_Cloud/`, `SF_Service/` or `SF_Sales/`.
+- **Route by subtraction:** strip the product out of the sentence. *Still true with no Agentforce in it?* *With no Experience Cloud site in it?* *With no Service Cloud in it?* *With no Sales Cloud in it?* **Still true → `SF_core/`. Falls apart → the vault that owns that product** — `SF_Agentforce/`, `SF_Data_360/`, `SF_Experience_Cloud/`, `SF_Service/` or `SF_Sales/`. **Not Salesforce at all?** Claude Code → `Claude_Code/`; anything else → `General/<subject>/`.
 - **New notes use the light format** in [templates/note.md](templates/note.md), in every vault. Start there → [HOME.md](HOME.md) is the front door.
 - **`## My recall` is the user's words. Never author it.** Their rough notes go there, tightened: reorder, trim, fix spelling. Never add a word, phrase or fact. A wrong line keeps its wording and gets `🚩 <why>`, and the user fixes it. Your research goes in the reference body below. The same holds for `## My code`, [Interview/my-stories.md](Interview/my-stories.md) and a flashcard answer the user has rewritten.
 - **Flag, don't fix, what the user learns from.** When a release changes something the user wrote, tell them the line and why. They rewrite it.
-- **Add gaps, scoped by the note's `Level`.** One level up, never two. Same topic only.
+- **Add gaps, scoped by the note's `Level`.** One level up, never two. Same topic only. Most important first, at most five new per note per feed.
+- **Record every feed in the journal.** One ticked `### Filed` line per note created or updated, linking the note. That tick starts its reviews.
 - **A link that crosses vaults gets a link back**, in the same edit. Same-vault links rely on Obsidian's Backlinks panel.
 - **Metadata is YAML frontmatter.** `status`, `gaps`, `org_checks` and `labs` are recomputed by `python scripts/vault.py fix`; every other key is yours. `created` never changes, `updated` does. Staleness is derived from `updated`, never stamped.
 - **A closed gap is deleted, not ticked.** When the last one goes, the `## Gaps to close` section goes too. `## History` says what changed, never a gap count.

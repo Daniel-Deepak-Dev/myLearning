@@ -41,7 +41,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Vaults holding notes the contract applies to.
 NOTE_VAULTS = ("SF_core", "SF_Agentforce", "SF_Data_360", "SF_Experience_Cloud", "SF_Service", "SF_Sales")
 # Walked for link integrity but not linted as notes.
-OTHER_LIVE = ("RELEASE-RADAR", "Interview", "Claude_Code")
+OTHER_LIVE = ("RELEASE-RADAR", "Interview", "Claude_Code", "General")
 # Never walked at all.
 SKIP_DIRS = {".git", "_archive", "node_modules", ".obsidian", ".vscode", ".claude"}
 # Live files that are scaffolding, not notes.
@@ -1551,6 +1551,8 @@ def cmd_home() -> int:
     # The same pick `npm run today` writes into the journal: one area, one
     # topic, the reviews that are due and one drill.
     recall = write_recall_sheets(notes)
+    general = general_notes()
+    subjects = write_general_index(general)
     s = plan_session(notes, TODAY)
     jrel = f"journal/{TODAY}.md"
     jpath = os.path.join(ROOT, jrel)
@@ -1663,6 +1665,10 @@ def cmd_home() -> int:
         door = "README.md" if vault == "SF_core" else "INDEX.md"
         out.append(f"| [{vault}/]({vault}/{door}) | {len(vn)} "
                    f"| [{recall[vault][0]}]({vault}/RECALL.md) | {len(vc)} | {len(vl)} |")
+    if os.path.isdir(os.path.join(ROOT, GENERAL_DIR)):
+        # Not a vault: no cards or labs, and its index is the front door.
+        out.append(f"| [{GENERAL_DIR}/]({GENERAL_DIR}/INDEX.md) | {len(general)} "
+                   f"| {sum(1 for n in general if recall_lines(n))} | — | — |")
     out += ["", f"*Rebuilt {TODAY}.*", ""]
 
     path = os.path.join(ROOT, "HOME.md")
@@ -1672,6 +1678,7 @@ def cmd_home() -> int:
     print(f"wrote HOME.md — {len(ticked)}/{total_labs} labs, {len(bank)} flashcards, "
           f"{sum(c for c, _ in gapped)} open gaps, {sum(c for c, _ in orgs)} org checks")
     print(f"wrote {len(recall)} RECALL.md sheets — {mine} of {total} notes in your words")
+    print(f"wrote {GENERAL_DIR}/INDEX.md — {len(general)} topics in {subjects} subjects")
     return 0
 
 
@@ -1705,6 +1712,12 @@ STUDY_AREAS = (
 # linting. Its README's path table orders the topics; a note exists once fed.
 TRACK_DIR, TRACK_TITLE = "Claude_Code", "Claude Code"
 TRACK_README = os.path.join(ROOT, TRACK_DIR, "README.md")
+
+# Everything that is not Salesforce or Claude Code, one folder per subject.
+# No cards, no labs, no linting; its notes join the reviews like track notes.
+GENERAL_DIR = "General"
+GENERAL_INDEX = os.path.join(ROOT, GENERAL_DIR, "INDEX.md")
+ONE_LINE_RE = re.compile(r"^\*\*One line:\*\*\s*(.*)$")
 
 # Days until a studied topic comes back, by how many times it has been ticked.
 REVIEW_DAYS = (3, 7, 16, 35, 75)
@@ -1906,6 +1919,48 @@ def track_notes() -> list[Note]:
             if f.endswith(".md") and f not in NON_NOTE_NAMES and not f.startswith("_")]
 
 
+def general_notes() -> list[Note]:
+    """Every note under General/, in any subject folder. None until the first feed."""
+    return [load_note(p) for p in walk_md((f"{GENERAL_DIR}/",))
+            if os.path.basename(p) not in NON_NOTE_NAMES
+            and not any(part.startswith("_") for part in rel_of(p).split("/"))]
+
+
+def write_general_index(notes: list[Note]) -> int:
+    """Write General/INDEX.md: every topic, grouped by its subject folder. Returns subjects."""
+    if not os.path.isdir(os.path.join(ROOT, GENERAL_DIR)):
+        return 0
+    by_subject: dict[str, list[Note]] = defaultdict(list)
+    for n in notes:
+        parts = n.rel.split("/")
+        by_subject[parts[1] if len(parts) > 2 else ""].append(n)
+
+    out = [
+        "# General — what you have learnt", "",
+        "**Generated from the notes by `npm run vault:home`. Edit a note, never this file.**",
+        "How to feed it: [README.md](README.md).", "",
+    ]
+    created = sorted(d for n in notes if (d := parse_date(str(n.meta.get("created", "")))))
+    if notes:
+        plural = lambda k, word: f"{k} {word}" + ("s" if k != 1 else "")
+        out += [f"**{plural(len(notes), 'topic')} · {plural(len(by_subject), 'subject')}"
+                + (f" · newest {created[-1]}" if created else "") + "**", ""]
+    else:
+        out += ["*Nothing here yet.* Paste what you learnt and say \"I learned … today\".", ""]
+    # Subject folders alphabetically; a note filed loose in General/ goes last.
+    for subject in sorted(by_subject, key=lambda s: (s == "", s)):
+        title = subject.replace("-", " ").capitalize() or "Unsorted — move into a subject folder"
+        out += [f"## {title}", "", "| Topic | One line | Created | Updated |", "|---|---|---|---|"]
+        for n in sorted(by_subject[subject], key=lambda n: note_title(n).lower()):
+            one = next((m.group(1) for l in n.lines if (m := ONE_LINE_RE.match(l))), "")
+            cells = [f"[{note_title(n)}]({n.rel[len(GENERAL_DIR) + 1:]})", one,
+                     str(n.meta.get("created", "")), str(n.meta.get("updated", ""))]
+            out.append("| " + " | ".join(c.replace("|", "\\|") for c in cells) + " |")
+        out.append("")
+    write_generated(GENERAL_INDEX, out)
+    return len(by_subject)
+
+
 def track_path(notes: list[Note]) -> list[tuple[str, str, Note | None]]:
     """The README path table as (topic, learn from, fed note or None), in order.
 
@@ -1952,16 +2007,17 @@ def plan_session(notes, day: date) -> Session:
     studied, ticked_text = journal_record(day)
     order = read_order(notes)
 
-    # Track notes are fed, never picked, so the day they were fed is their first study.
+    # Track and General notes are fed, never picked, so the day they were fed is their first study.
     track = track_notes()
-    for n in track:
+    fed_notes = track + general_notes()
+    for n in fed_notes:
         fed = parse_date(str(n.meta.get("created", "")))
         if fed and fed < day:
             studied[n.rel].add(fed)
 
     # Reviews: notes in your words whose next spaced date has come, most overdue first.
     due = []
-    for n in order + track:
+    for n in order + fed_notes:
         dates = studied.get(n.rel)
         if not dates or not recall_lines(n):
             continue
@@ -2087,7 +2143,7 @@ def render_session(s: Session) -> list[str]:
         if s.learn:
             topic, source = s.learn
             out.append(f"- [ ] **Learn** · 20 min · {topic}" + (f" — {source}" if source else "")
-                       + ". Then paste what you learnt and say \"I learned … today\".")
+                       + ". Then write what you learnt under **Notes** and say \"file today's notes\".")
         if s.build:
             out.append(f"- [ ] **Build** · {link(s.build[0])} — {s.build[1]} "
                        f"Tick the lab in the note too.")
