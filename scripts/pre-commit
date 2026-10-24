@@ -1,11 +1,17 @@
 #!/bin/sh
-# Vault contract check. Install with:
+# Vault contract check. Install once per clone with:
 #
-#     cp scripts/pre-commit .git/hooks/pre-commit
+#     git config core.hooksPath scripts
+#
+# Git then runs this file in place. There is no copy in .git/hooks/ to drift.
 #
 # The cross-vault backlink backlog is burnt down deliberately, not per-commit,
 # so it is excluded here. Run
-# `python scripts/vault.py check --rule backlink` when you want to work on it.
+# `npm run vault:check -- --rule backlink` when you want to work on it.
+#
+# Python is found through scripts/py.js, not a bare `python`. On Windows a bare
+# `python` can resolve to the Microsoft Store stub, which prints "Python was
+# not found" even when Python is installed.
 #
 # To commit past this once: git commit --no-verify
 
@@ -16,10 +22,10 @@ RULES="--rule status --rule frontmatter --rule tags --rule index --rule readme \
 --rule flashcards"
 
 # shellcheck disable=SC2086
-if ! python scripts/vault.py check $RULES --quiet; then
+if ! node scripts/py.js scripts/vault.py check $RULES --quiet; then
     echo
     echo "vault check failed — see above."
-    echo "  details:  python scripts/vault.py check <--rule NAME>"
+    echo "  details:  npm run vault:check -- --rule NAME"
     echo "  bypass:   git commit --no-verify"
     exit 1
 fi

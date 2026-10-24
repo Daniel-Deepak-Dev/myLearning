@@ -71,7 +71,7 @@ Use [templates/note.md](../../../templates/note.md).
 - **50 lines max, counted to `## Related`.** The footer — `## Related`, `## Sources`, `## History` — does not count. Never drop a citation to hit a line budget.
 - No paragraph longer than two sentences.
 - One table max. One code block max, 12 lines.
-- Metadata is YAML frontmatter. Run `python scripts/vault.py fix` after writing; it sets `status`, `gaps`, `org_checks` and `labs` from the body. Never type those four.
+- Metadata is YAML frontmatter. Run `npm run vault:fix` after writing; it sets `status`, `gaps`, `org_checks` and `labs` from the body. Never type those four.
 
 ### The user's words go on top — `## My recall`
 
@@ -174,12 +174,15 @@ Two rules keep this honest:
 ### Then run the tool — do not do this by hand
 
 ```
-python scripts/vault.py fix      # recounts status, gaps, org_checks, labs
-                                 # rebuilds INDEX rows, summary lines, README
-                                 # counts and the PRACTICE Done table
-python scripts/vault.py home     # rebuilds HOME.md
-python scripts/vault.py check    # reports whatever is left
+npm run vault:fix      # recounts status, gaps, org_checks, labs
+                       # rebuilds INDEX rows, summary lines, README
+                       # counts and the PRACTICE Done table
+npm run vault:home     # rebuilds HOME.md
+npm run vault:check    # reports whatever is left
 ```
+
+Never call a bare `python`. On Windows it can be the Microsoft Store stub; the
+npm scripts find a real Python through `scripts/py.js`.
 
 `fix` owns exactly four frontmatter keys — `status`, `gaps`, `org_checks`, `labs` — and recomputes them from the note body. **Never type those four.** `vault`, `area`, `format`, `level`, `created`, `currency`, `phase` and `tags` are the user's, and the tool leaves them alone.
 

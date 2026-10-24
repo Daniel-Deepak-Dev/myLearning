@@ -10,16 +10,16 @@ Most of this contract is mechanical — a derived count, a mirrored column, a li
 that must resolve. Those are checked by a script, not by remembering:
 
 ```
-python scripts/vault.py check            every rule
-python scripts/vault.py check --changed  only what you touched
-python scripts/vault.py fix              rewrite the derived values
+npm run vault:check                every rule
+npm run vault:check -- --changed   only what you touched
+npm run vault:fix                  rewrite the derived values
 ```
 
 `check` is **read-only** and reports `file:line`. `fix` rewrites only values with
 one correct answer — `status`, `gaps`, `org_checks` and `labs` recounted from the
 note body, the INDEX columns that mirror a note, the summary aggregates, the
 `SF_core` topic counts, and the `PRACTICE.md` Done table. It prints every change; read `git diff` before committing. Install it as a commit gate with
-`cp scripts/pre-commit .git/hooks/pre-commit`, or run `/vault-check` in a session.
+`git config core.hooksPath scripts` (once per clone), or run `/vault-check` in a session.
 
 Two things it deliberately does **not** do:
 
@@ -44,7 +44,7 @@ Five things exist for Obsidian that are easy to miss because nothing else links 
 | `bases/topics.base` | Six Bases views over the frontmatter — all topics, open gaps, org checks, currency warnings, new-since-2024, oldest-first. They read the notes directly, so they cannot drift. |
 | `templates/note.md`, `templates/daily.md` | Inserted by the core **Templates** plugin. The daily one holds a `<!-- today` line that `npm run today` replaces with the session, plus a blank `## Notes` section, weak answers and what broke, verbatim. |
 | `journal/` | Where **Daily Notes** and `npm run today` write. One file per day, `YYYY-MM-DD`. Its ticked lines are the study record. |
-| [Flashcards/](Flashcards/README.md) | The interview flashcard bank: Foundations and Hard cards per area and topic, each linking the note that holds the reasoning. Reviewable in Obsidian's Spaced Repetition plugin as-is; `python scripts/flashcards.py sync` pushes it to Anki. |
+| [Flashcards/](Flashcards/README.md) | The interview flashcard bank: Foundations and Hard cards per area and topic, each linking the note that holds the reasoning. Reviewable in Obsidian's Spaced Repetition plugin as-is; `npm run cards:sync` pushes it to Anki. |
 
 `bases/graph-groups.json` holds the graph colour groups. `.obsidian/graph.json`
 is gitignored because Obsidian rewrites its zoom level constantly; if the colours
@@ -246,7 +246,7 @@ link and never writes one.
 makes the Bases views, property search and sorting in [HOME.md](HOME.md) possible.
 It replaced a `>` blockquote, which no tool could read.
 
-**Four keys are the machine's; the rest are yours.** `python scripts/vault.py fix`
+**Four keys are the machine's; the rest are yours.** `npm run vault:fix`
 recounts `status`, `gaps`, `org_checks` and `labs` from the note body and will
 overwrite whatever you type there. `vault`, `area`, `format`, `level`, `created`,
 `currency`, `phase` and `tags` are yours — edit them in Obsidian's Properties

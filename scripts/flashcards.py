@@ -276,7 +276,7 @@ def validate(cards: list[Card]) -> list[tuple[Card, str]]:
         if not c.area or not c.topic:
             problems.append((c, "file needs `area:` frontmatter and a topic (frontmatter `topic:` or an H2)"))
         if c.id is None:
-            problems.append((c, "no ID — run `python scripts/flashcards.py ids`"))
+            problems.append((c, "no ID — run `npm run cards:ids`"))
         elif c.id in seen:
             problems.append((c, f"duplicate ID {c.id} (also {seen[c.id].file}:{seen[c.id].line})"))
         else:

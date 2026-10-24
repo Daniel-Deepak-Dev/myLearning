@@ -93,7 +93,7 @@ Build a record-grounded template on Account, then run it against a fully populat
 ## Done
 
 **Generated from the ticked labs — do not add rows by hand.** Tick `- [x]` in the
-note and run `python scripts/vault.py fix`; the row appears here. The `What broke`
+note and run `npm run vault:fix`; the row appears here. The `What broke`
 cell is yours: fill it in and it is preserved on every rebuild.
 
 | Lab | Date | What broke — verbatim |

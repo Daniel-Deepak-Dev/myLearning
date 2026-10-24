@@ -58,7 +58,7 @@ tags: []
 
 <!--
 `status`, `gaps`, `org_checks` and `labs` are DERIVED — run
-`python scripts/vault.py fix` and it sets them from this note's body.
+`npm run vault:fix` and it sets them from this note's body.
 Everything else in the frontmatter is yours.
 
 Full contract: NOTES-SYSTEM.md. Rules a machine can check: scripts/vault.py.

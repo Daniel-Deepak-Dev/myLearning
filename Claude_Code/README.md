@@ -35,7 +35,7 @@ Ideas for the labs a filed note will carry. You build them; Claude reviews.
 - **1 · Instructions & memory:** find out why this repo's `AGENTS.md` loads; add a rule to [AGENTS.md](AGENTS.md) and prove it applies only in this folder.
 - **2 · Settings & permissions:** move shared allows from `.claude/settings.local.json` to `.claude/settings.json`; deny edits to `_archive/` and watch one get blocked.
 - **3 · Skills:** take apart `/vault-check`; make a skill description vague and watch it stop triggering.
-- **4 · Hooks I:** a PostToolUse hook that runs `python scripts/vault.py check --changed` and feeds findings back to Claude.
+- **4 · Hooks I:** a PostToolUse hook that runs `npm run vault:check -- --changed` and feeds findings back to Claude.
 - **5 · Hooks II:** a PreToolUse guard on `_archive/`; a SessionStart hook that loads today's session.
 - **6 · Subagents:** a read-only `recall-quizzer` that quizzes you from a `RECALL.md`.
 - **7 · Output styles:** a "tutor" style that asks you to predict before it explains.

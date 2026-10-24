@@ -4,7 +4,7 @@ format: dashboard
 ---
 # What to study next
 
-**Generated — `python scripts/vault.py home`. Do not edit by hand.**
+**Generated — `npm run vault:home`. Do not edit by hand.**
 Everything below is counted from the notes, so it cannot drift.
 
 ## ▶ Today

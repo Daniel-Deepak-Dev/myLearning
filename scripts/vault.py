@@ -1543,7 +1543,7 @@ def cmd_home() -> int:
     out = [
         "---", "vault: root", "format: dashboard", "---",
         "# What to study next", "",
-        "**Generated — `python scripts/vault.py home`. Do not edit by hand.**",
+        "**Generated — `npm run vault:home`. Do not edit by hand.**",
         "Everything below is counted from the notes, so it cannot drift.", "",
     ]
 
@@ -1649,7 +1649,7 @@ def cmd_home() -> int:
             out.append(f"- [{target}]({target}) ← {srcs}")
         if len(by_target) > 10:
             out.append(f"- … {len(by_target) - 10} more — "
-                       f"`python scripts/vault.py check --rule backlink`")
+                       f"`npm run vault:check -- --rule backlink`")
         out.append("")
 
     out += [

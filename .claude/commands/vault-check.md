@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(python scripts/vault.py:*), Read, Edit, Glob, Grep
+allowed-tools: Bash(node scripts/py.js scripts/vault.py:*), Read, Edit, Glob, Grep
 argument-hint: "[rule prefix, e.g. backlink or index] — omit for everything"
 description: Run the mechanical half of the notes contract and report what drifted.
 ---
@@ -7,8 +7,11 @@ description: Run the mechanical half of the notes contract and report what drift
 Run the vault checker and report what it found.
 
 ```
-!python scripts/vault.py check $ARGUMENTS
+!node scripts/py.js scripts/vault.py check $ARGUMENTS
 ```
+
+Python runs through `scripts/py.js`, never a bare `python`. On Windows a bare
+`python` can be the Microsoft Store stub, which prints "Python was not found".
 
 ## The commands
 
@@ -31,13 +34,13 @@ that a machine can decide without judgement.
 
 1. **Derived values** — `status-derived`, `index-row`, `index-summary`,
    `readme-counts`, `tags`, `frontmatter`. One correct answer each.
-   `python scripts/vault.py fix` rewrites them all; offer that rather than
+   `npm run vault:fix` rewrites them all; offer that rather than
    editing files one at a time. `lab-practice-sync` has no fixer — the queue
    order is unblocked-first, which is a judgement call.
 2. **Integrity** — `link-broken`, `link-label`, `link-archive`,
    `link-wikilink`, `index-coverage`. Usually a move that left something
    behind. Say what moved before changing anything.
-3. **`backlink-missing`** — cross-vault seams only, currently ~31.
+3. **`backlink-missing`** — cross-vault seams only.
    **Never auto-write these.** A `## Related` bullet needs a real "— why you
    would jump there" clause; a generated one is filler that looks finished.
    Surface a few at a time and write the clause by hand after reading both

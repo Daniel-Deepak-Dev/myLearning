@@ -35,7 +35,7 @@ Template: [../templates/note.md](../templates/note.md).
 - **Closed gaps are deleted, not ticked.** Answer one, remove the line. Last one gone, remove the `## Gaps to close` heading too.
 - **A question no public doc answers goes in `## Confirm in org`**, as a `- 🚩 ` bullet naming what to open. It is a sandbox to-do, not a gap.
 - **`## Hands-on` holds 3–4 labs**, IDs `AF-<TOPIC>-NN`, one line each, every one carrying a `Proves:`. **Ticked, never deleted.** Bias to labs that break something on purpose — mine `## Gotchas` for them. New lab → `fix` adds its queue row; you place it in the queue, unblocked-first.
-- **Status is derived, never typed.** `python scripts/vault.py fix` counts the `- [ ]` lines in `## Gaps to close` and writes `status: open` + `gaps: N`, or `status: complete`. `## Confirm in org` bullets and `## Hands-on` labs never count. The 🌱/✅ glyphs are how `INDEX.md` renders it, never what the note stores.
+- **Status is derived, never typed.** `npm run vault:fix` counts the `- [ ]` lines in `## Gaps to close` and writes `status: open` + `gaps: N`, or `status: complete`. `## Confirm in org` bullets and `## Hands-on` labs never count. The 🌱/✅ glyphs are how `INDEX.md` renders it, never what the note stores.
 - **`## History` records what was added or changed** — never a gap tally.
 - **`created` never changes. `updated` changes on every edit.** Staleness is derived from `updated`, not stamped into the note — `HOME.md` lists what has gone 3+ months.
 - **Every researched fact gets a `## Sources` line** with the date read. Salesforce domains trusted; anything else carries 🚩.

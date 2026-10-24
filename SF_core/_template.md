@@ -57,5 +57,5 @@ RULES — do not remove
    > **From my notes.** <the gotcha> — and correct it inline if it is now stale.
 5. Cross-link into SF_Agentforce/ or SF_Data_360/ instead of duplicating their content.
 6. `status` is the only frontmatter key the tool owns for a dense note. Everything
-   else above is yours. Run `python scripts/vault.py fix` after writing.
+   else above is yours. Run `npm run vault:fix` after writing.
 -->

@@ -9,7 +9,7 @@ Style rules: [../AGENTS.md](../AGENTS.md). Full conventions: [README.md](README.
 - **A fed topic that already has a note here** → enrich that note in place. Add the cross-link and a `## Gaps to close` section. Never create a second file for the same topic.
 - **Both formats take `## My recall` as the first section**, with `## My code` after it if there is one. The user's words go there, tightened but never added to; a wrong line gets `🚩 <why>` for them to fix. It does not count towards the line cap. See [NOTES-SYSTEM.md](../NOTES-SYSTEM.md) § 2a.
 
-- **Metadata is YAML frontmatter**, read by Obsidian as Properties. `status`, `gaps`, `org_checks` and `labs` are recomputed by `python scripts/vault.py fix`; `vault`, `area`, `format`, `level`, `created`, `currency`, `phase` and `tags` are yours.
+- **Metadata is YAML frontmatter**, read by Obsidian as Properties. `status`, `gaps`, `org_checks` and `labs` are recomputed by `npm run vault:fix`; `vault`, `area`, `format`, `level`, `created`, `currency`, `phase` and `tags` are yours.
 
 Full contract for fed notes: [../NOTES-SYSTEM.md](../NOTES-SYSTEM.md).
 

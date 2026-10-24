@@ -44,7 +44,7 @@ The full contract is in [NOTES-SYSTEM.md](NOTES-SYSTEM.md). The short version:
 - **Add gaps, scoped by the note's `Level`.** One level up, never two. Same topic only. Most important first, at most five new per note per feed.
 - **Record every feed in the journal.** One ticked `### Filed` line per note created or updated, linking the note. That tick starts its reviews.
 - **A link that crosses vaults gets a link back**, in the same edit. Same-vault links rely on Obsidian's Backlinks panel.
-- **Metadata is YAML frontmatter.** `status`, `gaps`, `org_checks` and `labs` are recomputed by `python scripts/vault.py fix`; every other key is yours. `created` never changes, `updated` does. Staleness is derived from `updated`, never stamped.
+- **Metadata is YAML frontmatter.** `status`, `gaps`, `org_checks` and `labs` are recomputed by `npm run vault:fix`; every other key is yours. `created` never changes, `updated` does. Staleness is derived from `updated`, never stamped.
 - **A closed gap is deleted, not ticked.** When the last one goes, the `## Gaps to close` section goes too. `## History` says what changed, never a gap count.
 - **A question no public doc can answer belongs in `## Confirm in org`**, not in the gap list. Research cannot close it; only an org can.
 - **Every note carries 3–4 `## Hands-on` labs**, each with a `Proves:` and a time box, biased towards breaking something on purpose. **Labs are ticked, not deleted.** They queue in the vault's `PRACTICE.md` — see [SF_Agentforce/PRACTICE.md](SF_Agentforce/PRACTICE.md).
