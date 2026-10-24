@@ -9,14 +9,14 @@ Everything below is counted from the notes, so it cannot drift.
 
 ## ▶ Today
 
-Your session is in [journal/2026-10-17.md](journal/2026-10-17.md). Tick each line as you do it.
+Run `npm run today`. It writes this session into `journal/2026-10-25.md`, with room to blurt before you open the note.
 
 - **Agentforce** · [Prompt Builder & Prompt Templates](SF_Agentforce/prompt-builder-and-prompt-templates.md) — next in read order
-- **Review:** 0 due
+- **Review:** 3 due — [Calculated Insights & Segmentation](SF_Data_360/calculated-insights-and-segmentation.md), [Data Model: DSO, DLO & DMO](SF_Data_360/data-model-dso-dlo-dmo.md), [Identity Resolution](SF_Data_360/identity-resolution.md)
 - **Drill:** one recall sheet, answers covered
 - **Claude Code** · learn next: Instructions & memory
 
-*In your words: 0 of 288 notes. Each vault's `RECALL.md` collects them — linked in the table at the bottom.*
+*In your words: 4 of 288 notes. Each vault's `RECALL.md` collects them — linked in the table at the bottom.*
 
 ## Review
 
@@ -29,11 +29,15 @@ Your session is in [journal/2026-10-17.md](journal/2026-10-17.md). Tick each lin
 
 ## Open gaps — research can close these
 
+- **6** · [SF_Data_360/calculated-insights-and-segmentation.md](SF_Data_360/calculated-insights-and-segmentation.md)
+- **4** · [SF_Data_360/data-model-dso-dlo-dmo.md](SF_Data_360/data-model-dso-dlo-dmo.md)
+- **4** · [SF_Data_360/ingestion-and-data-streams.md](SF_Data_360/ingestion-and-data-streams.md)
 - **4** · [SF_Experience_Cloud/21-multilingual-sites-and-translation.md](SF_Experience_Cloud/21-multilingual-sites-and-translation.md)
 - **4** · [SF_Sales/enterprise-territory-management.md](SF_Sales/enterprise-territory-management.md)
 - **4** · [SF_Sales/pipeline-inspection.md](SF_Sales/pipeline-inspection.md)
 - **4** · [SF_Service/enhanced-chat-v1-vs-v2.md](SF_Service/enhanced-chat-v1-vs-v2.md)
 - **3** · [SF_Agentforce/flex-prompt-templates.md](SF_Agentforce/flex-prompt-templates.md)
+- **3** · [SF_Data_360/identity-resolution.md](SF_Data_360/identity-resolution.md)
 - **3** · [SF_Experience_Cloud/22-site-accessibility-and-conformance.md](SF_Experience_Cloud/22-site-accessibility-and-conformance.md)
 - **3** · [SF_Experience_Cloud/25-enhanced-chat-on-a-site-step-by-step.md](SF_Experience_Cloud/25-enhanced-chat-on-a-site-step-by-step.md)
 - **3** · [SF_Sales/account-and-opportunity-teams.md](SF_Sales/account-and-opportunity-teams.md)
@@ -53,11 +57,7 @@ Your session is in [journal/2026-10-17.md](journal/2026-10-17.md). Tick each lin
 - **3** · [SF_core/01-admin-and-declarative-platform/20-topics-for-objects.md](SF_core/01-admin-and-declarative-platform/20-topics-for-objects.md)
 - **3** · [SF_core/04-flow-and-automation/28-calling-prompt-templates-from-flow.md](SF_core/04-flow-and-automation/28-calling-prompt-templates-from-flow.md)
 - **3** · [SF_core/06-integration-and-apis/28-cors-allowlist.md](SF_core/06-integration-and-apis/28-cors-allowlist.md)
-- **2** · [SF_Data_360/calculated-insights-and-segmentation.md](SF_Data_360/calculated-insights-and-segmentation.md)
 - **2** · [SF_Data_360/data-360-devops.md](SF_Data_360/data-360-devops.md)
-- **2** · [SF_Data_360/data-model-dso-dlo-dmo.md](SF_Data_360/data-model-dso-dlo-dmo.md)
-- **2** · [SF_Data_360/identity-resolution.md](SF_Data_360/identity-resolution.md)
-- **2** · [SF_Data_360/ingestion-and-data-streams.md](SF_Data_360/ingestion-and-data-streams.md)
 - **2** · [SF_Data_360/vector-search-and-rag.md](SF_Data_360/vector-search-and-rag.md)
 - **2** · [SF_Data_360/zero-copy-and-byol.md](SF_Data_360/zero-copy-and-byol.md)
 - **2** · [SF_Experience_Cloud/23-topics-and-knowledge-on-sites.md](SF_Experience_Cloud/23-topics-and-knowledge-on-sites.md)
@@ -98,11 +98,11 @@ Your session is in [journal/2026-10-17.md](journal/2026-10-17.md). Tick each lin
 |---|---|---|---|---|
 | [SF_core/](SF_core/README.md) | 222 | [0](SF_core/RECALL.md) | 142 | 15 |
 | [SF_Agentforce/](SF_Agentforce/INDEX.md) | 10 | [0](SF_Agentforce/RECALL.md) | 0 | 38 |
-| [SF_Data_360/](SF_Data_360/INDEX.md) | 8 | [0](SF_Data_360/RECALL.md) | 125 | 25 |
+| [SF_Data_360/](SF_Data_360/INDEX.md) | 8 | [4](SF_Data_360/RECALL.md) | 125 | 26 |
 | [SF_Experience_Cloud/](SF_Experience_Cloud/INDEX.md) | 25 | [0](SF_Experience_Cloud/RECALL.md) | 0 | 20 |
 | [SF_Service/](SF_Service/INDEX.md) | 13 | [0](SF_Service/RECALL.md) | 0 | 51 |
 | [SF_Sales/](SF_Sales/INDEX.md) | 10 | [0](SF_Sales/RECALL.md) | 0 | 40 |
 | [General/](General/INDEX.md) | 0 | 0 | — | — |
 
-*Rebuilt 2026-10-17.*
+*Rebuilt 2026-10-25.*
 

@@ -3,11 +3,11 @@ vault: SF_Data_360
 format: light
 level: working
 status: open
-gaps: 2
+gaps: 3
 org_checks: 1
 labs: 3
 created: 2026-10-02
-updated: 2026-10-02
+updated: 2026-10-25
 currency: "Summer '26 (API 67.0)"
 ---
 # Identity Resolution
@@ -15,6 +15,10 @@ currency: "Summer '26 (API 67.0)"
 **One line:** A **ruleset** of match rules and reconciliation rules that links source records into one **unified profile** per person, without merging or deleting the source records.
 
 **Reach for it when:** profile counts look wrong, an agent mixes up two customers, or someone proposes "just loosen the matching".
+
+## My recall
+
+- **Linking guest data to Contacts** — no shared ids · identity solutions 🚩 the feature is called identity resolution
 
 ## Key points
 
@@ -39,6 +43,7 @@ currency: "Summer '26 (API 67.0)"
 
 - [ ] Re-read Identity Resolution Rulesets, Match Methods and Reconciliation Rules in full once help.salesforce.com is reachable. This note was built from search extracts.
 - [ ] What are the limits on rulesets per data space and match rules per ruleset at API 67.0?
+- [ ] Does a new ruleset come with default match rules, and which would link file-based guests to CRM Contacts when the two share no ID?
 
 ## Confirm in org
 
@@ -73,3 +78,4 @@ currency: "Summer '26 (API 67.0)"
 
 - 2026-10-02 · created — facts carried over from the archived roadmap notes and confirmed against Salesforce search extracts; corrected "most recent" to the documented **Last Updated** and narrowed fuzzy matching to first name
 - 2026-10-02 · updated — Unified Link Individual and Profile Explorer, for the terminology flashcards
+- 2026-10-25 · updated — your 2026-10-17 notes as `## My recall`

@@ -3,10 +3,10 @@ vault: SF_Data_360
 format: light
 level: basic
 status: open
-gaps: 2
+gaps: 4
 labs: 3
 created: 2026-10-02
-updated: 2026-10-02
+updated: 2026-10-25
 currency: "Summer '26 (API 67.0)"
 ---
 # Data Model: DSO, DLO & DMO
@@ -14,6 +14,10 @@ currency: "Summer '26 (API 67.0)"
 **One line:** Data moves from a raw **data source object** (DSO) to a stored **data lake object** (DLO), then is mapped into a standard **data model object** (DMO) that every other feature reads.
 
 **Reach for it when:** you are mapping a new source, or two answers about the same customer disagree.
+
+## My recall
+
+- **Guest data to Contacts in Salesforce** — Data mappings
 
 ## Key points
 
@@ -46,6 +50,8 @@ currency: "Summer '26 (API 67.0)"
 
 - [ ] Re-read Data Objects in Data 360, About Data Spaces and `SET OPTIONS` in full once help.salesforce.com is reachable. This note was built from search extracts.
 - [ ] What exactly does a DMO "physical or virtual view" mean for query cost and freshness?
+- [ ] Which fields must be mapped on Individual and on Contact Point Email before identity resolution can use a source?
+- [ ] Can one DLO, such as a guest file, map to several DMOs at once (Individual and Contact Point Email), or does each DMO need its own DLO?
 
 ## Hands-on
 
@@ -80,3 +86,4 @@ currency: "Summer '26 (API 67.0)"
 
 - 2026-10-02 · created — facts carried over from the archived roadmap notes and confirmed against Salesforce search extracts
 - 2026-10-02 · updated — mapping minimum, Contact Point and Party Identification DMOs, fully qualified keys and data transforms, for the terminology flashcards
+- 2026-10-25 · updated — your 2026-10-17 notes as `## My recall`

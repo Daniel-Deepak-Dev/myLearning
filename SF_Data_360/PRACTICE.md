@@ -6,7 +6,7 @@
 >
 > If you catch yourself reading instead of running, you are in the wrong file.
 
-**25 labs · ~9 h total.** Nothing here runs over 45 minutes. If one overruns it was too big — split it into `NNa` / `NNb` rather than letting it become the lab you never start.
+**26 labs · ~9.5 h total.** Nothing here runs over 45 minutes. If one overruns it was too big — split it into `NNa` / `NNb` rather than letting it become the lab you never start.
 
 Each lab's full wording lives in its own note, as a `- [ ]` line under `## Hands-on`. **Tick it there when it is done** — labs are ticked, not deleted, because work you actually did is a record. That tick is the whole record: [Done](#done) is rebuilt from it.
 
@@ -20,9 +20,9 @@ If a lab produced no failure at all, say so — `no failure; worked first time` 
 
 The queue is **unblocked-first**, not INDEX order:
 
-- **#1–19** need only a **Developer Edition with Data 360**. Keep test data to a few hundred records: a Developer Edition has 10 GB and no scheduled refreshes, so you run streams and rulesets by hand. **#5** is the only one needing a **second Developer Edition** as a CRM source.
-- **#20–22** need **Code Extension tooling** (the Python SDK and CLI plugin) or a **Data 360 sandbox**.
-- **#23–25** need a **Snowflake or BigQuery trial** for zero copy, or are a writing exercise.
+- **#1–20** need only a **Developer Edition with Data 360**. Keep test data to a few hundred records: a Developer Edition has 10 GB and no scheduled refreshes, so you run streams and rulesets by hand. **#5** is the only one needing a **second Developer Edition** as a CRM source.
+- **#21–23** need **Code Extension tooling** (the Python SDK and CLI plugin) or a **Data 360 sandbox**.
+- **#24–26** need a **Snowflake or BigQuery trial** for zero copy, or are a writing exercise.
 
 ---
 
@@ -61,16 +61,17 @@ Open Data 360 Setup, and record the data space count, storage used and the limit
 | 13 | D360-SEG-01 | [Insights & Segmentation](calculated-insights-and-segmentation.md) | 30 min | Validate an insight with raw SQL | needs #10 |
 | 14 | D360-SEG-02 | [Insights & Segmentation](calculated-insights-and-segmentation.md) | 20 min | Segment, activation and target are separate | needs #13 |
 | 15 | D360-SEG-03 | [Insights & Segmentation](calculated-insights-and-segmentation.md) | 25 min | RFM tiers move with the population | needs #10 |
-| 16 | D360-INGEST-04 | [Ingestion](ingestion-and-data-streams.md) | 20 min | Freshness belongs to the stream | needs #2, Prompt Builder |
-| 17 | D360-RAG-01 | [Vector Search & RAG](vector-search-and-rag.md) | 30 min | Retrieval returns chunks | Knowledge articles |
-| 18 | D360-RAG-02 | [Vector Search & RAG](vector-search-and-rag.md) | 25 min | Hybrid catches exact codes | needs #17 |
-| 19 | D360-RAG-03 | [Vector Search & RAG](vector-search-and-rag.md) | 20 min | Chunk boundaries decide the answer | needs #17 |
-| 20 | D360-OPS-03 | [DevOps](data-360-devops.md) | 30 min | Author is not operator | Python SDK + CLI plugin |
-| 21 | D360-OPS-01 | [DevOps](data-360-devops.md) | 30 min | What a data kit carries, and what it doesn't | Data 360 sandbox |
-| 22 | D360-OPS-02 | [DevOps](data-360-devops.md) | 15 min | Sandbox connections arrive Inactive | needs #21 |
-| 23 | D360-ZC-01 | [Zero Copy](zero-copy-and-byol.md) | 30 min | Federated data never lands in a DLO | warehouse trial |
-| 24 | D360-ZC-02 | [Zero Copy](zero-copy-and-byol.md) | 20 min | Acceleration trades freshness for speed | needs #23 |
-| 25 | D360-ZC-03 | [Zero Copy](zero-copy-and-byol.md) | 15 min | Defend zero copy vs ingestion per feature | — |
+| 16 | D360-SEG-04 | [Insights & Segmentation](calculated-insights-and-segmentation.md) | 25 min | Copy field vs related list | needs #13 |
+| 17 | D360-INGEST-04 | [Ingestion](ingestion-and-data-streams.md) | 20 min | Freshness belongs to the stream | needs #2, Prompt Builder |
+| 18 | D360-RAG-01 | [Vector Search & RAG](vector-search-and-rag.md) | 30 min | Retrieval returns chunks | Knowledge articles |
+| 19 | D360-RAG-02 | [Vector Search & RAG](vector-search-and-rag.md) | 25 min | Hybrid catches exact codes | needs #18 |
+| 20 | D360-RAG-03 | [Vector Search & RAG](vector-search-and-rag.md) | 20 min | Chunk boundaries decide the answer | needs #18 |
+| 21 | D360-OPS-03 | [DevOps](data-360-devops.md) | 30 min | Author is not operator | Python SDK + CLI plugin |
+| 22 | D360-OPS-01 | [DevOps](data-360-devops.md) | 30 min | What a data kit carries, and what it doesn't | Data 360 sandbox |
+| 23 | D360-OPS-02 | [DevOps](data-360-devops.md) | 15 min | Sandbox connections arrive Inactive | needs #22 |
+| 24 | D360-ZC-01 | [Zero Copy](zero-copy-and-byol.md) | 30 min | Federated data never lands in a DLO | warehouse trial |
+| 25 | D360-ZC-02 | [Zero Copy](zero-copy-and-byol.md) | 20 min | Acceleration trades freshness for speed | needs #24 |
+| 26 | D360-ZC-03 | [Zero Copy](zero-copy-and-byol.md) | 15 min | Defend zero copy vs ingestion per feature | — |
 
 ---
 

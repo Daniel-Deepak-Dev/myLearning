@@ -23,6 +23,21 @@ Newest first.
 
 ---
 
+### 2026-10-25 · Data 360 end to end: S3 guests → Contacts → lifetime value → CRM
+
+Your 2026-10-17 journal notes, filed late. They had replaced that day's session, so they sat under no `## Notes` heading and "file today's notes" could not see them. These are the first lines in the repo in your own words.
+
+- **Ingestion & Data Streams** → [SF_Data_360/ingestion-and-data-streams.md](SF_Data_360/ingestion-and-data-streams.md) · `updated` · Level: basic
+  - Your S3 guest-data line as `## My recall`. The Amazon S3 connector: CSV or Parquet, hourly to monthly, subdirectories ignored.
+- **Data Model** → [SF_Data_360/data-model-dso-dlo-dmo.md](SF_Data_360/data-model-dso-dlo-dmo.md) · `updated` · Level: basic
+  - Your data-mappings line as `## My recall`.
+- **Identity Resolution** → [SF_Data_360/identity-resolution.md](SF_Data_360/identity-resolution.md) · `updated` · Level: working
+  - Your no-shared-ids line as `## My recall`, flagged: "identity solutions" is identity resolution.
+- **Calculated Insights & Segmentation** → [SF_Data_360/calculated-insights-and-segmentation.md](SF_Data_360/calculated-insights-and-segmentation.md) · `updated` · Level: working
+  - Your lifetime-value and enrichment lines as `## My recall`. Lifetime value groups by the unified ID, not a source ID. Apex reads Data 360 through `sfsqlquery`. New lab D360-SEG-04.
+
+**Also touched:** [journal/2026-10-17.md](journal/2026-10-17.md) (`## Notes` heading and `### Filed`), [SF_Data_360/PRACTICE.md](SF_Data_360/PRACTICE.md) (D360-SEG-04 queued at #16).
+
 ### 2026-10-07 · A home for everything that isn't Salesforce
 
 **No notes fed — a structural change.** You said you will learn random topics too, and wanted them captured and organised. Until now a non-Salesforce feed had nowhere to go but a Salesforce vault's `_inbox.md`.

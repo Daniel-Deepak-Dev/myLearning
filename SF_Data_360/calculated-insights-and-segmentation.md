@@ -3,10 +3,10 @@ vault: SF_Data_360
 format: light
 level: working
 status: open
-gaps: 2
-labs: 3
+gaps: 6
+labs: 4
 created: 2026-10-02
-updated: 2026-10-02
+updated: 2026-10-25
 currency: "Summer '26 (API 67.0)"
 ---
 # Calculated Insights & Segmentation
@@ -15,9 +15,15 @@ currency: "Summer '26 (API 67.0)"
 
 **Reach for it when:** you need a metric an agent or a campaign can trust, or an audience to send somewhere.
 
+## My recall
+
+- **Lifetime value for guests** — Calculated Insights · group by guest, sum reservations
+- **Bring key data into Salesforce** — related list enrichments · copy field enrichments · apex
+
 ## Key points
 
 - **Calculated insights** run complex calculations over **stored** data, processed in high-volume batches. Any data can feed them.
+- **Lifetime value is a `SUM` grouped by the unified ID.** Trailhead's sample sums `ssot__GrandTotalAmount__c` from `ssot__SalesOrder__dlm`, joins through `IndividualIdentityLink__dlm` to `UnifiedIndividual__dlm`, and groups by the unified individual's ID.
 - **Streaming insights** run over **real-time** engagement data (for example Web or Mobile SDK events) as near-real-time time-series aggregates. They drive orchestration or data actions, and **can't** be built on streaming profile data.
 - **Insights feed segments.** Metrics, dimensions and filters from a calculated insight define segment criteria and personalization attributes.
 - **A calculated insight's output is a calculated insight object (CIO)**, with the `__cio` suffix, such as `Avg_Spends__cio`. It is queried like a DMO or DLO.
@@ -26,6 +32,7 @@ currency: "Summer '26 (API 67.0)"
 - **Publish schedule:** standard is every **12 or 24 hours**; **Rapid Publish** is every **1 or 4 hours**. Waterfall segments can't use Rapid Publish.
 - **A segment is published to an activation**, and each activation points at an **activation target**. The target holds the authentication for a platform: Marketing Cloud, Data 360 itself, B2C Commerce, Amazon Ads, Google.
 - **Enrichments bring Data 360 into CRM records.** A **copy field** enrichment copies a value, such as lifetime value, into a CRM field. A **related list** enrichment shows Data 360 records on a record page without storing them in CRM.
+- **Apex reads Data 360 through the `sfsqlquery` namespace**, the recommended route for new code. `SqlStatement` runs a query and `SqlQueueable` handles large results; `ConnectApi.CdpQuery` is the older, low-level option.
 - **Agents ground on insights too.** For an analytical question ("is this customer high value?"), a governed insight is cheaper and safer than letting the model aggregate raw rows.
 - **RFM** (recency, frequency, monetary) emits a tier label rather than one number. Its quintile ranks are **relative**: they re-cut on every run.
 
@@ -41,12 +48,17 @@ currency: "Summer '26 (API 67.0)"
 
 - [ ] Re-read Enhance Data with Insights and Activation for Data 360 Segments in full once help.salesforce.com is reachable. This note was built from search extracts.
 - [ ] What are the segment publish-frequency options and limits at API 67.0?
+- [ ] Which objects can a copy field enrichment write to, and how often does it sync the copied value?
+- [ ] Which objects support a related list enrichment, and which DMO relationship must exist for it to show records?
+- [ ] When do you pick a copy field over a related list enrichment: can a related-list value drive reports, list views and flows the way a copied field can?
+- [ ] Which `sfsqlquery` shape fits reading one guest's insight value from Apex on a record page, and which governor limits apply?
 
 ## Hands-on
 
 - [ ] **D360-SEG-01** · 30 min · Build a calculated insight for total spend per unified individual, then recompute it as raw SQL in Query Workspace. **Proves:** you can validate an insight against hand-written SQL rather than trusting the UI.
 - [ ] **D360-SEG-02** · 20 min · Build a segment on that insight and publish it to the Data 360 activation target. **Proves:** segment, activation and target are three separate objects; note which one holds the schedule.
 - [ ] **D360-SEG-03** · 25 min · Build an RFM-style tier insight on invented data, add 50 big spenders, and rerun. **Proves:** existing customers change tier with no change in their own behaviour.
+- [ ] **D360-SEG-04** · 25 min · Copy the D360-SEG-01 spend insight onto Contact with a copy field enrichment, add a related list enrichment beside it, then add one order and check both before and after the next insight run. **Proves:** which one shows the change first, and which one a Contact report can filter on.
 
 ## Related
 
@@ -54,6 +66,7 @@ currency: "Summer '26 (API 67.0)"
 - [Data Model: DSO, DLO & DMO](data-model-dso-dlo-dmo.md) — the DMOs insights query
 - [SF_core · 04-flow · 22 Data Cloud-triggered flows & data actions](../SF_core/04-flow-and-automation/22-data-cloud-triggered-flows-and-data-actions.md) — what a streaming insight or data action triggers on the CRM side
 - [Interview · Identity & segmentation](../Interview/02-data-360/02-identity-and-segmentation.md) — the RFM churn-alert and two-definitions-of-churn scenarios
+- [RELEASE-RADAR · Data 360](../RELEASE-RADAR/data-360.md) — the `sfsqlquery` entry: the three query shapes and the dataspace trap they inherit
 
 ## Sources
 
@@ -67,8 +80,11 @@ currency: "Summer '26 (API 67.0)"
 - [Segment Types and Their Applications](https://trailhead.salesforce.com/content/learn/modules/advanced-segmentation-in-data-360/match-segment-types-to-your-use-case) — Trailhead · via search 2026-10-02 · waterfall: up to 20 segments, each customer in exactly one
 - [Increase Segment Refresh to the Activation Targets](https://help.salesforce.com/s/articleView?id=data.c360_a_rapid_segment_publish.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-02 · 1 or 4 hours vs the standard 12 or 24
 - [Create a Copy Field Enrichment](https://help.salesforce.com/s/articleView?id=sf.c360_a_create_a_copy_field_enrichment.htm&language=en_US&type=5) and [Create a Customer 360 View using Data 360 Related Lists](https://help.salesforce.com/s/articleView?id=005101842&language=en_US&type=1) — Salesforce Help · via search 2026-10-02
+- [Review SQL Examples](https://trailhead.salesforce.com/content/learn/modules/customer-data-platform-insights-using-sql/review-sql-examples) — Trailhead · read 2026-10-25 · spend per unified individual: `SUM` over `ssot__SalesOrder__dlm`, joined through `IndividualIdentityLink__dlm`, `GROUP BY` the unified ID
+- [Query Data 360 Data with Apex](https://developer.salesforce.com/docs/data/data-cloud-query-guide/guide/dc-apex-query.html) — Salesforce Developers · via search 2026-10-25 · `sfsqlquery` is the recommended approach; `ConnectApi.CdpQuery` remains as the low-level option
 
 ## History
 
 - 2026-10-02 · created — facts carried over from the archived roadmap notes and confirmed against Salesforce search extracts
 - 2026-10-02 · updated — CIOs, Segment On, segment types, publish schedules and enrichments, for the terminology flashcards
+- 2026-10-25 · updated — your 2026-10-17 notes as `## My recall`; lifetime value grouped by the unified ID; Apex reads through `sfsqlquery`
