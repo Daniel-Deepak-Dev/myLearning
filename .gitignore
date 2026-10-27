@@ -16,3 +16,4 @@ cards/
 
 # Obsidian rewrites the graph zoom constantly; colour groups live in bases/graph-groups.json
 .obsidian/graph.json
+delete later 2.md

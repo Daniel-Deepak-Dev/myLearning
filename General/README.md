@@ -12,6 +12,12 @@ This is a home, not a vault. There are no flashcards, labs or gaps, and it is no
 4. **Find it later in [INDEX.md](INDEX.md)**, grouped by subject. `npm run vault:home` rebuilds it.
 5. **It comes back.** A note's `created` date counts as your first study. `npm run today` lists it under **Review** 3, 7, 16, 35 and 75 days later.
 
+## English speaking and grammar
+
+Start at [english/README.md](english/README.md). Run `npm run english` for a separate 15-minute session, or use the optional English block in `npm run today`.
+The path starts at intermediate level and uses brief Tamil explanations when helpful. Each lesson connects grammar, useful expressions and listening to a speaking task.
+English lesson creation is preparation. Only a spoken-practice tick in the journal starts its reviews; a filing tick does not. The lesson's `My recall` stays empty until you supply your words.
+
 ## Layout
 
 ```

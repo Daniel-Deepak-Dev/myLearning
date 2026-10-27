@@ -9,12 +9,14 @@ Everything below is counted from the notes, so it cannot drift.
 
 ## ▶ Today
 
-Run `npm run today`. It writes this session into `journal/2026-10-25.md`, with room to blurt before you open the note.
+Run `npm run today`. It writes this session into `journal/2026-10-27.md`, with room to blurt before you open the note.
 
-- **Agentforce** · [Prompt Builder & Prompt Templates](SF_Agentforce/prompt-builder-and-prompt-templates.md) — next in read order
+- **Core dev** · [Order of Execution — Declarative View](SF_core/01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md) — an interview question probes it
 - **Review:** 3 due — [Calculated Insights & Segmentation](SF_Data_360/calculated-insights-and-segmentation.md), [Data Model: DSO, DLO & DMO](SF_Data_360/data-model-dso-dlo-dmo.md), [Identity Resolution](SF_Data_360/identity-resolution.md)
-- **Drill:** one recall sheet, answers covered
+- **Drill:** one scenario question, out loud
 - **Claude Code** · learn next: Instructions & memory
+- **English · 15 min, optional** · [Giving clear work updates](General/english/giving-clear-work-updates.md) — next speaking lesson
+  English only: `npm run english` · [How to practise](General/english/README.md)
 
 *In your words: 4 of 288 notes. Each vault's `RECALL.md` collects them — linked in the table at the bottom.*
 
@@ -102,7 +104,7 @@ Run `npm run today`. It writes this session into `journal/2026-10-25.md`, with r
 | [SF_Experience_Cloud/](SF_Experience_Cloud/INDEX.md) | 25 | [0](SF_Experience_Cloud/RECALL.md) | 0 | 20 |
 | [SF_Service/](SF_Service/INDEX.md) | 13 | [0](SF_Service/RECALL.md) | 0 | 51 |
 | [SF_Sales/](SF_Sales/INDEX.md) | 10 | [0](SF_Sales/RECALL.md) | 0 | 40 |
-| [General/](General/INDEX.md) | 0 | 0 | — | — |
+| [General/](General/INDEX.md) | 4 | 0 | — | — |
 
-*Rebuilt 2026-10-25.*
+*Rebuilt 2026-10-27.*
 

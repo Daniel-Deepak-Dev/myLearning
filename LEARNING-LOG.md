@@ -23,6 +23,25 @@ Newest first.
 
 ---
 
+### 2026-10-25 · Tamil translations for English practice
+
+**No notes fed — a coaching preference.** Keep instructions and grammar explanations in English. Use occasional Tamil translations of an original sentence and its corrected version to clarify meaning. If both translate alike, explain that instead of inventing a Tamil error.
+
+- Updated the English guide, scoped coaching rules, filing procedure and session wording. Your practice answers and completion ticks are unchanged.
+
+### 2026-10-25 · English speaking and grammar track
+
+**No notes fed — a structural change.** You asked for professional English, vocabulary, pronunciation, compounds, idioms, film references and grammar. You described your level as intermediate and your native language as Tamil.
+
+- **Guide and coaching rules** → [General/english/README.md](General/english/README.md) and [AGENTS.md](General/english/AGENTS.md).
+  - A 15-minute listen, grammar, record and retry routine. English first, with brief Tamil explanations when helpful.
+- **Prepared lessons** → [work updates](General/english/giving-clear-work-updates.md), [clarification](General/english/clarifying-and-checking-understanding.md), [trade-offs](General/english/disagreeing-and-explaining-trade-offs.md) and [film discussion](General/english/movie-practice-and-calm-disagreement.md).
+  - Original practice dialogues, sourced grammar and listening links. Your recall sections remain empty.
+- **Commands** → `npm run english` writes English on its own; `npm run today` includes it as an optional block.
+  - Prepared dates and filing ticks do not start spoken reviews. Only your English practice tick does. Existing journal text is preserved.
+
+**Also touched:** root and General instructions, the daily-session contract and the study-notes procedure. No practice marked complete.
+
 ### 2026-10-25 · Data 360 end to end: S3 guests → Contacts → lifetime value → CRM
 
 Your 2026-10-17 journal notes, filed late. They had replaced that day's session, so they sat under no `## Notes` heading and "file today's notes" could not see them. These are the first lines in the repo in your own words.

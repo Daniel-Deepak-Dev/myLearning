@@ -123,7 +123,7 @@ Why: you remember what you produce, not what you read. Every study behind this d
 
 ### 2b. The daily session
 
-`npm run today` picks one session and writes it into `journal/YYYY-MM-DD.md`. It is built for 30–45 minutes:
+`npm run today` picks one session and writes it into `journal/YYYY-MM-DD.md`. The Salesforce blocks take about 45 minutes. The other tracks are optional and add their own time:
 
 | Block | Time | What you do |
 |---|---|---|
@@ -132,6 +132,7 @@ Why: you remember what you produce, not what you read. Every study behind this d
 | Topic | 20 min | Blurt everything you remember **before** opening the note. Then open it, write what you missed, and write or fix its `## My recall`. |
 | Drill | 10 min | Mon/Wed a scenario out loud · Tue/Thu the topic's code from a blank file · Fri a project story · weekend a recall sheet, answers covered. |
 | Claude Code | 20 min + lab | **Learn** the next unfed topic on the [Claude_Code/](Claude_Code/README.md) path, then write what you learnt under Notes. **Build** the first unticked lab in a fed note. |
+| English, optional | 15 min | Listen, practise one grammar choice, record a short answer, then retry. Intermediate level with Tamil support → [guide](General/english/README.md). `npm run english` writes this block on its own. |
 | Notes | any | Learn anything, on any number of topics, from a blank page. Say "file today's notes": Claude maps each piece to its note in each vault, adds the gaps you skipped, and writes `### Filed`. |
 
 **How it picks**, all derived and nothing stamped:
@@ -140,6 +141,7 @@ Why: you remember what you produce, not what you read. Every study behind this d
 - **Topic** — an open [WEAK-ANSWERS](Interview/WEAK-ANSWERS.md) row in that area first. Then a new note an interview question probes, then one a flashcard cites, then read order. Then the note studied longest ago.
 - **Reviews** come back 3, 7, 16, 35 and 75 days after each tick. A Claude Code note counts its `created` date as its first tick, because you feed it rather than `today` picking it.
 - **Claude Code** is a track outside the rotation. The first README path row with an empty `Note` cell is the Learn line. A fed note's first unticked lab is the Build line.
+- **English** is a speaking path inside General, outside the rotation. Due spoken reviews come first, then an unpractised lesson in its README order. Prepared files do not count as studied. Only a tick under `## English · 15 min` starts or advances its review interval; filing alone does not. Its reviews stay in that block.
 - **The record is the tick.** A ticked `- [x]` line in a journal file is what counts as studied. An unticked pick is a day skipped, and it comes back.
 - **A note you fed counts too.** Filing writes one ticked line per note under `### Filed`, linking the note. That tick starts its reviews, the same as a picked topic you ticked. The gaps stay in the note; Filed shows only how many were added.
 

@@ -13,6 +13,8 @@
     "vault:fix": "node scripts/py.js scripts/vault.py fix",
     "vault:home": "node scripts/py.js scripts/vault.py home",
     "today": "node scripts/py.js scripts/vault.py today",
+    "english": "node scripts/py.js scripts/vault.py english",
+    "test": "node scripts/py.js scripts/test_english.py",
     "check": "node scripts/py.js scripts/vault.py check --quiet && node scripts/py.js scripts/flashcards.py check"
   }
 }

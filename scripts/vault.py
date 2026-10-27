@@ -1575,6 +1575,12 @@ def cmd_home() -> int:
         if s.build:
             parts.append(f"build: [{note_title(s.build[0])}]({s.build[0].rel})")
         out.append(f"- **{TRACK_TITLE}** · " + " · ".join(parts))
+    if s.english is not None:
+        en_note, en_why = s.english
+        en_topic = (f"[{note_title(en_note)}]({en_note.rel}) — {en_why}"
+                    if en_note else "free speaking; no lesson due")
+        out.append(f"- **English · 15 min, optional** · {en_topic}")
+        out.append(f"  English only: `npm run english` · [How to practise]({ENGLISH_DIR}/README.md)")
     out.append("")
     mine = sum(m for m, _ in recall.values())
     total = sum(t for _, t in recall.values())
@@ -1719,6 +1725,12 @@ GENERAL_DIR = "General"
 GENERAL_INDEX = os.path.join(ROOT, GENERAL_DIR, "INDEX.md")
 ONE_LINE_RE = re.compile(r"^\*\*One line:\*\*\s*(.*)$")
 
+# English is an opt-in speaking track inside General. Prepared lessons need
+# a real spoken-practice tick; their creation dates are not study evidence.
+ENGLISH_DIR = "General/english"
+ENGLISH_README = os.path.join(ROOT, ENGLISH_DIR, "README.md")
+ENGLISH_HEADING = "## English · 15 min"
+
 # Days until a studied topic comes back, by how many times it has been ticked.
 REVIEW_DAYS = (3, 7, 16, 35, 75)
 REVIEWS_PER_DAY = 3
@@ -1827,13 +1839,19 @@ def journal_record(before: date) -> tuple[dict[str, set[date]], str]:
         if not name.endswith(".md") or not d or d >= before:
             continue
         with open(os.path.join(JOURNAL, name), encoding="utf-8") as fh:
+            section = ""
             for line in fh:
+                if line.startswith("## "):
+                    section = line.strip()
                 m = TICKED_RE.match(line)
                 if not m:
                     continue
                 text.append(m.group(1))
                 for _, target in MD_LINK_RE.findall(m.group(1)):
-                    studied[rel_of(os.path.normpath(os.path.join(JOURNAL, target)))].add(d)
+                    rel = rel_of(os.path.normpath(os.path.join(JOURNAL, target)))
+                    if rel.startswith(ENGLISH_DIR + "/") and section != ENGLISH_HEADING:
+                        continue  # Filing an English note is not spoken practice.
+                    studied[rel].add(d)
     return studied, "\n".join(text)
 
 
@@ -1936,7 +1954,7 @@ def write_general_index(notes: list[Note]) -> int:
         by_subject[parts[1] if len(parts) > 2 else ""].append(n)
 
     out = [
-        "# General — what you have learnt", "",
+        "# General — topics and notes", "",
         "**Generated from the notes by `npm run vault:home`. Edit a note, never this file.**",
         "How to feed it: [README.md](README.md).", "",
     ]
@@ -1961,15 +1979,16 @@ def write_general_index(notes: list[Note]) -> int:
     return len(by_subject)
 
 
-def track_path(notes: list[Note]) -> list[tuple[str, str, Note | None]]:
+def track_path(notes: list[Note], folder: str = TRACK_DIR,
+               readme: str = TRACK_README) -> list[tuple[str, str, Note | None]]:
     """The README path table as (topic, learn from, fed note or None), in order.
 
     Fed notes the table does not list follow at the end, so their labs still surface.
     """
-    if not os.path.exists(TRACK_README):
+    if not os.path.exists(readme):
         return []
     by_rel = {n.rel: n for n in notes}
-    headers, rows = parse_table(load_note(TRACK_README).lines, 0)
+    headers, rows = parse_table(load_note(readme).lines, 0)
     if "Topic" not in headers:
         return []
     col = {h: headers.index(h) for h in ("Topic", "Learn from", "Note") if h in headers}
@@ -1977,13 +1996,74 @@ def track_path(notes: list[Note]) -> list[tuple[str, str, Note | None]]:
     out, listed = [], set()
     for _, cells in rows:
         m = MD_LINK_RE.search(cell(cells, "Note"))
-        rel = rel_of(os.path.normpath(os.path.join(ROOT, TRACK_DIR, m.group(2)))) if m else None
+        rel = rel_of(os.path.normpath(os.path.join(ROOT, folder, m.group(2)))) if m else None
         note = by_rel.get(rel)
         if note:
             listed.add(note.rel)
         out.append((cell(cells, "Topic"), cell(cells, "Learn from"), note))
     out += [(note_title(n), "", n) for n in notes if n.rel not in listed]
     return out
+
+
+def pick_english(notes: list[Note], studied: dict[str, set[date]],
+                 day: date) -> tuple[Note | None, str]:
+    """Due spoken reviews first, then an unpractised lesson in README order."""
+    english = [n for n in notes if n.rel.startswith(ENGLISH_DIR + "/")]
+    ordered = [n for _, _, n in track_path(english, ENGLISH_DIR, ENGLISH_README) if n]
+    due = []
+    for n in ordered:
+        dates = studied.get(n.rel)
+        if dates:
+            wait = REVIEW_DAYS[min(len(dates), len(REVIEW_DAYS)) - 1]
+            over = (day - max(dates)).days - wait
+            if over >= 0:
+                due.append((-over, n.rel, n))
+    if due:
+        return min(due, key=lambda item: item[:2])[2], "due spoken review"
+    fresh = next((n for n in ordered if not studied.get(n.rel)), None)
+    return fresh, "next speaking lesson" if fresh else ""
+
+
+def render_english(note: Note | None, why: str) -> list[str]:
+    out = [ENGLISH_HEADING, "",
+           f"Optional. [Start here](../{ENGLISH_DIR}/README.md). "
+           "Intermediate English; English instructions with occasional Tamil translations.", ""]
+    if note:
+        out += [f"- [ ] **Speak from memory** · [{note_title(note)}](../{note.rel}) — {why}.", "",
+                "1. **Listen · 3 min.** Use the lesson's listening link; repeat a short passage.",
+                "2. **Grammar · 3 min.** Make three sentences with its target pattern.",
+                "3. **Speak · 5 min.** Record a 60–90 second answer to its prompt, then replay it.",
+                "4. **Retry · 4 min.** Fix one grammar or phrasing issue and record again.", "",
+                "Tick only after using the target grammar and two expressions without reading. "
+                "If stuck, leave it unticked and retry. Keep your actual sentences under **Notes**."]
+    else:
+        out += ["No lesson is due and every prepared lesson has been practised. "
+                "Talk for one minute about today's work, or ask for a new English lesson. "
+                "Keep any sentences you want feedback on under **Notes**."]
+    return out
+
+
+def cmd_english(day: date, dry_run: bool) -> int:
+    studied, _ = journal_record(day)
+    note, why = pick_english(general_notes(), studied, day)
+    block = render_english(note, why)
+    if dry_run:
+        print("\n".join(block))
+        return 0
+    path = os.path.join(JOURNAL, f"{day}.md")
+    source = path if os.path.exists(path) else DAILY_TEMPLATE
+    with open(source, encoding="utf-8") as fh:
+        lines = fh.read().replace("{{date:YYYY-MM-DD}}", str(day)).splitlines()
+    if any(l == ENGLISH_HEADING for l in lines):
+        print(f"journal/{day}.md already has English practice — open it.")
+    else:
+        at = next((i for i, l in enumerate(lines) if l == "## Notes"), len(lines))
+        os.makedirs(JOURNAL, exist_ok=True)
+        write_generated(path, lines[:at] + block + [""] + lines[at:])
+        print(f"wrote English practice into journal/{day}.md")
+    if day == TODAY:
+        cmd_home()
+    return 0
 
 
 @dataclass
@@ -2000,6 +2080,7 @@ class Session:
     story: str | None
     learn: tuple[str, str] | None = None      # track: next topic to learn, where from
     build: tuple[Note, str] | None = None     # track: next unticked lab in a fed note
+    english: tuple[Note | None, str] | None = None
 
 
 def plan_session(notes, day: date) -> Session:
@@ -2007,17 +2088,20 @@ def plan_session(notes, day: date) -> Session:
     studied, ticked_text = journal_record(day)
     order = read_order(notes)
 
-    # Track and General notes are fed, never picked, so the day they were fed is their first study.
+    # Track and General feeds start study on creation; prepared English
+    # lessons start only when the learner ticks a spoken attempt.
     track = track_notes()
     fed_notes = track + general_notes()
     for n in fed_notes:
         fed = parse_date(str(n.meta.get("created", "")))
-        if fed and fed < day:
+        if fed and fed < day and not n.rel.startswith(ENGLISH_DIR + "/"):
             studied[n.rel].add(fed)
 
     # Reviews: notes in your words whose next spaced date has come, most overdue first.
     due = []
     for n in order + fed_notes:
+        if n.rel.startswith(ENGLISH_DIR + "/"):
+            continue  # Its own optional block handles spoken reviews.
         dates = studied.get(n.rel)
         if not dates or not recall_lines(n):
             continue
@@ -2074,7 +2158,8 @@ def plan_session(notes, day: date) -> Session:
     build = next(((n, l) for _, _, n in path if n and (l := first_open_lab(n))), None)
 
     return Session(day, area, prefixes[0].split("/")[0], topic, why, reviews,
-                   drill, question, lab, story, learn, build)
+                   drill, question, lab, story, learn, build,
+                   pick_english(fed_notes, studied, day) if os.path.exists(ENGLISH_README) else None)
 
 
 def render_session(s: Session) -> list[str]:
@@ -2150,6 +2235,8 @@ def render_session(s: Session) -> list[str]:
         if not (s.learn or s.build):
             out.append(f"*Path done — add the next topic to [{TRACK_DIR}/README.md]"
                        f"(../{TRACK_DIR}/README.md).*")
+    if s.english is not None:
+        out += [""] + render_english(*s.english)
     return out
 
 
@@ -2176,6 +2263,11 @@ def cmd_today(day: date, dry_run: bool) -> int:
     with open(source, encoding="utf-8") as fh:
         lines = fh.read().replace("{{date:YYYY-MM-DD}}", str(day)).splitlines()
     at = next((i for i, l in enumerate(lines) if l.startswith("<!-- today")), None)
+    has_english = any(l == ENGLISH_HEADING for l in lines)
+    if has_english:
+        # `english` can run first. Its existing block and the user's edits win.
+        english_at = block.index(ENGLISH_HEADING) if ENGLISH_HEADING in block else len(block)
+        block = block[:english_at]
     if at is None:
         print(f"{rel} already has today's session — open it.")
     else:
@@ -2185,6 +2277,8 @@ def cmd_today(day: date, dry_run: bool) -> int:
               f"{note_title(s.topic) if s.topic else 'no topic'}, "
               f"{len(s.reviews)} review(s), drill: {DRILL_NAMES[s.drill]}"
               + (f", {TRACK_TITLE}: {s.learn[0]}" if s.learn else ""))
+    if at is None and not has_english and s.english is not None:
+        return cmd_english(day, False)
     if day == TODAY:
         cmd_home()
     return 0
@@ -2388,6 +2482,10 @@ def main() -> int:
                     help="plan for another day (YYYY-MM-DD) — for trying the picker")
     td.add_argument("--dry-run", action="store_true", help="print the session, write nothing")
 
+    en = sub.add_parser("english", help="add a 15-minute English session without the other tracks")
+    en.add_argument("--date", type=date.fromisoformat, default=TODAY)
+    en.add_argument("--dry-run", action="store_true", help="print the session, write nothing")
+
     mg = sub.add_parser("migrate", help="one-shot: blockquote metadata -> frontmatter")
     mg.add_argument("--only", action="append", default=[],
                     help="limit to paths containing this substring (repeatable)")
@@ -2401,6 +2499,9 @@ def main() -> int:
 
     if args.cmd == "today":
         return cmd_today(args.date, args.dry_run)
+
+    if args.cmd == "english":
+        return cmd_english(args.date, args.dry_run)
 
     if getattr(args, "list_rules", False):
         table = FIXERS if args.cmd == "fix" else RULES

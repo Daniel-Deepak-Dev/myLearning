@@ -31,6 +31,8 @@ Do not merge unrelated things into one file just because they arrived together.
 
 **Not Salesforce and not Claude Code at all?** Skip steps 2–9 and follow [General/AGENTS.md](../../../General/AGENTS.md): one folder per subject, a short researched body, no gaps or labs. The `## My recall` rule applies word for word. Then go to step 10. General tech that Salesforce uses, such as OAuth or REST, goes there only when the notes never name a Salesforce feature.
 
+**English speaking, grammar or vocabulary?** In the General branch, also read [General/english/AGENTS.md](../../../General/english/AGENTS.md). Use the existing situation-based lesson before making a new one. Keep the user's attempts and researched corrections separate. A Filed tick records filing; never tick their English speaking session. Keep instructions and grammar explanations in English. Use occasional Tamil translation pairs to clarify meaning; `## My recall` remains their words.
+
 ## 2 · Route
 
 One question per piece:

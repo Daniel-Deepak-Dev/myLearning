@@ -29,6 +29,8 @@ Shared at the root: [GLOSSARY.md](GLOSSARY.md) (all terms, greppable), [RELEASE-
 
 [General/](General/README.md) holds everything else you learn: money, history, health, a language, general tech. It is **not a vault** either. Notes sit in one folder per subject, with your words on top and a short researched body, and no gaps, labs or flashcards. Rules are in [General/AGENTS.md](General/AGENTS.md). Its notes join `npm run today`'s reviews from their `created` date, and [General/INDEX.md](General/INDEX.md) is generated.
 
+[English practice](General/english/README.md) lives inside General. Run `npm run english` for a 15-minute session, or use the optional block in `npm run today`. The user reports intermediate English and Tamil as their native language. Grammar is part of speaking practice. Read [General/english/AGENTS.md](General/english/AGENTS.md) before coaching or filing English notes. Prepared English lessons enter reviews only after the user's spoken-practice tick, not from `created`.
+
 [_archive/AI_Data/](_archive/AI_Data/) is the retired roadmap vault. It is a **quarry for verified facts, never a link target.** Nothing live should link into it.
 
 ## When the user pastes rough learning notes
