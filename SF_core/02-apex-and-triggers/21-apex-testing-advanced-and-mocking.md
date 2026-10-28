@@ -4,8 +4,8 @@ area: 02-apex-and-triggers
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 5
 ---
 # Apex Testing Advanced & Mocking
@@ -39,7 +39,7 @@ public class QuoteProvider implements System.StubProvider {
 
 ## 2026 currency
 
-**Apex Integration Tests are Developer Preview at 67.0, and they are narrower than the name suggests** — the feature is *Apex Integration Tests for Agentforce and Data 360 Services*, scratch orgs only, enabled with the `ApexIntegrationTests` scratch org feature. `@IntegrationTest` allows **live callouts** and `IntegrationTest.commitTestOnly()` commits data mid-transaction, with a `@TearDown` method for cleanup; they run asynchronously through the Tooling API. The reason it exists is exactly the limitation above: mocking every callout and rolling back all data makes it impossible to assert on a real Agentforce or Data 360 round trip. Separately, **Unified Logic Testing is Beta** — `sf logic run test --test-level RunLocalTests --test-category Apex --test-category Flow` runs both suites in one request, which matters once invocable Apex is the seam between them. → [22](22-invocable-apex-and-agentforce-actions.md), [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
+**Apex Integration Tests arrived as Developer Preview at 67.0 and are still Developer Preview at 68.0** — scratch orgs only, enabled with the `ApexIntegrationTests` scratch org feature, never in production, sandboxes or deployments. At 67.0 they were scoped to Agentforce and Data 360; **Winter '27 widened them to real HTTP endpoints** and added `@BeforeClass` for shared setup data. `@IntegrationTest` allows **live callouts** and `IntegrationTest.commitTestOnly()` commits data mid-transaction, with a `@TearDown` method for cleanup; they run asynchronously, one per org at a time, under async limits, and earn no coverage. A registered `HttpCalloutMock` still wins over the real endpoint. The reason it exists is exactly the limitation above: mocking every callout and rolling back all data makes it impossible to assert on a real round trip. Separately, **Unified Logic Testing is Beta** — `sf logic run test --test-level RunLocalTests --test-category Apex --test-category Flow` runs both suites in one request, which matters once invocable Apex is the seam between them. → [22](22-invocable-apex-and-agentforce-actions.md), [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 
 ## Gotchas
 
@@ -65,8 +65,8 @@ A: The stubbed object, the method name as a `String`, the return `Type`, the par
 Q: How do you assert on asynchronous work in a test?
 A: Call `Test.stopTest()` to flush the queue, then assert. Only one level of a Queueable chain runs.
 
-Q: What are Apex Integration Tests at 67.0, and what is the catch?
-A: Developer Preview, Agentforce and Data 360 only, scratch orgs only — `@IntegrationTest` permits live callouts and `IntegrationTest.commitTestOnly()`, with `@TearDown` for cleanup.
+Q: What are Apex Integration Tests at 68.0, and what is the catch?
+A: Still Developer Preview and scratch orgs only. Since Winter '27 they reach real HTTP endpoints as well as Agentforce and Data 360. `@IntegrationTest` permits live callouts and `IntegrationTest.commitTestOnly()`, with `@BeforeClass` for setup and `@TearDown` for cleanup.
 
 ## Related
 
@@ -76,3 +76,13 @@ A: Developer Preview, Agentforce and Data 360 only, scratch orgs only — `@Inte
 - [19 · Callouts, Named Credentials & HTTP](19-callouts-named-credentials-and-http-in-apex.md) — the real callout a mock stands in for
 - [22 · Invocable Apex & Agentforce actions](22-invocable-apex-and-agentforce-actions.md) — the seam Unified Logic Testing exists to cover
 - [26 · Testing platform events & CDC](26-testing-platform-events-and-cdc.md) — `Test.getEventBus().deliver()` and stepping through a retry sequence
+
+## Sources
+
+- [Apex Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · Apex Integration Tests (Developer Preview): *"real interactions between your Salesforce org and external services, including Agentforce and Data 360, as well as HTTP endpoints"*; `@BeforeClass` (Developer Preview); scratch orgs only, *"aren't available in production orgs, sandboxes, or during metadata deployments"*; one test per org at a time; async limits; no coverage; a registered `HttpCalloutMock` takes precedence
+- [Test External Services and HTTP Callouts in Apex Integration Tests (Developer Preview)](https://help.salesforce.com/s/articleView?id=release-notes.rn_apex_integration_tests.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-28 · Winter '27 release note: real HTTP endpoints without mocks; new `@BeforeClass`
+- [The Salesforce Developer's Guide to the Winter '27 Release](https://developer.salesforce.com/blogs/2026/10/developers-guide-to-the-winter-27-release) — Salesforce Developers Blog · via search 2026-10-28 · lists Apex integration tests as Developer Preview in Winter '27
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: Integration Tests still Developer Preview at 68.0 but no longer Agentforce/Data 360 only — real HTTP endpoints and `@BeforeClass` added; Recall answer updated

@@ -4,8 +4,8 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 15
 tags: [currency-new]
 ---
@@ -32,7 +32,7 @@ The mistake that makes archiving projects fail is treating it as a one-off clean
 - **Salesforce Archive** (from the Own acquisition) is the productized answer: **archive policies** define what leaves the live object and when, with end-to-end visibility and one-click unarchive. Part of it ships as a **managed package**, and it is licensed — design the policy so it survives without the product.
 - **Retention policy and purge policy are different things.** A retention policy deletes archived records when their period expires. A **purge policy deletes ad hoc, outside that period** — which is how a right-to-be-forgotten request is served against archived data.
 - **Standard objects have their own retention primitive:** `HistoryRetentionPolicy` under Field Audit Trail, which is the same idea applied to field history → [07-security · 22](../07-security-and-sharing/22-field-audit-trail-and-data-retention.md).
-- **Deleting is a tier.** The Recycle Bin means "archived" rows keep costing until physically purged → [13](13-deletes-recycle-bin-and-physical-deletion.md).
+- **Deleting is a tier.** The Recycle Bin means "archived" rows keep slowing queries until physically purged → [13](13-deletes-recycle-bin-and-physical-deletion.md).
 - **Design the archive around the retrieval question**, exactly as you design a big-object index — because on most tiers that is the only question you can ask.
 
 ## 2026 currency
@@ -41,12 +41,14 @@ The category changed owner. Salesforce **acquired Own Company** (announced Septe
 
 The second shift is the destination. Archiving used to mean *out of the org*; increasingly it means *into [Data 360](18-zero-copy-and-data-360-as-data-tier.md)*, where the data stays analysable and can ground an agent. Note the trade in both directions: a big object cannot be reported on, and a federated table cannot be transacted on.
 
+**Winter '27 made Platform Encryption for Archive and Backup GA**, extending Shield key management, including BYOK, to Salesforce Archive. That now separates the tiers for regulated data: a **custom big object supports no encryption**, and encrypted source fields archived into one are stored as clear text → [14](14-big-objects-and-the-archive-tier.md).
+
 ## Gotchas
 
 - **Editing a retention period applies retroactively** to everything already archived through that policy. The documented workaround is to deactivate the old policy and create a new one.
 - **Purge policies are capped at 1,000,000 records per day.** A large erasure obligation is a multi-day job, so a 30-day regulatory clock is tighter than it looks.
 - **Pre-2023 archive tutorials lead with a retired query mechanism.** Big objects are current; the query path named in those guides is not → [14](14-big-objects-and-the-archive-tier.md).
-- **Archiving does not shrink storage until the source rows are physically deleted** — soft-deleted rows still count → [13](13-deletes-recycle-bin-and-physical-deletion.md).
+- **Archiving does not speed up the object until the source rows are physically deleted.** Soft-deleted rows stop counting against storage but stay in the table → [13](13-deletes-recycle-bin-and-physical-deletion.md).
 - **Nothing archives a relationship.** Children whose parent left the live object become orphans unless the policy walks the graph in order.
 - **Retention obligations point both ways.** Privacy says delete; financial regulation says keep for ten years. The archive is how you hold both → [07-security · 25](../07-security-and-sharing/25-privacy-consent-and-data-protection.md).
 - **An archived record is invisible to automation, sharing and reports.** Anything that quietly assumed a full history — a roll-up, a report, an agent's grounding set — changes answer the day the policy runs.
@@ -65,12 +67,22 @@ A: 1,000,000 records per day.
 Q: Which tier do you choose for data that must be analysable and able to ground an agent?
 A: Data 360 or a federated lake — not a big object, which supports neither reporting nor arbitrary filters.
 
-Q: Why does archiving often fail to reduce storage?
-A: The source rows are only soft-deleted, and soft-deleted rows keep consuming storage and query time until they are physically purged.
+Q: Why does archiving often fail to speed up the source object?
+A: The source rows are only soft-deleted. They no longer count against storage, but they stay in the table and slow every scan until physically purged.
 
 ## Related
 
 - [14 · Big objects & the archive tier](14-big-objects-and-the-archive-tier.md) — the mechanism this note sets policy for
-- [13 · Deletes, the Recycle Bin & physical deletion](13-deletes-recycle-bin-and-physical-deletion.md) — why archiving alone frees nothing
+- [13 · Deletes, the Recycle Bin & physical deletion](13-deletes-recycle-bin-and-physical-deletion.md) — why archiving alone speeds up nothing
 - [21 · Backup, restore & recovery](21-backup-restore-and-recovery.md) — the other half of the Own suite, and a different problem
 - [07-security · 22 Field Audit Trail & data retention](../07-security-and-sharing/22-field-audit-trail-and-data-retention.md) — retention expressed as a policy object
+
+## Sources
+
+- [Winter '27 Release: Top Development & Security Features](https://www.salesforce.com/blog/platform-winter-27-release/) — Salesforce blog, 13 Oct 2026 · read 2026-10-28 · *Platform Encryption for Archive and Backup* listed GA: *"extends native BYOK and customer-managed encryption keys"* to Salesforce Archive and Backup & Recover
+- [Big Objects Implementation Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/big_objects_guide.pdf) — Salesforce Developers · read 2026-10-28 · *"Big objects don't support encryption. If you archive encrypted data from a standard or custom object, it's stored as clear text on the big object"*
+- [Best Practices for Deployments with Large Data Volumes (PDF, Winter '27)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_large_data_volumes_bp.pdf) — Salesforce Developers · read 2026-10-28 · Recycle Bin items don't count against storage
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: Platform Encryption for Archive GA vs no encryption on big objects; soft-deleted rows no longer described as counting against storage

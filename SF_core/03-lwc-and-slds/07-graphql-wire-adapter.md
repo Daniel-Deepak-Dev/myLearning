@@ -4,8 +4,8 @@ area: 03-lwc-and-slds
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 6
 tags: [currency-new]
 ---
@@ -15,13 +15,13 @@ tags: [currency-new]
 
 ## Core idea
 
-The `graphql` wire adapter closes the gap that used to force an Apex class for any query with a `WHERE` clause. It is UI API underneath, so it inherits everything LDS gives you — the shared cache, automatic FLS and sharing enforcement, reactivity — and adds rich predicates: filter, sort, group, aggregate, and cursor pagination across multiple objects in a single round trip. The real value is not that GraphQL is a nicer query language. It is that **the Apex class, its test class and its security review all disappear**, and with them the most common way LWC data access goes wrong. What it is not is a general replacement for Apex: it reads, it does not write, it only sees what UI API models, and it has no transaction. Salesforce's own guidance is blunt about the middle case — if you already know the record IDs, the plain LDS adapters are more efficient and you should use those.
+The `graphql` wire adapter closes the gap that used to force an Apex class for any query with a `WHERE` clause. It is UI API underneath, so it inherits everything LDS gives you — the shared cache, automatic FLS and sharing enforcement, reactivity — and adds rich predicates: filter, sort, group, aggregate, and cursor pagination across multiple objects in a single round trip. The real value is not that GraphQL is a nicer query language. It is that **the Apex class, its test class and its security review all disappear**, and with them the most common way LWC data access goes wrong. What it is not is a general replacement for Apex: the wire only reads (writes are a separate imperative call, below), it only sees what UI API models, and it has no transaction. Salesforce's own guidance is blunt about the middle case — if you already know the record IDs, the plain LDS adapters are more efficient and you should use those.
 
 ## How it works
 
 | Piece | Role |
 |---|---|
-| `import { gql, graphql } from 'lightning/uiGraphQLApi'` | the template tag and the adapter |
+| `import { gql, graphql } from 'lightning/graphql'` | the template tag and the adapter — v2; `lightning/uiGraphQLApi` is v1 |
 | `uiapi { query { Account(where: …, first: …) { edges { node { … } } } } }` | the query shape — always `edges` → `node` |
 | `first` / `after` + `pageInfo { hasNextPage endCursor }` | Cursor Connections pagination; **default page size 10** |
 | `where`, `orderBy` | predicates — `{ Name: { like: "Acme%" } }`, `{ Name: { order: ASC } }` |
@@ -36,7 +36,7 @@ The `graphql` wire adapter closes the gap that used to force an Apex class for a
 
 ```js
 import { LightningElement, wire } from 'lwc';
-import { gql, graphql } from 'lightning/uiGraphQLApi';
+import { gql, graphql } from 'lightning/graphql';
 
 export default class AccountSearch extends LightningElement {
     term = 'Acme%';
@@ -55,12 +55,12 @@ export default class AccountSearch extends LightningElement {
 
 ## 2026 currency
 
-Two things to keep straight, because the release notes blur them. **Mutation chaining shipped in Summer '26 for the GraphQL *API*, not for the wire adapter** — an operation can now reference any field returned by an earlier operation in the same request via `@{ref.Record.FieldName.value}`, which is genuinely useful for server-to-server work and does nothing for a component, because the wire adapter still supports no mutations at all. Writes from a component remain LDS's job. Second, **features reach the API before the adapter**, sometimes by several releases, so a capability documented under "GraphQL API" is not evidence the wire adapter has it. Two standing gaps worth knowing: variables in the `@skip` and `@include` directives are unsupported, and **Mobile Offline needs the imperative `lightning/uiGraphQLApi` module rather than the wire adapter**. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
+Two things to keep straight, because the release notes blur them. **A component can write through GraphQL.** Since **Spring '26**, `executeMutation` from `lightning/graphql` creates, updates and deletes records. It is imperative only — not a `@wire` — and it returns `errors` (plural) to match the GraphQL spec. `lightning/graphql` (v2, API 65.0+) supersedes `lightning/uiGraphQLApi` (v1), which still works but is deprecated. Second, **features reach the API before the adapter**: Summer '26 **mutation chaining** (`@{ref.Record.FieldName.value}`) is documented for the GraphQL *API*, so a capability listed there is not evidence a component has it. Two standing gaps worth knowing: variables in the `@skip` and `@include` directives are unsupported, and **Mobile Offline still needs v1 `lightning/uiGraphQLApi`**, because v2 does not support offline. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 
 ## Gotchas
 
 - **`node.Name` is an object, not a string.** Every field is `{ value, displayValue }`; binding the field directly renders `[object Object]`.
-- **No mutations.** Create, update and delete go through `lightning/uiRecordApi`. → [06](06-lightning-data-service-and-ui-api-wires.md)
+- **Mutations are imperative and do not refresh queries.** `executeMutation` cannot be `@wire`d, and a newly created record stays out of existing query results until you refresh the query. For one record you already have the ID of, `lightning/uiRecordApi` is still the simpler write → [06](06-lightning-data-service-and-ui-api-wires.md)
 - **Objects UI API does not support are invisible here**, because this is UI API with a different query language on top.
 - **Aggregate queries still obey the 2,000-record ceiling on the underlying rows**, so a `sum` over a large object is not the tool — that is a report or an Apex aggregate query.
 - **System-context work is out of reach by design.** If the requirement is "show a count the user cannot see the rows behind", that is Apex without sharing, not this. → [02-apex · 11 sharing keywords](../02-apex-and-triggers/INDEX.md)
@@ -79,11 +79,21 @@ A: Through `edges[].node.FieldName.value` — every scalar is wrapped as `{ valu
 Q: What are the pagination defaults and limits?
 A: Ten records per page by default, cursor-based via `first`/`after` and `pageInfo.endCursor`, capped at 2,000 records for the collection.
 
-Q: Did Summer '26 mutation chaining give components the ability to write via GraphQL?
-A: No — chaining is a GraphQL API feature. The wire adapter still has no mutations; writes stay in LDS.
+Q: Can a component create, update or delete records through GraphQL?
+A: Yes, since Spring '26 — `executeMutation` from `lightning/graphql`, called imperatively, never through `@wire`. Mutation chaining is documented for the GraphQL API, not for this module.
 
 ## Related
 
-- [06 · Lightning Data Service & UI API wires](06-lightning-data-service-and-ui-api-wires.md) — the cache this shares, and the only client-side write path
+- [06 · Lightning Data Service & UI API wires](06-lightning-data-service-and-ui-api-wires.md) — the cache this shares, and the record-by-ID write path
 - [08 · Apex in LWC — wire vs imperative](08-apex-in-lwc-wire-vs-imperative.md) — where to go when the query needs server logic or system context
 - [05 · Decorators & the reactivity model](05-decorators-and-the-reactivity-model.md) — `$`-prefixed wire variables and why the getter form matters
+
+## Sources
+
+- [GraphQL Mutations Now Available in LWC: Create, Update, and Delete Records](https://developer.salesforce.com/blogs/2026/05/graphql-mutations-now-available-in-lwc-create-update-and-delete-records) — Salesforce Developers · via search 2026-10-28 · `executeMutation` from `lightning/graphql`, introduced Spring '26; imperative only; created records need a query refresh, deletes do not
+- [executeMutation](https://developer.salesforce.com/docs/platform/lwc/guide/reference-graphql-mutation.html) — Salesforce Developers · via search 2026-10-28 · not supported with `@wire`; takes `query`, `variables`, `operationName`; returns `errors`. 🚩 The search did not show a GA or Beta label for this function; the GraphQL API marks mutations GA from v66.0
+- [lightning/graphql Wire Adapter (v2)](https://developer.salesforce.com/docs/platform/lwc/guide/reference-lightning-graphql-module.html) — Salesforce Developers · via search 2026-10-28 · v2 supersedes deprecated v1 `lightning/uiGraphQLApi`; first available at API 65.0; v1 is the one that supports Mobile Offline
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: corrected "no mutations" — `executeMutation` (Spring '26) writes from a component; switched the import to v2 `lightning/graphql`

@@ -4,8 +4,8 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 15
 tags: [currency-new, currency-warning]
 ---
@@ -26,7 +26,7 @@ The first is **choice of region**, which turns "where does our data live" from a
 - **Regions are the residency control.** Data at rest stays in the chosen region, with multiple availability zones behind it for durability.
 - **The EU Operating Zone goes further than region choice** — technical policies and operational processes that constrain what data moves out of the EU, which is the distinction a regulator actually asks about.
 - **Migration is managed, not a toggle.** Salesforce schedules it, notifies the org 30 days ahead with the org Id, date and new instance name, and reminds at 15 days.
-- **The instance name changes**, which is why instanced hostnames stop working — and API traffic on an instanced URL stops being supported shortly after Winter '27 anyway → [06-integration · 03](../06-integration-and-apis/03-api-endpoints-hostnames-and-edge-network.md).
+- **The instance name changes**, which is why instanced hostnames stop working — and API traffic on an instanced URL loses support anyway when the *Update Instanced URLs in API Traffic* Release Update is enforced, now postponed to **Spring '27** → [06-integration · 03](../06-integration-and-apis/03-api-endpoints-hostnames-and-edge-network.md). 🚩 Salesforce's Enhanced Domains pages still say Winter '27.
 - **Some limits are better on Hyperforce.** Salesforce Connect's per-hour ceilings on new external object rows and OData callouts are removed there → [17](17-external-objects-vs-replicated-copies.md).
 - **File previews are generated as JPG, not SVG**, regardless of the account preference. Previews created before migration survive; new uploads do not, and custom code that reads SVG previews breaks.
 
@@ -67,3 +67,13 @@ A: Not by itself. Residency covers data at rest; sovereignty questions also cove
 - [06-integration · 03 API endpoints, hostnames & Edge Network](../06-integration-and-apis/03-api-endpoints-hostnames-and-edge-network.md) — the instanced-URL deadline this shares a root cause with
 - [07-security · 20 My Domain, enhanced domains & trusted URLs](../07-security-and-sharing/20-my-domain-enhanced-domains-and-trusted-urls.md) — why the old hostname 404s
 - [09-devops · INDEX](../09-devops-sfdx-and-release-management/INDEX.md) — the same platform shift seen from release operations
+
+## Sources
+
+- [Release Updates (Winter '27)](https://help.salesforce.com/s/articleView?id=release-notes.rn_ru.htm&release=264&type=5&language=en_US) — Salesforce Help · via search 2026-10-28 · *Update Instanced URLs in API Traffic* listed under *Scheduled to Be Enforced in Spring '27*; first available Summer '25, scheduled Spring '26, postponed
+- [Update Instanced URLs in API Traffic (Release Update)](https://help.salesforce.com/s/articleView?id=release-notes.rn_update_instanced_urls_in_api_traffic.htm&language=en_US&release=262&type=5) — Salesforce Help · via search 2026-10-28 · *"we postponed the enforcement date to Spring '27"*; change log records it the week of 10 Aug 2026
+- [Salesforce Enhanced Domains FAQ](https://help.salesforce.com/s/articleView?id=000393816&language=en_US&type=1) — Salesforce Help · via search 2026-10-28 · still reads *"shortly after"* Winter '27 — the conflict flagged above
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: instanced-URL enforcement moved from Winter '27 to Spring '27

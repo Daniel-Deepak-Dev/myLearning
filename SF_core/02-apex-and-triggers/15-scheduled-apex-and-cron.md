@@ -4,8 +4,8 @@ area: 02-apex-and-triggers
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 4
 ---
 # Scheduled Apex & CRON
@@ -48,7 +48,7 @@ System.abortJob(jobId);        // a schedule cannot be edited — abort and re-c
 
 ## 2026 currency
 
-Nothing in the scheduling mechanism itself changed at 67.0, but what runs *under* it did. A scheduled class runs as the user who scheduled it, and at 67.0 its SOQL and DML default to that user's access — so a job scheduled years ago by an admin who has since been deactivated or had permissions reduced does less than it used to, silently, the first time its class is recompiled at 67.0. Auditing `CronTrigger.OwnerId` against still-active, still-privileged users is a genuinely new piece of housekeeping. The access-mode mechanics are [10](10-apex-security-user-mode-and-fls.md); the release detail is [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
+Nothing in the scheduling mechanism itself changed at 67.0, but what runs *under* it did. A scheduled class runs as the user who scheduled it, and at 67.0 its SOQL and DML default to that user's access — so a job scheduled years ago by an admin who has since been deactivated or had permissions reduced does less than it used to, silently, the first time its class is recompiled at 67.0. Auditing `CronTrigger.OwnerId` against still-active, still-privileged users is a genuinely new piece of housekeeping. The access-mode mechanics are [10](10-apex-security-user-mode-and-fls.md); the release detail is [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md). Winter '27 (API 68.0) adds one more reason to hand off: **elastic async limits (still Beta) cover batch, Queueable and `@future` but not scheduled jobs**, which stay capped at the 24-hour async limit. → [12](12-async-apex-overview-and-choosing.md)
 
 ## Gotchas
 
@@ -57,7 +57,7 @@ Nothing in the scheduling mechanism itself changed at 67.0, but what runs *under
 - **100 scheduled Apex jobs is the ceiling**, and scheduling from a trigger is the classic way to reach it — every save adds another job that nothing removes.
 - **The schedule uses the scheduling user's timezone**, so a job set to 02:00 moves an hour twice a year and can run twice or not at all on the changeover night.
 - **The scheduled time is when the job is *queued*, not when it runs.** Under load the platform starts it late, so two jobs 60 seconds apart are not guaranteed to execute in that order.
-- **A `Schedulable` that does the work itself gets synchronous limits** — 100 SOQL queries, 6 MB heap, 10,000 ms CPU. The batch it should have started would have had none of those problems.
+- **A `Schedulable` that does the work itself gets synchronous limits** — 100 SOQL queries, 10 MB heap (6 MB before Winter '27), 10,000 ms CPU. The batch it should have started would have had none of those problems.
 - **Aborting a job deletes its `CronTrigger` row**, so the run history goes with it. Log elsewhere if you need to prove a job ran.
 
 ## Recall
@@ -82,3 +82,12 @@ A: A pending or in-progress job on that class. Abort it, deploy, then reschedule
 - [14 · Batch Apex & stateful processing](14-batch-apex-and-stateful-processing.md) — what a scheduled job almost always starts
 - [12 · Async Apex overview & choosing](12-async-apex-overview-and-choosing.md) — the shared async limits every scheduled run draws on
 - [04-flow · Flow at scale](../04-flow-and-automation/INDEX.md) — scheduled-triggered flows, the declarative alternative for simple clock-driven work
+
+## Sources
+
+- [Apex Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · *"synchronous limits apply to scheduled Apex jobs"*; synchronous heap **10 MB**; elastic limits (Beta): *"Scheduled jobs remain capped at the rolling 24-hour asynchronous job limit"*
+- [Handle Larger Datasets with Increased Apex Heap Limits](https://help.salesforce.com/s/articleView?id=release-notes.rn_apex_heap_limit.htm&language=en_US&release=264&type=5) — Salesforce Help · via search 2026-10-28 · Winter '27 release note: synchronous heap 6 → 10 MB
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: synchronous heap 6 → 10 MB in the gotcha; noted that elastic async limits exclude scheduled jobs

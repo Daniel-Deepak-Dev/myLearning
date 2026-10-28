@@ -4,8 +4,8 @@ area: 02-apex-and-triggers
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 3
 tags: [currency-new]
 ---
@@ -44,7 +44,7 @@ Your order shipped on ${shipped}.'''.template(new Map<String, Object>{
 
 ## 2026 currency
 
-The 67.0 additions are **multiline strings and `String.template()`**, both GA. They are the first genuine ergonomics change to Apex text handling since the language shipped, and they retire the concatenation chains that email bodies, JSON payloads, HTTP request bodies and dynamic SOQL were all built from. Two details do not survive a casual reading: the newline immediately after the opening `'''` is **trimmed** — so the literal above starts at `Hi`, not a blank line — and `.template()` renders a `Datetime` in **GMT** as `yyyy-MM-dd HH:mm:ss`, which is not what `String.valueOf()` does. Nothing else in the operator set moved; `??`, `?.` and `switch` are all long-standing GA and any "new in Apex" article claiming otherwise is dating itself.
+The 67.0 additions are **multiline strings and `String.template()`**, both GA. They are the first genuine ergonomics change to Apex text handling since the language shipped, and they retire the concatenation chains that email bodies, JSON payloads, HTTP request bodies and dynamic SOQL were all built from. Two details do not survive a casual reading: the newline immediately after the opening `'''` is **trimmed** — so the literal above starts at `Hi`, not a blank line — and `.template()` renders a `Datetime` in **GMT** as `yyyy-MM-dd HH:mm:ss`, which is not what `String.valueOf()` does. Nothing else in the operator set moved; `??`, `?.` and `switch` are all long-standing GA and any "new in Apex" article claiming otherwise is dating itself. **The Winter '27 (API 68.0) versioned-behaviour list adds no Apex syntax.** What it adds is a **compiler warning for classes and triggers saved at API 9.0–19.0**, which Salesforce says will be retired in a future release. No date is announced, but an inherited codebase that raises the warning needs its version bumped — and a bump past 66.0 also flips user mode and the `with sharing` default. → [10](10-apex-security-user-mode-and-fls.md)
 
 ## Gotchas
 
@@ -78,3 +78,11 @@ A: In GMT, as `yyyy-MM-dd HH:mm:ss` — not the running user's locale. Format it
 - [01 · Apex language core & governor limits](01-apex-language-core-and-governor-limits.md) — the type system these operators work over
 - [04 · Advanced SOQL, SOSL & dynamic queries](04-advanced-soql-sosl-and-dynamic-queries.md) — where multiline strings stop being cosmetic and make dynamic SOQL readable
 - [09 · Exception handling & custom exceptions](09-exception-handling-and-custom-exceptions.md) — what `?.` suppresses, and when you wanted the exception
+
+## Sources
+
+- [Apex Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · Apex Versioned Behavior Changes, Version 68.0: *"Apex classes and triggers saved at API versions 9.0 through 19.0 will be retired in a future release. The Apex compiler now warns you"*; the 68.0 list has no language additions
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: no new syntax at 68.0; added the compiler warning for code saved at API 9.0–19.0

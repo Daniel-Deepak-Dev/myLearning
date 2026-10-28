@@ -4,8 +4,8 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 15
 tags: [currency-warning]
 ---
@@ -41,7 +41,7 @@ Automation is the one that settles most arguments. An external object fires no t
 
 ## 2026 currency
 
-Beyond the ceiling removal above, the shape of the decision changed: it is no longer two options. **Zero-copy federation in Data 360 is GA**, which gives you a third answer that is neither a copy nor an external object, and it is usually the right one when the requirement is analysis rather than transaction → [18](18-zero-copy-and-data-360-as-data-tier.md). In the other direction, the classic org-to-org copy mechanism is going away: **Salesforce-to-Salesforce stops functioning in Spring '27** → [26](26-cross-org-data-sharing-and-consolidation.md). Summer '26 also gave the **cross-org adapter named credential support**, which makes federating between two Salesforce orgs materially less unpleasant than it was.
+Beyond the ceiling removal above, the shape of the decision changed: it is no longer two options. **Zero-copy federation in Data 360 is GA**, which gives you a third answer that is neither a copy nor an external object, and it is usually the right one when the requirement is analysis rather than transaction → [18](18-zero-copy-and-data-360-as-data-tier.md). In the other direction, the classic org-to-org copy mechanism is going away: **Salesforce-to-Salesforce stops functioning in Spring '27** → [26](26-cross-org-data-sharing-and-consolidation.md). Summer '26 also gave the **cross-org adapter named credential support**, which makes federating between two Salesforce orgs materially less unpleasant than it was. From **Spring '27** it is the only option: the adapter's **password and OAuth 2.0 authentication methods retire** under a Release Update → [26](26-cross-org-data-sharing-and-consolidation.md).
 
 ## Gotchas
 
@@ -76,3 +76,12 @@ A: Zero-copy federation in Data 360 — the data stays in the lake and is querie
 - [26 · Cross-org data sharing & consolidation](26-cross-org-data-sharing-and-consolidation.md) — the same decision between two Salesforce orgs
 - [06-integration · 20 Salesforce Connect & external objects](../06-integration-and-apis/20-salesforce-connect-and-external-objects.md) — adapters, relationships and authentication
 - [06-integration · 13 Change Data Capture](../06-integration-and-apis/13-change-data-capture.md) — how a copy stays current
+
+## Sources
+
+- [Winter '27 Release Architect Highlights](https://www.salesforce.com/blog/winter-27-release-architect-highlights/) — Salesforce Architecture blog, 5 Oct 2026 · read 2026-10-28 · cross-org adapter legacy authentication must move to named credentials in Spring '27; S2S retires Spring '27
+- [Release Updates (Winter '27)](https://help.salesforce.com/s/articleView?id=release-notes.rn_ru.htm&release=264&type=5&language=en_US) — Salesforce Help · via search 2026-10-28 · *Salesforce Connect Cross-Org Adapter Legacy Authentication Is Being Retired (Release Update)*: *"The password and OAuth 2.0 authentication methods … are being retired in Spring '27"*
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: cross-org adapter password and OAuth 2.0 authentication retire in Spring '27

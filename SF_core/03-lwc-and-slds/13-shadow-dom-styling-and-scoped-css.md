@@ -4,8 +4,8 @@ area: 03-lwc-and-slds
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-09-19
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 6
 tags: [currency-warning]
 ---
@@ -45,7 +45,7 @@ The boundary does two jobs and it is worth separating them, because components f
 
 ## 2026 currency
 
-Mixed Shadow Mode has been **Beta for several releases and is still Beta at 67.0**, which is the honest headline: Salesforce has stated the intent to migrate off the synthetic polyfill and eventually remove it — removing it would roughly halve LWC's JavaScript payload, and native components already benchmark meaningfully faster — but that migration is not finished and native is not the platform default. What this means practically is that a component authored today should be written so it *would* survive native shadow: no reliance on global stylesheet leakage, no `document.querySelector` into another component, styling exposed as custom properties rather than overridable classes. LWR server-side rendering is the one place the choice is already forced — **synthetic shadow is not supported there**, so SSR components use native shadow or light DOM. → [SF_Experience_Cloud · LWR](../../SF_Experience_Cloud/INDEX.md)
+Mixed Shadow Mode has been **Beta for several releases and is still Beta at 68.0 (Winter '27)** — it was not one of the two LWC features Winter '27 made GA — which is the honest headline: Salesforce has stated the intent to migrate off the synthetic polyfill and eventually remove it — removing it would roughly halve LWC's JavaScript payload, and native components already benchmark meaningfully faster — but that migration is not finished and native is not the platform default. What this means practically is that a component authored today should be written so it *would* survive native shadow: no reliance on global stylesheet leakage, no `document.querySelector` into another component, styling exposed as custom properties rather than overridable classes. LWR server-side rendering is the one place the choice is already forced — **synthetic shadow is not supported there**, so SSR components use native shadow or light DOM. → [SF_Experience_Cloud · LWR](../../SF_Experience_Cloud/INDEX.md)
 
 ## Gotchas
 
@@ -82,3 +82,12 @@ A: Native shadow only, and only on elements the child marked with a `part` attri
 - [01 · Component model & lifecycle](01-component-model-and-lifecycle.md) — when the shadow tree exists and `querySelector` becomes safe
 - [SF_Experience_Cloud · 02 LWR architecture & build model](../../SF_Experience_Cloud/02-lwr-architecture-and-build-model.md) — where SSR forces native shadow or light DOM and the choice is not yours
 - [SF_Experience_Cloud · 05 Branding sets, design tokens & SLDS 2](../../SF_Experience_Cloud/05-branding-sets-design-tokens-and-slds-2.md) — branding sets as the site-level consumer of these custom properties
+
+## Sources
+
+- [Mixed Shadow Mode (Beta)](https://developer.salesforce.com/docs/platform/lwc/guide/create-mixed-shadow.html) — Salesforce Developers · via search 2026-10-28 · the LWC guide still labels the feature a Beta Service
+- [The Salesforce Developer's Guide to the Winter '27 Release](https://developer.salesforce.com/blogs/2026/10/developers-guide-to-the-winter-27-release) — Salesforce Developers · via search 2026-10-28 · the two LWC features made GA in Winter '27 are complex template expressions and `lwc:external`
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: Mixed Shadow Mode confirmed still Beta at 68.0

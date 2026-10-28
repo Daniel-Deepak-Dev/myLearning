@@ -4,8 +4,8 @@ area: 07-security-and-sharing
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-09-24
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 11
 tags: [currency-warning]
 ---
@@ -37,12 +37,12 @@ A secure-by-default platform does not remove the review, it moves it. When enfor
 | 12 | XSS sinks | `innerHTML`, `lwc:dom="manual"`, `unescape`, `{!$…}` in VF | LWS sanitises much and is **not** a firewall |
 | 13 | external hosts | new script or `fetch` targets | a CDN block is **CSP**, not LWS — `fetch` hosts go in Trusted URLs, scripts become static resources |
 | 14 | secrets | hardcoded keys, tokens, endpoints, `String` constants that look like credentials | named credentials or protected custom metadata, never a class constant |
-| 15 | legacy auth | `login()`, `grant_type=password`, new Connected Apps | password-only session minting; being retired for that reason |
-| 16 | hardcoded URLs | `.my.salesforce.com` literals, instance hostnames like `na139` | legacy redirections ended, instanced URLs unsupported in Winter '27 |
+| 15 | legacy auth | `login()`, `grant_type=password`, `response_type=token`, new Connected Apps | password-only session minting and tokens in the redirect; being retired for that reason |
+| 16 | hardcoded URLs | `.my.salesforce.com` literals, instance hostnames like `na139` | legacy redirections ended, instanced URLs unsupported from Spring '27 |
 
 ## 2026 currency
 
-Three lines above are new this year and worth stating as rules rather than checks. **The OAuth username-password flow and SOAP `login()` are on retirement paths** (Winter '27 and Summer '27), so any remaining use is an authentication finding — see [17](17-authentication-and-mfa.md). **New Connected Apps cannot be created** without a Salesforce Support exception; External Client Apps are the model, which makes "add a connected app" an outdated instruction in any runbook → [06-integration · 16](../06-integration-and-apis/16-external-client-apps.md). And **anonymous Apex execution from managed packages is being blocked** from Summer '27, which retires a small category of installed-package behaviour. Sourcing for all three: [../CURRENCY.md](../CURRENCY.md).
+Three lines above are new this year and worth stating as rules rather than checks. **The OAuth username-password flow and SOAP `login()` are on retirement paths** (20 February 2027 — moved from Winter '27 — and Summer '27), so any remaining use is an authentication finding — see [17](17-authentication-and-mfa.md). The user-agent flows retire on the same February date. **New Connected Apps cannot be created** without a Salesforce Support exception, and **support for existing ones ends in Summer '27**; External Client Apps are the model, which makes "add a connected app" an outdated instruction in any runbook → [06-integration · 16](../06-integration-and-apis/16-external-client-apps.md). And **anonymous Apex execution from managed packages is being blocked** from Summer '27, which retires a small category of installed-package behaviour. Sourcing for all three: [../CURRENCY.md](../CURRENCY.md).
 
 ## Gotchas
 
@@ -78,3 +78,15 @@ A: Raising `<apiVersion>` in the `.cls-meta.xml` to 67.0 — the code is untouch
 - [03-lwc · 09 Lightning Web Security](../03-lwc-and-slds/09-lightning-web-security.md) — what LWS actually blocks, and the three things wrongly blamed on it
 - [24 · Security Center & Health Check](24-security-center-and-health-check.md) — the configuration half of posture, which no code review reaches
 - [SF_Experience_Cloud · 11 Public site exposure audit](../../SF_Experience_Cloud/11-public-site-exposure-audit.md) — the exposure audit this checklist feeds, run against a real guest user
+
+## Sources
+
+- [Retirement of OAuth 2.0 Username-Password Flow for Connected Apps (Release Update)](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_security_unpw_flow_retirement.htm&release=262&type=5) — Salesforce Help · via search 2026-10-28 · enforced 20 February 2027, originally Winter '27
+- [OAuth User-Agent and Hybrid User-Agent Flows Retirement (Release Update)](https://help.salesforce.com/s/articleView?id=release-notes.rn_security_oauth_useragent.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-28 · retirement 20 February 2027
+- [Update Instanced URLs in API Traffic (Release Update)](https://help.salesforce.com/s/articleView?id=release-notes.rn_update_instanced_urls_in_api_traffic.htm&language=en_US&release=262&type=5) — Salesforce Help · via search 2026-10-28 · enforcement postponed to Spring '27
+- [Connected App & External Client App Security Requirement Updates (005461287)](https://help.salesforce.com/s/articleView?id=005461287&language=en_US&type=1) — Salesforce Help · via search 2026-10-28 · connected-app end of support Summer '27
+- [Release Updates (Summer '26)](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_ru.htm&release=262&type=5) — Salesforce Help · via search 2026-10-28 · blocking anonymous Apex from managed packages still listed for Summer '27 enforcement
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: username-password date moved to 20 Feb 2027, instanced URLs to Spring '27; added the user-agent flows and the Summer '27 connected-app end of support

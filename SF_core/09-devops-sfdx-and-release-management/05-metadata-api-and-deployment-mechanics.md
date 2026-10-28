@@ -4,8 +4,8 @@ area: 09-devops-sfdx-and-release-management
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-09-19
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 16
 ---
 # Metadata API & Deployment Mechanics
@@ -27,7 +27,7 @@ sf project deploy quick --job-id 0Af... -o prod
 ```
 
 - **Selecting components:** `--manifest package.xml`, `--source-dir`, or `--metadata ApexClass:Foo`. Generate a manifest with `sf project generate manifest`.
-- **Test levels:** `NoTestRun`, `RunSpecifiedTests`, `RunLocalTests`, `RunAllTestsInOrg`, plus **`RunRelevantTests` (Beta)** which runs only the tests the deployment touches → [02-apex · 20](../02-apex-and-triggers/20-apex-testing-fundamentals.md). Production deployments require tests unless the payload contains no Apex.
+- **Test levels:** `NoTestRun`, `RunSpecifiedTests`, `RunLocalTests`, `RunAllTestsInOrg`, plus **`RunRelevantTests` (still Beta at 68.0)** which runs only the tests the deployment touches → [02-apex · 20](../02-apex-and-triggers/20-apex-testing-fundamentals.md). Production deployments require tests unless the payload contains no Apex.
 - **Deleting** uses `destructiveChangesPre.xml` / `destructiveChangesPost.xml` alongside the manifest — `--pre-destructive-changes`, `--post-destructive-changes`. Deletion is never inferred from source absence.
 - **Async by default:** `deploy resume`, `deploy report`, `deploy cancel` operate on the job ID.
 - **Limits:** **10,000 files** per deploy or retrieve, **39 MB compressed**, **400 MB uncompressed**. The 39 MB figure is a consequence of the 50 MB SOAP message cap and base-64 encoding, not an arbitrary number.
@@ -36,6 +36,8 @@ sf project deploy quick --job-id 0Af... -o prod
 ## 2026 currency
 
 Two things to carry into 2026. First, **`RunRelevantTests` changes the economics of validation** — combined with quick deploy it attacks the same problem from both ends, and it is steered by `@IsTest(testFor=…)` annotations you have to actually write. Second, **retrieve is not a read-only operation**. A zip-slip in static-resource conversion (fixed in `@salesforce/source-deploy-retrieve` 13.0.1, 31 July 2026) let a crafted static resource write outside the project during `project retrieve start` or `project convert mdapi`, and the fix is gated behind a major version bump plus Node 22 — so "I updated the CLI" is not the same sentence as "I have the fix". Detail and the dependency graph: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
+
+**Winter '27 (API 68.0) adds compile-side tools.** On the Apex Classes and Apex Triggers Setup pages, **Compile only invalid classes** and **Compile only invalid triggers** recompile just the code marked invalid instead of the whole org. The Tooling API resource **`apexCompileResults`** (POST an empty `{}`; needs Author Apex) returns the invalid classes and triggers that still fail, with line, column and message — it does not set `IsValid`. CLI 2.154.4 (14 Oct 2026) added `sf apex get compile-status`, which lists invalid classes and those with compile warnings (🚩 CLI release notes on GitHub). And the compiler now **warns on deploy** for Apex saved at API 9.0–19.0, which Salesforce says will be retired in a future release → [02-apex · 02](../02-apex-and-triggers/02-modern-apex-syntax.md).
 
 ## Gotchas
 
@@ -73,3 +75,15 @@ A: It takes org-controlled bytes and writes them to a laptop or CI runner — a 
 - [SF_Agentforce · Prompt Template Metadata & Deployment](../../SF_Agentforce/prompt-template-metadata-and-deployment.md) — `GenAiPromptTemplate` carries every version plus a pointer to the active one
 - [SF_Experience_Cloud · 02 LWR architecture & build model](../../SF_Experience_Cloud/02-lwr-architecture-and-build-model.md) — the two site bundle types, and which one a pipeline can actually carry
 - [SF_Experience_Cloud · 18 Experience Cloud DevOps](../../SF_Experience_Cloud/18-experience-cloud-devops.md) — what deploying a site adds on top of these mechanics
+
+## Sources
+
+- [Tooling API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_tooling.pdf) — Salesforce Developers · read 2026-10-28 · `apexCompileResults`: API 68.0+, POST `{}`, Author Apex, `OK` / `PARTIAL_FAILURE`, problems with line and column; the Setup buttons update `IsValid`, the resource does not
+- [Apex Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · Version 68.0 behaviour list: recompile only invalid Apex; compiler warnings for API 9.0–19.0; `RunRelevantTests` and its `@IsTest` annotations still *"pilot or beta services"*
+- [Reduce Overhead by Recompiling Only Invalid Apex Classes and Triggers](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_apex_recompile_invalid_apex.htm&type=5&release=264) — Salesforce Help · via search 2026-10-28 · Winter '27 release note; the *Compile only invalid classes / triggers* buttons; Enterprise, Performance, Unlimited and Developer editions
+- [Salesforce CLI Command Reference (PDF, Winter '27)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/sfdx_cli_reference.pdf) — Salesforce Developers · read 2026-10-28 · `--test-level` still describes `RunRelevantTests (Beta)`
+- [Salesforce CLI release notes](https://github.com/forcedotcom/cli/blob/main/releasenotes/README.md) — 🚩 GitHub, not a Salesforce domain · read 2026-10-28 · `sf apex get compile-status`, new in 2.154.4 (14 Oct 2026)
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added recompile-only-invalid Apex and `apexCompileResults`; `RunRelevantTests` confirmed still Beta at 68.0

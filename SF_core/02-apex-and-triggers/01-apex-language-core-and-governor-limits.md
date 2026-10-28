@@ -4,8 +4,8 @@ area: 02-apex-and-triggers
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 3
 ---
 # Apex Language Core & Governor Limits
@@ -32,7 +32,7 @@ Apex is a strongly typed, object-oriented language running on Salesforce servers
 | DML statements | 150 | 150 |
 | Rows processed by DML | 10,000 | 10,000 |
 | CPU time | 10,000 ms | 60,000 ms |
-| Heap size | 6 MB | 12 MB |
+| Heap size | **10 MB** | **25 MB** |
 | Callouts | 100 | 100 |
 | Cumulative callout timeout | 120 s | 120 s |
 | Queueable jobs enqueued | 50 | 1 |
@@ -52,12 +52,12 @@ if (Limits.getQueries() < Limits.getLimitQueries() - 5
 
 ## 2026 currency
 
-The limit map itself is stable — nothing in it moved at 67.0. What moved is the **execution context** it applies to: SOQL now runs in user mode by default, so a query returns only rows the running user can see and consumes only those against your 50,000. The same code can therefore draw a different amount of budget in two orgs with different sharing models, which makes limit testing as an admin genuinely misleading. Detail in [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
+Nothing in the limit map moved at 67.0. **Winter '27 (API 68.0) moved one row: heap rose from 6 MB to 10 MB synchronous and from 12 MB to 25 MB asynchronous**, switched on automatically in every org. Until Spring '27 a sandbox can hold itself to the old figures with the ApexSettings field `enableEnforceSummer26ApexHeapLimit`, so read `Limits.getLimitHeapSize()` rather than trusting either number. What moved at 67.0 is the **execution context** the map applies to: SOQL now runs in user mode by default, so a query returns only rows the running user can see and consumes only those against your 50,000. The same code can therefore draw a different amount of budget in two orgs with different sharing models, which makes limit testing as an admin genuinely misleading. Detail in [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
 
 ## Gotchas
 
 - **`LimitException` is uncatchable.** `catch (Exception e)` will not save you — the platform is protecting other tenants, not your transaction. Check `Limits` *before* the work.
-- **CPU time excludes waiting.** Database time, callout time and DML processing do not count; loops and collection manipulation do. A slow transaction is not necessarily a CPU-limit transaction.
+- **CPU time excludes waiting.** Time spent in the database for SOQL, SOSL and DML does not count, and nor does callout waiting. Application-server CPU does, including the server-side work of DML, and so do loops and collection manipulation. A slow transaction is not necessarily a CPU-limit transaction.
 - **Heap measures what is still reachable**, so a `List<sObject>` you have finished with keeps its memory until the reference goes out of scope.
 - **SOSL is 20 queries and 2,000 rows** — reaching for it to dodge the 100-query SOQL limit trades one ceiling for a much lower one.
 - **`Integer / Integer` truncates silently.** Use `Decimal` operands, or `Decimal.divide(value, scale)` where you need a defined scale.
@@ -75,7 +75,7 @@ Q: What resets a static variable?
 A: The transaction boundary — not the class, not the method. Each batch chunk and each Queueable starts with fresh statics.
 
 Q: Does CPU time include the time a callout spends waiting for a response?
-A: No. Callout, database and DML processing time are all excluded; CPU time measures your own code's work.
+A: No. Callout waiting and time spent in the database are excluded. Application-server CPU is counted: your own code, and the server-side work of DML.
 
 Q: Why is `Double` the wrong type for a currency amount?
 A: It is binary floating point, so it cannot represent most decimal fractions exactly and loses cents. Use `Decimal`.
@@ -85,3 +85,14 @@ A: It is binary floating point, so it cannot represent most decimal fractions ex
 - [08 · Bulkification patterns](08-bulkification-patterns.md) — the patterns that keep a transaction inside this budget
 - [09 · Exception handling & custom exceptions](09-exception-handling-and-custom-exceptions.md) — what is catchable, what isn't, and what to do about it
 - [04-flow · INDEX](../04-flow-and-automation/INDEX.md) — flows draw on this same per-transaction budget, so a save can exhaust it before your Apex runs
+
+## Sources
+
+- [Apex Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · Per-Transaction Apex Limits: total heap **10 MB / 25 MB**; CPU footnote: *"Application server CPU time spent in DML operations is counted towards the Apex CPU limit"*, while database time for DML, SOQL and SOSL is not
+- [Metadata API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_meta.pdf) — Salesforce Developers · read 2026-10-28 · ApexSettings `enableEnforceSummer26ApexHeapLimit`: non-production orgs only, default `false`, Winter '27 only; *"In Spring '27, the higher Apex heap limits are enforced globally"*
+- [Handle Larger Datasets with Increased Apex Heap Limits](https://help.salesforce.com/s/articleView?id=release-notes.rn_apex_heap_limit.htm&language=en_US&release=264&type=5) — Salesforce Help · via search 2026-10-28 · Winter '27 release note: heap 6 → 10 MB and 12 → 25 MB, enabled automatically on the release schedule
+- [Winter '27 Release Architect Highlights](https://www.salesforce.com/blog/winter-27-release-architect-highlights/) — Salesforce Architecture Blog · read 2026-10-28 · *"Synchronous heap increases from 6 MB to 10 MB and asynchronous heap from 12 MB to 25 MB"*
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: heap row 6/12 MB → 10/25 MB plus the sandbox opt-out; corrected the CPU gotcha and Recall answer, which wrongly excluded the server-side CPU of DML

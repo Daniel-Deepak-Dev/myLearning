@@ -4,8 +4,8 @@ area: 07-security-and-sharing
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-09-19
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 10
 ---
 # Sharing Rules & Manual Sharing
@@ -14,7 +14,7 @@ phase: 10
 
 ## Core idea
 
-Everything here reduces to rows in a **share table**. Every object whose OWD is not Public Read/Write has one — `AccountShare`, `OpportunityShare`, `Project__Share` — and every grant, whoever made it, is a row in it with four meaningful columns: which record, which grantee, what access level, and **why**. That last column, `RowCause`, is the one that matters architecturally, because it decides the row's lifetime. A row created by a sharing rule is owned by the rule and rebuilt whenever the rule recalculates. A row created by hand has `RowCause = 'Manual'` and is **deleted the moment the record's owner changes**. Knowing which kind of row you have is the difference between a grant that survives a reorganisation and one that quietly evaporates.
+Everything here reduces to rows in a **share table**. Every object whose OWD is not Public Read/Write has one — `AccountShare`, `OpportunityShare`, `Project__Share` — and every grant, whoever made it, is a row in it with four meaningful columns: which record, which grantee, what access level, and **why**. That last column, `RowCause`, is the one that matters architecturally, because it decides the row's lifetime. A row created by a sharing rule is owned by the rule and rebuilt whenever the rule recalculates. A row created by hand has `RowCause = 'Manual'` and, by default, is **deleted the moment the record's owner changes**. Knowing which kind of row you have is the difference between a grant that survives a reorganisation and one that quietly evaporates.
 
 ## How it works
 
@@ -23,7 +23,7 @@ Everything here reduces to rows in a **share table**. Every object whose OWD is 
 | **Owner-based sharing rule** | `Rule` | yes | on rule or membership change |
 | **Criteria-based sharing rule** | `Rule` | yes | on record field change |
 | **Guest user sharing rule** | `GuestRule` | yes | read-only grants only |
-| **Manual share** (*Sharing* button) | `Manual` | **no** | never |
+| **Manual share** (*Sharing* button) | `Manual` | **no** by default; yes with the Winter '27 setting | never |
 | **Apex managed sharing** | your custom reason | yes | only if you register a recalculation class |
 
 - **Sharing rules grant, never restrict**, and only ever run in one direction: from a set of records to a grantee, at Read Only or Read/Write.
@@ -37,9 +37,11 @@ Everything here reduces to rows in a **share table**. Every object whose OWD is 
 
 Sharing rules themselves are unchanged, but two things around them are. **Queue-owned records may no longer flow up the hierarchy** ([08](08-groups-queues-and-the-grantee-model.md)), which changes what an owner-based rule on a queue actually reaches. And **restriction rules subtract from whatever this note grants** ([11](11-restriction-rules.md)) — so a sharing rule is now a *proposal* rather than a guarantee, and reading only the sharing rules no longer tells you the answer. That is the single most under-known change in this area.
 
+**Winter '27 made manual shares survivable.** A new **Keep manual shares when transferring records** checkbox in Setup → **Sharing Settings** keeps them when a record's owner changes. It is org-wide and **off by default**, so nothing changes until someone ticks it. Ticking it is a least-privilege decision, not a convenience: any process that relied on a transfer to strip access — a departing rep's accounts, say — stops doing so.
+
 ## Gotchas
 
-- **A manual share dies on owner change.** Every one of them, silently. A grant that must outlive a reassignment needs a sharing rule or an Apex sharing reason. → [02-apex · 11](../02-apex-and-triggers/11-sharing-keywords-and-apex-managed-sharing.md)
+- **A manual share dies on owner change — by default.** Every one of them, silently, unless the org has turned on *Keep manual shares when transferring records*. A grant that must outlive a reassignment in any org needs a sharing rule or an Apex sharing reason. → [02-apex · 11](../02-apex-and-triggers/11-sharing-keywords-and-apex-managed-sharing.md)
 - **No *Sharing* button means the OWD is Public Read/Write.** People raise this as a bug; it is the model working.
 - **You cannot grant below the OWD**, and you cannot share a record with its owner — both are errors, not silent no-ops.
 - **Criteria-based rules recalculate on field change**, so a nightly integration that touches the criteria field re-runs sharing for everything it touched.
@@ -53,7 +55,7 @@ Q: What does every sharing mechanism ultimately produce?
 A: A row in the object's share table, with a record, a grantee, an access level and a `RowCause`.
 
 Q: Why does a manual share sometimes disappear on its own?
-A: It has `RowCause = 'Manual'`, and manual rows are deleted when the record's owner changes.
+A: It has `RowCause = 'Manual'`, and manual rows are deleted when the record's owner changes — unless the org turned on the Winter '27 *Keep manual shares when transferring records* setting.
 
 Q: When is the *Sharing* button absent from a record?
 A: When the object's OWD is Public Read/Write — there is no access left to grant.
@@ -71,3 +73,13 @@ A: No. Sharing rules only grant. Only a restriction rule subtracts.
 - [11 · Restriction rules](11-restriction-rules.md) — why a sharing rule is now a proposal, not a guarantee
 - [02-apex · 11 Sharing keywords & Apex managed sharing](../02-apex-and-triggers/11-sharing-keywords-and-apex-managed-sharing.md) — writing share rows that outlive an owner change
 - [SF_Experience_Cloud · 09 Sharing for external users](../../SF_Experience_Cloud/09-sharing-for-external-users.md) — where these mechanisms stop at the portal boundary, and what replaces them
+
+## Sources
+
+- [Keep Manual Shares When Transferring Records](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_sharing_retain_manual.htm&release=264&type=5) — Winter '27 release notes · via search 2026-10-28 · Setup → Sharing Settings → Edit → *Keep manual shares when transferring records*; off by default; Lightning and Classic; Professional, Enterprise, Performance, Unlimited and Developer editions. No Beta label seen
+- [Manual Sharing Considerations](https://help.salesforce.com/s/articleView?id=sf.manual_sharing_considerations_lex.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-28 · default deletion on owner change; account transfers also remove the original owner's manual shares on child opportunities, cases and contacts
+- [Winter '27 Release Architect Highlights](https://www.salesforce.com/blog/winter-27-release-architect-highlights/) — Salesforce Architecture Blog, 5 Oct 2026 · read 2026-10-28 · *"make sure retained manual shares align with your broader sharing and least-privilege strategy"*
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: manual shares now survive an owner change when the new Sharing Settings checkbox is on; default unchanged

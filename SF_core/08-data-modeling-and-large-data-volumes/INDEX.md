@@ -22,9 +22,9 @@ Model it well, then keep it fast past 10M rows. **26 topics** · phases [14](PHA
 | 08 | [Indexes & query selectivity](08-indexes-and-query-selectivity.md) | standard/custom indexes, **30/15 and 10/5 thresholds** | 14 |
 | 09 | [Query Plan & performance tuning](09-query-plan-and-performance-tuning.md) | **cost > 1.0 is non-selective**, leading operation types | 14 |
 | 10 | [Data skew](10-data-skew.md) | account, ownership and lookup skew; the 10,000 threshold | 14 |
-| 11 | [Skinny tables & support levers](11-skinny-tables-and-support-levers.md) | 100 columns, no formulas, Support-only | 14 |
+| 11 | [Skinny tables & support levers](11-skinny-tables-and-support-levers.md) | 200 columns, no formulas, Support-only | 14 |
 | 12 | [Record locking & concurrency](12-record-locking-and-concurrency.md) | the 10-second wait, parent locks, sort by parent Id | 14 |
-| 13 | [Deletes, the Recycle Bin & physical deletion](13-deletes-recycle-bin-and-physical-deletion.md) | soft delete still costs; hard delete and purge | 14 |
+| 13 | [Deletes, the Recycle Bin & physical deletion](13-deletes-recycle-bin-and-physical-deletion.md) | soft delete costs query time, not storage; hard delete and purge | 14 |
 | 14 | [Big objects & the archive tier](14-big-objects-and-the-archive-tier.md) ⚠️ | **Async SOQL retired Summer '23**; immutable index | 14 |
 | 15 | [Archiving & retention strategy](15-archiving-and-retention-strategy.md) 🆕 | **Salesforce Archive**, retention vs purge, the 1M/day cap | 15 |
 | 16 | [Bulk loading strategy for LDV](16-bulk-loading-strategy-for-ldv.md) ⚠️ | **PK chunking is a v1 header**, defer sharing, load order | 15 |

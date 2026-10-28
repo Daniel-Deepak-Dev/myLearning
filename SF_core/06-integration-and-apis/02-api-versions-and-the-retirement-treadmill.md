@@ -4,8 +4,8 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 12
 tags: [currency-new, currency-warning]
 ---
@@ -13,7 +13,7 @@ tags: [currency-new, currency-warning]
 
 **Scope:** What an API version number commits you to, and the retirement cycle running underneath every integration in the org. The endpoint *host* is [03](03-api-endpoints-hostnames-and-edge-network.md); per-version feature detail belongs to each API's own note.
 
-> **What changed.** *"Old API versions are deprecated"* understates it. They are **actively retired**, and a retired version does not degrade — it returns **HTTP 410 GONE** and the integration stops. Versions **21.0–30.0** were deprecated in Summer '22 and **retired in Summer '25**. "It works on v39" is a position on a countdown, not a steady state.
+> **What changed.** *"Old API versions are deprecated"* understates it. They are **actively retired**, and a retired version does not degrade — it returns **HTTP 410 GONE** and the integration stops. Versions **21.0–30.0** were deprecated in Summer '22 and **retired in Summer '25**. "It works on v39" is a position on a countdown, not a steady state — and that countdown is now dated: **31.0–40.0 lose support in Summer '27 and are retired in Summer '28.**
 
 ## Core idea
 
@@ -25,19 +25,22 @@ The architect's job is therefore inventory, not memorisation: knowing **which ve
 
 | State | What it means | What a caller sees |
 |---|---|---|
-| **Current** | the version shipping with the release — **67.0** at Summer '26 | normal |
+| **Current** | the version shipping with the release — **68.0** at Winter '27 | normal |
 | **Supported** | older, still fully served, behaviour frozen at its own semantics | normal |
-| **Deprecated** | announced as going away; still served | normal, plus a countdown |
+| **Deprecated** | announced as going away; still served, but no longer troubleshot | normal, plus a countdown |
 | **Retired** | withdrawn | **HTTP 410 GONE** |
 
-- **The version lives in the path** — `/services/data/v67.0/…` — and in SOAP, in the endpoint URL and WSDL. Nothing about the org's release changes it.
+- **The version lives in the path** — `/services/data/v68.0/…` — and in SOAP, in the endpoint URL and WSDL. Nothing about the org's release changes it.
+- **`/services/data/latest` (Winter '27) resolves to the newest version the org supports.** Handy for exploring. In an integration it gives up the pinning this note is about, because the contract then moves three times a year.
 - **Apex classes and triggers carry their own version too**, set per file, which is how a 2019 class keeps its 2019 behaviour after the org reaches 67.0. → [09](09-metadata-tooling-and-connect-apis.md)
 - **Retirement is announced, dated, and published** on Salesforce's *Product & Feature Retirements* list. That list — not recall — is the source.
 - **Find your real exposure in the org, not in a spreadsheet.** The **API Total Usage** event type reports the API version of inbound calls, and it is one of the log types available **without Shield** → [07-security · 23](../07-security-and-sharing/23-event-monitoring-and-transaction-security.md).
 
 ## 2026 currency
 
-**One wave is complete and no next wave is announced.** Versions **21.0–30.0** are retired as of Summer '25; the floor is **31.0**. Projections that 31.0–39.0 follow in a particular release circulate widely and **none of them is an announcement** — do not repeat a date the retirements list does not carry. The dated item that *does* exist is narrower and easy to confuse with it: **SOAP `login()` is being retired for API versions 31.0–64.0 in Summer '27** — that is **one call** being withdrawn across a range of versions, **not those versions being retired**. Both facts and their sourcing live in [../CURRENCY.md](../CURRENCY.md). → [05](05-soap-api-and-where-it-persists.md)
+**The next wave is dated.** Versions **21.0–30.0** were retired in Summer '25. **Versions 31.0–40.0 are deprecated and unsupported from Summer '27, and retired from Summer '28** — Help **005321531** and the End-of-Life tables in the 68.0 REST, Bulk and Tooling guides. In the unsupported year the calls still work, but a support case starts with "upgrade first". From Summer '28, REST returns **410 GONE** and SOAP returns **500 `UNSUPPORTED_API_VERSION`**. The scope is SOAP, REST and Bulk API calls — **not** Apex classes, triggers, Visualforce pages or flows saved at those versions. This note said "no next wave is announced" until 2026-10-28, while the Help article had been live since April 2026.
+
+The narrower item is easy to confuse with it: **SOAP `login()` is being retired for API versions 31.0–64.0 in Summer '27** — **one call** withdrawn across a range of versions, **not those versions being retired**. Dates and sourcing: [../CURRENCY.md](../CURRENCY.md). → [05](05-soap-api-and-where-it-persists.md)
 
 ## Gotchas
 
@@ -54,10 +57,10 @@ Q: What does a retired API version return?
 A: HTTP 410 GONE. It does not fall back to a supported version.
 
 Q: Which versions are retired, and when did it happen?
-A: 21.0–30.0 — deprecated Summer '22, retired Summer '25. The supported floor is 31.0.
+A: 21.0–30.0 — deprecated Summer '22, retired Summer '25. The floor stays 31.0 until Summer '28.
 
 Q: When is the next retirement wave?
-A: No next wave is announced. Circulating projections about 31.0–39.0 are speculation, not a published date.
+A: 31.0–40.0 — unsupported from Summer '27, retired (410 GONE) from Summer '28. Help 005321531.
 
 Q: How is the SOAP `login()` retirement different from a version retirement?
 A: It withdraws one call across API versions 31.0–64.0 in Summer '27. Those versions themselves are not being retired.
@@ -71,3 +74,15 @@ A: The API Total Usage event type in Event Monitoring — available without Shie
 - [05 · SOAP API & where it persists](05-soap-api-and-where-it-persists.md) — where the `login()` retirement bites
 - [../CURRENCY.md](../CURRENCY.md) — the dated retirement rows and their sourcing
 - [07-security · 23 Event Monitoring](../07-security-and-sharing/23-event-monitoring-and-transaction-security.md) — where API Total Usage lives
+
+## Sources
+
+- [Salesforce Platform API Versions 31.0 through 40.0 Retirement (005321531)](https://help.salesforce.com/s/articleView?id=005321531&language=en_US&type=1) — Salesforce Help · via search 2026-10-28 · deprecated and unsupported from Summer '27, retired Summer '28; covers SOAP, REST and Bulk API, not Apex, Visualforce or flows; page last updated 30 April 2026
+- [REST API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_rest.pdf) — Salesforce Developers · read 2026-10-28 · End-of-Life table: 31.0–40.0 *"Deprecated and unsupported from Summer '27. Retired from Summer '28."*; 410 GONE; the `latest` alias (`/services/data/latest`)
+- [Bulk API 2.0 and Bulk API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_asynch.pdf) — Salesforce Developers · read 2026-10-28 · the same End-of-Life table; SOAP returns *"500:UNSUPPORTED_API_VERSION"*
+- [Tooling API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_tooling.pdf) — Salesforce Developers · read 2026-10-28 · the same End-of-Life table
+- [Simplify REST API Version Management](https://help.salesforce.com/s/articleView?id=release-notes.rn_api_rest_latest.htm&language=en_US&type=5) — Winter '27 release notes · via search 2026-10-28 · `latest` routes to the most recent version the org supports
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: corrected "no next wave is announced" — 31.0–40.0 unsupported Summer '27, retired Summer '28; added the `latest` alias; current version is 68.0

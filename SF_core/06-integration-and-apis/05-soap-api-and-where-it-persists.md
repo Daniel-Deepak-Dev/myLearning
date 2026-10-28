@@ -4,8 +4,8 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 12
 ---
 # SOAP API & where it persists
@@ -34,6 +34,8 @@ Where SOAP genuinely persists is not legacy inertia. **The Metadata API is SOAP*
 ## 2026 currency
 
 Two changes, in opposite directions. **`login()` is being retired for API versions 31.0–64.0 in Summer '27** — it mints a session from a password alone, which is precisely what MFA exists to prevent, so treat remaining use as an authentication finding rather than an integration one → [07-security · 17](../07-security-and-sharing/17-authentication-and-mfa.md). Meanwhile SOAP **gained** capability at 67.0: it now accepts **JWT-based access tokens** in the `sessionId` header, reaching parity with REST authentication. An API receiving new authentication support in the same release as a retirement announcement is the clearest possible evidence that the protocol is being narrowed, not withdrawn. Dates and sourcing: [../CURRENCY.md](../CURRENCY.md).
+
+Summer '27 is the last date, not the first. Winter '27 shipped the *Assign Use Any API Auth Permission for SOAP login()* Release Update: from **1 December 2026**, in every org and sandbox, a user without **`Use Any API Auth`** gets an error from `login()`. Then a one-time check **turns `login()` off in any org with no `login()` call in the previous six months** — sandboxes from **15 December 2026**, production from **31 January 2027**. An annual or disaster-recovery job is exactly what that check misses.
 
 > **From my notes.** *`SOAP API`* (2019) is structurally sound — the enterprise/partner split and the header model are unchanged — but its worked example authenticates with `login()`, and it presents SOAP as the default choice for new integrations. Both were fair in 2019. Today REST is the default and `login()` is on a clock; the WSDL material is still worth keeping.
 
@@ -69,3 +71,13 @@ A: It mints a session from a username and password alone — exactly what MFA wa
 - [02 · API versions & the retirement treadmill](02-api-versions-and-the-retirement-treadmill.md) — why `login()`'s version range is not a version retirement
 - [07-security · 17 Authentication & MFA](../07-security-and-sharing/17-authentication-and-mfa.md) — the reason password-only session minting is going
 - [15 · OAuth flows & authorization](INDEX.md) — what replaces `login()`
+
+## Sources
+
+- [Assign Use Any API Auth Permission for SOAP login() (Release Update)](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_api_soap_login.htm&release=264&type=5) — Winter '27 release notes · via search 2026-10-28 · enforced 1 December 2026 in all orgs and environments; grant by profile or permission set
+- [Platform SOAP API login() Retirement & new Security Requirements (005132110)](https://help.salesforce.com/s/articleView?id=005132110&language=en_US&type=1) — Salesforce Help · via search 2026-10-28 · Summer '27 retirement for 31.0–64.0 unchanged; one-time six-month inactivity check from 15 Dec 2026 (sandboxes) and 31 Jan 2027 (production); login from a broad IP range needs a security token
+- [(2026年10月) Salesforceの運用に関する重要なお知らせ](https://successjp.salesforce.com/article/NAI-001341) — Salesforce Japan Success Navi, 27 Oct 2026 · read 2026-10-28 · the SOAP `login()` permission update is one of the five Release Updates enforced in Winter '27
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added the 1 Dec 2026 `Use Any API Auth` enforcement and the six-month inactivity shut-off before the Summer '27 retirement

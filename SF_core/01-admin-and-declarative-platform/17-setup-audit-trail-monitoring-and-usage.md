@@ -4,8 +4,8 @@ area: 01-admin-and-declarative-platform
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 2
 ---
 # Setup Audit Trail, monitoring & usage
@@ -34,6 +34,8 @@ Every org accumulates two kinds of history: **who changed the configuration** an
 ## 2026 currency
 
 **Setup with Agentforce writes its changes to the Setup Audit Trail** — an agent acting in Setup is attributable exactly like an admin, which is what makes the review discipline in [19](19-agentforce-in-setup-and-ai-assisted-admin.md) workable. Treat the audit trail as the control that makes AI-assisted configuration auditable, and check it after any agent-assisted change.
+
+**Winter '27 made field history tracking on the User object GA** (Beta since Winter '26): up to **20 User fields**, with old and new values, whether the change came from the UI, a bulk operation, Apex or the API. Who changed a user's record now has a field-level answer, not just an audit-trail line. Winter '27 also ships a **Release Update** adding a dedicated **View Setup Audit Trail** permission, so the trail can be shared without *View Setup and Configuration*. When it is enforced in **Spring '27**, it is switched on for every profile and permission set that already has View Setup.
 
 ## Gotchas
 
@@ -68,3 +70,13 @@ A: Who changed a record's field value — that is field history / Field Audit Tr
 - [02 · Release cadence & Release Updates](02-release-cadence-and-release-updates.md) — what to check after an auto-enforced update lands
 - [19 · Agentforce in Setup & AI-assisted admin](19-agentforce-in-setup-and-ai-assisted-admin.md) — why the audit trail is the control for agent-made config
 - [07-security · INDEX](../07-security-and-sharing/INDEX.md) — Event Monitoring, Field Audit Trail and the paid tier of this story
+
+## Sources
+
+- [Enable Field History Tracking for Users (Generally Available)](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_field_history_tracking_ga.htm&release=264&type=5) — Salesforce Help · via search 2026-10-28 · Winter '27 GA; up to 20 User fields; UI, bulk, Apex and API changes
+- [Enable Field History Tracking for Users (Beta)](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_field_history_tracking_beta.htm&release=258&type=5) — Salesforce Help · via search 2026-10-28 · Beta in Winter '26
+- [Jen's Top Winter '27 Release Features For Admins](https://admin.salesforce.com/blog/2026/jens-top-winter-27-release-features-for-admins) — Salesforce Admins · via search 2026-10-28 · View Setup Audit Trail permission Release Update; enforced Spring '27, auto-enabled where View Setup is granted
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added User field history tracking (GA) and the View Setup Audit Trail permission Release Update

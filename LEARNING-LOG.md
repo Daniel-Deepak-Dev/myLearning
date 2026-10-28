@@ -23,6 +23,20 @@ Newest first.
 
 ---
 
+### 2026-10-28 · SF_core re-checked against Winter '27 (API 68.0)
+
+**No notes fed — a currency check.** Winter '27 reached every production org on 9–10 October 2026. Ten areas were re-checked against the v68.0 developer guides and the Winter '27 release notes. 75 notes were edited and now carry `currency: "Winter '27 (API 68.0)"`, plus a `## Sources` and `## History` footer. 07-security · 23 was edited but not fully re-checked, so it stays at Summer '26.
+
+- **What is live** → [SF_core/CURRENCY.md](SF_core/CURRENCY.md#winter-27-in-production--checked-2026-10-28)
+  - Apex heap is now 10 MB sync / 25 MB async. Complex Template Expressions and third-party web components are GA. Profile Filtering is enforced. Flow gained a `UserMode` run context. Web Console is GA, and DevOps Center is now Lifecycle Center.
+- **What moved** → the same section
+  - The username-password OAuth flow retires on 20 Feb 2027, instanced URLs in Spring '27, and standard-volume platform events in Summer '27. None of them retired at the upgrade.
+- **What was wrong, not just stale**
+  - Corrected: GraphQL mutations in LWC, Flow Tests scope, API 31.0–40.0 retirement wave, Recycle Bin storage, skinny-table columns, subquery depth, Bulk 2.0 serial mode.
+  - Disputed 🚩: `@TestSetup` limits.
+
+**Also touched:** area INDEX one-liners (03, 04, 06, 07, 08, 10) and 13 GLOSSARY entries. Not changed, flagged for you instead: five flashcards and the RELEASE-RADAR history.
+
 ### 2026-10-25 · Tamil translations for English practice
 
 **No notes fed — a coaching preference.** Keep instructions and grammar explanations in English. Use occasional Tamil translations of an original sentence and its corrected version to clarify meaning. If both translate alike, explain that instead of inventing a Tamil error.

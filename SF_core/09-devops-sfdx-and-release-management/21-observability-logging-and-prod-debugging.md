@@ -4,8 +4,8 @@ area: 09-devops-sfdx-and-release-management
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 17
 tags: [currency-new]
 ---
@@ -32,6 +32,8 @@ So production observability on this platform is a **design decision made in adva
 ## 2026 currency
 
 Two things worth folding in. **Elastic async limits (Beta)** change the shape of async failure: a runaway `Queueable` chain that used to stop with a `LimitException` can now be throttled instead, so the symptom moves from an error email to a queue draining late — which is invisible unless you are already logging enqueue and execution times → [02-apex · 24](../02-apex-and-triggers/24-apex-performance-and-profiling.md). And **agent workloads need their own observability story**: local traces land in `.sfdx/agents/…/traces/`, production goes through the Session Trace Data Model, and neither appears in a debug log → [SF_Agentforce · observability](../../SF_Agentforce/INDEX.md).
+
+**At API 68.0 `DebugLevel` is a Metadata API type** — suffix `.debugLevel`, folder `debugLevels` — so a team's standard log levels (`apexCode`, `database`, `callout`, `apexProfiling` and the rest) can live in source control and deploy like any other component. Trace flags are still records, not metadata. The CLI added `sf apex trace create | list | delete` in October 2026, and `sf apex run --debug-level` / `--category-level` in September (🚩 CLI release notes on GitHub). **Elastic async limits are still Beta at 68.0.**
 
 ## Gotchas
 
@@ -66,3 +68,13 @@ A: A correlation ID minted at the entry point and carried through every callout,
 - [07-security · 23 Event Monitoring & Transaction Security](../07-security-and-sharing/23-event-monitoring-and-transaction-security.md) — the same streams read for audit
 - [02-apex · 09 Exception handling & custom exceptions](../02-apex-and-triggers/09-exception-handling-and-custom-exceptions.md) — where the evidence is usually destroyed
 - [06-integration · 23 Idempotency, retries & error handling](../06-integration-and-apis/23-idempotency-retries-and-error-handling.md) — correlation across system boundaries
+
+## Sources
+
+- [Metadata API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_meta.pdf) — Salesforce Developers · read 2026-10-28 · `DebugLevel`: *"available in API version 68.0 and later"*, `.debugLevel` suffix, `debugLevels` folder, `ApexLogLevel` fields per category
+- [Apex Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · Version 68.0 list names the `DebugLevel` metadata type; debug log limits (20 MB, 24 hours / 7 days, 1,000 MB in 15 minutes) unchanged; elastic limits for async Apex still Beta
+- [Salesforce CLI release notes](https://github.com/forcedotcom/cli/blob/main/releasenotes/README.md) — 🚩 GitHub, not a Salesforce domain · read 2026-10-28 · `apex trace create|list|delete` in 2.153.5 (7 Oct 2026); `apex run --debug-level` / `--category-level` in 2.152.14 (30 Sep 2026)
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: `DebugLevel` became deployable metadata at 68.0; added the CLI trace-flag commands; elastic limits still Beta

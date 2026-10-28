@@ -4,8 +4,8 @@ area: 09-devops-sfdx-and-release-management
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 17
 ---
 # Apex Test Strategy in CI
@@ -20,7 +20,7 @@ The strategy question is therefore not "how do we get coverage up" but **"which 
 
 ## How it works
 
-- **Four test levels, plus a fifth in Beta.** `NoTestRun` (sandbox only, and not quick-deployable), `RunSpecifiedTests`, `RunLocalTests` (everything except managed packages — the production default), `RunAllTestsInOrg`, and **`RunRelevantTests` (Beta from Spring '26)** → [05](05-metadata-api-and-deployment-mechanics.md).
+- **Four test levels, plus a fifth in Beta.** `NoTestRun` (sandbox only, and not quick-deployable), `RunSpecifiedTests`, `RunLocalTests` (everything except managed packages — the production default), `RunAllTestsInOrg`, and **`RunRelevantTests` (Beta from Spring '26, still Beta at 68.0)** → [05](05-metadata-api-and-deployment-mechanics.md).
 - **`RunRelevantTests` is the delta strategy the platform now offers**, and it moves the work from your pipeline into your annotations: it runs only what the deployment touches, steered by `@IsTest(testFor='ApexClass:MyClass')`, with `@IsTest(critical=true)` forcing a test to always run. Nobody backfills those annotations onto a legacy suite, which is the real adoption cost.
 - **`RunSpecifiedTests` is the hand-rolled version of the same idea**, and it has a trap: the specified classes must themselves deliver 75% coverage **of every class in the deployment**, not of the org. Getting the list wrong fails the deploy after the tests have run.
 - **Run tests asynchronously and poll** — `sf apex run test --wait 0` then `sf apex get test --test-run-id` — so a long suite does not hold a job step's connection open.
@@ -32,11 +32,13 @@ The strategy question is therefore not "how do we get coverage up" but **"which 
 
 The **user-mode default at API 67.0** changes what a passing test proves. Apex now runs in user mode unless told otherwise, so a test that sets up data as an admin and asserts on rows a portal user should never see can pass in a way production will not reproduce → [02-apex · 10](../02-apex-and-triggers/10-apex-security-user-mode-and-fls.md). Tests written before the flip frequently `runAs` nobody, and those are exactly the tests that now certify the wrong thing. **`@IsTest(SeeAllData=true)` is worse than it was**, because the data it sees is filtered by sharing too — so the same test gives different results in two orgs with the same data.
 
+**At API 68.0 the Test Discovery API changed a parameter.** `testLevel` — `RunAllTestsInOrg` (the default) or `RunLocalTests` (your namespace plus flow tests, no managed-package tests) — replaces `showAllMethods`, which now exists only at 67.0 and earlier. A pipeline that lists tests before running them must either stay on 67.0 for that call or switch parameters.
+
 ## Gotchas
 
 - **Parallel test execution is the classic CI failure and it is not deterministic.** Concurrent classes contending on the same rows produce `UNABLE_TO_LOCK_ROW`, which looks like a flaky test and is really a data-design problem → [08-data · 12](../08-data-modeling-and-large-data-volumes/12-record-locking-and-concurrency.md).
 - **Disabling parallel execution is a real lever** (Setup → Apex Test Execution, or `--synchronous`), and it trades a green build for a much longer one. Decide deliberately rather than after the third rerun.
-- **`@TestSetup` resets DML limits between test methods but not SOQL limits** — a genuine seed-note gotcha, still true.
+- **What `@TestSetup` costs a test method is disputed in this vault.** The Apex Developer Guide (v68.0) says *"Every test method, including the test setup method, runs as a separate transaction"*, which implies setup has its own governor limits; [02-apex · 20](../02-apex-and-triggers/20-apex-testing-fundamentals.md) says setup DML and SOQL count against every method. 🚩 Settle it in an org by reading `Limits.getQueries()` on a test method's first line. The old seed line, *"resets DML but not SOQL"*, matches neither.
 - **Coverage is computed at deploy time, not at test time.** A class covered only by a test that was deleted in the same commit fails the deploy, not the test run.
 - **Managed-package tests do not count**, which is why `RunLocalTests` is the honest default and `RunAllTestsInOrg` mostly buys time you did not need to spend.
 - **Test data that depends on org configuration is a time bomb** — a record type or picklist value renamed in production makes a test fail only in production.
@@ -51,7 +53,7 @@ Q: Why does `UNABLE_TO_LOCK_ROW` show up in CI but rarely locally?
 A: CI runs test classes in parallel, so classes touching the same parent records contend for locks; a single-threaded local run never overlaps them.
 
 Q: What does `RunRelevantTests` need in order to work?
-A: `@IsTest(testFor=…)` annotations on the suite — Beta from Spring '26, and useless on a codebase nobody annotates. `@IsTest(critical=true)` forces a test to run regardless.
+A: `@IsTest(testFor=…)` annotations on the suite — Beta from Spring '26, still Beta at 68.0, and useless on a codebase nobody annotates. `@IsTest(critical=true)` forces a test to run regardless.
 
 Q: How did the API 67.0 security default change test meaning?
 A: Apex runs in user mode, so tests must establish a running user deliberately — an admin-context test can now pass while the production behaviour differs.
@@ -65,3 +67,12 @@ A: At deployment, against the classes in the deployment — not when the tests a
 - [02-apex · 21 Apex testing advanced & mocking](../02-apex-and-triggers/21-apex-testing-advanced-and-mocking.md) — Stub API, and how to make the fast suite fast
 - [14 · CI/CD with GitHub Actions](14-ci-cd-with-github-actions.md) — the jobs these levels are configured in
 - [08-data · 12 Record locking & concurrency](../08-data-modeling-and-large-data-volumes/12-record-locking-and-concurrency.md) — why parallel tests deadlock
+
+## Sources
+
+- [Apex Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · `RunRelevantTests`, `@IsTest(testFor=…)` and `@IsTest(critical=true)` still *"pilot or beta services"*; Using Test Setup Methods: *"Every test method, including the test setup method, runs as a separate transaction"*; Version 68.0: `testLevel` replaces `showAllMethods`
+- [Tooling API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_tooling.pdf) — Salesforce Developers · read 2026-10-28 · Test Discovery API `testLevel` values and default; `showAllMethods` deprecated, 67.0 and earlier only
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: `RunRelevantTests` still Beta at 68.0; added the `testLevel` change; replaced the `@TestSetup` limits line, which contradicted 02-apex · 20 and the 68.0 guide

@@ -4,8 +4,8 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 12
 tags: [currency-new]
 ---
@@ -21,7 +21,7 @@ The Salesforce implementation is built **on UI API**, which has a consequence pe
 
 ## How it works
 
-- **One endpoint, one verb:** `POST /services/data/v67.0/graphql`. Versioning still lives in the path → [02](02-api-versions-and-the-retirement-treadmill.md).
+- **One endpoint, one verb:** `POST /services/data/v68.0/graphql`. Versioning still lives in the path → [02](02-api-versions-and-the-retirement-treadmill.md).
 - **The schema is your org's**, discoverable by introspection — so a client tool can autocomplete against custom objects and fields with no configuration.
 - **Records come back through a connection shape** — `edges` → `node` → field → `value` — which is verbose to read but is what carries pagination cursors and per-field metadata.
 - **Filtering, sorting, pagination and aggregates** are all query arguments rather than separate resources.
@@ -33,7 +33,9 @@ The Salesforce implementation is built **on UI API**, which has a consequence pe
 
 **Mutation chaining is the Summer '26 addition, and it landed in the API — not in the LWC wire adapter.** A mutation can now reference **any field** returned by an earlier operation in the same request, not merely its record ID: `@{ref.Record.FieldName.value}` for a field value, `@{ref.Record.Id}` (shorthand `@{ref}`) for the ID. That is a **larger referencing model than composite's `referenceId`**, which only ever exposed the ID — so linked-record creation now fits in one GraphQL round trip.
 
-The split with the wire adapter is the thing to carry: **the adapter still has no mutations at 67.0**, so inside a component LDS remains the only create/update/delete path, and capability generally reaches the API several releases before the adapter. Reading a 2026 blog post about GraphQL mutations and expecting them in an LWC is the predictable mistake. → [03-lwc · 07](../03-lwc-and-slds/07-graphql-wire-adapter.md)
+The split with the component side is the thing to carry, and this note had it wrong until 2026-10-28. **A component can write through GraphQL**: since **Spring '26**, `executeMutation` from `lightning/graphql` creates, updates and deletes records. It is imperative only — the `@wire` adapter itself still has no mutations. What holds is that capability reaches the API before the component: mutation **chaining** is documented for the API, so do not assume it inside `executeMutation`. → [03-lwc · 07](../03-lwc-and-slds/07-graphql-wire-adapter.md)
+
+**Winter '27 added a guest-access switch.** Admins now control unauthenticated guest access to the GraphQL endpoint from Setup → **API Access Control**. It is **off by default** in new orgs and in orgs with no guest GraphQL use since March 2026; orgs that had guest traffic keep it. A guest call with the switch off gets an error.
 
 ## Gotchas
 
@@ -55,8 +57,8 @@ A: Mutation chaining, in the **API**. A mutation can reference any field from an
 Q: How does that compare with composite's referencing?
 A: It is larger — composite's `referenceId` exposes only the ID of an earlier subrequest.
 
-Q: Can an LWC use GraphQL mutations at 67.0?
-A: No. The wire adapter still has no mutations; LDS remains the only client-side write path in a component.
+Q: Can an LWC use GraphQL mutations?
+A: Yes, since Spring '26 — imperatively, through `executeMutation` from `lightning/graphql`. The `@wire` adapter itself still reads only.
 
 Q: Where does a field's scalar value sit in a response?
 A: Under `edges` → `node` → field → `value`.
@@ -67,3 +69,13 @@ A: Under `edges` → `node` → field → `value`.
 - [08 · UI API](08-ui-api-and-metadata-aware-clients.md) — the layer this is built on
 - [06 · Composite, Batch & Graph APIs](06-composite-batch-and-graph-apis.md) — the REST way to do one round trip
 - [04 · REST API fundamentals](04-rest-api-fundamentals.md) — where SOQL still wins
+
+## Sources
+
+- [GraphQL API (Winter '27 release notes)](https://help.salesforce.com/s/articleView?id=release-notes.rn_api_graphql.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-28 · guest-user access control under API Access Control; off by default in new orgs and orgs with no guest GraphQL access since March 2026; existing access kept. 🚩 The developer guide says API 68.0, one status-code page says 67.0
+- [(2026年8月) Salesforceの運用に関する重要なお知らせ](https://successjp.salesforce.com/article/NAI-001321) — Salesforce Japan Success Navi, 24 Aug 2026 · read 2026-10-28 · release note added: admins can control guest user access to the GraphQL API
+- [GraphQL Mutations Now Available in LWC: Create, Update, and Delete Records](https://developer.salesforce.com/blogs/2026/05/graphql-mutations-now-available-in-lwc-create-update-and-delete-records) — Salesforce Developers · via search 2026-10-28 · `executeMutation` from `lightning/graphql`, introduced Spring '26, imperative only. 🚩 No GA or Beta label seen for the function
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: corrected "LWC has no GraphQL mutations" (`executeMutation`, Spring '26); added the Winter '27 guest-access switch

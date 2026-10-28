@@ -4,8 +4,8 @@ area: 10-soql-and-sosl
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 22
 ---
 # Relationship Queries in Depth
@@ -14,12 +14,12 @@ phase: 22
 
 ## Core idea
 
-Traversal is asymmetric, and the asymmetry is the single most consequential fact in SOQL. **Child-to-parent is dot notation and reaches five levels; parent-to-child is a subquery and reaches exactly one.** The reason is structural rather than arbitrary: going up, every step resolves to at most one record, so the planner knows the cost in advance. Going down, each step multiplies rows by an unknown factor, so the platform allows one level and makes you ask for it explicitly. Almost every "one query or two?" decision follows from this — and so does the commonest row-limit failure, because **a subquery's children are counted in the same 50,000-row budget as the parents**.
+Traversal is asymmetric, and the asymmetry is the single most consequential fact in SOQL. **Child-to-parent is dot notation and reaches five levels; parent-to-child is a subquery, and every further level down is another nested subquery** — five levels counting the parent since API 58.0. The reason is structural rather than arbitrary: going up, every step resolves to at most one record, so the planner knows the cost in advance. Going down, each step multiplies rows by an unknown factor, so the platform makes you ask for every level explicitly. Almost every "one query or two?" decision follows from this — and so does the commonest row-limit failure, because **a subquery's children are counted in the same 50,000-row budget as the parents**.
 
 ## How it works
 
 - **Child-to-parent: dot notation, up to five levels.** `Contact.Account.Owner.Manager.Name`. Custom relationships take `__r`: `Opportunity.Custom_Deal__r.Owner.Email`.
-- **Parent-to-child: a subquery, one level, using the plural relationship name.** At most **20** parent-to-child relationships per query.
+- **Parent-to-child: a subquery using the plural relationship name, nestable to five levels including the parent** (API 58.0+, REST, SOAP and Apex query calls only). At most **20** parent-to-child relationships per query.
 
 ```sql
 SELECT Id, Name, Owner.Manager.Email,                    -- 3 levels up
@@ -49,14 +49,14 @@ Traversal syntax is unchanged, but **user mode makes traversal a permissions sur
 - **`__r` in the field list, `__c` in the filter** — mixing them up is the most common SOQL compile error, and the message names the wrong one first.
 - **The child relationship name is editable and often not what you expect.** It is not derivable from the object name; check the field definition rather than guessing the plural.
 - **Five levels is the ceiling for custom-object traversal specifically**; standard-object paths in some contexts allow fewer, and a `WHERE` clause on a deep path can be rejected where the same path in the `SELECT` list is accepted.
-- **A subquery cannot itself contain a subquery.** One level down is one level, and no nesting recovers it.
+- **Nested subqueries stop at five levels and at the API edge.** API 57.0 and earlier allowed only the parent plus one child level, so older code and older answers say "no nesting". Big objects, external objects, Bulk API and Bulk API 2.0 still refuse the deeper levels.
 - **`TYPEOF` cannot be used in a `WHERE` clause** — it shapes the returned fields only. Filtering by the polymorphic target still means filtering on `What.Type`.
 - **Ordering by a parent field forces the sort onto the joined data** and cannot use a child-side index; on large result sets this is a real cost.
 
 ## Recall
 
 Q: How far can you traverse in each direction, and why the asymmetry?
-A: Five levels child-to-parent, one level parent-to-child. Upward each step resolves to at most one record so cost is predictable; downward each step multiplies rows by an unknown factor.
+A: Five levels each way since API 58.0 — dot notation upward, nested subqueries downward (the parent counts as level one). Upward each step resolves to at most one record so cost is predictable; downward each level multiplies rows by an unknown factor, all counted against the 50,000-row limit.
 
 Q: What is the difference between `Deal__c` and `Deal__r`?
 A: `Deal__c` is the lookup field, holding the Id and used in `WHERE`. `Deal__r` is the relationship, used in the field list to traverse to the parent's fields.
@@ -76,3 +76,11 @@ A: A field the user cannot read raises an exception; a record the user cannot se
 - [06 · Semi-joins, anti-joins & set filtering](06-semi-joins-anti-joins-and-set-filtering.md) — filtering a parent by its children, which traversal cannot express
 - [08-data · 02 Relationships deep dive](../08-data-modeling-and-large-data-volumes/02-relationships-deep-dive.md) — master-detail vs lookup, cascade and reparenting, and why the model constrains the query
 - [08-data · 04 Standard CRM object map](../08-data-modeling-and-large-data-volumes/04-standard-crm-object-map.md) — `WhoId` and `WhatId`, the polymorphic joints `TYPEOF` exists for
+
+## Sources
+
+- [SOQL and SOSL Reference (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_soql_sosl.pdf) — Salesforce Developers · read 2026-10-28 · Query Parent-to-Child Relationships: *"In API version 58.0 and later, SOQL queries can contain up to five levels of parent-to-child relationships"*, limited to REST, SOAP and Apex query calls; Relationship Query Limitations: 20 parent-to-child relationships, five levels child-to-parent, *"In API version 57.0 and earlier, only two levels"*, not for big objects, external objects or Bulk API / Bulk API 2.0
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: corrected "parent-to-child reaches exactly one level" and "a subquery cannot contain a subquery" — wrong since API 58.0; five nested levels are allowed

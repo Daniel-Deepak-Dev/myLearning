@@ -4,8 +4,8 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 15
 ---
 # Data Migration & Cutover
@@ -36,7 +36,7 @@ Two platform defaults have moved under older migration runbooks. **Apex runs in 
 ## Gotchas
 
 - **Rollback has to be designed in.** Stamp every migrated record with a batch identifier; without it, "undo the load" means finding the rows first.
-- **A hard delete is the only rollback that frees storage**, and soft-deleted rows keep degrading queries meanwhile → [13](13-deletes-recycle-bin-and-physical-deletion.md).
+- **Roll back with a hard delete, not a delete.** Soft-deleted rows stop counting against storage but keep degrading queries until purged → [13](13-deletes-recycle-bin-and-physical-deletion.md).
 - **Throughput does not extrapolate linearly.** The second 10 million rows are slower than the first — indexes, sharing and skew all grow.
 - **Date and number parsing follows the running user's locale**, which is how 03/04 becomes the wrong month in production → [22](22-multi-currency-multi-language-and-locale.md).
 - **Migrating "everything" is a decision nobody made.** Legacy data you never intended to keep arrives with a retention obligation attached → [15](15-archiving-and-retention-strategy.md).
@@ -66,3 +66,12 @@ A: Backfilling everything the automation bypass suppressed — roll-ups, derived
 - [19 · Data quality, deduplication & MDM](19-data-quality-deduplication-and-mdm.md) — clean before you load, not after
 - [26 · Cross-org data sharing & consolidation](26-cross-org-data-sharing-and-consolidation.md) — the same project when the source is another Salesforce org
 - [01-admin · 13 Data import, export & loading tools](../01-admin-and-declarative-platform/13-data-import-export-and-loading-tools.md) — what you actually run the load with
+
+## Sources
+
+- [Best Practices for Deployments with Large Data Volumes (PDF, Winter '27)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_large_data_volumes_bp.pdf) — Salesforce Developers · read 2026-10-28 · Recycle Bin items don't count against storage but soft-deleted data *"still affects database performance"*
+- [Update Apex Code and Flows for Changed Sharing Recalculation Behavior (Release Update)](https://help.salesforce.com/s/articleView?id=release-notes.rn_customization_apex_sharing_ru.htm&release=260&type=5&language=en_US) — Salesforce Help · via search 2026-10-28 · available Spring '26, enforced Spring '27 — unchanged in Winter '27
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: hard-delete rollback described by query cost, not storage; async sharing recalculation date re-confirmed

@@ -4,8 +4,8 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 14
 ---
 # Relationships Deep Dive
@@ -25,7 +25,7 @@ The useful way to hold it is that **master-detail deletes the child's independen
 - **Reparenting is off by default on master-detail.** *Allow reparenting* must be ticked at creation-time thinking, and every reparent triggers a sharing recalculation for the child and its own children → [07-security · 16](../07-security-and-sharing/16-sharing-recalculation-and-performance.md).
 - **Depth: 3 custom detail levels, 2 master-detail relationships per object, 40 relationship fields per object.** The depth limit binds sooner than it sounds, because a junction object already consumes both master-detail slots.
 - **Roll-up summaries live only on the master**, cap at **25 per object** (Support-raisable to a hard **40**), and recalculate *after* after-triggers in the save order → [01-admin · 07](../01-admin-and-declarative-platform/07-formula-fields-and-roll-up-summaries.md).
-- **`__r` is the traversal name.** Child-to-parent is 5 levels in SOQL, parent-to-child is 1 level of subquery — a modelling constraint, not just a query one → [10-soql · 04](../10-soql-and-sosl/04-relationship-queries-in-depth.md).
+- **`__r` is the traversal name.** Child-to-parent is 5 levels in SOQL. Parent-to-child nests up to **5 levels counting the parent** since API 58.0, via Apex, REST and SOAP only — not for big objects, external objects or Bulk API. A modelling constraint, not just a query one → [10-soql · 04](../10-soql-and-sosl/04-relationship-queries-in-depth.md).
 - **External and indirect lookups** join on an external ID rather than a Salesforce Id, and exist for external objects → [06-integration · 20](../06-integration-and-apis/20-salesforce-connect-and-external-objects.md).
 
 > **From my notes.** `Lead Broker Field Migration` (2023) is catalogued here but is really a deployment checklist — missing report types across sandboxes, fields present in Stage and absent in devsd and QA. One durable data-modelling lesson survives it, and it is not obvious: its first task is *"change the field label and relationship label and rel api name"*. **A relationship's API name is part of the schema, and report types are built on relationship paths** — so renaming one invalidates every report type that traverses it, and report types are metadata that has to be deployed rather than something that follows the field. That is why the page's other two items are both "things missing in the other sandbox". Rename a relationship and you have signed up for a report-type deployment.
@@ -63,3 +63,11 @@ A: The write takes a lock on the master record, so concurrent writes to siblings
 - [10 · Data skew](10-data-skew.md) — what these relationships do when the distribution goes lopsided
 - [12 · Record locking & concurrency](12-record-locking-and-concurrency.md) — the parent lock, in full
 - [07-security · 06 Org-wide defaults & record access](../07-security-and-sharing/06-org-wide-defaults-and-record-access.md) — where `Controlled by Parent` lands in the access model
+
+## Sources
+
+- [SOQL and SOSL Reference (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_soql_sosl.pdf) — Salesforce Developers · read 2026-10-28 · *"In API version 58.0 and later, up to five levels of parent-to-child relationship can be queried via REST, SOAP, and Apex query calls"*; the parent counts as level 1; not for big objects, external objects, Bulk API or Bulk API 2.0; 57.0 and earlier allowed two
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: corrected parent-to-child subquery depth — 5 levels since API 58.0, not 1 (a correction, not a Winter '27 change)

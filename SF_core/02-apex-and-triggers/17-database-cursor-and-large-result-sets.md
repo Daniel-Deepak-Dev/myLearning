@@ -4,8 +4,8 @@ area: 02-apex-and-triggers
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 4
 tags: [currency-new]
 ---
@@ -29,7 +29,7 @@ A cursor is a server-side handle to a query's results that you page through your
 
 - **Creation takes an access level.** `Database.getCursor(soql, accessLevel)` and `Database.getCursorWithBinds(soql, binds, accessLevel)` — user mode by default at 67.0, like every other query. → [10](10-apex-security-user-mode-and-fls.md)
 - **Cursors are stateless and offset-based.** The set of record IDs is fixed when the cursor is created; `fetch()` just reads from an offset, so nothing is held open between calls.
-- **The pagination variant is a different object for a different job.** `Database.getPaginationCursor()` returns a `PaginationCursor` whose `fetchPage(start, pageSize)` yields a `Database.CursorFetchResult` with `getRecords()`, `getDeletedRows()`, `getNextIndex()` and `isDone()` — it skips deleted rows so page sizes stay stable for a UI, at the cost of a 100,000-row ceiling per instance.
+- **The pagination variant is a different object for a different job.** `Database.getPaginationCursor()` returns a `PaginationCursor` whose `fetchPage(start, pageSize)` yields a `Database.CursorFetchResult` with `getRecords()`, `getDeletedRows()`, `getNextIndex()` and `isDone()` — it skips deleted rows so page sizes stay stable for a UI, at the cost of tighter per-transaction caps: 100,000 rows across all pagination cursors, 50 instances, and 2,000 rows per `fetchPage()`.
 - **Two exception types, and the difference matters.** `System.TransientCursorException` means retry; `System.FatalCursorException` does not.
 
 ```apex
@@ -51,7 +51,7 @@ public class ContactSweep implements Queueable {
 
 ## 2026 currency
 
-Cursors arrived as **Beta in Summer '24 (API 61.0)** and reached **GA in Spring '26 (API 66.0)** — one release before the target, so this is genuinely recent and absent from almost every tutorial. Get the two halves the right way round: the *feature* is not a Summer '26 addition, but *general availability* is only one release old, so code written against the Beta should be re-read rather than assumed current. Track consumption with **`Limits.getApexCursors()`** and **`Limits.getApexCursorRows()`**. What 67.0 added is the same thing it added everywhere: the query behind a cursor runs in user mode unless you pass `AccessLevel.SYSTEM_MODE`, so a sweep job written before the flip processes fewer records rather than failing. The org-level ceilings — **10,000 standard cursors and 200,000 pagination cursors per 24 hours** — are the numbers to design against; they are generous for background work and tight for anything created per page view. Release context: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
+Cursors arrived as **Beta in Summer '24 (API 61.0)** and reached **GA in Spring '26 (API 66.0)** — one release before the target, so this is genuinely recent and absent from almost every tutorial. Get the two halves the right way round: the *feature* is not a Summer '26 addition, but *general availability* is only one release old, so code written against the Beta should be re-read rather than assumed current. Track consumption with **`Limits.getApexCursors()`** and **`Limits.getApexCursorRows()`**. What 67.0 added is the same thing it added everywhere: the query behind a cursor runs in user mode unless you pass `AccessLevel.SYSTEM_MODE`, so a sweep job written before the flip processes fewer records rather than failing. The org-level ceilings — **10,000 standard cursors and 200,000 pagination cursors per 24 hours** — are the numbers to design against; they are generous for background work and tight for anything created per page view. **Winter '27 (API 68.0) raised heap to 10 MB sync / 25 MB async**, which weakens the heap half of the case for a cursor on mid-sized sets; resumability across transactions is unaffected. Release context: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 ## Gotchas
 
@@ -75,7 +75,7 @@ Q: How long does a cursor and its results remain available?
 A: Two days.
 
 Q: When would you use `Database.getPaginationCursor` instead of `Database.getCursor`?
-A: For UI paging — it skips deleted rows so page sizes stay consistent, and exposes `isDone()` and `getNextIndex()`. It is capped at 100,000 rows per instance.
+A: For UI paging — it skips deleted rows so page sizes stay consistent, and exposes `isDone()` and `getNextIndex()`. Its caps are lower: 100,000 rows across all pagination cursors per transaction, and 2,000 rows per page.
 
 Q: Which cursor exception is worth retrying?
 A: `System.TransientCursorException`. `System.FatalCursorException` is not retryable.
@@ -85,3 +85,12 @@ A: `System.TransientCursorException`. `System.FatalCursorException` is not retry
 - [14 · Batch Apex & stateful processing](14-batch-apex-and-stateful-processing.md) — the alternative when 50 M rows and platform-managed chunking are what you want
 - [13 · Queueable Apex & chaining](13-queueable-apex-and-chaining.md) — the chain that carries a cursor's position between transactions
 - [08-data · 08 Indexes & query selectivity](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md) — making the underlying query selective enough that paging it is worth doing
+
+## Sources
+
+- [Apex Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · Pagination Cursors: *"a maximum of 100,000 rows across all active pagination cursors per transaction"*, maximum `pageSize` 2,000; Per-Transaction Apex Limits: 50 pagination cursor instances, 100 `fetch` calls shared, 50 million cursor rows; 10,000 cursors and 200,000 pagination cursors per 24 hours; 48-hour expiry; heap 10 MB / 25 MB
+- [Winter '27 Release Architect Highlights](https://www.salesforce.com/blog/winter-27-release-architect-highlights/) — Salesforce Architecture Blog · read 2026-10-28 · heap 6 → 10 MB and 12 → 25 MB; *"Revisit code that chunks or streams data primarily to stay under the old ceiling"*
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: corrected the pagination-cursor cap from "100,000 rows per instance" to 100,000 rows per transaction across all pagination cursors (plus 50 instances, 2,000 rows a page); added the heap rise

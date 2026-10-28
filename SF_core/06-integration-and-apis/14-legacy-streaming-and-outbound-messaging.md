@@ -4,8 +4,8 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 12
 tags: [currency-warning]
 ---
@@ -41,6 +41,8 @@ The honest summary is that **the transport is fine and two message types are dea
 
 **Nothing here acquired a retirement date in 2026.** The change worth recording is a correction to this vault's own framing: [../CURRENCY.md](../CURRENCY.md)'s six-defaults table lists CometD → Pub/Sub, and that row is **weaker than the others** — it is a recommendation, not a default flip and not a retirement. Treat it the way phase 06 had to treat Lightning Locker: the successor is where new work goes, the predecessor still runs. Where an existing CometD subscriber is stable and inside retention tolerances, *"migrate when you touch it"* is a defensible answer; where flow control or replay robustness matter, Pub/Sub is worth the gRPC adoption cost.
 
+The 68.0 Streaming API guide confirms all of this still holds, and shows the API still gaining features. **From 68.0 the server returns an updated replay ID per channel** in `ext.replay` on every successful `/meta/connect`, so a client can resume from the right point without waiting for an event to arrive. Versions **37.0–68.0** are supported. One version quirk worth knowing: a client on a withdrawn Streaming version (23.0–36.0, gone since Winter '25) is **routed to the latest version**, not refused with 410 like REST.
+
 > **From my notes.** `CometD` (2025) is a working long-polling subscriber write-up and its mechanics are still correct. What it lacks is the framing this whole note exists to supply — it presents CometD as *the* way to subscribe. For a new external subscriber it is not; for `lightning/empApi` inside a component it still is.
 
 ## Gotchas
@@ -75,3 +77,11 @@ A: It is configured as a workflow action, and new Workflow Rules cannot be creat
 - [13 · Change Data Capture](13-change-data-capture.md) — what PushTopic should have been
 - [12 · Platform Event design](12-platform-event-design.md) — the typed replacement for generic events
 - [../CURRENCY.md](../CURRENCY.md) — the six-defaults table, and why row 5 is the weakest of them
+
+## Sources
+
+- [Streaming API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_streaming.pdf) — Salesforce Developers · read 2026-10-28 · *"starting with API version 68.0, the server also emits an updated replay ID on a per channel basis on each successful /meta/connect call"*; End-of-Life table 37.0–68.0 supported, 23.0–36.0 unavailable since Winter '25 and routed to the latest version; PushTopic and generic events still *(Legacy)*; *"we recommend you use Pub/Sub API instead of Streaming API"*; last updated 9 October 2026
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: no retirement added; recorded the 68.0 per-channel replay ID and the retired-version routing

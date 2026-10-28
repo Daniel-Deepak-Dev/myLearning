@@ -4,8 +4,8 @@ area: 04-flow-and-automation
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 9
 tags: [currency-warning]
 ---
@@ -29,22 +29,22 @@ Every flow answers two separate questions. *Who is the running user?* decides wh
 | **Screen flow** | *Depends on How Flow is Launched* — user context when launched from a page, button or action | **yes** |
 | **Autolaunched** | *Depends on How Flow is Launched* — inherits its caller | **yes** |
 
-- **`How to Run the Flow`** sits in Flow Properties on screen and autolaunched flows, with three values: *Depends on How Flow is Launched*, **System Context With Sharing—Enforces Record-Level Access**, and **System Context Without Sharing—Access All Data**.
+- **`How to Run the Flow`** sits in Flow Properties on screen and autolaunched flows. It had three values: *Depends on How Flow is Launched*, **System Context With Sharing—Enforces Record-Level Access**, and **System Context Without Sharing—Access All Data**. **At API 68.0 there is a fourth: User Context—Enforces User Permissions** (`runInMode` = `UserMode`).
 - **"With Sharing" here means sharing only.** Object permissions and FLS are still bypassed — it is not user mode, and it is not what `with sharing` means in Apex. → [02-apex · 10](../02-apex-and-triggers/10-apex-security-user-mode-and-fls.md), [11](../02-apex-and-triggers/11-sharing-keywords-and-apex-managed-sharing.md)
 - **The default being conditional is why published guidance disagrees** about what an autolaunched flow's default is. It has no fixed answer; read the caller.
-- **A subflow inherits the parent's context**, so elevating one screen flow elevates everything it calls.
+- **A subflow inherits the parent's context**, so elevating one screen flow elevates everything it calls. The one exception is a subflow set to `UserMode`: it does not inherit its caller's context.
 - **The elevated-subflow pattern is the recommended shape**: leave the outer flow in user context and put the one privileged operation in a small subflow set to system context — the Flow equivalent of a narrow `without sharing` helper class.
 
 ## 2026 currency
 
-The platform moved in the opposite direction everywhere else, which is what makes this note worth reading twice. **Apex flipped to user mode by default at API 67.0** and keyword-less classes now default to `with sharing` → [../CURRENCY.md](../CURRENCY.md). Flow did not flip. A record-triggered flow at 67.0 has exactly the reach it had in 2019, so **the same logic is now more permissive in Flow than in Apex** — which inverts the old assumption that clicks are the safe option and code is the risky one. Nothing in the Summer '26 notes changes flow run context; the change is in the contrast. Treat "should this be Flow or Apex?" as a security question as well as a limits question. → [01](01-automation-landscape-and-tool-selection.md), [07-security](../07-security-and-sharing/INDEX.md)
+The platform moved in the opposite direction everywhere else, which is what makes this note worth reading twice. **Apex flipped to user mode by default at API 67.0** and keyword-less classes now default to `with sharing` → [../CURRENCY.md](../CURRENCY.md). Flow did not flip. A record-triggered flow at 67.0 has exactly the reach it had in 2019, so **the same logic is now more permissive in Flow than in Apex** — which inverts the old assumption that clicks are the safe option and code is the risky one. Nothing in the Summer '26 notes changes flow run context; the change is in the contrast. **Winter '27 closes part of the gap, for two flow types only.** A screen or autolaunched flow saved at **API 68.0 or later** can choose **User Context—Enforces User Permissions**. It runs with the running user's security context enforced and does **not** inherit system context from a calling flow or Apex — which the default *Depends on How Flow is Launched* does. The triggered types still have no setting, and the default did not change. Treat "should this be Flow or Apex?" as a security question as well as a limits question. → [01](01-automation-landscape-and-tool-selection.md), [07-security](../07-security-and-sharing/INDEX.md)
 
 ## Gotchas
 
 - **A record-triggered flow bypasses sharing, FLS and object permissions**, whatever the running user can do. There is no setting to change this.
 - **"System Context With Sharing" enforces record access only.** FLS and object permissions are still bypassed — the name oversells it.
 - **The screen-flow default is a deferral, not a context.** *Depends on How Flow is Launched* means the answer changes with the launch surface, including the site a guest hits. → [21](21-flow-for-external-and-guest-users.md)
-- **Elevating a parent elevates every subflow it calls.** Grant privilege at the leaf, not the root.
+- **Elevating a parent elevates every subflow it calls.** Grant privilege at the leaf, not the root. At 68.0, set a subflow that must never be elevated to `UserMode`.
 - **`$User` tells you nothing about permissions being enforced.** It is the running user, not the context.
 - **A Get Records in system context returns rows the user will never be shown**, and putting them on a screen leaks them — through the DOM, not just the UI. → [04](04-screen-flows-and-ux-design.md)
 - **Debugging as another user does not reproduce context**, because the triggered types' context is fixed regardless of who runs them. → [15](15-flow-testing-and-debugging.md)
@@ -72,3 +72,12 @@ A: Apex defaulted to user mode at API 67.0 and `with sharing`; Flow's triggered 
 - [21 · Flow for external & guest users](21-flow-for-external-and-guest-users.md) — where a permissive context becomes a public exposure
 - [02-apex · 10 Apex security, user mode & FLS](../02-apex-and-triggers/10-apex-security-user-mode-and-fls.md) — the same distinction in code, and the 67.0 default that Flow did not follow
 - [07-security](../07-security-and-sharing/INDEX.md) — the permissions and sharing model these contexts bypass
+
+## Sources
+
+- [Metadata API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_meta.pdf) — Salesforce Developers · read 2026-10-28 · Flow `runInMode` value `UserMode`: *"runs with the user's security context explicitly enforced, without inheriting sharing settings from the calling context"*; UI label *User Context—Enforces User Permissions*; available in API 68.0 and later
+- [Flow Run Context](https://help.salesforce.com/s/articleView?id=platform.flow_distribute_context.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-28 · the option applies to screen and autolaunched flows at API 68.0+; the default user-context option can inherit elevated permissions from a system-context caller
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added the fourth run-context value, `UserMode` (API 68.0), and its no-inheritance behaviour

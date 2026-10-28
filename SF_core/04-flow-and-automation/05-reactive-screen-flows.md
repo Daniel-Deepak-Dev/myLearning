@@ -4,8 +4,8 @@ area: 04-flow-and-automation
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 8
 tags: [currency-new]
 ---
@@ -33,7 +33,7 @@ Reactivity is the capability that changed screen-flow design most, and it arrive
 
 ## 2026 currency
 
-Reactivity is mature rather than new — the interesting fact is what it retired. Screen Actions completed the arc in Summer '25, and Salesforce's own framing is that it was the last missing piece: reactive components could recalculate but never fetch. Four constraints are still live at 67.0 and none of them is signposted in the builder: **cross-object formulas are not reactive**, **formulas are capped at 3,900 characters**, **a reactive change does not fire validation** on the components it updates, and reactivity is a property of *specific* components rather than all of them, so the supported list has to be checked per component rather than assumed. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
+Reactivity is mature rather than new — the interesting fact is what it retired. Screen Actions completed the arc in Summer '25, and Salesforce's own framing is that it was the last missing piece: reactive components could recalculate but never fetch. Four constraints are still live at 67.0 and none of them is signposted in the builder: **cross-object formulas are not reactive**, **formulas are capped at 3,900 characters**, **a reactive change does not fire validation** on the components it updates, and reactivity is a property of *specific* components rather than all of them, so the supported list has to be checked per component rather than assumed. **Winter '27 extends reactivity to conditional visibility**: a visibility rule can now evaluate a **reactive formula** built from components on the same screen (release note *Evaluate Conditional Visibility Rules with Reactive Formulas*). Show/hide logic that needed a formula no longer needs a screen boundary. 🚩 A third-party source says the flow must run on API 68.0 for this. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 
 ## Gotchas
 
@@ -67,3 +67,12 @@ A: Dispatch `FlowAttributeChangeEvent` from `lightning/flowSupport`. Assigning t
 - [04 · Screen flows & UX design](04-screen-flows-and-ux-design.md) — screen composition, and why fewer screens is now the goal
 - [03-lwc · 11 LWC in Flow screens](../03-lwc-and-slds/11-lwc-in-flow-screens-and-quick-actions.md) — the `FlowAttributeChangeEvent` contract on the component side
 - [12 · HTTP callout & External Services](12-http-callout-and-external-services-in-flow.md) — what a Screen Action calls when the answer is outside Salesforce
+
+## Sources
+
+- [Salesforce Winter '27 Release Notes](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.salesforce_release_notes.htm&release=264&type=5) — Salesforce Help · via search 2026-10-28 · *Screen Flow Updates*: *Evaluate Conditional Visibility Rules with Reactive Formulas*
+- [salesforce-agent-skills PR #15](https://github.com/pariveo/salesforce-agent-skills/pull/15) — GitHub · via search 2026-10-28 · 🚩 third-party: a visibility rule on a reactive formula needs API 68.0
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added reactive formulas in conditional visibility rules

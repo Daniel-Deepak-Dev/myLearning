@@ -4,8 +4,8 @@ area: 02-apex-and-triggers
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 21
 ---
 # JSON, Serialization & Untyped Data
@@ -50,7 +50,7 @@ for (Object o : items) {
 - **Serializing an SObject emits only the fields that were queried or set.** A field absent from the `SELECT` list is absent from the JSON rather than null, and a round trip therefore silently narrows the record.
 - **`serialize()` on an object graph with a cycle throws.** Parent-child references that point both ways need one side marked `transient`.
 - **`transient` fields are skipped by serialization *and* excluded from view state** — one keyword, two effects, and forgetting the first is how a value survives locally and vanishes over the wire.
-- **The whole serialized string counts against heap** (6 MB synchronous, 12 MB async). A response that fits the callout size limit can still fail on heap once it is a `String` and an object graph simultaneously → [01](01-apex-language-core-and-governor-limits.md).
+- **The whole serialized string counts against heap** (10 MB synchronous, 25 MB async since Winter '27; 6 MB and 12 MB before). A response that fits the callout size limit can still fail on heap once it is a `String` and an object graph simultaneously → [01](01-apex-language-core-and-governor-limits.md).
 
 ## Recall
 
@@ -75,3 +75,12 @@ A: They are omitted from the JSON entirely rather than serialized as null, so a 
 - [23 · `UserDefinedType` & typed interop](23-userdefinedtype-and-typed-interop.md) — `@AuraEnabled` and `@InvocableVariable`, the annotations that make a class a payload for Flow, LWC and agents
 - [02 · Modern Apex syntax](02-modern-apex-syntax.md) — multiline strings and `String.template()`, including the GMT `Datetime` trap above
 - [06-integration · 18 Apex REST & custom endpoints](../06-integration-and-apis/18-apex-rest-and-custom-endpoints.md) — the inbound direction, where the platform does the binding for you
+
+## Sources
+
+- [Apex Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · Per-Transaction Apex Limits: total heap **10 MB** synchronous, **25 MB** asynchronous
+- [Handle Larger Datasets with Increased Apex Heap Limits](https://help.salesforce.com/s/articleView?id=release-notes.rn_apex_heap_limit.htm&language=en_US&release=264&type=5) — Salesforce Help · via search 2026-10-28 · Winter '27 release note: heap 6 → 10 MB and 12 → 25 MB
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: heap figures in the serialization gotcha 6/12 MB → 10/25 MB; the note still has no `## 2026 currency` section, by design

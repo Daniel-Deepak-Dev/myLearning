@@ -4,8 +4,8 @@ area: 03-lwc-and-slds
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-09-24
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 7
 ---
 # Static Resources & Third-Party JavaScript
@@ -46,7 +46,7 @@ export default class Viz extends LightningElement {
 
 ## 2026 currency
 
-Two constraints tightened. **At 67.0 LWS blocks the `data:` URI scheme** — a pattern that shows up constantly in chart-export and download-link code, where `data:image/png;base64,…` was the obvious answer. Build a blob and use a **`blob:`** object URL instead ([09](09-lightning-web-security.md)). And the ambient answer to "which library" has changed: **the platform now ships things that used to need one.** Virtualized lists are a base component in Developer Preview ([16](16-lwc-performance-and-debugging.md)), `<details name>` gives a zero-JavaScript accordion at 67.0 ([02](02-templates-directives-and-rendering.md)), and CSS custom properties cover most of what a theming library did ([14](14-slds-2-and-styling-hooks.md)). Every third-party library is a permanent LWS-compatibility and upgrade liability, so the question to ask first is whether the platform already does it.
+Two constraints tightened. **At 67.0 LWS blocks the `data:` URI scheme** — a pattern that shows up constantly in chart-export and download-link code, where `data:image/png;base64,…` was the obvious answer. Build a blob and use a **`blob:`** object URL instead ([09](09-lightning-web-security.md)). And the ambient answer to "which library" has changed: **the platform now ships things that used to need one.** Virtualized lists are a base component in Developer Preview ([16](16-lwc-performance-and-debugging.md)), `<details name>` gives a zero-JavaScript accordion at 67.0 ([02](02-templates-directives-and-rendering.md)), and CSS custom properties cover most of what a theming library did ([14](14-slds-2-and-styling-hooks.md)). Every third-party library is a permanent LWS-compatibility and upgrade liability, so the question to ask first is whether the platform already does it. One door did open: **third-party web components went GA in Winter '27**, with no change since Beta. Put **`lwc:external`** on the custom element in the template and LWC renders it as a native web component. It **requires LWS** — Locker does not support custom elements — and `loadScript` takes only **IIFE or UMD** bundles, not ES modules, so a component that needs npm dependencies or a build step is still out.
 
 ## Gotchas
 
@@ -85,3 +85,13 @@ A: LWS blocks the `data:` URI scheme. Create a blob and use a `blob:` object URL
 - [07-security · Secure coding](../07-security-and-sharing/INDEX.md) — XSS, sanitization and CSP as an org-level control
 - [07-security · 27 Trusted URLs & CSP](../07-security-and-sharing/27-trusted-urls-and-csp.md) — which non-script resources a Trusted URL can open, and why a script never can
 - [SF_Experience_Cloud · 05 Branding sets, design tokens & SLDS 2](../../SF_Experience_Cloud/05-branding-sets-design-tokens-and-slds-2.md) — fonts and imagery in a site, and the guest caching rule that catches people out
+
+## Sources
+
+- [Use Third-Party Web Components in LWC (Generally Available)](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_lwc_custom_element_mode.htm&release=264&type=5) — Salesforce Help · via search 2026-10-28 · Winter '27 release note: GA with no changes since Beta; `lwc:external`; Lightning Experience in all editions
+- [The Salesforce Developer's Guide to the Winter '27 Release](https://developer.salesforce.com/blogs/2026/10/developers-guide-to-the-winter-27-release) — Salesforce Developers · via search 2026-10-28 · requires Lightning Web Security; load libraries as IIFE or UMD because `loadScript` does not accept ES modules
+- [Use Third-Party Web Components in LWC](https://developer.salesforce.com/docs/platform/lwc/guide/create-use-third-party-components.html) — Salesforce Developers · via search 2026-10-28 · components with npm dependencies, or that need compiling and bundling, are not supported
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added third-party web components (`lwc:external`), GA in Winter '27

@@ -4,8 +4,8 @@ area: 07-security-and-sharing
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 10
 tags: [currency-new, currency-warning]
 ---
@@ -33,7 +33,7 @@ Every user has exactly one profile and any number of permission sets, and their 
 
 Two Summer '26 changes are live and do matter:
 
-- **`Enable Profile Filtering` is a Release Update** — available Summer '26, **enforced Winter '27**. After enforcement a user sees only their own profile name unless granted **`View All Profiles`**. Anything that depends on users picking or reporting on profiles — support tooling, licence management, list view filters — needs that permission assigned first.
+- **`Enable Profile Filtering` is a Release Update** — available Summer '26, and **enforced with Winter '27**, one of the five Release Updates that release enforced. A user now sees only their own profile name unless granted **`View All Profiles`**. Anything that depends on users picking or reporting on profiles — support tooling, licence management, list view filters — needs that permission. So does **configuring login flows**, and so does any Apex, flow or integration that reads *another* user's profile name.
 - **The enhanced profile view now previews indirect changes.** Editing a user, object or app permission shows the dependent permissions it will drag along, for approval **before** saving. The cascade always existed; it was just invisible.
 
 ## Gotchas
@@ -43,7 +43,7 @@ Two Summer '26 changes are live and do matter:
 - **Cloning a profile to change two checkboxes** is how orgs reach 60 profiles. The clone inherits every drift the original had.
 - **Record type *availability* is a profile or permission set grant; the *default* record type is profile-only.** Migrating availability to permission sets does not migrate the default. → [01-admin · 04](../01-admin-and-declarative-platform/04-record-types-and-picklist-architecture.md)
 - **Permission set assignments can carry an expiry date.** Unused, they become the permanent grants that fail the next access review.
-- **`View All Profiles` is not assigned by default**, and Winter '27 enforcement turns that from harmless into a broken report.
+- **`View All Profiles` is not assigned by default**, and since Winter '27 enforcement that is a broken report, not a harmless gap.
 - **A profile change is an org-wide change.** There is no per-user override, which is exactly the coupling permission sets exist to break.
 
 ## Recall
@@ -58,7 +58,7 @@ Q: Which settings stay on the profile even in a fully permission-set-led design?
 A: Login hours, login IP ranges, the default record type per object, the default app, and page layout assignments.
 
 Q: What does the `Enable Profile Filtering` Release Update do, and when is it enforced?
-A: From Winter '27 a user sees only their own profile name unless granted `View All Profiles`. It is available to enable from Summer '26.
+A: A user sees only their own profile name unless granted `View All Profiles`. Available from Summer '26, enforced with Winter '27 — it is live in every org now.
 
 Q: Which profile is the intended baseline in a least-privilege design?
 A: `Minimum Access - Salesforce` — it grants little beyond login, with everything else composed from permission sets.
@@ -69,3 +69,12 @@ A: `Minimum Access - Salesforce` — it grants little beyond login, with everyth
 - [05 · User Access Policies & lifecycle](05-user-access-policies-and-lifecycle.md) — assigning all of this automatically as people join, move and leave
 - [15 · Auditing & troubleshooting access](15-auditing-and-troubleshooting-access.md) — finding which profile or permission set granted a permission
 - [02 · Licences & what they gate](02-licences-and-what-they-gate.md) — why a permission is sometimes not merely unchecked but absent
+
+## Sources
+
+- [Enable Profile Filtering (Release Update)](https://help.salesforce.com/s/articleView?id=release-notes.rn_permissions_profile_filtering_enforced.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-28 · *"This update was first available in Summer '26 and is enforced in Winter '27"*; test Apex, flows and integrations that read other users' profile names; login flow configuration needs `View All Profiles`
+- [(2026年10月) Salesforceの運用に関する重要なお知らせ](https://successjp.salesforce.com/article/NAI-001341) — Salesforce Japan Success Navi, 27 Oct 2026 · read 2026-10-28 · Profile Filtering (`rn_permissions_profile_filtering_enforced`) is one of the five Release Updates enforced in Winter '27
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: Profile Filtering is now enforced (past tense); added login flows and code that reads other users' profiles

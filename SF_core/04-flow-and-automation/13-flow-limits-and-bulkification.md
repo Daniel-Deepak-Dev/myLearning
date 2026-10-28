@@ -4,8 +4,8 @@ area: 04-flow-and-automation
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 9
 tags: [currency-warning]
 ---
@@ -19,7 +19,7 @@ tags: [currency-warning]
 
 Flow spends the same per-transaction budget as Apex, out of the same pot, in the same transaction — and it gives you less control over how. That single sentence answers most "should this be Flow or Apex?" arguments, because the honest answer is that moving the logic to Apex usually does not raise the ceiling; it only makes the spending visible. The two things worth internalising are that **limits are per transaction, not per flow** — your flow shares with every trigger, workflow field update and other flow in the same save — and that Flow's automatic bulkification is real but shallow. It batches identical operations *across interviews at the same element*, which is why 200 records saved together cost one DML statement at an Update element. It cannot batch across *iterations of your loop*, which is why the same element inside a loop costs 200.
 
-> **From my notes.** *"How to reduce CPU time: convert Process Builder, flows to Apex Triggers if possible."* The numbers on that page are still right — **10 seconds sync, 60 asynchronous**, plus heap at **6 MB / 12 MB** — and its list of causes is a good one: circular updates between two objects, recursion, DML'ing and querying the same object repeatedly, nested loops more than two deep. **The advice is not right.** Apex spends the same CPU budget on the same work; rewriting a flow in Apex only helps if you bulkify while you are there, and the rest of that page's own list — recursion, nested loops, repeated DML — is exactly what you would carry across unchanged.
+> **From my notes.** *"How to reduce CPU time: convert Process Builder, flows to Apex Triggers if possible."* The CPU numbers on that page are still right — **10 seconds sync, 60 asynchronous**. Its heap figures of **6 MB / 12 MB** are not: **Winter '27 raised heap to 10 MB / 25 MB**. Its list of causes is a good one: circular updates between two objects, recursion, DML'ing and querying the same object repeatedly, nested loops more than two deep. **The advice is not right.** Apex spends the same CPU budget on the same work; rewriting a flow in Apex only helps if you bulkify while you are there, and the rest of that page's own list — recursion, nested loops, repeated DML — is exactly what you would carry across unchanged.
 
 ## How it works
 
@@ -41,7 +41,7 @@ Flow spends the same per-transaction budget as Apex, out of the same pot, in the
 
 ## 2026 currency
 
-The removal of the element cap is three years old and still not in general circulation, which makes it the most useful thing to know here. Summer '26 adds two levers that reduce element count directly: **Formula Mode and Transform Mode inside the action property panel** collapse a resource plus an element into one configuration, and **a configurable batch size of 1–200 on schedule-triggered flows** finally lets you trade throughput for headroom the way `Database.executeBatch(job, scopeSize)` does in Apex → [06](06-scheduled-and-autolaunched-flows.md). The **Element Error Rate column** on the Flows list view is the first native way to find which element is actually failing in production rather than guessing. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
+The removal of the element cap is three years old and still not in general circulation, which makes it the most useful thing to know here. Summer '26 adds two levers that reduce element count directly: **Formula Mode and Transform Mode inside the action property panel** collapse a resource plus an element into one configuration, and **a configurable batch size of 1–200 on schedule-triggered flows** finally lets you trade throughput for headroom the way `Database.executeBatch(job, scopeSize)` does in Apex → [06](06-scheduled-and-autolaunched-flows.md). The **Element Error Rate column** on the Flows list view is the first native way to find which element is actually failing in production rather than guessing. **The transaction limits in the table are unchanged at 68.0**; heap is the transaction limit that moved. Salesforce's own Winter '27 architect guidance names **Flow record-lock retry** → [10](10-fault-paths-and-custom-errors.md) and **loop-free collection filtering** → [09](09-collections-loops-and-the-transform-element.md) as reasons to revisit Apex that exists only to work around Flow. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 
 ## Gotchas
 
@@ -76,3 +76,12 @@ A: The transaction's. Every trigger, flow and workflow field update in the same 
 - [09 · Collections, loops & Transform](09-collections-loops-and-the-transform-element.md) — the patterns that keep you under these numbers
 - [02-apex · 01 Governor limits](../02-apex-and-triggers/01-apex-language-core-and-governor-limits.md) — the same budget, described from the code side
 - [20 · Pause, Wait & waiting interviews](20-pause-wait-and-waiting-interviews.md) — where interview size stops being theoretical
+
+## Sources
+
+- [Apex Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · Per-Transaction Apex Limits: total heap **10 MB / 25 MB**, CPU **10,000 / 60,000 ms**, SOQL 100, DML 150 and 10,000 rows unchanged
+- [Winter '27 Release Architect Highlights](https://www.salesforce.com/blog/winter-27-release-architect-highlights/) — Salesforce Architecture Blog · read 2026-10-28 · heap 6 → 10 MB and 12 → 25 MB; Flow *record-lock retry* and *loop-free filtering* named as reasons to revisit Apex workarounds
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: corrected the heap figures (now 10 MB / 25 MB) and pointed to the two Winter '27 Flow changes that bear on limits

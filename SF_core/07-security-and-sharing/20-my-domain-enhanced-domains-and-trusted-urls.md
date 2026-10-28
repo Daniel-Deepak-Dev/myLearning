@@ -4,8 +4,8 @@ area: 07-security-and-sharing
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-09-24
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 11
 tags: [currency-warning]
 ---
@@ -13,7 +13,7 @@ tags: [currency-warning]
 
 **Scope:** The org's own hostnames — how they are shaped, what stopped redirecting, and what the browser is allowed to load once a page is served from them. The LWS half of front-end security is [03-lwc · 09](../03-lwc-and-slds/09-lightning-web-security.md); this note owns the domain and CSP configuration behind it.
 
-> **What changed.** *"Old URLs still redirect, so we can migrate the hardcoded ones later"* is wrong as of Spring '26. **Redirections for legacy My Domain hostnames ended in production** — an old link now fails outright rather than quietly forwarding. The API half is still in flight: an opt-in *Block API traffic that uses an incorrect instanced URL* switch became available **19 June 2026**, and support for incorrect instanced URLs ends in **Winter '27**.
+> **What changed.** *"Old URLs still redirect, so we can migrate the hardcoded ones later"* is wrong as of Spring '26. **Redirections for legacy My Domain hostnames ended in production** — an old link now fails outright rather than quietly forwarding. The API half is still in flight: an opt-in *Block API traffic that uses an incorrect instanced URL* switch became available **19 June 2026**, and support for incorrect instanced URLs ends in **Spring '27** — postponed from Winter '27.
 
 ## Core idea
 
@@ -33,11 +33,11 @@ Enhanced domains put your My Domain name into **every** URL the org serves — L
 - **A blocked external script is a CSP failure, not an LWS failure.** Phase 06 established this distinction and it is the single commonest misdiagnosis in LWC work — the fix is a **static resource** — Trusted URLs has no `script-src` box — not a Session Settings checkbox. → [03-lwc · 09](../03-lwc-and-slds/09-lightning-web-security.md)
 - **Clickjacking protection lives beside it** in Session Settings, and its defaults now block framing Salesforce pages in external sites — deliberate, and a frequent Experience Cloud embedding surprise.
 - **Login discovery, SP-initiated SSO and multiple IdPs all depend on My Domain.** → [19](19-sso-saml-oidc-and-identity.md)
-- **Instanced URLs are the remaining exposure.** An integration pinned to `na139.salesforce.com` or an instance-specific API host still works today, will fail on the opt-in switch, and stops being supported in Winter '27. Test with the switch on before the release forces it.
+- **Instanced URLs are the remaining exposure.** An integration pinned to `na139.salesforce.com` or an instance-specific API host still works today, will fail on the opt-in switch, and stops being supported in Spring '27. Test with the switch on before the release forces it.
 
 ## 2026 currency
 
-The redirect grace period is the story. Legacy hostname redirections **stopped in production and demo orgs in Spring '26**, so the failure mode changed from invisible-but-working to a hard 404 or blocked request — which is better for security and worse for anyone who deferred the audit. Since **19 June 2026** you can turn on *Block API traffic that uses an incorrect instanced URL* in the Redirections section of the My Domain Setup page to surface remaining offenders on your own schedule; **Winter '27 ends support** for that traffic regardless. Find them with Login History and API request logs rather than by grepping the codebase — most hardcoded URLs live in middleware and third-party configuration you do not own. → [23](23-event-monitoring-and-transaction-security.md)
+The redirect grace period is the story. Legacy hostname redirections **stopped in production and demo orgs in Spring '26**, so the failure mode changed from invisible-but-working to a hard 404 or blocked request — which is better for security and worse for anyone who deferred the audit. Since **19 June 2026** you can turn on *Block API traffic that uses an incorrect instanced URL* in the Redirections section of the My Domain Setup page to surface remaining offenders on your own schedule. End of support for that traffic was due shortly after Winter '27; the *Update Instanced URLs in API Traffic* Release Update now enforces it in **Spring '27**. The Enhanced Domains Timeline and FAQ still say Winter '27 🚩, so check the org's End-of-Support Schedule. Find them with Login History and API request logs rather than by grepping the codebase — most hardcoded URLs live in middleware and third-party configuration you do not own. → [23](23-event-monitoring-and-transaction-security.md)
 
 ## Gotchas
 
@@ -55,7 +55,7 @@ Q: What changed about legacy My Domain hostnames in Spring '26?
 A: Redirections ended in production. Old URLs now fail — 404 or blocked — instead of forwarding.
 
 Q: What is the remaining instanced-URL timeline?
-A: An opt-in *Block API traffic that uses an incorrect instanced URL* switch from 19 June 2026, and end of support in Winter '27.
+A: An opt-in *Block API traffic that uses an incorrect instanced URL* switch from 19 June 2026, and end of support in Spring '27 (postponed from Winter '27).
 
 Q: Why do enhanced domains exist at all?
 A: Shared instance hostnames depend on third-party cookie behaviour browsers have removed. Putting the org's name in every URL removes that dependency.
@@ -75,3 +75,13 @@ A: CORS controls which external origins may call Salesforce. Trusted URLs contro
 - [06-integration · 28 CORS allowlist](../06-integration-and-apis/28-cors-allowlist.md) — the other list in the CORS-vs-Trusted-URLs gotcha
 - [26 · Secure coding checklist](26-secure-coding-checklist.md) — the grep list, including hardcoded instance URLs
 - [SF_Experience_Cloud · 03 Site setup, domains & publishing](../../SF_Experience_Cloud/03-site-setup-domains-and-publishing.md) — the site domains that inherit these rules, and where they diverge
+
+## Sources
+
+- [Update Instanced URLs in API Traffic (Release Update)](https://help.salesforce.com/s/articleView?id=release-notes.rn_update_instanced_urls_in_api_traffic.htm&language=en_US&release=262&type=5) — Salesforce Help · via search 2026-10-28 · enforcement postponed to Spring '27
+- [(2026年10月) Salesforceの運用に関する重要なお知らせ](https://successjp.salesforce.com/article/NAI-001341) — Salesforce Japan Success Navi, 27 Oct 2026 · read 2026-10-28 · instanced URLs listed with the Spring '27 enforced items
+- [Enhanced Domains Timeline](https://help.salesforce.com/s/articleView?language=en_US&id=xcloud.domain_name_enhanced_timeline.htm&type=5) — Salesforce Help · via search 2026-10-28 · still says Winter '27 — conflicts with the Release Update
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: instanced-URL end of support moved from Winter '27 to Spring '27

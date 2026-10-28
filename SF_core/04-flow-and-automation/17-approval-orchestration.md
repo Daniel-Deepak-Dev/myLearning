@@ -4,8 +4,8 @@ area: 04-flow-and-automation
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 9
 tags: [currency-new, currency-warning]
 ---
@@ -37,7 +37,7 @@ A flow approval process is an orchestration whose steps are approvals. That one 
 
 ## 2026 currency
 
-Two changes, one commercial and one behavioural. **Flow Orchestration became a standard feature on 2026-02-18**, so flow approvals inherited a price of zero — cost was the usual reason to stay on classic, and that argument is now dead. **Summer '26 added unanimous approval for group-assigned steps**, and the mechanics matter more than the headline: every member of the group receives **their own work item**, the step advances only when all of them approve, and **those work items cannot be reassigned**. A group whose membership includes someone on leave will stall the process with no delegation route, which makes group membership an operational dependency rather than a configuration detail. Summer '26 also **ungated dependency visibility from *Manage Flow***, so an Approval Designer can now see step dependencies without full flow administration. → [../CURRENCY.md](../CURRENCY.md)
+Two changes, one commercial and one behavioural. **Flow Orchestration became a standard feature on 2026-02-18**, so flow approvals inherited a price of zero — cost was the usual reason to stay on classic, and that argument is now dead. **Summer '26 added unanimous approval for group-assigned steps**, and the mechanics matter more than the headline: every member of the group receives **their own work item**, the step advances only when all of them approve, and **those work items cannot be reassigned**. A group whose membership includes someone on leave will stall the process with no delegation route, which makes group membership an operational dependency rather than a configuration detail. Summer '26 also **ungated dependency visibility from *Manage Flow***, so an Approval Designer can now see step dependencies without full flow administration. **Winter '27 changes the submitter's side and the clean-up.** The **Request Approvals** component on a Lightning record page can now offer **up to 10 autolaunched flow approval processes**, with comments and approver selection set per process — one record page instead of one page per process. And approval submission records can now be deleted to meet GDPR requests: **deleting a parent record cancels its in-progress approval submissions** and their in-progress child records. → [../CURRENCY.md](../CURRENCY.md)
 
 ## Gotchas
 
@@ -71,3 +71,12 @@ A: Nothing. Flow Orchestration is a standard feature with no usage-based run lim
 - [16 · Flow Orchestrator](16-flow-orchestrator.md) — the stages-and-steps engine approvals are built on
 - [01-admin · 12 Approval processes](../01-admin-and-declarative-platform/12-approval-processes-and-approval-orchestration.md) — classic vs flow as an admin decision, with the classic-side plumbing
 - [21 · Flow for external & guest users](21-flow-for-external-and-guest-users.md) — approving from an Experience Cloud site
+
+## Sources
+
+- [Salesforce Winter '27 Release Notes](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.salesforce_release_notes.htm&release=264&type=5) — Salesforce Help · via search 2026-10-28 · *Flow Approval Processes*: *Add Multiple Flow Approval Processes to a Record with the Request…*, *Delete Approval Submission Records to Meet GDPR Requirements*
+- [Jen's Top Winter '27 Release Features For Admins](https://admin.salesforce.com/blog/2026/jens-top-winter-27-release-features-for-admins) — Salesforce Admins · via search 2026-10-28 · up to 10 autolaunched flow approval processes per record page; per-process comment and approver settings; deleting a parent cancels in-progress submissions and child items
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added the 10-process Request Approvals component and submission clean-up on parent delete

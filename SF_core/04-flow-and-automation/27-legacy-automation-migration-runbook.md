@@ -4,8 +4,8 @@ area: 04-flow-and-automation
 format: dense
 status: learning
 created: 2026-08-05
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 24
 tags: [currency-new]
 ---
@@ -24,7 +24,7 @@ Salesforce's recommendation is unambiguous and has not changed: **migrate to Flo
 | 1 · Inventory | `sf org list metadata --metadata-type WorkflowRule`, then retrieve what it names | **Setup is per-object** — scoping from those screens always undercounts |
 | 2 · Cull | delete what has not fired in years; check `LastModifiedDate` and the queue | converting dead automation doubles the work and preserves the mess |
 | 3 · Convert | Migrate to Flow, one rule or process at a time | one-to-one — five bad rules become five bad flows → [18](18-migrate-to-flow-and-legacy-retirement.md) |
-| 4 · Test | open the new flow in Flow Builder, debug-run it | **Flow Tests are record-triggered only** → [15](15-flow-testing-and-debugging.md) |
+| 4 · Test | open the new flow in Flow Builder, debug-run it | **Flow Tests skip asynchronous paths** 🚩 — the scheduled path a time trigger becomes may be untestable → [15](15-flow-testing-and-debugging.md) |
 | 5 · Cut over | **Switch Activations** — deactivates the rule and activates the flow together | the flow is created **inactive**; skipping this changes nothing |
 | 6 · Drain | Setup → Monitoring → **Time-Based Workflow**, delete pending entries | deactivating the rule does **not** empty the queue |
 | 7 · Decommission | delete the rule, then the orphaned field updates and email alerts | **a rule with pending actions cannot be deleted at all** |
@@ -72,3 +72,12 @@ A: An at-rest pending action migrates to a scheduled path **when the associated 
 - [18 · Migrate to Flow & legacy automation](18-migrate-to-flow-and-legacy-retirement.md) — what the tool converts and what it silently changes
 - [13 · Flow limits & bulkification](13-flow-limits-and-bulkification.md) — why a converted after-save flow can cost more than the rule it replaced
 - [24 · Flow deployment, versioning & governance](24-flow-deployment-versioning-and-governance.md) — getting the converted flows through a pipeline as active
+
+## Sources
+
+- [Automatically Test Record-Triggered, Autolaunched, and Data Cloud-Triggered Flows](https://help.salesforce.com/s/articleView?id=platform.automate_flow_test_record_data_cloud_triggered.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-28 · Flow Tests are not record-triggered only; they don't support delete triggers or paths that run asynchronously
+- [Salesforce Workflow Rules & Process Builder End of Support](https://help.salesforce.com/s/articleView?id=001096524&language=en_US&type=1) — Salesforce Help · via search 2026-10-28 · support ended 31 December 2025; still no retirement date
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: replaced "Flow Tests are record-triggered only" with the async-path gap that matters for migrated time triggers

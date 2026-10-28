@@ -4,8 +4,8 @@ area: 03-lwc-and-slds
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 6
 ---
 # Lightning Data Service & UI API Wires
@@ -50,7 +50,7 @@ export default class AccountHeader extends LightningElement {
 
 ## 2026 currency
 
-The interesting movement is that LDS is no longer only a wire adapter. **Built-in Lightning state managers went GA at 67.0** — `lightning/stateManagerRecord`, `lightning/stateManagerObjectInfo` and siblings wrap the same UI API access in the `defineState` model and **participate fully in LDS caching, normalisation and subscriptions**, so they are not a parallel cache competing with this one. Reach for those before hand-rolling a manager over `getRecord`; the mechanics are in [05](05-decorators-and-the-reactivity-model.md) and are not repeated here. The other thing worth knowing in 2026 is a *negative*: the GraphQL wire adapter added a great deal of read power and **still has no mutations**, so LDS remains the only supported client-side create, edit and delete path. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
+The interesting movement is that LDS is no longer only a wire adapter. **Built-in Lightning state managers went GA at 67.0** — `lightning/stateManagerRecord`, `lightning/stateManagerObjectInfo` and siblings wrap the same UI API access in the `defineState` model and **participate fully in LDS caching, normalisation and subscriptions**, so they are not a parallel cache competing with this one. Reach for those before hand-rolling a manager over `getRecord`; the mechanics are in [05](05-decorators-and-the-reactivity-model.md) and are not repeated here. The other thing worth knowing is that `lightning/uiRecordApi` is **no longer the only client-side write path**. Since Spring '26, `executeMutation` from `lightning/graphql` creates, updates and deletes records imperatively → [07](07-graphql-wire-adapter.md). For one record you hold the ID of, `updateRecord` and its siblings remain the simpler call. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 
 ## Gotchas
 
@@ -77,11 +77,20 @@ A: The import is compile-checked and creates a metadata dependency, so the field
 Q: What can LDS not do that pushes you to GraphQL or Apex?
 A: Arbitrary filtering, sorting, aggregation and multi-level relationship traversal. LDS addresses records by ID with one-hop spanning fields.
 
-Q: Which client-side operations can only be done through LDS at 67.0?
-A: Create, update and delete — the GraphQL wire adapter still has no mutation support.
+Q: Besides `createRecord` / `updateRecord` / `deleteRecord`, how can a component write records without Apex?
+A: `executeMutation` from `lightning/graphql`, since Spring '26 — imperative, never through `@wire`.
 
 ## Related
 
 - [08 · Apex in LWC — wire vs imperative](08-apex-in-lwc-wire-vs-imperative.md) — what to do when the data does not fit the record shape
-- [07 · GraphQL wire adapter](07-graphql-wire-adapter.md) — filtering, sorting and aggregation without Apex
+- [07 · GraphQL wire adapter](07-graphql-wire-adapter.md) — filtering, sorting and aggregation without Apex, and `executeMutation` for writes
 - [05 · Decorators & the reactivity model](05-decorators-and-the-reactivity-model.md) — `$` reactivity, and the state managers that wrap these adapters
+
+## Sources
+
+- [GraphQL Mutations Now Available in LWC: Create, Update, and Delete Records](https://developer.salesforce.com/blogs/2026/05/graphql-mutations-now-available-in-lwc-create-update-and-delete-records) — Salesforce Developers · via search 2026-10-28 · `executeMutation` from `lightning/graphql`, introduced Spring '26, imperative only
+- [executeMutation](https://developer.salesforce.com/docs/platform/lwc/guide/reference-graphql-mutation.html) — Salesforce Developers · via search 2026-10-28 · create, update and delete through GraphQL; not supported with `@wire`
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: corrected "LDS is the only client-side write path" — `executeMutation` has written records from a component since Spring '26

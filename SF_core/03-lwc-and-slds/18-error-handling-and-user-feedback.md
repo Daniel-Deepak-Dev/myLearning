@@ -4,8 +4,8 @@ area: 03-lwc-and-slds
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-09-19
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 7
 tags: [currency-warning]
 ---
@@ -62,7 +62,7 @@ The split is the thing to carry forward: **`ShowToastEvent` for Lightning Experi
 - **`errorCallback` will not catch your own `connectedCallback` throwing**, nor anything in a promise or an event handler.
 - **Without `AuraHandledException` the user sees the raw exception**, class name and all — a leak as much as a UX failure.
 - **`reduceErrors` is a copied helper, not a platform module.** There is no `import { reduceErrors }` from anything official; every codebase has its own, and they drift.
-- **Toasts auto-dismiss and are easy to miss** — mode `sticky` exists for errors the user must actually read.
+- **Toasts auto-dismiss and are easy to miss** — mode `sticky` exists for errors the user must actually read. Since **Winter '27** the timings follow WCAG 2.2.1: a `dismissible` toast from `lightning/toast` or `ShowToastEvent` stays up to **20 seconds**, and `pester` shows for 20 seconds. A UI test that waits for a toast to vanish now waits longer.
 - **A toast is not announced reliably to assistive technology.** An error the user must act on belongs in the DOM. → [17](17-accessibility-and-internationalization.md)
 - **`error.body` can be an array.** Handling only the object shape works until the first multi-error response.
 
@@ -91,3 +91,11 @@ A: Because there is no platform-provided one, and the same failure arrives as `b
 - [17 · Accessibility & internationalization](17-accessibility-and-internationalization.md) — announcing an error rather than only showing it
 - [02-apex · Exceptions](../02-apex-and-triggers/INDEX.md) — throwing `AuraHandledException` from the server side
 - [SF_Experience_Cloud · 06 Custom LWC in LWR sites](../../SF_Experience_Cloud/06-custom-lwc-in-lwr-sites.md) — where the toast portability rule actually bites: LWR has no toast to show
+
+## Sources
+
+- [New and Changed Modules for Lightning Web Components](https://help.salesforce.com/s/articleView?id=release-notes.rn_lwc_modules.htm&language=en_US&release=264&type=5) — Salesforce Help · via search 2026-10-28 · Winter '27: `lightning/toast` and `lightning/platformShowToastEvent` durations follow WCAG 2.2.1; dismissible closes after 20 seconds; pester mode now 20 seconds
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: toast durations changed to 20 seconds for `dismissible` and `pester`

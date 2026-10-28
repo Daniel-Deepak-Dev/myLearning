@@ -4,8 +4,8 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 14
 ---
 # Record Locking & Concurrency
@@ -27,6 +27,8 @@ The part that surprises people is **which** records get locked. Writing a child 
   1. **Sort the load file by parent Id**, so records sharing a parent land in the same chunk rather than being split across parallel batches.
   2. **Reduce the batch size**, shortening how long each lock is held.
   3. **Switch to serial mode**, which trades throughput for the guarantee that only one batch runs at a time.
+
+  Fixes 2 and 3 are **Bulk API v1** levers. Bulk API 2.0 sets its own chunk size and runs **parallel only** — its `concurrencyMode` field is documented as *"for future use"*. On 2.0, sorting is the lever you have.
 - **`FOR UPDATE` holds its locks until the transaction ends** — there is no early release, so a long transaction that locks early converts other users' saves into failures → [10-soql · 01](../10-soql-and-sosl/01-query-anatomy-and-the-soql-model.md).
 - **Group membership has its own lock**, on the group maintenance tables, and **granular locking** is the lever that narrows it → [07-security · 08](../07-security-and-sharing/08-groups-queues-and-the-grantee-model.md).
 - **`UNABLE_TO_LOCK_ROW` is retryable**, unlike a validation error — but retrying harder without changing the shape just moves the failure → [06-integration · 23](../06-integration-and-apis/23-idempotency-retries-and-error-handling.md).
@@ -64,3 +66,12 @@ A: Until the transaction ends. There is no early release, so long transactions t
 - [02 · Relationships deep dive](02-relationships-deep-dive.md) — why the parent gets locked at all
 - [06-integration · 07 Bulk API 2.0](../06-integration-and-apis/07-bulk-api-2.md) — parallel batches, serial mode and where the sort happens
 - [07-security · 08 Groups, queues & the grantee model](../07-security-and-sharing/08-groups-queues-and-the-grantee-model.md) — granular locking, the membership-side lever
+
+## Sources
+
+- [Bulk API 2.0 and Bulk API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_asynch.pdf) — Salesforce Developers · read 2026-10-28 · Bulk API 2.0 job `concurrencyMode`: *"For future use … Currently only parallel mode"* is supported
+- [Data Loader Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_data_loader.pdf) — Salesforce Developers · read 2026-10-28 · *Enable serial mode for Bulk API* applies *"If Use Bulk API is selected"* — the v1 option
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: batch size and serial mode marked as Bulk API v1 only

@@ -4,8 +4,8 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 15
 tags: [currency-new, currency-warning]
 ---
@@ -26,7 +26,7 @@ The trap is answering the third question when the business only asked the first.
 | Need | Answer | Notes |
 |---|---|---|
 | Hand records to a partner org | **Partner Cloud** | branded, with end-to-end visibility |
-| Read another org's data live | **Salesforce Connect cross-org adapter** | **gained named credential support in Summer '26** → [06-integration · 20](../06-integration-and-apis/20-salesforce-connect-and-external-objects.md) |
+| Read another org's data live | **Salesforce Connect cross-org adapter** | **gained named credential support in Summer '26**; password and OAuth 2.0 auth retire **Spring '27** → [06-integration · 20](../06-integration-and-apis/20-salesforce-connect-and-external-objects.md) |
 | One customer view across orgs | **Data Cloud One** / Data 360 | unification without merging → [18](18-zero-copy-and-data-360-as-data-tier.md) |
 | Event-driven sync | Pub/Sub, CDC, Event Relay | → [06-integration · 13](../06-integration-and-apis/13-change-data-capture.md) |
 | Orchestrated, transformed sync | MuleSoft | where mapping is non-trivial |
@@ -39,11 +39,12 @@ The trap is answering the third question when the business only asked the first.
 
 ## 2026 currency
 
-Beyond the S2S retirement above, the direction of travel is that **cross-org problems are increasingly solved at the data tier rather than by moving records**. Data Cloud One unifies profiles across orgs without either org giving up its records, which is a fundamentally different answer from S2S's publish-and-subscribe copying. Worth noting the naming: the feature keeps the words **Data Cloud** even though the product was renamed **Data 360** in October 2025 → [18](18-zero-copy-and-data-360-as-data-tier.md). On the federation side, the cross-org adapter's Summer '26 named credential support removes the weakest link in org-to-org connections → [06-integration · 17](../06-integration-and-apis/17-named-credentials-and-external-credentials.md).
+Beyond the S2S retirement above, the direction of travel is that **cross-org problems are increasingly solved at the data tier rather than by moving records**. Data Cloud One unifies profiles across orgs without either org giving up its records, which is a fundamentally different answer from S2S's publish-and-subscribe copying. Worth noting the naming: the feature keeps the words **Data Cloud** even though the product was renamed **Data 360** in October 2025 → [18](18-zero-copy-and-data-360-as-data-tier.md). On the federation side, the cross-org adapter's Summer '26 named credential support removes the weakest link in org-to-org connections → [06-integration · 17](../06-integration-and-apis/17-named-credentials-and-external-credentials.md). Winter '27 makes it mandatory: the *Salesforce Connect Cross-Org Adapter Legacy Authentication Is Being Retired* Release Update retires the password and OAuth 2.0 methods in **Spring '27** — the same release S2S stops. Winter '27 sources repeat the S2S dates unchanged.
 
 ## Gotchas
 
 - **S2S has a hard stop.** Support ended Summer '26; it stops working in Spring '27. Inventory publish/subscribe connections now, not in the release that breaks them.
+- **Spring '27 hits two org-to-org links at once.** S2S stops, and cross-org adapter data sources still on password or OAuth 2.0 authentication must be on named credentials. Scope both in one migration.
 - **"We'll just merge the orgs" is a multi-quarter programme**, and its longest pole is usually the access model, not the data.
 - **Duplicates are created by consolidation, not discovered by it** — the same customer exists legitimately in both orgs until the moment they do not.
 - **Cross-org federation inherits every external-object limitation**: no triggers, no roll-ups, no sharing rules → [17](17-external-objects-vs-replicated-copies.md).
@@ -66,7 +67,7 @@ Q: What are the three projects hiding inside an org consolidation?
 A: A data migration, a deduplication, and a rebuild of the access model.
 
 Q: Which cross-org connector improved in Summer '26?
-A: The Salesforce Connect cross-org adapter, which gained named credential support.
+A: The Salesforce Connect cross-org adapter, which gained named credential support — mandatory from Spring '27, when its password and OAuth 2.0 authentication retire.
 
 ## Related
 
@@ -74,3 +75,13 @@ A: The Salesforce Connect cross-org adapter, which gained named credential suppo
 - [17 · External objects vs replicated copies](17-external-objects-vs-replicated-copies.md) — the same copy-or-federate decision between orgs
 - [18 · Zero-copy & Data 360 as data tier](18-zero-copy-and-data-360-as-data-tier.md) — unification as the alternative to consolidation
 - [01-admin · 18 Salesforce Foundations & org strategy](../01-admin-and-declarative-platform/18-salesforce-foundations-and-org-strategy.md) — why the org count is what it is
+
+## Sources
+
+- [Salesforce-to-Salesforce Retirement](https://help.salesforce.com/s/articleView?id=005103355&language=en_US&type=1) — Salesforce Help · via search 2026-10-28 · no enablement from Spring '26, support ended Summer '26, stops working in all orgs in Spring '27 — unchanged
+- [Winter '27 Release Architect Highlights](https://www.salesforce.com/blog/winter-27-release-architect-highlights/) — Salesforce Architecture blog, 5 Oct 2026 · read 2026-10-28 · S2S *"will no longer function"* after Spring '27; cross-org adapter legacy authentication moves to named credentials in Spring '27
+- [Release Updates (Winter '27)](https://help.salesforce.com/s/articleView?id=release-notes.rn_ru.htm&release=264&type=5&language=en_US) — Salesforce Help · via search 2026-10-28 · *Salesforce Connect Cross-Org Adapter Legacy Authentication Is Being Retired (Release Update)*, Spring '27
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: S2S dates re-confirmed; cross-org adapter password and OAuth 2.0 authentication retire in Spring '27

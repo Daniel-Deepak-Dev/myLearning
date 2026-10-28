@@ -4,8 +4,8 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 14
 ---
 # Storage Model & Schema Limits
@@ -35,7 +35,7 @@ The second thing to hold is that there is no single "storage". **Data, file and 
 ## Gotchas
 
 - **A deleted field keeps consuming its allocation for 15 days**, and so does a deleted object. An org that is at the field limit cannot free space by deleting and immediately re-creating — it must purge first.
-- **Deleting records does not free storage immediately.** They sit in the Recycle Bin and still count → [13](13-deletes-recycle-bin-and-physical-deletion.md).
+- **Deleting records frees storage but not the table.** Recycle Bin items don't count against storage, yet the rows stay in the table and slow queries until purged → [13](13-deletes-recycle-bin-and-physical-deletion.md).
 - **Storage exhaustion blocks writes across the org**, not just on the offending object, and it surfaces as failing integrations rather than an admin warning.
 - **Sandboxes have their own, much smaller allocations.** A Developer sandbox that will not take a data load is usually hitting storage, not a governor limit.
 - **Field history and audit rows are records too.** Turning history tracking on for twenty fields on a high-volume object is a storage decision → [07-security · 22](../07-security-and-sharing/22-field-audit-trail-and-data-retention.md).
@@ -65,3 +65,12 @@ A: Not storage — the per-object field, relationship and roll-up allocations.
 - [13 · Deletes, the Recycle Bin & physical deletion](13-deletes-recycle-bin-and-physical-deletion.md) — how storage is actually reclaimed
 - [14 · Big objects & the archive tier](14-big-objects-and-the-archive-tier.md) — the separate allocation, and what belongs in it
 - [01-admin · 09 Custom metadata vs custom settings](../01-admin-and-declarative-platform/09-custom-metadata-vs-custom-settings.md) — configuration that should never be record storage
+
+## Sources
+
+- [Best Practices for Deployments with Large Data Volumes (PDF, Winter '27)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_large_data_volumes_bp.pdf) — Salesforce Developers · read 2026-10-28 · *"items in the Recycle Bin don't count against an org's storage usage"*
+- [Big Objects Implementation Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/big_objects_guide.pdf) — Salesforce Developers · read 2026-10-28 · big object storage *"up to 1 million records"*; up to 100 big objects per org
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: Recycle Bin rows no longer described as counting against storage

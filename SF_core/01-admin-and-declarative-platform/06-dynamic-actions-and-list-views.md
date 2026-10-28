@@ -4,8 +4,8 @@ area: 01-admin-and-declarative-platform
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 2
 tags: [currency-warning]
 ---
@@ -40,7 +40,9 @@ Dynamic Actions moves the action bar out of the page layout's *Salesforce Mobile
 
 ## 2026 currency
 
-Dynamic Actions covers standard and custom objects on desktop and mobile; the old "custom objects only" limitation is gone. Layout-driven actions are still supported and still the fallback, so this is a shift in where you *should* configure, not a retirement. Nothing here has changed in Summer '26 itself.
+Dynamic Actions covers standard and custom objects on desktop and mobile; the old "custom objects only" limitation is gone. Layout-driven actions are still supported and still the fallback, so this is a shift in where you *should* configure, not a retirement. Nothing here changed in Summer '26.
+
+**Winter '27 changes list views.** Two new **User Interface Settings** loosen inline editing, and both are **off by default**. *Remove list view inline edit dependencies on page layout* lets a user inline-edit any field they have edit access to, on the layout or not. *Make inline edits in list views with multiple record types* lifts the block on inline editing a list that mixes record types, for LWC-rendered list views only. And a **screen flow can now be a list view or related list mass action**, receiving the selected IDs. → [04-flow · 04](../04-flow-and-automation/04-screen-flows-and-ux-design.md)
 
 ## Gotchas
 
@@ -74,3 +76,12 @@ A: Up to 5 columns; pinning makes it that user's default list view for the objec
 - [05 · Dynamic Forms & Lightning App Builder](05-dynamic-forms-and-lightning-app-builder.md) — the field half of the same visibility model
 - [11 · Queues, assignment & escalation rules](11-queues-assignment-and-escalation-rules.md) — queue list views are where routed records actually get worked
 - [07-security · INDEX](../07-security-and-sharing/INDEX.md) — why hiding a button is not access control
+
+## Sources
+
+- [Jen's Top Winter '27 Release Features For Admins](https://admin.salesforce.com/blog/2026/jens-top-winter-27-release-features-for-admins) — Salesforce Admins · via search 2026-10-28 · the two User Interface Settings, off by default; multiple-record-type editing applies to LWC-rendered list views; screen flows as list view and related list actions
+- [Salesforce Winter '27 Release Notes](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.salesforce_release_notes.htm&release=264&type=5) — Salesforce Help · via search 2026-10-28 · *Process Multiple Records with Screen Flows from List Views and…*
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added the two list view inline-edit settings and screen flow mass actions

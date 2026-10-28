@@ -4,8 +4,8 @@ area: 07-security-and-sharing
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 11
 tags: [currency-warning]
 ---
@@ -36,7 +36,7 @@ Authentication is the only layer where the platform's answer is binary and the b
 
 ## 2026 currency
 
-The enforcement dates and the wider wave they belong to are tabulated in [../CURRENCY.md](../CURRENCY.md); do not restate them in five notes. Two adjacent retirements close the loop, because a strong front door means nothing while a weak one stands open: the **OAuth username-password flow** is being retired for connected apps (Winter '27) and **SOAP `login()` for API versions 31.0–64.0** follows in Summer '27. Both are flows where a username and password alone produce a session, which is precisely what MFA was introduced to prevent — so treat any remaining use of them as an authentication finding, not an integration one. → [26](26-secure-coding-checklist.md)
+The enforcement dates and the wider wave they belong to are tabulated in [../CURRENCY.md](../CURRENCY.md); do not restate them in five notes. Two adjacent retirements close the loop, because a strong front door means nothing while a weak one stands open: the **OAuth username-password flow** is being retired for connected apps on **20 February 2027** — moved from Winter '27 — and **SOAP `login()` for API versions 31.0–64.0** follows in Summer '27. Winter '27 itself added no new MFA enforcement; the phishing-resistant requirement for privileged users still stands as described above. Both are flows where a username and password alone produce a session, which is precisely what MFA was introduced to prevent — so treat any remaining use of them as an authentication finding, not an integration one. → [26](26-secure-coding-checklist.md)
 
 ## Gotchas
 
@@ -63,7 +63,7 @@ Q: How does SSO interact with the requirement?
 A: The IdP satisfies it, so Salesforce does not re-prompt — but the IdP's own MFA must meet the same strength for privileged users.
 
 Q: Which two legacy authentication paths are being retired for the same reason?
-A: The OAuth username-password flow (Winter '27) and SOAP `login()` for API 31.0–64.0 (Summer '27) — both mint a session from a password alone.
+A: The OAuth username-password flow (20 February 2027, moved from Winter '27) and SOAP `login()` for API 31.0–64.0 (Summer '27) — both mint a session from a password alone.
 
 ## Related
 
@@ -71,3 +71,13 @@ A: The OAuth username-password flow (Winter '27) and SOAP `login()` for API 31.0
 - [19 · SSO, SAML, OIDC & identity](19-sso-saml-oidc-and-identity.md) — moving the authentication decision to an external IdP
 - [01 · Security model layers overview](01-security-model-layers-overview.md) — where authentication sits in the debugging order
 - [06-integration · 15 OAuth flows & authorization](../06-integration-and-apis/15-oauth-flows-and-authorization.md) — the flows, and the two being retired
+
+## Sources
+
+- [Retirement of OAuth 2.0 Username-Password Flow for Connected Apps (Release Update)](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_security_unpw_flow_retirement.htm&release=262&type=5) — Salesforce Help · via search 2026-10-28 · enforced 20 February 2027; originally scheduled for Winter '27
+- [Prepare for Phishing-Resistant MFA Enforcement for Privileged Users including Admins (005321563)](https://help.salesforce.com/s/articleView?id=005321563&language=en_US&type=1) — Salesforce Help · via search 2026-10-28 · privileged users: security keys and built-in authenticators only; no Winter '27 change found
+- [(2026年10月) Salesforceの運用に関する重要なお知らせ](https://successjp.salesforce.com/article/NAI-001341) — Salesforce Japan Success Navi, 27 Oct 2026 · read 2026-10-28 · no MFA item among the five Release Updates enforced in Winter '27
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: username-password retirement date moved to 20 Feb 2027; MFA requirements re-checked, unchanged

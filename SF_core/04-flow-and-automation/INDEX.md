@@ -22,7 +22,7 @@ Flow as the **only** declarative automation tool you may build in, after Workflo
 | 12 | [HTTP callout & External Services](12-http-callout-and-external-services-in-flow.md) 🆕 | calling an API with no Apex, and where that stops | 08 |
 | 13 | [Flow limits & bulkification](13-flow-limits-and-bulkification.md) ⚠️ | **the 2,000-element cap was removed at API 57.0**; CPU is the wall | 09 |
 | 14 | [Trigger order & Flow Trigger Explorer](14-trigger-order-and-flow-trigger-explorer.md) | Trigger Order 1–2,000, per trigger type only | 09 |
-| 15 | [Flow testing & debugging](15-flow-testing-and-debugging.md) ⚠️ | **Flow Tests are record-triggered only**; debug run does the rest | 09 |
+| 15 | [Flow testing & debugging](15-flow-testing-and-debugging.md) ⚠️ | **Flow Tests cover record-triggered, autolaunched and Data Cloud-triggered flows**, not screen, schedule- or event-triggered; debug run does the rest | 09 |
 | 16 | [Flow Orchestrator](16-flow-orchestrator.md) *(GA Spring '22)* | stages, steps, work items — **standard feature since 2026-02-18** | 09 |
 | 17 | [Approval Orchestration](17-approval-orchestration.md) 🆕⚠️ | **classic approvals are not deprecated**; approvals callable from any flow | 09 |
 | 18 | [Migrate to Flow & legacy automation](18-migrate-to-flow-and-legacy-retirement.md) 🆕⚠️ | one-to-one conversion, recursion loss, the double-run trap | 09 |

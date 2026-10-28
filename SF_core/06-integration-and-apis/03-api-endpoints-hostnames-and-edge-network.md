@@ -4,8 +4,8 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-09-24
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 12
 tags: [currency-new, currency-warning]
 ---
@@ -13,7 +13,7 @@ tags: [currency-new, currency-warning]
 
 **Scope:** The half of the URL before `/services/` — which hostname a client may call, how it resolves, and the browser-side allowlists that decide whether a request is even attempted. The version path segment is [02](02-api-versions-and-the-retirement-treadmill.md); My Domain as an org-configuration topic is [07-security · 20](../07-security-and-sharing/20-my-domain-enhanced-domains-and-trusted-urls.md).
 
-> **What changed.** *"Any Salesforce hostname works, and old ones redirect"* is wrong twice over. **Legacy My Domain hostnames stopped redirecting in Spring '26 — they 404.** And **instanced hostnames (`na45.salesforce.com`, `cs12.salesforce.com`) stop being supported for API traffic with Winter '27**, which reaches sandboxes from **August 2026** and production from **September 2026**. That is weeks away, not a roadmap item.
+> **What changed.** *"Any Salesforce hostname works, and old ones redirect"* is wrong twice over. **Legacy My Domain hostnames stopped redirecting in Spring '26 — they 404.** And **instanced hostnames (`na45.salesforce.com`, `cs12.salesforce.com`) are losing support for API traffic.** That was due shortly after Winter '27; the Release Update's enforcement has been **postponed again, to Spring '27**. A slipped date is not a cancelled one.
 
 ## Core idea
 
@@ -26,7 +26,7 @@ The reason this deserves its own note is that the failure is **configuration you
 | Host form | Example | Status |
 |---|---|---|
 | **My Domain** | `mycompany.my.salesforce.com` | the correct form for API traffic |
-| **Instanced** | `na45.salesforce.com` | **unsupported from Winter '27** |
+| **Instanced** | `na45.salesforce.com` | **support ends Spring '27** (postponed from Winter '27) |
 | **Legacy My Domain** | pre-enhanced-domain hostnames | **404s since Spring '26** — no redirect |
 | **Login endpoints** | `login.salesforce.com` / `test.salesforce.com` | valid for the OAuth request itself |
 
@@ -38,7 +38,7 @@ The reason this deserves its own note is that the failure is **configuration you
 
 ## 2026 currency
 
-The instanced-URL withdrawal is the live one and its timeline is tight. An opt-in ***Block API traffic that uses an incorrect instanced URL*** switch became available **19 June 2026** so orgs can find offenders early; enforcement follows with **Winter '27**, which deploys to sandboxes from **August 2026** and production from **September 2026**. One documented trap in the opt-in phase: enabling the switch could make **SOAP login URLs called through Visualforce pages return 400 Bad Request** — Salesforce shipped the fix **16–18 June 2026**, so testing is only meaningful after that. Find the callers with the **Hostname Redirects** event type, which is in Event Monitoring's **free** tier → [07-security · 23](../07-security-and-sharing/23-event-monitoring-and-transaction-security.md). Wider domain context: [07-security · 20](../07-security-and-sharing/20-my-domain-enhanced-domains-and-trusted-urls.md).
+The instanced-URL withdrawal is the live one, and its date has moved. An opt-in ***Block API traffic that uses an incorrect instanced URL*** switch became available **19 June 2026** so orgs can find offenders early. Enforcement was due on a rolling basis shortly after each org took Winter '27; the *Update Instanced URLs in API Traffic* Release Update now says **Spring '27**, and Salesforce Japan's 27 October 2026 notice lists it with the Spring '27 items. The Enhanced Domains Timeline and FAQ still say Winter '27 🚩 — read the per-org End-of-Support Schedule in Help, not either page. One documented trap in the opt-in phase: enabling the switch could make **SOAP login URLs called through Visualforce pages return 400 Bad Request** — Salesforce shipped the fix **16–18 June 2026**, so testing is only meaningful after that. Find the callers with the **Hostname Redirects** event type, which is in Event Monitoring's **free** tier → [07-security · 23](../07-security-and-sharing/23-event-monitoring-and-transaction-security.md). Wider domain context: [07-security · 20](../07-security-and-sharing/20-my-domain-enhanced-domains-and-trusted-urls.md).
 
 > **From my notes.** *`Salesforce Edge Network`* (2023) treats Edge purely as a latency optimisation to switch on. Still true, and now incomplete: the same years turned hostname choice from a performance question into a **supportability** one. Enabling Edge changes how fast the right hostname resolves; it does nothing for a client still calling `na45`.
 
@@ -57,7 +57,7 @@ Q: What happens to a legacy My Domain hostname today?
 A: It 404s. Redirections ended in Spring '26 — it does not forward.
 
 Q: When do instanced URLs stop being supported for API traffic, and what is the real date?
-A: With Winter '27 — sandboxes from August 2026, production from September 2026.
+A: Spring '27. It was due shortly after Winter '27 and the Release Update was postponed; check the org's End-of-Support Schedule.
 
 Q: Where should a client get the host it calls after authenticating?
 A: From `instance_url` in the OAuth token response, used verbatim — never from a stored constant.
@@ -74,3 +74,15 @@ A: The Hostname Redirects event type, available without Shield.
 - [04 · REST API fundamentals](04-rest-api-fundamentals.md) — what goes after the host
 - [07-security · 20 My Domain & enhanced domains](../07-security-and-sharing/20-my-domain-enhanced-domains-and-trusted-urls.md) — the org-configuration side
 - [07-security · 26 Secure coding checklist](../07-security-and-sharing/26-secure-coding-checklist.md) — hardcoded hostnames as a review finding
+
+## Sources
+
+- [Update Instanced URLs in API Traffic (Release Update)](https://help.salesforce.com/s/articleView?id=release-notes.rn_update_instanced_urls_in_api_traffic.htm&language=en_US&release=262&type=5) — Salesforce Help · via search 2026-10-28 · enforcement postponed to Spring '27; the change log records it the week of 10 August 2026
+- [(2026年10月) Salesforceの運用に関する重要なお知らせ](https://successjp.salesforce.com/article/NAI-001341) — Salesforce Japan Success Navi, 27 Oct 2026 · read 2026-10-28 · instanced URLs listed with the Spring '27 enforced items; not among the five Release Updates enforced in Winter '27
+- [(2026年8月) Salesforceの運用に関する重要なお知らせ](https://successjp.salesforce.com/article/NAI-001321) — Salesforce Japan Success Navi, 24 Aug 2026 · read 2026-10-28 · *"適用時期が Spring'27 に延期されました"* (enforcement postponed to Spring '27)
+- [Enhanced Domains Timeline](https://help.salesforce.com/s/articleView?language=en_US&id=xcloud.domain_name_enhanced_timeline.htm&type=5) — Salesforce Help · via search 2026-10-28 · still says support ends on a rolling basis after Winter '27 — conflicts with the Release Update
+- [Salesforce Enhanced Domains FAQ (000393816)](https://help.salesforce.com/s/articleView?id=000393816&language=en_US&type=1) — Salesforce Help · via search 2026-10-28 · enforcement delayed in September 2025 (Visualforce 404s in sandboxes) and December 2025 (an internal enforcement-process issue)
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: instanced-URL end of support moved from Winter '27 to Spring '27 (Release Update postponed)

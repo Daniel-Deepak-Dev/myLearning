@@ -4,8 +4,8 @@ area: 07-security-and-sharing
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-09-24
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 10
 ---
 # Role Hierarchy & Ownership
@@ -22,7 +22,7 @@ Ownership is the strongest record grant there is: the owner gets full access reg
 - **`Grant Access Using Hierarchies` is per object.** Forced on for standard objects, optional for custom ones — turning it off is the only declarative way to stop upward inheritance. → [06](06-org-wide-defaults-and-record-access.md)
 - **Roles do not grant permissions.** No object, field or user permission lives on a role. A user can have no role at all and still work — they simply sit outside the hierarchy.
 - **A user with no role is invisible to every hierarchy-based grant**, including "Roles and Subordinates" sharing rules. This is a real gap in orgs that assign roles casually.
-- **Ownership change cascades.** Reassigning an account can reassign its children, recalculates sharing for every affected record, and **deletes manual shares** on the way through. → [09](09-sharing-rules-and-manual-sharing.md)
+- **Ownership change cascades.** Reassigning an account can reassign its children, recalculates sharing for every affected record, and **deletes manual shares** on the way through — unless the org has turned on Winter '27's *Keep manual shares when transferring records*. → [09](09-sharing-rules-and-manual-sharing.md)
 - **Territory hierarchy is a separate, parallel hierarchy** with its own upward grant. An org can run both. → [10](10-teams-territories-and-account-sharing.md)
 - **Skew is the failure mode.** *Ownership skew* — one user owning a very large share of an object — makes every recalculation and every reparent expensive.
 
@@ -36,7 +36,7 @@ Nothing changed in the role hierarchy itself. What changed sits one step away an
 - **Users with no role fall out of hierarchy-based sharing entirely**, including "Roles and Subordinates" grants that look like they should include them.
 - **Ownership skew is a sharing problem before it is a query problem.** The classic shape is an integration user owning every imported record, and the threshold is **10,000**. → [08-data · 10](../08-data-modeling-and-large-data-volumes/10-data-skew.md)
 - **Changing a user's role triggers a sharing recalculation** for every record they own and everything the hierarchy derives — do it in bulk, off-hours.
-- **Reassigning an owner deletes manual shares** on the record. Grants that must survive need an Apex sharing reason. → [02-apex · 11](../02-apex-and-triggers/11-sharing-keywords-and-apex-managed-sharing.md)
+- **Reassigning an owner deletes manual shares** on the record, by default. The Winter '27 Sharing Settings checkbox can keep them, org-wide; a grant that must survive in every org still needs an Apex sharing reason. → [02-apex · 11](../02-apex-and-triggers/11-sharing-keywords-and-apex-managed-sharing.md)
 - **You cannot stop upward inheritance on a standard object.** No setting exists; the answer is a different object or a restriction rule. → [11](11-restriction-rules.md)
 - **Deleting a role reparents its children silently**, quietly widening or narrowing access for everyone underneath.
 
@@ -65,3 +65,11 @@ A: Because record access is derived from ownership, so concentrated ownership ma
 - [08-data · 10 Data skew](../08-data-modeling-and-large-data-volumes/10-data-skew.md) — the volume side of ownership concentration, and why the fix is to remove the owner from the hierarchy
 - [SF_Sales · Enterprise Territory Management](../../SF_Sales/enterprise-territory-management.md) — the models and assignment rules that build the hierarchy running beside this one
 - [SF_Sales · Collaborative Forecasts](../../SF_Sales/collaborative-forecasts.md) — the forecast hierarchy generated from these roles, and why a role above a rep still sees nothing until it is named Forecast Manager
+
+## Sources
+
+- [Keep Manual Shares When Transferring Records](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_sharing_retain_manual.htm&release=264&type=5) — Winter '27 release notes · via search 2026-10-28 · org-wide Sharing Settings checkbox, off by default; keeps manual shares when ownership changes
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: the manual-share deletion on owner change is now the default, not a fixed rule

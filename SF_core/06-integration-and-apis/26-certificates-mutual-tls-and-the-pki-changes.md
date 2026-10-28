@@ -4,8 +4,8 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 13
 tags: [currency-new, currency-warning]
 ---
@@ -32,6 +32,8 @@ Salesforce lets an org hold certificates for the second and third roles under **
 ## 2026 currency
 
 The three dates above are the whole story and they are already in effect: **200-day maximum validity from 15 March 2026**, dropping to **100 days from 15 March 2027** and **47 days from 15 March 2029**. Two consequences worth stating separately. First, **any mTLS integration using a dual-use certificate from a public CA will experience outages** — organisations must obtain client-authentication-only certificates, issued from a root distinct from their website SSL root. Second, **certificate pinning is now an anti-pattern by Salesforce's own guidance**: pinned clients break every time a certificate rotates, and rotation is about to become routine. Audit both before the next renewal cycle rather than after an outage. The same tightening wave produced the MFA and instanced-hostname deadlines → [../CURRENCY.md](../CURRENCY.md).
+
+**Winter '27 added a per-org Certificate Trust Store** for validating **outbound** TLS — not inbound mTLS. It holds up to **50** unexpired root certificates, emails admins **60, 30 and 10 days** before one expires, and accepts private or internal CAs that the shared Salesforce trust store never will. It applies to **named credential callouts only**; every other outbound connection still uses the global, Salesforce-managed store. 🚩 Its GA or Beta status was not visible in the sources read.
 
 ## Gotchas
 
@@ -66,3 +68,12 @@ A: When only your own org validates it — a JWT bearer flow, for example. A thi
 - [03 · API endpoints, hostnames & Edge Network](03-api-endpoints-hostnames-and-edge-network.md) — the other dated integration deadline
 - [07-security · 19 SSO, SAML, OIDC & identity](../07-security-and-sharing/19-sso-saml-oidc-and-identity.md) — the same expiry problem, on the login path
 - [SF_Experience_Cloud · 03 Site setup, domains & publishing](../../SF_Experience_Cloud/03-site-setup-domains-and-publishing.md) — the certificate clock a custom site domain runs on
+
+## Sources
+
+- [Other Security Changes (Winter '27 release notes)](https://help.salesforce.com/s/articleView?id=release-notes.rn_security_other_changes.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-28 · Certificate Trust Store: outbound TLS, *"not inbound mTLS"*, up to 50 non-expired certificates, alerts at 60/30/10 days, *"supports Named Credentials integrations only"*. 🚩 Release status not shown in the search result
+- [Certificates in Salesforce](https://help.salesforce.com/s/articleView?language=en_US&id=xcloud.security_keys_policy_and_rotation.htm&type=5) — Salesforce Help · via search 2026-10-28 · global trust store vs per-org Certificate Trust Store; private and internal CAs. 🚩 One line there says *inbound* TLS, which contradicts the release note
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added the per-org Certificate Trust Store for named credential callouts

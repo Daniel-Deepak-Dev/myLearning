@@ -4,8 +4,8 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-10-02
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 12
 tags: [currency-warning]
 ---
@@ -40,15 +40,15 @@ Bulk API exists because synchronous APIs are the wrong shape for large volumes: 
 
 ## 2026 currency
 
-The v1 → 2.0 shift is complete in the sense that matters: **new capability lands in 2.0 and v1 receives none**. v1 is still callable, so this is a legacy status, not a retirement — audit remaining use under **Setup → Bulk Data Load Jobs**, filtering for **Bulk V1** jobs ([../CURRENCY.md](../CURRENCY.md)). Two adjacent facts stay true and are routinely misremembered: **Data Loader does not default to Bulk API 2.0** — *Use Bulk API* and *Use Bulk API 2.0* are separate opt-in checkboxes ([01-admin · 13](../01-admin-and-declarative-platform/13-data-import-export-and-loading-tools.md)) — and **serial mode still exists** for when parallel processing causes lock contention.
+The v1 → 2.0 shift is complete in the sense that matters: **new capability lands in 2.0 and v1 receives none**. v1 is still callable, so this is a legacy status, not a retirement — audit remaining use under **Setup → Bulk Data Load Jobs**, filtering for **Bulk V1** jobs ([../CURRENCY.md](../CURRENCY.md)). Two adjacent facts stay true and are routinely misremembered: **Data Loader does not default to Bulk API 2.0** — *Use Bulk API* and *Use Bulk API 2.0* are separate opt-in checkboxes ([01-admin · 13](../01-admin-and-declarative-platform/13-data-import-export-and-loading-tools.md)) — and **serial mode exists only in v1.** A 2.0 job always runs in parallel: its `concurrencyMode` field is documented *"For future use … Currently only parallel mode is supported"*, and any future mode *"will be chosen automatically by the API and will not be user configurable"*. A load that needs serial processing to survive lock contention is a v1 job. This note said otherwise until 2026-10-28.
 
-> **From my notes.** The seed `Bulk API` page is v1-era throughout: it teaches batch splitting, the 10,000-record batch ceiling and the `Sforce-Enable-PKChunking` header as the standard way to extract large tables. All three are v1 mechanics. **In 2.0 you do not set batch sizes and you do not set that header** — chunking of query jobs is handled server-side. The page's genuinely durable lesson survives: **lock contention, not row count, is what makes a large load slow**, and serial mode is the lever.
+> **From my notes.** The seed `Bulk API` page is v1-era throughout: it teaches batch splitting, the 10,000-record batch ceiling and the `Sforce-Enable-PKChunking` header as the standard way to extract large tables. All three are v1 mechanics. **In 2.0 you do not set batch sizes and you do not set that header** — chunking of query jobs is handled server-side. The page's genuinely durable lesson survives: **lock contention, not row count, is what makes a large load slow**, and in v1 serial mode is the lever.
 
 ## Gotchas
 
 - **`JobComplete` does not mean every record succeeded.** It means processing finished. This is the single most common Bulk defect.
 - **`Sforce-Enable-PKChunking` is a Bulk **v1** header.** Copying it into a 2.0 integration does nothing, and the tutorial that told you to is describing another API.
-- **Parent-child loads self-inflict lock contention.** Sorting the file by parent ID so one chunk touches one parent is the standard fix; serial mode is the fallback. → [08-data · 12](../08-data-modeling-and-large-data-volumes/12-record-locking-and-concurrency.md)
+- **Parent-child loads self-inflict lock contention.** Sorting the file by parent ID so one chunk touches one parent is the standard fix, and in 2.0 the only one; serial mode is a v1-only fallback. → [08-data · 12](../08-data-modeling-and-large-data-volumes/12-record-locking-and-concurrency.md)
 - **A hard-deleted record bypasses the Recycle Bin** and needs `Bulk API Hard Delete` — a permission worth treating as privileged.
 - **Bulk query has no relationship-subquery support** the way REST query does; reshape into separate jobs rather than fighting it.
 - **The results endpoints expire.** Collect them; a job whose results were never fetched is unrecoverable work.
@@ -77,3 +77,11 @@ A: No. It is legacy — still callable, but no new capability lands there.
 - [08-data · 12 Record locking & concurrency](../08-data-modeling-and-large-data-volumes/12-record-locking-and-concurrency.md) — why large loads are slow, and the three fixes in order
 - [24 · API limits, monitoring & access control](INDEX.md) — the daily allowance Bulk draws on
 - [SF_Data_360 · Ingestion & Data Streams](../../SF_Data_360/ingestion-and-data-streams.md) — the Data 360 Ingestion API's bulk pattern: CSV files up to 150 MB into a data stream
+
+## Sources
+
+- [Bulk API 2.0 and Bulk API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_asynch.pdf) — Salesforce Developers · read 2026-10-28 · 2.0 `concurrencyMode`: *"For future use … Currently only parallel mode is supported. (When other modes are added, the mode will be chosen automatically by the API and will not be user configurable.)"*; serial mode is described only in the Bulk API (v1) chapter, *"You set the value for concurrencyMode at the job level using the JobInfo resource"*
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: corrected "serial mode still exists" — it is v1 only; 2.0 jobs always run in parallel

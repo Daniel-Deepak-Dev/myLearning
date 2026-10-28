@@ -4,8 +4,8 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 13
 ---
 # Salesforce Connect & external objects
@@ -34,7 +34,7 @@ That single property decides every design conversation about it. There is no syn
 
 ## 2026 currency
 
-The design-changing news is that **Salesforce removed the per-hour limits on new external object rows and OData callouts** for the OData 2.0, 4.0 and 4.01 adapters — available for orgs **hosted on Hyperforce**, in Enterprise, Performance, Unlimited and Developer editions. Those hourly ceilings were the standard reason an architecture that "should" have used external objects used a replicated copy instead, so an assessment written before this is worth revisiting. Two things did not change: the **per-callout latency** of every single query, and the fact that a non-Hyperforce org still has the ceilings. Summer '26 also brought named credential support to the **cross-org adapter**, which removes the weakest link in org-to-org connections → [17](17-named-credentials-and-external-credentials.md).
+The design-changing news is that **Salesforce removed the per-hour limits on new external object rows and OData callouts** for the OData 2.0, 4.0 and 4.01 adapters — available for orgs **hosted on Hyperforce**, in Enterprise, Performance, Unlimited and Developer editions. Those hourly ceilings were the standard reason an architecture that "should" have used external objects used a replicated copy instead, so an assessment written before this is worth revisiting. Two things did not change: the **per-callout latency** of every single query, and the fact that a non-Hyperforce org still has the ceilings. Summer '26 also brought named credential support to the **cross-org adapter**, which removes the weakest link in org-to-org connections → [17](17-named-credentials-and-external-credentials.md). It is now a deadline, not an option: the adapter's legacy **password and OAuth 2.0 authentication retires in Spring '27**, so every cross-org external data source has to move to a named credential first.
 
 ## Gotchas
 
@@ -59,8 +59,8 @@ A: The per-hour limits on new rows and OData callouts, for OData 2.0/4.0/4.01 ad
 Q: Why can't a record-triggered flow react to an external object?
 A: External objects fire no automation — no triggers, no workflow, no roll-ups.
 
-Q: What changed for the cross-org adapter in Summer '26?
-A: It supports named credentials.
+Q: What changed for the cross-org adapter in Summer '26, and why does it matter now?
+A: It supports named credentials — and its legacy password and OAuth 2.0 authentication retires in Spring '27.
 
 ## Related
 
@@ -68,3 +68,13 @@ A: It supports named credentials.
 - [08-data · external objects vs replicated copies](../08-data-modeling-and-large-data-volumes/INDEX.md) — the copy-or-federate decision
 - [01 · Integration patterns & selection](01-integration-patterns-and-selection.md) — where data virtualization sits among the patterns
 - [21 · MuleSoft & API-led boundaries](21-mulesoft-and-api-led-boundaries.md) — when the source should be fronted rather than reached directly
+
+## Sources
+
+- [Release Updates (Winter '27)](https://help.salesforce.com/s/articleView?id=release-notes.rn_ru.htm&release=264&type=5&language=en_US) — Winter '27 release notes · via search 2026-10-28 · password and OAuth 2.0 methods for the cross-org adapter retire in Spring '27; migrate external data sources to named credentials
+- [Winter '27 Release Architect Highlights](https://www.salesforce.com/blog/winter-27-release-architect-highlights/) — Salesforce Architecture Blog, 5 Oct 2026 · read 2026-10-28 · *"legacy cross-org adapter authentication must move to named credentials"*, Spring '27
+- [(2026年10月) Salesforceの運用に関する重要なお知らせ](https://successjp.salesforce.com/article/NAI-001341) — Salesforce Japan Success Navi, 27 Oct 2026 · read 2026-10-28 · cross-org legacy authentication retirement listed with the Spring '27 enforced items
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added the Spring '27 retirement of the cross-org adapter's legacy authentication

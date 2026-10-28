@@ -4,8 +4,8 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 15
 tags: [currency-warning]
 ---
@@ -25,7 +25,7 @@ So the design question is never "is it backed up" but the two numbers underneath
 
 | Option | Covers | RPO | Notes |
 |---|---|---|---|
-| Recycle Bin | deleted rows | immediate | ~15 days, size-capped → [13](13-deletes-recycle-bin-and-physical-deletion.md) |
+| Recycle Bin | deleted rows | immediate | 15 days, then purged at an unguaranteed time → [13](13-deletes-recycle-bin-and-physical-deletion.md) |
 | **Data Export Service** | data, as CSV in a zip | 7 or 29 days | **monthly only in PE and DE**; files deleted **48 hours** after the email |
 | Full sandbox | data + metadata | up to 29 days | a point-in-time copy you already pay for → [20](20-sandboxes-seeding-and-data-mask.md) |
 | Own extraction pipeline | what you built | your choice | Bulk API 2.0 → [06-integration · 07](../06-integration-and-apis/07-bulk-api-2.md) |
@@ -39,6 +39,8 @@ So the design question is never "is it backed up" but the two numbers underneath
 ## 2026 currency
 
 The category consolidated. Salesforce **acquired Own Company** (announced September 2024) and **Salesforce Backup & Recover** — formerly Own Recover / OwnBackup — is the current native offering, with **Backup & Recover Next** announced as its successor. The suite's other members land elsewhere in this area: **Archive** on [15](15-archiving-and-retention-strategy.md), **Seed** on [20](20-sandboxes-seeding-and-data-mask.md). Practical consequence: any material naming *Backup and Restore* is at least two renames old, and the honest summary for a client is that **backup is a purchase decision on this platform, not a default**.
+
+**Winter '27 made Platform Encryption for Archive and Backup GA**, extending Shield key management to Backup & Recover. 🚩 Salesforce's own Winter '27 posts disagree on whether backups get customer-managed keys or BYOK only, so check the release note before promising a key model to a regulator.
 
 ## Gotchas
 
@@ -73,3 +75,13 @@ A: 48 hours after the notification email, excluding weekends.
 - [25 · Data migration & cutover](25-data-migration-and-cutover.md) — a restore is a migration with a deadline
 - [20 · Sandboxes, seeding & Data Mask](20-sandboxes-seeding-and-data-mask.md) — the Full sandbox as an accidental backup
 - [15 · Archiving & retention strategy](15-archiving-and-retention-strategy.md) — the other half of the Own suite, solving a different problem
+
+## Sources
+
+- [Winter '27 Release: Top Development & Security Features](https://www.salesforce.com/blog/platform-winter-27-release/) — Salesforce blog, 13 Oct 2026 · read 2026-10-28 · *Platform Encryption for Archive and Backup* GA, *"native BYOK and customer-managed encryption keys"* for Archive and Backup & Recover
+- [Close the Gap: Encrypt Every Stage of Your Data Lifecycle](https://www.salesforce.com/blog/encrypt-every-stage-data-lifecycle/) — Salesforce blog, 12 Oct 2026 · read 2026-10-28 · *"native BYOK and customer-managed encryption keys to Salesforce Archive"* but only *"BYOK to Backup & Recover"* — the disagreement flagged above
+- [Manage the Recycle Bin in Lightning Experience](https://help.salesforce.com/s/articleView?id=sf.recycle_bin_manage.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-28 · no item limit; purge after 15 days at no guaranteed time
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: Platform Encryption for Archive and Backup GA; Recycle Bin no longer described as size-capped

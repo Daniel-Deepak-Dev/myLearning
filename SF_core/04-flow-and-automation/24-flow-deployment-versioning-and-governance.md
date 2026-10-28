@@ -4,8 +4,8 @@ area: 04-flow-and-automation
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 9
 tags: [currency-warning]
 ---
@@ -28,6 +28,7 @@ Flow's versioning model is the source of most of its deployment surprises, and i
 | Version ceiling | **50 per flow** |
 | Error email recipient | Process Automation Settings → *Send Process or Flow Email to* |
 | Comparing versions | **Visual Flow Version Comparison** (Summer '26) |
+| Saves *within* a version | **Edit History** panel (Winter '27) |
 
 - **The deploy-as-active setting does not appear in sandboxes or scratch orgs**, because there you can always deploy an active version. Its absence in a dev org is not a bug and is a common false alarm.
 - **`Send Process or Flow Email to` has two values**: *User Who Last Modified the Process or Flow* — the default, and the reason so many flows fail silently — or *Apex Exception Email Recipients*. Change this on day one of any new org. → [10](10-fault-paths-and-custom-errors.md)
@@ -37,7 +38,9 @@ Flow's versioning model is the source of most of its deployment surprises, and i
 
 ## 2026 currency
 
-Summer '26 gives governance its first genuinely useful native instruments, which is notable because this has always been the part of Flow you were expected to solve with spreadsheets. **Visual Flow Version Comparison** puts two versions side by side on the canvas with a breakdown of Transform-element changes — the first credible answer to "what changed between these versions?" without a metadata diff. The **Element Error Rate column** on the Flows list view shows the failure percentage from the last execution, turning "which flow is broken?" into a sort. And **flow summarisation** can generate a description from the canvas and write it back to the flow's description metadata, which makes the naming-and-documentation part of governance cheap enough to actually do. → [25](25-ai-assisted-flow-authoring.md), [09-devops](../09-devops-sfdx-and-release-management/INDEX.md)
+Summer '26 gives governance its first genuinely useful native instruments, which is notable because this has always been the part of Flow you were expected to solve with spreadsheets. **Visual Flow Version Comparison** puts two versions side by side on the canvas with a breakdown of Transform-element changes — the first credible answer to "what changed between these versions?" without a metadata diff. The **Element Error Rate column** on the Flows list view shows the failure percentage from the last execution, turning "which flow is broken?" into a sort. And **flow summarisation** can generate a description from the canvas and write it back to the flow's description metadata, which makes the naming-and-documentation part of governance cheap enough to actually do.
+
+Winter '27 adds three more. **Edit History** shows a timeline of every save *within* a version, with element-level detail, and restores a past save through *Save as New Version* or *Save as New Flow*. It is history held in the org, not a replacement for source control. **End elements are now written to flow metadata** when you save in auto-layout (`Flow.ends`, type `FlowEnd`, API 68.0), so the XML shows every place a flow ends. Expect an old flow's next save to produce a diff for that reason alone. **Element groups** (`Flow.groups`, type `FlowNodeGroup`, API 68.0) wrap related elements in a named, collapsible group; the release note says they reach orgs on a rolling basis. → [25](25-ai-assisted-flow-authoring.md), [09-devops](../09-devops-sfdx-and-release-management/INDEX.md)
 
 ## Gotchas
 
@@ -72,3 +75,14 @@ A: Nothing — it resumes on the version it started on.
 - [15 · Flow testing & debugging](15-flow-testing-and-debugging.md) — the tests that deploy alongside the flow
 - [20 · Pause, Wait & waiting interviews](20-pause-wait-and-waiting-interviews.md) — the in-flight work a deployment cannot reach
 - [09-devops](../09-devops-sfdx-and-release-management/INDEX.md) — `sf` CLI, packaging and the pipeline this fits inside
+
+## Sources
+
+- [Track Flow Changes Over Time with Edit History](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_automate_flow_builder_edit_history.htm&release=264&type=5) — Salesforce Help · via search 2026-10-28 · Winter '27: timeline of saves for flows that support versioning, element-level detail, *Save as New Version* / *Save as New Flow*
+- [Group Elements to Organize and Simplify Flows](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_automate_flow_builder_group_elements_together_264.htm&release=264&type=5) — Salesforce Help · via search 2026-10-28 · named collapsible groups in auto-layout, available on a rolling basis from Winter '27
+- [Metadata API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_meta.pdf) — Salesforce Developers · read 2026-10-28 · `Flow.ends` (`FlowEnd[]`) and `Flow.groups` (`FlowNodeGroup[]`), both API 68.0 and later
+- [Jen's Top Winter '27 Release Features For Admins](https://admin.salesforce.com/blog/2026/jens-top-winter-27-release-features-for-admins) — Salesforce Admins · via search 2026-10-28 · existing flows get explicit end elements the next time they are saved
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added Edit History, end elements in metadata and element groups

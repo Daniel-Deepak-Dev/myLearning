@@ -4,8 +4,8 @@ area: 04-flow-and-automation
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 8
 tags: [currency-warning]
 ---
@@ -35,7 +35,9 @@ Flow gives you three tools that all look like error handling and do different th
 
 ## 2026 currency
 
-The Custom Error element is the substantive change and it is now several releases old, which makes "use a fault path" a dated answer rather than a wrong one — fault paths still have a job, it is just narrower than the advice implies. Summer '26's contribution is presentational but genuinely useful at scale: **fault paths collapse on the canvas**, joining the collapsible Decisions and Loops that arrived in Spring '26. A well-instrumented flow has a fault path on every Data and Action element, and before this the canvas became unreadable as a result — which is precisely why so many flows have none. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
+The Custom Error element is the substantive change and it is now several releases old, which makes "use a fault path" a dated answer rather than a wrong one — fault paths still have a job, it is just narrower than the advice implies. Summer '26's contribution is presentational but genuinely useful at scale: **fault paths collapse on the canvas**, joining the collapsible Decisions and Loops that arrived in Spring '26. A well-instrumented flow has a fault path on every Data and Action element, and before this the canvas became unreadable as a result — which is precisely why so many flows have none.
+
+Winter '27 adds three items under *Flow Error Handling*. **A flow that hits a record-lock error (`UNABLE_TO_LOCK_ROW`) during transaction initialization now retries by itself**, waiting 10 seconds first. 🚩 Which flow types it covers is not in anything I could read. Flow Builder also **warns at save** when an Assignment sets fixed text longer than the target field allows, and when a Create Records element that uses a record variable leaves a required field unassigned. Both are **warnings, not errors**: the flow still saves, and still fails at run time if you ignore them. The required-field check sees only values it can resolve at design time. → [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 
 ## Gotchas
 
@@ -70,3 +72,13 @@ A: Not "did I handle this?" but "what is on disk if it fails here?"
 - [07 · Platform event & async path flows](07-platform-event-and-async-path-flows.md) — the failure mode with no user to report to
 - [01-admin · 08 Validation rules](../01-admin-and-declarative-platform/08-validation-rules-and-duplicate-management.md) — the other way to reject a save, and when Custom Error beats it
 - [02-apex · 09 Exception handling](../02-apex-and-triggers/09-exception-handling-and-custom-exceptions.md) — savepoints and rollback semantics in code, where the same question applies
+
+## Sources
+
+- [Salesforce Winter '27 Release Notes](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.salesforce_release_notes.htm&release=264&type=5) — Salesforce Help · via search 2026-10-28 · *Flow Error Handling*: *Catch Field Length Violations When You Save a Flow*, *Catch Missing Required Fields When You Save a Flow*, *Reduce Flow Failures Caused by Record Lock Contention* (`rn_automate_flow_builder_row_lock_retry_264`)
+- [Jen's Top Winter '27 Release Features For Admins](https://admin.salesforce.com/blog/2026/jens-top-winter-27-release-features-for-admins) — Salesforce Admins · via search 2026-10-28 · retry on a record-lock error during transaction initialization after 10 seconds; both save checks are warnings and the flow still saves
+- [Winter '27 Release Architect Highlights](https://www.salesforce.com/blog/winter-27-release-architect-highlights/) — Salesforce Architecture Blog · read 2026-10-28 · names Flow record-lock retry as a reason to revisit Apex record-locking workarounds; gives no status or mechanics
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added record-lock retry and the two save-time warnings

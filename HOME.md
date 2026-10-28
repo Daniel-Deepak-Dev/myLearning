@@ -9,7 +9,7 @@ Everything below is counted from the notes, so it cannot drift.
 
 ## ▶ Today
 
-Run `npm run today`. It writes this session into `journal/2026-10-27.md`, with room to blurt before you open the note.
+Your session is in [journal/2026-10-27.md](journal/2026-10-27.md). Tick each line as you do it.
 
 - **Core dev** · [Order of Execution — Declarative View](SF_core/01-admin-and-declarative-platform/14-order-of-execution-declarative-view.md) — an interview question probes it
 - **Review:** 3 due — [Calculated Insights & Segmentation](SF_Data_360/calculated-insights-and-segmentation.md), [Data Model: DSO, DLO & DMO](SF_Data_360/data-model-dso-dlo-dmo.md), [Identity Resolution](SF_Data_360/identity-resolution.md)

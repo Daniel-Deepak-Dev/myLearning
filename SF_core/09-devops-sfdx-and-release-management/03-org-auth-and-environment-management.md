@@ -4,8 +4,8 @@ area: 09-devops-sfdx-and-release-management
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 16
 tags: [currency-warning]
 ---
@@ -13,7 +13,7 @@ tags: [currency-warning]
 
 **Scope:** Getting the CLI authorized against an org and keeping several orgs straight. The OAuth flows themselves are [06-integration · 15](../06-integration-and-apis/15-oauth-flows-and-authorization.md); this is the developer-and-CI end.
 
-> **What changed.** **The CLI stopped printing credentials.** Since **27 May 2026**, `org display`, `org list --json`, `org create scratch --json`, every `org login … --json` and `org list auth --json` redact access tokens, SFDX auth URLs and passwords. Any CI recipe that pipes `sf org display --verbose` into `grep sfdxAuthUrl` is broken. Ask for the secret explicitly — `org auth show-access-token`, `org auth show-sfdx-auth-url`, `org auth show-user-password` — and treat `SF_TEMP_SHOW_SECRETS=true` as a countdown, not a fix: Salesforce has said it will be disabled.
+> **What changed.** **The CLI stopped printing credentials.** Since **27 May 2026**, `org display`, `org list --json`, `org create scratch --json`, every `org login … --json` and `org list auth --json` redact access tokens, SFDX auth URLs and passwords. Any CI recipe that pipes `sf org display --verbose` into `grep sfdxAuthUrl` is broken. Ask for the secret explicitly — `org auth show-access-token`, `org auth show-sfdx-auth-url`, `org auth show-user-password` — and do not lean on `SF_TEMP_SHOW_SECRETS=true`: the CLI announced its removal for **28 October 2026**, and release candidate **2.156.8** of that date removes it, so secrets stay redacted even with the variable set (🚩 CLI release notes on GitHub).
 
 ## Core idea
 
@@ -37,7 +37,7 @@ The distinction that matters operationally is **interactive vs headless**. A hum
 
 ## 2026 currency
 
-Beyond the redaction above, the CI story has a **structural problem worth planning around**: the standard JWT recipe says "create a connected app with a digital certificate", and **connected-app creation has been Support-gated org-wide since Spring '26**, after being disabled by default for new orgs in Winter '26. Existing connected apps keep working and are *not* retired, but a new pipeline in a new org cannot follow the 2023 runbook — the current object is an **External Client App** → [06-integration · 16](../06-integration-and-apis/16-external-client-apps.md). The `org login device` removal is the same story one step further along: the flow was blocked outright in September 2025, so the command was deleted rather than left to fail.
+Beyond the redaction above, the CI story has a **structural problem worth planning around**: the standard JWT recipe says "create a connected app with a digital certificate", and **connected-app creation has been Support-gated org-wide since Spring '26**, after being disabled by default for new orgs in Winter '26. Existing connected apps keep working and are *not* retired, but a new pipeline in a new org cannot follow the 2023 runbook — the current object is an **External Client App** → [06-integration · 16](../06-integration-and-apis/16-external-client-apps.md). The `org login device` removal is the same story one step further along: the flow was blocked outright in September 2025, so the command was deleted rather than left to fail. One trap on the new path: if the Dev Hub is authorized with JWT through an **External Client App**, `org create scratch` fails, because an ECA cannot be replicated into a new scratch org. CLI 2.147.7 (12 Aug 2026) added a stopgap — set `SF_SCRATCH_SIGNUP_CONNECTED_APP=PlatformCLI` and `SF_SCRATCH_SIGNUP_CALLBACK_URL` before creating the org (🚩 GitHub).
 
 ## Gotchas
 
@@ -72,3 +72,11 @@ A: It contains a refresh token — anyone holding it has ongoing access to the o
 - [04 · Scratch orgs & org shape](04-scratch-orgs-and-org-shape.md) — what `target-dev-hub` is for
 - [06-integration · 16 External Client Apps](../06-integration-and-apis/16-external-client-apps.md) — why "create a connected app" is no longer a step you can take
 - [07-security · 17 Authentication & MFA](../07-security-and-sharing/17-authentication-and-mfa.md) — the enforcement wave this sits under
+
+## Sources
+
+- [Salesforce CLI release notes](https://github.com/forcedotcom/cli/blob/main/releasenotes/README.md) — 🚩 GitHub, not a Salesforce domain · read 2026-10-28 · 2.153.5 (7 Oct 2026) announces `SF_TEMP_SHOW_SECRETS` removal on 28 Oct 2026; 2.156.8 release candidate (28 Oct 2026) removes it; 2.147.7 (12 Aug 2026) adds `SF_SCRATCH_SIGNUP_CONNECTED_APP` and `SF_SCRATCH_SIGNUP_CALLBACK_URL` as a temporary workaround for ECA-authorized Dev Hubs
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: `SF_TEMP_SHOW_SECRETS` removal dated; added the ECA scratch-org signup workaround

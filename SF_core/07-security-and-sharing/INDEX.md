@@ -12,7 +12,7 @@ Sharing & Visibility architect depth, updated for the access model as it stands 
 |---|---|---|---|
 | 01 | [Security model layers overview](01-security-model-layers-overview.md) | licence → org → object → record → field, and the debugging order | 10 |
 | 02 | [Licences & what they gate](02-licences-and-what-they-gate.md) 🆕 | user vs permission set vs feature licence; what a permission set cannot exceed | 10 |
-| 03 | [Profiles & the permission-set-led model](03-profiles-and-the-permission-set-led-model.md) 🆕⚠️ | **retirement cancelled**; `Enable Profile Filtering` enforced Winter '27 | 10 |
+| 03 | [Profiles & the permission-set-led model](03-profiles-and-the-permission-set-led-model.md) 🆕⚠️ | **retirement cancelled**; `Enable Profile Filtering` enforced with Winter '27 — live | 10 |
 | 04 | [Permission Set Groups & muting](04-permission-set-groups-and-muting.md) | grouping, muting's floor, session-based activation | 10 |
 | 05 | [User Access Policies & lifecycle](05-user-access-policies-and-lifecycle.md) 🆕 | GA Summer '24; 200 active, never retroactive, EE/UE only | 10 |
 | 06 | [Org-wide defaults & record access](06-org-wide-defaults-and-record-access.md) | OWD, external OWD, **implicit sharing** | 10 |
@@ -29,7 +29,7 @@ Sharing & Visibility architect depth, updated for the access model as it stands 
 | 17 | [Authentication & MFA](17-authentication-and-mfa.md) ⚠️ | **MFA enforced, not contractual**; phishing-resistant MFA for privileged users | 11 |
 | 18 | [Session security, login policies & step-up](18-session-security-login-policies-and-step-up.md) 🆕 | assurance levels, login IP, **step-up on report export** | 11 |
 | 19 | [SSO, SAML, OIDC & identity](19-sso-saml-oidc-and-identity.md) 🆕 | federation, JIT, Identity licences, certificate expiry | 11 |
-| 20 | [My Domain, enhanced domains & Trusted URLs](20-my-domain-enhanced-domains-and-trusted-urls.md) ⚠️ | **redirections ended Spring '26**; instanced URLs die Winter '27 | 11 |
+| 20 | [My Domain, enhanced domains & Trusted URLs](20-my-domain-enhanced-domains-and-trusted-urls.md) ⚠️ | **redirections ended Spring '26**; instanced URLs die Spring '27 (postponed from Winter '27) | 11 |
 | 21 | [Shield Platform Encryption](21-shield-platform-encryption.md) | deterministic vs probabilistic, the incompatibility list, key custody | 11 |
 | 22 | [Field Audit Trail & data retention](22-field-audit-trail-and-data-retention.md) | 60 fields, 10 years, `FieldHistoryArchive`, `HistoryRetentionPolicy` | 11 |
 | 23 | [Event Monitoring & Transaction Security](23-event-monitoring-and-transaction-security.md) 🆕⚠️ | **legacy framework retired**; auto-created report-export policy | 11 |

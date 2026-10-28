@@ -4,8 +4,8 @@ area: 04-flow-and-automation
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 8
 tags: [currency-new]
 ---
@@ -35,7 +35,7 @@ Flow's Loop element is the most-used and most-misused element on the canvas, and
 
 ## 2026 currency
 
-Transform has been steadily absorbing work that used to need a loop. **Spring '25 added merging several collections into one**, which covers the "display related records together" case that previously needed nested loops. **Summer '26 added Transform Mode inside the action property panel**, so a transformation can be defined where an action's inputs are configured rather than as a separate canvas element — the same capability, one element fewer. Alongside it, actions gained **Formula Mode** for writing a formula directly into a parameter. Both reduce element count — though **not for the reason usually given**: the 2,000-executed-elements cap was removed at API 57.0, so what fewer elements actually buy you is CPU time, which is the limit a large loop now hits. → [13 · Flow limits & bulkification](13-flow-limits-and-bulkification.md), [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
+Transform has been steadily absorbing work that used to need a loop. **Spring '25 added merging several collections into one**, which covers the "display related records together" case that previously needed nested loops. **Summer '26 added Transform Mode inside the action property panel**, so a transformation can be defined where an action's inputs are configured rather than as a separate canvas element — the same capability, one element fewer. Alongside it, actions gained **Formula Mode** for writing a formula directly into a parameter. Both reduce element count — though **not for the reason usually given**: the 2,000-executed-elements cap was removed at API 57.0, so what fewer elements actually buy you is CPU time, which is the limit a large loop now hits. **Winter '27 adds a Collection Filter Criteria *resource*** (release note *Filter Collections Without Loop Elements*). You create it in the Manager tab, not on the canvas, and it holds filter and sort conditions over a collection you already have. 🚩 What it returns is disputed: two third-party tests say **only the first matching record**, not a collection, and the Metadata API 68.0 guide still lists `collectionFilterCriteria` as *Reserved for future use*. Until that settles, keep the Collection Filter element for "all matches". → [13 · Flow limits & bulkification](13-flow-limits-and-bulkification.md), [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md)
 
 ## Gotchas
 
@@ -70,3 +70,14 @@ A: A transformation can be defined inside an action's property panel rather than
 - [13 · Flow limits & bulkification](13-flow-limits-and-bulkification.md) — the actual numbers behind every rule in this note
 - [12 · HTTP callout & External Services](12-http-callout-and-external-services-in-flow.md) — the nested JSON responses Transform exists to flatten
 - [02-apex · 08 Bulkification patterns](../02-apex-and-triggers/08-bulkification-patterns.md) — the same discipline in code, where the limits are identical
+
+## Sources
+
+- [Salesforce Winter '27 Release Notes](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.salesforce_release_notes.htm&release=264&type=5) — Salesforce Help · via search 2026-10-28 · *Filter Collections Without Loop Elements* listed under Flow Builder Updates (`rn_automate_flow_collection_filter_criteria`)
+- [Winter '27 Release Architect Highlights](https://www.salesforce.com/blog/winter-27-release-architect-highlights/) — Salesforce Architecture Blog · read 2026-10-28 · names *loop-free filtering* as a Winter '27 Flow change; gives no status or mechanics
+- [Metadata API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_meta.pdf) — Salesforce Developers · read 2026-10-28 · `Flow.collectionFilterCriteria` (`FlowCollectionFilterCriteria[]`): *"Reserved for future use."*
+- [Collection Filter Criteria Resource in Flow](https://salesforcetime.com/2026/10/18/collection-filter-criteria-resource-in-flow/) — Salesforce Time · read 2026-10-28 · 🚩 third-party: a resource, not an element; returns only the first matching record, said to be confirmed by the product team
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added the Collection Filter Criteria resource, with its disputed return type flagged

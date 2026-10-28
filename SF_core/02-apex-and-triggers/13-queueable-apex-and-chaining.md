@@ -4,8 +4,8 @@ area: 02-apex-and-triggers
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 4
 tags: [currency-warning]
 ---
@@ -53,7 +53,7 @@ public class ReconcileJob implements Queueable, Database.AllowsCallouts {
 
 ## 2026 currency
 
-**Elastic limits for async jobs are Beta at 67.0** — Queueable and `@future` enqueues are accepted up to twice the licensed daily limit and the overflow is throttled rather than rejected. For chaining code this is a meaningful change of failure mode: a runaway chain used to stop with a `LimitException` at some point in the day, and now it slows down instead, which is harder to notice. Read `DailyAsyncApexElasticExecutions` and `DailyAsyncApexProcessed` from `System.OrgLimits.getMap()` if a job needs to back off on its own. Detail and Beta caveats: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
+**Elastic limits for async jobs are still Beta at 68.0, and off until an admin turns them on in Apex Settings** — Queueable, `@future` and, since Winter '27, batch enqueues are accepted past the licensed daily limit, by that limit again or 2 million, whichever is less, and the overflow is throttled rather than rejected. For chaining code this is a meaningful change of failure mode: a runaway chain used to stop with a `LimitException` at some point in the day, and now it slows down instead, which is harder to notice. Read `DailyAsyncApexExecutions` and `DailyAsyncApexElasticExecutions` from `System.OrgLimits.getMap()` if a job needs to back off on its own; the elastic key is missing while the setting is off. Detail and Beta caveats: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 ## Gotchas
 
@@ -87,3 +87,13 @@ A: 10 minutes — and the delay is ignored during Apex tests.
 - [12 · Async Apex overview & choosing](12-async-apex-overview-and-choosing.md) — when a Queueable is the wrong shape for the work
 - [16 · Transaction Finalizers](16-transaction-finalizers.md) — the only hook that survives an uncatchable failure in a Queueable
 - [19 · Callouts, Named Credentials & HTTP](19-callouts-named-credentials-and-http-in-apex.md) — what `Database.AllowsCallouts` actually unlocks, and its limits
+
+## Sources
+
+- [Apex Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · Elastic Limits for Asynchronous Apex Jobs (Beta): Batch, Queueable and future; elastic limit = daily limit + min(licensed limit, 2 million); `DailyAsyncApexElasticExecutions` absent from `OrgLimits.getMap()` when the setting is off
+- [REST API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_rest.pdf) — Salesforce Developers · read 2026-10-28 · org limit names `DailyAsyncApexExecutions` and `DailyAsyncApexElasticExecutions`; no `DailyAsyncApexProcessed`
+- [Winter '27 Release Architect Highlights](https://www.salesforce.com/blog/winter-27-release-architect-highlights/) — Salesforce Architecture Blog · read 2026-10-28 · Elastic Async Apex Jobs (Beta) *"now covers batch jobs in addition to future methods and Queueable jobs"*
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: elastic limits still Beta at 68.0, opt-in, now include batch, capped at 2 million extra; replaced the non-existent `DailyAsyncApexProcessed` with `DailyAsyncApexExecutions`

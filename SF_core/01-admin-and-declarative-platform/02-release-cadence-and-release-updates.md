@@ -4,8 +4,8 @@ area: 01-admin-and-declarative-platform
 format: dense
 status: learning
 created: 2026-08-01
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 1
 tags: [currency-warning]
 ---
@@ -21,7 +21,7 @@ Salesforce ships three major releases a year — Spring, Summer, Winter — and 
 
 ## How it works
 
-- **Preview window.** Roughly four to five weeks before general availability, sandboxes on **preview instances** are upgraded early. This is the only window in which you can run your org against the new release before production gets it — and you must have provisioned the sandbox on a preview instance to get it.
+- **Preview window.** Roughly four to six weeks before general availability, sandboxes on **preview instances** are upgraded early. This is the only window in which you can run your org against the new release before production gets it — and you must have provisioned the sandbox on a preview instance to get it.
 - **Instance upgrade.** Production instances are upgraded on scheduled maintenance windows, staggered across instances. Your date comes from Salesforce Trust, not from you.
 - **Release Updates node.** Setup → Quick Find → **Release Updates**. Each entry shows what changes, the steps to take, and a **Complete Steps By** release — the release in which enforcement happens.
 - **Test Run.** Many, not all, updates offer a Test Run: you switch the new behaviour on early, exercise the org, and switch it back. Where offered, this is the cheapest way to find breakage.
@@ -31,6 +31,8 @@ Salesforce ships three major releases a year — Spring, Summer, Winter — and 
 ## 2026 currency
 
 The Summer '26 wave is where the security defaults flipped — user-mode Apex, `with sharing` by default, `WITH SECURITY_ENFORCED` no longer compiling. Those arrived as enforced platform defaults, not as opt-in toggles, which is exactly the pattern this note describes. The six of them are tabulated in [CURRENCY.md](../CURRENCY.md); running detail and dates live in [RELEASE-RADAR/](../../RELEASE-RADAR/README.md).
+
+**Winter '27 (API 68.0) followed the pattern with a long preview.** Sandboxes on preview instances upgraded on **28–29 August 2026**; the cutoff to create or refresh one was **27 August**. Production instances then upgraded in waves, and the last non-preview instances upgraded on **9–10 October 2026** — about six weeks after preview.
 
 ## Gotchas
 
@@ -56,10 +58,19 @@ Q: What is a Test Run, and is it offered for every Release Update?
 A: A way to enable the new behaviour early and switch it back after testing. It is offered for many updates but not all.
 
 Q: Which sandboxes receive a release early, and how long before GA?
-A: Only sandboxes on preview instances, roughly four to five weeks ahead of general availability.
+A: Only sandboxes on preview instances, roughly four to six weeks ahead of general availability.
 
 ## Related
 
 - [01 · Org anatomy & editions](01-org-anatomy-and-editions.md) — the environments a release lands on
 - [CURRENCY.md](../CURRENCY.md) — the release→API map and the six flipped defaults
 - [RELEASE-RADAR/](../../RELEASE-RADAR/README.md) — the running record of what changed and when
+
+## Sources
+
+- [Salesforce Sandbox Preview Instructions](https://help.salesforce.com/s/articleView?id=000391927&language=en_US&type=1) — Salesforce Help · via search 2026-10-28 · Winter '27 preview from 28 August 2026; create/refresh cutoff 27 August; non-preview instances upgrade 9–10 October 2026
+- [Admin Release Countdown: Get Ready for Winter '27](https://admin.salesforce.com/blog/2026/admin-winter-27-release-countdown) — Salesforce Admins · via search 2026-10-28 · production upgrades staggered by instance across September and October; check Trust for your own instance
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: widened the preview window to four–six weeks and added the Winter '27 dates

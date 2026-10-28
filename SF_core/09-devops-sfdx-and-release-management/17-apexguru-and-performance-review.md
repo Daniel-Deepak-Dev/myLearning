@@ -4,8 +4,8 @@ area: 09-devops-sfdx-and-release-management
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 17
 tags: [currency-new]
 ---
@@ -30,11 +30,11 @@ It is packaged as a feature of **Scale Center**, Salesforce's performance-monito
 
 ## 2026 currency
 
-The MCP surface is the change worth noticing, and it is a change of *workflow* rather than of capability. ApexGuru has been GA since **February 2024**; what 2026 added is reaching it from the inner loop — the developer sees the org's runtime verdict while writing the class, instead of a release manager seeing it in a report six weeks later. Pair it with the two Summer '26 facts that move Apex cost around: **user-mode SOQL evaluates sharing**, so a query's cost now depends on who runs it, and **elastic async limits (Beta)** convert some runaway-chain failures into throttling, which turns a loud error into a quiet delay → [02-apex · 24](../02-apex-and-triggers/24-apex-performance-and-profiling.md).
+**Winter '27 added duplicate-code detection.** ApexGuru now flags exact and near-duplicate Apex in your custom code (managed packages excluded), ranked by how many characters you could remove; the top 100 groups appear under Scale Center → Scale Insights → ApexGuru Insights → *Code Duplicates*. It can also be run from an editor — VS Code's *SFDX: Scan Selected File for Performance Issues With ApexGuru*, or an agentic IDE through the DX MCP Server. The MCP surface is the change worth noticing, and it is a change of *workflow* rather than of capability. ApexGuru has been GA since **February 2024**; what 2026 added is reaching it from the inner loop — the developer sees the org's runtime verdict while writing the class, instead of a release manager seeing it in a report six weeks later. Pair it with the two Summer '26 facts that move Apex cost around: **user-mode SOQL evaluates sharing**, so a query's cost now depends on who runs it, and **elastic async limits (Beta)** convert some runaway-chain failures into throttling, which turns a loud error into a quiet delay → [02-apex · 24](../02-apex-and-triggers/24-apex-performance-and-profiling.md).
 
 ## Gotchas
 
-- **Most orgs cannot use it, and this is the headline.** It comes with **Scale Center** — Unlimited Edition production orgs and full-copy sandboxes, Signature Success customers, and Scale Test customers. It is **not supported on Government Cloud Plus.** Confirm entitlement before you put it in a proposal.
+- **Most orgs cannot use it, and this is the headline.** It comes with **Scale Center** — Unlimited Edition production orgs and full-copy sandboxes, Signature Success customers, and Scale Test customers. The Winter '27 release note says it **isn't supported in Government Cloud** — broader than the *Government Cloud Plus* this note used to name. Confirm entitlement before you put it in a proposal.
 - **It analyses production traffic**, so a finding in a sandbox with no load is meaningless. The sandbox use is validating a fix, not finding the problem.
 - **Nothing appears on day one.** The 24-hour delay is routinely mistaken for a failed enablement.
 - **Ranked by impact means quiet code stays invisible** — a genuinely awful class that barely executes will never surface here. Static analysis still owns that half → [16](16-code-analyzer-v5.md).
@@ -48,7 +48,7 @@ Q: What does ApexGuru have that a static analyser structurally cannot?
 A: Your org's runtime metrics — so findings are ranked by observed execution cost, not by rule severity.
 
 Q: Which orgs actually have it?
-A: Scale Center customers — UE production and full-copy sandboxes, Signature Success and Scale Test — and **not** Government Cloud Plus.
+A: Scale Center customers — UE production and full-copy sandboxes, Signature Success and Scale Test — and **not** Government Cloud.
 
 Q: Why is there nothing to look at right after enabling it?
 A: It needs a telemetry window; reports appear within roughly 24 hours.
@@ -65,3 +65,11 @@ A: Through the Salesforce DX MCP Server (Beta), which exposes ApexGuru as a tool
 - [15 · Apex test strategy in CI](15-apex-test-strategy-in-ci.md) — where Test Case Insights get spent
 - [02-apex · 24 Apex performance & profiling](../02-apex-and-triggers/24-apex-performance-and-profiling.md) — the limits and language-level tuning behind each finding
 - [21 · Observability, logging & prod debugging](21-observability-logging-and-prod-debugging.md) — what to do when the problem is not in Apex at all
+
+## Sources
+
+- [Find Duplicate Code and Scan from Your IDE with ApexGuru](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_apexguru.htm&release=264&type=5) — Salesforce Help · via search 2026-10-28 · Winter '27 release note: exact and near-duplicate detection, ranked by removable characters; top 100 groups; custom code only; IDE scan command; DX MCP Server for agentic IDEs; production and Full Copy sandboxes; not supported in Government Cloud
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added duplicate-code detection and IDE scanning; widened the exclusion to Government Cloud

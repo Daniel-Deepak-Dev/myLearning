@@ -4,8 +4,8 @@ area: 02-apex-and-triggers
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 4
 ---
 # Batch Apex & Stateful Processing
@@ -52,7 +52,7 @@ public class ArchiveOrders implements Database.Batchable<sObject>, Database.Stat
 
 ## 2026 currency
 
-Batch is not exempt from the 67.0 security flip. The `QueryLocator` built in `start()` runs in **user mode** by default like everything else, which for a nightly job running as a low-privilege automation user means the scope quietly shrinks rather than erroring — the job succeeds, having processed a subset. Decide the mode explicitly in `start()` (`WITH SYSTEM_MODE`, or the `AccessLevel` argument on `Database.getQueryLocatorWithBinds`) and treat an unqualified locator in a scheduled job as a review finding. Background: [10](10-apex-security-user-mode-and-fls.md) and [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
+Batch is not exempt from the 67.0 security flip. The `QueryLocator` built in `start()` runs in **user mode** by default like everything else, which for a nightly job running as a low-privilege automation user means the scope quietly shrinks rather than erroring — the job succeeds, having processed a subset. Decide the mode explicitly in `start()` (`WITH SYSTEM_MODE`, or the `AccessLevel` argument on `Database.getQueryLocatorWithBinds`) and treat an unqualified locator in a scheduled job as a review finding. Background: [10](10-apex-security-user-mode-and-fls.md) and [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md). **Winter '27 (API 68.0) brings batch under elastic async limits** — still Beta, and off until enabled in Apex Settings. Past the 24-hour async limit, batch is throttled rather than rejected: new jobs run one active at a time and in-flight jobs slow down. A nightly window can therefore overrun instead of failing. → [12](12-async-apex-overview-and-choosing.md)
 
 ## Gotchas
 
@@ -87,3 +87,12 @@ A: Its `QueryLocator` defaults to user mode, so the scope is filtered by the run
 - [12 · Async Apex overview & choosing](12-async-apex-overview-and-choosing.md) — when the record set is not actually the reason to go async
 - [08-data · 08 Indexes & query selectivity](../08-data-modeling-and-large-data-volumes/08-indexes-and-query-selectivity.md) — making the `QueryLocator` selective at the volumes that make batch necessary
 - [30 · Custom iterators & iterables](30-custom-iterators-and-iterables.md) — writing the `Iterable` that `start()` accepts when the scope is not a query, and the 50 K ceiling that comes with it
+
+## Sources
+
+- [Apex Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · Elastic Limits for Asynchronous Apex Jobs (Beta) *"applies to Batch Apex, Queueable Apex, and future methods"*; *"For Batch Apex, Salesforce limits new jobs to one active job at a time and slows the processing of in-flight jobs"*
+- [Winter '27 Release Architect Highlights](https://www.salesforce.com/blog/winter-27-release-architect-highlights/) — Salesforce Architecture Blog · read 2026-10-28 · Elastic Async Apex Jobs (Beta) *"now covers batch jobs"* in Winter '27
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added that elastic async limits (still Beta) now cover batch, and how throttled batch behaves

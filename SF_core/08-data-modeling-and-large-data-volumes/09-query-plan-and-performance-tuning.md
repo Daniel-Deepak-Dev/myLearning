@@ -4,8 +4,8 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 14
 ---
 # Query Plan & Performance Tuning
@@ -38,6 +38,10 @@ Enable it once per developer: **Developer Console → Help → Preferences → E
 
 > **From my notes.** The `QUERY PLAN` page (2025) is one of the few current pages in the seed corpus, and its worked example is right: `WHERE Industry = 'Technology'` gives `TableScan`, cost **1.5**; adding `AND CreatedDate > LAST_YEAR` gives `Index`, cost **0.5**. Two things to add and one to correct. It says *lower cost is better* but never states the threshold — **1.0 is the line**, and that is the number you actually use. Its list of standard indexed fields is accurate. **The correction:** it says custom indexes are created "by requesting Salesforce Support **or enabling them in Setup**." There is no Setup screen for custom indexes. Support is one route; the only self-service route is marking a field **External ID** or **Unique**, which creates an index as a side effect → [08](08-indexes-and-query-selectivity.md). Worth noting too that its "optimized query" worked only because `CreatedDate` is standard-indexed *and* the date filter cut the row count below threshold — adding a filter that is itself non-selective changes nothing.
 
+## 2026 currency
+
+**Web Console is GA (September 2026)**, and its SOQL Builder generates a query plan — a second way into the same tool. In **Winter '27 the Developer Console is hidden from the Setup menu by default**; turn it back on at Setup → **Web Console** → *Enable Developer Console* = Active. The Winter '27 LDV guide also names a **`CustomIndex` metadata file** as a route to a custom index, but the Metadata API guide says using it still means contacting Support — so External ID and Unique remain the only self-service routes.
+
 ## Gotchas
 
 - **The tool only reports on indexed fields.** A blank `Fields` column means no usable index existed, not that none could exist.
@@ -59,7 +63,7 @@ Q: What can the Query Plan tool not tell you?
 A: Which field you should index. It only reports statistics for fields that are already indexed.
 
 Q: How do you enable the tool?
-A: Developer Console → Help → Preferences → Enable Query Plan = true.
+A: Developer Console → Help → Preferences → Enable Query Plan = true. In Winter '27 the Developer Console is hidden by default, so first set Setup → Web Console → Enable Developer Console to Active — or use Web Console's own query plan.
 
 Q: Why is a query plan run as a System Administrator misleading?
 A: `View All Data` bypasses the sharing check, so the plan omits the cost your ordinary users actually pay.
@@ -70,3 +74,15 @@ A: `View All Data` bypasses the sharing check, so the plan omits the cost your o
 - [10 · Data skew](10-data-skew.md) — when the plan is fine and the distribution is not
 - [11 · Skinny tables & support levers](11-skinny-tables-and-support-levers.md) — what is left when tuning runs out
 - [02-apex · 24 Apex performance & profiling](../02-apex-and-triggers/24-apex-performance-and-profiling.md) — the transaction-level view around the query
+
+## Sources
+
+- [Announcing General Availability: Web Console](https://developer.salesforce.com/blogs/2026/09/announcing-general-availability-web-console-your-modern-in-browser-ide) — Salesforce Developers blog · via search 2026-10-28 · Web Console GA; SOQL Builder; *"generating a query plan"*
+- [Web Console — Frequently Asked Questions](https://developer.salesforce.com/docs/platform/webconsole/guide/faq.html) — Salesforce Developers · via search 2026-10-28 · Developer Console not visible in Setup by default; Setup → Web Console → Enable Developer Console
+- [The Salesforce Developer's Guide to the Winter '27 Release](https://developer.salesforce.com/blogs/2026/10/developers-guide-to-the-winter-27-release) — Salesforce Developers blog · via search 2026-10-28 · *"In Winter '27, Developer Console doesn't appear in the Setup menu by default"*; Web Console query plans
+- [Best Practices for Deployments with Large Data Volumes (PDF, Winter '27)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_large_data_volumes_bp.pdf) — Salesforce Developers · read 2026-10-28 · custom indexes via Support *"or by deploying a custom index XML file via the Metadata API"*; thresholds unchanged
+- [Metadata API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_meta.pdf) — Salesforce Developers · read 2026-10-28 · `CustomIndex` (API 50.0+): *"To use this metadata and create a custom index … contact Salesforce Customer Support"*
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: Developer Console hidden by default; Web Console GA as the second query-plan route; `CustomIndex` metadata still Support-gated

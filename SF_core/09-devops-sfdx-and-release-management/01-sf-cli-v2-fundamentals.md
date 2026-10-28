@@ -4,8 +4,8 @@ area: 09-devops-sfdx-and-release-management
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 16
 tags: [currency-new, currency-warning]
 ---
@@ -42,7 +42,7 @@ The thing to internalise is that **the CLI is on its own release train**. A new 
 
 ## 2026 currency
 
-Three CLI-level changes bite in 2026. **Secrets are redacted by default** since 27 May 2026 — `org display`, `org list --json`, `org login … --json` and friends no longer print access tokens, SFDX auth URLs or passwords; retrieve them deliberately with `org auth show-access-token`, `org auth show-sfdx-auth-url`, `org auth show-user-password`. The `SF_TEMP_SHOW_SECRETS=true` escape hatch exists only to unbreak pipelines and **is scheduled for removal** → [03](03-org-auth-and-environment-management.md). **The `template generate` reorganisation (Feb 2026)** moved `project generate`, `apex generate class`, `lightning generate component` and the rest under one `sf template generate …` topic — the old names still work, with a deprecation warning, which means even *`sf`-era* tutorials now show superseded commands. And **`org login device` was removed** because OAuth device flow is blocked platform-side → [06-integration · 16](../06-integration-and-apis/16-external-client-apps.md). Version-level detail, including the Node 22 floor and the retrieve-path zip-slip fix, is tracked in [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
+Three CLI-level changes bite in 2026. **Secrets are redacted by default** since 27 May 2026 — `org display`, `org list --json`, `org login … --json` and friends no longer print access tokens, SFDX auth URLs or passwords; retrieve them deliberately with `org auth show-access-token`, `org auth show-sfdx-auth-url`, `org auth show-user-password`. The `SF_TEMP_SHOW_SECRETS=true` escape hatch existed only to unbreak pipelines and **is removed in release candidate 2.156.8 (28 Oct 2026)**, the date the CLI had announced (🚩 CLI release notes on GitHub) → [03](03-org-auth-and-environment-management.md). **The `template generate` reorganisation (Feb 2026)** moved `project generate`, `apex generate class`, `lightning generate component` and the rest under one `sf template generate …` topic — the old names still work, with a deprecation warning, which means even *`sf`-era* tutorials now show superseded commands. And **`org login device` was removed** because OAuth device flow is blocked platform-side → [06-integration · 16](../06-integration-and-apis/16-external-client-apps.md). Version-level detail, including the Node 22 floor and the retrieve-path zip-slip fix, is tracked in [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 ## Gotchas
 
@@ -78,3 +78,11 @@ A: `sf project deploy preview` and `sf project retrieve preview`.
 - [03 · Org auth & environment management](03-org-auth-and-environment-management.md) — where the secrets-redaction change lands
 - [03-lwc · 21 Local dev](../03-lwc-and-slds/21-local-dev-and-lightning-dev-server.md) — `sf lightning dev`, the component-authoring loop
 - [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md) — weekly CLI detail, dist-tags, Node floor
+
+## Sources
+
+- [Salesforce CLI release notes](https://github.com/forcedotcom/cli/blob/main/releasenotes/README.md) — 🚩 GitHub, not a Salesforce domain · read 2026-10-28 · 2.153.5 announces `SF_TEMP_SHOW_SECRETS` removal on 28 Oct 2026; the 2.156.8 release candidate of that date removes it; stable on 28 Oct was 2.155.8
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: `SF_TEMP_SHOW_SECRETS` moved from "scheduled for removal" to removed in the 28 Oct 2026 release candidate

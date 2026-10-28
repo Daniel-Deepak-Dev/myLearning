@@ -16,7 +16,7 @@ LWC as the **only** UI framework in this vault. **24 topics** · phases [05](PHA
 | 04 | [Events & component communication](04-events-and-component-communication.md) | CustomEvent, `bubbles`/`composed`, retargeting, **no pubsub library** | 05 |
 | 05 | [Decorators & the reactivity model](05-decorators-and-the-reactivity-model.md) | reassign don't mutate; **State Managers GA at 67.0** | 05 |
 | 06 | [Lightning Data Service & UI API wires](06-lightning-data-service-and-ui-api-wires.md) | `getRecord`, the record-form trio, and the **only** client-side write path | 06 |
-| 07 | [GraphQL wire adapter](07-graphql-wire-adapter.md) 🆕 | filters, cursor pagination, aggregates — **still no mutations** | 06 |
+| 07 | [GraphQL wire adapter](07-graphql-wire-adapter.md) 🆕 | filters, cursor pagination, aggregates — **writes via imperative `executeMutation` (Spring '26), never the wire** | 06 |
 | 08 | [Apex in LWC — wire vs imperative](08-apex-in-lwc-wire-vs-imperative.md) | `cacheable=true` forbids DML; `refreshApex` re-runs the **old** config | 06 |
 | 09 | [Lightning Web Security](09-lightning-web-security.md) 🆕⚠️ | LWS replaced Locker **as the default, not by retiring it**; `data:` blocked at 67.0 | 06 |
 | 10 | [Navigation & page references](10-navigation-and-page-references.md) | NavigationMixin, page reference types, `c__` state, console tabs | 06 |
@@ -42,7 +42,7 @@ Topics are numbered in the order they were written, not strictly in learning ord
 ## Related
 
 - **24 is the dedicated State Manager topic** the phase-05 retro nominated. `defineState` from `@lwc/state` went **GA at API 67.0**; [05](05-decorators-and-the-reactivity-model.md) still carries the one-paragraph version, and 24 carries the contract, `fromContext`, and the reason it is *not* a replacement for [12](12-lightning-message-service.md).
-- **02's Beta caveat matters.** Complex template expressions need component `apiVersion` 66.0+ and are documented as **not for production** — most 2026 write-ups omit that.
+- **02's version gate matters.** Complex template expressions went **GA in Winter '27** but still need component `apiVersion` 66.0+. Below that, templates allow property access only.
 - **08** depends on [02-apex · 10 user mode](../02-apex-and-triggers/INDEX.md) — a `cacheable=true` method now enforces the running user's FLS by default.
 - **11** pairs with [04-flow · 04 Screen flows](../04-flow-and-automation/04-screen-flows-and-ux-design.md).
 - **The data layer is a three-way decision, not a preference.** [06](06-lightning-data-service-and-ui-api-wires.md) for records by ID, [07](07-graphql-wire-adapter.md) for filtered and aggregated reads, [08](08-apex-in-lwc-wire-vs-imperative.md) for server logic, system context or transactions — and **only 06 can write.**

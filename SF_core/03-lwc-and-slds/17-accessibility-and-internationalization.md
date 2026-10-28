@@ -4,8 +4,8 @@ area: 03-lwc-and-slds
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-09-20
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 7
 tags: [currency-warning]
 ---
@@ -44,6 +44,7 @@ The accessibility story is now coupled to the styling one. **SLDS 2 dark mode** 
 - **Hard-coded date and number formats break silently for other locales** — `MM/DD/YYYY` is simply wrong in most of the world, and nobody in the office will notice.
 - **A hard-coded string in a template cannot be translated.** Custom Labels are the only translatable surface.
 - **Time zone is per user, not per org.** `@salesforce/i18n/timeZone` is the running user's, which is the value a formatted date must use.
+- **High zoom changes base-component layout on a Release Update schedule.** *Enable Accessibility Enhancements for Page Headers and Modal Windows When Zoom Is Greater Than 200%* makes page headers scroll and keeps `lightning/modal` buttons inside the viewport. A follow-on update, which depends on it, reflows date pickers, popovers and record headers up to 400%. 🚩 The Release Updates page contradicts itself on whether both are enforced in Winter '27, so check Setup → Release Updates before you test a custom modal at 200%.
 
 ## Recall
 
@@ -69,3 +70,12 @@ A: Under SLDS 2 dark mode the surrounding theme changes and the fixed colour doe
 - [18 · Error handling & user feedback](18-error-handling-and-user-feedback.md) — errors announced to assistive technology, not just displayed
 - [23 · Static resources & third-party JavaScript](23-static-resources-and-third-party-javascript.md) — `@salesforce/resourceUrl`, and the a11y cost of manual DOM
 - [SF_Experience_Cloud · 22 Site accessibility & conformance](../../SF_Experience_Cloud/22-site-accessibility-and-conformance.md) — the other half: who legally owes WCAG conformance for a published site, and why a component that passes here still leaves the obligation open
+
+## Sources
+
+- [Accessibility Enhancements in Salesforce: Reflow and Resize Improvements for All Users](https://help.salesforce.com/s/articleView?id=005316430&language=en_US&type=1) — Salesforce Help · via search 2026-10-28 · page headers scroll and `lightning/modal` keeps its buttons in the viewport above 200% zoom; date pickers, popovers and record headers reflow to 400%; the second update depends on the first
+- [Release Updates — Winter '27](https://help.salesforce.com/s/articleView?id=release-notes.rn_ru.htm&language=en_US&release=264&type=5) — Salesforce Help · via search 2026-10-28 · lists the accessibility updates under both *Enforced with This Release* and *Scheduled to Be Enforced in Winter '27*; another heading says Summer '27 for the 400% update. 🚩 Enforcement date not settled
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added the high-zoom accessibility Release Updates, with their enforcement date flagged as unsettled

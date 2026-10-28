@@ -4,8 +4,8 @@ area: 04-flow-and-automation
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 8
 ---
 # Screen Flows & UX Design
@@ -20,7 +20,7 @@ A screen flow is the only flow type a user sees, and the design problem is not w
 
 | Component group | Members |
 |---|---|
-| **Input** | Text, Long Text, Number, Currency, Date/Time, Checkbox, Picklist, Radio Buttons, **Radio Button Group** 🆕, Toggle, Slider, Lookup, Choice Lookup, Name, Address, Email, Phone, URL |
+| **Input** | Text, Long Text, Number, Currency, Date/Time, **Time** (Winter '27), Checkbox, Picklist, Radio Buttons, **Radio Button Group** 🆕, Toggle, Slider, Lookup, Choice Lookup, Name, Address, Email, Phone, URL |
 | **Display** | Display Text, Image, Section, Column, **Data Table**, **Repeater**, Action Button |
 | **Structural** | conditional visibility per component, footer control, help text |
 
@@ -33,6 +33,8 @@ A screen flow is the only flow type a user sees, and the design problem is not w
 ## 2026 currency
 
 Summer '26 filled in the two things screen flows kept needing a custom LWC for. **A native `Show Toast Message` action** now fires success, warning, error and information toasts straight from a flow — worth pairing with the finding in [03-lwc · 18](../03-lwc-and-slds/18-error-handling-and-user-feedback.md), that `ShowToastEvent` fails *silently* in LWR sites; a flow no longer needs a toast component at all in Lightning Experience. **An `Open a Page` action** redirects to a new record or an external URL at the end of a flow, replacing the navigation-only LWC. Alongside those: the **Radio Button Group** component, **Data Table lookup columns that render record names as clickable links** instead of raw Ids, static-resource images browsable from inside the builder, and **styling overrides extended to eleven more components** including Action Button, Address, Choice Lookup, Dependent Picklists, Slider and Toggle. One deployment fix worth knowing: **Send Email action v3.0.1+ stores an email template by name rather than Id**, which is what used to break the action on the way from sandbox to production.
+
+**Winter '27 lets one screen flow act on many selected records.** Add a flow action to a list view's button layout or to a related list. The flow receives the selected IDs in a text collection input variable named **`ids`**; launched from a related list, a text variable named **`recordId`** gets the parent's ID. Before this, list view mass actions could only be Create or Update quick actions. Winter '27 also adds a native **Time** screen component, so capturing a time no longer needs a picklist or a custom component. → [01-admin · 06](../01-admin-and-declarative-platform/06-dynamic-actions-and-list-views.md)
 
 ## Gotchas
 
@@ -67,3 +69,13 @@ A: It stored the email template by Id, which differs per org. Action version 3.0
 - [05 · Reactive screen flows](05-reactive-screen-flows.md) — how a screen recalculates without a Next click
 - [03-lwc · 11 LWC in Flow screens](../03-lwc-and-slds/11-lwc-in-flow-screens-and-quick-actions.md) — the authoring contract when no stock component fits
 - [10 · Fault paths & custom errors](10-fault-paths-and-custom-errors.md) — what the user sees when a screen flow fails mid-way
+
+## Sources
+
+- [Salesforce Winter '27 Release Notes](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.salesforce_release_notes.htm&release=264&type=5) — Salesforce Help · via search 2026-10-28 · *Screen Flow Updates*: *Process Multiple Records with Screen Flows from List Views and…*, *Capture Time Values with the Time Component*
+- [Jen's Top Winter '27 Release Features For Admins](https://admin.salesforce.com/blog/2026/jens-top-winter-27-release-features-for-admins) — Salesforce Admins · via search 2026-10-28 · the `ids` text collection input and the `recordId` parent variable; list view button layout and related list placement
+- [Set Up a Mass Quick Action for List Views](https://help.salesforce.com/s/articleView?id=platform.mass_quick_actions_create.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-28 · mass quick actions were Create and Update only
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added screen flows as list view / related list mass actions and the Time component

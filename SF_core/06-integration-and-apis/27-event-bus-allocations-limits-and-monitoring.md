@@ -4,8 +4,8 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-04
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 20
 tags: [currency-new, currency-warning]
 ---
@@ -13,7 +13,7 @@ tags: [currency-new, currency-warning]
 
 **Scope:** What the event bus costs and how to see what it is doing — publish and delivery allocations, the CDC entity cap, and the two monitoring surfaces. Event *design* is [12](12-platform-event-design.md), CDC semantics are [13](13-change-data-capture.md), the transport is [11](11-pub-sub-api.md).
 
-> **What changed.** Treating standard-volume and high-volume platform events as two live choices is wrong. **Standard-volume events have been unavailable to create since Spring '19** — the only ones in existence were defined before it — they receive **no support and no bug fixes**, and Salesforce has announced their **retirement** (Help **002280033**), with a migration tool to high-volume by Summer '26. High-volume is not the modern default; it is the only option. **Verify the retirement date in your own org's release notes before quoting it** — the Help article reads Winter '27, published round-ups say June 2027, and this vault has been burned by a wrong date on a correct retirement before.
+> **What changed.** Treating standard-volume and high-volume platform events as two live choices is wrong. **Standard-volume events have been unavailable to create since Spring '19** — the only ones in existence were defined before it — they receive **no support and no bug fixes**, and Salesforce has announced their **retirement** (Help **002280033**), with a migration tool to high-volume by Summer '26. High-volume is not the modern default; it is the only option. **The retirement date is Summer '27.** The 68.0 Platform Events Developer Guide, updated 9 October 2026 after the Winter '27 rollout, says *"Standard-volume custom platform events will be retired in Summer '27"*. Help 002280033 and an August 2026 Salesforce Japan notice read Winter '27, and nothing was retired at that upgrade.
 
 ## Core idea
 
@@ -73,3 +73,12 @@ A: They cover disjoint halves — the first counts external deliveries and publi
 - [11 · Pub/Sub API](11-pub-sub-api.md) — the transport whose clients spend the delivery allocation
 - [24 · API limits, monitoring & access control](24-api-limits-monitoring-and-access-control.md) — the wider request budget this sits beside
 - [02-apex · 26 Testing platform events & CDC](../02-apex-and-triggers/26-testing-platform-events-and-cdc.md) — proving the subscriber works before it reaches these meters
+
+## Sources
+
+- [Platform Events Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/platform_events.pdf) — Salesforce Developers · read 2026-10-28 · *"Standard-volume custom platform events will be retired in Summer '27"* (twice); publish 250,000/50,000 per hour and delivery 50,000/25,000/10,000 per 24 h unchanged; last updated 9 October 2026
+- [(2026年8月) Salesforceの運用に関する重要なお知らせ](https://successjp.salesforce.com/article/NAI-001321) — Salesforce Japan Success Navi, 24 Aug 2026 · read 2026-10-28 · said *"Winter '27 リリースをもって廃止される予定"* (retirement with Winter '27) — superseded by the 68.0 guide
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: settled the standard-volume retirement date as Summer '27 from the 68.0 guide; allocations re-checked, unchanged

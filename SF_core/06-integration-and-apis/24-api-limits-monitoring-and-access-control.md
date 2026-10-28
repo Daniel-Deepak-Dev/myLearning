@@ -4,8 +4,8 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 13
 ---
 # API limits, monitoring & access control
@@ -29,7 +29,7 @@ Access control is the other half. Authentication says who you are ([15](15-oauth
 
 ## 2026 currency
 
-Two changes and one new audit surface. **Connect REST API moved off its per-user/per-app/per-hour throttle** onto the org's 24-hour Platform API limit — only Chatter-requiring requests keep an hourly cap, and the same applies to Connect in Apex, so designs built around the old ceiling can be simplified → [09](09-metadata-tooling-and-connect-apis.md). **Event Monitoring has a free tier** in Enterprise, Unlimited and Performance orgs — about seven log types at one day of retention, including **API Total Usage** and **Hostname Redirects**, the latter being exactly the inventory tool for integrations still calling instanced hostnames before the Winter '27 deadline → [03](03-api-endpoints-hostnames-and-edge-network.md), [02](02-api-versions-and-the-retirement-treadmill.md). And hosted MCP traffic is auditable: filter Event Monitoring on **`API_CLIENT_CATEGORY = SALESFORCE_HOSTED_MCP`** → [25](25-mcp-servers-and-agent-facing-apis.md).
+Two changes and one new audit surface. **Connect REST API moved off its per-user/per-app/per-hour throttle** onto the org's 24-hour Platform API limit — only Chatter-requiring requests keep an hourly cap, and the same applies to Connect in Apex, so designs built around the old ceiling can be simplified → [09](09-metadata-tooling-and-connect-apis.md). **Event Monitoring has a free tier** in Enterprise, Unlimited and Performance orgs — about seven log types at one day of retention, including **API Total Usage** and **Hostname Redirects**. Each is the inventory tool for a dated deadline: Hostname Redirects for integrations still calling instanced hostnames before support ends in **Spring '27** (postponed from Winter '27) → [03](03-api-endpoints-hostnames-and-edge-network.md), and API Total Usage for callers on **API 31.0–40.0**, which lose support in **Summer '27** → [02](02-api-versions-and-the-retirement-treadmill.md). And hosted MCP traffic is auditable: filter Event Monitoring on **`API_CLIENT_CATEGORY = SALESFORCE_HOSTED_MCP`** → [25](25-mcp-servers-and-agent-facing-apis.md).
 
 ## Gotchas
 
@@ -63,3 +63,12 @@ A: Event Monitoring, filtering on `API_CLIENT_CATEGORY = SALESFORCE_HOSTED_MCP`.
 - [16 · External Client Apps](16-external-client-apps.md) — what the allowlist allows
 - [23 · Idempotency, retries & error handling](23-idempotency-retries-and-error-handling.md) — which limit errors are worth retrying
 - [07-security · 23 Event Monitoring & Transaction Security](../07-security-and-sharing/23-event-monitoring-and-transaction-security.md) — the monitoring platform itself
+
+## Sources
+
+- [REST API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_rest.pdf) — Salesforce Developers · read 2026-10-28 · 31.0–40.0 unsupported from Summer '27; *"To identify requests made from old or unsupported API versions, use the API Total Usage event type"*
+- [Update Instanced URLs in API Traffic (Release Update)](https://help.salesforce.com/s/articleView?id=release-notes.rn_update_instanced_urls_in_api_traffic.htm&language=en_US&release=262&type=5) — Salesforce Help · via search 2026-10-28 · enforcement postponed to Spring '27
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: instanced-hostname deadline moved to Spring '27; API Total Usage tied to the 31.0–40.0 retirement

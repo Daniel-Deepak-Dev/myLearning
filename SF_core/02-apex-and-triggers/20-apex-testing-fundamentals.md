@@ -4,8 +4,8 @@ area: 02-apex-and-triggers
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 5
 tags: [currency-warning]
 ---
@@ -23,7 +23,7 @@ Coverage is a deployment gate, not a quality signal: 75% org-wide plus some cove
 
 | | Resets governor limits? | Notes |
 |---|---|---|
-| `@TestSetup` | **No** | its DML and SOQL count against *every* test method in the class |
+| `@TestSetup` | **No** 🚩 | its DML and SOQL count against *every* test method in the class — **disputed**, see below |
 | `Test.startTest()` / `stopTest()` | **Yes**, once | also forces queued async work to run at `stopTest()` |
 | `System.runAs(u)` | No | **costs one DML statement per call** |
 
@@ -52,9 +52,11 @@ private class RefundServiceTest {
 
 ## 2026 currency
 
-**The security flip lands hardest in tests, because tests are where system mode was invisible.** Under 67.0 a `with sharing` default plus user-mode SOQL means the *identity* a test runs under determines the result, so suites written entirely without `System.runAs` are now measuring the deploying admin's permissions and nothing else. Separately, **`RunRelevantTests` is Beta from Spring '26**: `sf project deploy start --test-level RunRelevantTests` runs only the tests a deployment touches, steered by `@IsTest(testFor='ApexClass:MyClass')` and overridden by `@IsTest(critical=true)` for tests that must always run. Detail: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
+**The security flip lands hardest in tests, because tests are where system mode was invisible.** Under 67.0 a `with sharing` default plus user-mode SOQL means the *identity* a test runs under determines the result, so suites written entirely without `System.runAs` are now measuring the deploying admin's permissions and nothing else. Separately, **`RunRelevantTests` is Beta from Spring '26, and still Beta at 68.0 (Winter '27)**: `sf project deploy start --test-level RunRelevantTests` runs only the tests a deployment touches, steered by `@IsTest(testFor='ApexClass:MyClass')` and overridden by `@IsTest(critical=true)` for tests that must always run. Detail: [RELEASE-RADAR/developer-tooling-and-apis.md](../../RELEASE-RADAR/developer-tooling-and-apis.md).
 
 > **From my notes.** *"DML limits are reset by `@TestSetup` but SOQL limits are not."* — **inverted, and worth unlearning carefully.** Neither is reset. Everything a setup method consumes counts against each test method in the class, which is why a 200-record factory can push a method over a limit that its own code never approached. The only reset is `Test.startTest()`/`stopTest()`, and it works *inside* the setup method — that is the fix, not a per-annotation exemption.
+
+🚩 **That correction is itself disputed (2026-10-28).** The v68.0 Apex Developer Guide says *"Every test method, including the test setup method, runs as a separate transaction."* Governor limits are per transaction, so setup would get its own limits and charge nothing to the methods. The guide never names limits outright. Settle it in an org: read `Limits.getDmlStatements()` and `Limits.getQueries()` on a test method's first line.
 
 ## Gotchas
 
@@ -72,7 +74,7 @@ Q: Why is `@IsTest(SeeAllData=true)` treated as a defect rather than a shortcut?
 A: Data isolation has been the default since API 24.0; the annotation couples the test to org state, so it passes where it was written and fails in a fresh scratch org — and it silently disables `@TestSetup`.
 
 Q: Does `@TestSetup` give a test method its own governor limits?
-A: No. Whatever setup consumes counts against every test method in the class. Wrapping the setup body in `Test.startTest()`/`stopTest()` is the only reset.
+A: No. Whatever setup consumes counts against every test method in the class. Wrapping the setup body in `Test.startTest()`/`stopTest()` is the only reset. 🚩 Disputed: the v68.0 guide says setup runs as its own transaction — check in an org.
 
 Q: What does `Test.stopTest()` do besides restore limits?
 A: It forces queued asynchronous work — Queueable, `@future`, batch — to execute before the next line.
@@ -89,3 +91,14 @@ A: User mode and the `with sharing` default mean the running identity decides th
 - [10 · Apex security: user mode & FLS](10-apex-security-user-mode-and-fls.md) — why `System.runAs` became load-bearing at 67.0
 - [09 · Exception handling & custom exceptions](09-exception-handling-and-custom-exceptions.md) — asserting on a thrown exception rather than swallowing it
 - [26 · Testing platform events & CDC](26-testing-platform-events-and-cdc.md) — the subscriber that passes green without ever running
+
+## Sources
+
+- [Apex Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · `@IsTest(critical=true)` and `@IsTest(testFor='...')` still headed *(Beta)*: *"The RunRelevantTests test level and the associated @IsTest() annotations are pilot or beta services"*; both class-level only, API 66.0+
+- [Apex Developer Guide (PDF, v68.0) — Using Test Setup Methods](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · *"Every test method, including the test setup method, runs as a separate transaction. The static context of the test class is reinitialized before each transaction begins."*
+- [Metadata API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_meta.pdf) — Salesforce Developers · read 2026-10-28 · *"Run Relevant Apex Tests in a Deployment (Beta)"*
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: confirmed `RunRelevantTests` is still Beta at 68.0
+- 2026-10-28 · flagged 🚩 the `@TestSetup` limits claim: the v68.0 guide's *"Using Test Setup Methods"* says setup and each test method run as separate transactions

@@ -4,8 +4,8 @@ area: 03-lwc-and-slds
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 7
 tags: [currency-new]
 ---
@@ -46,7 +46,7 @@ get total() { return this.counter.value.doubled; }
 
 ## 2026 currency
 
-**State Managers went GA at API 67.0 (Summer '26)** — the first genuinely new answer to cross-component state since Lightning Message Service, and the reason `@track` keeps getting narrower ([05](05-decorators-and-the-reactivity-model.md)). The distinction to hold is **context versus bus**. A state manager is shared through the DOM hierarchy: `fromContext` finds the *nearest ancestor* that instantiated it, so two sibling subtrees get two independent instances, and a component outside the provider's subtree gets nothing. LMS is genuinely page-wide, crosses into the utility bar and console tabs with `APPLICATION_SCOPE`, and reaches components in trees you do not control. They solve adjacent problems and neither replaces the other. Note the version skew worth knowing about: the **platform feature is GA while the `@lwc/state` npm package is still `0.x`** — off-platform it is not on the same footing ([22](22-lwc-open-source-and-off-platform-reuse.md)).
+**State Managers went GA at API 67.0 (Summer '26)** — the first genuinely new answer to cross-component state since Lightning Message Service, and the reason `@track` keeps getting narrower ([05](05-decorators-and-the-reactivity-model.md)). The distinction to hold is **context versus bus**. A state manager is shared through the DOM hierarchy: `fromContext` finds the *nearest ancestor* that instantiated it, so two sibling subtrees get two independent instances, and a component outside the provider's subtree gets nothing. LMS is genuinely page-wide, crosses into the utility bar and console tabs with `APPLICATION_SCOPE`, and reaches components in trees you do not control. They solve adjacent problems and neither replaces the other. Note the version skew worth knowing about: the **platform feature is GA while the `@lwc/state` npm package is still `0.x`** (0.36.0 in October 2026) — off-platform it is not on the same footing ([22](22-lwc-open-source-and-off-platform-reuse.md)). **Winter '27 added `refresh()`** to built-in state managers that hold list- or query-shaped data, such as `lightning/stateManagerRelatedListRecords`: it re-fetches from the server without reconfiguring the manager or reloading the page. It sits on `.value` with `status` and `data`, and it rejects unless `status` is `loaded`.
 
 ## Gotchas
 
@@ -56,7 +56,7 @@ get total() { return this.counter.value.doubled; }
 - **`setAtom` is the only write path.** Assigning to an atom directly does not notify anything, and fails quietly.
 - **Computeds are lazy.** A computed nothing reads is never evaluated — fine, until you put a side effect in one.
 - **State outside the component outlives the component.** Nothing resets on disconnect; a stale value from a previous record is a real defect unless the manager is reset deliberately.
-- **It is not a persistence layer.** State managers hold client state — LDS remains the only client-side write path to records. → [06](06-lightning-data-service-and-ui-api-wires.md)
+- **It is not a persistence layer.** State managers hold client state — records are written through `lightning/uiRecordApi` or GraphQL `executeMutation`. → [06](06-lightning-data-service-and-ui-api-wires.md)
 - **The npm package is pre-1.0** even though the platform feature is GA; do not assume off-platform parity.
 
 ## Recall
@@ -83,3 +83,13 @@ A: Each subtree gets its own independent instance. `fromContext` resolves to the
 - [04 · Events & component communication](04-events-and-component-communication.md) — the pattern this replaces for deep hierarchies
 - [15 · LWC testing with Jest](15-lwc-testing-with-jest.md) — a state module is testable without mounting a component
 - [22 · LWC OSS & off-platform reuse](22-lwc-open-source-and-off-platform-reuse.md) — `@lwc/state` off the platform
+
+## Sources
+
+- [The Salesforce Developer's Guide to the Winter '27 Release](https://developer.salesforce.com/blogs/2026/10/developers-guide-to-the-winter-27-release) — Salesforce Developers · via search 2026-10-28 · Winter '27 adds `refresh()` for state manager data; `status`, `data` and `refresh()` live on `.value`
+- [Use lightning/stateManager* State Managers](https://developer.salesforce.com/docs/platform/lwc/guide/reference-state-managers-use.html) — Salesforce Developers · via search 2026-10-28 · `refresh()` re-fetches list- or query-shaped data; rejects unless `status` is `loaded`; listed for `lightning/stateManagerRelatedListRecords`
+- [@lwc/state on npm](https://www.npmjs.com/package/@lwc/state) — 🚩 npm registry, not a Salesforce domain · read 2026-10-28 via `npm view` · latest version 0.36.0, so still pre-1.0
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: added `refresh()` on list-shaped built-in state managers; the write-path gotcha now names `executeMutation` too

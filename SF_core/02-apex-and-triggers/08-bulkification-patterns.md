@@ -4,8 +4,8 @@ area: 02-apex-and-triggers
 format: dense
 status: learning
 created: 2026-08-02
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 3
 ---
 # Bulkification Patterns
@@ -22,7 +22,7 @@ Bulkification is one rule with several shapes: **the cost of a transaction must 
 |---|---|---|
 | SOQL inside a `for` | 100 queries | collect Ids, one query with `IN :ids` |
 | DML inside a `for` | 150 statements | collect into a `List`, one DML after |
-| `List` holding a large result set | 6 MB heap | SOQL `for` loop, chunked at 200 |
+| `List` holding a large result set | 10 MB heap (25 MB async) | SOQL `for` loop, chunked at 200 |
 | Counting children per record | queries and CPU | `COUNT(Id)` with `GROUP BY` |
 | Re-reading the same parent | queries | `Map<Id, sObject>` built once |
 
@@ -49,7 +49,7 @@ for (Opportunity o : Trigger.new) {
 
 ## 2026 currency
 
-The patterns are unchanged, but user-mode SOQL gives one of them a new failure mode. A bulk query now returns only the rows the running user can see, so `accounts.get(o.AccountId)` can come back null because of **sharing**, not because of missing data — for the same code, the same records, and a different user. Null-handling in a bulk lookup has therefore stopped being defensive coding and become a genuine branch you need a decision for: skip the record, `addError()` it, or elevate that one query with `AccessLevel.SYSTEM_MODE` and document why. Context in [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
+The patterns are unchanged, but user-mode SOQL gives one of them a new failure mode. A bulk query now returns only the rows the running user can see, so `accounts.get(o.AccountId)` can come back null because of **sharing**, not because of missing data — for the same code, the same records, and a different user. Null-handling in a bulk lookup has therefore stopped being defensive coding and become a genuine branch you need a decision for: skip the record, `addError()` it, or elevate that one query with `AccessLevel.SYSTEM_MODE` and document why. Context in [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md). **Winter '27 (API 68.0) raised heap from 6 MB to 10 MB** (12 MB to 25 MB async). That widens the margin on the `List` row above but does not change its fix: a SOQL `for` loop still keeps heap flat and still spends rows. → [01](01-apex-language-core-and-governor-limits.md)
 
 ## Gotchas
 
@@ -83,3 +83,12 @@ A: A parent-to-child subquery, or one query over the children grouped into a `Ma
 - [01 · Apex language core & governor limits](01-apex-language-core-and-governor-limits.md) — the per-transaction budget every pattern here defends
 - [05 · DML, Database methods & savepoints](05-dml-database-methods-and-savepoints.md) — handling per-row failures once the collected list is written
 - [09-devops · INDEX](../09-devops-sfdx-and-release-management/INDEX.md) — Code Analyzer catches SOQL-in-loop in the pipeline, before a reviewer has to
+
+## Sources
+
+- [Apex Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_apex_developer_guide.pdf) — Salesforce Developers · read 2026-10-28 · Per-Transaction Apex Limits: total heap **10 MB** synchronous, **25 MB** asynchronous
+- [Handle Larger Datasets with Increased Apex Heap Limits](https://help.salesforce.com/s/articleView?id=release-notes.rn_apex_heap_limit.htm&language=en_US&release=264&type=5) — Salesforce Help · via search 2026-10-28 · Winter '27 release note: heap 6 → 10 MB and 12 → 25 MB
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: heap figure in the antipattern table 6 MB → 10 MB (25 MB async), with one currency sentence

@@ -13,7 +13,7 @@ The query language as its own subject — including **the SOSL surface that had 
 | 01 | [Query anatomy & the SOQL model](01-query-anatomy-and-the-soql-model.md) | clause order, no joins, `USING SCOPE`; **`LIMIT` doesn't reduce the scan** | 22 |
 | 02 | [Filtering, operators & literals](02-filtering-operators-and-literals.md) | `LIKE`, `IN`; **`INCLUDES` — semicolon is AND, comma is OR**; `toLabel()`, `FORMAT()` | 22 |
 | 03 | [Date, datetime & locale literals](03-date-datetime-and-locale-literals.md) | fiscal vs calendar periods, `DAY_ONLY()`, `convertTimezone()`; **grouping a Datetime is GMT** | 22 |
-| 04 | [Relationship queries in depth](04-relationship-queries-in-depth.md) | 5 up / 1 down, 20 subqueries, `__r` vs `__c`, `TYPEOF`; **FLS throws, sharing returns null** | 22 |
+| 04 | [Relationship queries in depth](04-relationship-queries-in-depth.md) | 5 up / 5 down counting the root (API 58.0+), 20 subqueries, `__r` vs `__c`, `TYPEOF`; **FLS throws, sharing returns null** | 22 |
 | 05 | [Aggregates, GROUP BY, ROLLUP & CUBE](05-aggregates-group-by-rollup-and-cube.md) | `AggregateResult`, **`ROLLUP` caps at 3 fields**, `GROUPING()` = 1 for subtotals, 2,000-row cap | 22 |
 | 06 | [Semi-joins, anti-joins & set filtering](06-semi-joins-anti-joins-and-set-filtering.md) | `IN (SELECT …)`, **two per query, hard**; **an anti-join returns *more* to a low-privilege user** ⚠️ | 22 |
 | 07 | [Dynamic SOQL & injection defence](07-dynamic-soql-and-injection-defence.md) | binds are for values, **identifiers need an allowlist**; user mode limits blast radius, not the attack | 22 |

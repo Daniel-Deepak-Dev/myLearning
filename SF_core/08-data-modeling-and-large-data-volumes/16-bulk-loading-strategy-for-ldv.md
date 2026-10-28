@@ -4,8 +4,8 @@ area: 08-data-modeling-and-large-data-volumes
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 15
 tags: [currency-warning]
 ---
@@ -26,14 +26,14 @@ So the strategy is subtractive. Work out what the platform is doing per row that
 - **Defer sharing calculation.** With the `Defer Sharing Calculation` permission you suspend group membership and sharing rule recalculation for the duration of the load and resume it afterwards, once — instead of per batch → [07-security · 16](../07-security-and-sharing/16-sharing-recalculation-and-performance.md).
 - **Load in dependency order** — parents before children, and lookups before the records that point at them. Anything else forces a second update pass.
 - **Sort the file by parent Id.** Two batches touching the same parent contend for its lock; grouping children by parent keeps each lock inside one batch → [12](12-record-locking-and-concurrency.md).
-- **Serial vs parallel.** Bulk 2.0 processes in parallel by default. If you are seeing `UNABLE_TO_LOCK_ROW`, serial is the fix that costs throughput but finishes.
+- **Serial vs parallel.** Bulk 2.0 runs **parallel only** — its `concurrencyMode` field is documented as *"for future use"*. If sorting by parent does not stop `UNABLE_TO_LOCK_ROW`, serial mode is a **Bulk API v1** option (in Data Loader, *Enable serial mode for Bulk API* with *Use Bulk API* ticked). It costs throughput but finishes.
 - **Suppress what you can, and know what you cannot.** Triggers and flows can be bypassed by a custom-permission or custom-setting switch; **validation rules and duplicate rules cannot be turned off for API writes** and fire on every row → [01-admin · 08](../01-admin-and-declarative-platform/08-validation-rules-and-duplicate-management.md).
 - **Use external IDs to upsert** rather than query-then-update — one round trip, and no ID mapping table to maintain → [03](03-record-ids-external-ids-and-upsert.md).
-- **Deleting is a load too.** `hardDelete` skips the Recycle Bin and is the only delete that frees storage immediately → [13](13-deletes-recycle-bin-and-physical-deletion.md).
+- **Deleting is a load too.** `hardDelete` skips the Recycle Bin, so the rows leave the table at once instead of slowing scans until the purge. Salesforce recommends the **Bulk API 2.0** hard delete for large volumes → [13](13-deletes-recycle-bin-and-physical-deletion.md).
 
 ## 2026 currency
 
-Bulk API 2.0 is where capability lands and where a new load should start; **v1 is legacy but not retired**, and PK chunking is the one reason to still reach for it. Two things worth re-checking on an inherited integration: whether it is pinned to a **retired API version**, which now returns **410 GONE** rather than degrading → [06-integration · 02](../06-integration-and-apis/02-api-versions-and-the-retirement-treadmill.md), and whether it still uses an **instanced hostname**, which stops being supported shortly after Winter '27 → [06-integration · 03](../06-integration-and-apis/03-api-endpoints-hostnames-and-edge-network.md). A load that has run nightly for six years is exactly the thing nobody has re-pointed.
+Bulk API 2.0 is where capability lands and where a new load should start; **v1 is legacy but not retired**, and PK chunking and serial mode are the two reasons to still reach for it. Two things worth re-checking on an inherited integration: whether it is pinned to a **retired API version**, which now returns **410 GONE** rather than degrading → [06-integration · 02](../06-integration-and-apis/02-api-versions-and-the-retirement-treadmill.md). **Versions 31.0–40.0 are next**: unsupported from **Summer '27**, retired in **Summer '28**, after which Bulk API answers `400 InvalidVersion`. And whether it still uses an **instanced hostname**: the *Update Instanced URLs in API Traffic* Release Update was postponed again, to **Spring '27** → [06-integration · 03](../06-integration-and-apis/03-api-endpoints-hostnames-and-edge-network.md). A load that has run nightly for six years is exactly the thing nobody has re-pointed.
 
 ## Gotchas
 
@@ -60,7 +60,7 @@ Q: What does the Defer Sharing Calculation permission buy you?
 A: It suspends group membership and sharing rule recalculation during the load so it runs once afterwards rather than continuously.
 
 Q: When is Bulk API v1 still the right choice?
-A: For extraction using PK chunking — the one capability 2.0 does not expose.
+A: For extraction using PK chunking, and for a load that only finishes in serial mode — two capabilities 2.0 does not expose.
 
 ## Related
 
@@ -68,3 +68,15 @@ A: For extraction using PK chunking — the one capability 2.0 does not expose.
 - [25 · Data migration & cutover](25-data-migration-and-cutover.md) — these levers inside a one-off migration project
 - [06-integration · 07 Bulk API 2.0](../06-integration-and-apis/07-bulk-api-2.md) — the API surface and job lifecycle
 - [07-security · 16 Sharing recalculation & performance](../07-security-and-sharing/16-sharing-recalculation-and-performance.md) — what deferral actually defers
+
+## Sources
+
+- [Bulk API 2.0 and Bulk API Developer Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/api_asynch.pdf) — Salesforce Developers · read 2026-10-28 · `concurrencyMode` *"For future use … Currently only parallel mode"*; versions 31.0–40.0 *"Deprecated and unsupported from Summer '27. Retired from Summer '28"*
+- [Salesforce Platform API Versions 31.0 through 40.0 Retirement](https://help.salesforce.com/s/articleView?id=005321531&language=en_US&type=1) — Salesforce Help · via search 2026-10-28 · after retirement REST returns `410 GONE`, SOAP `500 UNSUPPORTED_API_VERSION`, Bulk API `400 InvalidVersion`
+- [Data Loader Guide (PDF, v68.0)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_data_loader.pdf) — Salesforce Developers · read 2026-10-28 · *Enable serial mode for Bulk API* applies *"If Use Bulk API is selected"*
+- [Best Practices for Deployments with Large Data Volumes (PDF, Winter '27)](https://resources.docs.salesforce.com/latest/latest/en-us/sfdc/pdf/salesforce_large_data_volumes_bp.pdf) — Salesforce Developers · read 2026-10-28 · *"use the Bulk API 2.0's hard delete function to delete large data volumes"*
+- [Update Instanced URLs in API Traffic (Release Update)](https://help.salesforce.com/s/articleView?id=release-notes.rn_update_instanced_urls_in_api_traffic.htm&language=en_US&release=262&type=5) — Salesforce Help · via search 2026-10-28 · scheduled for Spring '26, postponed; listed under *Scheduled to Be Enforced in Spring '27* on the Winter '27 Release Updates page
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: API 31.0–40.0 retirement dates; instanced-URL enforcement now Spring '27; Bulk 2.0 has no serial mode; hard delete described by query cost, not storage

@@ -4,8 +4,8 @@ area: 06-integration-and-apis
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-09-24
-currency: "Summer '26 (API 67.0)"
+updated: 2026-10-28
+currency: "Winter '27 (API 68.0)"
 phase: 13
 tags: [currency-warning]
 ---
@@ -13,7 +13,7 @@ tags: [currency-warning]
 
 **Scope:** How an external caller gets an access token, which flow to pick, and what the token is allowed to do. The *app object* the flow runs through is [16](16-external-client-apps.md); outbound auth from Apex is [17](17-named-credentials-and-external-credentials.md); human login and MFA are [07-security · 17](../07-security-and-sharing/17-authentication-and-mfa.md).
 
-> **What changed.** Every tutorial that posts a username and password to `/services/oauth2/token` is teaching a flow on a retirement clock. Take the three dates separately, because conflating them misreads an inherited org: an org-wide **block switch** arrived in Winter '22, the flow became **blocked by default in newly created orgs** in Summer '23 — an org created in 2019 may still be running it — and the **Summer '26 Release Update retires it for connected apps in Winter '27**. **JWT bearer** and **client credentials** are the server-to-server answers.
+> **What changed.** Every tutorial that posts a username and password to `/services/oauth2/token` is teaching a flow on a retirement clock. Take the three dates separately, because conflating them misreads an inherited org: an org-wide **block switch** arrived in Winter '22, the flow became **blocked by default in newly created orgs** in Summer '23 — an org created in 2019 may still be running it — and a **Release Update retires it for connected apps on 20 February 2027**. That date replaced the Winter '27 one the vault carried until 2026-10-28; orgs created Summer '26 or later cannot use the flow at all. **JWT bearer** and **client credentials** are the server-to-server answers.
 
 ## Core idea
 
@@ -29,18 +29,19 @@ The second decision is **as whom**. A token names a user, and everything the tok
 | **JWT bearer** | nobody | a **private key** + certificate | server-to-server, no stored secret |
 | **Client credentials** | nobody | client ID + secret | server-to-server, needs a **Run As** user |
 | **Refresh token** | nobody, after a first login | refresh token | keeping a user session alive |
-| **Device** | a human, on a screen with no keyboard | device code | CLI and TV-style clients — **blocked for uninstalled apps** since Sept 2025 → [16](16-external-client-apps.md) |
-| ~~Username-password~~ | — | username + password | **nothing. Retiring Winter '27** |
+| **Device** | a human, on a screen with no keyboard | device code | CLI and TV-style clients — **blocked for uninstalled apps** since Sept 2025; **local ECAs with a `localhost` callback only** from 30 Nov 2026 → [16](16-external-client-apps.md) |
+| ~~User-agent, hybrid user-agent~~ | a human, in a browser or mobile app | token returned in the redirect | **nothing. Retiring 20 Feb 2027**, already blocked in new orgs — use web server + PKCE |
+| ~~Username-password~~ | — | username + password | **nothing. Retiring 20 Feb 2027** |
 
 - **JWT bearer is the default for unattended work.** You sign an assertion with a private key whose certificate is uploaded to the app; no secret is transmitted and nothing needs rotating on a password policy. The user it runs as must be **pre-authorized** for the app.
 - **Client credentials needs a Run As user**, chosen on the app itself. That user is the entire security boundary — it is why the free **Salesforce Integration** licence exists: an API-only identity with no UI login, paired with the *Salesforce API Integration* permission set licence.
 - **Scopes narrow what the token reaches.** `api` grants the whole Platform API surface — REST, Tooling, Metadata. `mcp_api` (new) grants **only** hosted MCP servers, which is why it exists → [25](25-mcp-servers-and-agent-facing-apis.md). `refresh_token` is separate and must be requested.
-- **`Any API Auth`** is a Summer '26 user permission gating who may authenticate via SOAP `login()`, enforced by default in new orgs → [05](05-soap-api-and-where-it-persists.md).
-- **Tokens are revocable and auditable.** Setup → *Connected Apps OAuth Usage* lists every app a user has authorized; refresh tokens default to a **one-year** lifetime and should be shortened.
+- **`Use Any API Auth`** is a Summer '26 user permission gating who may authenticate via SOAP `login()`. New orgs enforced it from the start; **every org enforces it from 1 December 2026** → [05](05-soap-api-and-where-it-persists.md).
+- **Tokens are revocable and auditable.** Setup → *Connected Apps OAuth Usage* lists every app a user has authorized. Refresh tokens default to a **one-year** lifetime and should be shortened. Salesforce is also turning on a **30-day idle limit** for every connected app and ECA — sandboxes from 21 October 2026, **production from 4 November 2026**. It is a sliding window: each use resets it.
 
 ## 2026 currency
 
-Two password-only mechanisms are ending on separate clocks: the **OAuth username-password flow in Winter '27** (a Summer '26 Release Update, scoped to connected apps, with a test run available now) and **SOAP `login()` for API 31.0–64.0 in Summer '27**. Both mint a session from a password alone, which is what MFA enforcement made untenable → [07-security · 17](../07-security-and-sharing/17-authentication-and-mfa.md). The migration Salesforce names for both is the same: **an external client app with JWT** → [16](16-external-client-apps.md). Dated detail: [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
+Two password-only mechanisms are ending on separate clocks: the **OAuth username-password flow on 20 February 2027** (a Release Update scoped to connected apps, with a test run available now) and **SOAP `login()` for API 31.0–64.0 in Summer '27**. Both mint a session from a password alone, which is what MFA enforcement made untenable → [07-security · 17](../07-security-and-sharing/17-authentication-and-mfa.md). **The username-password date moved.** It was set for the Winter '27 upgrade; Salesforce changed it to 20 February 2027, the same day the user-agent and hybrid user-agent flows retire. Nothing in this table was switched off by Winter '27 itself. Salesforce's named replacements are **web server + PKCE** for a person and **client credentials** for a server, configured on **an external client app** → [16](16-external-client-apps.md). Dated detail: [RELEASE-RADAR/trust-security-and-governance.md](../../RELEASE-RADAR/trust-security-and-governance.md).
 
 ## Gotchas
 
@@ -57,7 +58,7 @@ Q: Which OAuth flows are the server-to-server answers, and what does each need?
 A: JWT bearer (a private key plus an uploaded certificate, user must be pre-authorized) and client credentials (client ID/secret plus a **Run As** user configured on the app).
 
 Q: Is the username-password flow blocked everywhere?
-A: No. Blocked by default only in orgs created **Summer '23 or later**; an org-wide switch exists since Winter '22; retirement for connected apps is **Winter '27**.
+A: No. Blocked by default only in orgs created **Summer '23 or later**; an org-wide switch exists since Winter '22; retirement for connected apps is **20 February 2027** (moved from Winter '27).
 
 Q: What does the `mcp_api` scope do that `api` does not?
 A: It grants access to hosted MCP servers *only*, instead of the whole Platform API surface.
@@ -66,7 +67,7 @@ Q: What is the security boundary of a client credentials integration?
 A: The Run As user. The token can do exactly what that user can do — which is the argument for a Salesforce Integration licence rather than an admin.
 
 Q: What are the two password-only mechanisms retiring, and when?
-A: The OAuth username-password flow in **Winter '27**, and SOAP `login()` for API 31.0–64.0 in **Summer '27**.
+A: The OAuth username-password flow on **20 February 2027**, and SOAP `login()` for API 31.0–64.0 in **Summer '27**.
 
 ## Related
 
@@ -76,3 +77,17 @@ A: The OAuth username-password flow in **Winter '27**, and SOAP `login()` for AP
 - [07-security · 19 SSO, SAML, OIDC & identity](../07-security-and-sharing/19-sso-saml-oidc-and-identity.md) — authentication as federation rather than authorization
 - [SF_Experience_Cloud · 10 Authentication, self-registration & SSO](../../SF_Experience_Cloud/10-authentication-self-registration-and-sso.md) — site login, which is deliberately **not** OAuth, and the confusion that causes
 - [SF_Service · Enhanced Chat sessions & user verification](../../SF_Service/enhanced-chat-sessions-and-user-verification.md) — a JWT that is **not** OAuth: your server signs it (RS256/RS512) and Salesforce checks it against a keyset uploaded in Setup
+
+## Sources
+
+- [Retirement of OAuth 2.0 Username-Password Flow for Connected Apps (Release Update)](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_security_unpw_flow_retirement.htm&release=262&type=5) — Salesforce Help · via search 2026-10-28 · enforced 20 February 2027, originally scheduled for Winter '27; orgs created Summer '26 or later cannot use the flow
+- [OAuth User-Agent and Hybrid User-Agent Flows Retirement (Release Update)](https://help.salesforce.com/s/articleView?id=release-notes.rn_security_oauth_useragent.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-28 · enforced 20 February 2027; replacement is web server (or hybrid web server) + PKCE
+- [Connected App & External Client App Security Requirement Updates (005461287)](https://help.salesforce.com/s/articleView?id=005461287&language=en_US&type=1) — Salesforce Help · via search 2026-10-28 · refresh-token idle TTL 30 days (sandbox 21 Oct 2026, production 4 Nov 2026, sliding); device flow restricted to local ECAs 30 Nov 2026; both retirements 20 Feb 2027
+- [Restrict the OAuth 2.0 Device Flow to Local External Client Apps (Release Update)](https://help.salesforce.com/s/articleView?id=release-notes.rn_security_oauth_device.htm&language=en_US&type=5) — Salesforce Help · via search 2026-10-28 · local ECAs with a `localhost` callback only; a Release Updates page gives 1 December 2026 instead of 30 November 🚩
+- [Assign Use Any API Auth Permission for SOAP login() (Release Update)](https://help.salesforce.com/s/articleView?language=en_US&id=release-notes.rn_api_soap_login.htm&release=264&type=5) — Winter '27 release notes · via search 2026-10-28 · permission name; enforced 1 December 2026 in all orgs
+- [Winter '27 Release Architect Highlights](https://www.salesforce.com/blog/winter-27-release-architect-highlights/) — Salesforce Architecture Blog, 5 Oct 2026 · read 2026-10-28 · 4 Nov 2026 idle TTL, 30 Nov 2026 device flow, 20 Feb 2027 for username-password, user-agent and hybrid user-agent
+- [(2026年10月) Salesforceの運用に関する重要なお知らせ](https://successjp.salesforce.com/article/NAI-001341) — Salesforce Japan Success Navi, 27 Oct 2026 · read 2026-10-28 · the OAuth retirements are not among the five Release Updates enforced in Winter '27; new orgs already block the user-agent flows
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: username-password retirement moved from Winter '27 to 20 Feb 2027; added the user-agent flows, the device-flow restriction, the 30-day refresh-token idle limit and the `Use Any API Auth` name and date

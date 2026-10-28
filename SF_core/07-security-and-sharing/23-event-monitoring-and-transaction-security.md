@@ -4,7 +4,7 @@ area: 07-security-and-sharing
 format: dense
 status: learning
 created: 2026-08-03
-updated: 2026-08-27
+updated: 2026-10-28
 currency: "Summer '26 (API 67.0)"
 phase: 11
 tags: [currency-new, currency-warning]
@@ -31,7 +31,7 @@ Everything else in this area decides what a user *may* do. Event Monitoring reco
 - **There is a free tier, and it is worth knowing.** Enterprise, Unlimited and Performance orgs get a handful of log types — Login, Logout, API Total Usage, Apex Unexpected Exception, CORS Violation, CSP Violation, Hostname Redirects — at **one day** of retention. Shield unlocks the full set (~74 types) and the longer windows.
 - **A policy is event + condition + action.** Conditions are built in Condition Builder or written as an Apex class implementing the policy interface; actions are **Block**, **Require MFA** (step-up), **Notify**, **Freeze user** or **End session**.
 - **`ApiAnomalyEvent`, `CredentialStuffingEvent` and `SessionHijackingEvent` are model-derived**, not rule-derived — the platform decides what is anomalous. Treat their output as a signal to investigate, not as a verdict.
-- **`HostnameRedirects` is on the free tier and is exactly the log you need** to find integrations still calling legacy or instanced URLs before Winter '27. → [20](20-my-domain-enhanced-domains-and-trusted-urls.md)
+- **`HostnameRedirects` is on the free tier and is exactly the log you need** to find integrations still calling legacy or instanced URLs before support ends in Spring '27 (postponed from Winter '27). → [20](20-my-domain-enhanced-domains-and-trusted-urls.md)
 - **The Event Monitoring Analytics app** ships prebuilt dashboards over the log files, which is usually faster than building the CSV pipeline yourself.
 
 > **From my notes.** My 2025 page lists the use cases well — block logins from untrusted locations, cap API extractions, require MFA before a sensitive dashboard, alert on unusual report activity — and records that on the **GallagherRe project a policy was used to prevent report exports**. That bespoke control is now partly a platform default: in July 2026 Salesforce auto-created a `ReportEvent` policy in Shield and Event Monitoring orgs, with one important difference in posture — it **challenges** with step-up authentication rather than **blocks**. The page also says "Transaction Security Policies" without qualification; the framework it describes is the **Enhanced** one, and the legacy framework it inherits its name from is gone.
@@ -73,3 +73,11 @@ A: `Modify Transaction Security Policy`, in addition to `Customize Application`.
 - [22 · Field Audit Trail & data retention](22-field-audit-trail-and-data-retention.md) — the other Shield pillar built on big objects
 - [15 · Auditing & troubleshooting access](15-auditing-and-troubleshooting-access.md) — what the user was *allowed* to do, as opposed to what they did
 - [09-devops · INDEX](../09-devops-sfdx-and-release-management/INDEX.md) — Event Monitoring as the production-debugging tier above capped debug logs
+
+## Sources
+
+- [Update Instanced URLs in API Traffic (Release Update)](https://help.salesforce.com/s/articleView?id=release-notes.rn_update_instanced_urls_in_api_traffic.htm&language=en_US&release=262&type=5) — Salesforce Help · via search 2026-10-28 · enforcement postponed to Spring '27
+
+## History
+
+- 2026-10-28 · Winter '27 currency check: instanced-URL deadline corrected to Spring '27; the rest of the note was not re-researched
